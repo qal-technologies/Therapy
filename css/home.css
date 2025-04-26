@@ -1,0 +1,802 @@
+section#banner {
+  margin-top: 10%;
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+  height: auto;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap-reverse;
+  gap: 50px;
+  column-gap: 15%;
+  transition: all ease 400ms;
+}
+
+div#banner-circle {
+  width: 90%;
+  height: 90%;
+  max-width: 500px;
+  max-height: 500px;
+  background: var(--circle-gradient-color);
+  border-radius: 50%;
+  box-shadow: 0px 1px 10px var(--accentTrans);
+  filter: blur(20px);
+  position: absolute;
+  left: -5%;
+  top: 8%;
+}
+
+#banner #banner-upper {
+  max-width: 400px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 60px;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  padding-inline-start: 2%;
+}
+
+div#banner-upper div.text-div {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+div#banner-upper div.text-div p.banner-text {
+  font-family: PoppinsSemi;
+  font-size: 2.4rem;
+  line-height: 50px;
+}
+
+div#banner-upper div.text-div p.banner-motto {
+  font-family: PoppinsLight;
+  font-size: 1.2rem;
+  color: var(--mainText);
+}
+
+div#banner-upper div.button-div {
+  place-content: center;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+div#banner-upper div.button-div a {
+  padding: 10px;
+  border: none;
+  padding-inline: 20px;
+  border-radius: 30px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+div#banner-upper div.message {
+  min-width: 100%;
+  display: flex;
+  place-content: center;
+  flex-wrap: wrap;
+  margin-top: -8%;
+  gap: 10px;
+}
+
+#banner-upper .text {
+  max-width: 200px;
+}
+
+#banner-upper .message .player, #sessions div.upper-title .player {
+  width: 60%;
+  max-width: 150px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--accent);
+  padding: 5px;
+  border-radius: 50px;
+  height: 50px;
+}
+
+#banner-upper .message .indication, #sessions div.upper-title .player .indication {
+  color: var(--mainText);
+  font-family: PoppinsSemi;
+  padding-inline-start: 10px;
+}
+div#banner-upper .message button, #sessions div.upper-title .player button {
+  display: flex;
+  z-index: 99;
+  justify-content: center;
+  align-items: center;
+  padding-inline-start: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  border: none;
+  text-align: center;
+  background: var(--link);
+  height: 40px;
+}
+
+#banner-upper .message button svg, #sessions div.upper-title .player svg {
+  fill: var(--primary);
+}
+
+div#banner-upper div.button-div a:hover {
+  box-shadow: 0px 1px 20px var(--accent);
+}
+
+div.button-div a p {
+  font-size: 1rem;
+  font-family: PoppinsSemi;
+  letter-spacing: 0.5px;
+  color: var(--link);
+}
+
+div#banner-upper div.button-div a.register {
+  background: var(--link);
+}
+
+div#banner-upper a svg {
+  fill: white;
+}
+
+div#banner-upper a.register p {
+  color: white;
+}
+
+div#banner-lower {
+  width: 90%;
+  max-width: 500px;
+  height: 500px;
+  display: flex;
+  place-content: center;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  border-left: 3px dotted var(--link);
+  overflow: hidden;
+}
+
+#banner-lower img {
+  user-select: none;
+  display: flex;
+  width: 600px;
+  place-self: center;
+  transform: rotateY(180deg);
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(110%) saturate(105%);
+}
+
+div#bottom {
+  width: 80%;
+  place-self: center;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  margin-block: 20px;
+  place-content: center;
+}
+
+div#bottom div#contacts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1px;
+}
+
+div#bottom div#contacts  a.icons svg {
+  fill: var(--link);
+  width: 20px;
+  height: 20px;
+}
+
+section#testimonies {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  place-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-direction: row;
+  padding-block: 5%;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(20px);
+}
+
+#testimonies #testimony {
+  width: 100%;
+  max-width: 300px;
+  background-color: var(--accentTrans);
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  place-content: center;
+  height: max-content;
+}
+
+#testimonies #testimony:hover {
+  box-shadow: 1px 0px 10px var(--accentTrans);
+  transform: scale(102%);
+}
+
+#testimony div.rating {
+  margin-block: 5px;
+  width: 100%;
+  place-content: center;
+  gap: 10px;
+  display: flex;
+}
+
+#testimony .rating svg {
+  fill: var(--mainText);
+  width: 24px;
+  height: 24px;
+}
+
+#testimony .message {
+  font-family: Poppins;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#testimony .user {
+  display: flex;
+  place-content: center;
+}
+
+#testimony .user span {
+  color: var(--link);
+}
+
+section#sessions {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  place-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
+  justify-content: space-evenly;
+  gap: 20px;
+  padding-block: 5%;
+  background: var(--primary);
+  backdrop-filter: blur(20px);
+}
+
+#sessions div.upper-title{
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+#sessions div.upper-title p.text{
+  font-size: 1.4rem;
+  font-family: PoppinsMed;
+}
+
+#sessions div.upper-title .player{
+  place-self: center;
+  width: 80%;
+  max-width: 250px;
+}
+
+#sessions div#session {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 25px;
+  background: var(--gradient-color);
+  padding: 20px;
+  padding-block: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(10px);
+}
+
+#sessions div#session.virtual {
+  border: 2px solid var(--link);
+}
+
+#sessions div#session.inner {
+  border: 2px solid var(--mainText);
+  background: rgba(255, 255, 245, 0.34);
+}
+
+#sessions div#session.in-person {
+  border: 2px solid var(--accent);
+  background: rgba(255, 241, 223, 0.69);
+}
+
+#sessions div#session.community {
+  background: rgba(255, 237, 200, 0.69);
+  border: 2px solid var(--highlight);
+}
+
+#sessions #session:not(.inner):hover {
+  box-shadow: 1px 0px 10px var(--accentTrans);
+  transform: scale(102%);
+}
+
+div#session .upper {
+  display: none;
+}
+
+div#session.virtual .upper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#session .upper p {
+  font-family: PoppinsSemi;
+  letter-spacing: 0.5px;
+  padding: 2px;
+  font-size: 14px;
+  background-color: red;
+  color: white;
+  border-radius: 25px;
+  padding-inline: 10px;
+}
+
+#session .upper svg {
+  width: 22px;
+  height: 22px;
+  fill: rgb(255, 94, 0);
+}
+
+#session .middle {
+  margin-top: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  place-content: flex-start;
+}
+
+#session .middle .session-name {
+  width: 100%;
+  place-content: center;
+  text-align: left;
+  font-family: PoppinsSemi;
+  letter-spacing: 1px;
+  font-size: 25px;
+  color: black;
+  line-height: 25px;
+}
+
+#session .middle .intro {
+  margin-top: -5px;
+  text-align: left;
+  font-size: 14px;
+}
+
+#session .middle .extra {
+  font-size: 16px;
+  width: 100%;
+  text-align: left;
+  font-family: PoppinsMed;
+  color: var(--mainText);
+  margin-top: -8px;
+}
+
+#session .middle p.price {
+  margin-top: 10px;
+  font-size: 22px;
+  font-family: PoppinsSemi;
+  place-content: flex-start;
+  text-align: left;
+}
+
+#session .middle p span {
+  font-size: 14px;
+  font-family: PoppinsMed;
+}
+
+#session button {
+  cursor: pointer;
+  width: max-content;
+  padding: 8px;
+  padding-inline: 30px;
+  border-radius: 20px;
+  border: none;
+  place-self: flex-start;
+  margin-top: -5px;
+  background: var(--link);
+  color: white;
+  font-family: PoppinsSemi;
+}
+
+#session button:not(.inner):hover {
+  transform: scale(105%);
+  box-shadow: 1px 1px 10px var(--accent);
+}
+
+#session.inner button {
+  background-color: rgb(193, 193, 193);
+  color: black;
+  cursor: default;
+}
+
+#session.in-person button {
+  background-color: var(--accent);
+  color: black;
+}
+
+#session.community button {
+  background-color: var(--highlight);
+  color: black;
+}
+
+#session #message {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-start;
+  border-top: 1px solid var(--link);
+}
+
+#session #message .bonus {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+#session .bonus svg.check {
+ width: 20px;
+ height:20px;
+  fill: var(--link);
+}
+
+#session .bonus p {
+  font-size: 14px;
+  color: var(--mainText);
+  line-height: 18px;
+  text-align: left;
+  font-family: PoppinsMed;
+}
+
+#session #waitlist{
+  display: none;
+}
+
+#session #waitlist.inner{
+  display: flex;
+  align-self: center;
+}
+
+#session #waitlist.inner button{
+  margin-top: 5px;
+  border: 2px solid var(--link);
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--link);
+  font-family: PoppinsSemi;
+}
+section#why{
+  width: 100%;
+  padding-block: 5%;
+  padding-inline: 10%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  gap: 10px;
+}
+
+section#why .upper-title{
+  width: 100%;
+  padding: 10px;
+  font-family: PoppinsSemi;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  place-content: center;
+  text-align: center;
+  color: black;
+}
+
+#why .note{
+  text-align: left;
+  font-family: PoppinsMed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+font-size: 20px;
+padding-inline: 10px;
+}
+
+#why .note p.upper{
+ text-align: left;
+ margin-bottom: 20px;
+}
+
+#why .note span.second{
+  margin-bottom: 10px;
+}
+
+#why .note .list{
+  padding-inline-start: 25px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+#why p.last{
+  text-align: left;
+  margin-block: 10px;
+}
+
+#why div.button{
+  width: 100%;
+  place-content: center;
+  display: flex;
+  margin-top: 10px;
+  padding-block: 10px;
+}
+
+#why .button a.register{
+  width: 70%;
+  max-width: 200px;
+  border-radius: 20px;
+  background-color: var(--highlight);
+  color: black;
+  text-align: center;
+  padding: 10px;
+  font-family: PoppinsSemi;
+}
+
+#why .button a.register:hover{
+  transform: scale(105%);
+  box-shadow: 1px 1px 10px var(--highlight);
+}
+
+section#timeout{
+  width: 100%;
+  padding: 10px;
+  padding-block: 5%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: var(--link);
+  color: white;
+  font-family: PoppinsMed;
+}
+
+#timeout p.text{
+  color: var(--primary);
+  font-size: 2rem;
+  font-family: PoppinsSemi;
+  letter-spacing: 1px;
+}
+
+#timeout p.sub-text{
+  font-size: 1.5rem;
+  color: rgb(221, 221, 221);
+  margin-top: -10px;
+}
+
+#timeout .button {
+  margin-block: 20px;
+  width: 100%;
+  place-content: center;
+  padding-block: 10px;
+}
+
+#timeout .button a{
+  width: 70%;
+  max-width: 300px;
+  background-color: var(--primary);
+  border-radius: 20px;
+  color: black;
+  padding: 10px;
+  padding-inline: 20px;
+  font-family: PoppinsSemi;
+  letter-spacing: 1px;
+}
+
+section#faq{
+  width: 100%;
+  padding: 10px;
+  padding-block: 5%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.85);
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+#faq .title{
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  font-family: PoppinsSemi;
+  font-size: 1.6rem;
+}
+
+#faq .answers{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  padding: 10px;
+  max-width: 900px;
+}
+
+#faq .answers .answer{
+  width: 100%;
+  display: flex;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+#faq .answers .answer .upper{
+  cursor: pointer;
+  padding-inline-end: 5px;
+  padding-block: 5px;
+  border-bottom: 2px solid var(--link);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+#faq .answer .upper p{
+  font-size: 1.2rem;
+  font-family: PoppinsMed;
+}
+
+#faq .answer .upper .plus{
+  font-size: 20px;
+  color: var(--mainText);
+}
+
+#faq .answer .lower{
+  overflow: hidden;
+  padding-top: 10px;
+  max-height: 0px;
+  font-size: 1rem;
+  font-family: PoppinsLight;
+  letter-spacing: 0.2px;
+  color: var(--mainText);
+  display: flex;
+  flex-direction: column;
+}
+
+#faq .answer .lower a.extra{
+  width: 100%;
+  text-align: center;
+  color: var(--link);
+  font-family: PoppinsMed;
+}
+
+#faq .bottom{
+  min-width: 100%;
+  font-size: 1rem;
+  color: black;
+  padding: 8px;
+  text-align: center;
+  padding-block: 15px;
+}
+
+#faq .bottom span.highlight {
+  text-decoration: underline;
+  color: var(--link);
+  cursor: pointer;
+}
+
+footer{
+  width: 100%;
+  padding-inline: 5%;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--link);
+  color: white;
+  align-items: center;
+}
+
+footer div.upper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+footer p.name{
+  font-size: 2rem;
+  width: 100%;
+  max-width: 350px;
+  font-family: PoppinsSemi;
+  color: var(--accent);
+}
+
+footer .navs{
+  width: 100%;
+  padding-inline: 5px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-block: 5px;
+}
+
+footer .navs a.nav{
+  max-width: max-content;
+  font-family: PoppinsMed;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+footer .navs a.nav.login{
+  width: 60%;
+  max-width: 150px;
+  padding: 6px;
+  padding-inline: 10px;
+  border-radius: 25px;
+  background-color: var(--highlight);
+  margin-block: 5px;
+}
+
+footer .navs a.nav.login p.login-text{
+   color: black;
+  font-family: PoppinsSemi;
+  text-align: center;
+}
+
+footer div#bottom {
+  width: 100%;
+  max-width: 400px ;
+  padding: 10px;
+}
+
+footer div#bottom div#contacts a.icons svg{
+  fill: white;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+
+footer .copyright{
+  min-width: 100%;
+  padding: 10px;
+  place-content: center;
+  text-align: center;
+  font-size: 1.2rem;
+  font-family: PoppinsMed;
+}
