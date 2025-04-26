@@ -49,12 +49,15 @@
         .form-section {
             position: relative;
             overflow: hidden;
-            display: flex;
+            display: grid;
             align-items: center;
             justify-content: center;
         }
 
         .form-container {
+            width: 100%;
+            padding: 2rem;
+            max-width: 600px;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
