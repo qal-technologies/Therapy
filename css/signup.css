@@ -2,6 +2,7 @@
         .container {
             max-width: 600px;
             margin: 0 auto;
+            height: 80vh;
             background: white;
             padding: 2rem;
             border-radius: 12px;
