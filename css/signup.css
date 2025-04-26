@@ -116,18 +116,18 @@ body, div#body{
             display: flex;
             flex-direction: column;
             width: 100%;
-            padding: 2rem;
             max-height: auto;
             transition: display 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 
         }
 
         .form-group {
+            width: 100%;
             margin-bottom: 1.5rem;
         }
 
 .form-group#attendance{
-    max-width: 300px;
+    width: 100%;
 }
         label {
             display: block;
@@ -152,6 +152,13 @@ body, div#body{
             width: max-content;
         }
 
+#attendance .radio-group{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 300px;
+
+}
         .radio-option {
             flex: 1;
             display: flex;
