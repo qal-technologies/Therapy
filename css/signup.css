@@ -1,64 +1,79 @@
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            height: 80vh;
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-        }
-
         .header {
+            width: 100%;
+            padding: 2rem;
+            background-color: var(--link);
+            display: flex;
+            flex-direction: column;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: -50px;
+            position: relative;
+            height: 40%;
+            z-index: -999;
+            color: white;
+
         }
 
         .header h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: #2d3748;
+            color: var(--primary);
+            font-family: PoppinsSemi;
         }
 
         .header .date {
-            color: #718096;
-            font-size: 1.1rem;
+            color: whitesmoke;
+            font-size: 1.2rem;
+        }
+
+        .container {
+            z-index: 99;
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 4px 6px var(--accentTrans);
+            position: relative;
+            height: 80vh;
         }
 
         .tabs {
             display: flex;
             margin-bottom: 2rem;
-            border-bottom: 2px solid #e2e8f0;
         }
 
         .tab {
             flex: 1;
             padding: 1rem;
             text-align: center;
+            font-family: PoppinsMed;
             cursor: pointer;
-            color: #718096;
+            color:  var(--link);
             transition: all 0.3s ease;
         }
 
         .tab.active {
-            color: #4299e1;
-            border-bottom: 3px solid #4299e1;
+            color: var(--link);
+            font-family: PoppinsSemi;
+            border-bottom: 3px solid var(--link);
             font-weight: 500;
         }
 
         .form-section {
             position: relative;
-            overflow: hidden;
-            display: grid;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            height: 100%;
         }
 
         .form-container {
             width: 100%;
             padding: 2rem;
-            max-width: 600px;
+            max-height: auto;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
@@ -75,15 +90,17 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #2d3748;
+            color: var(--link);
             font-weight: 500;
+            font-family: PoppinsMed;
         }
 
         input, select {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
+            padding: 0.5rem;
+            border: 1px solid var(--accentTrans);
+            border-radius: 8px;
+            outline: none;
             font-size: 1rem;
         }
 

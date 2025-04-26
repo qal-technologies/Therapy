@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
     <link rel="stylesheet" href="/css/general.css" />
-    <link rel="stylesheet" href="/css/animation.css"/>
+    <link rel="stylesheet" href="/css/animation.css" />
 
     <link rel="stylesheet" href="/css/signup.css" />
 
@@ -24,77 +24,82 @@
     <title>Register - A Space to Heal</title>
   </head>
   <body class="fadeIn">
-  <div id="body"> 
-  
-    <div class="container">
-        <div class="header">
-            <h1>Charlotte Casiraghi</h1>
-            <h3>Sessions Live 2025</h3>
-            <!-- <div class="date">April 25 & 26, 2025</div> -->
+    <div id="body">
+      <div class="header">
+        <h1>Charlotte Casiraghi</h1>
+        <h3>Sessions Live 2025</h3>
+        <!-- <div class="date">April 25 & 26, 2025</div> -->
+        <div class="description">
+          <p>
+            Welcome to the registration page for Charlotte Casiraghi's sessions.
+            Please fill out the form below to register.
+          </p>
+          <p>We are excited to have you join us for this unique experience.</p>
         </div>
+      </div>
 
+      <div class="container">
         <div class="tabs">
-            <div class="tab active" data-form="register">REGISTER</div>
-            <div class="tab" data-form="login">LOGIN</div>
+          <div class="tab active" data-form="register">REGISTER</div>
+          <div class="tab" data-form="login">LOGIN</div>
         </div>
-
         <div class="form-section">
-            <!-- Register Form -->
-            <div class="form-container" id="register-form">
-                <div class="form-group">
-                    <label for="firstName">First Name *</label>
-                    <input type="text" id="firstName" required>
-                </div>
+          <!-- Register Form -->
+          <div class="form-container" id="register-form">
+            <div class="form-group">
+              <label for="firstName">First Name *</label>
+              <input type="text" id="firstName" required />
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" required />
+            </div>
+            <div class="form-group">
+              <label>How would you like to attend? *</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="attendance"
+                    value="virtual"
+                    required
+                  />
+                  Virtually
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="attendance" value="in-person" />
+                  In-person
+                </label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="adminCode">Admin Code</label>
+              <input type="text" id="adminCode" />
+            </div>
+          </div>
 
-                <div class="form-group">
-                    <label for="lastName">Last Name *</label>
-                    <input type="text" id="lastName" required>
-                </div>
-
-                <div class="form-group">
-                    <label>How would you like to attend? *</label>
-                    <div class="radio-group">
-                        <label class="radio-option">
-                            <input type="radio" name="attendance" value="virtual" required>
-                            Virtually
-                        </label>
-                        <label class="radio-option">
-                            <input type="radio" name="attendance" value="in-person">
-                            In-person
-                        </label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="adminCode">Admin Code</label>
-                    <input type="text" id="adminCode">
-                </div>
-
-                <div class="privacy-policy">
-                    By registering for this event, you agree to our 
-                    <a href="#">Privacy Policy</a>.
-                </div>
+          <!-- Login Form -->
+          <div class="form-container hidden" id="login-form">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" required />
             </div>
 
-            <!-- Login Form -->
-            <div class="form-container hidden" id="login-form">
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password *</label>
-                    <input type="password" id="password" required>
-                </div>
-
-                <div class="privacy-policy">
-                    Don't have an account? <a href="#" class="switch-tab" data-form="register">Register here</a>
-                </div>
+            <div class="form-group">
+              <label for="password">Password *</label>
+              <input type="password" id="password" required />
             </div>
+
+            <div class="privacy-policy">
+              Don't have an account?
+              <a href="#" class="switch-tab" data-form="register"
+                >Register here</a
+              >
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-
   </body>
 </html>
 
