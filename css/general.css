@@ -49,7 +49,7 @@
 html,
 body,
 div#body {
-  scroll-padding-top: 220px;
+  scroll-padding-top: 150px;
   scroll-behavior: smooth;
   background: var(--gradient-color);
   background-position: 100%;
