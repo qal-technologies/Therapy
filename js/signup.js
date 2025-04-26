@@ -16,12 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
             tab.classList.add('active');
 
             // Fade out current form
-            const currentActiveForm = document.querySelector('.form-container:not(.hidden)');
-            currentActiveForm.classList.add('hidden');
+            const currentActiveForm = document.querySelector('.form-container:not(.fadeOut)');
+            currentActiveForm.classList.add('fadeOut');
 
             // Fade in new form
             setTimeout(() => {
-                forms[formToShow].classList.remove('hidden');
+                forms[formToShow].classList.remove('fadeOut');
             }, 300);
         });
     })

@@ -121,11 +121,15 @@
   0% {
     opacity: 1;
     display: block;
+     transform: translateY(0px);
+            pointer-events:all; 
   }
 
   100% {
     opacity: 0;
     display: none;
+     transform: translateY(10px);
+            pointer-events: none; 
   }
 }
 

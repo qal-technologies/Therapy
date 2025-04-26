@@ -1,29 +1,70 @@
+body, div#body{
+    background: rgb(253, 253, 253);
+}
+
+.header .circle{
+    width: 90vw;
+    height: 90vw;
+    max-width: 800px;
+    max-height: 800px;
+    background: var(--highlight);
+    position: absolute;
+    right: -20%;
+    top: -30px;
+    opacity: 0.25;
+    z-index: -99;
+    border-radius: 50%;
+    filter: blur(2px);
+}
 
         .header {
             width: 100%;
-            padding: 2rem;
-            background-color: var(--link);
+            padding: 5rem;
+            background-color: var(--accentTrans);
             display: flex;
             flex-direction: column;
             text-align: center;
-            margin-bottom: -50px;
+            margin-bottom: -70px;
+            overflow: hidden;
             position: relative;
-            height: 40%;
-            z-index: -999;
-            color: white;
-
+            min-height: 60%;
+            padding-bottom: 5.5rem;
+            font-size: 1.2rem;
+            z-index: -99;
+            gap: 10px;
+            color: var(--mainText);
         }
 
         .header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
+            position: relative;
+            width: auto;
+            place-self: center;
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+            color: var(--link);
+            text-align: center;
+            margin-bottom: 30px;
             font-family: PoppinsSemi;
         }
 
-        .header .date {
-            color: whitesmoke;
-            font-size: 1.2rem;
+.header h1 span{
+    width: 40%;
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 34%;
+    height: 100%;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--link);
+            place-self: center;
+            padding: 10px;
+
+}
+        .header h3 {
+            text-align: center;
+            font-family: PoppinsMed;
+            color: var(--highlight);
+            font-size: 2rem;
         }
 
         .container {
@@ -33,6 +74,7 @@
             margin: 0 auto;
             background: white;
             padding: 2rem;
+            padding-top: 3rem;
             border-radius: 30px;
             box-shadow: 0 4px 6px var(--accentTrans);
             position: relative;
@@ -71,22 +113,22 @@
         }
 
         .form-container {
+            display: flex;
+            flex-direction: column;
             width: 100%;
             padding: 2rem;
             max-height: auto;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
+            transition: display 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 
-        .form-container.hidden {
-            opacity: 0;
-            transform: translateY(10px);
-            pointer-events: none;
         }
 
         .form-group {
             margin-bottom: 1.5rem;
         }
 
+.form-group#attendance{
+    max-width: 300px;
+}
         label {
             display: block;
             margin-bottom: 0.5rem;
@@ -107,6 +149,7 @@
         .radio-group {
             display: flex;
             gap: 1rem;
+            width: max-content;
         }
 
         .radio-option {
@@ -114,8 +157,12 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            width: max-content;
         }
-
+.radio-option-text{
+    width: auto;
+    min-width: 100px;;
+}
         .privacy-policy {
             margin-top: 2rem;
             font-size: 0.9rem;
@@ -123,6 +170,7 @@
         }
 
         .privacy-policy a {
-            color: #4299e1;
+            color: var(--link);
+            font-family: PoppinsMed;
             text-decoration: none;
         }
