@@ -278,6 +278,93 @@ span.bold{
   font-family: PoppinsSemi;
 }
 
+
+footer{
+  width: 100%;
+  padding-inline: 5%;
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: var(--link);
+  color: white;
+  align-items: center;
+}
+
+footer div.upper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+footer p.name{
+  font-size: 2rem;
+  width: 100%;
+  max-width: 350px;
+  font-family: PoppinsSemi;
+  color: var(--accent);
+}
+
+footer .navs{
+  width: 100%;
+  padding-inline: 5px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-block: 5px;
+}
+
+footer .navs a.nav{
+  max-width: max-content;
+  font-family: PoppinsMed;
+  letter-spacing: 0.5px;
+  color: var(--primary);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+footer .navs a.nav.login{
+  width: 60%;
+  max-width: 150px;
+  padding: 6px;
+  padding-inline: 10px;
+  border-radius: 25px;
+  background-color: var(--highlight);
+  margin-block: 5px;
+}
+
+footer .navs a.nav.login p.login-text{
+   color: black;
+  font-family: PoppinsSemi;
+  text-align: center;
+}
+
+footer div#bottom {
+  width: 100%;
+  max-width: 400px ;
+  padding: 10px;
+}
+
+footer div#bottom div#contacts a.icons svg{
+  fill: white;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+
+footer .copyright{
+  min-width: 100%;
+  padding: 10px;
+  place-content: center;
+  text-align: center;
+  font-size: 1.2rem;
+  font-family: PoppinsMed;
+}
+
 @keyframes show {
   from {
     height: 80px;

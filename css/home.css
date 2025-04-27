@@ -1,10 +1,10 @@
 section#banner {
-  margin-top: 10vmin;
+  margin-top: 15vmin;
   width: 100%;
   padding: 10px;
   overflow: hidden;
   height: auto;
-  min-height: 60vh;
+  min-height: 70vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -203,7 +203,7 @@ div#bottom div#contacts  a.icons svg {
   height: 20px;
 }
 
-section#testimonies {
+section.testimonies {
   width: 100%;
   padding: 10px;
   display: flex;
@@ -217,7 +217,7 @@ section#testimonies {
   backdrop-filter: blur(20px);
 }
 
-#testimonies #testimony {
+.testimonies #testimony {
   width: 100%;
   max-width: 300px;
   background-color: var(--accentTrans);
@@ -230,7 +230,21 @@ section#testimonies {
   height: max-content;
 }
 
-#testimonies #testimony:hover {
+#testimonies2 div.upper-title{
+  min-width: 100%;
+  padding: 10px;
+  place-content: center;
+  align-items: center;
+}
+#testimonies2 div.upper-title p{
+  text-align: center;
+  font-family: PoppinsSemi;
+  color: var(--link);
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+.testimonies #testimony:hover {
   box-shadow: 1px 0px 10px var(--accentTrans);
   transform: scale(102%);
 }
@@ -500,10 +514,11 @@ div#session.virtual .upper {
   color: var(--link);
   font-family: PoppinsSemi;
 }
+
 section#why{
-  width: 100%;
+  width: 95%;
+  place-self: center;
   padding-block: 5%;
-  padding-inline: 10%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -523,13 +538,14 @@ section#why .upper-title{
 }
 
 #why .note{
+  width: 80%;
+  place-self: center;
   text-align: left;
   font-family: PoppinsMed;
   display: flex;
   flex-direction: column;
   gap: 10px;
 font-size: 20px;
-padding-inline: 10px;
 }
 
 #why .note p.upper{
@@ -715,88 +731,50 @@ section#faq{
   cursor: pointer;
 }
 
-footer{
+section#discover{
+  padding-block: 10%;
   width: 100%;
-  padding-inline: 5%;
-  padding-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background-color: var(--link);
-  color: white;
-  align-items: center;
-}
-
-footer div.upper{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  justify-content: space-between;
-}
-footer p.name{
-  font-size: 2rem;
-  width: 100%;
-  max-width: 350px;
-  font-family: PoppinsSemi;
-  color: var(--accent);
-}
-
-footer .navs{
-  width: 100%;
-  padding-inline: 5px;
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-block: 5px;
-}
-
-footer .navs a.nav{
-  max-width: max-content;
-  font-family: PoppinsMed;
-  letter-spacing: 0.5px;
-  color: var(--primary);
-    cursor: pointer;
-    font-size: 1.2rem;
-}
-
-footer .navs a.nav.login{
-  width: 60%;
-  max-width: 150px;
-  padding: 6px;
+  background: rgba(255, 252, 250, 0.85);
   padding-inline: 10px;
-  border-radius: 25px;
-  background-color: var(--highlight);
-  margin-block: 5px;
+  display: flex;
+  place-content: center;
 }
 
-footer .navs a.nav.login p.login-text{
-   color: black;
+#discover div.parent{
+  width: 90%;
+  max-width: 1000px;
+  padding: 2.5rem;
+  border: 2px solid var(--link);
+  background: var(--accentTrans);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  justify-content: center;
+  gap: 2rem;
+  min-height: 200px;
+}
+
+#discover div.parent p{
+  text-align: left;
+  font-size: 1.4rem;
+  font-family: PoppinsLight;
+}
+
+#discover .parent button {
+  cursor: pointer;
+  border:none;
+  background-color: var(--link);
+  border-radius: 30px;
+  padding: 10px;
+  padding-inline: 15px;
+  width: 80%;
+  max-width: 300px;
+  place-self: center;
+  color: var(--primary);
+  font-size: 16px;
   font-family: PoppinsSemi;
   text-align: center;
-}
-
-footer div#bottom {
-  width: 100%;
-  max-width: 400px ;
-  padding: 10px;
-}
-
-footer div#bottom div#contacts a.icons svg{
-  fill: white;
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
-}
-
-footer .copyright{
-  min-width: 100%;
-  padding: 10px;
+  display: flex;
   place-content: center;
-  text-align: center;
-  font-size: 1.2rem;
-  font-family: PoppinsMed;
 }

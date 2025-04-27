@@ -1,4 +1,5 @@
 const reviews = [
+	first=[
 	{
 		name: "Vale´rie",
 		from: "France",
@@ -16,7 +17,10 @@ const reviews = [
 		from: "UK",
 		message:
 			"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
-	},
+		},
+	],
+
+	second=[
 	{
 		name: "Nadia",
 		from: "Germany",
@@ -34,7 +38,8 @@ const reviews = [
 		from: "Portugal",
 		message:
 			"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
-	},
+		},
+	]
 ];
 
 const sessionTypes = [
@@ -116,10 +121,12 @@ const audioSrc = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-	let user = true;
+	let user = false;
 
 	const language = navigator.language;
 	const testimonies = document.querySelector("section#testimonies");
+	const testimonies2 = document.querySelector("section#testimonies2");
+
 	const sessions = document.querySelector("section#sessions");
 	const FAQ = document.querySelector('section#faq div.answers');
 
@@ -196,7 +203,77 @@ window.addEventListener("DOMContentLoaded", () => {
                 </svg>`;
 	})
 	
-	testimonies.innerHTML = reviews.map((review) => {
+	testimonies.innerHTML = reviews[0].map((review) => {
+		return `
+		<div id="testimony">
+				<div class="rating">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="star"
+						viewBox="0 0 16 16">
+						<path
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+					</svg>
+
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="star"
+						viewBox="0 0 16 16">
+						<path
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+					</svg>
+
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="star"
+						viewBox="0 0 16 16">
+						<path
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+					</svg>
+
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="star"
+						viewBox="0 0 16 16">
+						<path
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+					</svg>
+
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="16"
+						height="16"
+						fill="currentColor"
+						class="star"
+						viewBox="0 0 16 16">
+						<path
+							d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+					</svg>
+				</div>
+				<div class="user"><span class="highlight">${review.name} </span>, ${review.from}</div>
+				<div class="message">
+					<p>
+						${review.message}
+					</p>
+				</div>
+				
+			</div>
+	`;
+	}).join("");
+
+	testimonies2.innerHTML += reviews[1].map((review) => {
 		return `
 		<div id="testimony">
 				<div class="rating">
