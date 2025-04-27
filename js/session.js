@@ -53,16 +53,38 @@ const sessionTypes = [
 ];
 
 const faq = [
-    { question: "Is Session Live 2025 right for me?", answer: "Sessions Live 2025 is an annual training conference designed for mental health professionals, relationship experts, and curious minds. If you’re a therapist, clinician, coach, personal growth enthusiast, or anyone else interested in navigating interpersonal relationships with more confidence, this event is for you." },
-    {
-        question: "Can I attend Session Live 2025 in person?", answer: "In-person tickets are sold out, but you can still join us for this transformative two-day event when you register for a virtual ticket.", extra: {
-            text: "Book for a Virtual ticket",
-            link: "/html/main/Session.html#sessions"
-        }
-    },
-    {
-        question: "What if I can't watch live event on April 25-26, 2025", answer: "You’ll have access to a complete archive of recordings and additional resources for 90 days after the live event."
+  {
+    question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session — whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
+  },
+  {
+    question: "What is the difference between a virtual and in-person session?", answer: "Virtual sessions happen securely online (video call) and are just as personal and transformative. In-person sessions take place in a private, serene setting in Monaco or Paris, allowing for deeper connection, presence, and healing energy."
+  },
+  {
+    question: "Are the sessions confidential?", answer: "Absolutely. Every conversation with Charlotte is completely private, sacred, and protected. Your story, emotions, and healing remain between you and her alone."
+  },
+  {
+    question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards,debit cards and gift cards, bank transfer, and PayPal to ensure flexibility and security."
+  },
+  {
+    question: "What happens after I make a payment?",
+    answer: "Once your payment is confirmed, you will receive a welcome message and personalized instructions on how to prepare for your session. You’ll also receive the official booking confirmation."
+  }, {
+    question: "Can I reschedule or cancel my session?", answer: "Yes, you can reschedule your session with at least 72 hours' notice. Cancellations are reviewed individually, but we encourage rescheduling to honor the healing process."
+  },
+  {
+    question: "What if I cannot afford a full session?",
+    answer: "We believe healing should be accessible. A limited number of support-priced sessions are available each month. You can also apply for a sponsored session funded by our generous community."
+  }, {
+    question: "What languages are sessions offered in?",
+    answer: "Charlotte speaks English and French fluently. You can select your preferred language during booking."
+  }, {
+    question: "What if I have more questions before booking?",
+    answer: "You can reach out directly through our private messaging portal. Charlotte’s team",
+    extra: {
+      text: "(healingwithcharlottecasiraghi@gmail.com).",
+      link: "emailto:healingwithcharlottecasiraghi@gmail.com"
     }
+  }
 ]
 
 const audioSrc = {
@@ -203,7 +225,7 @@ ${bonuses.join('')}
             if (faq.extra) {
                 return `
 				<a class="extra" href="${faq.extra.link}">
-				${faq.extra.text.toUpperCase()}
+				${faq.extra.text.toLowerCase()}
 				</a>
 				`
             } else {
@@ -227,20 +249,30 @@ ${bonuses.join('')}
 
     const questions = document.querySelectorAll(" section#faq .answers div.answer");
 
-    questions.forEach((question) => {
-        const upper = question.querySelector('.upper');
-        upper.addEventListener('click', () => {
-            const lower = document.querySelectorAll('section#faq .answers div.answer .lower');
+  questions.forEach((question) => {
+    const upper = question.querySelector('.upper');
+    upper.addEventListener('click', () => {
+      const arrows = document.querySelectorAll('section#faq .answers div.answer p.open');
 
-            const low = question.querySelector('div.lower');
+      const lower = document.querySelectorAll('section#faq .answers div.answer .lower');
 
-            lower.forEach((question) => {
-                question.style.maxHeight = "0px"
-            });
 
-            low.style.maxHeight = '300px';
+      const low = question.querySelector('div.lower');
+      const arrow = question.querySelector('p.open');
 
-        })
+      lower.forEach((question) => {
+        question.style.maxHeight = "0px"
+      });
+
+      arrows.forEach((question) => {
+        question.style.transform = "rotate(0deg)";
+      });
+
+
+      low.style.maxHeight = '300px';
+      arrow.style.transform = "rotate(90deg)"
+
     })
+  });
 
 });

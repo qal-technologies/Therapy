@@ -97,15 +97,24 @@ const sessionTypes = [
 ];
 
 const faq = [
-	{ question: "Is Session Live 2025 right for me?", answer: "Sessions Live 2025 is an annual training conference designed for mental health professionals, relationship experts, and curious minds. If you’re a therapist, clinician, coach, personal growth enthusiast, or anyone else interested in navigating interpersonal relationships with more confidence, this event is for you." },
+	{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation — raw, compassionate, and transformative — designed to help you reconnect with your inner truth." },
 	{
-		question: "Can I attend Session Live 2025 in person?", answer: "In-person tickets are sold out, but you can still join us for this transformative two-day event when you register for a virtual ticket.", extra: {
-			text: "Book for a Virtual ticket",
-			link: "/html/main/Session.html"
-		}
+		question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
 	},
 	{
-		question: "What if I can't watch live event on April 25-26, 2025", answer:"You’ll have access to a complete archive of recordings and additional resources for 90 days after the live event."
+		question: "Can I book if I live outside Europe?", answer: "Yes! You can book a virtual session from anywhere in the world. If you wish to attend in person, you’re warmly welcome to travel to Europe (Monaco) for your session."
+	}, {
+		question: "What happens after I make a payment?",
+		answer: "Once your payment is verified, you’ll receive a confirmation message, and your booking will be officially secured. From there, you’ll receive full session details and preparation instructions."
+	}, {
+		question: "Can I sponsor someone else’s healing?",
+		answer: "Yes. If you’d like to gift a session to someone in need, you can select the Sponsor a Session option at checkout. Your generosity could change a life."
+	}, {
+		question: "Are the books available worldwide?",
+		answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
+	},
+	{
+		question: "Why do you accept gift cards as a payment method?", answer: "Gift cards allow fans from all over the world — regardless of country or banking restrictions — to easily and securely support their healing journey. They also help us confirm your place faster and securely."
 	}
 ]
 
@@ -507,15 +516,25 @@ ${bonuses.join('')}
 	questions.forEach((question) => {
 		const upper = question.querySelector('.upper');
 		upper.addEventListener('click', () => {
+			const arrows = document.querySelectorAll('section#faq .answers div.answer p.open');
+
 			const lower = document.querySelectorAll('section#faq .answers div.answer .lower');
 
+
 			const low = question.querySelector('div.lower');
+			const arrow = question.querySelector('p.open');
 
 			lower.forEach((question) => {
 				question.style.maxHeight = "0px"
 			});
 
+			arrows.forEach((question) => {
+				question.style.transform = "rotate(0deg)";
+			});
+
+
 			low.style.maxHeight = '300px';
+			arrow.style.transform = "rotate(90deg)"
 
 		})
 	})

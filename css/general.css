@@ -49,7 +49,7 @@
 html,
 body,
 div#body {
-  scroll-padding-top: 150px;
+  scroll-padding-top: 200px;
   scroll-behavior: smooth;
   background: var(--gradient-color);
   background-position: 100%;
@@ -272,6 +272,10 @@ span.highlight {
   font-family: PoppinsSemi;
   color: var(--highlight);
 }
+span.link {
+  font-family: PoppinsSemi;
+  color: var(--link);text-decoration: underline;
+}
 
 span.bold{
   font-weight: bold;
@@ -281,11 +285,11 @@ span.bold{
 
 footer{
   width: 100%;
-  padding-inline: 5%;
-  padding-top: 30px;
+  padding-inline: 10%;
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   background-color: var(--link);
   color: white;
   align-items: center;
@@ -296,10 +300,11 @@ footer div.upper{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
 }
+
 footer p.name{
   font-size: 2rem;
   width: 100%;
@@ -346,7 +351,7 @@ footer .navs a.nav.login p.login-text{
 footer div#bottom {
   width: 100%;
   max-width: 400px ;
-  padding: 10px;
+  padding: 20px;
 }
 
 footer div#bottom div#contacts a.icons svg{
@@ -358,7 +363,7 @@ footer div#bottom div#contacts a.icons svg{
 
 footer .copyright{
   min-width: 100%;
-  padding: 10px;
+  padding: 20px;
   place-content: center;
   text-align: center;
   font-size: 1.2rem;

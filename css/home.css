@@ -292,6 +292,7 @@ section#sessions {
   padding-block: 5%;
   background: var(--primary);
   backdrop-filter: blur(20px);
+    padding-bottom: 150px;
 }
 
 #sessions div.upper-title{
@@ -515,6 +516,48 @@ div#session.virtual .upper {
   font-family: PoppinsSemi;
 }
 
+/* TV Ticker Styles */
+.ticker-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    background: var(--link);
+    color: white;
+    overflow: hidden;
+}
+
+.ticker {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+.ticker-item {
+  padding-inline: 50px;
+    display: inline-block;
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-family: PoppinsMed;
+    border-right: 1px solid var(--accentTrans);
+}
+
+@media (max-width: 768px) {
+    .ticker-container {
+        height: 40px;
+        margin: 2rem 0;
+    }
+    
+    .ticker-item {
+        font-size: 0.9rem;
+        margin-right: 30px;
+    }
+}
+
 section#why{
   width: 95%;
   place-self: center;
@@ -541,6 +584,7 @@ section#why .upper-title{
   width: 80%;
   place-self: center;
   text-align: left;
+  line-height: 30px;
   font-family: PoppinsMed;
   display: flex;
   flex-direction: column;
