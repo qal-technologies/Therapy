@@ -29,6 +29,8 @@ img#image {
 }
 
 p#app-name {
+	width: 100%;
+	text-align: center;
 	font-size: 25px;
 	font-family: PoppinsSemi;
 }
