@@ -733,6 +733,7 @@ section#faq{
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
+  gap: 10px;
 }
 
 #faq .answer .upper p{
