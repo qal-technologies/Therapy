@@ -584,12 +584,12 @@ section#why .upper-title{
   width: 80%;
   place-self: center;
   text-align: left;
-  line-height: 30px;
+  line-height: 28px;
   font-family: PoppinsMed;
   display: flex;
   flex-direction: column;
   gap: 10px;
-font-size: 20px;
+font-size: 18px;
 }
 
 #why .note p.upper{
@@ -602,9 +602,13 @@ font-size: 20px;
 }
 
 #why .note .list{
+  display: flex;
+  margin-top: -10px;
+  flex-direction: column;
   padding-inline-start: 25px;
   text-align: left;
   margin-bottom: 10px;
+  gap: 10px;
 }
 
 #why p.last{
