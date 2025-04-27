@@ -83,7 +83,7 @@ window.onload = () => {
 
         function startAnimation() {
             let position = 0;
-            const speed = 1.5;
+            const speed = 1.2;
 
             function animate() {
                 position -= speed;

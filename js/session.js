@@ -82,7 +82,7 @@ const faq = [
     answer: "You can reach out directly through our private messaging portal. Charlotte’s team",
     extra: {
       text: "(healingwithcharlottecasiraghi@gmail.com).",
-      link: "emailto:healingwithcharlottecasiraghi@gmail.com"
+      link: "https://emailto:healingwithcharlottecasiraghi@gmail.com"
     }
   }
 ]
@@ -267,7 +267,6 @@ ${bonuses.join('')}
       arrows.forEach((question) => {
         question.style.transform = "rotate(0deg)";
       });
-
 
       low.style.maxHeight = '300px';
       arrow.style.transform = "rotate(90deg)"
