@@ -1,185 +1,184 @@
-body, div#body{
-    background: rgb(253, 253, 253);
+body,
+div#body {
+  background: rgb(253, 253, 253);
 }
 
-.header .circle{
-    width: 90vw;
-    height: 90vw;
-    max-width: 800px;
-    max-height: 800px;
-    background: var(--highlight);
-    position: absolute;
-    right: -20%;
-    top: -30px;
-    opacity: 0.25;
-    z-index: -99;
-    border-radius: 50%;
-    filter: blur(1px);
+.header .circle {
+  width: 90vw;
+  height: 90vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: var(--highlight);
+  position: absolute;
+  right: -20%;
+  top: -30px;
+  opacity: 0.25;
+  z-index: -99;
+  border-radius: 50%;
+  filter: blur(1px);
 }
 
-        .header {
-            width: 100%;
-            padding: 5rem;
-            background-color: var(--accentTrans);
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            margin-bottom: -70px;
-            overflow: hidden;
-            position: relative;
-            min-height: 60%;
-            padding-bottom: 5.5rem;
-            font-size: 1.2rem;
-            z-index: -99;
-            gap: 10px;
-            color: var(--mainText);
-        }
-
-        .header h1 {
-            position: relative;
-            width: auto;
-            place-self: center;
-            font-size: 3rem;
-            margin-bottom: 0.8rem;
-            color: var(--link);
-            text-align: center;
-            margin-bottom: 30px;
-            font-family: PoppinsSemi;
-        }
-
-.header h1 span{
-    width: 40%;
-    display: flex;
-    position: absolute;
-    top: 0;
-    right: 34%;
-    height: 100%;
-            padding-bottom: 5px;
-            border-bottom: 1px solid var(--link);
-            place-self: center;
-            padding: 10px;
-
+.header {
+  width: 100%;
+  padding: 5rem;
+  background-color: var(--accentTrans);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: -70px;
+  overflow: hidden;
+  position: relative;
+  min-height: 60%;
+  padding-bottom: 5.5rem;
+  font-size: 1.2rem;
+  z-index: -99;
+  gap: 10px;
+  color: var(--mainText);
 }
-        .header h3 {
-            text-align: center;
-            font-family: PoppinsMed;
-            color: var(--highlight);
-            font-size: 2rem;
-        }
 
-        .container {
-            z-index: 99;
-            width: 95%;
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 2rem;
-            padding-top: 3rem;
-            border-radius: 30px;
-            box-shadow: 0 4px 6px var(--accentTrans);
-            position: relative;
-            height: max-content;
-            max-height: 80vh;
-            margin-bottom: 20px;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 2rem;
-        }
-
-        .tab {
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            font-family: PoppinsMed;
-            cursor: pointer;
-            color:  var(--link);
-            transition: all 0.3s ease;
-        }
-
-        .tab.active {
-            color: var(--link);
-            font-family: PoppinsSemi;
-            border-bottom: 3px solid var(--link);
-            font-weight: 500;
-        }
-
-        .form-section {
-            position: relative;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-        }
-
-        .form-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-height: auto;
-            transition: display 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
-
-        }
-
-        .form-group {
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-
-.form-group#attendance{
-    width: 100%;
+.header h1 {
+  position: relative;
+  width: auto;
+  place-self: center;
+  font-size: 3rem;
+  margin-bottom: 0.8rem;
+  color: var(--link);
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: PoppinsSemi;
 }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--link);
-            font-weight: 500;
-            font-family: PoppinsMed;
-        }
 
-        input, select {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid var(--accentTrans);
-            border-radius: 8px;
-            outline: none;
-            font-size: 1rem;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 1rem;
-            width: max-content;
-        }
-
-#attendance .radio-group{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 300px;
-
+.header h1 span {
+  width: 40%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 34%;
+  height: 100%;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--link);
+  place-self: center;
+  padding: 10px;
 }
-        .radio-option {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: max-content;
-        }
-.radio-option-text{
-    width: auto;
-    min-width: 100px;;
+.header h3 {
+  text-align: center;
+  font-family: PoppinsMed;
+  color: var(--highlight);
+  font-size: 2rem;
 }
-        .privacy-policy {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #718096;
-        }
 
-        .privacy-policy a {
-            color: var(--link);
-            font-family: PoppinsMed;
-            text-decoration: none;
-        }
+.container {
+  z-index: 99;
+  width: 95%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  padding-top: 3rem;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px var(--accentTrans);
+  position: relative;
+  height: max-content;
+  max-height: 80vh;
+  margin-bottom: 20px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 2rem;
+}
+
+.tab {
+  flex: 1;
+  padding: 1rem;
+  text-align: center;
+  font-family: PoppinsMed;
+  cursor: pointer;
+  color: var(--link);
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  color: var(--link);
+  font-family: PoppinsSemi;
+  border-bottom: 3px solid var(--link);
+  font-weight: 500;
+}
+
+.form-section {
+  position: relative;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: auto;
+  transition: display 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.form-group#attendance {
+  width: 100%;
+}
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--link);
+  font-weight: 500;
+  font-family: PoppinsMed;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--accentTrans);
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+}
+
+#attendance .radio-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 300px;
+}
+.radio-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: max-content;
+}
+.radio-option-text {
+  width: auto;
+  min-width: 100px;
+}
+.privacy-policy {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+.privacy-policy a {
+  color: var(--link);
+  font-family: PoppinsMed;
+  text-decoration: none;
+}

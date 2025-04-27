@@ -26,16 +26,18 @@
   <body class="fadeIn">
     <div id="body">
       <div class="header fadeIn">
-      <div class="circle"></div>
+        <div class="circle"></div>
         <h1>Charlotte Casiraghi <span class="underline"></span></h1>
         <h3>Sessions Live 2025</h3>
         <!-- <div class="date">April 25 & 26, 2025</div> -->
-        <div class="description" style="margin-top: 20px;">
+        <div class="description" style="margin-top: 20px">
           <p>
             Welcome to the registration page for Charlotte Casiraghi's sessions.
           </p>
-           
-          <p style="font-size: 14px; margin-top:5px"> Please fill out the form below to register.</p>
+
+          <p style="font-size: 14px; margin-top: 5px">
+            Please fill out the form below to register.
+          </p>
         </div>
       </div>
 
@@ -45,9 +47,12 @@
           <div class="tab" data-form="login">LOGIN</div>
         </div>
         <div class="form-section">
-
-         <!-- Login Form -->
+          <!-- Login Form -->
           <div class="form-container fadeOut" id="login-form">
+            <div class="header">
+              <h1>Login</h1>
+              <p>Welcome back! Please login to your account.</p>
+            </div>
             <div class="form-group">
               <label for="email">Email *</label>
               <input type="email" id="email" required />
@@ -68,38 +73,50 @@
 
           <!-- Register Form -->
           <div class="form-container fadeIn" id="register-form">
-            <div class="form-group">
-              <label for="firstName">First Name *</label>
-              <input type="text" id="firstName" required />
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name *</label>
-              <input type="text" id="lastName" required />
-            </div>
-            <div class="form-group" id="attendance">
-              <label>How would you like to attend? *</label>
-              <div class="radio-group">
-                <label class="radio-option">
-                  <input
-                    type="radio"
-                    name="attendance"
-                    value="virtual"
-                    required
-                  />
-                  <p class="radio-option-text">Virtually</p>
-                </label>
-                <label class="radio-option">
-                  <input type="radio" name="attendance" value="in-person" />
-                  <p class="radio-option-text">In-person</p>
-                </label>
+            <div class="register-upper upper">
+              <div class="header register-header">
+                <h1>Register</h1>
+                <p>Welcome! Please fill out the form below to register.</p>
+              </div>
+              <div class="lower">
+                <div class="form-group">
+                  <label for="firstName">First Name *</label>
+                  <input type="text" id="firstName" required />
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name *</label>
+                  <input type="text" id="lastName" required />
+                </div>
+                <div class="form-group" id="attendance">
+                  <label>How would you like to attend? *</label>
+                  <div class="radio-group">
+                    <label class="radio-option">
+                      <input
+                        type="radio"
+                        name="attendance"
+                        value="virtual"
+                        required
+                      />
+                      <p class="radio-option-text">Virtually</p>
+                    </label>
+                    <label class="radio-option">
+                      <input type="radio" name="attendance" value="in-person" />
+                      <p class="radio-option-text">In-person</p>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="form-group">
-              <label for="adminCode">Admin Code</label>
-              <input type="text" id="adminCode" />
+
+            <div class="lower">
+              <div class="header register-footer">
+                <div class="form-group">
+                  <label for="adminCode">Admin Code</label>
+                  <input type="text" id="adminCode" />
+                </div>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
