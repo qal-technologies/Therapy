@@ -161,9 +161,9 @@ div#banner-lower {
   height: 500px;
   display: flex;
   place-content: center;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
-  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50vw;
+  border-bottom-left-radius: 50vw;
+  border-top-left-radius: 50vw;
   border-left: 3px dotted var(--link);
   overflow: hidden;
 }
