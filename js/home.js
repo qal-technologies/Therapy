@@ -427,8 +427,7 @@ ${bonuses.join('')}
 
 	if (listenBTN && audioMessage2) {
 		listenBTN.addEventListener('click', () => {
-			if (!audioMessage.paused)
-			{
+			if (!audioMessage.paused) {
 				playBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -487,7 +486,7 @@ ${bonuses.join('')}
 		const checks = () => {
 			if (faq.extra) {
 				return `
-				<a class="extra" href="${faq.extra.link}">
+				<a class="extra" target="_blank" href="${faq.extra.link}">
 				${faq.extra.text.toUpperCase()}
 				</a>
 				`
@@ -514,28 +513,31 @@ ${bonuses.join('')}
 	const questions = document.querySelectorAll(" section#faq .answers div.answer");
 
 	questions.forEach((question) => {
+
 		const upper = question.querySelector('.upper');
+		const lower = question.querySelector('.lower');
+		const arrow = question.querySelector('.open');
+
+		lower.style.maxHeight = '0px';
+		arrow.style.transform = 'rotate(0deg)';
+
 		upper.addEventListener('click', () => {
-			const arrows = document.querySelectorAll('section#faq .answers div.answer p.open');
+			const isOpen = lower.style.maxHeight !== '0px';
 
-			const lower = document.querySelectorAll('section#faq .answers div.answer .lower');
+			if (isOpen) {
+				lower.style.maxHeight = '0px';
+				arrow.style.transform = 'rotate(0deg)';
+			} else {
+				document.querySelectorAll('.lower').forEach(l => {
+					l.style.maxHeight = '0px';
+				});
+				document.querySelectorAll('.open').forEach(a => {
+					a.style.transform = 'rotate(0deg)';
+				});
 
-
-			const low = question.querySelector('div.lower');
-			const arrow = question.querySelector('p.open');
-
-			lower.forEach((question) => {
-				question.style.maxHeight = "0px"
-			});
-
-			arrows.forEach((question) => {
-				question.style.transform = "rotate(0deg)";
-			});
-
-
-			low.style.maxHeight = '300px';
-			arrow.style.transform = "rotate(90deg)"
-
-		})
-	})
+				lower.style.maxHeight = '300px';
+				arrow.style.transform = 'rotate(90deg)';
+			}
+		});
+	});
 });

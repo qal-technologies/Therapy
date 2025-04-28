@@ -39,26 +39,15 @@ window.onload = () => {
     function initTicker() {
         const tickerItems = [
             {
-                text: "527112 booked a virtual session €800"
+                text: `A Transformative Journey with Charlotte Casiraghi`
             },
             {
-                text: "53842 secured an in-person spot €1600"
+                text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself."
+            }, {
+                text: `A Transformative Journey with Charlotte Casiraghi`
             },
             {
-                text: "588224 just confirmed their virtual booking €700"
-            },
-            { text: "524325 completed their 3rd payment for in-person" },
-            {
-                text: "559218 reserved a face-to-face session in Monaco"
-            },
-            {
-                text: '53418 just joined the waiting list for “Inner Circle”'
-            },
-            {
-                text: "511129 secured their virtual seat"
-            }, { text: "59467 confirmed payment for in-person session" },
-            {
-                text: "heartsync_141 just booked virtual session €800"
+                text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself."
             }
         ];
 
@@ -75,7 +64,7 @@ window.onload = () => {
                 span.className = `ticker-item${item.class ? ' ' + item.class : ''}`;
                 span.textContent = item.text;
                 ticker.appendChild(span);
-                tickerWidth += span.offsetWidth + 50;
+                tickerWidth += span.offsetWidth + 60;
             });
 
             startAnimation();
