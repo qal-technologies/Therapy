@@ -82,7 +82,7 @@ const faq = [
     answer: "You can reach out directly through our private messaging portal. Charlotte’s team",
     extra: {
       text: "(healingwithcharlottecasiraghi@gmail.com).",
-      link: "https://emailto:healingwithcharlottecasiraghi@gmail.com"
+      link: "mailto:healingwithcharlottecasiraghi@gmail.com"
     }
   }
 ]

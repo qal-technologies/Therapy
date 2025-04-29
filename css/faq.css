@@ -1,17 +1,18 @@
-header {
+.header {
   width: 100%;
+  display: grid;
   background: var(--gradient-color);
   padding: 2rem;
-  text-align: center;
   height: 20vw;
   min-height: 300px;
-  display: flex;
-  place-items: center;
-  margin-bottom: -40px;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
-header .circle {
+.header .circle {
   width: 90vw;
   height: 90vw;
   max-width: 800px;
@@ -26,18 +27,18 @@ header .circle {
   filter: blur(1px);
 }
 
-header p {
+.header h1 {
+  text-align: center;
   font-family: PoppinsSemi;
   letter-spacing: 0.5px;
   font-size: 2.5rem;
   color: var(--link);
-  text-align: center;
   position: relative;
   width: auto;
   place-self: center;
 }
 
-header p span.underline {
+.header h1 span.underline {
   width: 40%;
   display: flex;
   position: absolute;
@@ -51,14 +52,9 @@ header p span.underline {
 }
 
 section#faq {
-  padding: 1rem;
-  padding-top: 10vmin;
-  border-radius: 40px 40px 0 0;
-  background-color: white;
-}
-
-section#faq.second {
-  border-radius: 0;
+  padding: 1.5rem;
+  padding-top: 12vmin;
+  background: white;
 }
 
 section.faq p.title {
