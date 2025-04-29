@@ -95,8 +95,6 @@ const audioSrc = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-    let user = false;
-    
     const language = navigator.language;
     const lang = language.toLowerCase().substring(0, 2);
 

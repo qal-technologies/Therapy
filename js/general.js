@@ -1,6 +1,13 @@
 window.onload = () => {
     let user = false;
 
+    const year = document.querySelector("footer span#year");
+
+
+    const date = new Date().getFullYear();
+    year.innerHTML = date;
+
+
     const actionTab = document.querySelector("a.login");
     const header = document.querySelector("header#header");
     const menu = document.querySelector("header#header div#menu");
@@ -34,6 +41,7 @@ window.onload = () => {
         }
         show = !show;
     });
+
 
 
     function initTicker() {

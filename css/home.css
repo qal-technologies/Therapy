@@ -733,12 +733,12 @@ section#faq{
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 15px;
 }
 
 #faq .answer .upper p{
   font-size: 1.2rem;
-  line-height: 1.3rem;
+  line-height: 1.4rem;
   font-family: PoppinsMed;
 }
 
