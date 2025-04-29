@@ -3,12 +3,27 @@ header {
   background: var(--gradient-color);
   padding: 2rem;
   text-align: center;
-  height: 25vw;
+  height: 20vw;
   min-height: 300px;
   display: flex;
   place-items: center;
   margin-bottom: -40px;
   justify-content: center;
+}
+
+header .circle {
+  width: 90vw;
+  height: 90vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: var(--highlight);
+  position: absolute;
+  right: -20%;
+  top: -30px;
+  opacity: 0.25;
+  z-index: -99;
+  border-radius: 50%;
+  filter: blur(1px);
 }
 
 header p {
@@ -17,16 +32,32 @@ header p {
   font-size: 2.5rem;
   color: var(--link);
   text-align: center;
+  position: relative;
+  width: auto;
+  place-self: center;
 }
 
-section.faq {
+header p span.underline {
+  width: 40%;
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 34%;
+  height: 105%;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--link);
+  place-self: center;
+  padding: 15px;
+}
+
+section#faq {
   padding: 1rem;
   padding-top: 10vmin;
   border-radius: 40px 40px 0 0;
   background-color: white;
 }
 
-section.faq.second {
+section#faq.second {
   border-radius: 0;
 }
 
