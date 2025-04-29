@@ -811,7 +811,7 @@ section#discover{
   font-family: PoppinsLight;
 }
 
-#discover .parent button {
+#discover .parent a {
   cursor: pointer;
   border:none;
   background-color: var(--link);
