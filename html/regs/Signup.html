@@ -25,27 +25,18 @@
   </head>
   <body class="fadeIn">
     <div id="body">
-      <div class="header fadeIn">
+      <header class="header fadeIn">
         <div class="circle"></div>
+        <h3>Healing with</h3>
         <h1>Charlotte Casiraghi <span class="underline"></span></h1>
-        <h3>Sessions Live 2025</h3>
-        <!-- <div class="date">April 25 & 26, 2025</div> -->
-        <div class="description" style="margin-top: 20px">
-          <p>
-            Welcome to the registration page for Charlotte Casiraghi's sessions.
-          </p>
-
-          <p style="font-size: 14px; margin-top: 5px">
-            Please fill out the form below to register.
-          </p>
-        </div>
-      </div>
+      </header>
 
       <div class="container">
         <div class="tabs">
           <div class="tab active" data-form="register">REGISTER</div>
           <div class="tab" data-form="login">LOGIN</div>
         </div>
+
         <div class="form-section">
           <!-- Login Form -->
           <div class="form-container fadeOut" id="login-form">
@@ -53,21 +44,17 @@
               <h1>Login</h1>
               <p>Welcome back! Please login to your account.</p>
             </div>
-            <div class="form-group">
-              <label for="email">Email *</label>
-              <input type="email" id="email" required />
-            </div>
 
-            <div class="form-group">
-              <label for="password">Password *</label>
-              <input type="password" id="password" required />
-            </div>
+            <div class="bottom">
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" required />
+              </div>
 
-            <div class="privacy-policy">
-              Don't have an account?
-              <a href="#" class="switch-tab" data-form="register"
-                >Register here</a
-              >
+              <div class="form-group">
+                <label for="password">Password *</label>
+                <input type="password" id="password" required />
+              </div>
             </div>
           </div>
 
@@ -78,7 +65,8 @@
                 <h1>Register</h1>
                 <p>Welcome! Please fill out the form below to register.</p>
               </div>
-              <div class="lower">
+
+              <div class="bottom">
                 <div class="form-group">
                   <label for="firstName">First Name *</label>
                   <input type="text" id="firstName" required />
@@ -109,7 +97,26 @@
             </div>
 
             <div class="lower">
-              <div class="header register-footer">
+              <div class="header">
+                <h1 class="ticket">Ticket Information</h1>
+              </div>
+              <div class="bottom">
+              <div class="form-group">
+
+              <div class="session-plan">
+              <div class="image">
+              <img src="/src/images/logo.jpg" alt="" srcset="">
+              </div>
+
+              <div class="right">
+                <div class="title">Virtual Session</div>
+                <div class="under">
+                <p class="text">You made the right choice!</p>
+                <p class="price">800</p>
+                </div>
+              </div>
+              </div>
+              </div>
                 <div class="form-group">
                   <label for="adminCode">Admin Code</label>
                   <input type="text" id="adminCode" />
@@ -119,6 +126,15 @@
           </div>
         </div>
       </div>
+
+    <div class="faq-bottom">
+          For any question, check: 
+          <a href="/html/main/FAQ.html" class="faq"><span class="highlight">FAQs</span></a> or
+          contact
+         <a target="_blank" 
+            rel="noopener noreferrer"
+         href="mailto:healingwithcharlottecasiraghi@gmail.com" class="faq"> <span class="highlight">healingwithcharlottecasiraghi@gmail.com</span></a>
+        </div>
     </div>
   </body>
 </html>

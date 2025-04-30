@@ -3,7 +3,7 @@ div#body {
   background: rgb(253, 253, 253);
 }
 
-.header .circle {
+header.header .circle {
   width: 90vw;
   height: 90vw;
   max-width: 800px;
@@ -18,7 +18,7 @@ div#body {
   filter: blur(1px);
 }
 
-.header {
+header.header {
   width: 100%;
   padding: 5rem;
   background-color: var(--accentTrans);
@@ -28,7 +28,7 @@ div#body {
   margin-bottom: -70px;
   overflow: hidden;
   position: relative;
-  min-height: 60%;
+  min-height: 45%;
   padding-bottom: 5.5rem;
   font-size: 1.2rem;
   z-index: -99;
@@ -36,7 +36,7 @@ div#body {
   color: var(--mainText);
 }
 
-.header h1 {
+header.header h1 {
   position: relative;
   width: auto;
   place-self: center;
@@ -48,7 +48,7 @@ div#body {
   font-family: PoppinsSemi;
 }
 
-.header h1 span {
+header.header h1 span {
   width: 40%;
   display: flex;
   position: absolute;
@@ -60,26 +60,24 @@ div#body {
   place-self: center;
   padding: 10px;
 }
-.header h3 {
+header.header h3 {
   text-align: center;
   font-family: PoppinsMed;
-  color: var(--highlight);
+  color: var(--mainText);
   font-size: 2rem;
 }
 
 .container {
   z-index: 99;
-  width: 95%;
-  max-width: 800px;
+  width: 85vw;
   margin: 0 auto;
   background: white;
   padding: 2rem;
-  padding-top: 3rem;
+  padding-top: 2.6rem;
   border-radius: 30px;
   box-shadow: 0 4px 6px var(--accentTrans);
   position: relative;
   height: max-content;
-  max-height: 80vh;
   margin-bottom: 20px;
 }
 
@@ -116,10 +114,61 @@ div#body {
 
 .form-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  gap: 6%;
+  flex-wrap: wrap;
   width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
   max-height: auto;
   transition: display 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.form-container#register-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+} 
+
+.form-container#register-form .upper, .form-container#register-form .lower{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 6%;
+}
+
+.form-container#register-form .lower{
+  margin-top: 5px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(179, 179, 179, 0.5);
+}
+
+.form-container div.header{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 350px;
+  text-align: left;
+  font-size: 16px;
+  padding-bottom: 1.5rem;
+}
+
+.form-container div.header h1{
+  color: var(--link);
+  font-family: PoppinsMed;
+  margin-bottom: -8px;
+  font-size: 25px;
+}
+
+.form-container div.bottom{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 550px;
 }
 
 .form-group {
@@ -130,6 +179,7 @@ div#body {
 .form-group#attendance {
   width: 100%;
 }
+
 label {
   display: block;
   margin-bottom: 0.5rem;
@@ -171,14 +221,73 @@ select {
   width: auto;
   min-width: 100px;
 }
-.privacy-policy {
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  color: #718096;
+
+div.session-plan{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+  height: auto;
+  max-height: 200px;
+  border: 2px solid var(--link);
+  border-radius: 15px;
+  overflow: hidden;
+  background: white;
+  color: var(--mainText);
+  padding: 0.6rem;
+  align-items: center;
 }
 
-.privacy-policy a {
+div.session-plan .image{
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  overflow: hidden;
+  object-fit: fill;
+}
+
+div.session-plan .image img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.session-plan .right{
+  width: auto;
+  display: flex;
+  color: var(--mainText);
+  font-size: 14px;
+  flex-direction: column;
+}
+
+.session-plan .right .title{
+  font-family: PoppinsSemi;
+  font-size: 22px;
   color: var(--link);
-  font-family: PoppinsMed;
-  text-decoration: none;
+}
+
+.session-plan .right .under{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.session-plan .right .price{
+  font-family: PoppinsSemi;
+  font-size: 22px;
+  color: var(--link);
+}
+div.faq-bottom{
+  width: 100%;
+  padding: 1rem;
+  padding-block: 1.4rem;
+  text-align: center;
+  place-content: center;
+}
+
+div.faq-bottom .faq{
+  text-decoration: underline;
+  text-decoration-color: var(--highlight);
 }
