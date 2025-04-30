@@ -439,6 +439,7 @@ div#checkout {
   position: absolute;
   bottom: 20px;
   right: 20px;
+  box-shadow: 0px 4px 10px var(--accent);
   border-radius: 20px;
   align-items: center;
   color: white;
