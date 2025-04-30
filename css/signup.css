@@ -60,6 +60,7 @@ header.header h1 span {
   place-self: center;
   padding: 10px;
 }
+
 header.header h3 {
   text-align: center;
   font-family: PoppinsMed;
@@ -117,6 +118,7 @@ header.header h3 {
   flex-direction: row;
   gap: 6%;
   flex-wrap: wrap;
+  position: relative;
   width: 100%;
   align-items: flex-start;
   justify-content: flex-start;
@@ -124,13 +126,14 @@ header.header h3 {
   transition: display 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
 }
 
-.form-container#register-form{
+.form-container#register-form {
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 10px;
-} 
+}
 
-.form-container#register-form .upper, .form-container#register-form .lower{
+.form-container#register-form .upper, .form-container#register-form .lower {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -139,13 +142,13 @@ header.header h3 {
   gap: 6%;
 }
 
-.form-container#register-form .lower{
+.form-container#register-form .lower {
   margin-top: 5px;
   padding-top: 25px;
   border-top: 1px solid rgba(179, 179, 179, 0.5);
 }
 
-.form-container div.header{
+.form-container div.header {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -156,14 +159,14 @@ header.header h3 {
   padding-bottom: 1.5rem;
 }
 
-.form-container div.header h1{
+.form-container div.header h1 {
   color: var(--link);
   font-family: PoppinsMed;
   margin-bottom: -8px;
-  font-size: 25px;
+  font-size: 22px;
 }
 
-.form-container div.bottom{
+.form-container div.bottom {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -178,6 +181,10 @@ header.header h3 {
 
 .form-group#attendance {
   width: 100%;
+}
+
+.form-group#session {
+  display: none;
 }
 
 label {
@@ -210,6 +217,7 @@ select {
   flex-wrap: wrap;
   max-width: 300px;
 }
+
 .radio-option {
   flex: 1;
   display: flex;
@@ -217,69 +225,81 @@ select {
   gap: 0.5rem;
   width: max-content;
 }
+
 .radio-option-text {
   width: auto;
   min-width: 100px;
 }
 
-div.session-plan{
+div#session-plan {
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap:10px;
-  height: auto;
-  max-height: 200px;
-  border: 2px solid var(--link);
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: auto;
+  border: 1px solid var(--link);
   border-radius: 15px;
-  overflow: hidden;
   background: white;
   color: var(--mainText);
-  padding: 0.6rem;
+  padding: 0.8rem;
   align-items: center;
+  justify-content: flex-start;
 }
 
-div.session-plan .image{
-  width: 60px;
-  height: 60px;
+div#session-plan .image {
+  width: 50px;
+  height: 50px;
   border-radius: 10px;
   overflow: hidden;
   object-fit: fill;
 }
 
-div.session-plan .image img{
+div#session-plan .image img {
   width: 100%;
   height: 100%;
   object-fit: fill;
 }
 
-.session-plan .right{
-  width: auto;
+#session-plan .bottom {
   display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: max-content;
   color: var(--mainText);
   font-size: 14px;
   flex-direction: column;
-}
-
-.session-plan .right .title{
-  font-family: PoppinsSemi;
-  font-size: 22px;
-  color: var(--link);
-}
-
-.session-plan .right .under{
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
   align-items: center;
 }
 
-.session-plan .right .price{
+#session-plan .title {
+  display: flex;
+  margin-inline-end: 10px;
+  height: 100%;
+  align-items: center;
   font-family: PoppinsSemi;
   font-size: 22px;
   color: var(--link);
+  text-align: left;
 }
-div.faq-bottom{
+
+#session-plan .price {
+  font-family: PoppinsSemi;
+  font-size: 18px;
+  background: var(--accentTrans);
+  padding: 2px;
+  height: 30px;
+  padding-inline: 20px;
+  display: flex;
+  align-self: center;
+  width: max-content;
+  border-radius: 10px;
+  color: var(--link);
+}
+
+div.faq-bottom {
   width: 100%;
   padding: 1rem;
   padding-block: 1.4rem;
@@ -287,7 +307,144 @@ div.faq-bottom{
   place-content: center;
 }
 
-div.faq-bottom .faq{
+div.faq-bottom .faq {
   text-decoration: underline;
   text-decoration-color: var(--highlight);
+}
+
+.dropdown-container {
+  position: relative;
+  padding-inline: 5px;
+  margin-bottom: 2rem;
+  font-family: PoppinsMed;
+}
+
+.dropdown-header {
+  width: 100%;
+  padding: 12px 16px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 1px 6px rgba(100, 100, 100, 0.1);
+  cursor: pointer;
+  display: flex;
+  place-self: center;
+  border: 1px solid var(--link);
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: var(--link);
+}
+
+.dropdown-header span {
+  font-family: PoppinsSemi;
+}
+
+.dropdown-header:hover {
+  box-shadow: 0 1px 10px var(--accentTrans);
+}
+
+.dropdown-options {
+  position: relative;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+  max-height: 0;
+  width: 90%;
+  margin: 8px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  color: var(--link);
+  padding: 0.5rem;
+  z-index: 10;
+}
+
+.dropdown-options.open {
+  max-height: 300px;
+  opacity: 1;
+}
+
+.option {
+  font-family: PoppinsMed;
+  background: auto;
+  border-radius: 15px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.option:hover {
+  background: var(--accentTrans);
+}
+
+.questions-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.questions-container p.description {
+  padding-inline: 10px;
+  width: 100%;
+  text-align: left;
+  font-family: PoppinsSemi;
+  color: var(--link);
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.question-card {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 0.4s ease forwards;
+  transition: all 0.3s ease;
+}
+
+.question-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+}
+
+@keyframes fadeInUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+div#checkout {
+  background-color: var(--link);
+  padding: 8px;
+  padding-inline: 15px;
+  text-align: center;
+  display: flex;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 20px;
+  align-items: center;
+  color: white;
+  gap: 10px;
+}
+
+div#checkout p {
+  font-family: PoppinsMed;
 }

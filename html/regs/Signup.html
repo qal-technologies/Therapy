@@ -1,142 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=7" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <meta
-      name="keywords"
-      content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=7" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <!-- FOR STYLING -->
-    <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
+  <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
 
-    <link rel="stylesheet" href="/css/general.css" />
-    <link rel="stylesheet" href="/css/animation.css" />
+  <!-- FOR STYLING -->
+  <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
-    <link rel="stylesheet" href="/css/signup.css" />
+  <link rel="stylesheet" href="/css/general.css" />
+  <link rel="stylesheet" href="/css/animation.css" />
 
-    <link rel="stylesheet" href="/css/media.css" />
+  <link rel="stylesheet" href="/css/signup.css" />
 
-    <title>Register - A Space to Heal</title>
+  <link rel="stylesheet" href="/css/media.css" />
+
+  <title>Register - A Space to Heal</title>
   </head>
-  <body class="fadeIn">
-    <div id="body">
-      <header class="header fadeIn">
-        <div class="circle"></div>
-        <h3>Healing with</h3>
-        <h1>Charlotte Casiraghi <span class="underline"></span></h1>
-      </header>
 
-      <div class="container">
-        <div class="tabs">
-          <div class="tab active" data-form="register">REGISTER</div>
-          <div class="tab" data-form="login">LOGIN</div>
-        </div>
+<body class="fadeIn">
+  <div id="body">
+    <header class="header fadeIn">
+      <div class="circle"></div>
+      <h3>Healing with</h3>
+      <h1>Charlotte Casiraghi <span class="underline"></span></h1>
+    </header>
 
-        <div class="form-section">
-          <!-- Login Form -->
-          <div class="form-container fadeOut" id="login-form">
-            <div class="header">
-              <h1>Login</h1>
-              <p>Welcome back! Please login to your account.</p>
-            </div>
+    <div class="container">
+      <div class="tabs">
+        <div class="tab active" data-form="register">REGISTER</div>
+        <div class="tab" data-form="login">LOGIN</div>
+      </div>
 
-            <div class="bottom">
-              <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" required />
-              </div>
-
-              <div class="form-group">
-                <label for="password">Password *</label>
-                <input type="password" id="password" required />
-              </div>
-            </div>
+      <div class="form-section">
+        <!-- Login Form -->
+        <div class="form-container fadeOut" id="login-form">
+          <div class="header">
+            <h1>Login</h1>
+            <p>Welcome back! Please login to your account.</p>
           </div>
 
-          <!-- Register Form -->
-          <div class="form-container fadeIn" id="register-form">
-            <div class="register-upper upper">
-              <div class="header register-header">
-                <h1>Register</h1>
-                <p>Welcome! Please fill out the form below to register.</p>
+          <div class="bottom">
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password *</label>
+              <input type="password" id="password" required />
+            </div>
+            </div>
+
+        </div>
+
+        
+        <!-- Register Form -->
+        <div class="form-container fadeIn" id="register-form">
+
+          <div class="register-upper upper">
+            <div class="header register-header">
+              <h1>Register</h1>
+              <p>Welcome! Please fill out the form below to register.</p>
+            </div>
+          
+            <div class="bottom">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" required />
               </div>
 
-              <div class="bottom">
-                <div class="form-group">
-                  <label for="firstName">First Name *</label>
-                  <input type="text" id="firstName" required />
-                </div>
-                <div class="form-group">
-                  <label for="lastName">Last Name *</label>
-                  <input type="text" id="lastName" required />
-                </div>
-                <div class="form-group" id="attendance">
-                  <label>How would you like to attend? *</label>
-                  <div class="radio-group">
-                    <label class="radio-option">
-                      <input
-                        type="radio"
-                        name="attendance"
-                        value="virtual"
-                        required
-                      />
-                      <p class="radio-option-text">Virtually</p>
-                    </label>
-                    <label class="radio-option">
-                      <input type="radio" name="attendance" value="in-person" />
-                      <p class="radio-option-text">In-person</p>
-                    </label>
-                  </div>
-                </div>
-              </div>
+            <div class="form-group">
+              <label for="lastName">Last Name *</label>
+              <input type="text" id="lastName" required />
             </div>
+            <div class="form-group dropdown-container" id="dropdown-container">
+            
+              <div class="dropdown-header" id="dropdownHeader">
+                <span>Select a Session Type</span>
+                <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </div>
+              <div class="dropdown-options" id="dropdownOptions">
+              </div>
+              
+              <div class="questions-container" id="questionsContainer">
+              </div>
+              </div>
+              </div>
 
             <div class="lower">
               <div class="header">
                 <h1 class="ticket">Ticket Information</h1>
               </div>
+
               <div class="bottom">
-              <div class="form-group">
+                <div class="form-group" id="session">
+                  <label for="session-plan" class="fadeIn">Event Ticket</label>
 
-              <div class="session-plan">
-              <div class="image">
-              <img src="/src/images/logo.jpg" alt="" srcset="">
-              </div>
+                  <div id="session-plan" class="moveUpNfadeIn">
+                    <div class="image">
+                      <img src="/src/images/logo.jpg" alt="" srcset="">
+                    </div>
 
-              <div class="right">
-                <div class="title">Virtual Session</div>
-                <div class="under">
-                <p class="text">You made the right choice!</p>
-                <p class="price">800</p>
-                </div>
-              </div>
-              </div>
-              </div>
+                      <p class="title">Virtual Session</p>
+                      
+                      <p class="price">&euro; 800.00</p>
+                      </div>
+                      </div>
                 <div class="form-group">
                   <label for="adminCode">Admin Code</label>
                   <input type="text" id="adminCode" />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
-    <div class="faq-bottom">
-          For any question, check: 
-          <a href="/html/main/FAQ.html" class="faq"><span class="highlight">FAQs</span></a> or
-          contact
-         <a target="_blank" 
-            rel="noopener noreferrer"
-         href="mailto:healingwithcharlottecasiraghi@gmail.com" class="faq"> <span class="highlight">healingwithcharlottecasiraghi@gmail.com</span></a>
-        </div>
-    </div>
-  </body>
+<div class="faq-bottom">
+  For any question, check:
+  <a href="/html/main/FAQ.html" class="faq"><span class="highlight">FAQs</span></a> or
+  contact
+                  <a target="_blank" rel="noopener noreferrer" href="mailto:healingwithcharlottecasiraghi@gmail.com" class="faq">
+                    <span class="highlight">healingwithcharlottecasiraghi@gmail.com</span></a>
+                  </div>
+                  </div>
+                  
+                  <div id="checkout">
+                    <p class="text">PROCEED</p>
+                    <p class="svg">>></p>
+                  </div>
+                  </body>
+
 </html>
 
 <script src="/js/signup.js"></script>
