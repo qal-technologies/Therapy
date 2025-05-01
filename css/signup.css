@@ -311,6 +311,8 @@ flex-wrap:wrap;
 display: flex;
 gap:5px;
 width:max-content;
+align-items:flex-end;
+justify-content:flex-start;
   margin-top: 10px;
   font-size: 22px;
   font-family: PoppinsSemi;
