@@ -70,11 +70,11 @@ header.header h3 {
 
 .container {
   z-index: 99;
-  width: 85vw;
+  width: 90vw;
   margin: 0 auto;
   background: white;
-  padding: 2rem;
-  padding-top: 2.6rem;
+  padding: 1.5rem;
+  padding-top: 2rem;
   border-radius: 30px;
   box-shadow: 0 4px 6px var(--accentTrans);
   position: relative;
