@@ -280,6 +280,7 @@ flex-wrap:wrap;
   align-items: center;
 }
 
+
 #session-plan .title {
   display: flex;
   margin-inline-end: 10px;
@@ -291,18 +292,26 @@ flex-wrap:wrap;
   text-align: left;
 }
 
-#session-plan .price {
+#session-plan .extra {
+  font-size: 16px;
+  width: 100%;
+  text-align: left;
+  font-family: PoppinsMed;
+  color: var(--mainText);
+  margin-top: -8px;
+}
+
+#session-plan p.price {
+  margin-top: 10px;
+  font-size: 22px;
   font-family: PoppinsSemi;
-  font-size: 18px;
-  background: var(--accentTrans);
-  padding: 2px;
-  height: 30px;
-  padding-inline: 20px;
-  display: flex;
-  align-self: center;
-  width: max-content;
-  border-radius: 10px;
-  color: var(--link);
+  place-content: flex-start;
+  text-align: left;
+}
+
+#session-plan p span {
+  font-size: 14px;
+  font-family: PoppinsMed;
 }
 
 div.faq-bottom {
