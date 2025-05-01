@@ -308,6 +308,7 @@ flex-wrap:wrap;
 }
 
 #session-plan p.price {
+display: flex;
   margin-top: 10px;
   font-size: 22px;
   font-family: PoppinsSemi;
