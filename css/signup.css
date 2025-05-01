@@ -74,7 +74,7 @@ header.header h3 {
   margin: 0 auto;
   background: white;
   padding: 1.5rem;
-  padding-top: 2rem;
+  padding-top: 1.8rem;
   border-radius: 30px;
   box-shadow: 0 4px 6px var(--accentTrans);
   position: relative;
@@ -84,7 +84,7 @@ header.header h3 {
 
 .tabs {
   display: flex;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .tab {
