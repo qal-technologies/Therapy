@@ -21,8 +21,8 @@ const topicsData = {
         ]
     },
     "community": {
-        name: "COMMUNITY SESSION",
-        price: "6,850",
+        name: "SPONSORED SUPPORT SESSION",
+        price: "550",
         description: "Your story matters, Let's begin ",
         questions: [
             "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
@@ -33,7 +33,7 @@ const topicsData = {
     "inner": {
         name: "INNER CIRCLE EXPERIENCE",
         description: "A sanctuary made just for your soul",
-        price: "550",
+        price: "6,850",
         questions: [
             "If you could name this season of your life in one word, what would it be - and why?",
             "Would you like your healing plan to focus on emotional wounds, spiritual clarity, or self-love and transformation?",
