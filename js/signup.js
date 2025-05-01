@@ -58,6 +58,8 @@ window.addEventListener('DOMContentLoaded', () => {
         login: document.getElementById('login-form')
     };
 
+const formContainer = document.querySelectorAll('.form-container');
+
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const formToShow = tab.dataset.form;
@@ -65,6 +67,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
             // Switch active tab
             document.querySelector('.tab.active').classList.remove('active');
+        document.querySelector('.form-container.active').classList.remove('active');
+
             tab.classList.add('active');
 
             // Fade out current form
@@ -74,6 +78,7 @@ window.addEventListener('DOMContentLoaded', () => {
             // Fade in new form
             setTimeout(() => {
                 forms[formToShow].classList.remove('fadeOut');
+forms[formToShow].classList.add('active');
             }, 300);
         });
     });
