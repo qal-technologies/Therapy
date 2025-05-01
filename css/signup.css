@@ -269,15 +269,13 @@ div#session-plan .image img {
   object-fit: fill;
 }
 
-#session-plan .bottom {
+#session-plan .lower,#session-plan .upper {
   display: flex;
   width: 100%;
-  flex-direction: column;
+  flex-direction: row;
   height: max-content;
-  color: var(--mainText);
-  font-size: 14px;
-  flex-direction: column;
-  gap: 20px;
+flex-wrap:wrap;
+  gap: 10px;
   justify-content: flex-start;
   align-items: center;
 }
