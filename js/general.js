@@ -1,4 +1,5 @@
 window.onload = () => {
+alert('hey');
     let user = false;
 
     const year = document.querySelector("footer span#year");
