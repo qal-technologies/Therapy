@@ -486,6 +486,9 @@ box-shadow: 0px 4px 10px var(--accent);
   border-radius: 20px;
 color: white;
   gap: 10px;
+border:none;
+display:flex;
+flex-direction:column;
 }
 
 div#checkout p {
