@@ -89,7 +89,7 @@ header.header h3 {
 
 .tab {
   flex: 1;
-  padding: 1rem;
+  padding: 0.4rem;
   text-align: center;
   font-family: PoppinsMed;
   cursor: pointer;
