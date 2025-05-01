@@ -32,7 +32,7 @@ header.header {
   padding-bottom: 5.5rem;
   font-size: 1.2rem;
   z-index: -99;
-  gap: 10px;
+  gap: 15px;
   color: var(--mainText);
 }
 
@@ -43,7 +43,7 @@ header.header h1 {
   font-size: 3rem;
   margin-bottom: 0.8rem;
   color: var(--link);
-line-height:2.8rem;
+line-height:3.1rem;
   text-align: center;
   margin-bottom: 30px;
   font-family: PoppinsSemi;
@@ -67,7 +67,7 @@ header.header h3 {
   font-family: PoppinsMed;
   color: var(--mainText);
   font-size: 2rem;
-line-height:1.8rem;
+line-height:2.1rem;
 }
 
 .container {
