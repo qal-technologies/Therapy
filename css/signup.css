@@ -477,10 +477,10 @@ width:100%;
 
 div#checkout button{
 background-color: var(--link);
-  padding: 10px;
+  padding: 8px;
 width: max-content;
 max-width:200px;
-  padding-inline: 20px;
+  padding-inline: 15px;
 text-align: center;
 box-shadow: 0px 4px 10px var(--accent);
   border-radius: 20px;
@@ -492,6 +492,6 @@ flex-direction:row;
 }
 
 div#checkout p {
-font-size:18px;
+font-size:16px;
   font-family: PoppinsMed;
 }
