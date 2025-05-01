@@ -478,7 +478,8 @@ width:100%;
 div#checkout button{
 background-color: var(--link);
   padding: 8px;
-width: max-content;
+width: 60%;
+max-width:200px;
   padding-inline: 15px;
 text-align: center;
 box-shadow: 0px 4px 10px var(--accent);
@@ -487,7 +488,7 @@ color: white;
   gap: 10px;
 border:none;
 display:flex;
-flex-direction:column;
+flex-direction:row;
 }
 
 div#checkout p {
