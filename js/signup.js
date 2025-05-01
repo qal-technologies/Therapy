@@ -13,7 +13,8 @@ info:
         ]
     },
     "inPerson": {
-        name: "IN-PERSON SESSION (EUROPE/MONACO)",
+        name: "IN-PERSON SESSION",
+extra:"(EUROPE/MONACO)",
         price: "1600",
         description: "Let's prepare your sanctuary",
 info:
@@ -84,6 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const chevron = document.querySelector('.chevron');
     const price = document.querySelector("#session-plan .price");
     const title = document.querySelector("#session-plan .title");
+const description= document.querySelector('#session-plan . description');
     const formGroup = document.querySelector(".form-group#session");
 const ticket = document.querySelector(".form-container#register-form .lower h1.ticket");
 
@@ -126,6 +128,7 @@ ticket.style.display = "block";
         });
 
         title.textContent = topic.name;
+description.textContent=topic.info;
         price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight" >EUR</span>`;
     }
 
