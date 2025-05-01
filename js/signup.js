@@ -128,6 +128,13 @@ function switchForm(formType) {
             <label for="login-password">Password *</label>
             <input type="password" id="login-password" required />
           </div>
+
+<div id="checkout">
+      <button>
+        <p class="text">PROCEED</p>
+        <p class="svg">>></p>
+      </button>
+    </div>
         </div>
       </div>
     `);
