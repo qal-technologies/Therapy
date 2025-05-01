@@ -301,6 +301,12 @@ flex-wrap:wrap;
   margin-top: -8px;
 }
 
+#session-plan .intro {
+  margin-top: -5px;
+  text-align: left;
+  font-size: 14px;
+}
+
 #session-plan p.price {
   margin-top: 10px;
   font-size: 22px;
