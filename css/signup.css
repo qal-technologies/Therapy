@@ -173,7 +173,7 @@ display: none;
 .form-container div.bottom {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   width: 100%;
   max-width: 550px;
 }
