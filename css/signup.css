@@ -114,7 +114,7 @@ header.header h3 {
 }
 
 .form-container {
-  display: none;
+  display: flex;
   flex-direction: row;
   gap: 6%;
   flex-wrap: wrap;
@@ -176,10 +176,6 @@ display: none;
   gap: 5px;
   width: 100%;
   max-width: 550px;
-}
-
-.form-container.active{
-display:flex;
 }
 
 .form-group {
