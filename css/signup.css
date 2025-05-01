@@ -166,6 +166,9 @@ header.header h3 {
   font-size: 22px;
 }
 
+.form-container#register-form .bottom div.header h1 {
+display: none;
+}
 .form-container div.bottom {
   display: flex;
   flex-direction: column;
