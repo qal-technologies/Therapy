@@ -83,7 +83,81 @@ const TEMPLATES = {
       </div>
     </div>
   `, 
-registerForm:``,
+registerForm:` <div class="form-container active" id="register-form">
+          <div class="register-upper upper">
+            <div class="header register-header">
+              <h1>Register</h1>
+              <p>Welcome! complete the form below to reserve your spot with Charlotte Casiraghi. Together you'll unlock inner peace,
+                dissolve old patterns, and step into a more empowered radiant you.</p>
+            </div>
+          
+            <div class="bottom">
+              <div class="form-group">
+                <label for="reg-email">Email *</label>
+                <input type="email" id="reg-email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" required />
+              </div>
+
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" required />
+              </div>
+              
+              <div class="form-group">
+                <label for="reg-password">Password *</label>
+                <input type="password" id="reg-password" required />
+              </div>
+
+              <div class="form-group dropdown-container" id="dropdown-container">
+                <div class="dropdown-header" id="dropdownHeader">
+                  <span>Select a Session Type</span>
+                  <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </div>
+                <div class="dropdown-options" id="dropdownOptions"></div>
+                <div class="questions-container" id="questionsContainer"></div>
+              </div>
+            </div>
+
+            <div class="lower">
+              <div class="header">
+                <h1 class="ticket fadeIn">Ticket Information</h1>
+              </div>
+
+              <div class="bottom">
+                <div class="form-group" id="session">
+                  <label for="session-plan" class="moveUpNfadeIn">Event Ticket</label>
+                  <div id="session-plan" class="moveUpNfadeIn">
+                    <div class="upper">
+                      <div class="image">
+                        <img src="/src/images/logo.jpg" alt="" srcset="">
+                      </div>
+                      <div class="name">
+                        <p class="title">Virtual Session</p>
+                        <p class="extra"></p>
+                      </div>
+                    </div>
+                    <div class="lower">
+                      <p class="intro"></p>
+                      <p class="price">&euro; 800.00<span class="highlight">EUR</span></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="adminCode">Admin Code (Optional)</label>
+                  <input type="text" id="adminCode" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`,
 };
 
 // State Management
@@ -137,11 +211,7 @@ function switchForm(formType) {
   if (formType === 'login') {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATES.loginForm);
   } else {
-    DOM.formSection.insertAdjacentHTML('beforeend', `
-      <div class="form-container active" id="register-form">
-        <!-- Register form content here -->
-      </div>
-    `);
+    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATES.registerForm);
   }
   
   state.currentForm = formType;
