@@ -82,7 +82,8 @@ const TEMPLATES = {
         </div>
       </div>
     </div>
-  `
+  `, 
+registerForm:``,
 };
 
 // State Management
@@ -221,4 +222,4 @@ function handleDocumentClick(e) {
 }
 
 // Initialize the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+window.addEventListener('DOMContentLoaded', init);
