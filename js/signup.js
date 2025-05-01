@@ -85,6 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const chevron = document.querySelector('.chevron');
     const price = document.querySelector("#session-plan .price");
     const title = document.querySelector("#session-plan .title");
+const extra= document.querySelector("#session-plan .name .extra");
 const description= document.querySelector('#session-plan .intro');
     const formGroup = document.querySelector(".form-group#session");
 const ticket = document.querySelector(".form-container#register-form .lower h1.ticket");
@@ -128,6 +129,9 @@ ticket.style.display = "block";
         });
 
         title.textContent = topic.name;
+topic.extra? extra.style.display="block": extra.style.display="none";
+
+extra.textContent= topic.extra;
 description.textContent=topic.info;
         price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight" >EUR</span>`;
     }
