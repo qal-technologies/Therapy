@@ -48,6 +48,7 @@ const TOPICS_DATA = {
   }
 };
 
+window.onload = ()=>{
 // DOM Elements
 const DOM = {
   tabs: document.querySelectorAll('.tab'),
@@ -285,6 +286,5 @@ function toggleDropdown(e) {
     DOM.chevron.classList.add('open');
   }
 }
-
-// Initialize the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+init();
+}
