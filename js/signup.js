@@ -77,6 +77,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const price = document.querySelector("#session-plan .price");
     const title = document.querySelector("#session-plan .title");
     const formGroup = document.querySelector(".form-group#session");
+const ticket = document.querySelector(".form-container#register-form .lower h1.ticket");
 
     function populateDropdown() {
         dropdownOptions.innerHTML = '';
@@ -99,6 +100,7 @@ window.addEventListener('DOMContentLoaded', () => {
     function selectTopic(topicKey) {
         const topic = topicsData[topicKey];
         formGroup.style.display = "block";
+ticket.style.display = "block";
         dropdownHeader.querySelector('span').textContent = topic.name;
 
         // Clear previous questions
