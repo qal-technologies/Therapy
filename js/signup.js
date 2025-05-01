@@ -1,143 +1,291 @@
-// signup.js
-const topicsData = {
-    "virtual": {
-        name: "VIRTUAL SESSION",
-        price: "800",
-        description: "Let's make your screen disappear",
-        questions: [
-            "Do you feel most emotionally open in the morning, afternoon, or evening?",
-            "Would you like Charlotte to begin with a calming 90-second grounding exercise just for you?",
-            "Are there any life themes you feel emotionally 'stuck' in right now that you'd like to gently explore?"
-        ]
-    },
-    "inPerson": {
-        name: "IN-PERSON SESSION (EUROPE/MONACO)",
-        price: "1600",
-        description: "Let's prepare your sanctuary",
-        questions: [
-            "Do you have any dietary preferences or allergies we should consider while preparing your welcome refreshment?",
-            "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
-            "Is there a personal object (journal, photo, or keepsake) you'd like to bring into the session as part of your healing space?"
-        ]
-    },
-    "community": {
-        name: "COMMUNITY SESSION",
-        price: "6,850",
-        description: "Your story matters, Let's begin ",
-        questions: [
-            "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
-            "Is there one thing you've been carrying alone that you wish someone would simply hear - without trying to fix?",
-            "Would it help if we checked in with you a few days after the session to support your reflection?"
-        ]
-    },
-    "inner": {
-        name: "INNER CIRCLE EXPERIENCE",
-        description: "A sanctuary made just for your soul",
-        price: "550",
-        questions: [
-            "If you could name this season of your life in one word, what would it be - and why?",
-            "Would you like your healing plan to focus on emotional wounds, spiritual clarity, or self-love and transformation?",
-            "What would it mean to you if Charlotte's letter spoke directly to your soul's current journey?"
-        ]
-    }
+
+// Constants
+const TOPICS_DATA = {
+  virtual: {
+    name: "VIRTUAL SESSION",
+    price: "800",
+    description: "Let's make your screen disappear",
+    info: "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
+    questions: [
+      "Do you feel most emotionally open in the morning, afternoon, or evening?",
+      "Would you like Charlotte to begin with a calming 90-second grounding exercise just for you?",
+      "Are there any life themes you feel emotionally 'stuck' in right now that you'd like to gently explore?"
+    ]
+  },
+  inPerson: {
+    name: "IN-PERSON SESSION",
+    extra: "(EUROPE/MONACO)",
+    price: "1600",
+    description: "Let's prepare your sanctuary",
+    info: "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
+    questions: [
+      "Do you have any dietary preferences or allergies we should consider while preparing your welcome refreshment?",
+      "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
+      "Is there a personal object (journal, photo, or keepsake) you'd like to bring into the session as part of your healing space?"
+    ]
+  },
+  community: {
+    name: "SPONSORED SUPPORT SESSION",
+    price: "550",
+    description: "Your story matters, Let's begin ",
+    info: "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
+    questions: [
+      "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
+      "Is there one thing you've been carrying alone that you wish someone would simply hear - without trying to fix?",
+      "Would it help if we checked in with you a few days after the session to support your reflection?"
+    ]
+  },
+  inner: {
+    name: "INNER CIRCLE EXPERIENCE",
+    description: "A sanctuary made just for your soul",
+    info: "For those who seek not just a session, but a sanctuary.",
+    price: "6,850",
+    questions: [
+      "If you could name this season of your life in one word, what would it be - and why?",
+      "Would you like your healing plan to focus on emotional wounds, spiritual clarity, or self-love and transformation?",
+      "What would it mean to you if Charlotte's letter spoke directly to your soul's current journey?"
+    ]
+  }
 };
 
-window.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.tab');
-    const forms = {
-        register: document.getElementById('register-form'),
-        login: document.getElementById('login-form')
-    };
+window.onload = ()=>{
+alert('beginning');
+// DOM Elements
+const DOM = {
+  tabs: document.querySelectorAll('.tab'),
+  formSection: document.querySelector('.form-section'),
+  dropdownHeader: document.getElementById('dropdownHeader'),
+  dropdownOptions: document.getElementById('dropdownOptions'),
+  questionsContainer: document.getElementById('questionsContainer'),
+  chevron: document.querySelector('.chevron'),
+  price: document.querySelector("#session-plan .price"),
+  title: document.querySelector("#session-plan .title"),
+  extra: document.querySelector("#session-plan .name .extra"),
+  description: document.querySelector('#session-plan .intro'),
+  formGroup: document.querySelector(".form-group#session"),
+  ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
+  registerForm: document.getElementById('register-form')
+};
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const formToShow = tab.dataset.form;
-            if (tab.classList.contains('active')) return;
+// State Management
+// Add to the State Management section
+const state = {
+  currentForm: 'register',
+  selectedTopic: null,
+  originalRegisterFormHTML: ''
+};
 
-            // Switch active tab
-            document.querySelector('.tab.active').classList.remove('active');
-            tab.classList.add('active');
-
-            // Fade out current form
-            const currentActiveForm = document.querySelector('.form-container:not(.fadeOut)');
-            currentActiveForm.classList.add('fadeOut');
-
-            // Fade in new form
-            setTimeout(() => {
-                forms[formToShow].classList.remove('fadeOut');
-            }, 300);
-        });
-    });
-
-
-    const dropdownHeader = document.getElementById('dropdownHeader');
-    const dropdownOptions = document.querySelector('#dropdownOptions');
-    const questionsContainer = document.getElementById('questionsContainer');
-    const chevron = document.querySelector('.chevron');
-    const price = document.querySelector("#session-plan .price");
-    const title = document.querySelector("#session-plan .title");
-    const formGroup = document.querySelector(".form-group#session");
-
-    function populateDropdown() {
-        dropdownOptions.innerHTML = '';
-
-        for (const [key, topic] of Object.entries(topicsData)) {
-            const option = document.createElement('div');
-            option.className = 'option';
-            option.textContent = topic.name;
-            option.dataset.value = key;
-
-            option.addEventListener('click', () => {
-                selectTopic(key);
-                closeDropdown();
-            });
-
-            dropdownOptions.appendChild(option);
-        }
-    }
-
-    function selectTopic(topicKey) {
-        const topic = topicsData[topicKey];
-        formGroup.style.display = "block";
-        dropdownHeader.querySelector('span').textContent = topic.name;
-
-        // Clear previous questions
-        questionsContainer.innerHTML = '';
-        questionsContainer.innerHTML = `<p class="description">${topic.description}</p>`
-
-        // Add new questions with animation
-        topic.questions.forEach((question, index) => {
-            const questionCard = document.createElement('div');
-            questionCard.className = 'question-card';
-            questionCard.textContent = question;
-            questionCard.style.animationDelay = `${index * 0.1}s`;
-
-            questionsContainer.appendChild(questionCard);
-        });
-
-        title.textContent = topic.name;
-        price.innerHTML = `&euro; ${topic.price}.00`;
-    }
-
-    function toggleDropdown() {
-        dropdownOptions.classList.toggle('open');
-        chevron.classList.toggle('open');
-    }
-
-    function closeDropdown() {
-        dropdownOptions.classList.remove('open');
-        chevron.classList.remove('open');
-    }
-
-    dropdownHeader.addEventListener('click', toggleDropdown);
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!dropdownHeader.contains(e.target) && !dropdownOptions.contains(e.target)) {
-            closeDropdown();
-        }
-    });
-
-    populateDropdown();
+// Initialize the application
+// Update the init function:
+function init() {
+alert('inside');
+  // Store original register form HTML before any manipulation
+  if (DOM.registerForm) {
+    state.originalRegisterFormHTML = DOM.registerForm.outerHTML;
+  }
+  
+  setupEventListeners();
+  populateDropdown();
+  
+  // Initialize dropdown for the first time
+  initDropdown(DOM.registerForm);
 }
-);
+
+// Set up all event listeners
+function setupEventListeners() {
+  // Tab switching
+  DOM.tabs.forEach(tab => {
+    tab.addEventListener('click', handleTabClick);
+  });
+
+  // Dropdown functionality
+  DOM.dropdownHeader.addEventListener('click', toggleDropdown);
+  document.addEventListener('click', handleDocumentClick);
+}
+
+// Handle tab clicks
+function handleTabClick(e) {
+  const tab = e.currentTarget;
+  const formToShow = tab.dataset.form;
+  
+  if (tab.classList.contains('active') || formToShow === state.currentForm) return;
+  
+  // Update UI
+  document.querySelector('.tab.active').classList.remove('active');
+  tab.classList.add('active');
+  
+  // Switch forms
+  switchForm(formToShow);
+}
+
+// Switch between login and register forms
+function switchForm(formType) {
+  // Remove current form
+  const currentForm = document.querySelector(`.form-container`);
+  if (currentForm) {
+    currentForm.remove();
+  }
+  
+  // Add new form
+  if (formType === 'login') {
+    DOM.formSection.insertAdjacentHTML('beforeend', `
+      <div class="form-container" id="login-form">
+        <div class="header">
+          <h1>Login</h1>
+          <p>You've already taken the first step. Log in to continue healing...</p>
+        </div>
+        <div class="bottom">
+          <div class="form-group">
+            <label for="login-email">Email *</label>
+            <input type="email" id="login-email" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password *</label>
+            <input type="password" id="login-password" required />
+          </div>
+        </div>
+      </div>
+    `);
+  } else {
+    // Clone and reinsert the original register form
+    DOM.formSection.insertAdjacentHTML('beforeend', state.originalRegisterFormHTML);
+    
+    // Reinitialize dropdown functionality
+    initDropdown(registerFormClone);
+  }
+  
+  state.currentForm = formType;
+}
+
+
+Add this new helper function
+function initDropdown(formElement) {
+  DOM.dropdownHeader = formElement.querySelector('#dropdownHeader');
+  DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
+  DOM.questionsContainer = formElement.querySelector('#questionsContainer');
+  DOM.chevron = formElement.querySelector('.chevron');
+  DOM.formGroup = formElement.querySelector(".form-group#session");
+  DOM.ticket = formElement.querySelector(".lower h1.ticket");
+  
+  // Reattach event listeners
+  if (DOM.dropdownHeader) {
+    DOM.dropdownHeader.addEventListener('click', toggleDropdown);
+  }
+  
+  // Repopulate dropdown
+  populateDropdown();
+  
+  // Reselect topic if one was selected
+  if (state.selectedTopic) {
+    selectTopic(state.selectedTopic);
+  }
+}
+
+// Populate the session type dropdown
+function populateDropdown() {
+  if (!DOM.dropdownOptions) return;
+  
+  DOM.dropdownOptions.innerHTML = '';
+  
+  Object.entries(TOPICS_DATA).forEach(([key, topic]) => {
+    const option = document.createElement('div');
+    option.className = 'option';
+    option.textContent = topic.name;
+    option.dataset.value = key;
+    option.addEventListener('click', () => selectTopic(key));
+    DOM.dropdownOptions.appendChild(option);
+  });
+}
+
+// Select a topic from the dropdown
+function selectTopic(topicKey) {
+  const topic = TOPICS_DATA[topicKey];
+  if (!topic) return;
+  
+  state.selectedTopic = topicKey;
+  
+  // Update UI
+  if (DOM.dropdownHeader) {
+    DOM.dropdownHeader.querySelector('span').textContent = topic.name;
+  }
+  
+  if (DOM.formGroup) {
+    DOM.formGroup.style.display = "block";
+  }
+  
+  if (DOM.ticket) {
+    DOM.ticket.style.display = "block";
+  }
+  
+  // Update questions
+  renderQuestions(topic);
+  
+  // Update session info
+  updateSessionInfo(topic);
+  
+  closeDropdown();
+}
+
+// Render questions for selected topic
+function renderQuestions(topic) {
+  if (!DOM.questionsContainer) return;
+  
+  DOM.questionsContainer.innerHTML = `<p class="description">${topic.description}</p>`;
+  
+  topic.questions.forEach((question, index) => {
+    const questionCard = document.createElement('div');
+    questionCard.className = 'question-card';
+    questionCard.textContent = question;
+    questionCard.style.animationDelay = `${index * 0.1}s`;
+    DOM.questionsContainer.appendChild(questionCard);
+  });
+}
+
+// Update session information display
+function updateSessionInfo(topic) {
+  if (DOM.title) DOM.title.textContent = topic.name;
+  if (DOM.extra) {
+    DOM.extra.textContent = topic.extra || '';
+    DOM.extra.style.display = topic.extra ? "block" : "none";
+  }
+  if (DOM.description) DOM.description.textContent = topic.info;
+  if (DOM.price) DOM.price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight">EUR</span>`;
+}
+
+
+// Update the handleDocumentClick function:
+function handleDocumentClick(e) {
+  if (!DOM.dropdownHeader || !DOM.dropdownOptions) return;
+  
+  const isDropdownClick = DOM.dropdownHeader.contains(e.target) || 
+                         DOM.dropdownOptions.contains(e.target);
+  
+  if (!isDropdownClick) {
+    closeDropdown();
+  }
+}
+
+
+// Update the toggleDropdown function:
+function toggleDropdown(e) {
+  e.stopPropagation(); // Prevent event from bubbling up
+  if (!DOM.dropdownOptions || !DOM.chevron) return;
+  
+  const isOpen = DOM.dropdownOptions.classList.contains('open');
+  
+  // Close all dropdowns first
+  formElement.querySelectorAll('.dropdown-options.open').forEach(dropdown => {
+    dropdown.classList.remove('open');
+  });
+  formElement.querySelectorAll('.chevron.open').forEach(chev => {
+    chev.classList.remove('open');
+  });
+  
+  // Toggle this dropdown if it wasn't open
+  if (!isOpen) {
+    DOM.dropdownOptions.classList.add('open');
+    DOM.chevron.classList.add('open');
+  }
+}
+init();
+}
