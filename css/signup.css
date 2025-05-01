@@ -84,7 +84,7 @@ header.header h3 {
 
 .tabs {
   display: flex;
-  margin-bottom: 2rem;
+  margin-bottom: 0.8rem;
 }
 
 .tab {
@@ -114,7 +114,7 @@ header.header h3 {
 }
 
 .form-container {
-  display: flex;
+  display: none;
   flex-direction: row;
   gap: 6%;
   flex-wrap: wrap;
@@ -176,6 +176,10 @@ display: none;
   gap: 10px;
   width: 100%;
   max-width: 550px;
+}
+
+.form-container.active{
+display:flex;
 }
 
 .form-group {
