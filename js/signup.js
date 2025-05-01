@@ -65,15 +65,26 @@ const DOM = {
 };
 
 // State Management
+// Add to the State Management section
 const state = {
   currentForm: 'register',
-  selectedTopic: null
+  selectedTopic: null,
+  originalRegisterFormHTML: ''
 };
 
 // Initialize the application
+// Update the init function:
 function init() {
+  // Store original register form HTML before any manipulation
+  if (DOM.registerForm) {
+    state.originalRegisterFormHTML = DOM.registerForm.outerHTML;
+  }
+  
   setupEventListeners();
   populateDropdown();
+  
+  // Initialize dropdown for the first time
+  initDropdown(DOM.registerForm);
 }
 
 // Set up all event listeners
@@ -106,10 +117,11 @@ function handleTabClick(e) {
 // Switch between login and register forms
 function switchForm(formType) {
   // Remove current form
-  const currentForm = document.querySelector(`.form-container#${state.currentForm}-form`);
+  const currentForm = document.querySelector(`.form-container`);
   if (currentForm) {
     currentForm.remove();
   }
+
   
   // Add new form
   if (formType === 'login') {
@@ -117,7 +129,7 @@ function switchForm(formType) {
       <div class="form-container" id="login-form">
         <div class="header">
           <h1>Login</h1>
-          <p>You've already taken the first step. Log in to continue healing, evolving, and becoming the version of yourself you were meant to be.</p>
+          <p>You've already taken the first step. Log in to continue healing...</p>
         </div>
         <div class="bottom">
           <div class="form-group">
@@ -128,49 +140,44 @@ function switchForm(formType) {
             <label for="login-password">Password *</label>
             <input type="password" id="login-password" required />
           </div>
-
-<div id="checkout">
-      <button>
-        <p class="text">PROCEED</p>
-        <p class="svg">>></p>
-      </button>
-    </div>
         </div>
       </div>
     `);
   } else {
-    // Recreate the register form with all its content
-    DOM.formSection.insertAdjacentHTML('beforeend', `
-      <div class="form-container active" id="register-form">
-        ${DOM.registerForm.innerHTML}
-      </div>
-    `);
+    // Clone and reinsert the original register form
+    const registerFormClone = DOM.registerForm.cloneNode(true);
+    registerFormClone.id = 'register-form';
+    registerFormClone.classList.add('active');
+    DOM.formSection.appendChild(registerFormClone);
     
-    // Reinitialize dropdown functionality for the new form
-    const newRegisterForm = document.getElementById('register-form');
-    if (newRegisterForm) {
-      // Reassign DOM elements that might have been lost
-      DOM.dropdownHeader = newRegisterForm.querySelector('#dropdownHeader');
-      DOM.dropdownOptions = newRegisterForm.querySelector('#dropdownOptions');
-      DOM.questionsContainer = newRegisterForm.querySelector('#questionsContainer');
-      DOM.chevron = newRegisterForm.querySelector('.chevron');
-      DOM.formGroup = newRegisterForm.querySelector(".form-group#session");
-      DOM.ticket = newRegisterForm.querySelector(".lower h1.ticket");
-      
-      // Reattach event listeners
-      DOM.dropdownHeader.addEventListener('click', toggleDropdown);
-      
-      // Repopulate dropdown if needed
-      populateDropdown();
-      
-      // Reselect topic if one was selected
-      if (state.selectedTopic) {
-        selectTopic(state.selectedTopic);
-      }
-    }
+    // Reinitialize dropdown functionality
+    initDropdown(registerFormClone);
   }
   
   state.currentForm = formType;
+}
+
+Add this new helper function
+function initDropdown(formElement) {
+  DOM.dropdownHeader = formElement.querySelector('#dropdownHeader');
+  DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
+  DOM.questionsContainer = formElement.querySelector('#questionsContainer');
+  DOM.chevron = formElement.querySelector('.chevron');
+  DOM.formGroup = formElement.querySelector(".form-group#session");
+  DOM.ticket = formElement.querySelector(".lower h1.ticket");
+  
+  // Reattach event listeners
+  if (DOM.dropdownHeader) {
+    DOM.dropdownHeader.addEventListener('click', toggleDropdown);
+  }
+  
+  // Repopulate dropdown
+  populateDropdown();
+  
+  // Reselect topic if one was selected
+  if (state.selectedTopic) {
+    selectTopic(state.selectedTopic);
+  }
 }
 
 // Populate the session type dropdown
@@ -244,28 +251,38 @@ function updateSessionInfo(topic) {
   if (DOM.price) DOM.price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight">EUR</span>`;
 }
 
-// Toggle dropdown visibility
-function toggleDropdown() {
-  if (!DOM.dropdownOptions || !DOM.chevron) return;
-  
-  DOM.dropdownOptions.classList.toggle('open');
-  DOM.chevron.classList.toggle('open');
-}
 
-// Close dropdown
-function closeDropdown() {
-  if (!DOM.dropdownOptions || !DOM.chevron) return;
-  
-  DOM.dropdownOptions.classList.remove('open');
-  DOM.chevron.classList.remove('open');
-}
-
-// Handle clicks outside dropdown
+// Update the handleDocumentClick function:
 function handleDocumentClick(e) {
   if (!DOM.dropdownHeader || !DOM.dropdownOptions) return;
   
-  if (!DOM.dropdownHeader.contains(e.target) {
+  const isDropdownClick = DOM.dropdownHeader.contains(e.target) || 
+                         DOM.dropdownOptions.contains(e.target);
+  
+  if (!isDropdownClick) {
     closeDropdown();
+  }
+}
+
+// Update the toggleDropdown function:
+function toggleDropdown(e) {
+  e.stopPropagation(); // Prevent event from bubbling up
+  if (!DOM.dropdownOptions || !DOM.chevron) return;
+  
+  const isOpen = DOM.dropdownOptions.classList.contains('open');
+  
+  // Close all dropdowns first
+  document.querySelectorAll('.dropdown-options.open').forEach(dropdown => {
+    dropdown.classList.remove('open');
+  });
+  document.querySelectorAll('.chevron.open').forEach(chev => {
+    chev.classList.remove('open');
+  });
+  
+  // Toggle this dropdown if it wasn't open
+  if (!isOpen) {
+    DOM.dropdownOptions.classList.add('open');
+    DOM.chevron.classList.add('open');
   }
 }
 
