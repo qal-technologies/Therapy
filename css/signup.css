@@ -470,9 +470,7 @@ div.faq-bottom .faq {
 div#checkout {
 width:100%;
   display: flex;
-  position: absolute;
-  bottom: 30px;
-  place-items: center;
+  place-content: center;
   align-items: center;
   
 }
