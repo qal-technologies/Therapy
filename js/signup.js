@@ -60,104 +60,8 @@ const DOM = {
   extra: document.querySelector("#session-plan .name .extra"),
   description: document.querySelector('#session-plan .intro'),
   formGroup: document.querySelector(".form-group#session"),
-  ticket: document.querySelector(".form-container#register-form .lower h1.ticket")
-};
-
-// Templates
-const TEMPLATES = {
-  loginForm: `
-    <div class="form-container" id="login-form">
-      <div class="header">
-        <h1>Login</h1>
-        <p>You've already taken the first step. Log in to continue healing, evolving, and becoming the version of yourself you were meant to be.</p>
-      </div>
-      <div class="bottom">
-        <div class="form-group">
-          <label for="login-email">Email *</label>
-          <input type="email" id="login-email" required />
-        </div>
-        <div class="form-group">
-          <label for="login-password">Password *</label>
-          <input type="password" id="login-password" required />
-        </div>
-      </div>
-    </div>
-  `, 
-registerForm:` <div class="form-container active" id="register-form">
-          <div class="register-upper upper">
-            <div class="header register-header">
-              <h1>Register</h1>
-              <p>Welcome! complete the form below to reserve your spot with Charlotte Casiraghi. Together you'll unlock inner peace,
-                dissolve old patterns, and step into a more empowered radiant you.</p>
-            </div>
-          
-            <div class="bottom">
-              <div class="form-group">
-                <label for="reg-email">Email *</label>
-                <input type="email" id="reg-email" required />
-              </div>
-
-              <div class="form-group">
-                <label for="firstName">First Name *</label>
-                <input type="text" id="firstName" required />
-              </div>
-
-              <div class="form-group">
-                <label for="lastName">Last Name *</label>
-                <input type="text" id="lastName" required />
-              </div>
-              
-              <div class="form-group">
-                <label for="reg-password">Password *</label>
-                <input type="password" id="reg-password" required />
-              </div>
-
-              <div class="form-group dropdown-container" id="dropdown-container">
-                <div class="dropdown-header" id="dropdownHeader">
-                  <span>Select a Session Type</span>
-                  <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </div>
-                <div class="dropdown-options" id="dropdownOptions"></div>
-                <div class="questions-container" id="questionsContainer"></div>
-              </div>
-            </div>
-
-            <div class="lower">
-              <div class="header">
-                <h1 class="ticket fadeIn">Ticket Information</h1>
-              </div>
-
-              <div class="bottom">
-                <div class="form-group" id="session">
-                  <label for="session-plan" class="moveUpNfadeIn">Event Ticket</label>
-                  <div id="session-plan" class="moveUpNfadeIn">
-                    <div class="upper">
-                      <div class="image">
-                        <img src="/src/images/logo.jpg" alt="" srcset="">
-                      </div>
-                      <div class="name">
-                        <p class="title">Virtual Session</p>
-                        <p class="extra"></p>
-                      </div>
-                    </div>
-                    <div class="lower">
-                      <p class="intro"></p>
-                      <p class="price">&euro; 800.00<span class="highlight">EUR</span></p>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="adminCode">Admin Code (Optional)</label>
-                  <input type="text" id="adminCode" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>`,
+  ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
+  registerForm: document.getElementById('register-form')
 };
 
 // State Management
@@ -189,7 +93,7 @@ function handleTabClick(e) {
   const tab = e.currentTarget;
   const formToShow = tab.dataset.form;
   
-  if (tab.classList.contains('active') return;
+  if (tab.classList.contains('active') || formToShow === state.currentForm) return;
   
   // Update UI
   document.querySelector('.tab.active').classList.remove('active');
@@ -209,9 +113,54 @@ function switchForm(formType) {
   
   // Add new form
   if (formType === 'login') {
-    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATES.loginForm);
+    DOM.formSection.insertAdjacentHTML('beforeend', `
+      <div class="form-container" id="login-form">
+        <div class="header">
+          <h1>Login</h1>
+          <p>You've already taken the first step. Log in to continue healing, evolving, and becoming the version of yourself you were meant to be.</p>
+        </div>
+        <div class="bottom">
+          <div class="form-group">
+            <label for="login-email">Email *</label>
+            <input type="email" id="login-email" required />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password *</label>
+            <input type="password" id="login-password" required />
+          </div>
+        </div>
+      </div>
+    `);
   } else {
-    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATES.registerForm);
+    // Recreate the register form with all its content
+    DOM.formSection.insertAdjacentHTML('beforeend', `
+      <div class="form-container active" id="register-form">
+        ${DOM.registerForm.innerHTML}
+      </div>
+    `);
+    
+    // Reinitialize dropdown functionality for the new form
+    const newRegisterForm = document.getElementById('register-form');
+    if (newRegisterForm) {
+      // Reassign DOM elements that might have been lost
+      DOM.dropdownHeader = newRegisterForm.querySelector('#dropdownHeader');
+      DOM.dropdownOptions = newRegisterForm.querySelector('#dropdownOptions');
+      DOM.questionsContainer = newRegisterForm.querySelector('#questionsContainer');
+      DOM.chevron = newRegisterForm.querySelector('.chevron');
+      DOM.formGroup = newRegisterForm.querySelector(".form-group#session");
+      DOM.ticket = newRegisterForm.querySelector(".lower h1.ticket");
+      
+      // Reattach event listeners
+      DOM.dropdownHeader.addEventListener('click', toggleDropdown);
+      
+      // Repopulate dropdown if needed
+      populateDropdown();
+      
+      // Reselect topic if one was selected
+      if (state.selectedTopic) {
+        selectTopic(state.selectedTopic);
+      }
+    }
   }
   
   state.currentForm = formType;
@@ -219,6 +168,8 @@ function switchForm(formType) {
 
 // Populate the session type dropdown
 function populateDropdown() {
+  if (!DOM.dropdownOptions) return;
+  
   DOM.dropdownOptions.innerHTML = '';
   
   Object.entries(TOPICS_DATA).forEach(([key, topic]) => {
@@ -234,12 +185,22 @@ function populateDropdown() {
 // Select a topic from the dropdown
 function selectTopic(topicKey) {
   const topic = TOPICS_DATA[topicKey];
+  if (!topic) return;
+  
   state.selectedTopic = topicKey;
   
   // Update UI
-  DOM.dropdownHeader.querySelector('span').textContent = topic.name;
-  DOM.formGroup.style.display = "block";
-  DOM.ticket.style.display = "block";
+  if (DOM.dropdownHeader) {
+    DOM.dropdownHeader.querySelector('span').textContent = topic.name;
+  }
+  
+  if (DOM.formGroup) {
+    DOM.formGroup.style.display = "block";
+  }
+  
+  if (DOM.ticket) {
+    DOM.ticket.style.display = "block";
+  }
   
   // Update questions
   renderQuestions(topic);
@@ -252,6 +213,8 @@ function selectTopic(topicKey) {
 
 // Render questions for selected topic
 function renderQuestions(topic) {
+  if (!DOM.questionsContainer) return;
+  
   DOM.questionsContainer.innerHTML = `<p class="description">${topic.description}</p>`;
   
   topic.questions.forEach((question, index) => {
@@ -265,31 +228,39 @@ function renderQuestions(topic) {
 
 // Update session information display
 function updateSessionInfo(topic) {
-  DOM.title.textContent = topic.name;
-  DOM.extra.textContent = topic.extra || '';
-  DOM.extra.style.display = topic.extra ? "block" : "none";
-  DOM.description.textContent = topic.info;
-  DOM.price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight">EUR</span>`;
+  if (DOM.title) DOM.title.textContent = topic.name;
+  if (DOM.extra) {
+    DOM.extra.textContent = topic.extra || '';
+    DOM.extra.style.display = topic.extra ? "block" : "none";
+  }
+  if (DOM.description) DOM.description.textContent = topic.info;
+  if (DOM.price) DOM.price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight">EUR</span>`;
 }
 
 // Toggle dropdown visibility
 function toggleDropdown() {
+  if (!DOM.dropdownOptions || !DOM.chevron) return;
+  
   DOM.dropdownOptions.classList.toggle('open');
   DOM.chevron.classList.toggle('open');
 }
 
 // Close dropdown
 function closeDropdown() {
+  if (!DOM.dropdownOptions || !DOM.chevron) return;
+  
   DOM.dropdownOptions.classList.remove('open');
   DOM.chevron.classList.remove('open');
 }
 
 // Handle clicks outside dropdown
 function handleDocumentClick(e) {
+  if (!DOM.dropdownHeader || !DOM.dropdownOptions) return;
+  
   if (!DOM.dropdownHeader.contains(e.target) {
     closeDropdown();
   }
 }
 
 // Initialize the application when DOM is loaded
-window.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init);
