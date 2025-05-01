@@ -123,7 +123,6 @@ function switchForm(formType) {
   if (currentForm) {
     currentForm.remove();
   }
-
   
   // Add new form
   if (formType === 'login') {
@@ -147,10 +146,7 @@ function switchForm(formType) {
     `);
   } else {
     // Clone and reinsert the original register form
-    const registerFormClone = DOM.registerForm.cloneNode(true);
-    registerFormClone.id = 'register-form';
-    registerFormClone.classList.add('active');
-    DOM.formSection.appendChild(registerFormClone);
+    DOM.formSection.insertAdjacentHTML('beforeend', state.originalRegisterFormHTML);
     
     // Reinitialize dropdown functionality
     initDropdown(registerFormClone);
@@ -158,6 +154,7 @@ function switchForm(formType) {
   
   state.currentForm = formType;
 }
+
 
 Add this new helper function
 function initDropdown(formElement) {
@@ -266,6 +263,7 @@ function handleDocumentClick(e) {
   }
 }
 
+
 // Update the toggleDropdown function:
 function toggleDropdown(e) {
   e.stopPropagation(); // Prevent event from bubbling up
@@ -274,10 +272,10 @@ function toggleDropdown(e) {
   const isOpen = DOM.dropdownOptions.classList.contains('open');
   
   // Close all dropdowns first
-  document.querySelectorAll('.dropdown-options.open').forEach(dropdown => {
+  formElement.querySelectorAll('.dropdown-options.open').forEach(dropdown => {
     dropdown.classList.remove('open');
   });
-  document.querySelectorAll('.chevron.open').forEach(chev => {
+  formElement.querySelectorAll('.chevron.open').forEach(chev => {
     chev.classList.remove('open');
   });
   
