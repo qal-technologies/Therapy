@@ -1,3 +1,4 @@
+alert('beginning');
 // Constants
 const TOPICS_DATA = {
   virtual: {
@@ -75,6 +76,7 @@ const state = {
 // Initialize the application
 // Update the init function:
 function init() {
+alert('inside');
   // Store original register form HTML before any manipulation
   if (DOM.registerForm) {
     state.originalRegisterFormHTML = DOM.registerForm.outerHTML;
@@ -287,4 +289,4 @@ function toggleDropdown(e) {
 }
 
 // Initialize the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', init());
