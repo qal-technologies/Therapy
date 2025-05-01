@@ -471,7 +471,7 @@ div#checkout {
   display: flex;
   position: absolute;
   bottom: 30px;
-  right: 30px;
+  place-self: center;
   box-shadow: 0px 4px 10px var(--accent);
   border-radius: 20px;
   align-items: center;
