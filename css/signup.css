@@ -480,6 +480,7 @@ width:100%;
 div#checkout button{
 background-color: var(--link);
   padding: 8px;
+width: max-content;
   padding-inline: 15px;
 text-align: center;
 box-shadow: 0px 4px 10px var(--accent);
