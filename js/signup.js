@@ -85,7 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const chevron = document.querySelector('.chevron');
     const price = document.querySelector("#session-plan .price");
     const title = document.querySelector("#session-plan .title");
-const description= document.querySelector('#session-plan . description');
+const description= document.querySelector('#session-plan .intro');
     const formGroup = document.querySelector(".form-group#session");
 const ticket = document.querySelector(".form-container#register-form .lower h1.ticket");
 
