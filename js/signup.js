@@ -4,6 +4,8 @@ const topicsData = {
         name: "VIRTUAL SESSION",
         price: "800",
         description: "Let's make your screen disappear",
+info:
+            "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
         questions: [
             "Do you feel most emotionally open in the morning, afternoon, or evening?",
             "Would you like Charlotte to begin with a calming 90-second grounding exercise just for you?",
@@ -14,6 +16,8 @@ const topicsData = {
         name: "IN-PERSON SESSION (EUROPE/MONACO)",
         price: "1600",
         description: "Let's prepare your sanctuary",
+info:
+            "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
         questions: [
             "Do you have any dietary preferences or allergies we should consider while preparing your welcome refreshment?",
             "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
@@ -24,6 +28,8 @@ const topicsData = {
         name: "SPONSORED SUPPORT SESSION",
         price: "550",
         description: "Your story matters, Let's begin ",
+info:
+            "For those who seek not just a session, but a sanctuary.",
         questions: [
             "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
             "Is there one thing you've been carrying alone that you wish someone would simply hear - without trying to fix?",
@@ -33,6 +39,8 @@ const topicsData = {
     "inner": {
         name: "INNER CIRCLE EXPERIENCE",
         description: "A sanctuary made just for your soul",
+infi:
+            "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
         price: "6,850",
         questions: [
             "If you could name this season of your life in one word, what would it be - and why?",
