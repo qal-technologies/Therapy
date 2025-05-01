@@ -1,26 +1,29 @@
+const header = document.querySelector("header#header");
+
 window.onload = () => {
-    let user = false;
+    let user = true;
 
     const year = document.querySelector("footer span#year");
 
 
     const date = new Date().getFullYear();
-    year.innerHTML = date;
+    if (year) year.innerHTML = date;
 
 
     const actionTab = document.querySelector("a.login");
-    const header = document.querySelector("header#header");
     const menu = document.querySelector("header#header div#menu");
 
-    const actionText = actionTab.firstElementChild;
 
     if (user) {
+        if (actionTab) {
+            const actionText = actionTab.firstElementChild;
         actionTab.href = "/html//main/User.html";
         actionText.innerHTML = "PROFILE";
     }
+    }
 
     let show = false;
-    menu.addEventListener("click", () => {
+    menu && menu.addEventListener("click", () => {
         if (!show) {
             header.classList.add("heightShow");
             menu.innerHTML = `
@@ -62,7 +65,6 @@ window.onload = () => {
         const ticker = document.getElementById('ticker');
         let tickerWidth = 0;
         let animationFrame;
-
         function createTicker() {
             ticker.innerHTML = '';
             tickerWidth = 0;
@@ -96,7 +98,7 @@ window.onload = () => {
             animate();
         }
 
-        createTicker();
+        ticker && createTicker();
 
         window.addEventListener('unload', () => {
             cancelAnimationFrame(animationFrame);
@@ -106,7 +108,7 @@ window.onload = () => {
     initTicker();
 }
 
-    window.onresize = () => {
+window.onresize = () => {
         const navWidth = header.clientWidth;
 
         if (navWidth >= 800) {

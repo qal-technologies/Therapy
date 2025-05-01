@@ -1,0 +1,318 @@
+:root {
+    --success: #4cc9f0;
+    --warning: #f8961e;
+    --danger: #f94144;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: PoppinsLight, PoppinsMed;
+}
+
+/* User Profile Section */
+.profile-section {
+    background: var(--primaryTrans);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+.profile-info h2 {
+    margin-bottom: 0.5rem;
+    color: var(--link);
+    font-family: PoppinsSemi;
+}
+
+.profile-info p {
+    color: var(--gray);
+}
+
+/* Payments Section */
+.payments-section {
+    background: var(--primaryTrans);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    color: var(--link);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    width: 100%;
+    font-family: PoppinsSemi;
+}
+
+.payments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.payment-card {
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    background: var(--primary);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.payment-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.06);
+}
+
+.payment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.payment-code {
+    color: var(--dark);
+    font-family: PoppinsSemi;
+}
+
+.payment-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-family: PoppinsSemi;
+}
+
+.status-completed {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-failed {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.payment-details {
+    margin-top: 1rem;
+    font-family: PoppinsLight;
+}
+
+.payment-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.detail-label {
+    color: var(--gray);
+}
+
+.detail-value {
+    font-family: PoppinsMed;
+}
+
+/* Payslip Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+    background: white;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    padding: 2rem;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+}
+
+.payslip-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.payslip-title {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.payslip-details {
+    margin-bottom: 2rem;
+}
+
+.payslip-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+
+section#faq {
+    width: 100%;
+    padding: 10px;
+    padding-block: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: var(--primaryTrans);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 20px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+}
+
+#faq .title {
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    font-family: PoppinsSemi;
+    font-size: 1.6rem;
+}
+
+#faq .answers {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    padding: 10px;
+    max-width: 900px;
+    margin-bottom: 5px;
+}
+
+#faq .answers .answer {
+    width: 100%;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+}
+
+#faq .answers .answer .upper {
+    cursor: pointer;
+    padding-inline-end: 5px;
+    padding-block: 5px;
+    border-bottom: 2px solid var(--link);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+#faq .answer .upper p {
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    font-family: PoppinsMed;
+}
+
+#faq .answer .upper .plus {
+    font-size: 20px;
+    color: var(--mainText);
+}
+
+#faq .answer .lower {
+    overflow: hidden;
+    padding-top: 10px;
+    max-height: 0px;
+    font-size: 1rem;
+    font-family: PoppinsLight;
+    letter-spacing: 0.2px;
+    color: var(--mainText);
+    display: flex;
+    flex-direction: column;
+}
+
+#faq .answer .lower a.extra {
+    width: 100%;
+    text-align: center;
+    color: var(--link);
+    font-family: PoppinsMed;
+}
+
+#faq .bottom {
+    min-width: 100%;
+    font-size: 1rem;
+    color: black;
+    padding: 8px;
+    text-align: center;
+    padding-block: 15px;
+}
+
+#faq .bottom span.highlight {
+    text-decoration: underline;
+    color: var(--link);
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .profile-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .payments-grid {
+        grid-template-columns: 1fr;
+    }
+}

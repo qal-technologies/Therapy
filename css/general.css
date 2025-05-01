@@ -24,12 +24,10 @@
   --accent: #d8acac;
   --accentTrans: rgba(232, 195, 195, 0.4);
   --gradient-color: linear-gradient(var(--primaryTrans), var(--accentTrans));
-  --circle-gradient-color: radial-gradient(
-    rgba(255, 255, 255, 0.92),
-    rgba(255, 255, 255, 0.72),
-    rgba(255, 255, 255, 0.42),
-    var(--primary)
-  );
+  --circle-gradient-color: radial-gradient(rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.72),
+      rgba(255, 255, 255, 0.42),
+      var(--primary));
   --mainText: #3a3a3a;
   --highlight: #d4af37;
   --link: #8b5e5a;
@@ -62,7 +60,7 @@ div#body {
   overflow-y: auto;
   height: 100%;
   position: relative;
-    z-index: -99999999;
+  z-index: -99999999;
   user-select: none;
 }
 
@@ -272,18 +270,20 @@ span.highlight {
   font-family: PoppinsSemi;
   color: var(--highlight);
 }
+
 span.link {
   font-family: PoppinsSemi;
-  color: var(--link);text-decoration: underline;
+  color: var(--link);
+  text-decoration: underline;
 }
 
-span.bold{
+span.bold {
   font-weight: bold;
   font-family: PoppinsSemi;
 }
 
 
-footer{
+footer {
   width: 100%;
   padding-inline: 10%;
   padding-top: 40px;
@@ -295,7 +295,7 @@ footer{
   align-items: center;
 }
 
-footer div.upper{
+footer div.upper {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -305,7 +305,7 @@ footer div.upper{
   justify-content: space-between;
 }
 
-footer p.name{
+footer p.name {
   font-size: 2rem;
   width: 100%;
   max-width: 350px;
@@ -313,7 +313,7 @@ footer p.name{
   color: var(--accent);
 }
 
-footer .navs{
+footer .navs {
   width: 100%;
   padding-inline: 5px;
   max-width: 450px;
@@ -323,16 +323,16 @@ footer .navs{
   margin-block: 5px;
 }
 
-footer .navs a.nav{
+footer .navs a.nav {
   max-width: max-content;
   font-family: PoppinsMed;
   letter-spacing: 0.5px;
   color: var(--primary);
-    cursor: pointer;
-    font-size: 1.2rem;
+  cursor: pointer;
+  font-size: 1.2rem;
 }
 
-footer .navs a.nav.login{
+footer .navs a.nav.login {
   width: 60%;
   max-width: 150px;
   padding: 6px;
@@ -342,26 +342,26 @@ footer .navs a.nav.login{
   margin-block: 5px;
 }
 
-footer .navs a.nav.login p.login-text{
-   color: black;
+footer .navs a.nav.login p.login-text {
+  color: black;
   font-family: PoppinsSemi;
   text-align: center;
 }
 
 footer div#bottom {
   width: 100%;
-  max-width: 400px ;
+  max-width: 400px;
   padding: 20px;
 }
 
-footer div#bottom div#contacts a.icons svg{
+footer div#bottom div#contacts a.icons svg {
   fill: white;
   cursor: pointer;
   width: 25px;
   height: 25px;
 }
 
-footer .copyright{
+footer .copyright {
   min-width: 100%;
   padding: 20px;
   place-content: center;
@@ -374,7 +374,81 @@ footer .copyright{
   from {
     height: 80px;
   }
+
   to {
     height: 480px;
+  }
+}
+
+section#newsletter {
+  background: rgba(255, 241, 220, 0.541);
+  padding-block: 10%;
+  width: 100%;
+  padding-inline: 10px;
+  display: flex;
+  place-content: center;
+}
+
+#newsletter .container {
+  max-width: 800px;
+  text-align: center;
+}
+
+#newsletter h2 {
+  color: var(--link);
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-family: PoppinsSemi;
+}
+
+#newsletter .subtext {
+  color: var(--mainText);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.newsletter-form input {
+  width: 100%;
+  max-width: 500px;
+  padding: 0.5rem;
+  border: 1.5px solid var(--link);
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+.newsletter-form button {
+  background: var(--link);
+  color: white;
+  padding: 0.2rem 1.2rem;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background: var(--highlight);
+}
+
+@media (max-width: 768px) {
+  .newsletter-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    max-width: none;
   }
 }

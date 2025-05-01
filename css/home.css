@@ -113,6 +113,7 @@ div#banner-upper div.message {
   font-family: PoppinsSemi;
   padding-inline-start: 10px;
 }
+
 div#banner-upper .message button, #sessions div.upper-title .player button {
   display: flex;
   z-index: 99;
@@ -197,7 +198,7 @@ div#bottom div#contacts {
   gap: 1px;
 }
 
-div#bottom div#contacts  a.icons svg {
+div#bottom div#contacts a.icons svg {
   fill: var(--link);
   width: 20px;
   height: 20px;
@@ -230,13 +231,14 @@ section.testimonies {
   height: max-content;
 }
 
-#testimonies2 div.upper-title{
+#testimonies2 div.upper-title {
   min-width: 100%;
   padding: 10px;
   place-content: center;
   align-items: center;
 }
-#testimonies2 div.upper-title p{
+
+#testimonies2 div.upper-title p {
   text-align: center;
   font-family: PoppinsSemi;
   color: var(--link);
@@ -292,10 +294,10 @@ section#sessions {
   padding-block: 5%;
   background: var(--primary);
   backdrop-filter: blur(20px);
-    padding-bottom: 150px;
+  padding-bottom: 150px;
 }
 
-#sessions div.upper-title{
+#sessions div.upper-title {
   min-width: 100%;
   display: flex;
   flex-direction: column;
@@ -304,12 +306,12 @@ section#sessions {
   text-align: center;
 }
 
-#sessions div.upper-title p.text{
+#sessions div.upper-title p.text {
   font-size: 1.4rem;
   font-family: PoppinsMed;
 }
 
-#sessions div.upper-title .player{
+#sessions div.upper-title .player {
   place-self: center;
   width: 80%;
   max-width: 250px;
@@ -484,8 +486,8 @@ div#session.virtual .upper {
 }
 
 #session .bonus svg.check {
- width: 20px;
- height:20px;
+  width: 20px;
+  height: 20px;
   fill: var(--link);
 }
 
@@ -497,16 +499,16 @@ div#session.virtual .upper {
   font-family: PoppinsMed;
 }
 
-#session #waitlist{
+#session #waitlist {
   display: none;
 }
 
-#session #waitlist.inner{
+#session #waitlist.inner {
   display: flex;
   align-self: center;
 }
 
-#session #waitlist.inner button{
+#session #waitlist.inner button {
   margin-top: 5px;
   border: 2px solid var(--link);
   border-radius: 15px;
@@ -518,47 +520,47 @@ div#session.virtual .upper {
 
 /* TV Ticker Styles */
 .ticker-container {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    height: 50px;
-    background: var(--link);
-    color: white;
-    overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  background: var(--link);
+  color: white;
+  overflow: hidden;
 }
 
 .ticker {
-    display: flex;
-    white-space: nowrap;
-    align-items: center;
-    position: absolute;
-    transform: translateY(-50%);
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  position: absolute;
+  transform: translateY(-50%);
 }
 
 .ticker-item {
   padding-inline: 50px;
-    display: inline-block;
-    font-size: 1.1rem;
-    color: var(--primary);
-    font-family: PoppinsMed;
-    border-right: 1px solid var(--accentTrans);
+  display: inline-block;
+  font-size: 1.1rem;
+  color: var(--primary);
+  font-family: PoppinsMed;
+  border-right: 1px solid var(--accentTrans);
 }
 
 @media (max-width: 768px) {
-    .ticker-container {
-        height: 40px;
-        margin: 2rem 0;
-    }
-    
-    .ticker-item {
-        font-size: 0.9rem;
-        margin-right: 30px;
-    }
+  .ticker-container {
+    height: 40px;
+    margin: 2rem 0;
+  }
+
+  .ticker-item {
+    font-size: 0.9rem;
+    margin-right: 30px;
+  }
 }
 
-section#why{
+section#why {
   width: 95%;
   place-self: center;
   padding-block: 5%;
@@ -569,7 +571,7 @@ section#why{
   gap: 10px;
 }
 
-section#why .upper-title{
+section#why .upper-title {
   width: 100%;
   padding: 10px;
   font-family: PoppinsSemi;
@@ -580,7 +582,7 @@ section#why .upper-title{
   color: black;
 }
 
-#why .note{
+#why .note {
   width: 80%;
   place-self: center;
   text-align: left;
@@ -589,19 +591,19 @@ section#why .upper-title{
   display: flex;
   flex-direction: column;
   gap: 10px;
-font-size: 18px;
+  font-size: 18px;
 }
 
-#why .note p.upper{
- text-align: left;
- margin-bottom: 20px;
+#why .note p.upper {
+  text-align: left;
+  margin-bottom: 20px;
 }
 
-#why .note span.second{
+#why .note span.second {
   margin-bottom: 10px;
 }
 
-#why .note .list{
+#why .note .list {
   display: flex;
   margin-top: -10px;
   flex-direction: column;
@@ -611,12 +613,12 @@ font-size: 18px;
   gap: 10px;
 }
 
-#why p.last{
+#why p.last {
   text-align: left;
   margin-block: 10px;
 }
 
-#why div.button{
+#why div.button {
   width: 100%;
   place-content: center;
   display: flex;
@@ -624,7 +626,7 @@ font-size: 18px;
   padding-block: 10px;
 }
 
-#why .button a.register{
+#why .button a.register {
   width: 70%;
   max-width: 200px;
   border-radius: 20px;
@@ -635,12 +637,12 @@ font-size: 18px;
   font-family: PoppinsSemi;
 }
 
-#why .button a.register:hover{
+#why .button a.register:hover {
   transform: scale(105%);
   box-shadow: 1px 1px 10px var(--highlight);
 }
 
-section#timeout{
+section#timeout {
   width: 100%;
   padding: 10px;
   padding-block: 5%;
@@ -653,14 +655,14 @@ section#timeout{
   font-family: PoppinsMed;
 }
 
-#timeout p.text{
+#timeout p.text {
   color: var(--primary);
   font-size: 2rem;
   font-family: PoppinsSemi;
   letter-spacing: 1px;
 }
 
-#timeout p.sub-text{
+#timeout p.sub-text {
   font-size: 1.5rem;
   color: rgb(221, 221, 221);
   margin-top: -10px;
@@ -673,7 +675,7 @@ section#timeout{
   padding-block: 10px;
 }
 
-#timeout .button a{
+#timeout .button a {
   width: 70%;
   max-width: 300px;
   background-color: var(--primary);
@@ -685,7 +687,7 @@ section#timeout{
   letter-spacing: 1px;
 }
 
-section#faq{
+section#faq {
   width: 100%;
   padding: 10px;
   padding-block: 5%;
@@ -698,7 +700,7 @@ section#faq{
   justify-content: space-evenly;
 }
 
-#faq .title{
+#faq .title {
   width: 100%;
   max-width: 350px;
   text-align: center;
@@ -706,7 +708,7 @@ section#faq{
   font-size: 1.6rem;
 }
 
-#faq .answers{
+#faq .answers {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -715,7 +717,7 @@ section#faq{
   max-width: 900px;
 }
 
-#faq .answers .answer{
+#faq .answers .answer {
   width: 100%;
   display: flex;
   height: auto;
@@ -723,7 +725,7 @@ section#faq{
   align-items: center;
 }
 
-#faq .answers .answer .upper{
+#faq .answers .answer .upper {
   cursor: pointer;
   padding-inline-end: 5px;
   padding-block: 5px;
@@ -736,18 +738,18 @@ section#faq{
   gap: 15px;
 }
 
-#faq .answer .upper p{
+#faq .answer .upper p {
   font-size: 1.2rem;
   line-height: 1.4rem;
   font-family: PoppinsMed;
 }
 
-#faq .answer .upper .plus{
+#faq .answer .upper .plus {
   font-size: 20px;
   color: var(--mainText);
 }
 
-#faq .answer .lower{
+#faq .answer .lower {
   overflow: hidden;
   padding-top: 10px;
   max-height: 0px;
@@ -759,14 +761,14 @@ section#faq{
   flex-direction: column;
 }
 
-#faq .answer .lower a.extra{
+#faq .answer .lower a.extra {
   width: 100%;
   text-align: center;
   color: var(--link);
   font-family: PoppinsMed;
 }
 
-#faq .bottom{
+#faq .bottom {
   min-width: 100%;
   font-size: 1rem;
   color: black;
@@ -781,7 +783,7 @@ section#faq{
   cursor: pointer;
 }
 
-section#discover{
+section#discover {
   padding-block: 10%;
   width: 100%;
   background: rgba(255, 252, 250, 0.85);
@@ -790,7 +792,7 @@ section#discover{
   place-content: center;
 }
 
-#discover div.parent{
+#discover div.parent {
   width: 90%;
   max-width: 1000px;
   padding: 2.5rem;
@@ -805,7 +807,7 @@ section#discover{
   min-height: 200px;
 }
 
-#discover div.parent p{
+#discover div.parent p {
   text-align: left;
   font-size: 1.4rem;
   font-family: PoppinsLight;
@@ -813,7 +815,7 @@ section#discover{
 
 #discover .parent a {
   cursor: pointer;
-  border:none;
+  border: none;
   background-color: var(--link);
   border-radius: 30px;
   padding: 10px;
