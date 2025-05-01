@@ -464,19 +464,23 @@ div.faq-bottom .faq {
 }
 
 div#checkout {
-  background-color: var(--link);
-  padding: 8px;
-  padding-inline: 15px;
-  text-align: center;
+width:100%;
   display: flex;
   position: absolute;
   bottom: 30px;
-  place-self: center;
-right:50%;
-  box-shadow: 0px 4px 10px var(--accent);
-  border-radius: 20px;
+  place-items: center;
   align-items: center;
-  color: white;
+  
+}
+
+div#checkout button{
+background-color: var(--link);
+  padding: 8px;
+  padding-inline: 15px;
+text-align: center;
+box-shadow: 0px 4px 10px var(--accent);
+  border-radius: 20px;
+color: white;
   gap: 10px;
 }
 
