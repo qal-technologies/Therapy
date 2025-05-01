@@ -126,7 +126,7 @@ ticket.style.display = "block";
         });
 
         title.textContent = topic.name;
-        price.innerHTML = `&euro; ${topic.price}.00`;
+        price.innerHTML = `&euro; ${topic.price}.00 <span>EUR</span>`;
     }
 
     function toggleDropdown() {
