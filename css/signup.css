@@ -309,6 +309,8 @@ flex-wrap:wrap;
 
 #session-plan p.price {
 display: flex;
+gap:5px;
+width:max-content;
   margin-top: 10px;
   font-size: 22px;
   font-family: PoppinsSemi;
