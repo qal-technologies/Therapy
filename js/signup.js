@@ -29,7 +29,7 @@ info:
         price: "550",
         description: "Your story matters, Let's begin ",
 info:
-            "For those who seek not just a session, but a sanctuary.",
+            "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
         questions: [
             "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
             "Is there one thing you've been carrying alone that you wish someone would simply hear - without trying to fix?",
@@ -39,8 +39,8 @@ info:
     "inner": {
         name: "INNER CIRCLE EXPERIENCE",
         description: "A sanctuary made just for your soul",
-infi:
-            "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
+info:
+            "For those who seek not just a session, but a sanctuary.",
         price: "6,850",
         questions: [
             "If you could name this season of your life in one word, what would it be - and why?",
