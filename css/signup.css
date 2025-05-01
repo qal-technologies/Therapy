@@ -43,6 +43,7 @@ header.header h1 {
   font-size: 3rem;
   margin-bottom: 0.8rem;
   color: var(--link);
+line-height:2.8rem;
   text-align: center;
   margin-bottom: 30px;
   font-family: PoppinsSemi;
@@ -66,6 +67,7 @@ header.header h3 {
   font-family: PoppinsMed;
   color: var(--mainText);
   font-size: 2rem;
+line-height:1.8rem;
 }
 
 .container {
