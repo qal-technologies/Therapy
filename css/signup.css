@@ -280,6 +280,12 @@ flex-wrap:wrap;
   align-items: center;
 }
 
+#session-plan .name{
+display:flex;
+flex-direction: column;
+align-items:center;
+justify-content: flex-start;
+}
 
 #session-plan .title {
   display: flex;
