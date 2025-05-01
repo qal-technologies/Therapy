@@ -1,4 +1,4 @@
-alert('beginning');
+
 // Constants
 const TOPICS_DATA = {
   virtual: {
@@ -49,6 +49,7 @@ const TOPICS_DATA = {
 };
 
 window.onload = ()=>{
+alert('beginning');
 // DOM Elements
 const DOM = {
   tabs: document.querySelectorAll('.tab'),
