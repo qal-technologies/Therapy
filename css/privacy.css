@@ -1,0 +1,53 @@
+section.privacy1, section.privacy2 {
+    padding: 5%;
+    width: 100%;
+    background: var(--primary);
+}
+
+section#discover {
+    padding-block: 10%;
+    width: 100%;
+    background: rgba(255, 252, 250, 0.85);
+    padding-inline: 10px;
+    display: flex;
+    place-content: center;
+}
+
+#discover div.parent {
+    width: 90%;
+    max-width: 1000px;
+    padding: 2.5rem;
+    border: 2px solid var(--link);
+    background: var(--accentTrans);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    justify-content: center;
+    gap: 2rem;
+    min-height: 200px;
+}
+
+#discover div.parent p {
+    text-align: left;
+    font-size: 1.4rem;
+    font-family: PoppinsLight;
+}
+
+#discover .parent a {
+    cursor: pointer;
+    border: none;
+    background-color: var(--link);
+    border-radius: 30px;
+    padding: 10px;
+    padding-inline: 15px;
+    width: 80%;
+    max-width: 300px;
+    place-self: center;
+    color: var(--primary);
+    font-size: 16px;
+    font-family: PoppinsSemi;
+    text-align: center;
+    display: flex;
+    place-content: center
+}

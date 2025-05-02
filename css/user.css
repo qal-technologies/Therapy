@@ -21,6 +21,7 @@
     border-radius: 15px;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
     padding: 2rem;
+    padding-inline: 2.5rem;
     margin-bottom: 2rem;
     display: flex;
     align-items: center;
@@ -55,16 +56,15 @@
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
-    padding: 2rem;
+    padding: 1.5rem;
     margin-bottom: 2rem;
 }
 
 .section-title {
     font-size: 1.6rem;
-    margin-bottom: 1.5rem;
     color: var(--link);
     border-bottom: 2px solid var(--accent);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.4rem;
     width: 100%;
     font-family: PoppinsSemi;
 }
