@@ -64,29 +64,6 @@ div#body {
   user-select: none;
 }
 
-/* for main company tag style  */
-div#company {
-  position: absolute;
-  bottom: 10%;
-  display: grid;
-  place-content: center;
-  padding: 10px;
-  width: 100%;
-}
-
-#company p#developed {
-  font-size: x-small;
-  user-select: none;
-  display: grid;
-  text-align: center;
-}
-
-#company-name {
-  text-align: center;
-  font-family: PoppinsMed;
-  color: var(--link);
-}
-
 a#scrollUp {
   position: absolute;
   background: var(--gradient-color);

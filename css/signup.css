@@ -334,7 +334,9 @@ div#session-plan .image img {
 
 div.faq-bottom {
   width: 100%;
+  max-width: 750px;
   padding: 1rem;
+  place-self: center;
   padding-block: 1.4rem;
   text-align: center;
   place-content: center;
@@ -382,7 +384,7 @@ div.faq-bottom .faq {
   right: 0;
   background: #fff;
   border-radius: 15px;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
   max-height: 0;
   width: 100%;
   margin-block: 8px;
@@ -416,7 +418,7 @@ div.faq-bottom .faq {
   margin-top: 5px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .questions-container p.description {
@@ -434,17 +436,11 @@ div.faq-bottom .faq {
   flex-direction: row;
   background: #fff;
   border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  padding: 10px;
   transform: translateY(20px);
   opacity: 0;
   animation: fadeInUp 0.4s ease forwards;
   transition: all 0.3s ease;
-}
-
-.question-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
 }
 
 @keyframes fadeInUp {
@@ -465,7 +461,7 @@ div.faq-bottom .faq {
 div#checkout {
   width: 100%;
   display: flex;
-  place-content: flex-end;
+  place-content: center;
   align-items: center;
   padding-block: 10px;
 }
@@ -497,4 +493,41 @@ div#checkout button:hover {
   color: black;
   transform: scale(105%);
   box-shadow: 0px 4px 10px var(--accent);
+}
+
+div.bottom.privacy {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  padding-top: 20px;
+  place-items: center;
+  align-items: center;
+  justify-content: center;
+}
+
+div.privacy-policy {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem;
+  border: 1px solid var(--link);
+  background-color: var(--accentTrans);
+  color: var(--mainText);
+  border-radius: 15px;
+  line-height: 20px;
+  font-size: 14px;
+  display: flex;
+  place-self: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+div.privacy-policy a {
+  width: max-content;
+  padding-inline: 15px;
+  padding-block: 5px;
+  border: 1.8px solid var(--link);
+  border-radius: 8px;
+  color: var(--link);
+  font-family: PoppinsMed;
 }
