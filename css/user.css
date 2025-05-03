@@ -63,6 +63,7 @@ font-size:16px;
 
 /* Payments Section */
 .payments-section {
+align-self:center;
     background: var(--primaryTrans);
     backdrop-filter: blur(10px);
     border-radius: 20px;
