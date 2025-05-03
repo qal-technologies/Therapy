@@ -331,7 +331,6 @@ footer .navs a.nav.login {
 
 footer div.others a{
 width: max-content;
-padding:10px;
 padding-inline:20px;
 border-right:1px solid var(--primaryTrans);
 color:white;
