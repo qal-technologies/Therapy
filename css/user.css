@@ -22,8 +22,9 @@
     padding: 2rem;
     padding-inline: 2.5rem;
     margin-bottom: 1.5rem;
-margin-inline:1.5rem;
+margin-inline:1.2rem;
     display: flex;
+margin-top:0.8rem
     align-items: center;
     gap: 2rem;
 overflow:hidden;
@@ -57,7 +58,7 @@ font-size:16px;
 
 /* Payments Section */
 .payments-section {
-margin-inline:1.5rem;
+margin-inline:1.2rem;
     background: var(--primaryTrans);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -208,7 +209,7 @@ margin-bottom:15px
 
 section#faq {
 overflow:hidden;
-margin-inline:1.5rem;
+margin-inline:1.2rem;
     width: 100%;
     padding: 10px;
     padding-block: 5%;
@@ -315,7 +316,7 @@ overflow:hidden;
     padding: 2rem;
     color: var(--primary);
     font-size: 0.9rem;
-margin-inline:1.5rem;
+margin-inline:1.2rem;
 }
 
 @media (max-width: 768px) {
