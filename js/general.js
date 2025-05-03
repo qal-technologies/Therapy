@@ -11,7 +11,7 @@ window.onload = () => {
 
 
     const actionTab = document.querySelector("a.login");
-const actionTab2 = document.querySelector("a#login");
+
 
     const menu = document.querySelector("header#header div#menu");
 
@@ -20,12 +20,6 @@ const actionTab2 = document.querySelector("a#login");
         if (actionTab) {
             const actionText = actionTab.firstElementChild;
         actionTab.href = "/html//main/User.html";
-        actionText.innerHTML = "PROFILE";
-    }
-
-if (actionTab2) {
-            const actionText = actionTab2.firstElementChild;
-        actionTab2.href = "/html//main/User.html";
         actionText.innerHTML = "PROFILE";
     }
     }
