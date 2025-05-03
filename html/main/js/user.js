@@ -10,7 +10,7 @@ document.getElementById('joinDate').textContent = joinDate.toLocaleString('defau
 // Generate profile avatar
 const profileAvatar = document.getElementById('profileAvatar');
 const firstLetter = userEmail.charAt(0).toUpperCase();
-const colors = ['#4361ee', '#3a0ca3', '#7209b7', '#f72585', '#4cc9f0', '#4895ef'];
+const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
 const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
 profileAvatar.textContent = firstLetter;
