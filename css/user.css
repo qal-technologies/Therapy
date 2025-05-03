@@ -10,7 +10,6 @@
 #container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1.2rem;
     font-family: PoppinsLight, PoppinsMed;
 }
 
@@ -23,6 +22,7 @@
     padding: 2rem;
     padding-inline: 2.5rem;
     margin-bottom: 1.5rem;
+margin-inline:1.5rem;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -56,6 +56,7 @@ font-size:16px;
 
 /* Payments Section */
 .payments-section {
+margin-inline:1.5rem;
     background: var(--primaryTrans);
     backdrop-filter: blur(10px);
     border-radius: 20px;
@@ -204,6 +205,7 @@ margin-bottom:15px
 
 
 section#faq {
+margin-inline:1.5rem;
     width: 100%;
     padding: 10px;
     padding-block: 5%;
@@ -309,6 +311,7 @@ footer {
     padding: 2rem;
     color: var(--primary);
     font-size: 0.9rem;
+margin-inline:1.5rem;
 }
 
 @media (max-width: 768px) {
