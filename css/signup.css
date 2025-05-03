@@ -510,7 +510,7 @@ div.privacy-policy {
   max-width: 600px;
   padding: 1rem;
   border: 1px solid var(--link);
-  background-color: var(--accentTrans);
+  background-color: rgba(232, 195, 195, 0.14);
   color: var(--mainText);
   border-radius: 15px;
   line-height: 20px;
