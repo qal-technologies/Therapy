@@ -130,7 +130,7 @@ const audioSrc = {
 };
 
 window.addEventListener("DOMContentLoaded", () => {
-	let user = false;
+	let user = true;
 
 	const language = navigator.language;
 	const testimonies = document.querySelector("section#testimonies");
