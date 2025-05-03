@@ -21,13 +21,12 @@
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
     padding: 2rem;
     padding-inline: 2.5rem;
-    margin-bottom: 1.5rem;
-margin-inline:1.2rem;
+    margin-block 1.5rem;
     display: flex;
-margin-top:0.8rem
     align-items: center;
     gap: 2rem;
 overflow:hidden;
+width:90%;
 }
 
 .profile-avatar {
@@ -47,7 +46,7 @@ font-family: PoppinsSemi;
     margin-bottom: 0.5rem;
     color: var(--link);
     font-family: PoppinsSemi;
-font-size:25px;
+font-size:20px;
 text-overflow:wrap;
 }
 
@@ -58,14 +57,13 @@ font-size:16px;
 
 /* Payments Section */
 .payments-section {
-margin-inline:1.2rem;
     background: var(--primaryTrans);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
     padding: 1.5rem;
     margin-bottom: 2rem;
-overflow:hidden;
+width:90%;
 }
 
 .section-title {
@@ -209,8 +207,7 @@ margin-bottom:15px
 
 section#faq {
 overflow:hidden;
-margin-inline:1.2rem;
-    width: 100%;
+    width: 90%;
     padding: 10px;
     padding-block: 5%;
     display: flex;
@@ -316,7 +313,6 @@ overflow:hidden;
     padding: 2rem;
     color: var(--primary);
     font-size: 0.9rem;
-margin-inline:1.2rem;
 }
 
 @media (max-width: 768px) {
