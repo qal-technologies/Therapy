@@ -27,6 +27,8 @@ align-items:center;
     padding: 2rem;
     padding-inline: 2.5rem;
     display: flex;
+margin-top:20px;
+align-self:center;
     align-items: center;
     gap: 2rem;
 overflow:hidden;
