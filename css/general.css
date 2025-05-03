@@ -282,6 +282,16 @@ footer div.upper {
   justify-content: space-between;
 }
 
+footer div.others{
+display: flex;
+width:100%;
+padding:10px;
+place-content:center;
+gap:10px;
+flex-wrap:wrap;
+flex-direction:row;
+}
+
 footer p.name {
   font-size: 2rem;
   width: 100%;
@@ -317,6 +327,14 @@ footer .navs a.nav.login {
   border-radius: 25px;
   background-color: var(--highlight);
   margin-block: 5px;
+}
+
+footer div.others a{
+width: max-content;
+padding:10px;
+padding-inline:20px;
+border-right:1px solid var(--primaryTrans);
+color:white;
 }
 
 footer .navs a.nav.login p.login-text {
