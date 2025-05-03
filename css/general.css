@@ -417,6 +417,7 @@ section#newsletter {
   border: 1.5px solid var(--accent);
   border-radius: 10px;
   font-size: 1rem;
+outline:none;
 background:var(--primaryTrans);
 }
 
