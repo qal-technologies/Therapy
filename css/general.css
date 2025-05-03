@@ -333,7 +333,9 @@ footer div.others a{
 width: max-content;
 padding-inline:20px;
 border-right:1px solid var(--primaryTrans);
-color:white;
+color:whitesmoke;
+font-family:PoppinsMed;
+font-size:14px;
 }
 
 footer .navs a.nav.login p.login-text {
