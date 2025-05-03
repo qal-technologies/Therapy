@@ -380,7 +380,7 @@ section#newsletter {
   background: rgba(255, 241, 220, 0.541);
   padding-block: 10%;
   width: 100%;
-  padding-inline: 10px;
+  padding-inline: 20px;
   display: flex;
   place-content: center;
 }
@@ -411,7 +411,7 @@ section#newsletter {
 }
 
 .newsletter-form input {
-  width: 100%;
+  width: 90%;
   max-width: 500px;
   padding: 0.5rem;
   border: 1.5px solid var(--accent);
