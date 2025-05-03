@@ -22,7 +22,7 @@ const payments = [
         id: 'PAY-' + Math.floor(Math.random() * 1000000),
         type: 'Virtual Session',
         date: new Date(2023, 5, 15),
-        amount: '$800.00',
+        amount: '800.00',
         status: 'completed',
         description: '1-hour virtual healing session'
     },
@@ -30,7 +30,7 @@ const payments = [
         id: 'PAY-' + Math.floor(Math.random() * 1000000),
         type: 'In-Person Session',
         date: new Date(2023, 6, 2),
-        amount: '$1600.00',
+        amount: '1600.00',
         status: 'completed',
         description: '2-hour in-person session in Monaco'
     },
@@ -38,7 +38,7 @@ const payments = [
         id: 'PAY-' + Math.floor(Math.random() * 1000000),
         type: 'Community Session',
         date: new Date(2023, 6, 20),
-        amount: '$550.00',
+        amount: '550.00',
         status: 'pending',
         description: 'Accessible healing session'
     },
@@ -77,13 +77,14 @@ payments.forEach(payment => {
                     </div>
                     <div class="payment-detail">
                         <span class="detail-label">Amount:</span>
-                        <span class="detail-value">${payment.amount}</span>
+                        <span class="detail-value">
+                        &euro; ${payment.amount}</span>
                     </div>
                 </div>
             `;
 
     paymentCard.addEventListener('click', () => {
-        if (payment.status === 'completed') {
+        if (payment.status === 'completed' || payment.status === 'failed') {
             showPayslip(payment);
         } else {
             window.location.href = `/payment?code=${payment.id}`;
@@ -98,6 +99,10 @@ const modal = document.getElementById('payslipModal');
 const closeModal = document.getElementById('closeModal');
 
 function showPayslip(payment) {
+    const icon = document.getElementById('icon');
+    icon.classList.add(`${payment.status.toLowerCase()}`);
+    icon.textContent = payment.status.toUpperCase();
+
     document.getElementById('receiptId').textContent = payment.id;
     document.getElementById('receiptType').textContent = payment.type;
     document.getElementById('receiptAmount').textContent = payment.amount;

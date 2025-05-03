@@ -278,18 +278,18 @@ footer div.upper {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 20px;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
-footer div.others{
-display: flex;
-width:100%;
-padding:10px;
-place-content:center;
-gap:10px;
-flex-wrap:wrap;
-flex-direction:row;
+footer div.others {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  place-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 footer p.name {
@@ -329,13 +329,17 @@ footer .navs a.nav.login {
   margin-block: 5px;
 }
 
-footer div.others a{
-width: max-content;
-padding-inline:20px;
-border-right:1px solid var(--primaryTrans);
-color:whitesmoke;
-font-family:PoppinsMed;
-font-size:14px;
+footer div.others a {
+  width: max-content;
+  padding-inline: 20px;
+  border-right: 1px solid var(--primaryTrans);
+  color: rgb(238, 238, 238);
+  font-family: PoppinsMed;
+  font-size: 12px;
+}
+
+footer div.others a:last-child {
+  border: none;
 }
 
 footer .navs a.nav.login p.login-text {
@@ -372,7 +376,7 @@ footer .copyright {
   }
 
   to {
-    height: 480px;
+    height: 380px;
   }
 }
 
@@ -417,12 +421,12 @@ section#newsletter {
   border: 1.5px solid var(--accent);
   border-radius: 10px;
   font-size: 1rem;
-outline:none;
-background:var(--primaryTrans);
+  outline: none;
+  background: var(--primaryTrans);
 }
 
-.newsletter-form input:focus{
-border: 1.5px solid var(--link);
+.newsletter-form input:focus {
+  border: 1.5px solid var(--link);
 }
 
 .newsletter-form button {
@@ -431,8 +435,8 @@ border: 1.5px solid var(--link);
   padding: 0.5rem 1.2rem;
   border: none;
   border-radius: 15px;
-width:auto;
-max-width:150px;
+  width: auto;
+  max-width: 150px;
   cursor: pointer;
   display: flex;
   align-items: center;
