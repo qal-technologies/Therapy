@@ -260,6 +260,7 @@ function handleTabClick(e) {
 
 // Switch between login and register forms
 function switchForm(formType) {
+reAttach();
   // Remove current form
   const currentForm = document.querySelector(`.form-container`);
   if (currentForm) {
@@ -491,10 +492,8 @@ function toggleDropdown(e) {
   }
 }
 
-
-
-window.addEventListener('DOMContentLoaded', () => {
-  Object.assign(DOM, {
+function reAttach () {
+Object.assign(DOM, {
     tabs: document.querySelectorAll('.tab'),
     formSection: document.querySelector('.form-section'),
     dropdownHeader: document.getElementById('dropdownHeader'),
@@ -509,5 +508,9 @@ window.addEventListener('DOMContentLoaded', () => {
     ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
     registerForm: document.getElementById('register-form')
   });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  reAttach();
   init();
 });
