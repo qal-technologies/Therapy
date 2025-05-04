@@ -361,7 +361,7 @@ function renderQuestions(topic) {
 
 function showQuestion(question, index) {
   const questionDiv = document.createElement('div');
-  questionDiv.className = `question-card fadeInUp`;
+  questionDiv.className = question.type =='input'? `question-card fadeInUp input`:`question-card fadeInUp`;
   questionDiv.innerHTML = `
     <p>${question.question}</p>
     <div class="answer-options">
