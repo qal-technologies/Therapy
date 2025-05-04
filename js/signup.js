@@ -243,6 +243,25 @@ function setupEventListeners() {
   document.addEventListener('click', handleDocumentClick);
 }
 
+function reAttach () {
+Object.assign(DOM, {
+    tabs: document.querySelectorAll('.tab'),
+    formSection: document.querySelector('.form-section'),
+    dropdownHeader: document.getElementById('dropdownHeader'),
+    dropdownOptions: document.getElementById('dropdownOptions'),
+    questionsContainer: document.getElementById('questionsContainer'),
+    chevron: document.querySelector('.chevron'),
+    price: document.querySelector("#session-plan .price"),
+    title: document.querySelector("#session-plan .title"),
+    extra: document.querySelector("#session-plan .name .extra"),
+    description: document.querySelector('#session-plan .intro'),
+    formGroup: document.querySelector(".form-group#session"),
+    ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
+    registerForm: document.getElementById('register-form')
+  });
+}
+
+
 // Handle tab clicks
 function handleTabClick(e) {
   const tab = e.currentTarget;
@@ -430,8 +449,7 @@ function showCompletion() {
     <div class="animation-container">
       <div class="checkmark">✓</div>
       <h2>You're All Set!</h2>
-      <p>You are all set.</p>
-<p>Proceed to continue your healing journey with Charlotte Casiraghi</p>
+<h4>Proceed to continue your healing journey with <span class="highlight"> Charlotte Casiraghi</span></h4>
       <div class="celebrate">🎉✨</div>
     </div>
   `;
@@ -491,24 +509,6 @@ function toggleDropdown(e) {
     DOM.dropdownOptions.classList.add('open');
     DOM.chevron.classList.add('open');
   }
-}
-
-function reAttach () {
-Object.assign(DOM, {
-    tabs: document.querySelectorAll('.tab'),
-    formSection: document.querySelector('.form-section'),
-    dropdownHeader: document.getElementById('dropdownHeader'),
-    dropdownOptions: document.getElementById('dropdownOptions'),
-    questionsContainer: document.getElementById('questionsContainer'),
-    chevron: document.querySelector('.chevron'),
-    price: document.querySelector("#session-plan .price"),
-    title: document.querySelector("#session-plan .title"),
-    extra: document.querySelector("#session-plan .name .extra"),
-    description: document.querySelector('#session-plan .intro'),
-    formGroup: document.querySelector(".form-group#session"),
-    ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
-    registerForm: document.getElementById('register-form')
-  });
 }
 
 window.addEventListener('DOMContentLoaded', () => {
