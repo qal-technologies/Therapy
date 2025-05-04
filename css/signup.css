@@ -458,7 +458,7 @@ div.faq-bottom .faq {
   align-items: center;
 }
 
-.question-card .answer-options.input {
+.question-card.input .answer-options{
 flex-direction:row;
 }
 
