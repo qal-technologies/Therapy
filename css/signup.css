@@ -458,6 +458,10 @@ div.faq-bottom .faq {
   align-items: center;
 }
 
+.question-card .answer-options {
+flex-direction:row;
+}
+
 .question-card button.next {
   padding: 4px;
   padding-inline: 15px;
