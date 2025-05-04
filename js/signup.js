@@ -329,6 +329,10 @@ function selectTopic(topicKey) {
   const topic = TOPICS_DATA[topicKey];
   if (!topic) return;
   
+
+const button = document.querySelector('div#checkout button');
+button.disabled=true;
+
   state.selectedTopic = topicKey;
   
   // Update UI
@@ -360,8 +364,6 @@ function renderQuestions(topic) {
 }
 
 function showQuestion(question, index) {
-const button = document.querySelector('#checkout button');
-button.diabled=true;
 
   const questionDiv = document.createElement('div');
   questionDiv.className = `question-card ${question.type === 'input' ? 'input' : ''}`;
@@ -408,20 +410,19 @@ button.diabled=true;
 }
 
 function nextQuestion(index) {
-const button = document.querySelector('#checkout button');
 
-  const topic = state.selectedTopic;
+const topic = state.selectedTopic;
   const questions = TOPICS_DATA[topic].questions;
 
   if (index < questions.length) {
     setTimeout(() => showQuestion(questions[index], index), 300);
   } else {
     showCompletion();
-button.disabled=false;
   }
 }
 
 function showCompletion() {
+
   const completionDiv = document.createElement('div');
   completionDiv.className = 'completion-screen fadeInUp';
   completionDiv.innerHTML = `
@@ -432,7 +433,10 @@ function showCompletion() {
       <div class="celebrate">🎉✨</div>
     </div>
   `;
-  
+
+  const button = document.querySelector('div#checkout button');
+button.disabled=false;
+
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
 }
