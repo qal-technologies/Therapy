@@ -585,3 +585,33 @@ div.privacy-policy a {
   color: var(--link);
   font-family: PoppinsMed;
 }
+
+/* Animations */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.completion-screen {
+  text-align: center;
+  padding: 2rem;
+}
+
+.checkmark {
+  font-size: 4rem;
+  color: #4CAF50;
+  animation: bounce 1s;
+}
+
+.celebrate {
+  font-size: 2rem;
+  margin: 1rem 0;
+  animation: fadeInUp 1s;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
