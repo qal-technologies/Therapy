@@ -1,0 +1,185 @@
+#banner {
+    width: 100%;
+    padding: 1.4rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 5rem;
+    background: var(--vert-gradient-color);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
+    position: relative;
+    min-height: 45%;
+    padding-bottom: 5.5rem;
+    font-size: 1.2rem;
+    text-align: left;
+    gap: 15px;
+}
+
+
+#banner .circle {
+    width: 90vw;
+    height: 90vw;
+    max-width: 800px;
+    max-height: 800px;
+    background: rgba(255, 210, 86, 0.5);
+    position: absolute;
+    right: -20%;
+    top: -30px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+#banner h1, #books h1 {
+    position: relative;
+    font-family: PoppinsSemi;
+    font-size: 30px;
+}
+
+#banner .header p {
+    font-size: 18px;
+}
+
+#books {
+    padding: 2rem;
+}
+
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.book-card {
+    background: var(--primaryTrans);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 0.5px solid var(--accentTrans);
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.5)
+}
+
+.book-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.book-info {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.book-info h3 {
+    font-family: PoppinsSemi;
+}
+
+.book-info h4 {
+    padding: 2px;
+    padding-inline: 10px;
+    border-radius: 50px;
+    background-color: var(--accentTrans);
+    width: max-content;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-family: PoppinsLight;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    transition: fill 0.3s ease;
+}
+
+div#paymentModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    padding: 1rem;
+    position: relative;
+    padding-left: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content p {
+    font-family: PoppinsSemi;
+    font-size: 16px;
+}
+
+section#discover {
+    padding-block: 10%;
+    width: 100%;
+    background: rgba(255, 252, 250, 0.85);
+    padding-inline: 10px;
+    display: flex;
+    place-content: center;
+}
+
+#discover div.parent {
+    width: 90%;
+    max-width: 1000px;
+    padding: 2.5rem;
+    border: 2px solid var(--link);
+    background: var(--accentTrans);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    justify-content: center;
+    gap: 2rem;
+    min-height: 200px;
+}
+
+#discover div.parent p {
+    text-align: left;
+    font-size: 1.4rem;
+    font-family: PoppinsLight;
+}
+
+#discover .parent a {
+    cursor: pointer;
+    border: none;
+    background-color: var(--link);
+    border-radius: 30px;
+    padding: 10px;
+    padding-inline: 15px;
+    width: 80%;
+    max-width: 300px;
+    place-self: center;
+    color: var(--primary);
+    font-size: 16px;
+    font-family: PoppinsSemi;
+    text-align: center;
+    display: flex;
+    place-content: center;
+}

@@ -5,9 +5,19 @@ const TOPICS_DATA = {
     description: "Let's make your screen disappear",
     info: "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
     questions: [
-      "Do you feel most emotionally open in the morning, afternoon, or evening?",
-      "Would you like Charlotte to begin with a calming 90-second grounding exercise just for you?",
-      "Are there any life themes you feel emotionally 'stuck' in right now that you'd like to gently explore?"
+      {
+        question: "Do you feel most emotionally open in the morning, afternoon, or evening?",
+        type: "input",
+      },
+      {
+        question: "Would you like Charlotte to begin with a calming 90-second grounding exercise just for you?",
+        type: "button",
+        options: ["YES", "NO"]
+      },
+      {
+        question: "Are there any life themes you feel emotionally 'stuck' in right now that you'd like to gently explore?",
+        type: "input",
+      }
     ]
   },
   inPerson: {
@@ -17,9 +27,19 @@ const TOPICS_DATA = {
     description: "Let's prepare your sanctuary",
     info: "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
     questions: [
-      "Do you have any dietary preferences or allergies we should consider while preparing your welcome refreshment?",
-      "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
-      "Is there a personal object (journal, photo, or keepsake) you'd like to bring into the session as part of your healing space?"
+      {
+        question: "Do you have any dietary preferences or allergies we should consider while preparing your welcome refreshment?",
+        type: "input"
+      },
+      {
+        question: "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
+        type: "button",
+        options: ["YES", "NO"]
+      },
+      {
+        question: "Is there a personal object (journal, photo, or keepsake) you'd like to bring into the session as part of your healing space?",
+        type: "input",
+      }
     ]
   },
   community: {
@@ -28,9 +48,19 @@ const TOPICS_DATA = {
     description: "Your story matters, Let's begin ",
     info: "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
     questions: [
-      "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
-      "Is there one thing you've been carrying alone that you wish someone would simply hear - without trying to fix?",
-      "Would it help if we checked in with you a few days after the session to support your reflection?"
+      {
+        question: "Would you feel safer starting the session in silence, or would you prefer Charlotte to welcome you with a gentle question?",
+        type: "input"
+      },
+      {
+        question: "Is there one thing you've been carrying alone that you wish someone would simply hear - without trying to fix?",
+        type: "input",
+      },
+      {
+        question: "Would it help if we checked in with you a few days after the session to support your reflection?",
+        type: "button",
+        options: ["YES", "NO"]
+      }
     ]
   },
   inner: {
@@ -39,9 +69,19 @@ const TOPICS_DATA = {
     info: "For those who seek not just a session, but a sanctuary.",
     price: "6,850",
     questions: [
-      "If you could name this season of your life in one word, what would it be - and why?",
-      "Would you like your healing plan to focus on emotional wounds, spiritual clarity, or self-love and transformation?",
-      "What would it mean to you if Charlotte's letter spoke directly to your soul's current journey?"
+      {
+        question: "If you could name this season of your life in one word, what would it be - and why?",
+        type: "input"
+      },
+      {
+        question: "Would you like your healing plan to focus on emotional wounds, spiritual clarity, or self-love and transformation?",
+        type: "input",
+      },
+      {
+        question:
+          "What would it mean to you if Charlotte's letter spoke directly to your soul's current journey?",
+        type: "input",
+      }
     ]
   }
 };
@@ -177,6 +217,8 @@ const state = {
   currentForm: 'register',
   selectedTopic: null,
   originalRegisterFormHTML: ``,
+  currentQuestion: 0,
+  answers: {},
 };
 
 function init() {
@@ -313,17 +355,64 @@ function selectTopic(topicKey) {
 
 // Render questions for selected topic
 function renderQuestions(topic) {
-  if (!DOM.questionsContainer) return;
-  
-  DOM.questionsContainer.innerHTML = `<p class="description">${topic.description}</p>`;
-  
-  topic.questions.forEach((question, index) => {
-    const questionCard = document.createElement('div');
-    questionCard.className = 'question-card';
-    questionCard.textContent = question;
-    questionCard.style.animationDelay = `${index * 0.1}s`;
-    DOM.questionsContainer.appendChild(questionCard);
+  DOM.questionsContainer.innerHTML = '';
+  showQuestion(topic.questions[0], 0);
+}
+
+function showQuestion(question, index) {
+  const questionDiv = document.createElement('div');
+  questionDiv.className = `question-card fadeInUp`;
+  questionDiv.innerHTML = `
+    <p>${question.question}</p>
+    <div class="answer-options">
+      ${question.type === 'button' ?
+      question.options.map(opt =>
+        `<button class="answer-btn" data-value="${opt}">${opt}</button>`
+      ).join('') :
+      `<input type="${question.inputType}" placeholder="Your answer"/> <button class="next">></button>`
+    }
+    </div>
+  `;
+
+  questionDiv.querySelectorAll('.answer-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.target.classList.add('selected');
+      saveAnswer(question.question, e.target.dataset.value);
+      nextQuestion(index + 1);
+
+      e.target.disabled = true;
+    });
   });
+
+  if (question.type === 'input') {
+    const input = questionDiv.querySelector('input');
+    const next = questionDiv.querySelector('.next');
+
+    next.addEventListener('click', (e) => {
+      saveAnswer(question.question, input.value);
+      nextQuestion(index + 1);
+
+      input.disabled = true;
+      e.target.disabled = true;
+    });
+  }
+
+  DOM.questionsContainer.appendChild(questionDiv);
+}
+
+function nextQuestion(index) {
+  const topic = state.selectedTopic;
+  const currentTopic = TOPICS_DATA[topic];
+
+  if (index < currentTopic.questions.length) {
+    setTimeout(() => {
+      showQuestion(currentTopic.questions[index], index);
+    }, 500);
+  }
+}
+
+function saveAnswer(question, answer) {
+  state.answers[question] = answer;
 }
 
 // Update session information display

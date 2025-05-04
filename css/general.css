@@ -21,9 +21,10 @@
 :root {
   --primary: ivory;
   --primaryTrans: rgba(255, 255, 240, 0.4);
-  --accent: #d8acac;
+  --accent: #dfc9ad;
   --accentTrans: rgba(232, 195, 195, 0.4);
   --gradient-color: linear-gradient(var(--primaryTrans), var(--accentTrans));
+  --vert-gradient-color: linear-gradient(90deg, var(--accentTrans), var(--primaryTrans));
   --circle-gradient-color: radial-gradient(rgba(255, 255, 255, 0.92),
       rgba(255, 255, 255, 0.72),
       rgba(255, 255, 255, 0.42),

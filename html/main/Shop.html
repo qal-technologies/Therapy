@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/css/general.css" />
     <link rel="stylesheet" href="/css/animation.css" />
 
-    <link rel="stylesheet" href="/css/home.css" />
+    <link rel="stylesheet" href="/css/shop.css" />
 
     <link rel="stylesheet" href="/css/media.css" />
 
@@ -130,6 +130,52 @@
         </div>
       </header>
 
+<section id="banner">
+  <div class="rightIntro circle"></div>
+  <div class="header leftIntro">
+    <h1>Healing Books & Resources</h1>
+    <p>Curated collection by <b>Charlotte Casiraghi</b></p>
+  </div>
+</section>
+<section id="books">
+  <div class="header">
+    <h1>Book Collections</h1>
+  </div>
+  <div class="book-grid" id="bookContainer"></div>
+</section>
+
+<section id="discover">
+  <div class="parent">
+    <p class="text">
+      Discover insights and tools for navigating a world on edge at
+      <i style="font-weight: bold">Healing with Charlotte Casiraghi</i>.
+    </p>
+
+    <a id="login" href="/html/regs/Signup.html">REGISTER NOW</a>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="container">
+    <h2>Stay Connected with Charlotte</h2>
+    <p class="subtext">Receive healing insights, exclusive updates, and special offers directly to your inbox</p>
+
+    <form class="newsletter-form">
+      <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+      <button type="submit">
+        <p class="text">Subscribe</p>
+        <p class="svg">>></p>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <p>This book requires purchase. Redirecting to payment...</p>
+  </div>
+</div>
       
       <footer>
         <div class="upper">
@@ -165,3 +211,4 @@
 </html>
 
 <script src="/js/general.js"></script>
+<script src="/js/shop.js"></script>

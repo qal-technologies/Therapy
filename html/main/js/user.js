@@ -113,8 +113,10 @@ function showPayslip(payment) {
     modal.style.display = 'flex';
 }
 
+
 closeModal.addEventListener('click', () => {
     modal.style.display = 'none';
+    // Reset icon class
 });
 
 window.addEventListener('click', (e) => {
