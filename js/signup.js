@@ -360,6 +360,9 @@ function renderQuestions(topic) {
 }
 
 function showQuestion(question, index) {
+const button = document.querySelector('#check button');
+button.diabled=true;
+
   const questionDiv = document.createElement('div');
   questionDiv.className = `question-card ${question.type === 'input' ? 'input' : ''}`;
   questionDiv.innerHTML = `
@@ -405,6 +408,8 @@ function showQuestion(question, index) {
 }
 
 function nextQuestion(index) {
+const button = document.querySelector('#check button');
+
   const topic = state.selectedTopic;
   const questions = TOPICS_DATA[topic].questions;
 
@@ -412,6 +417,7 @@ function nextQuestion(index) {
     setTimeout(() => showQuestion(questions[index], index), 300);
   } else {
     showCompletion();
+button.disabled=false;
   }
 }
 
