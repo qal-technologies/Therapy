@@ -369,7 +369,7 @@ function showQuestion(question, index) {
       question.options.map(opt =>
         `<button class="answer-btn" data-value="${opt}">${opt}</button>`
       ).join('') :
-      `<input type="${question.inputType}" placeholder="Your answer"/> <button class="next">></button>`
+      `<input type="${question.inputType}" placeholder="Your answer"/> <button class="next">SUBMIT</button>`
     }
     </div>
   `;
