@@ -430,7 +430,8 @@ function showCompletion() {
     <div class="animation-container">
       <div class="checkmark">✓</div>
       <h2>You're All Set!</h2>
-      <p>Your healing journey begins now</p>
+      <p>You are all set.</p>
+<p>Proceed to continue your healing journey with Charlotte Casiraghi</p>
       <div class="celebrate">🎉✨</div>
     </div>
   `;
