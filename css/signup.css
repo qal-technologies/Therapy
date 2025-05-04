@@ -464,7 +464,7 @@ div.faq-bottom .faq {
   background: var(--link);
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 15px;
   display: flex;
   place-content: center;
 place-self:flex-end;
