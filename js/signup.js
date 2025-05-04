@@ -360,7 +360,7 @@ function renderQuestions(topic) {
 }
 
 function showQuestion(question, index) {
-const button = document.querySelector('#check button');
+const button = document.querySelector('#checkout button');
 button.diabled=true;
 
   const questionDiv = document.createElement('div');
@@ -408,7 +408,7 @@ button.diabled=true;
 }
 
 function nextQuestion(index) {
-const button = document.querySelector('#check button');
+const button = document.querySelector('#checkout button');
 
   const topic = state.selectedTopic;
   const questions = TOPICS_DATA[topic].questions;
