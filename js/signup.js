@@ -351,9 +351,6 @@ button.disabled=true;
   // Update questions
   renderQuestions(topic);
   
-  // Update session info
-  updateSessionInfo(topic);
-  
   closeDropdown();
 }
 
@@ -422,6 +419,7 @@ const topic = state.selectedTopic;
 }
 
 function showCompletion() {
+const topic = TOPIC_DATA[state.selectedTopic];
 
   const completionDiv = document.createElement('div');
   completionDiv.className = 'completion-screen fadeInUp';
@@ -439,6 +437,9 @@ button.disabled=false;
 
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
+
+// Update session info
+  updateSessionInfo(topic);
 }
 
 
