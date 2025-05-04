@@ -340,10 +340,20 @@ button.disabled=true;
     DOM.dropdownHeader.querySelector('span').textContent = topic.name;
   }
   
+if (DOM.formGroup) {
+    DOM.formGroup.style.display = "block";
+  }
+  
+  if (DOM.ticket) {
+    DOM.ticket.style.display = "block";
+  }
   
   // Update questions
   renderQuestions(topic);
   
+// Update session info
+  updateSessionInfo(topic);
+
   closeDropdown();
 }
 
@@ -424,25 +434,11 @@ function showCompletion() {
     </div>
   `;
 
-if (DOM.formGroup) {
-    DOM.formGroup.style.display = "block";
-  }
-  
-  if (DOM.ticket) {
-    DOM.ticket.style.display = "block";
-  }
-
-const current = state.selectedTopic;
-  const topic = TOPICS_DATA[topic];
-
   const button = document.querySelector('div#checkout button');
 button.disabled=false;
 
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
-
-// Update session info
-  updateSessionInfo(topic);
 }
 
 
