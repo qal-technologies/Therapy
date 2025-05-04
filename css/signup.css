@@ -453,7 +453,7 @@ div.faq-bottom .faq {
 .question-card .answer-options {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 10px;
   align-items: center;
 }
@@ -467,6 +467,7 @@ div.faq-bottom .faq {
   border-radius: 50%;
   display: flex;
   place-content: center;
+place-self:flex-end;
   color: white;
   text-align: center;
   border: none;
