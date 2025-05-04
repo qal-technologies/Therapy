@@ -419,7 +419,8 @@ const topic = state.selectedTopic;
 }
 
 function showCompletion() {
-const topic = TOPIC_DATA[state.selectedTopic];
+const topic = state.selectedTopic;
+  const questions = TOPICS_DATA[topic];
 
   const completionDiv = document.createElement('div');
   completionDiv.className = 'completion-screen fadeInUp';
