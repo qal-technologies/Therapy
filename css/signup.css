@@ -556,7 +556,6 @@ div.bottom.privacy {
 
 div.privacy-policy {
   width: 100%;
-  max-width: 600px;
   padding: 1rem;
   border: 1px solid var(--link);
   background-color: rgba(167, 173, 192, 0.04);
@@ -567,6 +566,7 @@ div.privacy-policy {
   display: flex;
   place-self: center;
   flex-direction: row;
+  align-items: center;
   flex-wrap: wrap;
   gap: 10px;
 }

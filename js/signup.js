@@ -113,12 +113,12 @@ const TEMPLATE = {
       </div>
   `,
 
-  register: `
-  <div class="form-container" id="register-form">
+  register: ` <div class="form-container active" id="register-form">
           <div class="register-upper upper">
             <div class="header register-header">
               <h1>Register</h1>
-              <p>Welcome! complete the form below to reserve your spot with Charlotte Casiraghi. Together you'll unlock inner peace,
+              <p>Welcome! complete the form below to reserve your spot with Charlotte Casiraghi. Together you'll unlock
+                inner peace,
                 dissolve old patterns, and step into a more empowered radiant you.</p>
             </div>
 
@@ -136,6 +136,11 @@ const TEMPLATE = {
               <div class="form-group">
                 <label for="lastName">Last Name *</label>
                 <input type="text" id="lastName" required />
+              </div>
+
+              <div class="form-group">
+                <label for="Country">Country*</label>
+                <input type="text" id="Country" required />
               </div>
 
               <div class="form-group">
@@ -164,37 +169,63 @@ const TEMPLATE = {
               <div class="bottom">
                 <div class="form-group" id="session">
                   <label for="session-plan" class="moveUpNfadeIn">Event Ticket</label>
-                  <div id="session-plan" class="moveUpNfadeIn">
-                    <div class="upper">
-                      <div class="image">
-                        <img src="/src/images/logo.jpg" alt="" srcset="">
-                      </div>
-                      <div class="name">
-                        <p class="title">Virtual Session</p>
-                        <p class="extra"></p>
-                      </div>
-                    </div>
-                    <div class="lower">
-                      <p class="intro"></p>
-                      <p class="price">&euro; 800.00<span class="highlight">EUR</span></p>
-                    </div>
+                  <div id="session-plan" class
+
+="moveUpNfadeIn">
+
+<div class="upper">
+
+<div class="image">
+
+<img src="/src/images/Logo.jpg" alt="" srcset="">
+
+</div>
+
+<div class="name">
+
+<p class="title">Virtual Session</p>
+
+<p class="extra"></p>
+
+</div>
+
+</div>
+
+<div class="lower">
+
+<p class="intro"></p>
+
+<p class="price">&euro; 800.00<span class="highlight">EUR</span>
+</p>
+</div>
+
+<div class="learn">
+<a href="/html/main/Session.html">Learn More</a>
+</div>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <label for="adminCode">Admin Code (Optional)</label>
                   <input type="text" id="adminCode" />
                 </div>
-<div id="checkout">
-      <button>
-        <p class="text">PROCEED</p>
-        <p class="svg">>></p>
-      </button>
-    </div>
-              </div>
+                <div id="checkout">
+                  <button disabled=true>
+                    <p class="text">PROCEED</p>
+                    <p class="svg">>></p>
+                  </button>
+                </div>
+                </div>
+                <div class="bottom privacy">
+                  <div class="privacy-policy">
+                    <p class="text">By registering for this healing session, you are stating that you
+                      have read and agreed to the privacy policy.</p>
+                    <a href="/html/main/Privacy.html" class="view"> View privacy policy </a>
+                  </div>
+                </div>
             </div>
           </div>
-        </div>
-    `
+        </div>`
 }
 
 const DOM = {
@@ -279,7 +310,6 @@ function handleTabClick(e) {
 
 // Switch between login and register forms
 function switchForm(formType) {
-reAttach();
   // Remove current form
   const currentForm = document.querySelector(`.form-container`);
   if (currentForm) {
@@ -291,18 +321,18 @@ reAttach();
     const currentForm = document.querySelector(`.form-container`);
     currentForm.classList.add('active');
 
-    console.log('login-show');
   } else {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
 
     const currentForm = document.querySelector(`.form-container`);
     currentForm.classList.add('active');
 
-    console.log('register-show');
     const newForm = DOM.formSection.lastElementChild;
     initDropdown(newForm);
   }
   
+
+  reAttach();
   state.currentForm = formType;
 }
 
@@ -454,14 +484,6 @@ function showCompletion() {
     </div>
   `;
 
-  if (DOM.formGroup) {
-    DOM.formGroup.style.display = "block";
-  }
-
-  if (DOM.ticket) {
-    DOM.ticket.style.display = "block";
-  }
-
   // Update session info
   updateSessionInfo(topic);
 
@@ -470,6 +492,7 @@ button.disabled=false;
 
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
+  console.log(state.answers)
 }
 
 
@@ -479,6 +502,12 @@ function saveAnswer(question, answer) {
 
 // Update session information display
 function updateSessionInfo(topic) {
+
+  if (DOM.formGroup) DOM.formGroup.style.display = "block";
+
+  if (DOM.ticket) DOM.ticket.style.display = "block";
+
+
   if (DOM.title) DOM.title.textContent = topic.name;
   if (DOM.extra) {
     DOM.extra.textContent = topic.extra || '';
