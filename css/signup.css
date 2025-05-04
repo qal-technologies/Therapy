@@ -460,11 +460,11 @@ div.faq-bottom .faq {
 
 .question-card button.next {
   padding: 5px;
-  padding-inline: 10px;
+  padding-inline: 20px;
   background: var(--link);
   width: max-content;
   height: max-content;
-  border-radius: 15px;
+  border-radius: 10px;
   display: flex;
   place-content: center;
 place-self:flex-end;
