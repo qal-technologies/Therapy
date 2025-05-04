@@ -361,55 +361,76 @@ function renderQuestions(topic) {
 
 function showQuestion(question, index) {
   const questionDiv = document.createElement('div');
-  questionDiv.className = question.type =='input'? `question-card fadeInUp input`:`question-card fadeInUp`;
+  questionDiv.className = `question-card ${question.type === 'input' ? 'input' : ''}`;
   questionDiv.innerHTML = `
     <p>${question.question}</p>
     <div class="answer-options">
-      ${question.type === 'button' ?
-      question.options.map(opt =>
-        `<button class="answer-btn" data-value="${opt}">${opt}</button>`
-      ).join('') :
-      `<input type="${question.inputType}" placeholder="Your answer"/> <button class="next">SUBMIT</button>`
-    }
+      ${question.type === 'button' 
+        ? question.options.map(opt => 
+          `<button class="answer-btn" data-value="${opt}">${opt}</button>`
+        ).join('') 
+        : `<input type="${question.inputType}" placeholder="Your answer"/>
+           <button class="next">SUBMIT</button>`}
     </div>
   `;
+
+  // Fade in animation
+  questionDiv.style.animation = 'fadeInUp 0.5s forwards';
+  DOM.questionsContainer.appendChild(questionDiv);
+
+  // Handle answers
+  const handleAnswer = () => {
+    questionDiv.style.animation = 'fadeOut 0.5s forwards';
+    setTimeout(() => questionDiv.remove(), 500);
+    nextQuestion(index + 1);
+  };
 
   questionDiv.querySelectorAll('.answer-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.target.classList.add('selected');
       saveAnswer(question.question, e.target.dataset.value);
-      nextQuestion(index + 1);
-
-      e.target.disabled = true;
+      handleAnswer();
     });
   });
 
   if (question.type === 'input') {
     const input = questionDiv.querySelector('input');
     const next = questionDiv.querySelector('.next');
-
-    next.addEventListener('click', (e) => {
+    
+    next.addEventListener('click', () => {
       saveAnswer(question.question, input.value);
-      nextQuestion(index + 1);
-
-      input.disabled = true;
-      e.target.disabled = true;
+      handleAnswer();
     });
   }
-
-  DOM.questionsContainer.appendChild(questionDiv);
 }
 
 function nextQuestion(index) {
   const topic = state.selectedTopic;
-  const currentTopic = TOPICS_DATA[topic];
+  const questions = TOPICS_DATA[topic].questions;
 
-  if (index < currentTopic.questions.length) {
-    setTimeout(() => {
-      showQuestion(currentTopic.questions[index], index);
-    }, 500);
+  if (index < questions.length) {
+    setTimeout(() => showQuestion(questions[index], index), 300);
+  } else {
+    showCompletion();
   }
 }
+
+function showCompletion() {
+  const completionDiv = document.createElement('div');
+  completionDiv.className = 'completion-screen fadeInUp';
+  completionDiv.innerHTML = `
+    <div class="animation-container">
+      <div class="checkmark">✓</div>
+      <h2>You're All Set!</h2>
+      <p>Your healing journey begins now</p>
+      <div class="celebrate">🎉✨</div>
+    </div>
+  `;
+  
+  DOM.questionsContainer.innerHTML = '';
+  DOM.questionsContainer.appendChild(completionDiv);
+}
+
 
 function saveAnswer(question, answer) {
   state.answers[question] = answer;
