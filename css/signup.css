@@ -462,8 +462,8 @@ div.faq-bottom .faq {
   padding: 5px;
   padding-inline: 10px;
   background: var(--link);
-  width: 40px;
-  height: 40px;
+  width: max-content;
+  height: max-content;
   border-radius: 15px;
   display: flex;
   place-content: center;
@@ -471,7 +471,7 @@ place-self:flex-end;
   color: white;
   text-align: center;
   border: none;
-  font-size: 20px;
+  font-size: 16px;
   cursor: pointer;
 }
 
