@@ -459,12 +459,12 @@ div.faq-bottom .faq {
 }
 
 .question-card button.next {
-  padding: 5px;
-  padding-inline: 20px;
+  padding: 4px;
+  padding-inline: 15px;
   background: var(--link);
   width: max-content;
   height: max-content;
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   place-content: center;
 place-self:flex-end;
