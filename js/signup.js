@@ -340,13 +340,6 @@ button.disabled=true;
     DOM.dropdownHeader.querySelector('span').textContent = topic.name;
   }
   
-  if (DOM.formGroup) {
-    DOM.formGroup.style.display = "block";
-  }
-  
-  if (DOM.ticket) {
-    DOM.ticket.style.display = "block";
-  }
   
   // Update questions
   renderQuestions(topic);
@@ -419,8 +412,6 @@ const topic = state.selectedTopic;
 }
 
 function showCompletion() {
-const current = state.selectedTopic;
-  const topic = TOPICS_DATA[topic];
 
   const completionDiv = document.createElement('div');
   completionDiv.className = 'completion-screen fadeInUp';
@@ -432,6 +423,17 @@ const current = state.selectedTopic;
       <div class="celebrate">🎉✨</div>
     </div>
   `;
+
+if (DOM.formGroup) {
+    DOM.formGroup.style.display = "block";
+  }
+  
+  if (DOM.ticket) {
+    DOM.ticket.style.display = "block";
+  }
+
+const current = state.selectedTopic;
+  const topic = TOPICS_DATA[topic];
 
   const button = document.querySelector('div#checkout button');
 button.disabled=false;
