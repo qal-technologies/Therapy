@@ -458,8 +458,8 @@ div.faq-bottom .faq {
   align-items: center;
 }
 
-.question-card.input .answer-options{
-flex-direction:column;
+.question-card.input .answer-options {
+  flex-direction: column;
 }
 
 .question-card button.next {
@@ -471,7 +471,7 @@ flex-direction:column;
   border-radius: 20px;
   display: flex;
   place-content: center;
-place-self:flex-end;
+  place-self: flex-end;
   color: white;
   text-align: center;
   border: none;
@@ -484,7 +484,7 @@ place-self:flex-end;
   color: black;
   cursor: default;
   opacity: 0.3;
-user-select:none;
+  user-select: none;
 }
 
 .question-card .answer-btn {
@@ -493,6 +493,7 @@ user-select:none;
   padding-inline: 15px;
   border-radius: 8px;
   border: none;
+  font-family: PoppinsMed;
   color: var(--mainText);
   background: var(--accentTrans);
   cursor: pointer;
@@ -541,13 +542,6 @@ div#checkout button {
 div#checkout p {
   font-size: 16px;
   font-family: PoppinsMed;
-}
-
-div#checkout button:hover {
-  background: var(--highlight);
-  color: black;
-  transform: scale(105%);
-  box-shadow: 0px 4px 10px var(--accent);
 }
 
 div.bottom.privacy {
@@ -613,6 +607,11 @@ div.privacy-policy a {
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
 }

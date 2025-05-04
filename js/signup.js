@@ -359,20 +359,17 @@ button.disabled=true;
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.querySelector('span').textContent = topic.name;
   }
-  
-if (DOM.formGroup) {
-    DOM.formGroup.style.display = "block";
+
+  if (DOM.formGroup) {
+     DOM.formGroup.style.display = "none";
   }
-  
+
   if (DOM.ticket) {
-    DOM.ticket.style.display = "block";
+    DOM.ticket.style.display = "none";
   }
-  
+
   // Update questions
   renderQuestions(topic);
-  
-// Update session info
-  updateSessionInfo(topic);
 
   closeDropdown();
 }
@@ -443,6 +440,9 @@ const topic = state.selectedTopic;
 
 function showCompletion() {
 
+  const session = state.selectedTopic;
+  const topic = TOPICS_DATA[session];
+
   const completionDiv = document.createElement('div');
   completionDiv.className = 'completion-screen fadeInUp';
   completionDiv.innerHTML = `
@@ -453,6 +453,17 @@ function showCompletion() {
       <div class="celebrate">🎉✨</div>
     </div>
   `;
+
+  if (DOM.formGroup) {
+    DOM.formGroup.style.display = "block";
+  }
+
+  if (DOM.ticket) {
+    DOM.ticket.style.display = "block";
+  }
+
+  // Update session info
+  updateSessionInfo(topic);
 
   const button = document.querySelector('div#checkout button');
 button.disabled=false;
