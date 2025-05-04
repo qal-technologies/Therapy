@@ -479,7 +479,7 @@ place-self:flex-end;
   cursor: pointer;
 }
 
-.question-card button.next:disabled, .question-card .answer-btn:disabled {
+.question-card button.next:disabled, .question-card .answer-btn:disabled, div#checkout button:disabled {
   background-color: rgb(194, 194, 194);
   color: black;
   cursor: default;
