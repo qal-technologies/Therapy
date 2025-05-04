@@ -47,16 +47,22 @@
 }
 
 .book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    place-content: center;
+    /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
+    gap: 1.5rem;
+    padding: 1rem;
 }
 
 .book-card {
     background: var(--primaryTrans);
     backdrop-filter: blur(10px);
     border-radius: 20px;
+    width: 100%;
+    max-width: 300px;
+    min-width: 250px;
     border: 0.5px solid var(--accentTrans);
     padding: 1rem;
     transition: transform 0.3s ease;
