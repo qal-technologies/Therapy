@@ -274,24 +274,24 @@ function setupEventListeners() {
   document.addEventListener('click', handleDocumentClick);
 }
 
-function reAttach () {
-Object.assign(DOM, {
+function reAttach() {
+  const registerForm = document.getElementById('register-form');
+  Object.assign(DOM, {
     tabs: document.querySelectorAll('.tab'),
     formSection: document.querySelector('.form-section'),
-    dropdownHeader: document.getElementById('dropdownHeader'),
-    dropdownOptions: document.getElementById('dropdownOptions'),
-    questionsContainer: document.getElementById('questionsContainer'),
-    chevron: document.querySelector('.chevron'),
-    price: document.querySelector("#session-plan .price"),
-    title: document.querySelector("#session-plan .title"),
-    extra: document.querySelector("#session-plan .name .extra"),
-    description: document.querySelector('#session-plan .intro'),
-    formGroup: document.querySelector(".form-group#session"),
-    ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
-    registerForm: document.getElementById('register-form')
+    dropdownHeader: registerForm ? registerForm.querySelector('#dropdownHeader') : null,
+    dropdownOptions: registerForm ? registerForm.querySelector('#dropdownOptions') : null,
+    questionsContainer: registerForm ? registerForm.querySelector('#questionsContainer') : null,
+    chevron: registerForm ? registerForm.querySelector('.chevron') : null,
+    price: registerForm ? registerForm.querySelector("#session-plan .price") : null,
+    title: registerForm ? registerForm.querySelector("#session-plan .title") : null,
+    extra: registerForm ? registerForm.querySelector("#session-plan .name .extra") : null,
+    description: registerForm ? registerForm.querySelector('#session-plan .intro') : null,
+    formGroup: registerForm ? registerForm.querySelector(".form-group#session") : null,
+    ticket: registerForm ? registerForm.querySelector(".lower h1.ticket") : null,
+    registerForm: registerForm
   });
 }
-
 
 // Handle tab clicks
 function handleTabClick(e) {
@@ -304,39 +304,34 @@ function handleTabClick(e) {
   document.querySelector('.tab.active').classList.remove('active');
   tab.classList.add('active');
   
-  // Switch forms
+  state.selectedTopic = null;
+  state.answers = {};
   switchForm(formToShow);
 }
 
+
+
 // Switch between login and register forms
 function switchForm(formType) {
-  // Remove current form
   const currentForm = document.querySelector(`.form-container`);
-  if (currentForm) {
-    currentForm.remove();
-  }
+  if (currentForm) currentForm.remove();
 
   if (formType === 'login') {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.login);
-    const currentForm = document.querySelector(`.form-container`);
-    currentForm.classList.add('active');
-
   } else {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
-
-    const currentForm = document.querySelector(`.form-container`);
-    currentForm.classList.add('active');
-
+    reAttach(); 
     const newForm = DOM.formSection.lastElementChild;
     initDropdown(newForm);
   }
-  
 
   reAttach();
   state.currentForm = formType;
-}
+}  
 
 function initDropdown(formElement) {
+  if (!formElement) return;
+
   DOM.dropdownHeader = formElement.querySelector('#dropdownHeader');
   DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
   DOM.questionsContainer = formElement.querySelector('#questionsContainer');
@@ -344,18 +339,13 @@ function initDropdown(formElement) {
   DOM.formGroup = formElement.querySelector(".form-group#session");
   DOM.ticket = formElement.querySelector(".lower h1.ticket");
   
-  // Reattach event listeners
+
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.addEventListener('click', toggleDropdown);
   }
-  
-  // Repopulate dropdown
+
   populateDropdown();
-  
-  // Reselect topic if one was selected
-  if (state.selectedTopic) {
-    selectTopic(state.selectedTopic);
-  }
+  if (state.selectedTopic) selectTopic(state.selectedTopic);
 }
 
 // Populate the session type dropdown
