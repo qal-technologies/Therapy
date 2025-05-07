@@ -310,24 +310,30 @@ function handleTabClick(e) {
 }
 
 
-
 // Switch between login and register forms
 function switchForm(formType) {
+  // Remove current form
   const currentForm = document.querySelector(`.form-container`);
-  if (currentForm) currentForm.remove();
-
-  if (formType === 'login') {
-    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.login);
-  } else {
-    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
-    reAttach(); 
-    const newForm = DOM.formSection.lastElementChild;
-    initDropdown(newForm);
+  if (currentForm) {
+    currentForm.remove();
   }
 
-  reAttach();
+  // Insert new form
+  if (formType === 'login') {
+    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.login);
+    const loginForm = document.getElementById('login-form');
+    loginForm.classList.add('active');
+  } else {
+    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
+    const registerForm = document.getElementById('register-form');
+    registerForm.classList.add('active');
+    initDropdown(registerForm);
+  }
+
+  // Update state and reattach all DOM references
   state.currentForm = formType;
-}  
+  reAttach();
+}
 
 function initDropdown(formElement) {
   if (!formElement) return;
