@@ -317,7 +317,7 @@ function switchForm(formType) {
   if (currentForm) currentForm.remove();
 
   if (formType === 'login') {
-    DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.login);
+    DOM.formSection.insertAdjacentHTML('beforeend', 'ttyt');
   } else {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
     reAttach(); 
