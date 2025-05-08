@@ -163,7 +163,7 @@ window.addEventListener("DOMContentLoaded", () => {
             </p>
             <p class="price">&euro; ${session.price} <span class="highlight">EUR</span></p>
 
-            <button id="book" class="${session.type}">${session.button}</button>
+            <a id="book" class="${session.type}" href="/html/main/Book.html" >${session.button}</a>
           </div>
 
 			<div id="message" class="${session.type}">
@@ -171,7 +171,7 @@ ${bonuses.join('')}
 		  </div>
 
 		  <div id="waitlist" class="${session.type}">
-		  <button id="waitBTN">JOIN WAITLIST  >></button>
+		  <a id="waitBTN">JOIN WAITLIST  >></a>
 		  </div>
         </div>`
     }).join("");

@@ -432,7 +432,7 @@ div#session.virtual .upper {
   font-family: PoppinsMed;
 }
 
-#session button {
+#session a {
   cursor: pointer;
   width: max-content;
   padding: 8px;
@@ -446,23 +446,23 @@ div#session.virtual .upper {
   font-family: PoppinsSemi;
 }
 
-#session button:not(.inner):hover {
+#session a:not(.inner):hover {
   transform: scale(105%);
   box-shadow: 1px 1px 10px var(--accent);
 }
 
-#session.inner button {
+#session.inner a {
   background-color: rgb(193, 193, 193);
   color: black;
   cursor: default;
 }
 
-#session.in-person button {
+#session.in-person a {
   background-color: var(--accent);
   color: black;
 }
 
-#session.community button {
+#session.community a {
   background-color: var(--highlight);
   color: black;
 }
@@ -508,7 +508,7 @@ div#session.virtual .upper {
   align-self: center;
 }
 
-#session #waitlist.inner button {
+#session #waitlist.inner a {
   margin-top: 5px;
   border: 2px solid var(--link);
   border-radius: 15px;
