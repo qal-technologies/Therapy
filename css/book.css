@@ -2,3 +2,73 @@ body,
 div#body {
   background: rgb(253, 253, 253);
 }
+
+header.header .circle {
+  width: 90vw;
+  height: 90vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: var(--highlight);
+  position: absolute;
+  right: -20%;
+  top: -30px;
+  opacity: 0.25;
+  z-index: -99;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+header.header {
+  width: 100%;
+  padding: 5rem;
+  background-color: var(--accentTrans);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: -70px;
+  overflow: hidden;
+  position: relative;
+  min-height: 45%;
+  padding-bottom: 5.5rem;
+  font-size: 1.2rem;
+  z-index: -99;
+  gap: 15px;
+  color: var(--mainText);
+}
+
+header.header h1 {
+  position: relative;
+  width: auto;
+  place-self: center;
+  font-size: 3rem;
+  margin-bottom: 0.8rem;
+  color: var(--link);
+  line-height: 3.3rem;
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: PoppinsSemi;
+}
+
+header.header h3 {
+  text-align: center;
+  font-family: PoppinsMed;
+  color: var(--mainText);
+  font-size: 1.6rem;
+  line-height: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.container {
+  z-index: 99;
+  width: 92vw;
+  margin: 0 auto;
+  background: white;
+  padding: 1.5rem;
+  max-width: 1200px;
+  padding-top: 2.1rem;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px var(--accentTrans);
+  position: relative;
+  height: max-content;
+  margin-bottom: 20px;
+}
