@@ -166,7 +166,7 @@ function selectTopic(topicKey) {
   }
 
   renderQuestions(topic);
-  // closeDropdown();
+  closeDropdown();
 }
 
 // Render questions for selected topic
@@ -314,7 +314,23 @@ function toggleDropdown(e) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+
   init();
+
+  try {
+    const type = urlParams.get('type');
+    const details = JSON.parse(urlParams.get('details'));
+
+    console.log('Payment Type:', type);
+    console.log('Payment Details:', details);
+
+    selectTopic(type);
+
+  } catch (error) {
+    console.error('Error parsing booking details:', error);
+    // Handle error or redirect back
+  }
 });
 
 function init() {

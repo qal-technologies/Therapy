@@ -353,10 +353,16 @@ window.addEventListener("DOMContentLoaded", () => {
 	}).join("");
 
 	sessions.innerHTML += sessionTypes.map((session) => {
-		let returning = {
-			name: session.name, price: session.price, type: session.type,
-		}
-		const details = JSON.stringify(returning);
+		const details = {
+			name: session.name,
+			price: session.price,
+			type: session.type,
+		};
+
+		const params = new URLSearchParams({
+			type: "session",
+			details: JSON.stringify(details)
+		}).toString();
 
 		let bonuses = session.bonus.map(bonus => {
 			if (bonus.length > 0) {
@@ -414,7 +420,7 @@ window.addEventListener("DOMContentLoaded", () => {
             </p>
             <p class="price">&euro; ${session.price} <span class="highlight">EUR</span></p>
 
-            <a id="book" class="${session.type}" disabled=${session.type == "inner" ? true : false} ${session.type !== "inner" ? `href="/html/main/Book.html?details=${details}"` : ""}>${session.button}</a>
+            <a id="book" class="${session.type}" disabled=${session.type == "inner" ? true : false} ${session.type !== "inner" ? `href="/html/main/Book.html?${params}"` : ""}>${session.button}</a>
           </div>
 
 			<div id="message" class="${session.type}">
