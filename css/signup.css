@@ -337,21 +337,6 @@ div#session-plan .image img {
   cursor: pointer;
 }
 
-div.faq-bottom {
-  width: 100%;
-  max-width: 750px;
-  padding: 1rem;
-  place-self: center;
-  padding-block: 1.4rem;
-  text-align: center;
-  place-content: center;
-}
-
-div.faq-bottom .faq {
-  text-decoration: underline;
-  text-decoration-color: var(--highlight);
-}
-
 .dropdown-container {
   position: relative;
   margin-bottom: 2rem;
