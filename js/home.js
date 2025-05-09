@@ -157,7 +157,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
 	if (user) {
-		bannerBTN.href = "/html/main/Home.html#sessions";
+		bannerBTN.href = "/html/main/Book.html";
 		BTNText.innerHTML = "BOOK NOW";
 	};
 

@@ -330,23 +330,31 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  const user = true;
   const urlParams = new URLSearchParams(window.location.search);
 
   init();
 
-  try {
-    const type = urlParams.get('type');
-    const details = JSON.parse(urlParams.get('details'));
+  if (user) {
+    try {
+      const type = urlParams.get('type');
+      const details = JSON.parse(urlParams.get('details'));
 
-    console.log('Payment Type:', type);
-    console.log('Payment Details:', details);
+      const topic = details.type;
 
-    if (type == "session") {
-      selectTopic(details.type);
+      console.log('Payment Type:', type);
+      console.log('Payment Details:', details);
+
+      if (type == "session") {
+        selectTopic(topic);
+      }
+    } catch (error) {
+      console.error('Error parsing booking details:', error);
     }
-  } catch (error) {
-    console.error('Error parsing booking details:', error);
-    // Handle error or redirect back
+  } else {
+    alert('You are not logged in, Please Sign Up!');
+    // Redirect to signup page
+    window.location.href = '/html/regs/Signup.html';
   }
 });
 

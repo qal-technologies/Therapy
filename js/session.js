@@ -1,55 +1,59 @@
 const sessionTypes = [
-    {
-        type: "virtual",
-        name: "VIRTUAL SESSION",
-        price: "800",
-        description:
-            "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
-        button: "BOOK NOW",
-        bonus: [
-            "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
-            "BONUS! Exclusive discounts from event sponsors",
-            "5+ hours of live online content",
-            "Event recordings and additional resources",
-            "Guided workshops, live polling, and more for interactive learning",
-            "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
-        ]
-    },
-    {
-        type: "in-person",
-        name: "IN-PERSON SESSION",
-        extra: "(in Europe/Monaco)",
-        price: "1600",
-        description:
-            "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
-        button: "BOOK NOW",
-        bonus: [
-            "Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
-            "Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
-        ]
-    },
-    {
-        type: "inner",
-        name: "INNER CIRCLE EXPERIENCE",
-        extra: "This plan is sold out for now",
-        price: "6,850",
-        description:
-            "For those who seek not just a session, but a sanctuary.",
-        button: "SOLD OUT",
-        bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
-    },
-    {
-        type: "community",
-        name: "COMMUNITY SESSION",
-        extra: "Accessible Plan",
-        price: "550",
-        description:
-            "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
-        button: "BOOK NOW",
-        bonus: [
-            "Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
-        ]
-    },
+  {
+    type: "virtual",
+    route: "virtual",
+    name: "VIRTUAL SESSION",
+    price: "800",
+    description:
+      "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
+    button: "BOOK NOW",
+    bonus: [
+      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
+      "BONUS! Exclusive discounts from event sponsors",
+      "5+ hours of live online content",
+      "Event recordings and additional resources",
+      "Guided workshops, live polling, and more for interactive learning",
+      "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
+    ]
+  },
+  {
+    type: "in-person",
+    route: "inPerson",
+    name: "IN-PERSON SESSION",
+    extra: "(in Europe/Monaco)",
+    price: "1600",
+    description:
+      "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
+    button: "BOOK NOW",
+    bonus: [
+      "Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
+      "Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
+    ]
+  },
+  {
+    type: "inner",
+    route: "inner",
+    name: "INNER CIRCLE EXPERIENCE",
+    extra: "This plan is sold out for now",
+    price: "6,850",
+    description:
+      "For those who seek not just a session, but a sanctuary.",
+    button: "SOLD OUT",
+    bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
+  },
+  {
+    type: "community",
+    route: "community",
+    name: "COMMUNITY SESSION",
+    extra: "Accessible Plan",
+    price: "550",
+    description:
+      "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
+    button: "BOOK NOW",
+    bonus: [
+      "Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
+    ]
+  },
 ];
 
 const faq = [
@@ -106,10 +110,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
     audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
-    sessions.innerHTML += sessionTypes.map((session) => {
-        let bonuses = session.bonus.map(bonus => {
-            if (bonus.length > 0) {
-                const bonusDiv = `
+  sessions.innerHTML += sessionTypes.map((session) => {
+    const details = {
+      name: session.name,
+      price: session.price,
+      type: session.route,
+    };
+
+    const params = new URLSearchParams({
+      type: "session",
+      details: JSON.stringify(details)
+    }).toString();
+
+    let bonuses = session.bonus.map(bonus => {
+      if (bonus.length > 0) {
+        const bonusDiv = `
 			<div class="bonus">
 			<div class="svg-div">
               <svg
@@ -131,13 +146,13 @@ window.addEventListener("DOMContentLoaded", () => {
               <p>${bonus}</p>
           </div>
 				`
-                return bonusDiv;
-            } else {
-                return "";
-            }
-        });
+        return bonusDiv;
+      } else {
+        return "";
+      }
+    });
 
-        return ` <div id="session" class="${session.type} moveUpNfadeIn">
+    return ` <div id="session" class="${session.type}">
           <div class="upper">
             <p class="recommendation">SELLING FAST!</p>
             <svg
@@ -163,7 +178,7 @@ window.addEventListener("DOMContentLoaded", () => {
             </p>
             <p class="price">&euro; ${session.price} <span class="highlight">EUR</span></p>
 
-            <a id="book" class="${session.type}" href="/html/main/Book.html" disabled=${session.type == "inner"}>${session.button}</a>
+            <a id="book" class="${session.type}" disabled=${session.type == "inner" ? true : false} ${session.type !== "inner" ? `href="/html/main/Book.html?${params}"` : ""}>${session.button}</a>
           </div>
 
 			<div id="message" class="${session.type}">
@@ -174,7 +189,7 @@ ${bonuses.join('')}
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
 		  </div>
         </div>`
-    }).join("");
+  }).join("");
 
     const listenBTN = document.querySelector("#sessions button#play2");
 
