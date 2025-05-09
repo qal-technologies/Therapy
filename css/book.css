@@ -115,7 +115,7 @@ header.header h3 {
   font-size: 22px;
 }
 
-.form-container#register-form .lower h1.ticket {
+.form-container .lower h1.ticket {
   display: none;
 }
 
