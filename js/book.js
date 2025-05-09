@@ -85,3 +85,18 @@ const TOPICS_DATA = {
     ]
   }
 };
+
+
+const DOM = {
+  
+  dropdownHeader: document.getElementById('dropdownHeader'),
+  dropdownOptions: document.getElementById('dropdownOptions'),
+  questionsContainer: document.getElementById('questionsContainer'),
+  chevron: document.querySelector('.chevron'),
+  price: document.querySelector("#session-plan .price"),
+  title: document.querySelector("#session-plan .title"),
+  extra: document.querySelector("#session-plan .name .extra"),
+  description: document.querySelector('#session-plan .intro'),
+  formGroup: document.querySelector(".form-group#session"),
+  ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
+};
