@@ -269,3 +269,199 @@ div#session-plan .image img {
   font-family: PoppinsMed;
   cursor: pointer;
 }
+
+.form-container .lower h1.ticket {
+  display: none;
+}
+
+.dropdown-container {
+  position: relative;
+  margin-bottom: 2rem;
+  font-family: PoppinsMed;
+}
+
+.dropdown-header {
+  width: 100%;
+  padding: 12px 16px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 1px 6px rgba(100, 100, 100, 0.1);
+  cursor: pointer;
+  display: flex;
+  place-self: center;
+  border: 1px solid var(--link);
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  color: var(--link);
+}
+
+.dropdown-header span {
+  font-family: PoppinsSemi;
+}
+
+.dropdown-header:hover {
+  box-shadow: 0 1px 10px var(--accentTrans);
+}
+
+.dropdown-options {
+  position: relative;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+  max-height: 0;
+  width: 100%;
+  margin-block: 8px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  color: var(--link);
+  padding: 0.5rem;
+  z-index: 10;
+}
+
+.dropdown-options.open {
+  max-height: 300px;
+  opacity: 1;
+}
+
+.option {
+  font-family: PoppinsMed;
+  background: auto;
+  border-radius: 15px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.option:hover {
+  background: var(--accentTrans);
+}
+
+.questions-container {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.questions-container p.description {
+  padding-inline: 10px;
+  width: 100%;
+  text-align: left;
+  font-family: PoppinsSemi;
+  color: var(--link);
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.question-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 10px;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 0.4s ease forwards;
+  transition: all 0.3s ease;
+}
+
+.question-card .answer-options {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.question-card.input .answer-options {
+  flex-direction: column;
+}
+
+.question-card button.next {
+  padding: 4px;
+  padding-inline: 15px;
+  background: var(--link);
+  width: max-content;
+  height: max-content;
+  border-radius: 20px;
+  display: flex;
+  place-content: center;
+  place-self: flex-end;
+  color: white;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.question-card button.next:disabled, .question-card .answer-btn:disabled, div#checkout button:disabled {
+  background-color: rgb(194, 194, 194);
+  color: black;
+  cursor: default;
+  opacity: 0.3;
+  user-select: none;
+}
+
+.question-card .answer-btn {
+  width: max-content;
+  padding: 5px;
+  padding-inline: 15px;
+  border-radius: 8px;
+  border: none;
+  font-family: PoppinsMed;
+  color: var(--mainText);
+  background: var(--accentTrans);
+  cursor: pointer;
+}
+
+@keyframes fadeInUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.chevron {
+  transition: transform 0.3s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+div#checkout {
+  width: 100%;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  padding-block: 10px;
+}
+
+div#checkout button {
+  background-color: var(--link);
+  padding: 10px;
+  width: 60%;
+  max-width: 200px;
+  padding-inline: 15px;
+  text-align: center;
+  justify-content: space-between;
+  border-radius: 20px;
+  color: white;
+  gap: 10px;
+  border: none;
+  display: flex;
+  font-family: PoppinsMed;
+  flex-direction: row;
+}
+
+div#checkout p {
+  font-size: 16px;
+  font-family: PoppinsMed;
+}
