@@ -332,3 +332,7 @@ function toggleDropdown(e) {
     DOM.chevron.classList.add('open');
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  init();
+});
