@@ -117,16 +117,6 @@ function reAttach() {
   Object.assign(DOM, {
     tabs: document.querySelectorAll('.tab'),
     formSection: document.querySelector('.form-section'),
-    dropdownHeader: registerForm ? registerForm.querySelector('#dropdownHeader') : null,
-    dropdownOptions: registerForm ? registerForm.querySelector('#dropdownOptions') : null,
-    questionsContainer: registerForm ? registerForm.querySelector('#questionsContainer') : null,
-    chevron: registerForm ? registerForm.querySelector('.chevron') : null,
-    price: registerForm ? registerForm.querySelector("#session-plan .price") : null,
-    title: registerForm ? registerForm.querySelector("#session-plan .title") : null,
-    extra: registerForm ? registerForm.querySelector("#session-plan .name .extra") : null,
-    description: registerForm ? registerForm.querySelector('#session-plan .intro') : null,
-    formGroup: registerForm ? registerForm.querySelector(".form-group#session") : null,
-    ticket: registerForm ? registerForm.querySelector(".lower h1.ticket") : null,
     registerForm: registerForm
   });
 }
@@ -142,8 +132,6 @@ function handleTabClick(e) {
   document.querySelector('.tab.active').classList.remove('active');
   tab.classList.add('active');
   
-  state.selectedTopic = null;
-  state.answers = {};
   switchForm(formToShow);
 }
 
@@ -165,7 +153,7 @@ function switchForm(formType) {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
     const registerForm = document.getElementById('register-form');
     registerForm.classList.add('active');
-    initDropdown(registerForm);
+    
   }
 
   // Update state and reattach all DOM references
@@ -173,24 +161,6 @@ function switchForm(formType) {
   reAttach();
 }
 
-function initDropdown(formElement) {
-  if (!formElement) return;
-
-  DOM.dropdownHeader = formElement.querySelector('#dropdownHeader');
-  DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
-  DOM.questionsContainer = formElement.querySelector('#questionsContainer');
-  DOM.chevron = formElement.querySelector('.chevron');
-  DOM.formGroup = formElement.querySelector(".form-group#session");
-  DOM.ticket = formElement.querySelector(".lower h1.ticket");
-  
-
-  if (DOM.dropdownHeader) {
-    DOM.dropdownHeader.addEventListener('click', toggleDropdown);
-  }
-
-  populateDropdown();
-  if (state.selectedTopic) selectTopic(state.selectedTopic);
-}
 
 // Populate the session type dropdown
 function populateDropdown() {
