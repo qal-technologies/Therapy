@@ -40,20 +40,20 @@ header.header h1 {
   position: relative;
   width: auto;
   place-self: center;
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 0.8rem;
   color: var(--link);
-  line-height: 3.3rem;
-  text-align: center;
+  line-height: 2.2rem;
+  text-align: left;
   margin-bottom: 30px;
   font-family: PoppinsSemi;
 }
 
 header.header h3 {
-  text-align: center;
+  text-align: left;
   font-family: PoppinsMed;
   color: var(--mainText);
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   line-height: 2rem;
   margin-bottom: 1.2rem;
 }
