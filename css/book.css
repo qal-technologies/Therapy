@@ -38,7 +38,6 @@ header.header {
 header.header h1 {
   position: relative;
   width: auto;
-  place-self: flex-start;
   font-size: 2.5rem;
   margin-bottom: 0.8rem;
   color: var(--link);
@@ -49,8 +48,8 @@ header.header h1 {
 }
 
 header.header h3 {
-  text-align: center;
-  font-family: PoppinsMed;
+  text-align: left;
+  font-family: PoppinsLight;
   color: var(--mainText);
   font-size: 1.6rem;
   line-height: 2rem;
