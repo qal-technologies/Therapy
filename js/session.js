@@ -163,7 +163,7 @@ window.addEventListener("DOMContentLoaded", () => {
             </p>
             <p class="price">&euro; ${session.price} <span class="highlight">EUR</span></p>
 
-            <a id="book" class="${session.type}" href="/html/main/Book.html" >${session.button}</a>
+            <a id="book" class="${session.type}" href="/html/main/Book.html" disabled=${session.type == "inner"}>${session.button}</a>
           </div>
 
 			<div id="message" class="${session.type}">

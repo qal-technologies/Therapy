@@ -353,6 +353,11 @@ window.addEventListener("DOMContentLoaded", () => {
 	}).join("");
 
 	sessions.innerHTML += sessionTypes.map((session) => {
+		let returning = {
+			name: session.name, price: session.price, type: session.type,
+		}
+		const details = JSON.stringify(returning);
+
 		let bonuses = session.bonus.map(bonus => {
 			if (bonus.length > 0) {
 				const bonusDiv = `
@@ -409,7 +414,7 @@ window.addEventListener("DOMContentLoaded", () => {
             </p>
             <p class="price">&euro; ${session.price} <span class="highlight">EUR</span></p>
 
-            <a id="book" class="${session.type}" href="/html/main/Book.html" >${session.button}</a>
+            <a id="book" class="${session.type}" disabled=${session.type == "inner" ? true : false} ${session.type !== "inner" ? `href="/html/main/Book.html?details=${details}"` : ""}>${session.button}</a>
           </div>
 
 			<div id="message" class="${session.type}">
