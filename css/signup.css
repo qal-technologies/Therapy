@@ -547,15 +547,16 @@ div#checkout p {
 div.bottom.privacy {
   display: flex;
   flex-direction: column;
-  min-width: 100%;
-  padding-top: 20px;
+width:90%
+  padding-top: 10px;
   place-items: center;
   align-items: center;
+gap:10px;
   justify-content: center;
 }
 
 div.privacy-policy {
-  width: 100%;
+  width: 80%;
   padding: 1rem;
   border: 1px solid var(--link);
   background-color: rgba(167, 173, 192, 0.04);
