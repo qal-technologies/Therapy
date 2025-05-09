@@ -93,10 +93,7 @@ const DOM = {
 
 const state = {
   currentForm: 'register',
-  selectedTopic: null,
   originalRegisterFormHTML: ``,
-  currentQuestion: 0,
-  answers: {},
 };
 
 function init() {
