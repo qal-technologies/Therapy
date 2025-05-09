@@ -102,9 +102,6 @@ function init() {
   }
   
   setupEventListeners();
-  populateDropdown();
-
-  initDropdown(DOM.registerForm);
 }
 
 function setupEventListeners() {
@@ -113,9 +110,6 @@ function setupEventListeners() {
     tab.addEventListener('click', handleTabClick);
   });
 
-  // Dropdown functionality
-  DOM.dropdownHeader.addEventListener('click', toggleDropdown);
-  document.addEventListener('click', handleDocumentClick);
 }
 
 function reAttach() {
