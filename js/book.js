@@ -1,3 +1,4 @@
+alert("before");
 const TOPICS_DATA = {
   virtual: {
     name: "VIRTUAL SESSION",
@@ -325,7 +326,8 @@ function toggleDropdown(e) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', () => {
+alert("after");
   init();
 });
 
