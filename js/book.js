@@ -98,7 +98,7 @@ const DOM = {
   description: document.querySelector('#session-plan .intro'),
   formGroup: document.querySelector(".form-group#session"),
   ticket: document.querySelector(".form-container .lower h1.ticket"),
-registerForm: document.querySelector(".form-container"),
+registerForm: document.querySelector(".form-section"),
 };
 
 
@@ -107,14 +107,6 @@ const state = {
   currentQuestion: 0,
   answers: {},
 };
-
-function init() {
-  
-  setupEventListeners();
-  populateDropdown();
-
-  initDropdown(DOM.registerForm);
-}
 
 function setupEventListeners() {
 
@@ -336,3 +328,9 @@ function toggleDropdown(e) {
 document.addEventListener('DOMContentLoaded', function() {
   init();
 });
+
+function init() {
+  setupEventListeners();
+  populateDropdown();
+  initDropdown(DOM.registerForm);
+}
