@@ -121,3 +121,23 @@ function setupEventListeners() {
   DOM.dropdownHeader.addEventListener('click', toggleDropdown);
   document.addEventListener('click', handleDocumentClick);
 }
+
+
+function initDropdown(formElement) {
+  if (!formElement) return;
+
+  DOM.dropdownHeader = formElement.querySelector('#dropdownHeader');
+  DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
+  DOM.questionsContainer = formElement.querySelector('#questionsContainer');
+  DOM.chevron = formElement.querySelector('.chevron');
+  DOM.formGroup = formElement.querySelector(".form-group#session");
+  DOM.ticket = formElement.querySelector(".lower h1.ticket");
+  
+
+  if (DOM.dropdownHeader) {
+    DOM.dropdownHeader.addEventListener('click', toggleDropdown);
+  }
+
+  populateDropdown();
+  if (state.selectedTopic) selectTopic(state.selectedTopic);
+}
