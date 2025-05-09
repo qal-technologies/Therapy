@@ -97,7 +97,7 @@ const DOM = {
   extra: document.querySelector("#session-plan .name .extra"),
   description: document.querySelector('#session-plan .intro'),
   formGroup: document.querySelector(".form-group#session"),
-  ticket: document.querySelector(".form-container .lower h1.ticket"),
+  ticket: document.querySelector(".form-section .lower h1.ticket"),
 registerForm: document.querySelector(".form-section"),
 };
 
