@@ -26,63 +26,73 @@ const TEMPLATE = {
       </div>
   `,
 
-  register: ` <div class="form-container active" id="register-form">
-          <div class="register-upper upper">
-            <div class="header register-header">
-              <h1>Register</h1>
-              <p>Welcome! complete the form below to reserve your spot with Charlotte Casiraghi. Together you'll unlock
-                inner peace,
-                dissolve old patterns, and step into a more empowered radiant you.</p>
-            </div>
+  register: `<!-- Register Form -->
+          <div class="form-container active" id="register-form">
+            <div class="register-upper upper">
+              <div class="header register-header">
+                <h1>Register</h1>
+                <p>
+                  Welcome! complete the form below to become a better version of
+                  yourself.
+                </p>
+                <p>
+                  Discover insights and tools to navigate a world on edge. Learn
+                  to become a better version of yourself.
+                </p>
+                </div>
 
-            <div class="bottom">
-              <div class="form-group">
-                <label for="reg-email">Email *</label>
-                <input type="email" id="reg-email" required />
-              </div>
-
-              <div class="form-group">
-                <label for="firstName">First Name *</label>
-                <input type="text" id="firstName" required />
-              </div>
-
-              <div class="form-group">
-                <label for="lastName">Last Name *</label>
-                <input type="text" id="lastName" required />
-              </div>
-
-              <div class="form-group">
-                <label for="Country">Country*</label>
-                <input type="text" id="Country" required />
-              </div>
-
-              <div class="form-group">
-                <label for="reg-password">Password *</label>
-                <input type="password" id="reg-password" required />
-              </div>
-
-
+              <div class="bottom">
                 <div class="form-group">
-                  <label for="adminCode">Admin Code (Optional)</label>
-                  <input type="text" id="adminCode" />
+                  <label for="reg-email">Email *</label>
+                  <input type="email" id="reg-email" required />
                 </div>
-                <div id="checkout">
-                  <button disabled=true>
-                    <p class="text">PROCEED</p>
-                    <p class="svg">>></p>
-                  </button>
-                </div>
-                </div>
-                <div class="bottom privacy">
-                  <div class="privacy-policy">
-                    <p class="text">By registering for this healing session, you are stating that you
-                      have read and agreed to the privacy policy.</p>
-                    <a href="/html/main/Privacy.html" class="view"> View privacy policy </a>
+
+                  <div class="form-group">
+                    <label for="firstName">First Name *</label>
+                    <input type="text" id="firstName" required />
                   </div>
+
+                  <div class="form-group">
+                    <label for="lastName">Last Name *</label>
+                    <input type="text" id="lastName" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="Country">Country*</label>
+                    <input type="text" id="Country" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="reg-password">Password *</label>
+                    <input type="password" id="reg-password" required />
+                  </div>
+
+                  <!-- <div class="form-group">
+                                                                                                                                                                                      <label for="adminCode">Admin Code (Optional)</label>
+                                                                                                                                                                                      <input type="text" id="adminCode" />
+                  </div> -->
+
+                  <div id="checkout">
+                    <button>
+                      <p class="text">REGISTER</p>
+                      <p class="svg">>></p>
+                    </button>
+                  </div>
+                  <div class="bottom privacy">
+                    <div class="privacy-policy">
+                      <p class="text">
+                        By registering for this healing session, you are stating that you
+                        have read and agreed to the privacy policy.
+                      </p>
+                      <a href="/html/main/Privacy.html" class="view">
+                        View privacy policy
+                      </a>
+                </div>
+</div>
+
                 </div>
             </div>
-          </div>
-        </div>`
+</div>`
 }
 
 const DOM = {
