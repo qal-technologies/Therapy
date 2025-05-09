@@ -38,11 +38,10 @@ header.header {
 header.header h1 {
   position: relative;
   width: auto;
-  place-self: center;
-  font-size: 2rem;
-  margin-bottom: 0.8rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
   color: var(--link);
-  line-height: 2.2rem;
+  line-height: 3.5rem;
   text-align: left;
   margin-bottom: 30px;
   font-family: PoppinsSemi;
@@ -50,10 +49,10 @@ header.header h1 {
 
 header.header h3 {
   text-align: left;
-  font-family: PoppinsMed;
+  font-family: PoppinsLight;
   color: var(--mainText);
-  font-size: 1.5rem;
-  line-height: 2rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
   margin-bottom: 1.2rem;
 }
 
