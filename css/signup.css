@@ -210,6 +210,7 @@ label {
   color: var(--link);
   font-weight: 500;
   font-family: PoppinsMed;
+  opacity: 0.9;
 }
 
 input,
@@ -237,9 +238,10 @@ input:focus {
 div#checkout {
   width: 100%;
   display: flex;
-  place-content: center;
+  place-content: flex-end;
   align-items: center;
   padding-block: 10px;
+  padding-bottom: 1.5rem;
 }
 
 div#checkout button {
@@ -290,6 +292,7 @@ div.privacy-policy {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+  font-family: PoppinsMed;
   gap: 10px;
 }
 
@@ -301,39 +304,4 @@ div.privacy-policy a {
   border-radius: 8px;
   color: var(--link);
   font-family: PoppinsMed;
-}
-
-/* Animations */
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-}
-
-.completion-screen {
-  text-align: center;
-  padding: 1.5rem;
-}
-
-.checkmark {
-  font-size: 4rem;
-  color: #4CAF50;
-  animation: bounce 1s;
-}
-
-.celebrate {
-  font-size: 2rem;
-  margin: 1rem 0;
-  animation: fadeInUp 1s;
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-20px);
-  }
 }

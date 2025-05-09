@@ -1,4 +1,3 @@
-
 const TEMPLATE = {
   login: `
    <div class="form-container" id="login-form">

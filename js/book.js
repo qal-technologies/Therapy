@@ -1,4 +1,3 @@
-alert("before");
 const TOPICS_DATA = {
   virtual: {
     name: "VIRTUAL SESSION",
@@ -97,8 +96,7 @@ const DOM = {
   title: document.querySelector("#session-plan .title"),
   extra: document.querySelector("#session-plan .name .extra"),
   description: document.querySelector('#session-plan .intro'),
-  formGroup: document.querySelector(".form-group#session"),
-  ticket: document.querySelector(".form-section .form-container .lower h1.ticket"),
+  formGroup: document.querySelector(".form-container div.lower"),
 registerForm: document.querySelector(".form-container#register-form"),
 };
 
@@ -110,7 +108,6 @@ const state = {
 };
 
 function setupEventListeners() {
-
   // Dropdown functionality
   DOM.dropdownHeader.addEventListener('click', toggleDropdown);
   document.addEventListener('click', handleDocumentClick);
@@ -124,8 +121,7 @@ function initDropdown(formElement) {
   DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
   DOM.questionsContainer = formElement.querySelector('#questionsContainer');
   DOM.chevron = formElement.querySelector('.chevron');
-  DOM.formGroup = formElement.querySelector(".form-group#session");
-  DOM.ticket = formElement.querySelector(".lower h1.ticket");
+  DOM.formGroup = formElement.querySelector("..form-container .lower");
   
 
   if (DOM.dropdownHeader) {
@@ -169,14 +165,8 @@ function selectTopic(topicKey) {
      DOM.formGroup.style.display = "none";
   }
 
-  if (DOM.ticket) {
-    DOM.ticket.style.display = "none";
-  }
-
-  // Update questions
   renderQuestions(topic);
-
-  closeDropdown();
+  // closeDropdown();
 }
 
 // Render questions for selected topic
@@ -186,7 +176,6 @@ function renderQuestions(topic) {
 }
 
 function showQuestion(question, index) {
-
   const questionDiv = document.createElement('div');
   questionDiv.className = `question-card ${question.type === 'input' ? 'input' : ''}`;
   questionDiv.innerHTML = `
@@ -267,7 +256,7 @@ button.disabled=false;
 
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
-  console.log(state.answers)
+  // console.log(state.answers);
 }
 
 
@@ -277,11 +266,9 @@ function saveAnswer(question, answer) {
 
 // Update session information display
 function updateSessionInfo(topic) {
-
-  if (DOM.formGroup) DOM.formGroup.style.display = "block";
-
-  if (DOM.ticket) DOM.ticket.style.display = "block";
-
+  if (DOM.formGroup) {
+    DOM.formGroup.style.display = "flex";
+  }
 
   if (DOM.title) DOM.title.textContent = topic.name;
   if (DOM.extra) {
@@ -327,7 +314,6 @@ function toggleDropdown(e) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-alert("after");
   init();
 });
 
