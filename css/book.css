@@ -98,9 +98,10 @@ header.header h3 {
   font-family: PoppinsMed;
   margin-bottom: -8px;
   font-size: 22px;
+
 }
 
-.form-section .lower h1.ticket {
+.form-section div.header h1.ticket {
   display: none;
 }
 
