@@ -82,21 +82,7 @@ header.header h3 {
   height: 100%;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: row;
-  gap: 6%;
-  flex-wrap: wrap;
-  position: relative;
-  width: 100%;
-  align-items: flex-start;
-  justify-content: flex-start;
-  max-height: auto;
-  transition: display 0.3s ease, opacity 0.3s ease;
-  opacity: 1;
-}
-
-.form-container div.header {
+.form-section div.header {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -107,18 +93,18 @@ header.header h3 {
   padding-bottom: 1.5rem;
 }
 
-.form-container div.header h1 {
+.form-section div.header h1 {
   color: var(--link);
   font-family: PoppinsMed;
   margin-bottom: -8px;
   font-size: 22px;
 }
 
-.form-container .lower h1.ticket {
+.form-section .lower h1.ticket {
   display: none;
 }
 
-.form-container div.bottom {
+.form-section div.bottom {
   display: flex;
   flex-direction: column;
   gap: 5px;
