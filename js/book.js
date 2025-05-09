@@ -165,6 +165,9 @@ function selectTopic(topicKey) {
      DOM.formGroup.style.display = "none";
   }
 
+  const button = document.querySelector('div#checkout button');
+  if (button) button.disabled = false;
+
   renderQuestions(topic);
   closeDropdown();
 }
