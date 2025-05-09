@@ -16,7 +16,7 @@ const TEMPLATE = {
           </div>
 
           <div id="checkout">
-      <button>
+       <button disabled>
         <p class="text">LOGIN</p>
         <p class="svg">>></p>
       </button>
@@ -72,7 +72,7 @@ const TEMPLATE = {
                   </div> -->
 
                   <div id="checkout">
-                    <button>
+                      <button disabled>
                       <p class="text">REGISTER</p>
                       <p class="svg">>></p>
                     </button>

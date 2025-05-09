@@ -259,6 +259,12 @@ div#session-plan .image img {
   font-family: PoppinsMed;
 }
 
+#session-plan div.learn {
+  width: 100%;
+  text-align: left;
+  place-content: flex-start;
+}
+
 #session-plan div.learn a {
   font-size: 14px;
   text-decoration: underline;
@@ -436,8 +442,7 @@ div#checkout {
   display: flex;
   place-content: flex-end;
   align-items: center;
-  padding-block: 10px;
-  padding-bottom: 1.5rem;
+  padding-top: 10px;
 }
 
 div#checkout button {

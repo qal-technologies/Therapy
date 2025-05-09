@@ -45,6 +45,7 @@ const reviews = [
 const sessionTypes = [
 	{
 		type: "virtual",
+		route: "virtual",
 		name: "VIRTUAL SESSION",
 		price: "800",
 		description:
@@ -61,6 +62,7 @@ const sessionTypes = [
 	},
 	{
 		type: "in-person",
+		route: "inPerson",
 		name: "IN-PERSON SESSION",
 		extra: "(in Europe/Monaco)",
 		price: "1600",
@@ -74,6 +76,7 @@ const sessionTypes = [
 	},
 	{
 		type: "inner",
+		route: "inner",
 		name: "INNER CIRCLE EXPERIENCE",
 		extra:"This plan is sold out for now",
 		price: "6,850",
@@ -84,6 +87,7 @@ const sessionTypes = [
 	},
 	{
 		type: "community",
+		route: "community",
 		name: "COMMUNITY SESSION",
 		extra: "Accessible Plan",
 		price: "550",
@@ -356,7 +360,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		const details = {
 			name: session.name,
 			price: session.price,
-			type: session.type,
+			type: session.route,
 		};
 
 		const params = new URLSearchParams({

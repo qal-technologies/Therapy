@@ -97,7 +97,7 @@ const DOM = {
   extra: document.querySelector("#session-plan .name .extra"),
   description: document.querySelector('#session-plan .intro'),
   formGroup: document.querySelector(".form-container div.lower"),
-registerForm: document.querySelector(".form-container#register-form"),
+  registerForm: document.querySelector(".form-container#register-form"),
 };
 
 
@@ -121,8 +121,8 @@ function initDropdown(formElement) {
   DOM.dropdownOptions = formElement.querySelector('#dropdownOptions');
   DOM.questionsContainer = formElement.querySelector('#questionsContainer');
   DOM.chevron = formElement.querySelector('.chevron');
-  DOM.formGroup = formElement.querySelector("..form-container .lower");
-  
+  DOM.formGroup = formElement.querySelector(".form-container .lower");
+
 
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.addEventListener('click', toggleDropdown);
@@ -136,9 +136,9 @@ function initDropdown(formElement) {
 // Populate the session type dropdown
 function populateDropdown() {
   if (!DOM.dropdownOptions) return;
-  
+
   DOM.dropdownOptions.innerHTML = '';
-  
+
   Object.entries(TOPICS_DATA).forEach(([key, topic]) => {
     const option = document.createElement('div');
     option.className = 'option';
@@ -153,20 +153,21 @@ function populateDropdown() {
 function selectTopic(topicKey) {
   const topic = TOPICS_DATA[topicKey];
   if (!topic) return;
-  
+
   state.selectedTopic = topicKey;
-  
+
   // Update UI
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.querySelector('span').textContent = topic.name;
   }
 
   if (DOM.formGroup) {
-     DOM.formGroup.style.display = "none";
+    DOM.formGroup.style.display = "none";
   }
 
   const button = document.querySelector('div#checkout button');
-  if (button) button.disabled = false;
+
+  if (button) button.disabled = true;
 
   renderQuestions(topic);
   closeDropdown();
@@ -184,12 +185,12 @@ function showQuestion(question, index) {
   questionDiv.innerHTML = `
     <p>${question.question}</p>
     <div class="answer-options">
-      ${question.type === 'button' 
-        ? question.options.map(opt => 
-          `<button class="answer-btn" data-value="${opt}">${opt}</button>`
-        ).join('') 
-        : `<input type="${question.inputType}" placeholder="Your answer"/>
-           <button class="next">SUBMIT</button>`}
+      ${question.type === 'button'
+      ? question.options.map(opt =>
+        `<button class="answer-btn" data-value="${opt}">${opt}</button>`
+      ).join('')
+      : `<input type="${question.inputType}" placeholder="Your answer"/>
+           <button class="next" disabled>SUBMIT</button>`}
     </div>
   `;
 
@@ -215,7 +216,13 @@ function showQuestion(question, index) {
   if (question.type === 'input') {
     const input = questionDiv.querySelector('input');
     const next = questionDiv.querySelector('.next');
-    
+
+    input.addEventListener("input", () => {
+      const lengthObj = { value: input.value.length, status: input.value.length > 0 };
+
+      next.disabled = !lengthObj.status;
+    });
+
     next.addEventListener('click', () => {
       saveAnswer(question.question, input.value);
       handleAnswer();
@@ -225,7 +232,7 @@ function showQuestion(question, index) {
 
 function nextQuestion(index) {
 
-const topic = state.selectedTopic;
+  const topic = state.selectedTopic;
   const questions = TOPICS_DATA[topic].questions;
 
   if (index < questions.length) {
@@ -255,7 +262,7 @@ function showCompletion() {
   updateSessionInfo(topic);
 
   const button = document.querySelector('div#checkout button');
-button.disabled=false;
+  button.disabled = false;
 
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
@@ -292,10 +299,10 @@ function closeDropdown() {
 // Update the handleDocumentClick function:
 function handleDocumentClick(e) {
   if (!DOM.dropdownHeader || !DOM.dropdownOptions) return;
-  
+
   const isDropdownClick = DOM.dropdownHeader.contains(e.target) ||
     DOM.dropdownOptions.contains(e.target);
-  
+
   if (!isDropdownClick) {
     closeDropdown();
   }
@@ -316,6 +323,12 @@ function toggleDropdown(e) {
   }
 }
 
+function init() {
+  setupEventListeners();
+  populateDropdown();
+  initDropdown(DOM.registerForm);
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
 
@@ -328,16 +341,12 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log('Payment Type:', type);
     console.log('Payment Details:', details);
 
-    selectTopic(type);
-
+    if (type == "session") {
+      selectTopic(details.type);
+    }
   } catch (error) {
     console.error('Error parsing booking details:', error);
     // Handle error or redirect back
   }
 });
 
-function init() {
-  setupEventListeners();
-  populateDropdown();
-  initDropdown(DOM.registerForm);
-}
