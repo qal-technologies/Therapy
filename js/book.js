@@ -100,3 +100,10 @@ const DOM = {
   formGroup: document.querySelector(".form-group#session"),
   ticket: document.querySelector(".form-container#register-form .lower h1.ticket"),
 };
+
+
+const state = {
+  selectedTopic: null,
+  currentQuestion: 0,
+  answers: {},
+};
