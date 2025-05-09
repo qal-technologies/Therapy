@@ -139,7 +139,7 @@ header.header h3 {
   color: var(--link);
   font-family: PoppinsMed;
   margin-bottom: -8px;
-  font-size: 22px;
+  font-size: 2rem;
 }
 
 .form-container#register-form .lower h1.ticket {
