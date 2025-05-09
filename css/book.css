@@ -20,7 +20,7 @@ header.header .circle {
 
 header.header {
   width: 100%;
-  padding: 5rem;
+  padding: 1rem;
   background-color: var(--accentTrans);
   display: flex;
   flex-direction: column;
@@ -28,7 +28,6 @@ header.header {
   margin-bottom: -70px;
   overflow: hidden;
   position: relative;
-  min-height: 45%;
   padding-bottom: 5.5rem;
   font-size: 1.2rem;
   z-index: -99;
