@@ -20,7 +20,7 @@ header.header .circle {
 
 header.header {
   width: 100%;
-  padding: 5rem;
+  padding: 3rem;
   background-color: var(--accentTrans);
   display: flex;
   flex-direction: column;
@@ -28,7 +28,6 @@ header.header {
   margin-bottom: -70px;
   overflow: hidden;
   position: relative;
-  min-height: 45%;
   padding-bottom: 5.5rem;
   font-size: 1.2rem;
   z-index: -99;
@@ -39,36 +38,21 @@ header.header {
 header.header h1 {
   position: relative;
   width: auto;
-  place-self: center;
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 0.8rem;
   color: var(--link);
-  line-height: 3.3rem;
-  text-align: center;
+  line-height: 3rem;
+  text-align: left;
   margin-bottom: 30px;
   font-family: PoppinsSemi;
 }
 
-header.header h1 span {
-  width: 40%;
-  max-width: 200px;
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 30%;
-  height: 105%;
-  padding-bottom: 5px;
-  border-bottom: 2px solid var(--link);
-  place-self: center;
-  padding: 10px;
-}
-
 header.header h3 {
-  text-align: center;
-  font-family: PoppinsMed;
+  text-align: left;
+  font-family: PoppinsLight;
   color: var(--mainText);
-  font-size: 2rem;
-  line-height: 2.1rem;
+  font-size: 1.6rem;
+  line-height: 2rem;
   margin-bottom: 1.2rem;
 }
 
@@ -87,30 +71,6 @@ header.header h3 {
   margin-bottom: 20px;
 }
 
-.tabs {
-  display: flex;
-  margin-bottom: 1rem;
-  width: 100%;
-  max-width: 750px;
-  place-self: center;
-}
-
-.tab {
-  flex: 1;
-  padding: 0.4rem;
-  text-align: center;
-  font-family: PoppinsMed;
-  cursor: pointer;
-  color: var(--link);
-  transition: all 0.3s ease;
-}
-
-.tab.active {
-  color: var(--link);
-  font-family: PoppinsSemi;
-  border-bottom: 3px solid var(--link);
-  font-weight: 500;
-}
 
 .form-section {
   padding-top: 20px;
@@ -179,7 +139,7 @@ header.header h3 {
   color: var(--link);
   font-family: PoppinsMed;
   margin-bottom: -8px;
-  font-size: 22px;
+  font-size: 2rem;
 }
 
 .form-container#register-form .lower h1.ticket {
@@ -335,6 +295,21 @@ div#session-plan .image img {
   padding-top: 5px;
   font-family: PoppinsMed;
   cursor: pointer;
+}
+
+div.faq-bottom {
+  width: 100%;
+  max-width: 750px;
+  padding: 1rem;
+  place-self: center;
+  padding-block: 1.4rem;
+  text-align: center;
+  place-content: center;
+}
+
+div.faq-bottom .faq {
+  text-decoration: underline;
+  text-decoration-color: var(--highlight);
 }
 
 .dropdown-container {
@@ -532,16 +507,15 @@ div#checkout p {
 div.bottom.privacy {
   display: flex;
   flex-direction: column;
-width:90%
-  padding-top: 10px;
+  min-width: 100%;
+  padding-top: 20px;
   place-items: center;
   align-items: center;
-gap:10px;
   justify-content: center;
 }
 
 div.privacy-policy {
-  width: 80%;
+  width: 100%;
   padding: 1rem;
   border: 1px solid var(--link);
   background-color: rgba(167, 173, 192, 0.04);
