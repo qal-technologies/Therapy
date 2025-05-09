@@ -21,6 +21,7 @@ header.header .circle {
 header.header {
   width: 100%;
   padding: 1rem;
+padding-top:2rem;
   background-color: var(--accentTrans);
   display: flex;
   flex-direction: column;
@@ -39,7 +40,7 @@ header.header h1 {
   position: relative;
   width: auto;
   font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   color: var(--link);
   line-height: 3.5rem;
   text-align: left;
