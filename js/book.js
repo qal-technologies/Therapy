@@ -88,7 +88,6 @@ const TOPICS_DATA = {
 
 
 const DOM = {
-  
   dropdownHeader: document.getElementById('dropdownHeader'),
   dropdownOptions: document.getElementById('dropdownOptions'),
   questionsContainer: document.getElementById('questionsContainer'),
@@ -107,3 +106,18 @@ const state = {
   currentQuestion: 0,
   answers: {},
 };
+
+function init() {
+  
+  setupEventListeners();
+  populateDropdown();
+
+  initDropdown(DOM.registerForm);
+}
+
+function setupEventListeners() {
+
+  // Dropdown functionality
+  DOM.dropdownHeader.addEventListener('click', toggleDropdown);
+  document.addEventListener('click', handleDocumentClick);
+}
