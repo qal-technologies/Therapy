@@ -267,7 +267,7 @@ div#checkout p {
 div.bottom.privacy {
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  width: auto;
   padding-block: 20px;
   padding-top: 10px;
   align-items: center;
