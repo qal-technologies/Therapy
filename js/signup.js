@@ -172,12 +172,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const acceptRadio = document.getElementById('accept');
   const registerButton = document.querySelector('#checkout button');
 
-  registerButton.disabled = !acceptRadio.checked;
+
+  reAttach();
+  init();
+
+  registerButton.disabled = true;
 
   acceptRadio.addEventListener('change', () => {
     registerButton.disabled = !acceptRadio.checked;
   });
-
-  reAttach();
-  init();
 });

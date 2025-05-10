@@ -261,6 +261,14 @@ div#checkout button {
   flex-direction: row;
 }
 
+div#checkout button:disabled {
+  background-color: rgb(194, 194, 194);
+  color: black;
+  cursor: not-allowed;
+  opacity: 0.3;
+  user-select: none;
+}
+
 div#checkout p {
   width: auto;
   text-align: center;
