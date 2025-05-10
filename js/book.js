@@ -106,6 +106,8 @@ const state = {
   selectedTopic: null,
   currentQuestion: 0,
   answers: {},
+  completed: false,
+  clicked: false,
 };
 
 function setupEventListeners() {
@@ -243,7 +245,6 @@ function nextQuestion(index) {
 }
 
 function showCompletion() {
-
   const session = state.selectedTopic;
   const topic = TOPICS_DATA[session];
 
@@ -253,7 +254,7 @@ function showCompletion() {
     <div class="animation-container">
       <div class="checkmark">✓</div>
       <h2>You're All Set!</h2>
-<h4>Proceed to continue your healing journey with <span class="highlight"> Charlotte Casiraghi</span></h4>
+      <h4>Proceed to continue your healing journey with <span class="highlight"> Charlotte Casiraghi</span></h4>
       <div class="celebrate">🎉✨</div>
     </div>
   `;
@@ -264,17 +265,31 @@ function showCompletion() {
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
 
-  if (DOM.proceed) {
-    DOM.proceed.disabled = false;
+  state.completed = true;
 
-    DOM.proceed.addEventListener('click', () => {
+  // Get the radio button and proceed button
+  const acceptRadio = document.getElementById('accept');
+  const proceedButton = DOM.proceed;
+
+  // Initially disable the proceed button
+  proceedButton.disabled = true;
+
+  // Only enable the radio button interaction after completion
+  if (state.completed) {
+    acceptRadio.addEventListener('change', () => {
+      proceedButton.disabled = !acceptRadio.checked;
+    });
+
+    // Handle proceed button click
+    proceedButton.addEventListener('click', () => {
+      if (!acceptRadio.checked) return;
+
       const session = TOPICS_DATA[state.selectedTopic];
-
       const details = {
         type: "session",
         description: session.description,
         title: session.name,
-        price: parseInt(session.price),
+        price: parseInt(session.price.replace(',', '')), // Handle price formatting
         date: new Date().toLocaleDateString()
       };
 
@@ -283,8 +298,8 @@ function showCompletion() {
         details: JSON.stringify(details)
       }).toString();
 
-      window.location.href = `/html/main/Payment.html?${params}`
-    })
+      window.location.href = `/html/main/Payment.html?${params}`;
+    });
   }
 }
 
@@ -372,5 +387,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // Redirect to signup page
     window.location.href = '/html/regs/Signup.html';
   }
+
 });
 
