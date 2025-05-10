@@ -440,9 +440,8 @@ div#session-plan .image img {
 div#checkout {
   width: 100%;
   display: flex;
-  place-content: flex-end;
+  place-content: center;
   align-items: center;
-  padding-top: 10px;
 }
 
 div#checkout button {
@@ -451,19 +450,22 @@ div#checkout button {
   width: 60%;
   max-width: 200px;
   padding-inline: 15px;
-  text-align: center;
   justify-content: space-between;
   border-radius: 20px;
   color: white;
   gap: 10px;
   border: none;
   display: flex;
+  place-self: center;
+  place-content: center;
   cursor: pointer;
   font-family: PoppinsMed;
   flex-direction: row;
 }
 
 div#checkout p {
+  width: auto;
+  text-align: center;
   font-size: 16px;
   font-family: PoppinsMed;
 }
@@ -471,41 +473,40 @@ div#checkout p {
 div.bottom.privacy {
   display: flex;
   flex-direction: column;
-  width: auto;
-  padding-block: 20px;
-  padding-top: 10px;
-  align-items: center;
   gap: 10px;
+  width: 100%;
+  padding-block: 10px;
+  align-items: center;
   place-self: center;
-  justify-content: center;
 }
 
 div.privacy-policy {
-  width: auto;
+  width: 100%;
   padding: 0.8rem;
-  border: 1px solid var(--link);
-  background-color: rgba(167, 173, 192, 0.04);
-  color: var(--mainText);
-  border-radius: 15px;
-  line-height: 18px;
-  font-size: 14px;
   display: flex;
   place-self: center;
   flex-direction: row;
   align-items: center;
-  max-width: 90%;
-  flex-wrap: wrap;
-  gap: 10px;
+  max-width: 100%;
+}
+
+div.privacy-policy input {
+  max-width: 50px;
+}
+
+div.privacy-policy p {
+  width: 90%;
   font-family: PoppinsMed;
+  color: var(--mainText);
+  line-height: 18px;
+  font-size: 14px;
 }
 
 div.privacy-policy a {
   width: max-content;
-  padding-inline: 15px;
-  padding-block: 5px;
-  border: 1.8px solid var(--link);
-  border-radius: 8px;
   color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link);
   font-family: PoppinsMed;
 }
 

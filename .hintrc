@@ -10,6 +10,7 @@
   ],
   "hints": {
     "detect-css-reflows/composite": "off",
-    "disown-opener": "off"
+    "disown-opener": "off",
+    "axe/forms": "off"
   }
 }

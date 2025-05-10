@@ -18,7 +18,6 @@ const TEMPLATE = {
           <div id="checkout">
        <button disabled>
         <p class="text">LOGIN</p>
-        <p class="svg">>></p>
       </button>
     </div>
         </div>
@@ -71,23 +70,21 @@ const TEMPLATE = {
                                                                                                                                                                                       <input type="text" id="adminCode" />
                   </div> -->
 
-                  <div id="checkout">
-                      <button disabled>
-                      <p class="text">REGISTER</p>
-                      <p class="svg">>></p>
-                    </button>
-                  </div>
-                  <div class="bottom privacy">
-                    <div class="privacy-policy">
-                      <p class="text">
-                        By registering for this healing session, you are stating that you
-                        have read and agreed to the privacy policy.
-                      </p>
-                      <a href="/html/main/Privacy.html" class="view">
-                        View privacy policy
-                      </a>
-                </div>
-</div>
+
+      <div class="bottom privacy">
+        <div class="privacy-policy">
+        <input type="radio" name="accept" id="accept">
+          <p class="text">
+            I agree to the <a href="/html/main/Privacy.html" class="view">Terms of Service</a> and <a href="/html/main/Privacy.html"
+              class="view">Privacy Policy</a>
+          </p>
+        </div>
+        <div id="checkout">
+          <button disabled>
+            <p class="text">PROCEED</p>
+          </button>
+        </div>
+        </div>
 
                 </div>
             </div>

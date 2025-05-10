@@ -64,6 +64,10 @@ section {
     margin: 20px 0;
 }
 
+section#payment-methods {
+    display: none;
+}
+
 .method-option {
     background: var(--primaryTrans);
     border: 2px solid var(--accentTrans);
@@ -85,15 +89,15 @@ section {
 
 .proceed-button {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 80%;
     padding: 12px;
     padding-inline: 15px;
     background-color: var(--link);
     border: none;
-    border-radius: 15px;
+    border-radius: 20px;
     cursor: pointer;
     color: white;
     place-self: center;
