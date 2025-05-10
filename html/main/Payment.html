@@ -58,7 +58,7 @@
             </div>
         </header>
 
-<section id="display">
+<section id="display" class="parent">
     <h2>Payment Summary</h2>
     <div class="detail-card">
         <div class="detail-row">
@@ -89,7 +89,7 @@
 </section>
 
 <!-- Payment Method Selection Section -->
-<section class="payment-methods">
+<section id="payment-methods" class="parent">
     <h2>Select Payment Method</h2>
     <div class="method-options">
         <div class="method-option" data-method="bank">
@@ -114,7 +114,8 @@
     </div>
 
     <button id="proceed-button" class="proceed-button" disabled>
-        Proceed to Payment
+        <p>Proceed to Payment</p>
+        <span class="bold">>></span>
     </button>
 </section>
 

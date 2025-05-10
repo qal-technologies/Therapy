@@ -454,7 +454,7 @@ div#session.virtual .upper {
 #session.inner a {
   background-color: rgb(193, 193, 193);
   color: black;
-  cursor: default;
+  cursor: not-allowed;
 }
 
 #session.in-person a {

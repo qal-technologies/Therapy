@@ -256,6 +256,7 @@ div#checkout button {
   color: white;
   gap: 10px;
   border: none;
+  cursor: pointer;
   display: flex;
   font-family: PoppinsMed;
   flex-direction: row;
@@ -269,9 +270,10 @@ div#checkout p {
 div#checkout button:disabled {
   background-color: rgb(194, 194, 194);
   color: black;
-  cursor: default;
+  cursor: not-allowed;
   opacity: 0.3;
   user-select: none;
+
 }
 
 div.bottom.privacy {

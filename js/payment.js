@@ -19,11 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
             Math.random().toString(36).substring(2, 15);
 
         // Populate payment details
-        document.getElementById('payment-name').textContent = details.name || 'N/A';
-        document.getElementById('payment-type').textContent = paymentType;
+        document.getElementById('payment-name').textContent = details.title || 'N/A';
+        document.getElementById('payment-type').textContent = paymentType.toLocaleUpperCase();
         document.getElementById('transaction-id').textContent = transactionId;
         document.getElementById('payment-amount').textContent =
-            details.amount ? `$${details.amount.toFixed(2)}` : 'N/A';
+            details.price ? `$${details.price.toFixed(2)}` : 'N/A';
         document.getElementById('payment-description').textContent =
             details.description || 'No description';
         document.getElementById('payment-date').textContent =

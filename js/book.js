@@ -98,6 +98,7 @@ const DOM = {
   description: document.querySelector('#session-plan .intro'),
   formGroup: document.querySelector(".form-container div.lower"),
   registerForm: document.querySelector(".form-container#register-form"),
+  proceed: document.querySelector('div#checkout button'),
 };
 
 
@@ -165,9 +166,8 @@ function selectTopic(topicKey) {
     DOM.formGroup.style.display = "none";
   }
 
-  const button = document.querySelector('div#checkout button');
 
-  if (button) button.disabled = true;
+  if (DOM.proceed) DOM.proceed.disabled = true;
 
   renderQuestions(topic);
   closeDropdown();
@@ -261,12 +261,31 @@ function showCompletion() {
   // Update session info
   updateSessionInfo(topic);
 
-  const button = document.querySelector('div#checkout button');
-  button.disabled = false;
-
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
-  // console.log(state.answers);
+
+  if (DOM.proceed) {
+    DOM.proceed.disabled = false;
+
+    DOM.proceed.addEventListener('click', () => {
+      const session = TOPICS_DATA[state.selectedTopic];
+
+      const details = {
+        type: "session",
+        description: session.description,
+        title: session.name,
+        price: parseInt(session.price),
+        date: new Date().toLocaleDateString()
+      };
+
+      const params = new URLSearchParams({
+        type: "session",
+        details: JSON.stringify(details)
+      }).toString();
+
+      window.location.href = `/html/main/Payment.html?${params}`
+    })
+  }
 }
 
 
@@ -341,9 +360,6 @@ window.addEventListener('DOMContentLoaded', () => {
       const details = JSON.parse(urlParams.get('details'));
 
       const topic = details.type;
-
-      console.log('Payment Type:', type);
-      console.log('Payment Details:', details);
 
       if (type == "session") {
         selectTopic(topic);

@@ -22,8 +22,7 @@ const BOOKS = [
         title: "Best Therapy",
         description: "A guide to inner healing...",
         price: 119.99
-    },
-    {
+    }, {
         id: 'book-3',
         image: '/src/images/logo.jpg',
         title: "Self Motivation",
@@ -47,7 +46,7 @@ function renderBooks() {
         src="${book.image}" 
         class="book-image" 
         alt="${book.title}"
-        data-id="${book.id}"
+        id="${book.id}"
       >
       <div class="book-info">
         <svg class="favorite-btn" width="24" height="24" viewBox="0 0 24 24">
@@ -70,9 +69,10 @@ function renderBooks() {
 
 // Handle Book Click
 function handleBookClick(e) {
-    const bookId = e.target.dataset.id;
+    const bookId = e.target.id;
     const hasAccess = State.paidFeatures.includes(bookId);
 
+    console.log(bookId);
     if (!hasAccess) {
         showPaymentModal(bookId);
         return;
@@ -84,11 +84,29 @@ function handleBookClick(e) {
 
 // Show Payment Modal
 function showPaymentModal(bookId) {
+    const book = BOOKS.filter(book => {
+        return book.id == bookId;
+    })[0];
+
+    const details = {
+        id: bookId,
+        type: "pdf",
+        description: book.description,
+        title: book.title,
+        price: book.price,
+        date: new Date().toLocaleDateString()
+    };
+
+    const params = new URLSearchParams({
+        type: "book",
+        details: JSON.stringify(details)
+    }).toString();
+
     const modal = document.getElementById('paymentModal');
     modal.style.display = 'flex';
 
     setTimeout(() => {
-        window.location.href = `/html/main/payment.html?itemId=${bookId}&type=book`;
+        window.location.href = `/html/main/payment.html?${params}`;
     }, 2000);
 }
 
