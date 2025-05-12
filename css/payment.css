@@ -121,3 +121,88 @@ margin-bottom:20px;
     background-color: #cccccc;
     cursor: not-allowed;
 }
+
+.payment-summary-container {
+  max-width: 500px;
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px 0;
+  font-family: PoppinsLight, sans-serif;
+  text-align: center;
+}
+
+.payment-summary-container h2 {
+  font-size: 1.6rem;
+  font-family: PoppinsSemi, sans-serif;
+  margin-bottom: 15px;
+  color: var(--link);
+}
+
+.detail-card {
+  background: var(--primaryTrans);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.amount {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.date {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--accentTrans);
+  margin: 10px 0;
+}
+
+.single-row {
+  display: block;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.detail-label {
+  display: block;
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: PoppinsMed, sans-serif;
+}
+
+.detail-value {
+  display: block;
+  font-size: 1rem;
+  font-family: monospace, 'Roboto Mono', 'Courier New';
+  margin-top: 3px;
+  word-wrap: break-word;
+}
+
+.txn-id {
+  font-family: monospace;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.proceed-btn {
+  background: #eee;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.proceed-btn:hover {
+  background: #ddd;
+}
