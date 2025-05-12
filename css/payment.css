@@ -76,6 +76,9 @@ margin-top:30px;
 }
 
 .payment-summary-container {
+display:flex;
+flex-direction: column;
+gap:15px;
   max-width: 600px;
   width: 100%;
   margin: 20px auto;
