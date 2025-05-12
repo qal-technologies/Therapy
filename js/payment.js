@@ -13,10 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
+const language = navigator.language;
 
         // Generate transaction ID
-        const transactionId = 'TXN' + Math.random().toString(36).substring(2, 15) +
-            Math.random().toString(36).substring(2, 15);
+        const transactionId = `TXN - ${Math.random().toString(36).substring(2, 15)}
+            ${Math.random().toString(36).substring(2, 15)} - ${language.substring(1,2)}`;
 
         // Populate payment details
         document.getElementById('payment-name').textContent = details.title || 'N/A';
