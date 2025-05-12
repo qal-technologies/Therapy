@@ -130,7 +130,7 @@ margin-bottom:40px;
 .divider.transaction {
   border: none;
   border-top: 1px solid var(--accentTrans);
-  margin-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 
