@@ -119,6 +119,7 @@ margin-bottom:20px;
   font-family: PoppinsSemi, sans-serif;
   margin-bottom: 15px;
   color: var(--link);
+text-align:left;
 }
 
 .detail-card {
