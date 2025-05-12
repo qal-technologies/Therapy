@@ -319,20 +319,18 @@ div.privacy-policy a {
 
 div.bottom.FAQ {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: auto;
-  padding-block: 20px;
-  padding-top: 10px;
+  padding: 10px;
   align-items: center;
   gap: 10px;
   place-self: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 div.faq {
   width: auto;
   padding: 0.5rem;
-  background-color: rgba(167, 173, 192, 0.04);
   color: var(--mainText);
   border-radius: 15px;
   line-height: 20px;
@@ -350,7 +348,8 @@ div.faq a {
   width: max-content;
   padding-inline: 15px;
   padding-block: 5px;
-  border: 1.8px solid var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link);
   border-radius: 8px;
   color: var(--link);
   font-family: PoppinsMed;

@@ -310,9 +310,9 @@ function formatDateTime() {
   const now = new Date();
 
   const options = {
-    month: 'long',   // e.g., May
-    day: 'numeric',  // e.g., 12
-    year: 'numeric', // e.g., 2025
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric', 
   };
 
   return now.toLocaleString('en-US', options) + ' at ' + now.toLocaleTimeString('en-US', {
