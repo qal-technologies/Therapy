@@ -155,3 +155,129 @@ text-align: center;
   font-size: 1.1rem;
   margin-bottom: 20px;
 }
+
+/* Container wrapper */
+.payment-step-container {
+    max-width: 500px;
+    width: 90%;
+    margin: 40px auto;
+    border-radius: 16px;
+    padding: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Hide with fade */
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    position: absolute;
+}
+
+/* Show with fade */
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+    position: relative;
+}
+
+/* Currency and payment text */
+.payment-step-container h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: #1c1c1e;
+}
+
+.payment-step-container p {
+    margin-bottom: 14px;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Radio buttons */
+.currency-options label,
+.dollar-suboptions label,
+.payment-method label {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+/* Support box */
+.currency-support {
+    background-color: #fff7ed;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.currency-support b {
+    color: #8b4513;
+    font-weight: 600;
+}
+
+.currency-support a {
+    color: #5a2d0c;
+    text-decoration: underline;
+}
+
+/* Continue button */
+.continue-btn {
+    background-color: #0046ad;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.continue-btn:hover {
+    background-color: #00398d;
+}
+
+/* Payment method styles */
+.payment-method .recommended {
+    color: #a45b00;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.method-option {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.method-option img {
+    width: 28px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.method-option.selected {
+    border-color: #0046ad;
+    background-color: #f0f8ff;
+}
