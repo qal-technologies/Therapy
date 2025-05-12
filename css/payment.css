@@ -4,15 +4,14 @@ section {
 display:flex;
 place-content:center;
 flex-direction:column;
-    padding: 1rem;
 }
 
 .parent {
     max-width: 750px;
-    padding: 2rem;
+    padding: 1rem;
+padding-inline:2rem;
     font-family: PoppinsLight;
-    padding: 10px;
-    margin-block: 20px;
+    margin-block: 5px;
 }
 
 .parent h2 {
