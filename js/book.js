@@ -318,7 +318,7 @@ function formatDateTime() {
     hour12: true     // for AM/PM
   };
 
-  return now.toLocaleString('en-US', options).replace(',', ''));
+  return now.toLocaleString('en-US', options).replace(',', '');
 }
       const session = TOPICS_DATA[state.selectedTopic];
       const details = {
