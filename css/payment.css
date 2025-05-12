@@ -21,21 +21,6 @@ flex-direction:column;
     font-family: PoppinsSemi;
 }
 
-.detail-card {
-    background: var(--primaryTrans);
-    margin-top: 20px;
-    border-radius: 20px;
-    padding: 1rem;
-    padding-inline: 1.2rem;
-padding-top:40px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-    overflow: hidden;
-height:60vh;
-max-height:450px;
-gap:20px;
-}
-
 .detail-row .detail-value {
     font-size: 1rem;
     font-family: monospace, 'Roboto Mono', 'Courier New' ;
@@ -107,6 +92,12 @@ text-align:center;
   backdrop-filter: blur(10px);
   text-align: center;
 gap:15%
+padding-top:40px;
+    backdrop-filter: blur(10px);
+    
+    overflow: hidden;
+height:60vh;
+max-height:450px;
 }
 
 .amount {
