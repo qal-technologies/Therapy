@@ -74,9 +74,9 @@ flex-direction:column;
 display:flex;
 flex-direction: column;
 gap:15px;
-  max-width: 600px;
+  max-width: 400px;
   width: 100%;
-  margin: 20px auto;
+  margin: 10px auto;
   padding: 10px 0;
   font-family: PoppinsLight, sans-serif;
   text-align: center;
@@ -102,7 +102,7 @@ padding-top:40px;
     backdrop-filter: blur(10px); 
     overflow: hidden;
 height:80vh;
-max-height:550px;
+max-height:500px;
 }
 
 .amount {
