@@ -61,7 +61,7 @@ padding-bottom:5px;
     color: white;
     place-self: center;
     max-width: 400px;
-margin-top:30px;
+margin-top:40px;
 }
 
 .proceed-button p {
@@ -124,7 +124,7 @@ font-family:PoppinsSemi;
   border: none;
   border-top: 1px solid var(--accentTrans);
   margin: 10px;
-margin-bottom:40px;
+margin-bottom:25px;
 }
 
 .divider.transaction {
@@ -143,21 +143,21 @@ margin-bottom:40px;
 .detail-label {
   display: block;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-family: PoppinsMed, sans-serif;
 margin-top:50px;
 }
 
 .detail-value {
   display: block;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-family: monospace, 'Roboto Mono', 'Courier New';
   margin-top: 5px;
   word-wrap: break-word;
 }
 
 .detail-value#payment-description{
-font-size:1rem;
+font-size:0.8rem;
 padding-bottom:1rem;
 text-align: center;
 }
