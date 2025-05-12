@@ -156,128 +156,154 @@ text-align: center;
   margin-bottom: 20px;
 }
 
-/* Container wrapper */
+/* General container layout */
 .payment-step-container {
-    max-width: 500px;
+    max-width: 420px;
     width: 90%;
     margin: 40px auto;
-    border-radius: 16px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
     padding: 24px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-/* Hide with fade */
-.hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-    position: absolute;
-}
-
-/* Show with fade */
-.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
+    font-family: 'Segoe UI', sans-serif;
+    transition: all 0.4s ease;
     position: relative;
 }
 
-/* Currency and payment text */
+/* Headings */
 .payment-step-container h2 {
-    font-size: 1.4rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-    color: #1c1c1e;
-}
-
-.payment-step-container p {
+    font-size: 1.25rem;
     margin-bottom: 14px;
-    color: #333;
-    font-size: 1rem;
+    font-weight: 600;
+    color: #1f1f1f;
 }
 
-/* Radio buttons */
+/* Paragraph/Description */
+.payment-step-container p {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 18px;
+}
+
+/* Radio option containers */
 .currency-options label,
 .dollar-suboptions label,
 .payment-method label {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    font-size: 1rem;
+    display: block;
+    background-color: #f8f9fc;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    color: #333;
     cursor: pointer;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.currency-options label:hover,
+.dollar-suboptions label:hover,
+.payment-method label:hover {
+    background-color: #edf0f8;
 }
 
 input[type="radio"] {
     margin-right: 10px;
-    transform: scale(1.2);
+    transform: scale(1.15);
+    vertical-align: middle;
 }
 
-/* Support box */
-.currency-support {
-    background-color: #fff7ed;
-    border-radius: 12px;
-    padding: 16px;
-    margin-top: 20px;
-    font-size: 0.95rem;
-    color: #333;
-}
-
-.currency-support b {
-    color: #8b4513;
+/* Active selection styling */
+input[type="radio"]:checked + span {
     font-weight: 600;
+    color: #003d99;
 }
 
-.currency-support a {
-    color: #5a2d0c;
-    text-decoration: underline;
-}
-
-/* Continue button */
+/* "Continue" button */
 .continue-btn {
-    background-color: #0046ad;
+    background-color: #003d99;
     color: #fff;
     border: none;
-    padding: 12px 20px;
+    padding: 14px 20px;
     font-size: 1rem;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: 14px;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 24px;
     cursor: pointer;
     transition: background 0.3s ease;
 }
 
 .continue-btn:hover {
-    background-color: #00398d;
+    background-color: #002d75;
 }
 
-/* Payment method styles */
-.payment-method .recommended {
-    color: #a45b00;
-    font-weight: bold;
-    margin-bottom: 6px;
+/* Support text box */
+.currency-support {
+    background-color: #fff5e5;
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 0.9rem;
+    color: #6d4600;
+    border: 1px solid #ffd6a6;
+    margin-top: 20px;
 }
 
-.method-option {
+.currency-support a {
+    color: #a45300;
+    text-decoration: underline;
+}
+
+/* Animation transitions */
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    position: absolute;
+    transition: all 0.4s ease;
+}
+
+.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+/* Payment method options with icon and highlight */
+.payment-method .method-option {
     display: flex;
     align-items: center;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 15px;
+    border: 1px solid #e3e3e3;
+    border-radius: 14px;
+    padding: 14px 16px;
+    background-color: #f9fafe;
     cursor: pointer;
-    transition: border-color 0.3s ease, background 0.3s ease;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
 }
 
-.method-option img {
-    width: 28px;
+.payment-method .method-option img {
+    width: 26px;
     height: auto;
     margin-right: 12px;
 }
 
-.method-option.selected {
-    border-color: #0046ad;
-    background-color: #f0f8ff;
+.payment-method .method-option:hover {
+    background-color: #eef1fa;
+    border-color: #cfd9f0;
+}
+
+.payment-method .method-option.selected {
+    border-color: #003d99;
+    background-color: #e6efff;
+}
+
+.payment-method .recommended {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #c96900;
+    margin-bottom: 6px;
 }
