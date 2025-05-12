@@ -18,10 +18,7 @@ const language = navigator.language;
         // Generate transaction ID
         const transactionId = `TXN-${Math.random().toString(26).substring(2, 15).toLocaleUpperCase()}-${language.substring(0,2).toLocaleUpperCase()}`;
 
-        // Populate payment details
-        document.getElementById('payment-name').textContent = details.title || 'N/A';
-
-        //document.getElementById('payment-type').textContent = paymentType.toLocaleUpperCase();
+        // Populate payment details document.getElementById('payment-name').textContent = details.title || 'N/A';
         document.getElementById('transaction-id').textContent = transactionId;
         document.getElementById('payment-amount').innerHTML =
             details.price ? `&euro;${details.price.toFixed(2)}` : 'N/A';
