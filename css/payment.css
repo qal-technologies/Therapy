@@ -51,7 +51,7 @@ flex-direction:column;
 
 .detail-row .detail-value {
     font-size: 1rem;
-    font-family: 'Roboto Mono', monospace;
+    font-family: monospace, 'Roboto Mono', 'Courier New' ;
     user-select: text;
     width: auto;
     text-wrap: wrap;
