@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const language = navigator.language;
 
         // Generate transaction ID
-        const transactionId = `TXN-${Math.random().toString(36).substring(2, 18).substring(3,12).toLocaleUpperCase()}-${language.substring(0,2).toLocaleUpperCase()}`;
+        const transactionId = `TXN-${Math.random().toString(36).substring(2, 18).substring(3,16).toLocaleUpperCase()}-${language.substring(0,2).toLocaleUpperCase()}`;
 
         // Populate payment details document.getElementById('payment-name').textContent = details.title || 'N/A';
         document.getElementById('transaction-id').textContent = transactionId;
