@@ -1,17 +1,13 @@
-section {
+section.parent {
     place-self: center;
-    width: 95%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    place-content: center;
     flex-direction: column;
-}
-
-.parent {
-    max-width: 750px;
-    padding: 1rem;
-    padding-inline: 2rem;
+    place-content: center;
+    background-color: #ebebeb;
+    padding-inline: 0.2rem;
     font-family: PoppinsLight;
-    margin-block: 5px;
 }
 
 .detail-row .detail-value {
@@ -120,13 +116,13 @@ h2 {
     border-radius: 20px;
     padding: 1.2rem;
     padding-top: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
     overflow: hidden;
-    max-width: 400px;
+    max-width: 500px;
     place-self: center;
     display: none;
-    width: 100%;
+    width: 98%;
     margin: 10px auto;
     font-family: PoppinsLight, sans-serif;
 }
