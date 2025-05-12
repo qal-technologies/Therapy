@@ -313,13 +313,16 @@ function formatDateTime() {
     month: 'long',   // e.g., May
     day: 'numeric',  // e.g., 12
     year: 'numeric', // e.g., 2025
-    hour: 'numeric', // e.g., 3
-    minute: '2-digit', // e.g., 45
-    hour12: true     // for AM/PM
   };
 
-  return now.toLocaleString('en-US', options).replace(',', '');
+  return now.toLocaleString('en-US', options).replace(',', '') + ' at ' + now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
 }
+
+
       const session = TOPICS_DATA[state.selectedTopic];
       const details = {
         type: "session",
