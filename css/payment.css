@@ -91,10 +91,9 @@ text-align:center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(10px);
   text-align: center;
-gap:15%
+gap:15%;
 padding-top:40px;
-    backdrop-filter: blur(10px);
-    
+    backdrop-filter: blur(10px); 
     overflow: hidden;
 height:60vh;
 max-height:450px;
