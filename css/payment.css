@@ -59,14 +59,13 @@ padding-bottom:5px;
     color: white;
     place-self: center;
     max-width: 400px;
-font-family: PoppinsBold;
 margin-top:30px;
 }
 
 .proceed-button p {
     font-size: 16px;
     color: white;
-    font-family: PoppinsBold;
+    font-family: PoppinsSemi;
     text-align: center;
 
 }
