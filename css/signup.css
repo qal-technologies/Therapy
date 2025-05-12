@@ -332,7 +332,6 @@ div.bottom.FAQ {
 div.faq {
   width: auto;
   padding: 0.5rem;
-  border: 1px solid var(--link);
   background-color: rgba(167, 173, 192, 0.04);
   color: var(--mainText);
   border-radius: 15px;
