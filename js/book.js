@@ -318,7 +318,7 @@ function formatDateTime() {
     hour12: true     // for AM/PM
   };
 
-  return now.toLocaleString('en-US', options).replace(',', '') + ' at ' + now.toLocaleTimeString('en-US', {
+  return now.toLocaleString('en-US', options).replace(',', '') + ', ' + now.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true
