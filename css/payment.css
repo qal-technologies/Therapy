@@ -58,6 +58,7 @@ flex-direction:column;
     text-overflow: ellipsis;
     text-align: left;
     height: auto;
+padding-bottom:5px;
 }
 
 .method-options {
