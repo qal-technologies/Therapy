@@ -29,6 +29,7 @@ const language = navigator.language;
 
     } catch (error) {
         console.error('Error parsing payment details:', error);
+alert(error);
         window.location.href = '/html/main/Session.html';
     }
 
