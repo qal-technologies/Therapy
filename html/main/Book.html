@@ -20,9 +20,23 @@
     <header class="header fadeIn">
       <div class="circle"></div>
       <h1>Book a Session</h1>
-      <p>A Transformative Journey with
+<div class="under">
+  <p class="intro">A Transformative Journey with
         <span class="highlight">Charlotte Casiraghi.</span>
       </p>
+<div class="player moveUpNfadeIn">
+  <audio src="/src/audio/AUD-20250424-WA0159.mp3" id="audio-message2" preload="metadata" hidden></audio>
+  <p class="indication">Listen >></p>
+
+  <button id="play2" type="button" title="Play Message">
+
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+      <path
+        d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+    </svg>
+  </button>
+</div>
+</div>
     </header>
 
     <div class="container">
@@ -83,17 +97,20 @@
 
                 <div class="lower">
 
-                  <p class="intro"></p>
+                    <p class="intro"></p>
 
-                  <p class="price">&euro; 800.00<span class="highlight">EUR</span>
-                  </p>
+                    <p class="price">&euro; 800.00<span class="highlight">EUR</span>
+                    </p>
+                    </div>
+                    
+                    <div id="message" class="bonus">
                   </div>
 
-                <div class="learn">
-                  <a href="/html/main/Session.html">Learn More</a>
+                  <div class="learn">
+                    <a href="/html/main/Session.html">Learn More</a>
+                  </div>
                 </div>
-                </div>
-                </div>
+            </div>
 
           </div>
 
@@ -110,13 +127,17 @@
               class="view">Privacy Policy</a>
           </p>
         </div>
+
         <div id="checkout">
           <button disabled>
             <p class="text">PROCEED</p>
           </button>
         </div>
+
         </div>
+
         </div>
+
         </div>
 </body>
 

@@ -18,6 +18,13 @@ const TOPICS_DATA = {
         question: "Are there any life themes you feel emotionally 'stuck' in right now that you'd like to gently explore?",
         type: "input",
       }
+    ], bonus: [
+      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
+      "BONUS! Exclusive discounts from event sponsors",
+      "5+ hours of live online content",
+      "Event recordings and additional resources",
+      "Guided workshops, live polling, and more for interactive learning",
+      "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
     ]
   },
   inPerson: {
@@ -40,6 +47,9 @@ const TOPICS_DATA = {
         question: "Is there a personal object (journal, photo, or keepsake) you'd like to bring into the session as part of your healing space?",
         type: "input",
       }
+    ], bonus: [
+      "Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
+      "Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
     ]
   },
   community: {
@@ -61,6 +71,8 @@ const TOPICS_DATA = {
         type: "button",
         options: ["YES", "NO"]
       }
+    ], bonus: [
+      "Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
     ]
   },
   inner: {
@@ -82,7 +94,7 @@ const TOPICS_DATA = {
           "What would it mean to you if Charlotte's letter spoke directly to your soul's current journey?",
         type: "input",
       }
-    ]
+    ], bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
   }
 };
 
@@ -96,6 +108,7 @@ const DOM = {
   title: document.querySelector("#session-plan .title"),
   extra: document.querySelector("#session-plan .name .extra"),
   description: document.querySelector('#session-plan .intro'),
+  bonus: document.querySelector("div#message.bonus"),
   formGroup: document.querySelector(".form-container div.lower"),
   registerForm: document.querySelector(".form-container#register-form"),
   proceed: document.querySelector('div#checkout button'),
@@ -108,6 +121,13 @@ const state = {
   answers: {},
   completed: false,
   clicked: false,
+};
+
+const audioSrc = {
+  session: {
+    "en": "/src/audio/AUD-20250424-WA0159.mp3",
+    "fr": "/src/audio/AUD-20250424-WA0165.mp3",
+  }
 };
 
 function setupEventListeners() {
@@ -310,6 +330,36 @@ function saveAnswer(question, answer) {
 
 // Update session information display
 function updateSessionInfo(topic) {
+  let bonuses = topic.bonus.map(bonus => {
+    if (bonus.length > 0) {
+      const bonusDiv = `
+			<div class="bonus">
+			<div class="svg-div">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="check"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0"
+                />
+                <path
+                  d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"
+                />
+              </svg>
+			  </div>
+              <p>${bonus}</p>
+          </div>
+				`
+      return bonusDiv;
+    } else {
+      return "";
+    }
+  });
+
   if (DOM.formGroup) {
     DOM.formGroup.style.display = "flex";
   }
@@ -320,6 +370,9 @@ function updateSessionInfo(topic) {
     DOM.extra.style.display = topic.extra ? "block" : "none";
   }
   if (DOM.description) DOM.description.textContent = topic.info;
+
+  if (DOM.bonus) DOM.bonus.innerHTML = bonuses.join('');
+
   if (DOM.price) DOM.price.innerHTML = `&euro; ${topic.price}.00 <span class="highlight">EUR</span>`;
 }
 
@@ -365,28 +418,69 @@ function init() {
 
 window.addEventListener('DOMContentLoaded', () => {
   const user = true;
+  const language = navigator.language;
+  const lang = language.toLowerCase().substring(0, 2);
   const urlParams = new URLSearchParams(window.location.search);
 
   init();
 
   if (user) {
-    try {
-      const type = urlParams.get('type');
-      const details = JSON.parse(urlParams.get('details'));
+    if (urlParams.get('type')) {
+      try {
+        const type = urlParams.get('type');
+        const details = JSON.parse(urlParams.get('details'));
 
-      const topic = details.type;
+        const topic = details.type;
 
-      if (type == "session") {
-        selectTopic(topic);
+        if (type == "session") {
+          selectTopic(topic);
+        }
+      } catch (error) {
+        console.error('Error parsing booking details:', error);
       }
-    } catch (error) {
-      console.error('Error parsing booking details:', error);
+    }
+
+    const audioMessage2 = document.getElementById('audio-message2');
+    if (audioMessage2) {
+      audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+
+      const listenBTN = document.getElementById('play2');
+      if (listenBTN) {
+        listenBTN.addEventListener('click', (e) => {
+          e.preventDefault();
+          try {
+            if (audioMessage2.paused) {
+              audioMessage2.play()
+                .then(() => {
+                  listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+                  </svg>`;
+                })
+                .catch(error => {
+                  console.error('Audio playback failed:', error);
+                  alert('Audio playback failed. Please try again.');
+                });
+            } else {
+              audioMessage2.pause();
+              listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+              </svg>`;
+            }
+          } catch (error) {
+            console.error('Audio error:', error);
+          }
+        });
+
+        audioMessage2.addEventListener("ended", () => {
+          listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+            <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+          </svg>`;
+        });
+      }
     }
   } else {
     alert('You are not logged in, Please Sign Up!');
-    // Redirect to signup page
     window.location.href = '/html/regs/Signup.html';
   }
-
 });
 

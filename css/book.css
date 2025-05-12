@@ -25,10 +25,10 @@ header.header {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-bottom: -70px;
+  margin-bottom: -60px;
   overflow: hidden;
   position: relative;
-  padding-bottom: 5.5rem;
+  padding-bottom: 6rem;
   font-size: 1.2rem;
   z-index: -99;
   gap: 15px;
@@ -42,18 +42,66 @@ header.header h1 {
   color: var(--link);
   line-height: 3rem;
   text-align: left;
-  margin-bottom: 2dvw;
   font-family: PoppinsSemi;
 }
 
-header.header p {
+header.header div.under {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  gap: 10px;
+}
+
+
+header.header p.intro {
   text-align: left;
   font-family: PoppinsLight;
   color: var(--mainText);
   font-size: 1.6rem;
   line-height: 2rem;
-  margin-bottom: 1.2rem;
 }
+
+.player {
+  width: 60%;
+  max-width: 200px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--accent);
+  padding: 5px;
+  border-radius: 50px;
+  height: 50px;
+}
+
+.player .indication {
+  display: flex;
+  color: var(--mainText);
+  font-family: PoppinsSemi;
+  padding-inline-start: 10px;
+}
+
+.player button {
+  display: flex;
+  z-index: 99;
+  justify-content: center;
+  align-items: center;
+  padding-inline-start: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  border: none;
+  text-align: center;
+  background: var(--link);
+  height: 40px;
+}
+
+.player svg {
+  fill: var(--primary);
+}
+
 
 .container {
   z-index: 99;
@@ -273,6 +321,38 @@ div#session-plan .image img {
   padding-top: 5px;
   font-family: PoppinsMed;
   cursor: pointer;
+}
+
+#session #message {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-start;
+  border-top: 1px solid var(--link);
+}
+
+#session #message .bonus {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+#session .bonus svg.check {
+  width: 20px;
+  height: 20px;
+  fill: var(--link);
+}
+
+#session .bonus p {
+  font-size: 14px;
+  color: var(--mainText);
+  line-height: 18px;
+  text-align: left;
+  font-family: PoppinsMed;
 }
 
 .dropdown-container {
