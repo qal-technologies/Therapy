@@ -33,6 +33,14 @@ flex-direction:column;
 padding-bottom:5px;
 }
 
+.procced-div{
+display:flex;
+width:100%;
+margin-top:50px;
+place-content:center;
+flex-direction:column;
+}
+
 .proceed-button {
     display: flex;
     flex-direction: column;
@@ -48,7 +56,6 @@ padding-bottom:5px;
     color: white;
     place-self: center;
     max-width: 400px;
-margin-top:50px;
 }
 
 .proceed-button p {
@@ -96,7 +103,7 @@ padding-top:40px;
     backdrop-filter: blur(10px); 
     overflow: hidden;
 height:80vh;
-max-height:600px;
+max-height:500px;
 }
 
 .amount {
