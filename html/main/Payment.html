@@ -82,10 +82,53 @@
                 <p>Proceed to Payment</p>
             </button>
 </div>
+
+
+  <!-- Currency Selection Section -->
+  <div id="currency-section" class="fade-in">
+    <h2>Currency Selection</h2>
+    <p>Please select your preferred currency:</p>
+    <div class="radio-group" id="currency-options">
+      <label><input type="radio" name="currency" value="EUR" /> Euro (EUR)</label>
+      <label><input type="radio" name="currency" value="GBP" /> British Pound (GBP)</label>
+      <label><input type="radio" name="currency" value="CHF" /> Swiss Franc (CHF)</label>
+      <label><input type="radio" name="currency" value="DOLLAR" /> Dollar (USD)</label>
+    </div>
+    <div class="radio-group hidden" id="dollar-suboptions">
+      <p>Please specify:</p>
+      <label><input type="radio" name="dollar-type" value="USD" /> US Dollar (USD)</label>
+      <label><input type="radio" name="dollar-type" value="CAD" /> Canadian Dollar (CAD)</label>
+      <label><input type="radio" name="dollar-type" value="AUD" /> Australian Dollar (AUD)</label>
+    </div>
+    <p>Can’t find my currency?</p>
+    <div class="support-box">
+      <strong>We’re happy to help.</strong><br />
+      Click here to contact support:
+      <a href="mailto:healingwithcharlottecasiraghi.com">
+        healingwithcharlottecasiraghi.com
+      </a>
+    </div>
+    <button id="currency-continue">Continue</button>
+  </div>
+
+  <!-- Payment Method Section -->
+  <div id="payment-method-section" class="hidden fade-in">
+    <h2>Payment Method</h2>
+    <div class="radio-group">
+      <label class="method-option" data-method="paypal">
+        <input type="radio" name="method" /> <img src="paypal.png" alt="PayPal" /> PayPal - confirmation takes 2–3 days
+      </label>
+      <label class="method-option" data-method="bank">
+        <input type="radio" name="method" /> <img src="bank.png" alt="Bank" /> Bank Transfer - confirmation takes 4–5 days
+      </label>
+      <label class="method-option" data-method="card">
+        <input type="radio" name="method" /> <img src="card.png" alt="Card" /> Credit/Debit/Gift Card - 1–2 mins
+      </label>
+    </div>
+    <button id="proceed-button" disabled>Proceed to Payment</button>
+  </div>
         </section>
 
-      
-            
 
        
     </div>
