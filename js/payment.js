@@ -52,12 +52,12 @@ const language = navigator.language;
     currencyDropdownItems.forEach(item => {
         item.addEventListener('click', () => {
             const value = item.getAttribute('data-value');
-            const text = item.textContent.trim();
             const code = item.querySelector('.currency-code').textContent;
+            const currency = item.querySelector('p').textContent;
 
             // Update the displayed text
             const optionLabel = usdOption.querySelector('.option-label');
-            optionLabel.innerHTML = `${text.split(' ')[0]} <span class="option-subtext">${code}</span>`;
+            optionLabel.innerHTML = `${currency} <span class="option-subtext">${code}</span>`;
 
             // Close dropdown
             document.querySelector('.currency-option-container').classList.remove('open');
