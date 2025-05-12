@@ -315,7 +315,7 @@ function formatDateTime() {
     year: 'numeric', // e.g., 2025
   };
 
-  return now.toLocaleString('en-US', options).replace(',', '') + ' at ' + now.toLocaleTimeString('en-US', {
+  return now.toLocaleString('en-US', options) + ' at ' + now.toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true
