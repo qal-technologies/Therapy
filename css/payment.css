@@ -1,319 +1,368 @@
 section {
     place-self: center;
     width: 95%;
-display:flex;
-place-content:center;
-flex-direction:column;
+    display: flex;
+    place-content: center;
+    flex-direction: column;
 }
 
 .parent {
     max-width: 750px;
     padding: 1rem;
-padding-inline:2rem;
+    padding-inline: 2rem;
     font-family: PoppinsLight;
     margin-block: 5px;
 }
 
-.parent h2 {
-    color: var(--link);
-    font-size: 1.6rem;
-    font-family: PoppinsSemi;
-}
-
 .detail-row .detail-value {
     font-size: 1rem;
-    font-family: monospace, 'Roboto Mono', 'Courier New' ;
+    font-family: monospace, 'Roboto Mono', 'Courier New';
     user-select: text;
     width: auto;
     text-wrap: wrap;
     text-overflow: ellipsis;
     text-align: left;
     height: auto;
-padding-bottom:5px;
+    padding-bottom: 5px;
 }
 
-.proceed-div{
-display:flex;
-width:100%;
-margin-top:45px;
-place-content:center;
-flex-direction:column;
-}
-
-.proceed-button {
+.proceed-div {
     display: flex;
+    width: 100%;
+    margin-top: 40px;
+    place-content: center;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    padding: 10px;
-    padding-inline: 15px;
-    background-color: var(--link);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    color: white;
-    place-self: center;
-    max-width: 400px;
-}
-
-.proceed-button p {
-    font-size: 16px;
-    color: white;
-    font-family: PoppinsSemi;
-    text-align: center;
-
-}
-
-.proceed-button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
 }
 
 .payment-summary-container {
-display:flex;
-flex-direction: column;
-gap:15px;
-  max-width: 400px;
-  width: 100%;
-  margin: 10px auto;
-  padding: 10px 0;
-  font-family: PoppinsLight, sans-serif;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    width: 100%;
+    margin: 10px auto;
+    padding: 10px 0;
+    font-family: PoppinsLight, sans-serif;
+    text-align: center;
 }
 
-.payment-summary-container h2 {
-  font-size: 1.4rem;
-  font-family: PoppinsSemi, sans-serif;
-  margin-bottom: 30px;
-  color: black;
-text-align:center;
-}
-
-.detail-card {
-  background: white;
-  border-radius: 15px;
-  padding: 1.2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
-  backdrop-filter: blur(10px);
-  text-align: center;
-gap:20%;
-padding-top:40px;
-    backdrop-filter: blur(10px); 
-    overflow: hidden;
-height:80vh;
-max-height:500px;
+h2 {
+    font-size: 1.4rem;
+    font-family: PoppinsSemi, sans-serif;
+    margin-bottom: 30px;
+    color: black;
+    text-align: center;
 }
 
 .amount {
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 5px;
-font-family:PoppinsSemi;
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-family: PoppinsSemi;
 }
 
 .date {
-  font-family: monospace;
-  font-size: 0.8rem;
-  margin-bottom: 10px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
 }
 
 .divider {
-  border: none;
-  border-top: 1px solid var(--accentTrans);
-  margin: 10px;
-margin-bottom:20px;
+    border: none;
+    border-top: 1px solid var(--accentTrans);
+    margin: 10px;
+    margin-bottom: 20px;
 }
 
 .divider.transaction {
-  border: none;
-  border-top: 1px solid var(--accentTrans);
-  margin-bottom: 10px;
+    border: none;
+    border-top: 1px solid var(--accentTrans);
+    margin-bottom: 10px;
 }
 
 
 .single-row {
-  display: block;
-  padding: 0;
-  margin-bottom: 20px;
+    display: block;
+    padding: 0;
+    margin-bottom: 20px;
 }
 
 .detail-label {
-  display: block;
-  font-weight: bold;
-  font-size: 1.2rem;
-  font-family: PoppinsMed, sans-serif;
-margin-top:50px;
+    display: block;
+    font-weight: bold;
+    font-size: 1.2rem;
+    font-family: PoppinsMed, sans-serif;
+    margin-top: 50px;
 }
 
 .detail-value {
-  display: block;
-  font-size: 1rem;
-  font-family: monospace, 'Roboto Mono', 'Courier New';
-  margin-top: 5px;
-  word-wrap: break-word;
+    display: block;
+    font-size: 1rem;
+    font-family: monospace, 'Roboto Mono', 'Courier New';
+    margin-top: 5px;
+    word-wrap: break-word;
 }
 
-.detail-value#payment-description{
-font-size:0.8rem;
-padding-bottom:1rem;
-text-align: center;
+.detail-value#payment-description {
+    font-size: 0.8rem;
+    padding-bottom: 1rem;
+    text-align: center;
 }
 
 .txn-id {
-  font-family: monospace;
-  font-size: 1.2rem;
-  margin-bottom: 20px;
+    font-family: monospace;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
 }
 
-/* General container layout */
-.payment-step-container {
-    max-width: 420px;
-    width: 90%;
-    margin: 40px auto;
-    background-color: #fff;
+.payment-section {
+    background: white;
     border-radius: 20px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
-    padding: 24px;
-    font-family: 'Segoe UI', sans-serif;
-    transition: all 0.4s ease;
-    position: relative;
-}
-
-/* Headings */
-.payment-step-container h2 {
-    font-size: 1.25rem;
-    margin-bottom: 14px;
-    font-weight: 600;
-}
-
-/* Paragraph/Description */
-.payment-step-container p {
-    font-size: 0.95rem;
-    color: #444;
-    margin-bottom: 18px;
-}
-
-/* Radio option containers */
-.currency-options label,
-.dollar-suboptions label,
-.payment-method label {
-    display: block;
-    background-color: #f8f9fc;
-    border: 1px solid transparent;
-    border-radius: 16px;
-    padding: 14px 18px;
-    font-size: 0.95rem;
-    color: #333;
-    cursor: pointer;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.currency-options label:hover,
-.dollar-suboptions label:hover,
-.payment-method label:hover {
-    background-color: #edf0f8;
-}
-
-input[type="radio"] {
-    margin-right: 10px;
-    transform: scale(1.15);
-    vertical-align: middle;
-}
-
-/* Active selection styling */
-input[type="radio"]:checked + span {
-    font-weight: 600;
-    color: #003d99;
-}
-
-/* "Continue" button */
-.continue-btn {
-    background-color: #003d99;
-    color: #fff;
-    border: none;
-    padding: 14px 20px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 14px;
+    padding: 1.2rem;
+    padding-top: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    max-width: 400px;
+    place-self: center;
+    display: none;
     width: 100%;
-    margin-top: 24px;
+    margin: 10px auto;
+    font-family: PoppinsLight, sans-serif;
+}
+
+.detail-card {
+    text-align: center;
+    gap: 20%;
+    padding-top: 40px;
+    height: 80vh;
+    max-height: 500px;
+}
+
+.payment-section.active {
+    display: block;
+    animation: fadein 0.3s ease-in-out;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-family: PoppinsSemi, sans-serif;
+    color: black;
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.section-description {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.option-list {
+    margin-bottom: 30px;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    margin-bottom: 10px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.2s;
 }
 
-.continue-btn:hover {
-    background-color: #002d75;
+.option-item:hover {
+    border-color: #4a90e2;
 }
 
-/* Support text box */
-.currency-support {
-    background-color: #fff5e5;
-    border-radius: 14px;
-    padding: 16px;
-    font-size: 0.9rem;
-    color: #6d4600;
-    border: 1px solid #ffd6a6;
-    margin-top: 20px;
+.option-item.selected {
+    border-color: #4a90e2;
+    background-color: #f0f7ff;
 }
 
-.currency-support a {
-    color: #a45300;
+.option-radio {
+    margin-inline: 5px;
+    margin-right: 15px;
+    accent-color: #4a90e2;
+    width: 20px;
+    height: 20px;
+}
+
+.option-label {
+    font-family: PoppinsSemi;
+    font-size: 18px;
+    color: #333;
+}
+
+.option-subtext {
+    display: block;
+    font-size: 13px;
+    font-family: PoppinsLight;
+    color: #666;
+}
+
+.cant-find {
+    color: #4a90e2;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.cant-find:hover {
     text-decoration: underline;
 }
 
-/* Animation transitions */
-.hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-    position: absolute;
-    transition: all 0.4s ease;
-display:none;
+.continue-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    width: 90%;
+    align-self: center;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-    position: relative;
-    transition: all 0.4s ease;
+.loading-section {
+    text-align: center;
+    padding: 40px 30px;
 }
 
-/* Payment method options with icon and highlight */
-.payment-method .method-option {
+.loading-spinner {
+    border: 4px solid #f0f0f0;
+    border-top: 4px solid #4a90e2;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 25px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.loading-text {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+button.continue-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.currency-icon, .payment-icon {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    border: 1px solid #e3e3e3;
-    border-radius: 14px;
-    padding: 14px 16px;
-    background-color: #f9fafe;
+    justify-content: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #cfcfcf;
+    color: black;
+    fill: black;
+}
+
+.option-item.selected .currency-icon, .option-item.selected .payment-icon {
+    background-color: #4a90e2;
+    color: white;
+    border-color: #4a90e2;
+}
+
+.currency-toggle .toggle-left {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.currency-dropdown {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 20px);
+    left: 10px;
+    top: 60px;
+    z-index: 10;
+    padding: 10px 0;
+}
+
+.currency-dropdown.show {
+    display: block;
+}
+
+.currency-dropdown-item {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 12px;
 }
 
-.payment-method .method-option img {
-    width: 26px;
-    height: auto;
-    margin-right: 12px;
+.currency-dropdown-item:hover {
+    background-color: #f5f5f5;
 }
 
-.payment-method .method-option:hover {
-    background-color: #eef1fa;
-    border-color: #cfd9f0;
+.currency-code {
+    font-weight: bold;
+    margin-right: 8px;
+    font-family: PoppinsSemi;
+    color: #4a90e2;
 }
 
-.payment-method .method-option.selected {
-    border-color: #003d99;
-    background-color: #e6efff;
+.currency-option-container {
+    position: relative;
 }
 
-.payment-method .recommended {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #c96900;
-    margin-bottom: 6px;
+.currency-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    min-width: 100%;
+}
+
+.dropdown-arrow {
+    margin-left: auto;
+    transition: transform 0.3s;
+}
+
+.currency-option-container.open .dropdown-arrow {
+    transform: rotate(180deg);
 }
