@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('payment-amount').textContent =
             details.price ? `$${details.price.toFixed(2)}` : 'N/A';
         document.getElementById('payment-description').textContent =
-            details.description || 'No description';
+            `Payment for ${details.title.toUpperCase()}`|| 'No description';
         document.getElementById('payment-date').textContent =
             details.date || new Date().toLocaleDateString();
 
