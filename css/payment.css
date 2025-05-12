@@ -32,23 +32,6 @@ flex-direction:column;
     overflow: hidden;
 }
 
-.detail-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    justify-content: space-between;
-    gap: 20%;
-    padding: 12px 0;
-}
-
-.detail-row:not(:last-child) {
-    border-bottom: 1px solid var(--accentTrans);
-}
-
-.detail-row .detail-label {
-    font-family: PoppinsMed;
-    font-size: 1.1rem;
-}
-
 .detail-row .detail-value {
     font-size: 1rem;
     font-family: monospace, 'Roboto Mono', 'Courier New' ;
@@ -123,10 +106,10 @@ margin-bottom:20px;
 }
 
 .payment-summary-container {
-  max-width: 500px;
-  width: 90%;
+  max-width: 600px;
+  width: 95%;
   margin: 20px auto;
-  padding: 20px 0;
+  padding: 10px 0;
   font-family: PoppinsLight, sans-serif;
   text-align: center;
 }
@@ -139,9 +122,9 @@ margin-bottom:20px;
 }
 
 .detail-card {
-  background: var(--primaryTrans);
-  border-radius: 20px;
-  padding: 1.5rem;
+  background: white;
+  border-radius: 15px;
+  padding: 1.2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(10px);
   text-align: center;
@@ -151,11 +134,12 @@ margin-bottom:20px;
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 5px;
+font-family:PoppinsSemi;
 }
 
 .date {
   font-family: monospace;
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 10px;
 }
 
@@ -174,7 +158,7 @@ margin-bottom:20px;
 .detail-label {
   display: block;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: PoppinsMed, sans-serif;
 }
 
@@ -188,21 +172,6 @@ margin-bottom:20px;
 
 .txn-id {
   font-family: monospace;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-bottom: 20px;
-}
-
-.proceed-btn {
-  background: #eee;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.proceed-btn:hover {
-  background: #ddd;
 }
