@@ -31,7 +31,8 @@ padding-top:40px;
     backdrop-filter: blur(10px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
     overflow: hidden;
-height:250px;
+height:60vh;
+max-height:450px;
 gap:20px;
 }
 
