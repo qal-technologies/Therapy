@@ -123,8 +123,16 @@ font-family:PoppinsSemi;
 .divider {
   border: none;
   border-top: 1px solid var(--accentTrans);
-  margin: 40px 0;
+  margin: 10px;
+margin-bottom:40px;
 }
+
+.divider.transaction {
+  border: none;
+  border-top: 1px solid var(--accentTrans);
+  margin-bottom: 0px;
+}
+
 
 .single-row {
   display: block;
