@@ -48,7 +48,7 @@ padding-bottom:5px;
     color: white;
     place-self: center;
     max-width: 400px;
-margin-top:40px;
+margin-top:50px;
 }
 
 .proceed-button p {
@@ -91,12 +91,12 @@ text-align:center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
   backdrop-filter: blur(10px);
   text-align: center;
-gap:15%;
+gap:20%;
 padding-top:40px;
     backdrop-filter: blur(10px); 
     overflow: hidden;
-height:60vh;
-max-height:450px;
+height:80vh;
+max-height:600px;
 }
 
 .amount {
@@ -116,7 +116,7 @@ font-family:PoppinsSemi;
   border: none;
   border-top: 1px solid var(--accentTrans);
   margin: 10px;
-margin-bottom:25px;
+margin-bottom:20px;
 }
 
 .divider.transaction {
