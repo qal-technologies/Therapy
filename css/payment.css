@@ -1,6 +1,9 @@
 section {
     place-self: center;
     width: 95%;
+display:flex;
+place-content:center;
+flex-direction:column;
     padding: 1rem;
 }
 
