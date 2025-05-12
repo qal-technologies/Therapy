@@ -51,7 +51,7 @@ flex-direction:column;
 
 .detail-row .detail-value {
     font-size: 1rem;
-    font-family: PoppinsLight;
+    font-family: 'Roboto Mono', monospace;
     user-select: text;
     width: auto;
     text-wrap: wrap;
