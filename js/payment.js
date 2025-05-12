@@ -20,10 +20,11 @@ const language = navigator.language;
 
         // Populate payment details
         document.getElementById('payment-name').textContent = details.title || 'N/A';
-        document.getElementById('payment-type').textContent = paymentType.toLocaleUpperCase();
+
+        //document.getElementById('payment-type').textContent = paymentType.toLocaleUpperCase();
         document.getElementById('transaction-id').textContent = transactionId;
-        document.getElementById('payment-amount').textContent =
-            details.price ? `$${details.price.toFixed(2)}` : 'N/A';
+        document.getElementById('payment-amount').innerHTML =
+            details.price ? `&euro;${details.price.toFixed(2)}` : 'N/A';
         document.getElementById('payment-description').textContent =
             `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`|| 'No description';
         document.getElementById('payment-date').textContent =
