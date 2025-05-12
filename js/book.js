@@ -111,6 +111,7 @@ const DOM = {
   bonus: document.querySelector("div#message.bonus"),
   formGroup: document.querySelector(".form-container div.lower"),
   registerForm: document.querySelector(".form-container#register-form"),
+acceptRadio:document.getElementById('accept'),
   proceed: document.querySelector('div#checkout button'),
 };
 
@@ -265,6 +266,7 @@ function nextQuestion(index) {
 }
 
 function showCompletion() {
+
   const session = state.selectedTopic;
   const topic = TOPICS_DATA[session];
 
@@ -288,7 +290,7 @@ function showCompletion() {
   state.completed = true;
 
   // Get the radio button and proceed button
-  const acceptRadio = document.getElementById('accept');
+DOM.acceptRadio.disabled = false;
   const proceedButton = DOM.proceed;
 
   // Initially disable the proceed button
@@ -296,13 +298,13 @@ function showCompletion() {
 
   // Only enable the radio button interaction after completion
   if (state.completed) {
-    acceptRadio.addEventListener('change', () => {
-      proceedButton.disabled = !acceptRadio.checked;
+    DOM.acceptRadio.addEventListener('change', () => {
+      proceedButton.disabled = !DOM.acceptRadio.checked;
     });
 
     // Handle proceed button click
     proceedButton.addEventListener('click', () => {
-      if (!acceptRadio.checked) return;
+      if (!DOM.acceptRadio.checked) return;
 
       const session = TOPICS_DATA[state.selectedTopic];
       const details = {
@@ -420,6 +422,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const user = true;
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
+
+if(DOM.acceptRadio){
+ DOM.acceptRadio.checked = false;
+DOM.acceptRadio.disabled = true
+}
+
   const urlParams = new URLSearchParams(window.location.search);
 
   init();
