@@ -21,11 +21,12 @@ const language = navigator.language;
         // Generate transaction ID
         const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`
 
-        document.getElementById('transaction-id').textContent = transactionId;
+       const description= `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`;
+
+ document.getElementById('transaction-id').textContent = transactionId;
         document.getElementById('payment-amount').innerHTML =
             details.price ? `&euro;${details.price.toFixed(2)}` : 'N/A';
-        document.getElementById('payment-description').textContent =
-            `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`|| 'No description';
+        document.getElementById('payment-description').textContent = description|| 'No description';
         document.getElementById('payment-date').textContent =
             details.date || new Date().toLocaleDateString();
 
