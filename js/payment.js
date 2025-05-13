@@ -5,10 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const paymentType = urlParams.get('type');
     const paymentDetails = urlParams.get('details');
 
-
     // Redirect if no params
     if (!paymentType || !paymentDetails) {
-        alert('No Payment Details Gotten, Please Book a Session!')
+        alert('No Payment Details Gotten, Please Book a Session!');
         window.location.href = '/html/main/Session.html';
         return;
     }
@@ -16,17 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
-const language = navigator.language;
+        const language = navigator.language;
 
         // Generate transaction ID
-        const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`
+        const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 
-       const description= `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`;
+        const description = `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`;
 
- document.getElementById('transaction-id').textContent = transactionId;
+        document.getElementById('transaction-id').textContent = transactionId;
         document.getElementById('payment-amount').innerHTML =
             details.price ? `&euro;${details.price.toFixed(2)}` : 'N/A';
-        document.getElementById('payment-description').textContent = description|| 'No description';
+        document.getElementById('payment-description').textContent = description || 'No description';
         document.getElementById('payment-date').textContent =
             details.date || new Date().toLocaleDateString();
 
@@ -35,13 +34,35 @@ const language = navigator.language;
         window.location.href = '/html/main/Session.html';
     }
 
+    // Get buttons and disable them initially
+    const currencyContinueBtn = document.getElementById('currency-continue');
+    const makePaymentBtn = document.getElementById('make-payment-btn');
+    currencyContinueBtn.disabled = true;
+    makePaymentBtn.disabled = true;
 
     const usdOption = document.getElementById('usd-option');
     const usdDropdown = document.getElementById('usd-dropdown');
     const currencyOptions = document.querySelectorAll('.option-item');
     const currencyDropdownItems = document.querySelectorAll('.currency-dropdown-item');
+    const paymentMethodOptions = document.querySelectorAll('input[name="payment-method"]');
 
+    // Function to enable continue button when currency is selected
+    function checkCurrencySelection() {
+        const selectedCurrency = document.querySelector('input[name="currency"]:checked');
+        currencyContinueBtn.disabled = !selectedCurrency;
+    }
 
+    // Function to enable payment button when payment method is selected
+    function checkPaymentMethodSelection() {
+        const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
+        makePaymentBtn.disabled = !selectedMethod;
+    }
+
+    // Initialize checks
+    checkCurrencySelection();
+    checkPaymentMethodSelection();
+
+    // USD dropdown toggle
     usdOption.addEventListener('click', (e) => {
         if (!e.target.closest('.currency-dropdown-item')) {
             document.querySelector('.currency-option-container').classList.toggle('open');
@@ -54,11 +75,14 @@ const language = navigator.language;
         item.addEventListener('click', () => {
             const value = item.getAttribute('data-value');
             const code = item.querySelector('.currency-code').textContent;
-            const currency = item.querySelector('p').textContent;
+            const currency = item.querySelector('p')?.textContent || item.textContent.trim().split(' ').slice(1).join(' ');
 
             // Update the displayed text
             const optionLabel = usdOption.querySelector('.option-label');
             optionLabel.innerHTML = `${currency} <span class="option-subtext">${code}</span>`;
+
+            // Set the radio button value
+            document.querySelector(`input[name="currency"][value="${value}"]`).checked = true;
 
             // Close dropdown
             document.querySelector('.currency-option-container').classList.remove('open');
@@ -67,6 +91,9 @@ const language = navigator.language;
             // Update selection styling
             currencyOptions.forEach(opt => opt.classList.remove('selected'));
             usdOption.classList.add('selected');
+
+            // Check if currency is selected
+            checkCurrencySelection();
         });
     });
 
@@ -80,10 +107,19 @@ const language = navigator.language;
                 // Close USD dropdown if open
                 document.querySelector('.currency-option-container').classList.remove('open');
                 usdDropdown.classList.remove('show');
+
+                // Check if currency is selected
+                checkCurrencySelection();
             }
         });
     });
 
+    // Handle payment method selection
+    paymentMethodOptions.forEach(option => {
+        option.addEventListener('change', () => {
+            checkPaymentMethodSelection();
+        });
+    });
 
     // Proceed to payment handler
     document.getElementById('proceed-button')?.addEventListener('click', (e) => {
@@ -101,7 +137,7 @@ const language = navigator.language;
         }, 2000);
     });
 
-    document.getElementById('currency-continue')?.addEventListener('click', function (e) {
+    document.getElementById('currency-continue')?.addEventListener('click', function(e) {
         e.preventDefault();
         const button = e.target;
 
@@ -112,11 +148,11 @@ const language = navigator.language;
             document.getElementById('currency-section')?.classList.remove('active');
             document.getElementById('payment-method-section')?.classList.add('active');
             button.disabled = false;
-            button.textContent = 'Continue'; // Reset button text
+            button.textContent = 'Continue';
         }, 2000);
     });
 
-    document.getElementById('make-payment-btn')?.addEventListener('click', function (e) {
+    document.getElementById('make-payment-btn')?.addEventListener('click', function(e) {
         e.preventDefault();
         const button = e.target;
 
