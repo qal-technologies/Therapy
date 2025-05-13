@@ -51,7 +51,7 @@ methodSelected:false,
     const currencyOptions = document.querySelectorAll('.option-item');
     const currencyDropdownItems = document.querySelectorAll('.currency-dropdown-item');
 
-    const paymentMethodOptions = document.querySelectorAll('#payment-method-section .option-item');
+    const paymentMethodOptions = document.querySelectorAll('#payment-method-section label.option-item');
 
 function checkCurrencySelection() {
 if (state.currencySelected){ currencyContinueBtn.disabled = !state.currencySelected;
