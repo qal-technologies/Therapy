@@ -51,15 +51,6 @@ methodSelected:false,
     const currencyOptions = document.querySelectorAll('.option-item');
     const currencyDropdownItems = document.querySelectorAll('.currency-dropdown-item');
 
-usdOption.addEventListener('click', (e) => {
-        if (!e.target.closest('.currency-dropdown-item')) {
-            document.querySelector('.currency-option-container').classList.toggle('open');
-            usdDropdown.classList.toggle('show');
-
-state.currencySelected = true;
-        }
-    });
-
     const paymentMethodOptions = document.querySelectorAll('input[name="payment-method"]');
 
 function checkCurrencySelection() {
@@ -69,21 +60,20 @@ if (state.currencySelected){ currencyContinueBtn.disabled = !state.currencySelec
 
     // Function to enable payment button when payment method is selected
     function checkPaymentMethodSelection() {
-        if (state.paymentSelected){ makePaymentBtn.disabled = !state.paymentSelected;
+        if (state.methodSelected){ makePaymentBtn.disabled = !state.methodSelected;
 }
     }
 
-    // Initialize checks
-    checkCurrencySelection();
-    checkPaymentMethodSelection();
 
-    // USD dropdown toggle
-    usdOption.addEventListener('click', (e) => {
+usdOption.addEventListener('click', (e) => {
         if (!e.target.closest('.currency-dropdown-item')) {
             document.querySelector('.currency-option-container').classList.toggle('open');
             usdDropdown.classList.toggle('show');
+
+state.currencySelected = true;
         }
     });
+
 
     // Handle currency selection from dropdown
     currencyDropdownItems.forEach(item => {
@@ -135,10 +125,15 @@ state.currencySelected = true;
     // Handle payment method selection
     paymentMethodOptions.forEach(option => {
         option.addEventListener('change', () => {
-state.paymentSelected = true;
+state.methodSelected = true;
             checkPaymentMethodSelection();
         });
     });
+
+
+// Initialize checks
+    checkCurrencySelection();
+    checkPaymentMethodSelection();
 
     // Proceed to payment handler
     document.getElementById('proceed-button')?.addEventListener('click', (e) => {
