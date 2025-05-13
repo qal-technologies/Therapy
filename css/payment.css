@@ -4,10 +4,10 @@ section.parent {
     height: 100vh;
     display: flex;
     flex-direction: column;
-align-items: center;
-justify-content:center;
+    align-items: center;
+    justify-content: center;
     background-color: #ebebeb;
-background-color: white;
+    background-color: white;
     padding-inline: 0.2rem;
     font-family: PoppinsLight;
 }
@@ -110,6 +110,7 @@ h2 {
     place-self: center;
     display: none;
     width: 98%;
+    max-width: 500px;
     margin: 10px auto;
     font-family: PoppinsLight, sans-serif;
 }
@@ -122,13 +123,13 @@ h2 {
     padding: 10px 0;
     font-family: PoppinsLight, sans-serif;
     text-align: center;
-max-height: 500px;
-gap: 20%;
+    max-height: 500px;
+    gap: 20%;
     height: 80vh;
-padding-top:40px;
-width:90%;
-border-radius:20px;
-   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
+    padding-top: 40px;
+    width: 90%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1), -4px 10px 10px rgba(0, 47, 255, 0.1);
 }
 
 .payment-section.active {
@@ -153,13 +154,15 @@ border-radius:20px;
     font-family: PoppinsSemi, sans-serif;
     color: black;
     margin-bottom: 2px;
-    text-align: left;
+    text-align: center;
 }
 
 .section-description {
     color: #666;
     margin-bottom: 30px;
     font-size: 14px;
+    text-align: center;
+
 }
 
 .option-list {
@@ -224,6 +227,7 @@ border-radius:20px;
     border-radius: 15px;
     padding: 10px;
     width: 90%;
+    max-width: 300px;
     align-self: center;
     font-size: 16px;
     font-weight: 600;
@@ -357,4 +361,43 @@ button.continue-btn:disabled {
 
 .currency-option-container.open .dropdown-arrow {
     transform: rotate(180deg);
+}
+
+#conversion-section .option-list {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    text-align: center;
+    margin-top: 2rem;
+    font-family: PoppinsLight;
+    font-size: 16px;
+}
+
+.option-list p.title {
+    font-family: PoppinsMed;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    color: #0278ff;
+}
+
+.option-list .title span {
+    font-family: PoppinsSemi;
+    font-size: 1.5rem;
+    margin-inline: 5px;
+    color: black;
+}
+
+#conversion-section .option-list span.choosen-currency-code {
+    font-family: PoppinsMed;
+    font-size: 16px;
+}
+
+.option-list h2.converted {
+    margin-top: 2px;
+    font-size: 2.2rem;
+}
+
+.option-list h2.converted span.choosen-currency-code {
+    font-size: 14px;
+    color: #0278ff;
 }

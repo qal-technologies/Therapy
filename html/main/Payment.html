@@ -49,7 +49,7 @@
 
 
 <div class="proceed-div">
-<button id="proceed-button" class="proceed-button continue-btn">
+<button id="proceed-button" class="continue-btn">
                 <p>Proceed to Payment</p>
             </button>
 </div>
@@ -58,7 +58,7 @@
 <!-- Currency selection section  -->
 <div class="payment-section" id="currency-section">
   <h2 class="section-title">Select Currency</h2>
-  <p class="section-description">Choose your currency to make a payment.</p>
+  <p class="section-description">Choose the currency you're paying with.</p>
 
   <div class="option-list">
     <div class="currency-option-container">
@@ -113,8 +113,26 @@
   <a href="mailto:healingwithcharlottecasiraghi@gmail.com" class="cant-find">Can't find your currency?</a>
 
   <div class="proceed-div">
-    <button class="continue-btn" disabled id="currency-continue">Continue</button>
-  </div>
+    <button class="continue-btn" disabled id="currency-continue">Convert</button>
+    </div>
+    </div>
+    
+    
+    <!-- Conversion section  -->
+    <div class="payment-section" id="conversion-section">
+      <h2 class="section-title">Currency Conversion</h2>
+    
+      <div class="option-list">
+        <p class="title"><span class="initial-amount">0.00</span> >> <span class="converted-amount">0.00</span></p>
+    
+        <p class="text">Amount to pay after conversion to <span class="choosen-currency-code">USD</span></p>
+    
+        <h2 class="converted">0.00 <span class="choosen-currency-code">USD</span></h2>
+      </div>
+    
+      <div class="proceed-div">
+        <button class="continue-btn" id="choose-method-btn">Choose Method</button>
+      </div>
 </div>
 
 <!-- Payment methodd section  -->
