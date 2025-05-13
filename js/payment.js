@@ -125,7 +125,6 @@ state.currencySelected = true;
     paymentMethodOptions.forEach(option => {
 
         option.addEventListener('click', () => {
-alert('clicked');
 state.methodSelected = true;
             checkPaymentMethodSelection();
         });
