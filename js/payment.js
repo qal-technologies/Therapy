@@ -44,6 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const usdDropdown = document.getElementById('usd-dropdown');
     const currencyOptions = document.querySelectorAll('.option-item');
     const currencyDropdownItems = document.querySelectorAll('.currency-dropdown-item');
+
+usdOption.addEventListener('click', (e) => {
+        if (!e.target.closest('.currency-dropdown-item')) {
+            document.querySelector('.currency-option-container').classList.toggle('open');
+            usdDropdown.classList.toggle('show');
+        }
+    });
+
     const paymentMethodOptions = document.querySelectorAll('input[name="payment-method"]');
 
     // Function to enable continue button when currency is selected
