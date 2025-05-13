@@ -115,9 +115,8 @@ h2 {
 }
 
 .payment-summary-container {
-    display: flex;
+    display: none;
     flex-direction: column;
-    gap: 15px;
     max-width: 400px;
     margin: 10px auto;
     padding: 10px 0;
