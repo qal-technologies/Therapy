@@ -114,13 +114,10 @@ h2 {
 
 .payment-section {
     background: white;
-    /*border-radius: 20px;*/
     padding: 1.2rem;
     padding-top: 1.5rem;
-    /*box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);*/
     backdrop-filter: blur(10px);
     overflow: hidden;
-    /*max-width: 500px;*/
     place-self: center;
     display: none;
     width: 98%;
@@ -133,7 +130,11 @@ h2 {
     gap: 20%;
     padding-top: 40px;
     height: 80vh;
+width:85%;
+border-radius: 20px;
+    max-width: 400px;
     max-height: 500px;
+   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
 }
 
 .payment-section.active {
