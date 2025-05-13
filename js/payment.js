@@ -58,12 +58,11 @@ if (state.currencySelected){ currencyContinueBtn.disabled = !state.currencySelec
 }
 }
 
-    // Function to enable payment button when payment method is selected
-    function checkPaymentMethodSelection() {
-        if (state.methodSelected){ makePaymentBtn.disabled = !state.methodSelected;
+    // Function to enable payment button
+function checkPaymentMethodSelection() {
+if (state.methodSelected){ makePaymentBtn.disabled = !state.methodSelected;
 }
-    }
-
+}
 
 usdOption.addEventListener('click', (e) => {
         if (!e.target.closest('.currency-dropdown-item')) {
@@ -124,6 +123,7 @@ state.currencySelected = true;
 
     // Handle payment method selection
     paymentMethodOptions.forEach(option => {
+alert('clicked');
         option.addEventListener('click', () => {
 state.methodSelected = true;
             checkPaymentMethodSelection();
