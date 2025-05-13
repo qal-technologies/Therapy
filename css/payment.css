@@ -6,6 +6,7 @@ section.parent {
     flex-direction: column;
     place-content: center;
     background-color: #ebebeb;
+background-color: white;
     padding-inline: 0.2rem;
     font-family: PoppinsLight;
 }
@@ -119,7 +120,7 @@ h2 {
     box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(10px);
     overflow: hidden;
-    max-width: 500px;
+    /*max-width: 500px;*/
     place-self: center;
     display: none;
     width: 98%;
