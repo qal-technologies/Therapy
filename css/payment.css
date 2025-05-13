@@ -150,7 +150,7 @@ h2 {
 }
 
 .section-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-family: PoppinsSemi, sans-serif;
     color: black;
     margin-bottom: 2px;
@@ -376,14 +376,14 @@ button.continue-btn:disabled {
 .option-list p.title {
     font-family: PoppinsMed;
     font-size: 16px;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: #0278ff;
 }
 
 .option-list .title span {
     font-family: PoppinsSemi;
     font-size: 1.5rem;
-    margin-inline: 5px;
+    margin-inline: 2px;
     color: black;
 }
 
@@ -393,8 +393,7 @@ button.continue-btn:disabled {
 }
 
 .option-list h2.converted {
-    margin-top: 2px;
-    font-size: 2.2rem;
+    font-size: 2rem;
 }
 
 .option-list h2.converted span.choosen-currency-code {
