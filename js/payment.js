@@ -34,6 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = '/html/main/Session.html';
     }
 
+
+const state ={
+currencySelected: false,
+methodSelected:false,
+};
+
     // Get buttons and disable them initially
     const currencyContinueBtn = document.getElementById('currency-continue');
     const makePaymentBtn = document.getElementById('make-payment-btn');
@@ -49,21 +55,22 @@ usdOption.addEventListener('click', (e) => {
         if (!e.target.closest('.currency-dropdown-item')) {
             document.querySelector('.currency-option-container').classList.toggle('open');
             usdDropdown.classList.toggle('show');
+
+state.currencySelected = true;
         }
     });
 
     const paymentMethodOptions = document.querySelectorAll('input[name="payment-method"]');
 
-    // Function to enable continue button when currency is selected
-    function checkCurrencySelection() {
-        const selectedCurrency = document.querySelector('input[name="currency"]:checked');
-        currencyContinueBtn.disabled = !selectedCurrency;
-    }
+function checkCurrencySelection() {
+if (state.currencySelected){ currencyContinueBtn.disabled = !state.currencySelected;
+}
+}
 
     // Function to enable payment button when payment method is selected
     function checkPaymentMethodSelection() {
-        const selectedMethod = document.querySelector('input[name="payment-method"]:checked');
-        makePaymentBtn.disabled = !selectedMethod;
+        if (state.paymentSelected){ makePaymentBtn.disabled = !state.paymentSelected;
+}
     }
 
     // Initialize checks
@@ -89,8 +96,7 @@ usdOption.addEventListener('click', (e) => {
             const optionLabel = usdOption.querySelector('.option-label');
             optionLabel.innerHTML = `${currency} <span class="option-subtext">${code}</span>`;
 
-            // Set the radio button value
-            document.querySelector(`input[name="currency"][value="${value}"]`).checked = true;
+            state.currencySelected = true;
 
             // Close dropdown
             document.querySelector('.currency-option-container').classList.remove('open');
@@ -110,7 +116,11 @@ usdOption.addEventListener('click', (e) => {
         option.addEventListener('click', (e) => {
             if (option !== usdOption && !e.target.closest('.currency-dropdown')) {
                 currencyOptions.forEach(opt => opt.classList.remove('selected'));
+
+state.currencySelected = true;
+
                 option.classList.add('selected');
+
 
                 // Close USD dropdown if open
                 document.querySelector('.currency-option-container').classList.remove('open');
@@ -125,6 +135,7 @@ usdOption.addEventListener('click', (e) => {
     // Handle payment method selection
     paymentMethodOptions.forEach(option => {
         option.addEventListener('change', () => {
+state.paymentSelected = true;
             checkPaymentMethodSelection();
         });
     });
