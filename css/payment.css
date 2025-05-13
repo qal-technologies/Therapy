@@ -4,7 +4,8 @@ section.parent {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    place-content: center;
+align-items: center;
+justify-content:center;
     background-color: #ebebeb;
 background-color: white;
     padding-inline: 0.2rem;
@@ -128,9 +129,8 @@ h2 {
 .detail-card {
     text-align: center;
     gap: 20%;
-    padding-top: 40px;
     height: 80vh;
-width:85%;
+width:90%;
 border-radius: 20px;
     max-width: 400px;
     max-height: 500px;
