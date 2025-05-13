@@ -114,28 +114,20 @@ h2 {
     font-family: PoppinsLight, sans-serif;
 }
 
-.detail-card {
-    text-align: center;
-    gap: 20%;
-    height: 80vh;
-padding-top:40px;
-width:90%;
-
-    max-width: 400px;
-    
-}
-
 .payment-summary-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
     max-width: 400px;
-    width: 100%;
     margin: 10px auto;
     padding: 10px 0;
     font-family: PoppinsLight, sans-serif;
     text-align: center;
 max-height: 500px;
+gap: 20%;
+    height: 80vh;
+padding-top:40px;
+width:90%;
    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.08);
 }
 
