@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const rate = rates[state.currencyCode];
                         state.converted = (state.amount * rate).toFixed(2);
 
-                        titleDiv.innerHTML = `<span class="initial-amount">${state.amount} <span class="choosen-currency-code">${state.currencyCode}</span></span> <i class="fas fa-exchange-alt"></i> <span class="converted-amount">${state.converted} <span class="choosen-currency-code">${state.currencyCode}</span></span>`;
+                        titleDiv.innerHTML = `<span class="initial-amount">${state.amount} <span class="choosen-currency-code">EUR</span></span> <i class="fas fa-exchange-alt"></i> <span class="converted-amount">${state.converted} <span class="choosen-currency-code">${state.currencyCode}</span></span>`;
 
                         currencyCode.textContent = state.currencyCode;
 
