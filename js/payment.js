@@ -202,9 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(async () => {
 
-            // Update UI after conversion
-            document.getElementById('currency-section')?.classList.remove('active');
             if (state.currencyCode !== "EUR") {
+
                 try {
                     // Fetch conversion rates
                     const response = await fetch(EXCHANGE_RATE_API);
@@ -223,6 +222,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         convertedText.innerHTML =
                             `${symbol[state.currencyCode]} ${state.converted} <span class="choosen-currency-code">${state.currencyCode}</span>`;
 
+
+                        // Update UI after conversion
+                        document.getElementById('currency-section')?.classList.remove('active');
+
                         document.getElementById('conversion-section')?.classList.add('active');
                     } else {
                         // Fallback if currency not found
@@ -238,6 +241,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.textContent = 'Convert';
                 }
             } else {
+
+                // Update UI after conversion
+                document.getElementById('currency-section')?.classList.remove('active');
+
                 document.getElementById('payment-method-section')?.classList.add('active');
                 button.disabled = false;
                 button.textContent = 'Convert';
