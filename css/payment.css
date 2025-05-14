@@ -383,13 +383,17 @@ button.continue-btn:disabled {
 .option-list .title span {
     font-family: PoppinsSemi;
     font-size: 1.5rem;
-    margin-inline: 2px;
     color: black;
+}
+
+.option-list .title i {
+    margin-inline: 8px;
 }
 
 #conversion-section .option-list span.choosen-currency-code {
     font-family: PoppinsMed;
-    font-size: 16px;
+    font-size: 1.2rem;
+    marginin
 }
 
 .option-list h2.converted {
@@ -397,6 +401,5 @@ button.continue-btn:disabled {
 }
 
 .option-list h2.converted span.choosen-currency-code {
-    font-size: 14px;
     color: #0278ff;
 }

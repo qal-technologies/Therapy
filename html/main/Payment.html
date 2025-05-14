@@ -2,184 +2,185 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=7" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=7" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
+  <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
 
-    <!-- FOR STYLING -->
-    <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
+  <!-- FOR STYLING -->
+  <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <link rel="stylesheet" href="/css/general.css" />
-    <link rel="stylesheet" href="/css/animation.css" />
+  <link rel="stylesheet" href="/css/general.css" />
+  <link rel="stylesheet" href="/css/animation.css" />
 
-    <link rel="stylesheet" href="/css/payment.css" />
+  <link rel="stylesheet" href="/css/payment.css" />
 
-    <link rel="stylesheet" href="/css/media.css" />
+  <link rel="stylesheet" href="/css/media.css" />
 
-    <title>Payment - A Space to Heal</title>
+  <title>Payment - A Space to Heal</title>
 </head>
 
 
 
 <body class="fadeIn">
-        <section id="display" class="parent">
+  <section id="display" class="parent">
 
-<!-- Payment Details  -->
-<div class="payment-summary-container payment-section" id="payment-details">
-<h2>Payment Summary</h2>
+    <!-- Payment Details  -->
+    <div class="payment-summary-container payment-section" id="payment-details">
+      <h2>Payment Summary</h2>
 
-    <div id="payment-amount" class="amount">$0.00</div>
-    <div id="payment-date" class="date">Date Placeholder</div>
+      <div id="payment-amount" class="amount">$0.00</div>
+      <div id="payment-date" class="date">Date Placeholder</div>
 
-    <hr class="divider" />
+      <hr class="divider" />
 
-    <div class="detail-row single-row">
-      <span class="detail-label">Description</span>
-      <span id="payment-description" class="detail-value">N/A</span>
+      <div class="detail-row single-row">
+        <span class="detail-label">Description</span>
+        <span id="payment-description" class="detail-value">N/A</span>
+      </div>
+
+      <hr class="divider transaction" />
+
+      <div id="transaction-id" class="txn-id">TXN-XXXXXX-FR</div>
+
+
+      <div class="proceed-div">
+        <button id="proceed-button" class="continue-btn">
+          <p>Proceed to Payment</p>
+        </button>
+      </div>
     </div>
 
-    <hr class="divider transaction" />
+    <!-- Currency selection section  -->
+    <div class="payment-section" id="currency-section">
+      <h2 class="section-title">Select Currency</h2>
+      <p class="section-description">Choose the currency you're paying with.</p>
 
-    <div id="transaction-id" class="txn-id">TXN-XXXXXX-FR</div>
+      <div class="option-list">
+        <div class="currency-option-container">
+          <div class="option-item" id="usd-option">
+            <div class="currency-toggle">
+              <div class="currency-icon">
+                <i class="fas fa-dollar-sign"></i>
+              </div>
 
+              <div class="toggle-left">
+                <span class="option-label">Dollar<span class="option-subtext">$$</span></span>
+                <i class="fas fa-chevron-down dropdown-arrow"></i>
+              </div>
+            </div>
 
-<div class="proceed-div">
-<button id="proceed-button" class="continue-btn">
-                <p>Proceed to Payment</p>
-            </button>
-</div>
-</div>
-
-<!-- Currency selection section  -->
-<div class="payment-section" id="currency-section">
-  <h2 class="section-title">Select Currency</h2>
-  <p class="section-description">Choose the currency you're paying with.</p>
-
-  <div class="option-list">
-    <div class="currency-option-container">
-      <div class="option-item" id="usd-option">
-        <div class="currency-toggle">
+          </div>
+          <div class="currency-dropdown" id="usd-dropdown">
+            <div class="currency-dropdown-item" data-value="USD">
+              <span class="currency-code">USD</span>
+              <p>US Dollar</p>
+            </div>
+            <div class="currency-dropdown-item" data-value="CAD">
+              <span class="currency-code">CAD</span>
+              <p>Canadian Dollar</p>
+            </div>
+            <div class="currency-dropdown-item" data-value="AUD">
+              <span class="currency-code">AUD</span>
+              <p>Australian Dollar</p>
+            </div>
+          </div>
+        </div>
+        <label class="option-item">
           <div class="currency-icon">
-            <i class="fas fa-dollar-sign"></i>
+            <i class="fas fa-euro-sign"></i>
           </div>
-    
-          <div class="toggle-left">
-            <span class="option-label">Dollar<span class="option-subtext">$$</span></span>
-            <i class="fas fa-chevron-down dropdown-arrow"></i>
+          <span class="option-label">Euro<span class="option-subtext">EUR</span></span>
+        </label>
+
+        <label class="option-item">
+          <div class="currency-icon">
+            <i class="fas fa-pound-sign"></i>
           </div>
-        </div>
-    
+          <span class="option-label">British Pound<span class="option-subtext">GBP</span></span>
+        </label>
+        <label class="option-item">
+          <div class="currency-icon">
+            <i class="fas fa-franc-sign"></i>
+          </div>
+          <span class="option-label">Switzerland Franc<span class="option-subtext">CHF</span></span>
+        </label>
       </div>
-      <div class="currency-dropdown" id="usd-dropdown">
-        <div class="currency-dropdown-item" data-value="USD">
-          <span class="currency-code">USD</span>
-          <p>US Dollar</p>
-        </div>
-        <div class="currency-dropdown-item" data-value="CAD">
-          <span class="currency-code">CAD</span>
-          <p>Canadian Dollar</p>
-        </div>
-        <div class="currency-dropdown-item" data-value="AUD">
-          <span class="currency-code">AUD</span>
-          <p>Australian Dollar</p>
-        </div>
-      </div>
-    </div>
-    <label class="option-item">
-      <div class="currency-icon">
-        <i class="fas fa-euro-sign"></i>
-      </div>
-      <span class="option-label">Euro<span class="option-subtext">EUR</span></span>
-    </label>
+      <a href="mailto:healingwithcharlottecasiraghi@gmail.com" class="cant-find">Can't find your currency?</a>
 
-    <label class="option-item">
-      <div class="currency-icon">
-        <i class="fas fa-pound-sign"></i>
+      <div class="proceed-div">
+        <button class="continue-btn" disabled id="currency-continue">Continue</button>
       </div>
-      <span class="option-label">British Pound<span class="option-subtext">GBP</span></span>
-      </label>
-<label class="option-item">
-  <div class="currency-icon">
-    <i class="fas fa-franc-sign"></i>
-  </div>
-  <span class="option-label">Switzerland Franc<span class="option-subtext">CHF</span></span>
-</label>
-  </div>
-  <a href="mailto:healingwithcharlottecasiraghi@gmail.com" class="cant-find">Can't find your currency?</a>
+    </div>
 
-  <div class="proceed-div">
-    <button class="continue-btn" disabled id="currency-continue">Convert</button>
-    </div>
-    </div>
-    
-    
+
     <!-- Conversion section  -->
     <div class="payment-section" id="conversion-section">
       <h2 class="section-title">Currency Conversion</h2>
-    
+
       <div class="option-list">
-        <p class="title"><span class="initial-amount">0.00</span> >> <span class="converted-amount">0.00</span></p>
-    
+        <p class="title"><span class="initial-amount">0.00</span> <i class="fas fa-exchange-alt"></i><span
+            class="converted-amount">0.00</span></p>
+
         <p class="text">Amount to pay after conversion to <span class="choosen-currency-code">USD</span></p>
-    
-        <h2 class="converted">0.00 <span class="choosen-currency-code">USD</span></h2>
+
+        <h2 class="converted">0.00</h2>
       </div>
-    
+
       <div class="proceed-div">
         <button class="continue-btn" id="choose-method-btn">Choose Method</button>
       </div>
-</div>
+    </div>
 
-<!-- Payment methodd section  -->
-<div class="payment-section" id="payment-method-section">
-  <h2 class="section-title">Select Payment Method</h2>
-  <p class="section-description">Choose your method of payment.</p>
+    <!-- Payment methodd section  -->
+    <div class="payment-section" id="payment-method-section">
+      <h2 class="section-title">Select Payment Method</h2>
+      <p class="section-description">Choose your method of payment.</p>
 
-  <div class="option-list">
-    <label class="option-item">
-      <div class="payment-icon">
-        <i class="far fa-credit-card"></i>
-      </div>
-      <span class="option-label">Credit or Debit Card</span>
-    </label>
-    <label class="option-item">
-      <div class="payment-icon">
-        <i class="fab fa-paypal"></i>
-      </div>
-      <span class="option-label">PayPal</span>
-      </label>
-      <label class="option-item">
-      <div class="payment-icon">
-        <i class="fas fa-university"></i>
-      </div>
-      <span class="option-label">Bank Transfer</span>
-      </label>
-      <label class="option-item">
-      <div class="payment-icon">
-        <i class="fas fa-tag"></i>
-      </div>
-      <span class="option-label">Redeem Code</span>
-      </label>
+      <div class="option-list">
+        <label class="option-item">
+          <div class="payment-icon">
+            <i class="far fa-credit-card"></i>
+          </div>
+          <span class="option-label">Credit or Debit Card</span>
+        </label>
+        <label class="option-item">
+          <div class="payment-icon">
+            <i class="fab fa-paypal"></i>
+          </div>
+          <span class="option-label">PayPal</span>
+        </label>
+        <label class="option-item">
+          <div class="payment-icon">
+            <i class="fas fa-university"></i>
+          </div>
+          <span class="option-label">Bank Transfer</span>
+        </label>
+        <label class="option-item">
+          <div class="payment-icon">
+            <i class="fas fa-tag"></i>
+          </div>
+          <span class="option-label">Redeem Code</span>
+        </label>
       </div>
 
       <div class="proceed-div">
         <button class="continue-btn" disabled id="make-payment-btn">Make Payment</button>
       </div>
-</div>
+    </div>
 
-<!-- Loading Section -->
-<div class="payment-section loading-section" id="loading-section">
-  <div class="loading-spinner"></div>
-  <h3 class="loading-title">Processing Your Payment</h3>
-  <p class="loading-text">Please wait while we process your payment. This may take a few moments.</p>
-</div>
-</div>
-        </section>
+    <!-- Loading Section -->
+    <div class="payment-section loading-section" id="loading-section">
+      <div class="loading-spinner"></div>
+      <h3 class="loading-title">Processing Your Payment</h3>
+      <p class="loading-text">Please wait while we process your payment. This may take a few moments.</p>
+    </div>
+    </div>
+  </section>
 </body>
 
 </html>

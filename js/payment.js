@@ -182,8 +182,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     });
 
-    const EXCHANGE_RATE_API = 'https://api.exchangerate-api.com/v4/latest/EUR';
 
+    const EXCHANGE_RATE_API = 'https://api.exchangerate-api.com/v4/latest/EUR';
     document.getElementById('currency-continue')?.addEventListener('click', async function (e) {
         e.preventDefault();
         const button = e.target;
@@ -191,40 +191,54 @@ document.addEventListener('DOMContentLoaded', () => {
         button.disabled = true;
         button.textContent = 'Converting...';
 
+        const symbol = {
+            "EUR": "€",
+            "USD": "$",
+            "CAD": "$",
+            "AUD": "$",
+            "GBP": "£",
+            "CHF": "₣",
+        }
+
         setTimeout(async () => {
 
-            try {
-                // Fetch conversion rates
-                const response = await fetch(EXCHANGE_RATE_API);
-                const data = await response.json();
-                const rates = data.rates;
+            // Update UI after conversion
+            document.getElementById('currency-section')?.classList.remove('active');
+            if (state.currencyCode !== "EUR") {
+                try {
+                    // Fetch conversion rates
+                    const response = await fetch(EXCHANGE_RATE_API);
+                    const data = await response.json();
+                    const rates = data.rates;
 
-                // Check if selected currency is available in rates
-                if (state.currencyCode && state.currencyCode in rates) {
-                    const rate = rates[state.currencyCode];
-                    state.converted = (state.amount * rate).toFixed(2);
+                    // Check if selected currency is available in rates
+                    if (state.currencyCode && state.currencyCode in rates) {
+                        const rate = rates[state.currencyCode];
+                        state.converted = (state.amount * rate).toFixed(2);
 
-                    // Update UI after conversion
-                    document.getElementById('currency-section')?.classList.remove('active');
+                        titleDiv.innerHTML = `<span class="initial-amount">${state.amount} <span class="choosen-currency-code">${state.currencyCode}</span></span> <i class="fas fa-exchange-alt"></i> <span class="converted-amount">${state.converted} <span class="choosen-currency-code">${state.currencyCode}</span></span>`;
 
-                    titleDiv.innerHTML = state.currencyCode !== "EUR" ? `<span class="initial-amount"> ${state.amount}<span class="choosen-currency-code">EUR</span></span> >> <span class="converted-amount">${state.converted}<span class="choosen-currency-code">${state.currencyCode}</span></span>` : ``;
+                        currencyCode.textContent = state.currencyCode;
 
-                    currencyCode.textContent = state.currencyCode;
-                    convertedText.innerHTML = state.currencyCode !== "EUR" ?
-                        `${state.converted} <span class="choosen-currency-code">${state.currencyCode}</span>` :
-                        `${state.amount}<span class="choosen-currency-code"> EUR</span>`;
+                        convertedText.innerHTML =
+                            `${symbol[state.currencyCode]} ${state.converted} <span class="choosen-currency-code">${state.currencyCode}</span>`;
 
+                        document.getElementById('conversion-section')?.classList.add('active');
+                    } else {
+                        // Fallback if currency not found
+                        titleDiv.innerHTML = 'Currency conversion not available';
+                        document.getElementById('conversion-section')?.classList.add('active');
+                    }
+                } catch (error) {
+                    console.error('Conversion error:', error);
+                    titleDiv.innerHTML = 'Conversion service unavailable';
                     document.getElementById('conversion-section')?.classList.add('active');
-                } else {
-                    // Fallback if currency not found
-                    titleDiv.innerHTML = 'Currency conversion not available';
-                    document.getElementById('conversion-section')?.classList.add('active');
+                } finally {
+                    button.disabled = false;
+                    button.textContent = 'Convert';
                 }
-            } catch (error) {
-                console.error('Conversion error:', error);
-                titleDiv.innerHTML = 'Conversion service unavailable';
-                document.getElementById('conversion-section')?.classList.add('active');
-            } finally {
+            } else {
+                document.getElementById('payment-method-section')?.classList.add('active');
                 button.disabled = false;
                 button.textContent = 'Convert';
             }
