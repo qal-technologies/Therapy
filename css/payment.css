@@ -107,10 +107,8 @@ h2 {
     padding: 1.2rem;
     padding-top: 1.5rem;
     backdrop-filter: blur(10px);
-    /* overflow: hidden; */
     place-self: center;
     display: none;
-    /* display: block; */
     width: 98%;
     max-width: 500px;
     margin: 10px auto;
@@ -132,6 +130,11 @@ h2 {
     width: 90%;
     border-radius: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1), -4px 10px 10px rgba(0, 47, 255, 0.1);
+}
+
+.payment-section.paypal-section{
+padding-top: 0.5rem;
+align-items:flex-start;
 }
 
 .payment-section.active {
@@ -410,7 +413,7 @@ button.continue-btn:disabled {
 div.paypal-header {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 8px;
     align-items: center;
     width: 100%;
     padding: 10px;
@@ -438,12 +441,13 @@ div.paypal-header {
     width: 80px;
     height: 80px;
     display: flex;
+overflow:hidden;
     place-content: center;
     align-items: center;
 }
 
 .paypal-header .logo img {
-    width: 100%;
+    width: 90px;
     height: auto;
 }
 
@@ -544,6 +548,7 @@ p.fandf-text {
     min-width: 100%;
     display: flex;
     justify-content: space-between;
+gap:10px;
     align-items: center;
 }
 
@@ -556,6 +561,8 @@ p.fandf-text {
 .payment-info .info-div .info-text {
     font-size: 18px;
     font-family: PoppinsSemi;
+text-wrap: wrap;
+    text-overflow: ellipsis;
 }
 
 .payment-info .info-div button.copy {
