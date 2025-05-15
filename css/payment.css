@@ -10,6 +10,7 @@ section.parent {
     background-color: white;
     padding-inline: 0.2rem;
     font-family: PoppinsLight;
+    overflow-y: scroll;
 }
 
 .detail-row .detail-value {
@@ -106,9 +107,10 @@ h2 {
     padding: 1.2rem;
     padding-top: 1.5rem;
     backdrop-filter: blur(10px);
-    overflow: hidden;
+    /* overflow: hidden; */
     place-self: center;
     display: none;
+    /* display: block; */
     width: 98%;
     max-width: 500px;
     margin: 10px auto;
@@ -226,11 +228,12 @@ h2 {
     border: none;
     border-radius: 15px;
     padding: 10px;
-    width: 90%;
+    width: 95%;
     max-width: 300px;
     align-self: center;
     font-size: 16px;
     font-weight: 600;
+    letter-spacing: 0.8px;
     cursor: pointer;
     transition: background-color 0.2s;
 }
@@ -242,10 +245,10 @@ h2 {
 
 .loading-spinner {
     border: 4px solid #f0f0f0;
-    border-top: 4px solid #4a90e2;
+    border-top: 5px solid #0086df;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     animation: spin 1s linear infinite;
     margin: 0 auto 25px;
 }
@@ -291,6 +294,7 @@ button.continue-btn:disabled {
     border: 1px solid #cfcfcf;
     color: black;
     fill: black;
+    overflow: hidden;
 }
 
 .option-item.selected .currency-icon, .option-item.selected .payment-icon {
@@ -393,7 +397,6 @@ button.continue-btn:disabled {
 #conversion-section .option-list span.choosen-currency-code {
     font-family: PoppinsMed;
     font-size: 1.2rem;
-    marginin
 }
 
 .option-list h2.converted {
@@ -402,4 +405,287 @@ button.continue-btn:disabled {
 
 .option-list h2.converted span.choosen-currency-code {
     color: #0278ff;
+}
+
+div.paypal-header {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    justify-content: center;
+}
+
+#paypal-amount-to-pay .paypal-header, #paypal-processing .paypal-header {
+    border-bottom: none;
+}
+
+#fandf .paypal-header {
+    justify-content: flex-start;
+    padding-bottom: 5px;
+    margin-top: 10px;
+}
+
+#paypal-upload .paypal-header {
+    justify-content: flex-start;
+}
+
+.paypal-header .logo {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    place-content: center;
+    align-items: center;
+}
+
+.paypal-header .logo img {
+    width: 100%;
+    height: auto;
+}
+
+div.paypal-header p {
+    color: #003087;
+    font-size: 2.4rem;
+    font-family: PoppinsBold;
+}
+
+#fandf .paypal-header p {
+    font-size: 20px;
+}
+
+.paypal-header span.second {
+    color: #0278ff;
+    font-family: PoppinsBold;
+}
+
+#paypal-first h2 {
+    font-size: 1.6rem;
+    margin: 25px 0 15px 0;
+    color: #003087;
+    font-family: PoppinsSemi;
+}
+
+#paypal-first ul {
+    padding-inline: 20px;
+}
+
+#paypal-first li {
+    margin-bottom: 10px;
+    list-style: disc;
+    font-family: PoppinsLight;
+}
+
+.paypal-section .divider {
+    height: 1px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+.paypal-section .continue-btn {
+    background-color: #0d50cc;
+    border-radius: 20px;
+}
+
+p.once {
+    padding-inline: 6px;
+    text-align: center;
+    font-size: 15px;
+    font-family: PoppinsLight;
+    color: #333;
+}
+
+.amount-section {
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.amount-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+    padding-inline: 10px;
+    font-family: PoppinsMed;
+    font-size: 0.8rem;
+}
+
+.amount-row span:last-child {
+    font-size: 1.4rem;
+    font-family: PoppinsSemi;
+}
+
+#fandf h1 {
+    font-family: PoppinsSemi;
+    margin-top: 10px;
+}
+
+p.fandf-text {
+    font-size: 15px;
+    color: #333;
+}
+
+.payment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-block: 30px;
+}
+
+.payment-info .info-div {
+    min-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-info .info-div .info-title {
+    font-size: 16px;
+    font-family: PoppinsLight;
+    letter-spacing: 0.5px;
+}
+
+.payment-info .info-div .info-text {
+    font-size: 18px;
+    font-family: PoppinsSemi;
+}
+
+.payment-info .info-div button.copy {
+    padding: 5px;
+    padding-inline: 10px;
+    background: #fdfdfd;
+    border: 2px solid #bebebe;
+    border-radius: 8px;
+    color: rgba(116, 116, 116, 0.8);
+    font-family: PoppinsMed;
+    cursor: pointer;
+}
+
+.payment-info .info-div button.copy:hover {
+    background: #fafafa;
+    border-color: #666;
+    color: #464646;
+}
+
+.important {
+    margin: 25px 0;
+}
+
+.important p {
+    font-size: 18px;
+    font-family: PoppinsSemi;
+    padding-bottom: 6px;
+}
+
+.important ol {
+    padding-left: 20px;
+}
+
+.important li {
+    margin-bottom: 2px;
+    list-style: decimal;
+}
+
+.expiry {
+    font-size: 14px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.expiry span.timeout {
+    font-family: PoppinsSemi;
+}
+
+h2.upload-title {
+    font-size: 1.6rem;
+    text-align: left;
+}
+
+p.upload-text {
+    margin-top: -20px;
+}
+
+.upload-section {
+    margin: 30px 0;
+}
+
+.upload-box {
+    border: 2px dashed #ccc;
+    padding: 30px;
+    text-align: center;
+    margin-block: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.upload-box:hover {
+    border-color: #0070ba;
+}
+
+.upload-box p:first-child {
+    font-size: 3rem;
+    color: black;
+}
+
+.sender-name {
+    margin: 25px 0;
+}
+
+.sender-name input {
+    width: 100%;
+    padding: 10px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.sender-name input:focus {
+    border-color: #0070ba;
+}
+
+#paypal-processing .paypal-display {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.paypal-display .display-inner {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.display-inner .display-title {
+    font-size: 1.6rem;
+    font-family: PoppinsSemi;
+    margin-block: 10px;
+    color: black;
+}
+
+.display-inner .under {
+    font-size: 14px;
+    color: #333;
+}
+
+.display-inner p.display-title-price {
+    font-size: 1.6rem;
+    font-family: PoppinsSemi;
+    margin-bottom: 5px;
+}
+
+.display-inner .proceed-div p.completed-time {
+    margin-top: calc(5% + 10px);
 }

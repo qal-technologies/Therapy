@@ -1,36 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=7" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=7" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
 
-  <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
+    <!-- FOR STYLING -->
+    <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
-  <!-- FOR STYLING -->
-  <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/css/general.css" />
+    <link rel="stylesheet" href="/css/animation.css" />
 
-  <link rel="stylesheet" href="/css/general.css" />
-  <link rel="stylesheet" href="/css/animation.css" />
+    <link rel="stylesheet" href="/css/payment.css" />
 
-  <link rel="stylesheet" href="/css/payment.css" />
+    <link rel="stylesheet" href="/css/media.css" />
 
-  <link rel="stylesheet" href="/css/media.css" />
+    <title>Payment - A Space to Heal</title>
+    </head>
 
-  <title>Payment - A Space to Heal</title>
-</head>
-
-
-
-<body class="fadeIn">
-  <section id="display" class="parent">
-
-    <!-- Payment Details  -->
-    <div class="payment-summary-container payment-section" id="payment-details">
+  <body class="fadeIn">
+    <section id="display" class="parent">
+      <!-- Payment Details  -->
+      <div class="payment-summary-container payment-section" id="payment-details">
       <h2>Payment Summary</h2>
 
       <div id="payment-amount" class="amount">$0.00</div>
@@ -55,8 +51,8 @@
       </div>
     </div>
 
-    <!-- Currency selection section  -->
-    <div class="payment-section" id="currency-section">
+      <!-- Currency selection section  -->
+      <div class="payment-section" id="currency-section">
       <h2 class="section-title">Select Currency</h2>
       <p class="section-description">Choose the currency you're paying with.</p>
 
@@ -117,9 +113,8 @@
       </div>
     </div>
 
-
-    <!-- Conversion section  -->
-    <div class="payment-section" id="conversion-section">
+      <!-- Conversion section  -->
+      <div class="payment-section" id="conversion-section">
       <h2 class="section-title">Currency Conversion</h2>
 
       <div class="option-list">
@@ -136,8 +131,8 @@
       </div>
     </div>
 
-    <!-- Payment methodd section  -->
-    <div class="payment-section" id="payment-method-section">
+      <!-- Payment methodd section  -->
+      <div class="payment-section" id="payment-method-section">
       <h2 class="section-title">Select Payment Method</h2>
       <p class="section-description">Choose your method of payment.</p>
 
@@ -150,7 +145,7 @@
         </label>
         <label class="option-item">
           <div class="payment-icon">
-            <i class="fab fa-paypal"></i>
+            <img src="/src/images/paypal.png" alt="paypal-logo" srcset="" width="60" height="50" style="border-radius: 50%;">
           </div>
           <span class="option-label">PayPal</span>
         </label>
@@ -173,16 +168,15 @@
       </div>
     </div>
 
-    <!-- Loading Section -->
-    <div class="payment-section loading-section" id="loading-section">
+      <!-- Loading Section -->
+      <div class="payment-section loading-section" id="loading-section">
       <div class="loading-spinner"></div>
       <h3 class="loading-title">Processing Your Payment</h3>
       <p class="loading-text">Please wait while we process your payment. This may take a few moments.</p>
     </div>
-    </div>
+<!--Testing-->
   </section>
 </body>
-
 </html>
 
 <script src="/js/general.js"></script>
