@@ -4,7 +4,7 @@ section.parent {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background-color: #ebebeb;
     background-color: white;
@@ -135,6 +135,7 @@ h2 {
 .payment-section.paypal-section{
 padding-top: 0.5rem;
 align-items:flex-start;
+margin: 0px auto;
 }
 
 .payment-section.active {
