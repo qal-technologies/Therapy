@@ -372,10 +372,10 @@ function createPaypalSection1() {
         </div>
         <h2>To pay successfully</h2>
         <ul>
-            <li>Transfer the exact amount showed in the session type you selected</li>
+            <li>Please transfer the exact amount displayed on the next page as the total amount to be transferred</li>
             <li>Make the payment within 30 minutes of generating your one-off beneficiary details</li>
             <li>After payment upload a Screenshot or receipt of the payment</li>
-            <li>Only click Pay Now when you are all set to make the transfer.</li>
+            <li>Only click Pay Now when you are all set to make the transfer</li>
         </ul>
         <div class="proceed-div">
             <button class="continue-btn paypal-btn">Pay Now</button>
