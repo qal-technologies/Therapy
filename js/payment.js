@@ -21,7 +21,7 @@ function initializeState() {
         converted: "",
         amount: 0,
         txn: "",
-        charge: 0.98,
+        charge: 5.00,
         toPay: 0,
         paypalIndex: 0,
         senderName: "",
@@ -161,6 +161,7 @@ async function handleCurrencyContinueClick(e, state, elements) {
     } catch (error) {
         console.error('Conversion error:', error);
         elements.titleDiv.innerHTML = 'Conversion service unavailable';
+        document.getElementById('currency-section')?.classList.remove('active');
         document.getElementById('conversion-section')?.classList.add('active');
 
     } finally {
@@ -282,8 +283,6 @@ function showPaymentError() {
 
 // ==================== HELPER FUNCTIONS ====================
 function updateCurrencyState(state, code, currency) {
-    const oldCode = state.currencyCode;
-
     state.currencySelected = true;
     state.currencyCode = code;
     state.selectedCurrency = currency;
@@ -322,7 +321,7 @@ async function convertCurrency(state, elements) {
 
         const rate = rates[state.currencyCode];
         state.converted = (state.amount * rate).toFixed(2);
-        state.charge = (0.98 * rate).toFixed(2);
+        state.charge = (5 * rate).toFixed(2);
 
         state.toPay = state.currencyCode === "EUR"
             ? (parseFloat(state.amount) + parseFloat(state.charge)).toFixed(2)
@@ -372,10 +371,10 @@ function createPaypalSection1() {
         </div>
         <h2>To pay successfully</h2>
         <ul>
-            <li>Please transfer the exact amount displayed on the next page as the total amount to be transferred</li>
+            <li>Transfer the exact amount showed in the session type you selected</li>
             <li>Make the payment within 30 minutes of generating your one-off beneficiary details</li>
             <li>After payment upload a Screenshot or receipt of the payment</li>
-            <li>Only click Pay Now when you are all set to make the transfer</li>
+            <li>Only click Pay Now when you are all set to make the transfer.</li>
         </ul>
         <div class="proceed-div">
             <button class="continue-btn paypal-btn">Pay Now</button>

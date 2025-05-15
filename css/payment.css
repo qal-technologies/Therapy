@@ -4,8 +4,8 @@ section.parent {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+    align-items: center;
+    /* justify-content: center; */
     background-color: #ebebeb;
     background-color: white;
     padding-inline: 0.2rem;
@@ -111,7 +111,7 @@ h2 {
     display: none;
     width: 98%;
     max-width: 500px;
-    margin: 10px auto;
+    margin: 20px auto;
     font-family: PoppinsLight, sans-serif;
 }
 
@@ -119,12 +119,12 @@ h2 {
     display: none;
     flex-direction: column;
     max-width: 400px;
-    margin: 10px auto;
     padding: 10px 0;
     font-family: PoppinsLight, sans-serif;
     text-align: center;
     max-height: 500px;
     gap: 20%;
+    place-self: center;
     height: 80vh;
     padding-top: 40px;
     width: 90%;
@@ -132,10 +132,9 @@ h2 {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1), -4px 10px 10px rgba(0, 47, 255, 0.1);
 }
 
-.payment-section.paypal-section{
-padding-top: 0.5rem;
-align-items:flex-start;
-margin: 0px auto;
+.payment-section.paypal-section {
+    padding-top: 0.5rem;
+    align-items: flex-start;
 }
 
 .payment-section.active {
@@ -232,7 +231,7 @@ margin: 0px auto;
     border: none;
     border-radius: 15px;
     padding: 10px;
-    width: 95%;
+    width: 90%;
     max-width: 300px;
     align-self: center;
     font-size: 16px;
@@ -442,7 +441,7 @@ div.paypal-header {
     width: 80px;
     height: 80px;
     display: flex;
-overflow:hidden;
+    overflow: hidden;
     place-content: center;
     align-items: center;
 }
@@ -549,7 +548,7 @@ p.fandf-text {
     min-width: 100%;
     display: flex;
     justify-content: space-between;
-gap:10px;
+    gap: 10px;
     align-items: center;
 }
 
@@ -562,7 +561,7 @@ gap:10px;
 .payment-info .info-div .info-text {
     font-size: 18px;
     font-family: PoppinsSemi;
-text-wrap: wrap;
+    text-wrap: wrap;
     text-overflow: ellipsis;
 }
 
