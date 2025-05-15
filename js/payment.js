@@ -48,7 +48,7 @@ function cacheDOMElements() {
         makePaymentBtn: document.getElementById('make-payment-btn'),
         usdOption: document.getElementById('usd-option'),
         usdDropdown: document.getElementById('usd-dropdown'),
-        currencyOptions: document.querySelectorAll('.option-item'),
+        currencyOptions: document.querySelectorAll('#currency-section .option-item'),
         currencyDropdownItems: document.querySelectorAll('.currency-dropdown-item'),
         paymentMethodOptions: document.querySelectorAll('#payment-method-section label.option-item'),
         currencyCode: document.querySelector('span.choosen-currency-code'),
@@ -91,7 +91,7 @@ function handleUsdOptionClick(e, state, elements) {
 }
 
 function handleCurrencyDropdownClick(item, state, elements) {
-    const code = item.querySelector('.currency-code').textContent;
+    const code = item.querySelector('.currency-code')?.textContent;
     const currency = item.querySelector('p')?.textContent || item.textContent.trim().split(' ').slice(1).join(' ');
 
     const optionLabel = elements.usdOption.querySelector('.option-label');
@@ -104,8 +104,11 @@ function handleCurrencyDropdownClick(item, state, elements) {
 }
 
 function handleCurrencyOptionClick(e, option, state, elements) {
+
+    if (option === elements.usdOption || e.target.closest('.currency-dropdown')) return;
+
     if (option !== elements.usdOption && !e.target.closest('.currency-dropdown')) {
-        const code = option.querySelector('.option-subtext')?.textContent;
+        const code = option.querySelector('.option-subtext')?.textContent || "";
         const currency = option.querySelector('.option-label')?.textContent || option.textContent.trim().split(' ').slice(1).join(' ');
 
         updateSelectionStyles(option, elements.currencyOptions);
@@ -120,6 +123,9 @@ function handlePaymentMethodClick(option, state, elements) {
     const method = option.querySelector(".option-label").textContent;
     state.methodSelected = true;
     state.selectedMethod = method.toString().replace(" ", "");
+
+    updateSelectionStyles(option, elements.paymentMethodOptions);
+
     checkPaymentMethodSelection(state, elements);
 }
 
@@ -187,7 +193,10 @@ function handleMakePaymentClick(e, state, elements) {
         document.getElementById('payment-method-section')?.classList.remove('active');
 
         if (state.selectedMethod === "PayPal") {
-
+            if (state.currencyCode === "EUR") {
+                state.toPay = (parseFloat(state.amount) + parseFloat(state.charge)).toFixed(2);
+            }
+            state.paypalSections = createPaypalSections(state);
             handlePaypal(state, elements);
         } else {
             document.getElementById('loading-section')?.classList.add('active');
@@ -210,7 +219,6 @@ function getCurrencySymbol(currencyCode) {
 
 // ==================== PAYPAL HANDLING ====================
 function handlePaypal(state, elements) {
-
     state.paypalSections = createPaypalSections(state);
 
     const currentSection = state.paypalSections[state.paypalIndex + 1];
@@ -248,7 +256,6 @@ function handlePaypal(state, elements) {
     }
 
     else {
-        console.log("PayPal flow completed");
         // Handle completion
         if (state.paymentStatus === false) {
             showPaymentError();
@@ -275,10 +282,13 @@ function showPaymentError() {
 
 // ==================== HELPER FUNCTIONS ====================
 function updateCurrencyState(state, code, currency) {
+    const oldCode = state.currencyCode;
+
     state.currencySelected = true;
     state.currencyCode = code;
     state.selectedCurrency = currency;
 }
+
 
 function closeCurrencyDropdown(elements) {
     document.querySelector('.currency-option-container').classList.remove('open');
@@ -376,7 +386,7 @@ function createPaypalSection1() {
 function createPaypalSection2(state) {
     const symbol = getCurrencySymbol(state.currencyCode);
     const amount = state.currencyCode === "EUR" ? state.amount : state.converted;
-    const total = state.currencyCode === "EUR" ? (parseFloat(state.amount) + parseFloat(state.charge)).toFixed(2) : state.toPay;
+    const total = state.toPay;
 
     return `
     <div class="payment-section paypal-section active" id="paypal-amount-to-pay">
@@ -410,10 +420,7 @@ function createPaypalSection2(state) {
 
 function createPaypalSection3(state) {
     const symbol = getCurrencySymbol(state.currencyCode);
-    const amount = state.currencyCode === "EUR" ?
-        (parseFloat(state.amount) + parseFloat(state.charge)) :
-        state.toPay;
-
+    const amount = state.toPay;
 
     return `
     <div class="payment-section paypal-section active" id="fandf">
@@ -565,7 +572,6 @@ function initializePaymentFlow(state, elements) {
 
         state.txn = transactionId;
         state.amount = details.price;
-        state.paypalSections = createPaypalSections(state);
 
         const description = details.type === "session" ?
             `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi` :
