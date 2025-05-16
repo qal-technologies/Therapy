@@ -413,7 +413,7 @@ button.continue-btn:disabled {
 div.paypal-header {
     display: flex;
     flex-direction: row;
-    gap: 8px;
+    /* gap: 8px; */
     align-items: center;
     width: 100%;
     padding: 10px;
@@ -438,8 +438,8 @@ div.paypal-header {
 }
 
 .paypal-header .logo {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     display: flex;
     overflow: hidden;
     place-content: center;
@@ -447,7 +447,7 @@ div.paypal-header {
 }
 
 .paypal-header .logo img {
-    width: 90px;
+    width: 100px;
     height: auto;
 }
 
@@ -497,6 +497,7 @@ div.paypal-header p {
 p.once {
     padding-inline: 6px;
     text-align: center;
+    line-height: 20px;
     font-size: 15px;
     font-family: PoppinsLight;
     color: #333;
@@ -532,6 +533,7 @@ p.once {
 p.fandf-text {
     font-size: 15px;
     color: #333;
+    line-height: 20px;
 }
 
 .payment-info {
@@ -548,7 +550,7 @@ p.fandf-text {
     min-width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
 }
 
@@ -563,6 +565,8 @@ p.fandf-text {
     font-family: PoppinsSemi;
     text-wrap: wrap;
     text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
 }
 
 .payment-info .info-div button.copy {
@@ -574,6 +578,7 @@ p.fandf-text {
     color: rgba(116, 116, 116, 0.8);
     font-family: PoppinsMed;
     cursor: pointer;
+    min-width: 100px;
 }
 
 .payment-info .info-div button.copy:hover {
