@@ -160,9 +160,11 @@ async function handleCurrencyContinueClick(e, state, elements) {
         }
     } catch (error) {
         console.error('Conversion error:', error);
-        elements.titleDiv.innerHTML = 'Conversion service unavailable';
+        elements.titleDiv.innerHTML = 'Error: Conversion service unavailable';
+
         document.getElementById('currency-section')?.classList.remove('active');
         document.getElementById('conversion-section')?.classList.add('active');
+        document.getElementById("choose-method-btn").disabled = true;
 
     } finally {
         button.disabled = false;
