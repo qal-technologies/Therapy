@@ -25,6 +25,7 @@ function initializeState() {
         toPay: 0,
         paypalIndex: 0,
         senderName: "",
+        senderName: "",
         paymentStatus: null,
         paypalSections: null 
     };
