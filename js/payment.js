@@ -281,6 +281,7 @@ function setupUploadSection(state) {
     const uploadFeedback = document.querySelector('.upload-feedback');
     const fileNameDisplay = document.querySelector('.file-name');
     const senderNameInput = document.getElementById('sender-name-input');
+const plusBTN = document.getElementById('add-button');
 
     // Set initial sender name if it exists in state
     if (state.senderName) {
@@ -295,6 +296,8 @@ function setupUploadSection(state) {
         if (file) {
             fileNameDisplay.textContent = `File: ${file.name}`;
             uploadFeedback.style.display = 'block';
+plusBTN.innerHTML ="✓";
+plusBTN.style.color ="#0006a";
             
             // Here you would typically handle the file upload to a server
             // For now, we'll just show the UI feedback
@@ -525,7 +528,7 @@ function createPaypalSection4() {
             <p><strong>Payment Receipt</strong></p>
                 <input type="file" id="receipt-upload" style="display: none;" accept="image/*,.pdf">
             <div class="upload-box" id="upload-trigger">
-                <p>+</p>
+                <p id="add-button" >+</p>
                 <p>Upload File</p>
             </div>
 
