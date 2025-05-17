@@ -630,6 +630,15 @@ p.upload-text {
     margin: 30px 0;
 }
 
+.upload-box p:first-child {
+    font-size: 3rem;
+    color: black;
+}
+
+#receipt-upload {
+    display: none;
+}
+
 .upload-box {
     border: 2px dashed #ccc;
     padding: 30px;
@@ -637,16 +646,40 @@ p.upload-text {
     margin-block: 10px;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 18px;
+    transition: all 0.3s ease;
 }
 
 .upload-box:hover {
-    border-color: #0070ba;
+   border-color: #0070ba;
+    background-color: #f5f9ff;
 }
 
 .upload-box p:first-child {
     font-size: 3rem;
-    color: black;
+    color: #0070ba;
+    margin-bottom: 10px;
+}
+
+.upload-box p:last-child {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.upload-feedback {
+    margin-top: 15px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.upload-feedback .file-name {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.upload-feedback .upload-success {
+    color: #28a745;
+    font-weight: bold;
 }
 
 .sender-name {
