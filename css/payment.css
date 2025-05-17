@@ -30,6 +30,7 @@ section.parent {
     margin-top: 40px;
     place-content: center;
     flex-direction: column;
+padding-bottom:10px
 }
 
 h2 {
