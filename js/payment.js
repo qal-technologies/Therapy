@@ -27,7 +27,8 @@ function initializeState() {
         senderName: "",
         senderName: "",
         paymentStatus: null,
-        paypalSections: null 
+        paypalSections: null,
+paymentTimer:null,
     };
 }
 
@@ -247,6 +248,13 @@ function handlePaypal(state, elements) {
  if (state.paypalIndex + 1 === 4) {
             setupUploadSection(state);
         }
+
+
+        // Start countdown timer when section 3 is shown
+        if (state.paypalIndex + 1 === 3) {
+            startPaymentTimer(state);
+        }
+
     }
 
     else {
@@ -310,6 +318,66 @@ plusBTN.style.color ="#0006a";
         state.senderName = e.target.value;
         console.log('Sender name updated:', state.senderName);
     });
+}
+
+function startPaymentTimer(state) {
+    let timeLeft = 30 * 60; // 30 minutes in seconds
+    const timerElement = document.getElementById('payment-timer');
+    
+    // Clear any existing timer
+    if (state.paymentTimer) {
+        clearInterval(state.paymentTimer);
+    }
+
+    // Update timer immediately
+    updateTimerDisplay(timerElement, timeLeft);
+
+    // Start countdown
+    state.paymentTimer = setInterval(() => {
+        timeLeft--;
+        
+        // Update display
+        updateTimerDisplay(timerElement, timeLeft);
+
+        // Handle timer completion
+        if (timeLeft <= 0) {
+            clearInterval(state.paymentTimer);
+            timerExpired(state);
+        }
+    }, 1000);
+}
+
+
+function updateTimerDisplay(element, seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    
+    // Format as MM:SS with leading zeros
+    element.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    
+    // Add warning class when under 5 minutes
+    if (seconds <= 300) { // 5 minutes = 300 seconds
+        element.classList.add('warning');
+    } else {
+        element.classList.remove('warning');
+    }
+}
+
+
+function timerExpired(state) {
+    // Disable the payment button
+    const paymentBtn = document.querySelector('#fandf .paypal-btn');
+    if (paymentBtn) {
+        paymentBtn.disabled = true;
+        paymentBtn.textContent = 'Time Expired';
+        paymentBtn.style.backgroundColor = '#dc3545';
+    }
+    
+    // Show an alert or notification
+    alert('Payment time has expired. Please start a new payment session.');
+    
+    // You could also automatically redirect or reset the flow
+    // window.location.href = '/payment-timeout.html';
 }
 
 
@@ -504,7 +572,8 @@ function createPaypalSection3(state) {
                 <li>Complete the transaction.</li>
             </ol>
         </div>
-        <p class="expiry">This payment link/account expires in: <span class="timeout">29:59</span></p>
+               <p class="expiry">This payment link/account expires in: <span class="timeout" id="payment-timer">30:00</span></p>
+
         <div class="proceed-div">
             <button class="continue-btn paypal-btn">I HAVE MADE MY PAYMENT</button>
             <p style="text-align: center; font-size: 12px; margin-top: 5px;">(Click only after sending payment successfully)</p>
