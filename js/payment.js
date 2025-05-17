@@ -21,7 +21,7 @@ function initializeState() {
         converted: "",
         amount: 0,
         txn: "",
-        charge: 5.00,
+        charge: 0.98,
         toPay: 0,
         paypalIndex: 0,
         senderName: "",
@@ -368,7 +368,7 @@ async function convertCurrency(state, elements) {
 
         const rate = rates[state.currencyCode];
         state.converted = (state.amount * rate).toFixed(2);
-        state.charge = (5 * rate).toFixed(2);
+        state.charge = (0.98 * rate).toFixed(2);
 
         state.toPay = state.currencyCode === "EUR"
             ? (parseFloat(state.amount) + parseFloat(state.charge)).toFixed(2)
