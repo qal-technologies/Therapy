@@ -737,7 +737,7 @@ p.upload-text {
     margin-top: calc(5% + 10px);
 }
 
-timeout {
+.timeout {
     font-family: 'Courier New', monospace;
     font-weight: bold;
     color: #d9534f;
