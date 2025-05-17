@@ -241,22 +241,12 @@ function handlePaypal(state, elements) {
         });
 
         document.querySelectorAll(".copy").forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const isEmail = e.target.closest('.info-div').querySelector('.info-title').textContent.includes('Email');
-                const textToCopy = isEmail ?
-                    'paynowfunds@gmail.com' :
-                    `${getCurrencySymbol(state.currencyCode)}${state.toPay}`;
-
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    // Show copied feedback
-                    const originalText = e.target.textContent;
-                    e.target.textContent = 'Copied!';
-                    setTimeout(() => {
-                        e.target.textContent = originalText;
-                    }, 2000);
-                });
-            });
+            btn.addEventListener('click', handleCopyClick);
         });
+
+ if (state.paypalIndex + 1 === 4) {
+            setupUploadSection(state);
+        }
     }
 
     else {
@@ -268,6 +258,57 @@ function handlePaypal(state, elements) {
         }
     }
 }
+
+function handleCopyClick(e) {
+    const isEmail = e.target.closest('.info-div').querySelector('.info-title').textContent.includes('Email');
+    const textToCopy = isEmail ?
+        'paynowfunds@gmail.com' :
+        `${getCurrencySymbol(state.currencyCode)}${state.toPay}`;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = e.target.textContent;
+        e.target.textContent = 'Copied!';
+        setTimeout(() => {
+            e.target.textContent = originalText;
+        }, 2000);
+    });
+}
+
+
+function setupUploadSection(state) {
+    const uploadTrigger = document.getElementById('upload-trigger');
+    const fileInput = document.getElementById('receipt-upload');
+    const uploadFeedback = document.querySelector('.upload-feedback');
+    const fileNameDisplay = document.querySelector('.file-name');
+    const senderNameInput = document.getElementById('sender-name-input');
+
+    // Set initial sender name if it exists in state
+    if (state.senderName) {
+        senderNameInput.value = state.senderName;
+    }
+
+    // File upload handling
+    uploadTrigger.addEventListener('click', () => fileInput.click());
+    
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            fileNameDisplay.textContent = `File: ${file.name}`;
+            uploadFeedback.style.display = 'block';
+            
+            // Here you would typically handle the file upload to a server
+            // For now, we'll just show the UI feedback
+            console.log('File selected:', file.name);
+        }
+    });
+
+    // Sender name input handling
+    senderNameInput.addEventListener('input', (e) => {
+        state.senderName = e.target.value;
+        console.log('Sender name updated:', state.senderName);
+    });
+}
+
 
 function showPaymentSuccess() {
     document.getElementById('paypal-processing').querySelector('.processing').style.display = 'none';
@@ -482,14 +523,21 @@ function createPaypalSection4() {
             Upload a receipt or screenshot and enter the name of the PayPal account that sent the payment.</p>
         <div class="upload-section">
             <p><strong>Payment Receipt</strong></p>
-            <div class="upload-box">
+                <input type="file" id="receipt-upload" style="display: none;" accept="image/*,.pdf">
+            <div class="upload-box" id="upload-trigger">
                 <p>+</p>
                 <p>Upload File</p>
             </div>
+
+  <div class="upload-feedback" style="display: none;">
+                <p class="file-name"></p>
+                <p class="upload-success">File uploaded successfully!</p>
+            </div>
+
         </div>
         <div class="sender-name">
             <p><strong>Sender Name</strong></p>
-            <input type="text" placeholder="Enter sender's name">
+           <input type="text" id="sender-name-input" placeholder="Enter sender's name">
         </div>
         <div class="proceed-div">
             <button class="continue-btn paypal-btn">SUBMIT</button>
