@@ -736,3 +736,21 @@ p.upload-text {
 .display-inner .proceed-div p.completed-time {
     margin-top: calc(5% + 10px);
 }
+
+timeout {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #d9534f;
+    font-size: 1.1em;
+}
+
+.timeout.warning {
+    color: #f0ad4e;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
