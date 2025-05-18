@@ -547,7 +547,7 @@ function setupUploadSection(state) {
         if (file) {
             fileNameDisplay.textContent = `File: ${file.name}`;
             uploadFeedback.style.display = "block";
-            plusBTN.innerHTML = `<i class="fa-check-circle success"></i>`;
+            plusBTN.innerHTML = `<i class=" fas fa-check-circle success"></i>`;
             plusBTN.style.color = "#0006a";
 
             uploaded = true;
