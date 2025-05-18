@@ -752,7 +752,7 @@ function createCreditCardSection1(state) {
     <div class="payment-section credit-card-section active" id="credit-card-first">
         <div class="cc-header method-header">
         <div class="logo">
-            <i class="fas fa-credit-card"></i>
+            <i class="far fa-credit-card"></i>
             </div>
             <p>Credit/Debit Card Payment</p>
         </div>
@@ -789,7 +789,7 @@ function createCreditCardSection2(state) {
     <div class="payment-section credit-card-section active" id="credit-card-details">
          <div class="cc-header method-header">
         <div class="logo">
-            <i class="fas fa-credit-card"></i>
+            <i class="far fa-credit-card"></i>
             </div>
             <p>Card Details</p>
         </div>
@@ -1054,7 +1054,7 @@ function createBankSection1() {
     <div class="payment-section card-section active" id="paypal-first">
         <div class="method-header">
             <div class="logo">
-                           <i class="far fa-university"></i>
+                           <i class="fas fa-university"></i>
             </div>
             <p class="text">Bank Transfer</p>
         </div>
@@ -1080,7 +1080,7 @@ function createBankSection2(state) {
     <div class="payment-section card-section active" id="paypal-amount-to-pay">
        <div class="method-header">
             <div class="logo">
-                           <i class="far fa-university"></i>
+                           <i class="fas fa-university"></i>
             </div>
             <p class="text">Bank Transfer</p>
         </div>
