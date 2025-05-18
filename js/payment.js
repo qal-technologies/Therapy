@@ -318,19 +318,33 @@ function handleCreditCard(state, elements) {
     }
 }
 
-function setupCreditCardInputs() {
-    // Format card number with spaces
+function setupCreditCardInputs(state) {
     const cardNumber = document.getElementById('card-number');
     const expiryDate = document.getElementById('expiry-date');
     const cvv = document.getElementById('cvv');
+    const cardName = document.getElementById('card-name');
+    const submitBtn = document.querySelector('#credit-card-details .cc-btn');
 
+    function validateInputs() {
+        const isCardValid = cardNumber.value.replace(/\s/g, '').length === 16;
+        const isExpiryValid = /^\d{2}\/\d{2}$/.test(expiryDate.value);
+        const isCvvValid = cvv.value.length >= 3 && cvv.value.length <= 4;
+        const isNameValid = cardName.value.trim().length > 0;
+
+        submitBtn.disabled = !(isCardValid && isExpiryValid && isCvvValid && isNameValid);
+    }
+
+
+
+    // Format card number with spaces
     if (cardNumber) {
         cardNumber.addEventListener('input', function (e) {
             let value = e.target.value.replace(/\s+/g, '');
             if (value.length > 0) {
-                value = value.match(new RegExp('.{1,4}', 'g')).join(' ');
+                value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
             }
             e.target.value = value;
+            validateInputs();
         });
     }
 
@@ -342,8 +356,25 @@ function setupCreditCardInputs() {
                 value = value.substring(0, 2) + '/' + value.substring(2, 4);
             }
             e.target.value = value;
+            validateInputs();
         });
     }
+
+    // Validate CVV
+    if (cvv) {
+        cvv.addEventListener('input', function () {
+            this.value = this.value.replace(/\D/g, '');
+            validateInputs();
+        });
+    }
+
+    // Validate card name
+    if (cardName) {
+        cardName.addEventListener('input', validateInputs);
+    }
+
+    // Initial validation
+    validateInputs();
 }
 
 function processCreditCardPayment(state) {
@@ -516,7 +547,7 @@ function setupUploadSection(state) {
         if (file) {
             fileNameDisplay.textContent = `File: ${file.name}`;
             uploadFeedback.style.display = "block";
-            plusBTN.innerHTML = "✓";
+            plusBTN.innerHTML = `<i class="fa-check-circle success"></i>`;
             plusBTN.style.color = "#0006a";
 
             uploaded = true;
@@ -745,7 +776,6 @@ function createCreditCardSection1(state) {
             </ul>
                 <p style="margin-top:10px;">A <strong style="color:#003087; font-size:18px;">${getCurrencySymbol(state.currencyCode)}${state.charge}</strong> processing fee will be added</p>
 
-                <p style="margin-top:20px;">All transactions are securely processed</p>
         </div>
 
         <div class="proceed-div">
@@ -767,24 +797,24 @@ function createCreditCardSection2(state) {
         <div class="cc-form">
             <div class="form-group">
                 <label for="card-number">Card Number</label>
-                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" class="card-input">
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">Expiration Date</label>
-                    <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5">
+                    <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" class="card-input">
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" placeholder="123" maxlength="4">
+                    <input type="text" id="cvv" placeholder="123" maxlength="4" class="card-input">
                 </div>
             </div>
             <div class="form-group">
                 <label for="card-name">Name on Card</label>
-                <input type="text" id="card-name" placeholder="John Smith">
+                <input type="text" id="card-name" placeholder="John Smith" class="card-input">
             </div>
             <div class="amount-display">
-                <p>Amount to charge: <span>${getCurrencySymbol(state.currencyCode)}${state.toPay}</span></p>
+                <p>Amount to charge: <span style="font-family:PoppinsSemi;">${getCurrencySymbol(state.currencyCode)}${state.toPay}</span></p>
             </div>
         </div>
         <div class="proceed-div">
@@ -1024,7 +1054,7 @@ function createBankSection1() {
     <div class="payment-section card-section active" id="paypal-first">
         <div class="method-header">
             <div class="logo">
-                           <i class="fas fa-university"></i>
+                           <i class="far fa-university"></i>
             </div>
             <p class="text">Bank Transfer</p>
         </div>
@@ -1050,7 +1080,7 @@ function createBankSection2(state) {
     <div class="payment-section card-section active" id="paypal-amount-to-pay">
        <div class="method-header">
             <div class="logo">
-                           <i class="fas fa-university"></i>
+                           <i class="far fa-university"></i>
             </div>
             <p class="text">Bank Transfer</p>
         </div>

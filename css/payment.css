@@ -436,7 +436,7 @@ div.paypal-header, div.method-header {
     justify-content: flex-start;
 }
 
-.paypal-header .logo, .method-header .logo {
+.paypal-header .logo {
     width: 70px;
     height: 70px;
     display: flex;
@@ -445,14 +445,30 @@ div.paypal-header, div.method-header {
     align-items: center;
 }
 
-.paypal-header .logo img, .method-header .logo i, .method-header .logo img {
+.method-header .logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.paypal-header .logo img {
     width: 100px;
     height: auto;
 }
 
 .method-header .logo i {
-    width: 200px;
+    display: flex;
+    place-content: center;
+    width: auto;
+    max-width: 150px;
+    min-width: 80px;
     height: auto;
+    place-self: center;
+    border: 1px solid red;
 }
 
 div.paypal-header p {
