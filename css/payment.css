@@ -467,8 +467,8 @@ div.paypal-header, div.method-header {
     max-width: 150px;
     min-width: 80px;
     height: auto;
+    font-size: 2.5rem;
     place-self: center;
-    border: 1px solid red;
 }
 
 div.paypal-header p {
@@ -925,5 +925,5 @@ p.upload-text {
     margin: 20px 0;
     padding: 15px;
     background: #f8f9fa;
-    border-radius: 5px;
+    border-radius: 15px;
 }
