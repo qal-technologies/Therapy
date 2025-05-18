@@ -30,7 +30,7 @@ section.parent {
     margin-top: 40px;
     place-content: center;
     flex-direction: column;
-padding-bottom:10px
+    padding-bottom: 10px
 }
 
 h2 {
@@ -56,14 +56,14 @@ h2 {
 
 .divider {
     border: none;
-    border-top: 1px solid var(--accentTrans);
     margin: 10px;
     margin-bottom: 20px;
+    border-top: 1px solid #a9d7ff65;
 }
 
 .divider.transaction {
     border: none;
-    border-top: 1px solid var(--accentTrans);
+    border-top: 1px solid #a9d7ff65;
     margin-bottom: 10px;
 }
 
@@ -111,7 +111,6 @@ h2 {
     display: none;
     width: 100%;
     max-width: 500px;
-    /* margin: 20px auto; */
     min-height: 90%;
     font-family: PoppinsLight, sans-serif;
 }
@@ -134,8 +133,8 @@ h2 {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1), -4px 10px 10px rgba(0, 47, 255, 0.1);
 }
 
-.payment-section.paypal-section {
-    padding-top: 0.5rem;
+.payment-section.paypal-section, .payment-section.card-section {
+    padding-top: 1rem;
     align-items: flex-start;
 }
 
@@ -412,34 +411,32 @@ button.continue-btn:disabled {
     color: #0278ff;
 }
 
-div.paypal-header {
+div.paypal-header, div.method-header {
     display: flex;
     flex-direction: row;
-    /* gap: 8px; */
     align-items: center;
     width: 100%;
     padding: 10px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.08);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
     justify-content: center;
 }
 
-#paypal-amount-to-pay .paypal-header, #paypal-processing .paypal-header {
+#paypal-amount-to-pay .paypal-header, #paypal-processing .paypal-header .card-section#paypal-amount-to-pay .method-header {
     border-bottom: none;
 }
 
-#fandf .paypal-header {
+#fandf .paypal-header, #fandf .method-header {
     justify-content: flex-start;
-    padding-bottom: 5px;
     margin-top: 10px;
 }
 
-#paypal-upload .paypal-header {
+#paypal-upload .paypal-header, #paypal-upload .method-header {
     justify-content: flex-start;
 }
 
-.paypal-header .logo {
+.paypal-header .logo, .method-header .logo {
     width: 70px;
     height: 70px;
     display: flex;
@@ -448,19 +445,24 @@ div.paypal-header {
     align-items: center;
 }
 
-.paypal-header .logo img {
+.paypal-header .logo img, .method-header .logo i, .method-header .logo img {
     width: 100px;
     height: auto;
 }
 
-div.paypal-header p {
+div.paypal-header p, .method-header p {
     color: #003087;
     font-size: 2.4rem;
     font-family: PoppinsBold;
 }
 
-#fandf .paypal-header p {
+#fandf .paypal-header p, #fandf .method-header p {
     font-size: 20px;
+}
+
+.credit-card-section .method-header p {
+    width: max-content;
+    font-size: 1.8rem;
 }
 
 .paypal-header span.second {
@@ -485,7 +487,7 @@ div.paypal-header p {
     font-family: PoppinsLight;
 }
 
-.paypal-section .divider {
+.divider {
     height: 1px;
     background-color: #ddd;
     margin: 20px 0;
@@ -494,6 +496,10 @@ div.paypal-header p {
 .paypal-section .continue-btn {
     background-color: #0d50cc;
     border-radius: 20px;
+}
+
+.card-section .continue-btn {
+    background-color: #0d50cc;
 }
 
 p.once {
@@ -556,10 +562,23 @@ p.fandf-text {
     align-items: center;
 }
 
+.card-section .payment-info.deposit {
+    gap: 20px;
+}
+
 .payment-info .info-div .info-title {
-    font-size: 16px;
+    font-size: 15px;
     font-family: PoppinsLight;
     letter-spacing: 0.5px;
+}
+
+.card-section .payment-info .info-div .info-title {
+    letter-spacing: 1px;
+}
+
+.card-section .payment-info .info-div .info-text-extra {
+    font-size: 14px;
+    color: rgb(24, 24, 24);
 }
 
 .payment-info .info-div .info-text {
@@ -574,19 +593,19 @@ p.fandf-text {
 .payment-info .info-div button.copy {
     padding: 5px;
     padding-inline: 10px;
-    background: #fdfdfd;
-    border: 2px solid #bebebe;
+    background: #ffffff;
+    border: 2px solid #b9b9b9;
     border-radius: 8px;
-    color: rgba(116, 116, 116, 0.8);
-    font-family: PoppinsMed;
+    color: #a8a8a8;
+    font-family: PoppinsSemi;
     cursor: pointer;
     min-width: 100px;
 }
 
 .payment-info .info-div button.copy:hover {
     background: #fafafa;
-    border-color: #666;
-    color: #464646;
+    border-color: #363636;
+    color: #363636;
 }
 
 .important {
@@ -651,7 +670,7 @@ p.upload-text {
 }
 
 .upload-box:hover {
-   border-color: #0070ba;
+    border-color: #0070ba;
     background-color: #f5f9ff;
 }
 
@@ -740,17 +759,142 @@ p.upload-text {
 .timeout {
     font-family: 'Courier New', monospace;
     font-weight: bold;
-    color: #d9534f;
+    color: #2e0b0a;
     font-size: 1.1em;
 }
 
 .timeout.warning {
-    color: #f0ad4e;
+    color: #ff0800;
     animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1; }
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Credit Card Section Styles */
+.credit-card-section {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cc-header {
+    text-align: left;
+}
+
+.cc-header i {
+    font-size: 3rem;
+    color: #4a90e2;
+    margin-bottom: 10px;
+}
+
+.cc-instructions {
+    margin-bottom: 30px;
+}
+
+.cc-instructions p:first-child {
+    font-size: 1.2rem;
+    font-family: PoppinsSemi;
+    color: #003087;
+}
+
+.cc-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+    font-size: 2rem;
+    color: #555;
+}
+
+.cc-instructions ul.card-ul {
+    padding-inline-start: 20px;
+}
+
+.cc-instructions ul.card-ul li {
+    list-style: disc;
+}
+
+.cc-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.amount-display {
+    margin: 20px 0;
+    text-align: right;
+    font-size: 1.1rem;
+}
+
+.amount-display span {
+    font-weight: bold;
+    color: #2a6496;
+}
+
+.processing-content {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.payment-result {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.payment-result .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.payment-result .success {
+    color: #28a745;
+}
+
+.payment-result .failure {
+    color: #dc3545;
+}
+
+.transaction-details {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
 }
