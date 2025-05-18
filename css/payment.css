@@ -458,6 +458,7 @@ div.paypal-header, div.method-header {
 div.paypal-header p, .method-header p {
     color: #003087;
     font-size: 2.4rem;
+    line-height: 2.6rem;
     font-family: PoppinsBold;
 }
 
