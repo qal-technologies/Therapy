@@ -450,6 +450,11 @@ div.paypal-header, div.method-header {
     height: auto;
 }
 
+.method-header .logo i {
+    width: 200px;
+    height: auto;
+}
+
 div.paypal-header p, .method-header p {
     color: #003087;
     font-size: 2.4rem;

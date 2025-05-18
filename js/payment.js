@@ -743,7 +743,7 @@ function createCreditCardSection1(state) {
                 <li>Expiration date</li>
                 <li>CVV</li>
             </ul>
-                <p style="margin-top:10px;">A <strong style="color:#003087; font-size:18px;">${state.charge}</strong> processing fee will be added</p>
+                <p style="margin-top:10px;">A <strong style="color:#003087; font-size:18px;">${getCurrencySymbol(state.currencyCode)}${state.charge}</strong> processing fee will be added</p>
 
                 <p style="margin-top:20px;">All transactions are securely processed</p>
         </div>
