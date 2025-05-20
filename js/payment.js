@@ -547,7 +547,7 @@ function setupUploadSection(state) {
         if (file) {
             fileNameDisplay.textContent = `File: ${file.name}`;
             uploadFeedback.style.display = "block";
-            plusBTN.innerHTML = `<i class="fa-check-circle success"></i>`;
+            plusBTN.innerHTML = `<i class=" fas fa-check-circle success"></i>`;
             plusBTN.style.color = "#0006a";
 
             uploaded = true;
@@ -1054,7 +1054,7 @@ function createBankSection1() {
     <div class="payment-section card-section active" id="paypal-first">
         <div class="method-header">
             <div class="logo">
-                           <i class="far fa-university"></i>
+                           <i class="fas fa-university"></i>
             </div>
             <p class="text">Bank Transfer</p>
         </div>
@@ -1080,7 +1080,7 @@ function createBankSection2(state) {
     <div class="payment-section card-section active" id="paypal-amount-to-pay">
        <div class="method-header">
             <div class="logo">
-                           <i class="far fa-university"></i>
+                           <i class="fas fa-university"></i>
             </div>
             <p class="text">Bank Transfer</p>
         </div>
