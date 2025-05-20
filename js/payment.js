@@ -752,7 +752,7 @@ function createCreditCardSection1(state) {
     <div class="payment-section credit-card-section active" id="credit-card-first">
         <div class="cc-header method-header">
         <div class="logo">
-            <i class="fas fa-credit-card"></i>
+            <i class="far fa-credit-card"></i>
             </div>
             <p>Credit/Debit Card Payment</p>
         </div>
@@ -789,7 +789,7 @@ function createCreditCardSection2(state) {
     <div class="payment-section credit-card-section active" id="credit-card-details">
          <div class="cc-header method-header">
         <div class="logo">
-            <i class="fas fa-credit-card"></i>
+            <i class="far fa-credit-card"></i>
             </div>
             <p>Card Details</p>
         </div>
@@ -828,7 +828,7 @@ function createCreditCardSection3(state) {
     <div class="payment-section credit-card-section active" id="credit-card-processing">
          <div class="cc-header method-header">
         <div class="logo">
-            <i class="fas fa-credit-card"></i>
+            <i class="far fa-credit-card"></i>
             </div>
             <p>Processing Payment</p>
         </div>
