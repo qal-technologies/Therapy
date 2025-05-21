@@ -883,9 +883,9 @@ function createCreditCardSection1(state) {
 
 function createCreditCardSection2(state) {
     return ` <div class="payment-section credit-card-section active" id="credit-card-processing">
-        <div class="cc-header">
+        <div class="cc-header method-header">
             <i class="far fa-credit-card"></i>
-            <h2>Processing Payment</h2>
+            <p>Processing Payment</p>
         </div>
         
         <div class="processing-content">
