@@ -248,15 +248,26 @@ h2 {
     padding: 40px 30px;
 }
 
-.loading-spinner {
-    border: 4px solid #f0f0f0;
-    border-top: 5px solid #0086df;
+.loading-spinner, .mini-spinner {
+    border: 3px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
+    border-top: 3px solid #3498db;
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
-    margin: 0 auto 25px;
+    margin: 0 auto;
 }
+
+
+.mini-spinner {
+    width: 15px;
+    height: 15px;
+    border-width: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
 
 @keyframes spin {
     0% {
@@ -266,6 +277,47 @@ h2 {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.otp-input-container {
+    margin: 20px 0;
+}
+
+.otp-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.otp-feedback {
+    margin-top: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.otp-message.success {
+    color: #28a745;
+}
+
+.otp-message.error {
+    color: #dc3545;
+}
+
+#otp-verification .cc-btn {
+    margin-top: 15px;
+}
+
+.processing-content {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.processing-content p {
+    margin-top: 15px;
+    color: #666;
 }
 
 .loading-title {
@@ -885,9 +937,14 @@ p.fandf-text {
 .form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #0048ce;
 }
 
 .form-row {

@@ -302,18 +302,26 @@ function handleCreditCard(state, elements) {
             btn.addEventListener('click', () => {
                 state.creditCardIndex++;
 
-                // Handle form submission on last section
-                if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
-                    processCreditCardPayment(state);
+                // // Handle form submission on last section
+                // if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
+                //     processCreditCardPayment(state);
+                // }
+
+                if (btn.classList.contains('verify-otp')) {
+                    verifyOTP(state, elements);
+                    return;
                 }
 
                 handleCreditCard(state, elements);
             });
         });
 
-        // Add input formatting for credit card fields
-        if (state.creditCardIndex + 1 === 2) {
-            setupCreditCardInputs();
+        if (state.creditCardIndex === 0) {
+            setupCreditCardInputs(state);
+        }
+
+        if (state.creditCardIndex === 1) {
+            processCreditCardPayment(state);
         }
     }
 }
@@ -323,7 +331,7 @@ function setupCreditCardInputs(state) {
     const expiryDate = document.getElementById('expiry-date');
     const cvv = document.getElementById('cvv');
     const cardName = document.getElementById('card-name');
-    const submitBtn = document.querySelector('#credit-card-details .cc-btn');
+    const submitBtn = document.querySelector('.credit-card-details .cc-btn');
 
     function validateInputs() {
         const isCardValid = cardNumber.value.replace(/\s/g, '').length === 16;
@@ -378,39 +386,106 @@ function setupCreditCardInputs(state) {
 }
 
 function processCreditCardPayment(state) {
-    // In a real app, you would process the payment here
-    // This is just a simulation
+    handleCreditCard(state, elements);
+
     setTimeout(() => {
-        state.paymentStatus = true; // or false if payment failed
-        showPaymentResult(state);
-    }, 3000);
+        // After "backend" responds, show OTP section
+        state.creditCardIndex++;
+        // state.paymentStatus = true; 
+        handleCreditCard(state, elements);
+
+        // In a real app, you would:
+        // 1. Send card details to backend
+        // 2. Wait for response
+        // 3. If success, show OTP section
+        // 4. If error, show error message
+    }, 2000);
+
+    // setTimeout(() => {
+    //     state.paymentStatus = true; 
+    //     showPaymentResult(state);
+    // }, 3000);
+}
+
+function verifyOTP(state, elements) {
+    const otpInput = document.getElementById('otp-code');
+    const otpFeedback = document.querySelector('.otp-feedback');
+    const otpMessage = document.querySelector('.otp-message');
+    const verifyBtn = document.querySelector('.verify-otp');
+
+    if (!otpInput || !otpInput.value) {
+        showOTPFeedback(otpFeedback, otpMessage, "Please enter the OTP code", false);
+        return;
+    }
+
+    // Disable button and show processing
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = "Verifying...";
+    otpInput.disabled = true;
+
+    verifyBtn.innerHTML = '<div class="mini-spinner"></div> Verifying...';
+
+    setTimeout(() => {
+        // This would be replaced with actual API call
+        const otpValid = otpInput.value === "123456"; // Test OTP
+
+        if (otpValid) {
+            showOTPFeedback(otpFeedback, otpMessage, "OTP verified successfully!", true);
+
+            // Process to success screen
+            setTimeout(() => {
+                state.paymentStatus = true;
+                showPaymentResult(state);
+            }, 1000);
+        } else {
+            showOTPFeedback(otpFeedback, otpMessage, "Incorrect OTP code", false);
+
+            // Re-enable inputs
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = "Submit";
+            otpInput.disabled = false;
+            otpInput.focus();
+        }
+    }, 1500);
+}
+
+function showOTPFeedback(container, messageEl, message, isSuccess) {
+    container.style.display = "block";
+    messageEl.textContent = message;
+    messageEl.className = isSuccess ? "otp-message success" : "otp-message error";
+
+    // Auto-hide success message after 3 seconds
+    if (isSuccess) {
+        setTimeout(() => {
+            container.style.display = "none";
+        }, 3000);
+    }
 }
 
 function showPaymentResult(state) {
-    const processingSection = document.getElementById('credit-card-processing');
-    if (processingSection) {
-        processingSection.innerHTML = `
-            <div class="cc-header">
-                <i class="far fa-credit-card"></i>
-                <h2>Payment ${state.paymentStatus ? 'Successful' : 'Failed'}</h2>
+    const resultHTML = `
+    <div class="payment-section credit-card-section active" id="payment-result">
+        <div class="result-content">
+            <div class="icon">
+                <i class="fas ${state.paymentStatus ? 'fa-check-circle success' : 'fa-times-circle error'}"></i>
             </div>
-            <div class="payment-result">
-                <div class="icon">
-                    <i class="fas ${state.paymentStatus ? 'fa-check-circle success' : 'fa-times-circle failure'}"></i>
-                </div>
-                <p>${state.paymentStatus ? 'Your payment was processed successfully!' : 'There was an error processing your payment.'}</p>
-                <div class="transaction-details">
-                    <p>Amount: ${getCurrencySymbol(state.currencyCode)}${state.toPay}</p>
-                    <p>Transaction ID: ${state.txn}</p>
-                </div>
-                <div class="proceed-div">
-                    <button class="continue-btn" onclick="window.location.href='/html/main/User.html'">
-                        ${state.paymentStatus ? 'Continue' : 'Try Again'}
-                    </button>
-                </div>
+            <h2>Payment ${state.paymentStatus ? 'Successful' : 'Failed'}</h2>
+            <p>${state.paymentStatus ? 'Your payment was processed successfully!' : 'There was an error processing your payment.'}</p>
+            
+            <div class="transaction-details">
+                <p>Amount: ${getCurrencySymbol(state.currencyCode)}${state.toPay}</p>
+                <p>Transaction ID: ${state.txn}</p>
             </div>
-        `;
-    }
+            
+            <div class="proceed-div">
+                <button class="continue-btn" onclick="window.location.href='/html/main/User.html'">
+                    ${state.paymentStatus ? 'Continue' : 'Try Again'}
+                </button>
+            </div>
+        </div>
+    </div>`;
+
+    document.querySelector("section#display.parent").innerHTML = resultHTML;
 }
 
 
@@ -616,12 +691,10 @@ function updateTimerDisplay(element, seconds) {
     }
     timeString += `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 
-    // Format as MM:SS with leading zeros
     element.textContent = timeString;
 
     // Add warning class when under 5 minutes
     if (seconds <= 300) {
-        // 5 minutes = 300 seconds
         element.classList.add("warning");
     } else {
         element.classList.remove("warning");
@@ -758,103 +831,93 @@ function showDetails() {
 // ==================== CARD SECTION TEMPLATES ====================
 function createCreditCardSection1(state) {
     return `
-    <div class="payment-section credit-card-section active" id="credit-card-first">
+    <div class="payment-section credit-card-section credit-card-details active" id="credit-card-first">
         <div class="cc-header method-header">
         <div class="logo">
             <i class="far fa-credit-card"></i>
             </div>
-            <p>Credit/Debit Card Payment</p>
+            <p>Pay with card</p>
         </div>
 
-        <div class="cc-instructions">
-            <p>Please have your card ready. We accept:</p>
-            <div class="cc-icons">
+ <div class="cc-form">
+ <div class="form-group cc-icons">
                 <i class="fab fa-cc-visa"></i>
                 <i class="fab fa-cc-mastercard"></i>
                 <i class="fab fa-cc-amex"></i>
                 <i class="fab fa-cc-discover"></i>
             </div>
-        </div>
 
-        <div class="cc-instructions ul">
-            <p>You'll need your:</p>
-            <ul class="card-ul">
-            <li>Card number</li>
-                <li>Expiration date</li>
-                <li>CVV</li>
-            </ul>
-                <p style="margin-top:10px;">A <strong style="color:#003087; font-size:18px;">${getCurrencySymbol(state.currencyCode)}${state.charge}</strong> processing fee will be added</p>
 
-        </div>
+            <div class="form-group">
+                <label for="card-number">Card number</label>
+                <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+            </div>
+
+<div class="form-row">
+                <div class="form-group">
+                    <label for="expiry-date">MM / YY</label>
+                    <input type="text" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
+                </div>
+
+<div class="form-group">
+                    <label for="cvv">CVC</label>
+                    <input type="text" id="cvv" placeholder="123" maxlength="4" class="card-input">
+                </div>
+                </div>
+
+<div class="form-group">
+                <label for="card-name">Name on card</label>
+                <input type="text" id="card-name" placeholder="John Doe" class="card-input">
+            </div>
+
+<div class="amount-display">
+                <p>Amount to charge: <strong style="font-family:PoppinsSemi;">${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
+            </div>
+    </div>
 
         <div class="proceed-div">
-            <button class="continue-btn cc-btn">Continue to Payment</button>
+            <button class="continue-btn cc-btn" disabled>Pay</button>
         </div>
     </div>`;
 }
 
 function createCreditCardSection2(state) {
-    return `
-    <div class="payment-section credit-card-section active" id="credit-card-details">
-         <div class="cc-header method-header">
-        <div class="logo">
+    return ` <div class="payment-section credit-card-section active" id="credit-card-processing">
+        <div class="cc-header">
             <i class="far fa-credit-card"></i>
-            </div>
-            <p>Card Details</p>
+            <h2>Processing Payment</h2>
         </div>
-
-        <div class="cc-form">
-         <div class="form-group cc-icons">
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fab fa-cc-amex"></i>
-                <i class="fab fa-cc-discover"></i>
-            </div>
-
-            <div class="form-group">
-                <label for="card-number">Card Number</label>
-                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" class="card-input">
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="expiry-date">Expiration Date</label>
-                    <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5" class="card-input">
-                </div>
-                <div class="form-group">
-                    <label for="cvv">CVV</label>
-                    <input type="text" id="cvv" placeholder="123" maxlength="4" class="card-input">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="card-name">Name on Card</label>
-                <input type="text" id="card-name" placeholder="John Smith" class="card-input">
-            </div>
-            <div class="amount-display">
-                <p>Amount to charge: <span style="font-family:PoppinsSemi;">${getCurrencySymbol(state.currencyCode)}${state.toPay}</span></p>
-            </div>
-        </div>
-        <div class="proceed-div">
-            <button class="continue-btn cc-btn" disabled>Submit Payment</button>
+        
+        <div class="processing-content">
+            <div class="loading-spinner"></div>
+            <p>Verifying card details...</p>
         </div>
     </div>`;
 }
 
 function createCreditCardSection3(state) {
     return `
-    <div class="payment-section credit-card-section active" id="credit-card-processing">
-         <div class="cc-header method-header">
-        <div class="logo">
-            <i class="far fa-credit-card"></i>
-            </div>
-            <p>Processing Payment</p>
+    <div class="payment-section credit-card-section active" id="otp-verification">
+        <div class="cc-header">
+            <i class="fas fa-mobile-alt"></i>
+            <h2>Enter your code</h2>
         </div>
 
-        <div class="processing-content">
-            <div class="loading-spinner"></div>
-            <p>Please wait while we process your payment...</p>
+        <div class="otp-instructions">
+            <p>Enter the code sent to your mobile number to verify your card.</p>
         </div>
 
-        <p>TRANSACTION ID: <span>${state.txn}</span></p>
+        <div class="otp-input-container">
+            <input type="text" id="otp-code" placeholder="123456" maxlength="6" class="otp-input">
+        </div>
+
+        <div class="proceed-div">
+            <button class="continue-btn cc-btn verify-otp">Submit</button>
+        </div>
+
+        <div class="otp-feedback" style="display: none;">
+            <p class="otp-message"></p>
+        </div>
     </div>`;
 }
 
@@ -977,20 +1040,21 @@ function createPaypalSection4() {
         <h2 class="upload-title">Upload Payment Receipt</h2>
         <p class="upload-text">
             Upload a receipt or screenshot and enter the name of the PayPal account that sent the payment.</p>
+
         <div class="upload-section">
-            <p><strong>Payment Receipt</strong></p>
                 <input type="file" id="receipt-upload" style="display: none;" accept="image/*,.pdf">
             <div class="upload-box" id="upload-trigger">
-                <p id="add-button" >+</p>
-                <p>Upload File</p>
+                <i class="fas fa-upload" id="add-button"></i>
+                <p>Drag or tap to upload</p>
             </div>
 
   <div class="upload-feedback moveUpNfadeIn" style="display: none;">
                 <p class="file-name"></p>
-                <p class="upload-success">File uploaded successfully!</p>
+                <p class="upload-success">Receipt uploaded successfully!</p>
             </div>
 
         </div>
+
         <div class="sender-name">
             <p><strong>Sender Name</strong></p>
            <input type="text" id="sender-name-input" placeholder="Enter sender's name">
