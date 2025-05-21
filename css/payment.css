@@ -30,7 +30,8 @@ section.parent {
     margin-top: 40px;
     place-content: center;
     flex-direction: column;
-    padding-bottom: 10px
+    padding-bottom: 10px;
+    gap: 10px
 }
 
 h2 {
@@ -226,7 +227,7 @@ h2 {
     text-decoration: underline;
 }
 
-.continue-btn {
+.continue-btn, .util-btn {
     background-color: #4a90e2;
     color: white;
     border: none;
@@ -419,11 +420,15 @@ div.paypal-header, div.method-header {
     padding: 10px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.08);
     margin-bottom: 25px;
-    padding-bottom: 5px;
     justify-content: center;
 }
 
-#paypal-amount-to-pay .paypal-header, #paypal-processing .paypal-header .card-section#paypal-amount-to-pay .method-header {
+div.method-header {
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+#paypal-amount-to-pay .paypal-header, #paypal-processing .paypal-header .card-section#paypal-amount-to-pay .method-header, #fandf .method-header {
     border-bottom: none;
 }
 
@@ -434,6 +439,12 @@ div.paypal-header, div.method-header {
 
 #paypal-upload .paypal-header, #paypal-upload .method-header {
     justify-content: flex-start;
+}
+
+.card-section#paypal-upload .method-header, .card-section#paypal-processing .method-header {
+    flex-direction: column;
+    gap: 10px;
+    place-content: center;
 }
 
 .paypal-header .logo {
@@ -450,8 +461,8 @@ div.paypal-header, div.method-header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     margin-right: 10px;
 }
 
@@ -468,6 +479,7 @@ div.paypal-header, div.method-header {
     min-width: 80px;
     height: auto;
     font-size: 2.5rem;
+    color: #0048ce;
     place-self: center;
 }
 
@@ -479,19 +491,14 @@ div.paypal-header p {
 }
 
 .method-header p {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: #0e0e0e;
     line-height: 2rem;
-    font-family: PoppinsBold;
+    font-family: PoppinsSemi;
 }
 
-#fandf .paypal-header p, #fandf .method-header p {
+#fandf .paypal-header p {
     font-size: 20px;
-}
-
-.credit-card-section .method-header p {
-    width: max-content;
-    font-size: 1.8rem;
 }
 
 .paypal-header span.second {
@@ -500,9 +507,10 @@ div.paypal-header p {
 }
 
 #paypal-first h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin: 25px 0 15px 0;
     color: #003087;
+    text-align: left;
     font-family: PoppinsSemi;
 }
 
@@ -518,17 +526,20 @@ div.paypal-header p {
 
 .divider {
     height: 1px;
-    background-color: #ddd;
+    background-color: #dddddd;
     margin: 20px 0;
 }
 
-.paypal-section .continue-btn {
+.paypal-section .continue-btn,
+.card-section .continue-btn, .util-btn {
     background-color: #0d50cc;
     border-radius: 20px;
 }
 
-.card-section .continue-btn {
-    background-color: #0d50cc;
+.util-btn.cancel {
+    background-color: transparent;
+    border: 1px solid #dfdfdf;
+    color: #333;
 }
 
 p.once {
@@ -587,7 +598,7 @@ p.fandf-text {
     min-width: 100%;
     display: flex;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
 }
 
@@ -597,7 +608,8 @@ p.fandf-text {
 
 .payment-info .info-div .info-title {
     font-size: 15px;
-    font-family: PoppinsLight;
+    font-family: PoppinsMed;
+    font-weight: bolder;
     letter-spacing: 0.5px;
 }
 
@@ -612,10 +624,9 @@ p.fandf-text {
 
 .payment-info .info-div .info-text {
     font-size: 18px;
-    font-family: PoppinsSemi;
-    text-wrap: wrap;
+    font-family: PoppinsLight;
     text-overflow: ellipsis;
-    word-break: break-all;
+    word-break: keep-all;
     word-wrap: break-word;
 }
 
@@ -626,9 +637,9 @@ p.fandf-text {
     border: 2px solid #b9b9b9;
     border-radius: 8px;
     color: #a8a8a8;
-    font-family: PoppinsSemi;
+    font-family: PoppinsMed;
     cursor: pointer;
-    min-width: 100px;
+    min-width: 80px;
 }
 
 .payment-info .info-div button.copy:hover {
@@ -639,6 +650,10 @@ p.fandf-text {
 
 .important {
     margin: 25px 0;
+}
+
+.important.under {
+    font-size: 14px;
 }
 
 .important p {
@@ -666,13 +681,10 @@ p.fandf-text {
     font-family: PoppinsSemi;
 }
 
-h2.upload-title {
+
+#paypal-upload h2 {
     font-size: 1.6rem;
     text-align: left;
-}
-
-p.upload-text {
-    margin-top: -20px;
 }
 
 .upload-section {
@@ -693,7 +705,7 @@ p.upload-text {
     padding: 30px;
     text-align: center;
     margin-block: 10px;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -703,14 +715,14 @@ p.upload-text {
     background-color: #f5f9ff;
 }
 
-.upload-box p:first-child {
-    font-size: 3rem;
+.upload-box i {
+    font-size: 2.5rem;
     color: #0070ba;
     margin-bottom: 10px;
 }
 
 .upload-box p:last-child {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #333;
 }
 
@@ -926,4 +938,23 @@ p.upload-text {
     padding: 15px;
     background: #f8f9fa;
     border-radius: 15px;
+}
+
+#processing-details {
+    display: none;
+    flex-direction: column;
+    max-width: 90%;
+    place-self: center;
+    position: absolute;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1), -4px 10px 10px rgba(0, 47, 255, 0.1);
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+    width: 80%;
+    z-index: 9999999999;
+}
+
+#processing-details.show {
+    display: flex;
 }

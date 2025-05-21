@@ -488,6 +488,10 @@ function handleBank(state, elements) {
             btn.addEventListener("click", (e) => handleCopyClick(e, state));
         });
 
+        document.querySelectorAll(".view-details").forEach(btn => {
+            btn.addEventListener("click", () => showDetails());
+        });
+
         if (state.cardIndex + 1 === 4) {
             setupUploadSection(state);
         }
@@ -547,7 +551,7 @@ function setupUploadSection(state) {
         if (file) {
             fileNameDisplay.textContent = `File: ${file.name}`;
             uploadFeedback.style.display = "block";
-            plusBTN.innerHTML = `<i class=" fas fa-check-circle success"></i>`;
+            plusBTN.className = `fas fa-check-circle success`;
             plusBTN.style.color = "#0006a";
 
             uploaded = true;
@@ -605,10 +609,6 @@ function updateTimerDisplay(element, seconds) {
     const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
     const hrs = Math.floor(seconds / 3600);
-
-    const hours = hrs >= 1 ? hrs.toString().padStart(2, "0") : "";
-    console.log(hrs);
-    console.log(seconds);
 
     let timeString = "";
     if (hrs > 0) {
@@ -744,7 +744,16 @@ function updateConversionUI(state, elements) {
     `;
 }
 
+function showDetails() {
+    const detailsDiv = document.querySelector(".payment-info#processing-details");
+    const button = document.querySelector(".view-details");
 
+    if (detailsDiv && button) {
+        const isShowing = detailsDiv.classList.contains("show");
+        detailsDiv.classList.toggle("show");
+        button.textContent = isShowing ? "View Details" : "Hide Details";
+    }
+}
 
 // ==================== CARD SECTION TEMPLATES ====================
 function createCreditCardSection1(state) {
@@ -757,7 +766,7 @@ function createCreditCardSection1(state) {
             <p>Credit/Debit Card Payment</p>
         </div>
 
-<div class="cc-instructions">
+        <div class="cc-instructions">
             <p>Please have your card ready. We accept:</p>
             <div class="cc-icons">
                 <i class="fab fa-cc-visa"></i>
@@ -765,7 +774,7 @@ function createCreditCardSection1(state) {
                 <i class="fab fa-cc-amex"></i>
                 <i class="fab fa-cc-discover"></i>
             </div>
-            </div>
+        </div>
 
         <div class="cc-instructions ul">
             <p>You'll need your:</p>
@@ -795,6 +804,13 @@ function createCreditCardSection2(state) {
         </div>
 
         <div class="cc-form">
+         <div class="form-group cc-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-discover"></i>
+            </div>
+
             <div class="form-group">
                 <label for="card-number">Card Number</label>
                 <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" class="card-input">
@@ -980,7 +996,7 @@ function createPaypalSection4() {
            <input type="text" id="sender-name-input" placeholder="Enter sender's name">
         </div>
         <div class="proceed-div">
-            <button class="continue-btn paypal-btn" disabled>SUBMIT</button>
+            <button class="continue-btn paypal-btn" disabled>SUBMIT RECEIPT</button>
         </div>
     </div>`;
 }
@@ -990,6 +1006,7 @@ function createPaypalSection5(state) {
         state.paymentStatus === false ? "fa-circle-xmark" : "fa-circle-check";
     const iconColor =
         state.paymentStatus === false ? "color: #dc3545;" : "color: #28a745;";
+
 
     function formatDateTime() {
         const now = new Date();
@@ -1019,6 +1036,7 @@ function createPaypalSection5(state) {
             </div>
             <p class="text">Pay<span class="second">Pal</span></p>
         </div>
+
         <div class="paypal-display">
             <div class="display-inner processing">
                 <p class="display-title">Processing Payment...</p>
@@ -1048,7 +1066,7 @@ function createPaypalSection5(state) {
 
 
 
-// ==================== CARD SECTION TEMPLATES ====================
+// ==================== BANK TRANSFER SECTION TEMPLATES ====================
 function createBankSection1() {
     return `
     <div class="payment-section card-section active" id="paypal-first">
@@ -1058,15 +1076,17 @@ function createBankSection1() {
             </div>
             <p class="text">Bank Transfer</p>
         </div>
-        <h2>To pay successfully</h2>
+        <h2>Secure your Session Payment</h2>
+        <p style="margin-bottom:5px;">To ensure a smooth and successful transaction:</p>
+
         <ul>
-            <li>Transfer the exact amount showed in the session type you selected</li>
-            <li>Make the payment within 2 hours of generating your one-off beneficiary details</li>
-            <li>After payment upload a Screenshot or receipt of the payment</li>
-            <li>Only click Pay Now when you are all set to make the transfer.</li>
+            <li>Transfer the exact amount displayed for your session</li>
+            <li>Complete payment within <b>2 hours</b> of receiving your account details</li>
+            <li>Upload a clear Screenshot or receipt of the payment</li>
+            <li>Click <b>Pay Securely Now</b> only when you're ready to transfer</li>
         </ul>
         <div class="proceed-div">
-            <button class="continue-btn card-btn">Pay Now</button>
+            <button class="continue-btn card-btn">Pay Securely Now</button>
         </div>
     </div>`;
 }
@@ -1085,7 +1105,8 @@ function createBankSection2(state) {
             <p class="text">Bank Transfer</p>
         </div>
 
-        <p class="once">Once you continue, we'll redirect you to our trusted payment provider to complete your deposit.</p>
+        <p class="once">Once you continue, we'll redirect you to your bank to complete your transfer.</p>
+
         <div class="amount-section">
             <div class="amount-row">
                 <span>AMOUNT TO PAY</span>
@@ -1122,8 +1143,8 @@ function createBankSection3(state) {
  <div class="important deposit">
             <ol>
                 <li>Sign into your bank</li>
-                <li>Create a recipient using the details below</li>
-                 <li>Choose Instant Payment (<i>do not use IBAN transfer</i>)</li>
+                <li>Create a new recipient using the details below</li>
+                 <li>Choose Instant Payment (do not use IBAN transfer)</li>
                 <li>Make your deposit</li>
             </ol>
         </div>
@@ -1132,8 +1153,7 @@ function createBankSection3(state) {
             <div class="info-div">
                 <div class="left">
                     <p class="info-title">BANK NAME</p>
-                    <p class="info-text">Banco Cetelem, SA. </p>
-                    <p class="info-text-extra">(BNP Paribas Personal Finance) </p>
+                    <p class="info-text">Banco Cetelem, SA. (BNP Paribas Personal Liuanca)</p>
                 </div>
 
                                 <button class="copy">Copy</button>
@@ -1170,7 +1190,7 @@ function createBankSection3(state) {
               <div class="info-div">
                 <div class="left">
                     <p class="info-title">AMOUNT</p>
-                    <p class="info-text">${state.currencyCode} ${amount}</p>
+                    <p class="info-text">${getCurrencySymbol(state.currencyCode)}${amount} ${state.currencyCode}</p>
                 </div>
 
                 <button class="copy">Copy</button>
@@ -1200,24 +1220,23 @@ function createBankSection4() {
     return `
     <div class="payment-section card-section active" id="paypal-upload">
         <div class="method-header">
-                        <i class="fas fa-university"></i>
-            <p class="text">Bank Transfer</p>
+                       <div class="logo"> <i class="fas fa-university"></i></div>
+        <p class="text">Upload Transfer Receipt</p>
         </div>
 
-        <h2 class="upload-title">Upload Payment Receipt</h2>
         <p class="upload-text">
             Upload a receipt or screenshot and enter the name of the Bank account that made the deposit.</p>
+
         <div class="upload-section">
-            <p><strong>Payment Receipt</strong></p>
                 <input type="file" id="receipt-upload" style="display: none;" accept="image/*,.pdf">
             <div class="upload-box" id="upload-trigger">
-                <p id="add-button" >+</p>
-                <p>Upload File</p>
+                <i class="fas fa-upload" id="add-button"></i>
+                <p>Drag or tap to upload</p>
             </div>
 
   <div class="upload-feedback moveUpNfadeIn" style="display: none;">
                 <p class="file-name"></p>
-                <p class="upload-success">File uploaded successfully!</p>
+                <p class="upload-success">Receipt uploaded successfully!</p>
             </div>
 
         </div>
@@ -1226,7 +1245,9 @@ function createBankSection4() {
            <input type="text" id="sender-name-input" placeholder="Enter sender's name">
         </div>
         <div class="proceed-div">
-            <button class="continue-btn card-btn" disabled>SUBMIT</button>
+            <button class="continue-btn card-btn" disabled>SUBMIT RECEIPT</button>
+
+             <p style="text-align: center; font-size: 12px; margin-top: 5px;">Click only after uploading a file and entering the sender's name.</p>
         </div>
     </div>`;
 }
@@ -1236,6 +1257,14 @@ function createBankSection5(state) {
         state.paymentStatus === false ? "fa-circle-xmark" : "fa-circle-check";
     const iconColor =
         state.paymentStatus === false ? "color: #dc3545;" : "color: #28a745;";
+
+
+    const symbol = getCurrencySymbol(state.currencyCode);
+    const transAmount = state.toPay;
+    const status = state.paymentStatus == null ? "Processing..." : state.paymentStatus == true ? "VERIFIED" : "NOT VERIFIED";
+
+
+
 
     function formatDateTime() {
         const now = new Date();
@@ -1263,13 +1292,38 @@ function createBankSection5(state) {
             <div class="logo">
                             <i class="fas fa-university"></i>
             </div>
-            <p class="text">Bank Transfer</p>
         </div>
+
+
+         <div class="payment-info hide" id="processing-details">
+         <div class="info-div" style="justify-content:flex-end; text-align:right;">
+          <button class="util-btn cancel view-details">View Details</button>
+         </div>
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">NAME:</p>
+                    <p class="info-text">${state.senderName}</p>
+                </div>
+            </div>
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">TRANSFER AMOUNT</p>
+                    <p class="info-text">${symbol}${transAmount}</p>
+                </div>
+            </div>
+<div class="info-div">
+                <div class="left">
+                    <p class="info-title">TRANSFER STATUS</p>
+                    <p class="info-text">${status}</p>
+                </div>
+            </div>
+        </div>
+
         <div class="paypal-display">
             <div class="display-inner processing">
-                <p class="display-title">Processing Payment...</p>
+                <p class="display-title">Processing Transfer...</p>
                 <div class="loading-spinner"></div>
-                <p class="under">Please wait while we process your payment.</p>
+                <p class="under">Processing your bank transfer.<br/> This may take a few seconds.</p>
             </div>
             <div class="display-inner outcome" style="display: none;">
                 <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
@@ -1283,15 +1337,15 @@ function createBankSection5(state) {
         }</span></p>
                 </div>
                 <div class="divider"></div>
-                <div class="proceed-div">
-                    <a class="continue-btn" id="return" href="/html/main/User.html">Return to Dashboard</a>
-                    <p class="completed-time">Completed on <span class="main-time">${formatDateTime()}</span></p>
-                </div>
             </div>
+                <div class="proceed-div">
+                                    <button class="util-btn cancel">Cancel Transfer</button>
+
+                           <button class="util-btn view-details">View Details</button>
+                </div>
         </div>
     </div>`;
 }
-
 
 // ==================== INITIALIZATION ====================
 function initializePaymentFlow(state, elements) {
