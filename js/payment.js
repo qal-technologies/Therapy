@@ -303,9 +303,9 @@ function handleCreditCard(state, elements) {
                 state.creditCardIndex++;
 
                 // // Handle form submission on last section
-                // if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
-                //     processCreditCardPayment(state);
-                // }
+                if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
+                    processCreditCardPayment(state);
+                }
 
                 if (btn.classList.contains('verify-otp')) {
                     verifyOTP(state, elements);
@@ -320,9 +320,9 @@ function handleCreditCard(state, elements) {
             setupCreditCardInputs(state);
         }
 
-        if (state.creditCardIndex === 1) {
-            processCreditCardPayment(state);
-        }
+        // if (state.creditCardIndex === 1) {
+        //     processCreditCardPayment(state);
+        // }
     }
 }
 
