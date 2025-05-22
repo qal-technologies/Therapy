@@ -1015,3 +1015,77 @@ p.fandf-text {
 #processing-details.show {
     display: flex;
 }
+
+
+.card-brands {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.card-brand {
+    width: 60px;
+    height: 40px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.card-brand.active {
+    opacity: 1;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.card-brand img {
+    max-width: 100%;
+    max-height: 100%;
+    filter: brightness(0) invert(1);
+}
+
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .card-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 26px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-with-icon .card-icon img {
+    max-width: 80%;
+    max-height: 80%;
+    filter: brightness(0) invert(1);
+}
+
+.stripe-branding {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #666;
+}
+
+.stripe-branding img {
+    height: 18px;
+    margin-left: 5px;
+}
+
+/* Add to existing .card-input styles */
+.card-input {
+    padding-right: 50px !important;
+}
