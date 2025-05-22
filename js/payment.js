@@ -365,29 +365,73 @@ function setupCreditCardInputs(state) {
     const cvv = document.getElementById('cvv');
     const cardName = document.getElementById('card-name');
     const submitBtn = document.querySelector('.credit-card-details .cc-btn');
+    const cardState = initializeCreditCardState();
 
-    function validateInputs() {
-        const isCardValid = cardNumber.value.replace(/\s/g, '').length === 16;
-        const isExpiryValid = /^\d{2}\/\d{2}$/.test(expiryDate.value);
+
+function detectCardBrand(number) {
+        const cleaned = number.replace(/\s+/g, '');
+        if (/^4/.test(cleaned)) return "Visa";
+        if (/^5[1-5]/.test(cleaned)) return "Mastercard";
+        if (/^3[47]/.test(cleaned)) return "American Express";
+        if (/^6(?:011|5)/.test(cleaned)) return "Discover";
+        return null;
+    }
+
+
+function validateInputs() {
+        const isCardValid = cardNumber.value.replace(/\s/g, '').length >= 15;
+        const isExpiryValid = /^\d{2}\s?\/\s?\d{2}$/.test(expiryDate.value);
         const isCvvValid = cvv.value.length >= 3 && cvv.value.length <= 4;
-        const isNameValid = cardName.value.trim().length > 0;
-
+        const isNameValid = cardName.value.trim().length > 2;
+        
         submitBtn.disabled = !(isCardValid && isExpiryValid && isCvvValid && isNameValid);
     }
 
 
-
     // Format card number with spaces
     if (cardNumber) {
-        cardNumber.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\s+/g, '');
-            if (value.length > 0) {
-                value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
+
+cardNumber.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s+/g, '');
+        if (value.length > 0) {
+            value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
+        }
+        e.target.value = value;
+        
+        // Detect card brand
+        state.detectedBrand = detectCardBrand(value);
+        validateInputs();
+        
+        // Update UI to show detected brand
+        const cardBrands = document.querySelectorAll('.card-brand');
+        cardBrands.forEach(brand => {
+            brand.classList.remove('active');
+            if (brand.querySelector('img').alt === state.detectedBrand) {
+                brand.classList.add('active');
             }
-            e.target.value = value;
-            validateInputs();
         });
     }
+
+
+ // Update card icon in input field
+        const inputIcon = document.querySelector('.input-with-icon .card-icon');
+        if (state.detectedBrand) {
+            const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
+            if (!inputIcon) {
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'card-icon';
+                iconDiv.style.background = brand.pattern;
+                iconDiv.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+                document.querySelector('.input-with-icon').appendChild(iconDiv);
+            } else {
+                inputIcon.style.background = brand.pattern;
+                inputIcon.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+            }
+        } else if (inputIcon) {
+            inputIcon.remove();
+        }
+    });
+
 
     // Format expiration date
     if (expiryDate) {
