@@ -284,6 +284,39 @@ function getCurrencySymbol(currencyCode) {
     return symbols[currencyCode] || currencyCode;
 }
 
+function initializeCreditCardState() {
+    return {
+        cardBrands: [
+            {
+                name: "Visa",
+                image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg",
+                colors: ["#1a1f71", "#ffffff"], // Blue and white
+                pattern: "linear-gradient(135deg, #1a1f71 0%, #1a1f71 50%, #f7b600 50%, #f7b600 100%)"
+            },
+            {
+                name: "Mastercard",
+                image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",
+                colors: ["#eb001b", "#f79e1b"], // Red and orange
+                pattern: "linear-gradient(135deg, #eb001b 0%, #eb001b 50%, #f79e1b 50%, #f79e1b 100%)"
+            },
+            {
+                name: "American Express",
+                image: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg",
+                colors: ["#016fd0", "#ffffff"], // Blue and white
+                pattern: "linear-gradient(135deg, #016fd0 0%, #016fd0 70%, #ffffff 70%, #ffffff 100%)"
+            },
+            {
+                name: "Discover",
+                image: "https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg",
+                colors: ["#ff6000", "#ffffff"], // Orange and white
+                pattern: "linear-gradient(135deg, #ff6000 0%, #ff6000 60%, #ffffff 60%, #ffffff 100%)"
+            }
+        ],
+        detectedBrand: null
+    };
+}
+
+
 // =============
 // ===========
 // ====P====
@@ -828,58 +861,69 @@ function showDetails() {
     }
 }
 
-// ==================== CARD SECTION TEMPLATES ====================
+
+// ==================== CREDIT CARD UI TEMPLATES ====================
 function createCreditCardSection1(state) {
+    const cardState = initializeCreditCardState();
+    
     return `
-    <div class="payment-section credit-card-section credit-card-details active" id="credit-card-first">
-        <div class="cc-header method-header">
-        <div class="logo">
+    <div class="payment-section credit-card-section active" id="credit-card-details">
+        <div class="cc-header">
             <i class="far fa-credit-card"></i>
-            </div>
-            <p>Pay with card</p>
+            <h2>Pay with card</h2>
         </div>
 
- <div class="cc-form">
- <div class="form-group cc-icons">
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fab fa-cc-amex"></i>
-                <i class="fab fa-cc-discover"></i>
+        <div class="cc-form">
+            <div class="card-brands">
+                ${cardState.cardBrands.map(brand => `
+                    <div class="card-brand ${state.detectedBrand === brand.name ? 'active' : ''}" 
+                         style="background: ${brand.pattern}">
+                        <img src="${brand.image}" alt="${brand.name}">
+                    </div>
+                `).join('')}
             </div>
-
 
             <div class="form-group">
                 <label for="card-number">Card number</label>
-                <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                <div class="input-with-icon">
+                    <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                    ${state.detectedBrand ? `<div class="card-icon" style="background: ${cardState.cardBrands.find(b => b.name === state.detectedBrand).pattern}">
+                        <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}">
+                    </div>` : ''}
+                </div>
             </div>
-
-<div class="form-row">
+            
+            <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">MM / YY</label>
-                    <input type="text" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
+                    <input type="text" id="expiry-date" placeholder="04 / 24" maxlength="5" class="card-input">
                 </div>
-
-<div class="form-group">
+                <div class="form-group">
                     <label for="cvv">CVC</label>
                     <input type="text" id="cvv" placeholder="123" maxlength="4" class="card-input">
                 </div>
-                </div>
-
-<div class="form-group">
+            </div>
+            
+            <div class="form-group">
                 <label for="card-name">Name on card</label>
                 <input type="text" id="card-name" placeholder="John Doe" class="card-input">
             </div>
-
-<div class="amount-display">
-                <p>Amount to charge: <strong style="font-family:PoppinsSemi;">${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
+            
+            <div class="amount-display">
+                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
             </div>
-    </div>
-
+        </div>
+        
         <div class="proceed-div">
             <button class="continue-btn cc-btn" disabled>Pay</button>
+            <div class="stripe-branding">
+                <span>Secured by</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+            </div>
         </div>
     </div>`;
 }
+
 
 function createCreditCardSection2(state) {
     return ` <div class="payment-section credit-card-section active" id="credit-card-processing">
