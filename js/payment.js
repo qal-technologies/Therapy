@@ -364,11 +364,10 @@ function setupCreditCardInputs(state) {
     const expiryDate = document.getElementById('expiry-date');
     const cvv = document.getElementById('cvv');
     const cardName = document.getElementById('card-name');
-    const submitBtn = document.querySelector('.credit-card-details .cc-btn');
+    const submitBtn = document.querySelector('#credit-card-details .cc-btn');
     const cardState = initializeCreditCardState();
 
-
-function detectCardBrand(number) {
+    function detectCardBrand(number) {
         const cleaned = number.replace(/\s+/g, '');
         if (/^4/.test(cleaned)) return "Visa";
         if (/^5[1-5]/.test(cleaned)) return "Mastercard";
@@ -378,37 +377,38 @@ function detectCardBrand(number) {
     }
 
 
-function validateInputs() {
+
+    function validateInputs() {
         const isCardValid = cardNumber.value.replace(/\s/g, '').length >= 15;
         const isExpiryValid = /^\d{2}\s?\/\s?\d{2}$/.test(expiryDate.value);
         const isCvvValid = cvv.value.length >= 3 && cvv.value.length <= 4;
         const isNameValid = cardName.value.trim().length > 2;
-        
+
         submitBtn.disabled = !(isCardValid && isExpiryValid && isCvvValid && isNameValid);
     }
 
 
     // Format card number with spaces
     if (cardNumber) {
-
-cardNumber.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\s+/g, '');
-        if (value.length > 0) {
-            value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
-        }
-        e.target.value = value;
-        
-        // Detect card brand
-        state.detectedBrand = detectCardBrand(value);
-        validateInputs();
-        
-        // Update UI to show detected brand
-        const cardBrands = document.querySelectorAll('.card-brand');
-        cardBrands.forEach(brand => {
-            brand.classList.remove('active');
-            if (brand.querySelector('img').alt === state.detectedBrand) {
-                brand.classList.add('active');
+        cardNumber.addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\s+/g, '');
+            if (value.length > 0) {
+                value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
             }
+            e.target.value = value;
+        
+            // Detect card brand
+            state.detectedBrand = detectCardBrand(value);
+            validateInputs();
+        
+            // Update UI to show detected brand
+            const cardBrands = document.querySelectorAll('.card-brand');
+            cardBrands.forEach(brand => {
+                brand.classList.remove('active');
+                if (brand.querySelector('img').alt === state.detectedBrand) {
+                    brand.classList.add('active');
+                }
+            });
         });
     }
 
@@ -430,7 +430,6 @@ cardNumber.addEventListener('input', function(e) {
         } else if (inputIcon) {
             inputIcon.remove();
         }
-    });
 
 
     // Format expiration date
@@ -913,15 +912,13 @@ function createCreditCardSection1(state) {
     return `
     <div class="payment-section credit-card-section active" id="credit-card-details">
         <div class="cc-header">
-            <i class="far fa-credit-card"></i>
             <h2>Pay with card</h2>
         </div>
 
         <div class="cc-form">
             <div class="card-brands">
                 ${cardState.cardBrands.map(brand => `
-                    <div class="card-brand ${state.detectedBrand === brand.name ? 'active' : ''}" 
-                         style="background: ${brand.pattern}">
+                    <div class="card-brand ${state.detectedBrand === brand.name ? 'active' : ''}" >
                         <img src="${brand.image}" alt="${brand.name}">
                     </div>
                 `).join('')}
@@ -940,7 +937,7 @@ function createCreditCardSection1(state) {
             <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">MM / YY</label>
-                    <input type="text" id="expiry-date" placeholder="04 / 24" maxlength="5" class="card-input">
+                    <input type="text" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVC</label>
@@ -961,7 +958,7 @@ function createCreditCardSection1(state) {
         <div class="proceed-div">
             <button class="continue-btn cc-btn" disabled>Pay</button>
             <div class="stripe-branding">
-                <span>Secured by</span>
+                <span>Powered by</span>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
             </div>
         </div>
@@ -972,9 +969,7 @@ function createCreditCardSection1(state) {
 function createCreditCardSection2(state) {
     return ` <div class="payment-section credit-card-section active" id="credit-card-processing">
         <div class="cc-header method-header">
-        <div class="logo">
-            <i class="far fa-credit-card"></i>
-            </div>
+
             <p>Processing Payment</p>
         </div>
         
