@@ -284,6 +284,39 @@ function getCurrencySymbol(currencyCode) {
     return symbols[currencyCode] || currencyCode;
 }
 
+function initializeCreditCardState() {
+    return {
+        cardBrands: [
+            {
+                name: "Visa",
+                image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg",
+                colors: ["#1a1f71", "#ffffff"], // Blue and white
+                pattern: "linear-gradient(135deg, #1a1f71 0%, #1a1f71 50%, #f7b600 50%, #f7b600 100%)"
+            },
+            {
+                name: "Mastercard",
+                image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg",
+                colors: ["#eb001b", "#f79e1b"], // Red and orange
+                pattern: "linear-gradient(135deg, #eb001b 0%, #eb001b 50%, #f79e1b 50%, #f79e1b 100%)"
+            },
+            {
+                name: "American Express",
+                image: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg",
+                colors: ["#016fd0", "#ffffff"], // Blue and white
+                pattern: "linear-gradient(135deg, #016fd0 0%, #016fd0 70%, #ffffff 70%, #ffffff 100%)"
+            },
+            {
+                name: "Discover",
+                image: "https://upload.wikimedia.org/wikipedia/commons/5/57/Discover_Card_logo.svg",
+                colors: ["#ff6000", "#ffffff"], // Orange and white
+                pattern: "linear-gradient(135deg, #ff6000 0%, #ff6000 60%, #ffffff 60%, #ffffff 100%)"
+            }
+        ],
+        detectedBrand: null
+    };
+}
+
+
 // =============
 // ===========
 // ====P====
@@ -332,29 +365,73 @@ function setupCreditCardInputs(state) {
     const cvv = document.getElementById('cvv');
     const cardName = document.getElementById('card-name');
     const submitBtn = document.querySelector('.credit-card-details .cc-btn');
+    const cardState = initializeCreditCardState();
 
-    function validateInputs() {
-        const isCardValid = cardNumber.value.replace(/\s/g, '').length === 16;
-        const isExpiryValid = /^\d{2}\/\d{2}$/.test(expiryDate.value);
+
+function detectCardBrand(number) {
+        const cleaned = number.replace(/\s+/g, '');
+        if (/^4/.test(cleaned)) return "Visa";
+        if (/^5[1-5]/.test(cleaned)) return "Mastercard";
+        if (/^3[47]/.test(cleaned)) return "American Express";
+        if (/^6(?:011|5)/.test(cleaned)) return "Discover";
+        return null;
+    }
+
+
+function validateInputs() {
+        const isCardValid = cardNumber.value.replace(/\s/g, '').length >= 15;
+        const isExpiryValid = /^\d{2}\s?\/\s?\d{2}$/.test(expiryDate.value);
         const isCvvValid = cvv.value.length >= 3 && cvv.value.length <= 4;
-        const isNameValid = cardName.value.trim().length > 0;
-
+        const isNameValid = cardName.value.trim().length > 2;
+        
         submitBtn.disabled = !(isCardValid && isExpiryValid && isCvvValid && isNameValid);
     }
 
 
-
     // Format card number with spaces
     if (cardNumber) {
-        cardNumber.addEventListener('input', function (e) {
-            let value = e.target.value.replace(/\s+/g, '');
-            if (value.length > 0) {
-                value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
+
+cardNumber.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s+/g, '');
+        if (value.length > 0) {
+            value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
+        }
+        e.target.value = value;
+        
+        // Detect card brand
+        state.detectedBrand = detectCardBrand(value);
+        validateInputs();
+        
+        // Update UI to show detected brand
+        const cardBrands = document.querySelectorAll('.card-brand');
+        cardBrands.forEach(brand => {
+            brand.classList.remove('active');
+            if (brand.querySelector('img').alt === state.detectedBrand) {
+                brand.classList.add('active');
             }
-            e.target.value = value;
-            validateInputs();
         });
     }
+
+
+ // Update card icon in input field
+        const inputIcon = document.querySelector('.input-with-icon .card-icon');
+        if (state.detectedBrand) {
+            const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
+            if (!inputIcon) {
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'card-icon';
+                iconDiv.style.background = brand.pattern;
+                iconDiv.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+                document.querySelector('.input-with-icon').appendChild(iconDiv);
+            } else {
+                inputIcon.style.background = brand.pattern;
+                inputIcon.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+            }
+        } else if (inputIcon) {
+            inputIcon.remove();
+        }
+    });
+
 
     // Format expiration date
     if (expiryDate) {
@@ -828,58 +905,69 @@ function showDetails() {
     }
 }
 
-// ==================== CARD SECTION TEMPLATES ====================
+
+// ==================== CREDIT CARD UI TEMPLATES ====================
 function createCreditCardSection1(state) {
+    const cardState = initializeCreditCardState();
+    
     return `
-    <div class="payment-section credit-card-section credit-card-details active" id="credit-card-first">
-        <div class="cc-header method-header">
-        <div class="logo">
+    <div class="payment-section credit-card-section active" id="credit-card-details">
+        <div class="cc-header">
             <i class="far fa-credit-card"></i>
-            </div>
-            <p>Pay with card</p>
+            <h2>Pay with card</h2>
         </div>
 
- <div class="cc-form">
- <div class="form-group cc-icons">
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fab fa-cc-amex"></i>
-                <i class="fab fa-cc-discover"></i>
+        <div class="cc-form">
+            <div class="card-brands">
+                ${cardState.cardBrands.map(brand => `
+                    <div class="card-brand ${state.detectedBrand === brand.name ? 'active' : ''}" 
+                         style="background: ${brand.pattern}">
+                        <img src="${brand.image}" alt="${brand.name}">
+                    </div>
+                `).join('')}
             </div>
-
 
             <div class="form-group">
                 <label for="card-number">Card number</label>
-                <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                <div class="input-with-icon">
+                    <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                    ${state.detectedBrand ? `<div class="card-icon" style="background: ${cardState.cardBrands.find(b => b.name === state.detectedBrand).pattern}">
+                        <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}">
+                    </div>` : ''}
+                </div>
             </div>
-
-<div class="form-row">
+            
+            <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">MM / YY</label>
-                    <input type="text" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
+                    <input type="text" id="expiry-date" placeholder="04 / 24" maxlength="5" class="card-input">
                 </div>
-
-<div class="form-group">
+                <div class="form-group">
                     <label for="cvv">CVC</label>
                     <input type="text" id="cvv" placeholder="123" maxlength="4" class="card-input">
                 </div>
-                </div>
-
-<div class="form-group">
+            </div>
+            
+            <div class="form-group">
                 <label for="card-name">Name on card</label>
                 <input type="text" id="card-name" placeholder="John Doe" class="card-input">
             </div>
-
-<div class="amount-display">
-                <p>Amount to charge: <strong style="font-family:PoppinsSemi;">${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
+            
+            <div class="amount-display">
+                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
             </div>
-    </div>
-
+        </div>
+        
         <div class="proceed-div">
             <button class="continue-btn cc-btn" disabled>Pay</button>
+            <div class="stripe-branding">
+                <span>Secured by</span>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+            </div>
         </div>
     </div>`;
 }
+
 
 function createCreditCardSection2(state) {
     return ` <div class="payment-section credit-card-section active" id="credit-card-processing">
