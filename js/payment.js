@@ -884,7 +884,9 @@ function createCreditCardSection1(state) {
 function createCreditCardSection2(state) {
     return ` <div class="payment-section credit-card-section active" id="credit-card-processing">
         <div class="cc-header method-header">
+        <div class="logo">
             <i class="far fa-credit-card"></i>
+            </div>
             <p>Processing Payment</p>
         </div>
         
@@ -898,9 +900,11 @@ function createCreditCardSection2(state) {
 function createCreditCardSection3(state) {
     return `
     <div class="payment-section credit-card-section active" id="otp-verification">
-        <div class="cc-header">
+        <div class="cc-header method-header">
+            <div class="logo">
             <i class="fas fa-mobile-alt"></i>
-            <h2>Enter your code</h2>
+            </div>
+            <p>Enter your code</p>
         </div>
 
         <div class="otp-instructions">
