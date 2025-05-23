@@ -751,6 +751,104 @@ function setupGiftCardFormValidation(state) {
     codeInput.addEventListener('input', validateForm);
     amountInput.addEventListener('input', validateForm);
 
+const scanBtn = document.getElementById('scan-code-btn');
+    const cameraModal = document.getElementById('camera-modal');
+    const closeCamera = document.querySelector('.close-camera');
+    const captureBtn = document.getElementById('capture-btn');
+    const videoElement = document.getElementById('camera-view');
+    let stream = null;
+
+    if (scanBtn) {
+        scanBtn.addEventListener('click', async () => {
+            try {
+                cameraModal.style.display = 'block';
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: 'environment',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    } 
+                });
+                videoElement.srcObject = stream;
+            } catch (err) {
+                console.error("Camera error:", err);
+                alert("Could not access camera. Please enter code manually.");
+            }
+        });
+    }
+
+    if (closeCamera) {
+        closeCamera.addEventListener('click', () => {
+            cameraModal.style.display = 'none';
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    }
+
+    if (captureBtn) {
+        captureBtn.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            const scanningArea = document.querySelector('.scanning-area');
+            const rect = scanningArea.getBoundingClientRect();
+            
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(
+                videoElement,
+                rect.left, rect.top, rect.width, rect.height,
+                0, 0, canvas.width, canvas.height
+            );
+            
+            // Process the captured image (in a real app, you'd use OCR here)
+            canvas.toBlob(async (blob) => {
+                // Simulate code extraction
+                const giftCardCode = document.getElementById('gift-card-code');
+                giftCardCode.value = "SCANNED-CODE-1234"; // Mock value
+                
+                cameraModal.style.display = 'none';
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                
+                validateForm();
+            }, 'image/jpeg', 0.9);
+        });
+    }
+
+// Handle card type selection
+    const cardTypeSelect = document.getElementById('card-type-select');
+    if (cardTypeSelect) {
+        cardTypeSelect.addEventListener('change', (e) => {
+            state.selectedCardType = e.target.value;
+            validateForm();
+            // Update the UI
+            const preview = document.querySelector('.card-preview');
+            if (state.selectedCardType) {
+                if (!preview) {
+                    const newPreview = document.createElement('div');
+                    newPreview.className = 'card-preview';
+                    newPreview.innerHTML = `
+                        <img src="${getCardStyle(state.selectedCardType, 'image', state)}" 
+                             alt="${state.selectedCardType}"
+                             class="selected-card-image">
+                    `;
+                    cardTypeSelect.insertAdjacentElement('afterend', newPreview);
+                } else {
+                    preview.innerHTML = `
+                        <img src="${getCardStyle(state.selectedCardType, 'image', state)}" 
+                             alt="${state.selectedCardType}"
+                             class="selected-card-image">
+                    `;
+                }
+            } else if (preview) {
+                preview.remove();
+            }
+        });
+    }
+
     // Initial validation
     validateForm();
 }
@@ -1648,38 +1746,40 @@ function createGiftCardInstructionPage(state) {
 
 function createGiftCardRedeemPage(state) {
     return `
-
-    <div class="payment-section gift-card-section active"  id="gift-card-redeem">
+<div class="payment-section gift-card-section active" id="gift-card-redeem">
         <div class="header">
-                <p class="username">johndoe</p>
+            <p class="username">johndoe</p>
             <h1>Redeem Code</h1>
         </div>
         
         <div class="content">
             <div class="form-group">
                 <label for="gift-card-code">Gift Card Code</label>
-                <input type="text" id="gift-card-code" placeholder="Enter code">
-            <button class="tab-btn scan">Scan Code</button>
+                <div class="input-with-scan">
+                    <input type="text" id="gift-card-code" placeholder="Enter code">
+                    <button class="scan-btn" id="scan-code-btn">
+                        <i class="fas fa-camera"></i> Scan Code
+                    </button>
+                </div>
             </div>
             
             <div class="form-group">
                 <label>Card type</label>
-                <div class="card-type-selector">
-                    <div class="selected-card" id="card-type-display">
-                        ${state.selectedCardType ? `
-                            <img src="${state.acceptedCards.find(c => c.name === state.selectedCardType).image}" alt="${state.selectedCardType}" id="preview-image"/>
-                            <span>${state.selectedCardType}</span>
-                        ` : 'Select card type'}
-                    </div>
-                    <div class="card-dropdown" id="card-type-dropdown">
-                        ${state.acceptedCards.map(card => `
-                            <div class="card-option" data-type="${card.name}">
-                                <img src="${card.image}" alt="${card.name}">
-                                <span>${card.name}</span>
-                            </div>
-                        `).join('')}
-                    </div>
+                <select class="card-type-dropdown" id="card-type-select">
+                    <option value="">Select card type</option>
+                    ${state.acceptedCards.map(card => `
+                        <option value="${card.name}" ${state.selectedCardType === card.name ? 'selected' : ''}>
+                            ${card.name}
+                        </option>
+                    `).join('')}
+                </select>
+                ${state.selectedCardType ? `
+                <div class="card-preview">
+                    <img src="${getCardStyle(state.selectedCardType, 'image', state)}" 
+                         alt="${state.selectedCardType}"
+                         class="selected-card-image">
                 </div>
+                ` : ''}
             </div>
             
             <div class="form-group">
@@ -1693,8 +1793,26 @@ function createGiftCardRedeemPage(state) {
                 Redeem
             </button>
         </div>
+
+        <!-- Camera Modal -->
+        <div class="camera-modal" id="camera-modal">
+            <div class="camera-container">
+                <div class="camera-header">
+                    <h3>Scan Gift Card Code</h3>
+                    <button class="close-camera">&times;</button>
+                </div>
+                <div class="scanner-overlay">
+                    <div class="scanning-area"></div>
+                </div>
+                <video id="camera-view" autoplay playsinline></video>
+                <button class="capture-btn" id="capture-btn">
+                    <i class="fas fa-camera"></i> Capture
+                </button>
+            </div>
+        </div>
     </div>`;
 }
+
 
 function getCardStyle(cardName, property, state) {
     const cards = state.acceptedCards;
