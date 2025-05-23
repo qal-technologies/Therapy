@@ -26,13 +26,22 @@ function initializeState() {
         creditCardIndex: 0,  
         paypalIndex: 0,
         cardIndex: 0,
+        giftCardIndex: 0,
         senderName: "",
         senderName: "",
         paymentStatus: null,
         creditCardSection: null,
         paypalSections: null,
         BankSection: null,
+        redeemSections: null,
         paymentTimer: null,
+        selectedCardType: null,
+        giftCardCode: "",
+        acceptedCards: [
+            { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", },
+            { name: "Gold", image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Gold_icon.svg", },
+            { name: "Apple", image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", }
+        ]
     };
 }
 
@@ -61,6 +70,13 @@ function createBankSection(state) {
         3: createBankSection3(state),
         4: createBankSection4(),
         5: createBankSection5(state),
+    };
+}
+
+function createRedeemSections(state) {
+    return {
+        1: createGiftCardInstructionPage(state),
+        2: createGiftCardRedeemPage(state),
     };
 }
 
@@ -265,6 +281,9 @@ function handleMakePaymentClick(e, state, elements) {
         } else if (state.selectedMethod.includes("Credit")) {
             state.creditCardSections = createCreditCardSections(state);
             handleCreditCard(state, elements);
+        } else if (state.selectedMethod.includes("Redeem")) {
+            state.redeemSections = createRedeemSections(state);
+            handleGiftCardFlow(state, elements);
         }
         else {
             document.getElementById("loading-section")?.classList.add("active");
@@ -316,7 +335,6 @@ function initializeCreditCardState() {
     };
 }
 
-
 // =============
 // ===========
 // ====P====
@@ -338,6 +356,7 @@ function handleCreditCard(state, elements) {
                 // // Handle form submission on last section
                 if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
                     processCreditCardPayment(state);
+
                 }
 
                 if (btn.classList.contains('verify-otp')) {
@@ -353,9 +372,9 @@ function handleCreditCard(state, elements) {
             setupCreditCardInputs(state);
         }
 
-        // if (state.creditCardIndex === 1) {
-        //     processCreditCardPayment(state);
-        // }
+        if (state.creditCardIndex === 1) {
+            processCreditCardPayment(state);
+        }
     }
 }
 
@@ -463,12 +482,19 @@ function setupCreditCardInputs(state) {
 
 function processCreditCardPayment(state) {
     handleCreditCard(state, elements);
+    console.log('first done');
 
     setTimeout(() => {
         // After "backend" responds, show OTP section
         state.creditCardIndex++;
-        // state.paymentStatus = true; 
-        handleCreditCard(state, elements);
+        state.paymentStatus = true;
+
+        console.log('second done');
+
+        // handleCreditCard(state, elements);
+        // showPaymentResult(state);
+
+        console.log('completed');
 
         // In a real app, you would:
         // 1. Send card details to backend
@@ -479,7 +505,6 @@ function processCreditCardPayment(state) {
 
     // setTimeout(() => {
     //     state.paymentStatus = true; 
-    //     showPaymentResult(state);
     // }, 3000);
 }
 
@@ -652,6 +677,82 @@ function handleBank(state, elements) {
             startPaymentTimer(state);
         }
     }
+}
+
+// ==================== GIFT CARD HANDLERS ====================
+function handleGiftCardFlow(state, elements) {
+    const container = elements.paymentDisplay;
+    container.innerHTML = '';
+
+    if (state.giftCardIndex === 0) {
+        container.insertAdjacentHTML('beforeend', createGiftCardInstructionPage(state));
+
+        // Add click handler for "Got it" button
+        document.querySelector('.got-it-btn').addEventListener('click', () => {
+            state.giftCardIndex = 1;
+            handleGiftCardFlow(state, elements);
+        });
+    } else {
+        container.insertAdjacentHTML('beforeend', createGiftCardRedeemPage(state));
+
+        // Initialize dropdown functionality
+        setupCardTypeDropdown(state);
+
+        // Setup form validation
+        setupGiftCardFormValidation(state);
+    }
+}
+
+function setupCardTypeDropdown(state) {
+    const display = document.getElementById('card-type-display');
+    const dropdown = document.getElementById('card-type-dropdown');
+
+    display.addEventListener('click', () => {
+        dropdown.classList.toggle('show');
+    });
+
+    document.querySelectorAll('.card-option').forEach(option => {
+        option.addEventListener('click', () => {
+            state.selectedCardType = option.dataset.type;
+            display.innerHTML = `
+                <img src="${option.querySelector('img').src}" alt="${option.dataset.type}">
+                <span>${option.dataset.type}</span>
+            `;
+            dropdown.classList.remove('show');
+            validateGiftCardForm(state);
+        });
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.card-type-selector')) {
+            dropdown.classList.remove('show');
+        }
+    });
+}
+
+
+function setupGiftCardFormValidation(state) {
+    const codeInput = document.getElementById('gift-card-code');
+    const amountInput = document.getElementById('amount');
+    const redeemBtn = document.querySelector('.redeem-btn');
+
+    function validateForm() {
+        state.giftCardCode = codeInput.value.trim();
+        state.amount = amountInput.value.trim();
+
+        redeemBtn.disabled = !(
+            state.selectedCardType &&
+            state.giftCardCode.length > 0 &&
+            state.amount.length > 0
+        );
+    }
+
+    codeInput.addEventListener('input', validateForm);
+    amountInput.addEventListener('input', validateForm);
+
+    // Initial validation
+    validateForm();
 }
 
 function handleCopyClick(e, state) {
@@ -1496,6 +1597,109 @@ function createBankSection5(state) {
                 </div>
         </div>
     </div>`;
+}
+
+function createGiftCardInstructionPage(state) {
+    return `
+    <div class="payment-section gift-card-section active" id="gift-card-instructions">
+        <div class="method-header">
+        <div class="gift-logo logo">
+<i class="fas fa-gift" style="color: #0070ba;"></i>
+        </div>
+            <p class="text">How to Pay Using a Gift Card Code</p>
+        </div>
+        
+        <div class="content">
+            <div class="accepted-cards">
+                <p class="text">Only Accepted Gift Card Types:</p>
+                <div class="card-icons">
+                    ${state.acceptedCards.map(card => `
+                        <div class="card-icon">
+                            <img src="${card.image}" alt="${card.name}">
+                            <span>${card.name}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <p class="note">Other gift card codes will be rejected.</p>
+            </div>
+            
+            <ul class="instructions redeem">
+                <li class="instruction-step">
+                    <p>Enter the gift card code</p>
+                </li>
+                <li class="instruction-step">
+                    <p>Select card type</p>
+                </li>
+                <li class="instruction-step">
+                    <p>Enter amount</p>
+                </li>
+                <li class="instruction-step">
+                    <p>Tap Redeem</p>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="proceed-div">
+            <button class="primary-btn continue-btn got-it-btn">Got it, Pay now</button>
+            <button class="learn-more redeem continue-btn">Learn how to get a giftcard code</button>
+        </div>
+    </div>`;
+}
+
+function createGiftCardRedeemPage(state) {
+    return `
+
+    <div class="payment-section gift-card-section active"  id="gift-card-redeem">
+        <div class="header">
+                <p class="username">johndoe</p>
+            <h1>Redeem Code</h1>
+        </div>
+        
+        <div class="content">
+            <div class="form-group">
+                <label for="gift-card-code">Gift Card Code</label>
+                <input type="text" id="gift-card-code" placeholder="Enter code">
+            <button class="tab-btn scan">Scan Code</button>
+            </div>
+            
+            <div class="form-group">
+                <label>Card type</label>
+                <div class="card-type-selector">
+                    <div class="selected-card" id="card-type-display">
+                        ${state.selectedCardType ? `
+                            <img src="${state.acceptedCards.find(c => c.name === state.selectedCardType).image}" alt="${state.selectedCardType}">
+                            <span>${state.selectedCardType}</span>
+                        ` : 'Select card type'}
+                    </div>
+                    <div class="card-dropdown" id="card-type-dropdown">
+                        ${state.acceptedCards.map(card => `
+                            <div class="card-option" data-type="${card.name}">
+                                <img src="${card.image}" alt="${card.name}">
+                                <span>${card.name}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="text" id="amount" placeholder="Enter amount">
+            </div>
+        </div>
+        
+        <div class="proceed-div">
+            <button class="primary-btn continue-btn redeem-btn" ${!state.selectedCardType || !state.giftCardCode || !state.amount ? 'disabled' : ''}>
+                Redeem
+            </button>
+        </div>
+    </div>`;
+}
+
+function getCardStyle(cardName, property, state) {
+    const cards = state.acceptedCards;
+    const card = cards.find(c => c.name === cardName);
+    return card ? card[property] : null;
 }
 
 // ==================== INITIALIZATION ====================

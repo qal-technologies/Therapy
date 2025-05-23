@@ -31,7 +31,8 @@ section.parent {
     place-content: center;
     flex-direction: column;
     padding-bottom: 10px;
-    gap: 10px
+    gap: 10px;
+    text-align: center;
 }
 
 h2 {
@@ -1087,4 +1088,164 @@ p.fandf-text {
 /* Add to existing .card-input styles */
 .card-input {
     padding-right: 50px !important;
+}
+
+.accepted-cards {
+    margin-bottom: 20px;
+}
+
+.accepted-cards .card-icons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    gap: 10px;
+}
+
+.accepted-cards .card-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    padding: 10px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: #fafafa85;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+    transition: all 0.3s ease;
+}
+
+.accepted-cards .card-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.accepted-cards .card-icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+.card-icons img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 8px;
+}
+
+ul.instructions.redeem {
+    padding-left: 20px;
+    margin-bottom: 10px;
+}
+
+ul.instructions.redeem li {
+    list-style: decimal;
+    margin-bottom: 5px;
+    padding-left: 5px;
+    font-family: PoppinsMed;
+}
+
+ul.instructions.redeem li p {
+    font-family: PoppinsMed;
+    letter-spacing: 1px;
+}
+
+.accepted-cards .note {
+    font-size: 14px;
+    color: #666;
+    margin-block: 10px;
+    text-align: center;
+    font-family: PoppinsLight;
+}
+
+.card-preview img, .card-option img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.stripe-branding {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #666;
+}
+
+.stripe-branding img {
+    height: 20px;
+    margin-left: 5px;
+}
+
+/* Add to existing card-dropdown styles */
+.card-dropdown {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-option {
+    padding: 12px 15px;
+    transition: all 0.2s ease;
+}
+
+.card-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add to existing selected-card styles */
+.selected-card .placeholder {
+    color: #999;
+}
+
+#gift-card-redeem .header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#gift-card-redeem .header h1 {
+    font-size: 1.8rem;
+    font-family: PoppinsSemi;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+#gift-card-redeem .header p.username {
+    font-size: 1.2rem;
+    font-family: PoppinsLight;
+    color: #111111;
+}
+
+#gift-card-instructions button.learn-more.redeem {
+    background: transparent;
+    border: 1px solid #0070ba;
+    text-align: center;
+    border-radius: 10px;
+    color: #0070ba;
+    max-width: 350px;
+}
+
+#gift-card-instructions .method-header {
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+#gift-card-instructions .method-header .gift-logo i {
+    color: #0070ba;
+    font-size: 3.5rem;
+}
+
+#gift-card-instructions .method-header p {
+    text-align: center;
 }
