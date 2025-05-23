@@ -1240,3 +1240,130 @@ ul.instructions.redeem li {
 #gift-card-instructions .method-header p {
     text-align: center;
 }
+
+.input-with-scan {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scan-btn {
+    align-self: flex-end;
+    background-color: #0070ba;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.scan-btn i {
+    font-size: 16px;
+}
+
+.card-type-dropdown {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.card-preview {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.selected-card-image {
+    max-width: 90%;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+/* Camera Modal Styles */
+.camera-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.camera-container {
+    width: 90%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.camera-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #0070ba;
+    color: white;
+}
+
+.close-camera {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#camera-view {
+    width: 100%;
+    display: block;
+}
+
+.scanner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.scanning-area {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 150px;
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+}
+
+.capture-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0070ba;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
