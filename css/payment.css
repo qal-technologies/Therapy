@@ -1110,9 +1110,9 @@ p.fandf-text {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100px;
+    width: 140px;
     padding: 10px;
-    height: 100px;
+    height: 160px;
     border-radius: 10px;
     background-color: #fafafa85;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
@@ -1122,18 +1122,12 @@ p.fandf-text {
 .accepted-cards .card-icon:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #0070ba;
 }
 
 .accepted-cards .card-icon img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    margin-bottom: 8px;
-}
-
-.card-icons img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     margin-bottom: 8px;
 }
@@ -1147,11 +1141,6 @@ ul.instructions.redeem li {
     list-style: decimal;
     margin-bottom: 5px;
     padding-left: 5px;
-    font-family: PoppinsMed;
-}
-
-ul.instructions.redeem li p {
-    font-family: PoppinsMed;
 }
 
 .accepted-cards .note {
@@ -1163,8 +1152,8 @@ ul.instructions.redeem li p {
 }
 
 .card-preview img, .card-option img {
-    width: 30px;
-    height: 30px;
+    max-width: 30px;
+    max-height: 30px;
     object-fit: contain;
     margin-right: 10px;
 }
