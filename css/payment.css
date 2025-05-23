@@ -1152,7 +1152,6 @@ ul.instructions.redeem li {
 
 ul.instructions.redeem li p {
     font-family: PoppinsMed;
-    letter-spacing: 1px;
 }
 
 .accepted-cards .note {
@@ -1233,7 +1232,9 @@ ul.instructions.redeem li p {
     text-align: center;
     border-radius: 10px;
     color: #0070ba;
-    max-width: 350px;
+    max-width: 300px;
+    font-size: 14px;
+    padding: 6px;
 }
 
 #gift-card-instructions .method-header {
