@@ -340,8 +340,8 @@ button.continue-btn:disabled {
 }
 
 .currency-icon, .payment-icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     margin-right: 15px;
     border-radius: 50%;
     display: flex;
@@ -352,6 +352,7 @@ button.continue-btn:disabled {
     border: 1px solid #cfcfcf;
     color: black;
     fill: black;
+    object-fit: contain;
     overflow: hidden;
 }
 
