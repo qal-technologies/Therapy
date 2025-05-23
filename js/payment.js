@@ -1667,7 +1667,7 @@ function createGiftCardRedeemPage(state) {
                 <div class="card-type-selector">
                     <div class="selected-card" id="card-type-display">
                         ${state.selectedCardType ? `
-                            <img src="${state.acceptedCards.find(c => c.name === state.selectedCardType).image}" alt="${state.selectedCardType}">
+                            <img src="${state.acceptedCards.find(c => c.name === state.selectedCardType).image}" alt="${state.selectedCardType}" id="preview-image"/>
                             <span>${state.selectedCardType}</span>
                         ` : 'Select card type'}
                     </div>

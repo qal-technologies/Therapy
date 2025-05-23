@@ -1158,20 +1158,6 @@ ul.instructions.redeem li {
     margin-right: 10px;
 }
 
-.stripe-branding {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    font-size: 12px;
-    color: #666;
-}
-
-.stripe-branding img {
-    height: 20px;
-    margin-left: 5px;
-}
-
 /* Add to existing card-dropdown styles */
 .card-dropdown {
     border-radius: 8px;
@@ -1193,26 +1179,40 @@ ul.instructions.redeem li {
     color: #999;
 }
 
+#gift-card-redeem img#preview-image {
+    width: 80%;
+    height: auto;
+    max-width: 250px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
 #gift-card-redeem .header {
     width: 100%;
+    padding-block: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
-    gap: 10px;
+    text-align: left;
+    margin-block: 5%;
 }
 
 #gift-card-redeem .header h1 {
     font-size: 1.8rem;
     font-family: PoppinsSemi;
     color: #000000;
-    margin-bottom: 10px;
+
 }
 
 #gift-card-redeem .header p.username {
     font-size: 1.2rem;
     font-family: PoppinsLight;
     color: #111111;
+}
+
+#gift-card-redeem .content {
+    margin-top: 10px;
 }
 
 #gift-card-instructions button.learn-more.redeem {
