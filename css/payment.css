@@ -1306,11 +1306,11 @@ flex-direction: column;
 place-content:center;
     width: 100%;
 height:100%;
+border-radius:10px;
 max-width:600px;
     background: #fff;
     overflow: hidden;
-    position: relative;
-}
+  }
 
 .camera-header {
     display: flex;
@@ -1337,7 +1337,6 @@ top:0;
 #camera-view {
     width: 100%;
     display: block;
-position:relative;
 overflow:hidden;
 }
 
