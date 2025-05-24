@@ -761,7 +761,7 @@ const scanBtn = document.getElementById('scan-code-btn');
     if (scanBtn) {
         scanBtn.addEventListener('click', async () => {
             try {
-                cameraModal.style.display = 'block';
+                cameraModal.style.display = 'flex';
                 stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { 
                         facingMode: 'environment',
