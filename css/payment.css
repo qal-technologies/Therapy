@@ -1346,6 +1346,7 @@ overflow:hidden;
     left: 0;
     width: 100%;
 overflow:hidden;
+position: absolute;
     pointer-events: none;
 }
 
