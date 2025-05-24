@@ -696,16 +696,16 @@ function handleGiftCardFlow(state, elements) {
         container.insertAdjacentHTML('beforeend', createGiftCardRedeemPage(state));
 
         // Initialize dropdown functionality
-        setupCardTypeDropdown(state);
+        setupCardTypeDropdown(state, elements);
 
         // Setup form validation
         setupGiftCardFormValidation(state);
     }
 }
 
-function setupCardTypeDropdown(state) {
-    const display = document.getElementById('card-type-display');
-    const dropdown = document.getElementById('card-type-dropdown');
+function setupCardTypeDropdown(state, elements) {
+    const display = elements.paymentDisplay;
+    const dropdown = document.getElementById('card-type-selector');
 
     display.addEventListener('click', () => {
         dropdown.classList.toggle('show');
@@ -725,7 +725,7 @@ function setupCardTypeDropdown(state) {
 
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.card-type-selector')) {
+        if (!e.target.closest('#card-type-selector')) {
             dropdown.classList.remove('show');
         }
     });
