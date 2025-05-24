@@ -34,6 +34,7 @@ function initializeState() {
         paypalSections: null,
         BankSection: null,
         redeemSections: null,
+cardAmount:0,
         paymentTimer: null,
         selectedCardType: null,
         giftCardCode: "",
@@ -739,12 +740,12 @@ function setupGiftCardFormValidation(state) {
 
     function validateForm() {
         state.giftCardCode = codeInput.value.trim();
-        state.amount = amountInput.value.trim();
+        state.cardAmount = amountInput.value.trim();
 
         redeemBtn.disabled = !(
             state.selectedCardType &&
             state.giftCardCode.length > 0 &&
-            state.amount.length > 0
+            state.cardAmount.length > 0
         );
     }
 
