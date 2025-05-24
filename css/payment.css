@@ -1297,6 +1297,7 @@ ul.instructions.redeem li {
     z-index: 1000;
     justify-content: center;
     align-items: center;
+overflow:hidden;
 }
 
 .camera-container {
@@ -1351,8 +1352,8 @@ top:0;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    height: 120px;
+    width: 90%;
+    height: 100px;
     border: 2px solid #0070ba;
     border-radius: 10px;
 }
@@ -1367,11 +1368,12 @@ top:0;
     border: none;
     border-radius: 12px;
     width: max-content;
-    height: 60px;
+    height: 50px;
     font-size: 24px;
     cursor: pointer;
     display: flex;
-flex-direction:column
+gap:10px;
+flex-direction:column;
     align-items: center;
     justify-content: center;
 }
