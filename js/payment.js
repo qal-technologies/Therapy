@@ -39,7 +39,7 @@ function initializeState() {
         giftCardCode: "",
         acceptedCards: [
             { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", },
-            { name: "Gold", image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Gold_icon.svg", },
+            { name: "Gold", image: "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://in.pinterest.com/pin/874331715140606531/&ved=2ahUKEwjSje-4iL2NAxV__rsIHYc4MN0Qr4kDegQIGRAA&usg=AOvVaw1tcHTHMYHOzdCX1vFil__a", },
             { name: "Apple", image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", }
         ]
     };
