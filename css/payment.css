@@ -1291,8 +1291,8 @@ ul.instructions.redeem li {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
     background-color: rgba(0,0,0,0.9);
     z-index: 1000;
     justify-content: center;
@@ -1336,6 +1336,7 @@ top:10px;
 #camera-view {
     width: 100%;
     display: block;
+overflow:hidden;
 }
 
 .scanner-overlay {
@@ -1369,8 +1370,8 @@ overflow:hidden;
     border: none;
     border-radius: 12px;
     width: max-content;
-    height: 50px;
-    font-size: 24px;
+    height: 40px;
+    font-size: 18px;
     cursor: pointer;
     display: flex;
 padding:5px;
