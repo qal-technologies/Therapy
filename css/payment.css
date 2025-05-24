@@ -1110,9 +1110,9 @@ p.fandf-text {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 140px;
+    width: 80px;
     padding: 10px;
-    height: 160px;
+    height: 100px;
     border-radius: 10px;
     background-color: #fafafa85;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
