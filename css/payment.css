@@ -1317,6 +1317,9 @@ place-self:center;
     padding: 15px;
 padding-inline:25px;
 border-radius:15px;
+width:100%;
+position: absolute;
+top:0;
     background: #0070ba;
     color: white;
 }
