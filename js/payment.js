@@ -1868,7 +1868,10 @@ function createBankSection5(state) {
           <button class="util-btn cancel">Close</button>
          </div>
             <div class="info-div">
-              You can't cancel this trade now, because it is still processing...
+              You can't cancel this transaction now, because it is still processing...
+
+<br/>
+Please wait ☺️
             </div>
         </div>
         
