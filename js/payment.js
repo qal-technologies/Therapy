@@ -43,7 +43,7 @@ function initializeState() {
                 {
                     image: "/src/images/paypal.jpeg",
                     title: "Step 1: Visit a Trusted Gift Card Website",
-                    description: "Start by visiting a secure and trusted French website where digital gift cards are sold. In this image, the user is on a site like <a href="https://www.giftcards-website.fr" target="_blank">giftcards-website.fr</a>, where Steam, Apple, and Razer Gold cards are listed. Make sure the address bar shows "https://" and a padlock icon to confirm it’s secure. Then click on “Parcourir” to view available cards."
+                    description: `Start by visiting a secure and trusted French website where digital gift cards are sold. In this image, the user is on a site like <a href="https://www.giftcards-website.fr" target="_blank">giftcards-website.fr</a>, where Steam, Apple, and Razer Gold cards are listed. Make sure the address bar shows "https://" and a padlock icon to confirm it’s secure. Then click on “Parcourir” to view available cards.`
                 },
                 {
                     image: "https://example.com/giftcard-step2.jpg",
@@ -59,14 +59,14 @@ function initializeState() {
                     image: "https://example.com/giftcard-step4.jpg",
                     title: "Step 4: Payment Confirmation Screen",
                     description: "After completing your payment, you’ll see a confirmation message like this:
-“Merci pour votre commande” (Thank you for your order).
+'Merci pour votre commande' (Thank you for your order).
 <br/>
-It also states that a confirmation email has been sent to you. Tap “Retour à la commande” if you'd like to return to the site or view more details. Now check your email inbox to receive your digital gift card code."
+It also states that a confirmation email has been sent to you. Tap 'Retour à la commande' if you'd like to return to the site or view more details. Now check your email inbox to receive your digital gift card code."
                 },
                 {
                     image: "https://example.com/giftcard-step4.jpg",
                     title: "Step 5: Open Your Email and Copy the Gift Card Code",
-                    description: "You’ll receive an email like this titled "Votre code de carte cadeau numérique" (Your digital gift card code). It includes the code you’ll need to redeem on the payment platform. Carefully copy the code exactly as shown. Keep the email saved in case you need to refer back to it later."
+                    description: "You’ll receive an email like this titled 'Votre code de carte cadeau numérique' (Your digital gift card code). It includes the code you’ll need to redeem on the payment platform. Carefully copy the code exactly as shown. Keep the email saved in case you need to refer back to it later."
                 },
                
             ],
