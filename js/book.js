@@ -322,14 +322,21 @@ function formatDateTime() {
   });
 }
 
+      const language = navigator.language;
+
+      const transactionId = `TXN-${Math.random()
+        .toString(36)
+        .substring(2, 10)
+        .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 
       const session = TOPICS_DATA[state.selectedTopic];
       const details = {
         type: "session",
         description: session.description,
         title: session.name,
-        price: parseInt(session.price.replace(',', '')), // Handle price formatting
-        date:formatDateTime()
+        price: parseInt(session.price.replace(',', '')),
+        date: formatDateTime(),
+        transactionId: transactionId,
       };
 
       const params = new URLSearchParams({

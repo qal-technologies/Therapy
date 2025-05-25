@@ -88,13 +88,23 @@ function showPaymentModal(bookId) {
         return book.id == bookId;
     })[0];
 
+
+    const language = navigator.language;
+
+
+    const transactionId = `TXN-${Math.random()
+        .toString(36)
+        .substring(2, 10)
+        .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+
     const details = {
         id: bookId,
         type: "pdf",
         description: book.description,
         title: book.title,
         price: book.price,
-        date: new Date().toLocaleDateString()
+        date: new Date().toLocaleDateString(),
+        transactionId: transactionId,
     };
 
     const params = new URLSearchParams({

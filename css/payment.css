@@ -60,12 +60,10 @@ h2 {
     border: none;
     margin: 10px;
     margin-bottom: 20px;
-    border-top: 1px solid #a9d7ff65;
+    border-top: 1px solid #ddd;
 }
 
 .divider.transaction {
-    border: none;
-    border-top: 1px solid #a9d7ff65;
     margin-bottom: 10px;
 }
 
@@ -1110,9 +1108,11 @@ p.fandf-text {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80px;
+    width: 85px;
     padding: 10px;
-    height: 100px;
+    height: 120px;
+    padding-top: 10px;
+    overflow: hidden;
     border-radius: 10px;
     background-color: #fafafa85;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
@@ -1123,7 +1123,7 @@ p.fandf-text {
 .accepted-cards .card-icon:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 2px solid #0070ba;
+    border: 1px solid #0070ba;
 }
 
 .accepted-cards .card-icon img {
@@ -1216,6 +1216,10 @@ ul.instructions.redeem li {
     margin-top: 10px;
 }
 
+#gift-card-redeem input, #gift-card-redeem select {
+    border-radius: 8px;
+}
+
 #gift-card-instructions button.learn-more.redeem {
     background: transparent;
     border: 1px solid #0070ba;
@@ -1240,6 +1244,175 @@ ul.instructions.redeem li {
 
 #gift-card-instructions .method-header p {
     text-align: center;
+}
+
+.tutorial-header {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding-inline-end: 10px;
+}
+
+.tutorial-header p {
+    font-size: 1.4rem;
+    color: #333;
+    font-family: PoppinsSemi;
+}
+
+.tutorial-header .close-tutorial {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #666;
+    cursor: pointer;
+    line-height: 1;
+    background-color: rgb(254, 254, 254);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.tutorial-image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.tutorial-image {
+    min-width: 90%;
+    max-width: 500px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    object-fit: contain;
+    max-height: 300px;
+    place-self: center;
+}
+
+.tutorial-text {
+    padding: 0 10px;
+    margin-bottom: 20px;
+}
+
+.tutorial-text h3 {
+    font-size: 20px;
+    color: #0070ba;
+    margin-block: 10px;
+    font-family: PoppinsSemi;
+}
+
+.tutorial-text p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.tutorial-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.tutorial-nav-btn {
+    padding: 6px;
+    border: none;
+    border-radius: 25px;
+    background: #0070ba;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-inline: 10px;
+    transition: all 0.3s ease;
+}
+
+.tutorial-nav-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.tutorial-nav-btn i {
+    font-size: 14px;
+}
+
+.tutorial-progress {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Animation Classes */
+.slide-in-right {
+    animation: slideInRight 0.3s forwards;
+}
+
+.slide-out-right {
+    animation: slideOutRight 0.3s forwards;
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.3s forwards;
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.3s forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
 }
 
 .input-with-scan {
@@ -1273,7 +1446,6 @@ ul.instructions.redeem li {
     border-radius: 4px;
     font-size: 16px;
     margin-bottom: 10px;
-    padding-inline: 20px;
 }
 
 .card-preview {
@@ -1295,10 +1467,14 @@ ul.instructions.redeem li {
     top: 0;
     left: 0;
     width: 100%;
+    min-width: 90vw;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
     z-index: 1000;
     justify-content: center;
+    overflow: hidden;
     align-items: center;
 }
 
@@ -1306,19 +1482,24 @@ ul.instructions.redeem li {
     display: flex;
     flex-direction: column;
     place-content: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
-    max-width: 600px;
-    background: #fff;
     overflow: hidden;
+    position: relative;
+    background: #111;
+    border-radius: 10px;
+    aspect-ratio: 4/3;
 }
 
 .camera-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 15px;
-    background: #0070ba;
+    position: absolute;
+    top: 0;
+    width: 100%;
     color: white;
 }
 
@@ -1326,24 +1507,48 @@ ul.instructions.redeem li {
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 30px;
     cursor: pointer;
 }
 
 #camera-view {
     width: 100%;
+    height: 100%;
     display: block;
-    position: relative;
-    overflow: hidden;
+    object-fit: cover;
 }
 
 .scanner-overlay {
     top: 0;
     left: 0;
     width: 100%;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
     pointer-events: none;
-    z-index: 999;
+    z-index: 999999;
+    position: absolute;
+    height: 100%;
+}
+
+.camera-container div.info {
+    width: 95%;
+    max-width: 400px;
+    place-self: center;
+    position: absolute;
+    bottom: 16%;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    color: white;
+    text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 15px;
+    padding: 5px;
+    padding-inline: 12px;
+    position: absolute;
+    z-index: 9999999;
+
 }
 
 .scanning-area {
@@ -1351,17 +1556,20 @@ ul.instructions.redeem li {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100px;
-
-    margin-inline: 20px;
-    border: 2px solid #0070ba;
-    border-radius: 10px;
+    max-width: 600px;
+    height: 200px;
+    border: 2.5px solid #3cb1ff;
+    border-radius: 15px;
+    width: 90%;
+    height: 40%;
+    max-height: 300px;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
 }
 
 .capture-btn {
     position: absolute;
-    bottom: 10%;
+    z-index: 9999999;
+    bottom: 8%;
     left: 50%;
     transform: translateX(-50%);
     background: #0070ba;
@@ -1379,4 +1587,65 @@ ul.instructions.redeem li {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.scanned-image-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.scanned-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.scanned-image {
+    width: 100%;
+    display: block;
+}
+
+.cancel-scan-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.2s ease;
+}
+
+.cancel-scan-btn:hover {
+    background-color: rgba(255, 0, 0, 0.99);
+    transform: scale(1.1);
+}
+
+/* Disabled Scan Button */
+.scan-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+/* Input With Scan */
+.input-with-scan {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-with-scan input {
+    flex: 1;
 }
