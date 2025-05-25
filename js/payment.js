@@ -40,7 +40,7 @@ cardAmount:0,
         giftCardCode: "",
         acceptedCards: [
             { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", },
-            { name: "Razer Gold", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Razer_logo.svg/1200px-Razer_logo.svg.png" },
+            { name: "Razer Gold", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Razer_logo.svg" },
             { name: "Apple", image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", }
         ]
     };
