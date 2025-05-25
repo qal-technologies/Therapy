@@ -705,7 +705,11 @@ function handleGiftCardFlow(state, elements) {
 
 function setupCardTypeDropdown(state, elements) {
     const display = elements.paymentDisplay;
+<<<<<<< HEAD
     const dropdown = document.getElementById('card-type-select');
+=======
+    const dropdown = document.getElementById('card-type-selector');
+>>>>>>> 4f42be46eb9cf0befa5a54bc2db7aac49a0c6fc7
 
     display.addEventListener('click', () => {
         dropdown.classList.toggle('show');
@@ -726,6 +730,8 @@ function setupCardTypeDropdown(state, elements) {
     // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('#card-type-select')) {
+
+        if (!e.target.closest('#card-type-selector')) {
             dropdown.classList.remove('show');
         }
     });
@@ -761,7 +767,7 @@ const scanBtn = document.getElementById('scan-code-btn');
     if (scanBtn) {
         scanBtn.addEventListener('click', async () => {
             try {
-                cameraModal.style.display = 'block';
+                cameraModal.style.display = 'flex';
                 stream = await navigator.mediaDevices.getUserMedia({ 
                     video: { 
                         facingMode: 'environment',
