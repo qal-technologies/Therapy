@@ -528,8 +528,8 @@ function processCreditCardPayment(state) {
 
         console.log('second done');
 
-        // handleCreditCard(state, elements);
-        // showPaymentResult(state);
+        handleCreditCard(state, elements);
+        showPaymentResult(state);
 
         console.log('completed');
 
@@ -704,6 +704,11 @@ function handleBank(state, elements) {
         document.querySelectorAll(".view-details").forEach(btn => {
             btn.addEventListener("click", () => showDetails());
         });
+
+        document.querySelectorAll(".util-btn.cancel").forEach(btn => {
+            btn.addEventListener("click", () => showStillProcessing());
+        });
+
 
         if (state.cardIndex + 1 === 4) {
             setupUploadSection(state);
@@ -1209,7 +1214,7 @@ function updateConversionUI(state, elements) {
 }
 
 function showDetails() {
-    const detailsDiv = document.querySelector(".payment-info#processing-details");
+    const detailsDiv = document.querySelector(".payment-info.user-details");
     const button = document.querySelector(".view-details");
 
     if (detailsDiv && button) {
@@ -1219,6 +1224,14 @@ function showDetails() {
     }
 }
 
+function showStillProcessing() {
+    const detailsDiv = document.querySelector(".payment-info.closing-warning");
+    const button = document.querySelector(".cancel");
+
+    if (detailsDiv && button) {
+        detailsDiv.classList.toggle("show");
+    }
+}
 
 // ==================== CREDIT CARD UI TEMPLATES ====================
 function createCreditCardSection1(state) {
@@ -1761,7 +1774,7 @@ function createBankSection5(state) {
         </div>
 
 
-         <div class="payment-info hide" id="processing-details">
+         <div class="payment-info user-details hide" id="processing-details">
          <div class="info-div" style="justify-content:flex-end; text-align:right;">
           <button class="util-btn cancel view-details">View Details</button>
          </div>
@@ -1785,6 +1798,15 @@ function createBankSection5(state) {
             </div>
         </div>
 
+<div class="payment-info closing-warning hide" id="processing-details">
+         <div class="info-div" style="justify-content:flex-end; text-align:right;">
+          <button class="util-btn cancel">Close</button>
+         </div>
+            <div class="info-div">
+              You can't cancel this trade now, because it is still processing...
+            </div>
+        </div>
+        
         <div class="paypal-display">
             <div class="display-inner processing">
                 <p class="display-title">Processing Transfer...</p>
