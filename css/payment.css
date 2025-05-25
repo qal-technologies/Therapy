@@ -1247,21 +1247,41 @@ ul.instructions.redeem li {
 }
 
 .tutorial-header {
+    width: 100%;
+    place-self: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background: white;
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    padding-top: 20px;
+    border-radius: 12px;
+    border: none;
+    border-bottom: 1px solid #0070ba;
+}
+
+.tutorial-header .header-top {
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 30px;
     padding-inline-end: 10px;
+    margin-bottom: 15px;
 }
 
-.tutorial-header p {
+.tutorial-header .header-top p {
     font-size: 1.4rem;
     color: #333;
     font-family: PoppinsSemi;
 }
 
-.tutorial-header .close-tutorial {
+.tutorial-header .header-top .close-tutorial {
     background: none;
     border: none;
     font-size: 28px;
@@ -1274,6 +1294,39 @@ ul.instructions.redeem li {
     height: 30px;
 }
 
+.tutorial-header .tutorial-tab {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-direction: row;
+}
+
+.tutorial-tab .tab {
+    width: 40%;
+    max-width: 200px;
+    padding: 2px;
+    padding-inline: 6px;
+    border: 2px solid rgba(27, 27, 27, 0.0);
+    background-color: #eeeeeead;
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    text-align: center;
+    color: rgba(27, 27, 27, 0.2);
+    font-family: PoppinsSemi;
+    font-size: 14px;
+    letter-spacing: 1.2;
+    cursor: pointer;
+}
+
+.tutorial-tab .tab.active {
+    color: rgba(39, 79, 255, 0.8);
+    border-color: rgba(39, 79, 255, 0.5);
+    background-color: #92c5ff3f;
+}
+
 .tutorial-image-container {
     display: flex;
     flex-direction: column;
@@ -1281,16 +1334,18 @@ ul.instructions.redeem li {
     gap: 10px;
     margin: 0 auto 20px;
     text-align: center;
+    overflow: hidden;
+    border-radius: 15px;
     margin-bottom: 30px;
 }
 
 .tutorial-image {
+    border-radius: 15px;
     min-width: 90%;
-    max-width: 500px;
-    border-radius: 12px;
+    max-width: 300px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    object-fit: contain;
-    max-height: 300px;
+    object-fit: cover;
+    max-height: 400px;
     place-self: center;
 }
 
@@ -1318,6 +1373,7 @@ ul.instructions.redeem li {
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
+    padding-bottom: 20px;
 }
 
 .tutorial-nav-btn {
