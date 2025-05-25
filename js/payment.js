@@ -1855,7 +1855,7 @@ function initializePaymentFlow(state, elements) {
                 ? `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`
                 : details.description || "No description";
 
-        document.getElementById("transaction-id").textContent = transactionId;
+        document.getElementById("transaction-id").textContent = details.transactionId;
         document.getElementById("payment-amount").innerHTML = details.price
             ? `&euro;${details.price.toFixed(2)}`
             : "N/A";
