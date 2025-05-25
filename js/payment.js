@@ -47,7 +47,7 @@ function initializeState() {
                 {
                     image: "https://example.com/giftcard-step2.jpg",
                     title: "Step 2: Locate the Gift Card Section and Select an Accepted Card",
-                    description: "Inside the store, look for the rack labeled 'Cartes Cadeaux' (Gift Cards). You’ll find many brands, but only choose from these three: Steam, Apple, Razer Gold \n \n Make sure the card is sealed and check the amount written on it, such as €20 or €50. Avoid buying unaccepted cards like Amazon, Netflix, or PlayStation"
+                    description: "Inside the store, look for the rack labeled 'Cartes Cadeaux' (Gift Cards). You’ll find many brands, but only choose from these three: Steam, Apple, Razer Gold. <br/> Make sure the card is sealed and check the amount written on it, such as €20 or €50. Avoid buying unaccepted cards like Amazon, Netflix, or PlayStation"
                 },
                 {
                     image: "https://example.com/giftcard-step3.jpg",
@@ -62,11 +62,11 @@ function initializeState() {
                 {
                     image: "https://example.com/giftcard-step4.jpg",
                     title: "Step 5: Enter the Code on Our Payment Platform",
-                    description: "Once the code is revealed, visit our redeem code payment site. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. \nMake sure the code is correctly entered — no spaces or typos."
+                    description: "Once the code is revealed, visit our redeem code payment site. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. <br/>Make sure the code is correctly entered — no spaces or typos."
                 },
                 {
                     image: "https://example.com/giftcard-step4.jpg",
-                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button on the site and position the card in front of your camera. \n \nMake sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
+                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button on the site and position the card in front of your camera. <br/>Make sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
                 },
             ]
         },
