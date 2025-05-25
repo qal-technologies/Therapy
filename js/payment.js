@@ -846,27 +846,24 @@ function setupGiftCardFormValidation(state) {
             const displayWidth = displayRect.width;
             const displayHeight = displayRect.height;
 
-            // Calculate scaling factors
             const scaleX = videoWidth / displayWidth;
             const scaleY = videoHeight / displayHeight;
 
-            // Get scanning area position relative to video
             const scanRect = scanningArea.getBoundingClientRect();
+
             const scanX = (scanRect.left - displayRect.left) * scaleX;
             const scanY = (scanRect.top - displayRect.top) * scaleY;
             const scanWidth = scanRect.width * scaleX;
             const scanHeight = scanRect.height * scaleY;
 
-            // Set canvas to the scanning area size
             canvas.width = scanWidth;
             canvas.height = scanHeight;
 
-            // Draw only the scanning area portion
             const ctx = canvas.getContext('2d');
             ctx.drawImage(
                 video,
-                scanX, scanY, scanWidth, scanHeight, // source rectangle
-                0, 0, scanWidth, scanHeight          // destination rectangle
+                scanX, scanY, scanWidth, scanHeight,
+                0, 0, scanWidth, scanHeight      
             );
 
             // Convert canvas to image and store in state
@@ -886,7 +883,6 @@ function setupGiftCardFormValidation(state) {
     if (cancelScanBtn) {
         cancelScanBtn.addEventListener('click', () => {
             state.scannedImage = null;
-            // Refresh the view to remove the scanned image
             handleGiftCardFlow(state, cacheDOMElements());
             validateForm();
         });
