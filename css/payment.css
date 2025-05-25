@@ -1110,13 +1110,14 @@ p.fandf-text {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 140px;
+    width: 80px;
     padding: 10px;
-    height: 160px;
+    height: 100px;
     border-radius: 10px;
     background-color: #fafafa85;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
     transition: all 0.3s ease;
+    font-size: 14px;
 }
 
 .accepted-cards .card-icon:hover {
@@ -1126,8 +1127,8 @@ p.fandf-text {
 }
 
 .accepted-cards .card-icon img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
     margin-bottom: 8px;
 }
@@ -1152,8 +1153,8 @@ ul.instructions.redeem li {
 }
 
 .card-preview img, .card-option img {
-    max-width: 30px;
-    max-height: 30px;
+    max-width: 40px;
+    max-height: 40px;
     object-fit: contain;
     margin-right: 10px;
 }
@@ -1252,13 +1253,13 @@ ul.instructions.redeem li {
     background-color: #0070ba;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 8px 12px;
     font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .scan-btn i {
@@ -1272,6 +1273,7 @@ ul.instructions.redeem li {
     border-radius: 4px;
     font-size: 16px;
     margin-bottom: 10px;
+    padding-inline: 20px;
 }
 
 .card-preview {
@@ -1301,11 +1303,14 @@ ul.instructions.redeem li {
 }
 
 .camera-container {
-    width: 90%;
-    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: 600px;
     background: #fff;
     overflow: hidden;
-    position: relative;
 }
 
 .camera-header {
@@ -1338,6 +1343,7 @@ ul.instructions.redeem li {
     width: 100%;
     overflow: hidden;
     pointer-events: none;
+    z-index: 999;
 }
 
 .scanning-area {
@@ -1345,8 +1351,10 @@ ul.instructions.redeem li {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90%;
+    width: 100%;
     height: 100px;
+
+    margin-inline: 20px;
     border: 2px solid #0070ba;
     border-radius: 10px;
 }
@@ -1359,7 +1367,7 @@ ul.instructions.redeem li {
     background: #0070ba;
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 20px;
     width: max-content;
     height: 40px;
     font-size: 18px;

