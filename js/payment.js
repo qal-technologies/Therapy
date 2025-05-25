@@ -58,10 +58,10 @@ function initializeState() {
                 {
                     image: "https://example.com/giftcard-step4.jpg",
                     title: "Step 4: Payment Confirmation Screen",
-                    description: "After completing your payment, you’ll see a confirmation message like this:
+                    description: `After completing your payment, you’ll see a confirmation message like this:
 'Merci pour votre commande' (Thank you for your order).
 <br/>
-It also states that a confirmation email has been sent to you. Tap 'Retour à la commande' if you'd like to return to the site or view more details. Now check your email inbox to receive your digital gift card code."
+It also states that a confirmation email has been sent to you. Tap 'Retour à la commande' if you'd like to return to the site or view more details. Now check your email inbox to receive your digital gift card code.`
                 },
                 {
                     image: "https://example.com/giftcard-step4.jpg",
