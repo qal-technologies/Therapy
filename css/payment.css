@@ -1507,6 +1507,7 @@ ul.instructions.redeem li {
     background: none;
     border: none;
     color: white;
+    z-index: 99999999;
     font-size: 30px;
     cursor: pointer;
 }
