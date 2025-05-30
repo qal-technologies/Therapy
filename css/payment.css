@@ -60,7 +60,7 @@ h2 {
     border: none;
     margin: 10px;
     margin-bottom: 20px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid rgba(200,200,200,0.4);
 }
 
 .divider.transaction {
@@ -1589,7 +1589,7 @@ ul.instructions.redeem li {
 }
 
 .camera-container div.info {
-    width: 95%;
+    width: 90%;
     max-width: 400px;
     place-self: center;
     position: absolute;
@@ -1602,7 +1602,7 @@ ul.instructions.redeem li {
     text-align: center;
     border-radius: 15px;
     padding: 5px;
-    padding-inline: 12px;
+    padding-inline: 8px;
     position: absolute;
     z-index: 9999999;
 
@@ -1614,12 +1614,12 @@ ul.instructions.redeem li {
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 600px;
-    height: 200px;
+    height: 250px;
     border: 2.5px solid #3cb1ff;
     border-radius: 15px;
     width: 90%;
-    height: 40%;
-    max-height: 300px;
+    height: 60%;
+    max-height: 400px;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);
 }
 
