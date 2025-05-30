@@ -1593,7 +1593,7 @@ ul.instructions.redeem li {
     max-width: 400px;
     place-self: center;
     position: absolute;
-    bottom: 16%;
+    bottom: 15%;
     z-index: 9999;
     background-color: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(10px);
@@ -1610,7 +1610,7 @@ ul.instructions.redeem li {
 
 .scanning-area {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 600px;
@@ -1626,7 +1626,7 @@ ul.instructions.redeem li {
 .capture-btn {
     position: absolute;
     z-index: 9999999;
-    bottom: 8%;
+    bottom: 6%;
     left: 50%;
     transform: translateX(-50%);
     background: #0070ba;
