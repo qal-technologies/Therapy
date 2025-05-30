@@ -1530,6 +1530,7 @@ ul.instructions.redeem li {
     backdrop-filter: blur(5px);
     z-index: 1000;
     justify-content: center;
+place-self:center;
     overflow: hidden;
     align-items: center;
 }
@@ -1626,7 +1627,7 @@ ul.instructions.redeem li {
 .capture-btn {
     position: absolute;
     z-index: 9999999;
-    bottom: 6%;
+    bottom: 8%;
     left: 50%;
     transform: translateX(-50%);
     background: #0070ba;
