@@ -60,7 +60,7 @@ h2 {
     border: none;
     margin: 10px;
     margin-bottom: 20px;
-    border-top: 1px solid rgba(200,200,200,0.4);
+    border-top: 1px solid rgba(200,200,200,0.2);
 }
 
 .divider.transaction {
