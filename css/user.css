@@ -240,6 +240,7 @@
 section#discover {
     padding-block: 10%;
     width: 100%;
+    min-width: 95vw;
     background: rgba(255, 252, 250, 0.85);
     padding-inline: 10px;
     display: flex;
@@ -299,6 +300,7 @@ section#faq {
     align-items: center;
     justify-content: space-evenly;
     border-radius: 20px;
+    word-break: break-all;
     box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
 }
 
