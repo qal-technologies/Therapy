@@ -66,6 +66,7 @@
     border: 0.5px solid var(--accentTrans);
     padding: 1rem;
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .book-card:hover {
@@ -84,6 +85,8 @@
 .book-info {
     position: relative;
     padding: 1rem 0;
+    cursor: text;
+    user-select: text;
 }
 
 .book-info h3 {

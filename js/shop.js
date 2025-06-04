@@ -62,8 +62,8 @@ function renderBooks() {
   `).join('');
 
     // Add click handlers
-    document.querySelectorAll('.book-image').forEach(img => {
-        img.addEventListener('click', handleBookClick);
+    document.querySelectorAll('.book-card').forEach(card => {
+        card.addEventListener('click', handleBookClick);
     });
 }
 
@@ -72,7 +72,6 @@ function handleBookClick(e) {
     const bookId = e.target.id;
     const hasAccess = State.paidFeatures.includes(bookId);
 
-    console.log(bookId);
     if (!hasAccess) {
         showPaymentModal(bookId);
         return;
@@ -80,6 +79,22 @@ function handleBookClick(e) {
 
     // Open book reader
     window.location.href = `/html/main/read.html?id=${bookId}`;
+}
+
+function formatDateTime() {
+    const now = new Date();
+
+    const options = {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+    };
+
+    return now.toLocaleString('en-US', options) + ' at ' + now.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+    });
 }
 
 // Show Payment Modal
@@ -99,11 +114,11 @@ function showPaymentModal(bookId) {
 
     const details = {
         id: bookId,
-        type: "pdf",
-        description: book.description,
+        type: "book",
+        description: `PURCHASE OF BOOK (${book.title}) - ${book.description}`,
         title: book.title,
         price: book.price,
-        date: new Date().toLocaleDateString(),
+        date: formatDateTime(),
         transactionId: transactionId,
     };
 
