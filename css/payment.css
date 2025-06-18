@@ -21,7 +21,7 @@ section.parent {
     text-overflow: ellipsis;
     text-align: left;
     height: auto;
-    padding-bottom: 5px;
+    padding: 5px;
 }
 
 .proceed-div {
@@ -67,10 +67,8 @@ h2 {
     margin-bottom: 10px;
 }
 
-
 .single-row {
     display: block;
-    padding: 0;
     margin-bottom: 20px;
 }
 
@@ -828,7 +826,7 @@ p.fandf-text {
 }
 
 .display-inner .display-title {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-family: PoppinsSemi;
     margin-block: 10px;
     color: black;
@@ -843,6 +841,10 @@ p.fandf-text {
     font-size: 1.6rem;
     font-family: PoppinsSemi;
     margin-bottom: 5px;
+}
+
+.display-inner.hidden{
+    display: none;
 }
 
 .display-inner .proceed-div p.completed-time {

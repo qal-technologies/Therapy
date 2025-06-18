@@ -51,7 +51,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     place-content: center;
-    /* grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
     gap: 1.5rem;
     padding: 1rem;
 }
@@ -61,8 +60,8 @@
     backdrop-filter: blur(10px);
     border-radius: 20px;
     width: 100%;
-    max-width: 300px;
-    min-width: 250px;
+    max-width: 350px;
+    min-width: 300px;
     border: 0.5px solid var(--accentTrans);
     padding: 1rem;
     transition: transform 0.3s ease;
@@ -104,12 +103,42 @@
     font-family: PoppinsLight;
 }
 
-.favorite-btn {
+.book-card button.favorite-btn {
+    padding: 4px;
     position: absolute;
     top: 10px;
     right: 10px;
     cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.book-card svg:first-child {
+    width: 25px;
+    height: 25px;
     transition: fill 0.3s ease;
+}
+
+.book-card div.bottom-btn{
+    width: 80%;
+    max-width: 300px;
+    background-color: var(--link);
+    border-radius: 20px;
+    color: white;
+    place-self: center;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    padding: 6px;
+    font-family: PoppinsMed;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bottom-btn span{
+    font-family: PoppinsSemi;
+    color: white;
 }
 
 div#paymentModal {

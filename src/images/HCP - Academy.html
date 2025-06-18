@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- saved from url=(0034)http://127.0.0.1:5500/academy.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="Author" content="Paschal Ngaoka">
+    <meta name="Creator" content="Paschal Ngaoka">
+
+    <meta name="keywords" content="HCP, Higher Circuit Professional, Higher Circuit, Professionals,Teaching, Learning, Mentorship, Academy, Electronics, electrical academy, electrical, learn, electronics, and, electrical science, the art of crafting">
+
+    
+    
+
+    <title>HCP - Academy</title>
+<link rel="stylesheet" href="./HCP - Academy_files/style.css"><link rel="stylesheet" href="./HCP - Academy_files/animation.css"></head>
+
+<body class="fadeIn">
+    <div id="body">
+        <!-- HEADER OF THE WEBSITE -->
+        <header id="academy-header">
+            <div class="left">
+                <div class="company-image"><img src="http://127.0.0.1:5500/academy.html" alt=""></div>
+                <div class="company-title">
+                    <p class="upper">HCP</p>
+                    <p class="lower">ACADEMY</p>
+                </div>
+            </div>
+
+            <div class="right">search</div>
+        </header>
+
+        <!-- FOR THE BANNER OF THE ACADEMY PAGE  -->
+        <div id="academy-banner" class="section">
+            <div class="leftIntro circle"></div>
+            <div class="rightIntro angle"></div>
+            
+            <div class="banner-left">
+                <p class="catchy">Learn <span class="highlight">everything</span> you need to know</p>
+                <p class="under">Electronics, Electrical Science &amp; Embeeded systems</p>
+
+                <div class="bottom"><button id="register" title="REGISTER">REGISTER</button></div>
+
+                <div class="contact">
+                </div>
+            </div>
+
+            <div class="banner-image right">
+                <img src="http://127.0.0.1:5500/academy.html" alt="Banner Image" srcset="">
+            </div>
+        </div>
+
+        <!-- FOR THE FREE VIDEO PLAYING  -->
+        <div id="free-video" class="section">
+            <div class="video-title">
+                <p class="video-title-text">Check Out this Free Videos</p>
+                <p class="under">This covers a very comprehensive highlight and summary of the basics and all you need
+                    to know just for a start. This is not the main deal, You can <a href="http://127.0.0.1:5500/academy.html#register" class="register">Register</a> to have the full package and dig deep into the world of
+                    Electronics, Electrical Science and Embedded System.</p>
+            </div>
+
+            <div class="video-div">
+                <video src="/" controls="" loop=""></video>
+            </div>
+        </div>
+
+        <!-- FOR WHAT WE HAVE DONE ALREADY  -->
+        <div id="doings" class="section">
+
+        </div>
+
+        <div id="newsletter" class="section">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Enter your Full Name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" id="email" placeholder="Enter your Email">
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">WhatsApp Number</label>
+                    <input type="text" name="telephone" id="telephone" placeholder="Enter your WhatsApp Number">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="scroll-up">&gt;</div>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>

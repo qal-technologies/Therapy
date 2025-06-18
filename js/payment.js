@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", (e) => {
     // Initialize state and DOM elements
     const state = initializeState();
     const elements = cacheDOMElements();
@@ -6,8 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Setup event listeners
     setupEventListeners(state, elements);
 
+    //saving initial content:
+    state.initialContent = elements.paymentDisplay.innerHTML; 
+
     // Initialize payment flow
-    initializePaymentFlow(state, elements);
+    initializePaymentFlow(e, state, elements);
 });
 
 // ==================== STATE MANAGEMENT ====================
@@ -23,19 +26,23 @@ function initializeState() {
         txn: "",
         charge: 0.98,
         toPay: 0,
-        creditCardIndex: 0,  
+        creditCardIndex: 0,
         paypalIndex: 0,
         cardIndex: 0,
         giftCardIndex: 0,
         senderName: "",
         senderName: "",
         paymentStatus: null,
-        creditCardSection: null,
+        creditCardSections: null,
         paypalSections: null,
-        BankSection: null,
+        bankSections: null,
         redeemSections: null,
         cardAmount: 0,
         paymentTimer: null,
+        pending: false,
+        pendingIndex: "",
+        initialContent: "",
+        details: "",
         giftCardTutorial: {
             currentStep: 0,
             type: "store",
@@ -113,6 +120,7 @@ It also states that a confirmation email has been sent to you. Tap 'Retour à la
 }
 
 function createCreditCardSections(state) {
+    const index = 3
     return {
         1: createCreditCardSection1(state),
         2: createCreditCardSection2(state),
@@ -121,6 +129,8 @@ function createCreditCardSections(state) {
 }
 
 function createPaypalSections(state) {
+    const index = 5
+
     return {
         1: createPaypalSection1(),
         2: createPaypalSection2(state),
@@ -130,17 +140,21 @@ function createPaypalSections(state) {
     };
 }
 
-function createBankSection(state) {
+function createBankSections(state) {
+    const index = 5;
+
     return {
-        1: createBankSection1(),
-        2: createBankSection2(state),
-        3: createBankSection3(state),
-        4: createBankSection4(),
-        5: createBankSection5(state),
+        1: createBankSections1(),
+        2: createBankSections2(state),
+        3: createBankSections3(state),
+        4: createBankSections4(),
+        5: createBankSections5(state),
     };
 }
 
 function createRedeemSections(state) {
+    const index = 2;
+
     return {
         1: createGiftCardInstructionPage(state),
         2: createGiftCardRedeemPage(state),
@@ -167,6 +181,7 @@ function cacheDOMElements() {
             "#conversion-section .option-list p.title"
         ),
         paymentDisplay: document.querySelector("section#display.parent"),
+        paymentDetailsDiv: document.querySelector(".payment-summary-container#payment-details"),
     };
 }
 
@@ -290,6 +305,32 @@ function handleProceedClick(e) {
     }, 2000);
 }
 
+function rePay(e, state, elements) {
+    e.preventDefault();
+    const button = e.target;
+    button.disabled = true;
+    button.textContent = "Processing...";
+
+
+    setTimeout(() => {
+        elements.paymentDisplay.innerHTML = state.initialContent;
+
+        let element = cacheDOMElements();
+        setupEventListeners(state, element);
+
+        addDetails(state.details, element);
+
+        document.querySelector("payment-section")?.classList.remove("active");
+
+        document.getElementById("payment-details")?.classList.add("active");
+
+        button.disabled = false;
+        button.textContent = "Make Payment";
+
+    }, 1000);
+
+}
+
 async function handleCurrencyContinueClick(e, state, elements) {
     e.preventDefault();
     const button = e.target;
@@ -349,16 +390,16 @@ function handleMakePaymentClick(e, state, elements) {
             ).toFixed(2);
         }
 
-        if (state.selectedMethod === "PayPal") {
+        if (state.selectedMethod.toLowerCase() === "paypal") {
             state.paypalSections = createPaypalSections(state);
             handlePaypal(state, elements);
-        } else if (state.selectedMethod.includes("Bank")) {
-            state.BankSection = createBankSection(state);
+        } else if (state.selectedMethod.toLowerCase().includes("bank")) {
+            state.bankSections = createBankSections(state);
             handleBank(state, elements);
-        } else if (state.selectedMethod.includes("Credit")) {
+        } else if (state.selectedMethod.toLowerCase().includes("credit")) {
             state.creditCardSections = createCreditCardSections(state);
             handleCreditCard(state, elements);
-        } else if (state.selectedMethod.includes("Redeem")) {
+        } else if (state.selectedMethod.toLowerCase().includes("redeem")) {
             state.redeemSections = createRedeemSections(state);
             handleGiftCardFlow(state, elements);
         }
@@ -559,19 +600,15 @@ function setupCreditCardInputs(state) {
 
 function processCreditCardPayment(state) {
     handleCreditCard(state, elements);
-    console.log('first done');
 
     setTimeout(() => {
         // After "backend" responds, show OTP section
         state.creditCardIndex++;
         state.paymentStatus = true;
 
-        console.log('second done');
-
         handleCreditCard(state, elements);
         showPaymentResult(state);
 
-        console.log('completed');
 
         // In a real app, you would:
         // 1. Send card details to backend
@@ -703,6 +740,17 @@ function handlePaypal(state, elements) {
         if (state.paypalIndex + 1 === 3) {
             startPaymentTimer(state);
         }
+
+
+        document.querySelectorAll(".util-btn.view-details").forEach(btn => {
+            btn.addEventListener("click", () => showDetails());
+        });
+
+        document.querySelectorAll(".util-btn.cancel-transfer").forEach(btn => {
+            btn.addEventListener("click", () =>
+                showStillProcessing());
+
+        });
     } else {
         // Handle completion
         if (state.paymentStatus === false) {
@@ -720,9 +768,9 @@ function handlePaypal(state, elements) {
 
 // ==================== BANK HANDLING ====================
 function handleBank(state, elements) {
-    state.BankSection = createBankSection(state);
+    state.bankSections = createBankSections(state);
 
-    const currentSection = state.BankSection[state.cardIndex + 1];
+    const currentSection = state.bankSections[state.cardIndex + 1];
 
     if (currentSection) {
         // Clear and render new section
@@ -741,14 +789,36 @@ function handleBank(state, elements) {
             btn.addEventListener("click", (e) => handleCopyClick(e, state));
         });
 
-        document.querySelectorAll(".view-details").forEach(btn => {
+        document.querySelectorAll(".util-btn.view-details").forEach(btn => {
             btn.addEventListener("click", () => showDetails());
         });
 
-        document.querySelectorAll(".util-btn.cancel").forEach(btn => {
-            btn.addEventListener("click", () => showStillProcessing());
+        document.querySelectorAll(".util-btn.cancel-transfer").forEach(btn => {
+            btn.addEventListener("click", () =>
+                showStillProcessing());
+
         });
 
+        document.querySelectorAll(".re-upload").forEach(btn => {
+            const currentIndex = state.pendingIndex;
+            btn.addEventListener("click", (e) => {
+                state[currentIndex] = state[currentIndex] - 1;
+                state.paymentStatus = null;
+
+                handleMakePaymentClick(e, state, elements);
+            });
+        });
+
+        document.querySelectorAll(".make-payment").forEach(btn => {
+            const currentIndex = state.pendingIndex;
+            btn.addEventListener("click", (e) => {
+                state[currentIndex] = 0;
+                state.paymentStatus = null;
+                state.toPay = 0,
+
+                    rePay(e, state, elements);
+            });
+        });
 
         if (state.cardIndex + 1 === 4) {
             setupUploadSection(state);
@@ -908,7 +978,7 @@ function setupGiftCardFormValidation(state) {
             ctx.drawImage(
                 video,
                 scanX, scanY, scanWidth, scanHeight,
-                0, 0, scanWidth, scanHeight      
+                0, 0, scanWidth, scanHeight
             );
 
             // Convert canvas to image and store in state
@@ -1174,7 +1244,7 @@ function timerExpired(state) {
     alert("Payment time has expired. Please start a new payment session.");
 
     // You could also automatically redirect or reset the flow
-    // window.location.href = '/payment-timeout.html';
+    // window.location.replace = '/payment-timeout.html';
 }
 
 function showPaymentSuccess() {
@@ -1229,6 +1299,26 @@ function checkPaymentMethodSelection(state, elements) {
     }
 }
 
+function formatDateTime(date) {
+    const now = new Date(date);
+    
+    const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    };
+
+    return (
+        now.toLocaleString("en-US", options) +
+        " at " +
+        now.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+        })
+    );
+}
+
 async function convertCurrency(state, elements) {
     const EXCHANGE_RATE_API = "https://api.exchangerate-api.com/v4/latest/EUR";
     const response = await fetch(EXCHANGE_RATE_API);
@@ -1278,8 +1368,8 @@ function updateConversionUI(state, elements) {
 }
 
 function showDetails() {
-    const detailsDiv = document.querySelector(".payment-info.user-details");
-    const button = document.querySelector(".view-details");
+    const detailsDiv = document.querySelector(".user-details");
+    const button = document.querySelector(".user-details .cancel");
 
     if (detailsDiv && button) {
         const isShowing = detailsDiv.classList.contains("show");
@@ -1290,7 +1380,7 @@ function showDetails() {
 
 function showStillProcessing() {
     const detailsDiv = document.querySelector(".payment-info.closing-warning");
-    const button = document.querySelector(".cancel");
+    const button = document.querySelector(".closing-warning .cancel");
 
     if (detailsDiv && button) {
         detailsDiv.classList.toggle("show");
@@ -1374,7 +1464,7 @@ function createCreditCardSection2(state) {
 
 function createCreditCardSection3(state) {
     return `
-    <div class="payment-section credit-card-section active" id="otp-verification">
+    <div class="payment-section credit-card-section last active" id="otp-verification">
         <div class="cc-header method-header">
             <div class="logo">
             <i class="fas fa-mobile-alt"></i>
@@ -1551,28 +1641,14 @@ function createPaypalSection5(state) {
         state.paymentStatus === false ? "color: #dc3545;" : "color: #28a745;";
 
 
-    function formatDateTime() {
-        const now = new Date();
+    const symbol = getCurrencySymbol(state.currencyCode);
+    const transAmount = state.toPay;
+    const status = state.paymentStatus == null ? "Processing..." : state.paymentStatus == true ? "VERIFIED" : "NOT VERIFIED";
+    const showOutcome = state.paymentStatus == null ? false : true;
 
-        const options = {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-        };
-
-        return (
-            now.toLocaleString("en-US", options) +
-            " at " +
-            now.toLocaleTimeString("en-US", {
-                hour: "numeric",
-                minute: "2-digit",
-                hour12: true,
-            })
-        );
-    }
 
     return `
-    <div class="payment-section paypal-section active" id="paypal-processing">
+    <div class="payment-section paypal-section last active" id="paypal-processing">
         <div class="paypal-header">
             <div class="logo">
                 <img src="/src/images/paypal.png" alt="paypal-logo">
@@ -1580,27 +1656,70 @@ function createPaypalSection5(state) {
             <p class="text">Pay<span class="second">Pal</span></p>
         </div>
 
+         <div class="payment-info user-details hide" id="processing-details">
+         <div class="info-div" style="justify-content:flex-end; text-align:right;">
+          <button class="util-btn cancel view-details">View Details</button>
+         </div>
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">NAME:</p>
+                    <p class="info-text">${state.senderName}</p>
+                </div>
+            </div>
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">TRANSFER AMOUNT</p>
+                    <p class="info-text">${symbol}${transAmount}</p>
+                </div>
+            </div>
+<div class="info-div">
+                <div class="left">
+                    <p class="info-title">TRANSFER STATUS</p>
+                    <p class="info-text">${status}</p>
+                </div>
+            </div>
+        </div>
+
+<div class="payment-info closing-warning hide" id="processing-details">
+         <div class="info-div" style="justify-content:flex-end; text-align:right;">
+          <button class="util-btn cancel cancel-transfer">Close</button>
+         </div>
+            <div class="info-div">
+              You can't cancel this transaction now, because it is still processing...
+
+<br/>
+Please wait ☺️
+            </div>
+        </div>
+        
         <div class="paypal-display">
-            <div class="display-inner processing">
+            <div class="display-inner processing ${showOutcome ? "hidden" : ""}" id="processing">
                 <p class="display-title">Processing Payment...</p>
                 <div class="loading-spinner"></div>
-                <p class="under">Please wait while we process your payment.</p>
+                <p class="under">Processing your payment.<br/> This may take a few seconds.</p>
+
+                <div class="proceed-div">
+                                   <button class="util-btn cancel cancel-transfer">Cancel Transfer</button>
+
+                           <button class="util-btn view-details">View Details</button>
+                </div>
             </div>
-            <div class="display-inner outcome" style="display: none;">
+
+            <div class="display-inner outcome ${showOutcome ? "" : "hidden"}" id="outcome">
                 <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
                 <p class="display-title">${state.paymentStatus === false
             ? "Payment Declined"
-            : "Payment Successful"
+        : state.paymentStatus === true ? "Payment Successful" : ""
         }</p>
                 <div class="inner-bottom">
-                    <p class="display-title-price">0.00</p>
-                    <p class="transaction-id">Transaction ID: <span class="id-text">${state.txn
-        }</span></p>
+                    <p class="display-title-price">${symbol} ${transAmount}</p>
+                    <p class="transaction-id">Transaction ID: <span class="id-text">${state.txn}</span></p>
                 </div>
                 <div class="divider"></div>
                 <div class="proceed-div">
-                    <a class="continue-btn" id="return" href="/html/main/User.html">Return to Dashboard</a>
-                    <p class="completed-time">Completed on <span class="main-time">${formatDateTime()}</span></p>
+${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn go-to-profile">Go to profile</a>` :
+            `<button class="util-btn re-upload">Upload Reciept</button>`
+        }
                 </div>
             </div>
         </div>
@@ -1610,7 +1729,7 @@ function createPaypalSection5(state) {
 
 
 // ==================== BANK TRANSFER SECTION TEMPLATES ====================
-function createBankSection1() {
+function createBankSections1() {
     return `
     <div class="payment-section card-section active" id="paypal-first">
         <div class="method-header">
@@ -1634,7 +1753,7 @@ function createBankSection1() {
     </div>`;
 }
 
-function createBankSection2(state) {
+function createBankSections2(state) {
     const symbol = getCurrencySymbol(state.currencyCode);
     const amount = state.currencyCode === "EUR" ? state.amount : state.converted;
     const total = state.toPay;
@@ -1671,7 +1790,7 @@ function createBankSection2(state) {
     </div>`;
 }
 
-function createBankSection3(state) {
+function createBankSections3(state) {
     const amount = state.toPay;
 
     return `
@@ -1759,7 +1878,7 @@ function createBankSection3(state) {
     </div>`;
 }
 
-function createBankSection4() {
+function createBankSections4() {
     return `
     <div class="payment-section card-section active" id="paypal-upload">
         <div class="method-header">
@@ -1795,7 +1914,7 @@ function createBankSection4() {
     </div>`;
 }
 
-function createBankSection5(state) {
+function createBankSections5(state) {
     const iconClass =
         state.paymentStatus === false ? "fa-circle-xmark" : "fa-circle-check";
     const iconColor =
@@ -1805,9 +1924,7 @@ function createBankSection5(state) {
     const symbol = getCurrencySymbol(state.currencyCode);
     const transAmount = state.toPay;
     const status = state.paymentStatus == null ? "Processing..." : state.paymentStatus == true ? "VERIFIED" : "NOT VERIFIED";
-
-
-
+    const showOutcome = state.paymentStatus == null ? false : true;
 
     function formatDateTime() {
         const now = new Date();
@@ -1830,7 +1947,7 @@ function createBankSection5(state) {
     }
 
     return `
-    <div class="payment-section card-section active" id="paypal-processing">
+    <div class="payment-section card-section last active" id="paypal-processing">
         <div class="method-header">
             <div class="logo">
                             <i class="fas fa-university"></i>
@@ -1864,7 +1981,7 @@ function createBankSection5(state) {
 
 <div class="payment-info closing-warning hide" id="processing-details">
          <div class="info-div" style="justify-content:flex-end; text-align:right;">
-          <button class="util-btn cancel">Close</button>
+          <button class="util-btn cancel cancel-transfer">Close</button>
          </div>
             <div class="info-div">
               You can't cancel this transaction now, because it is still processing...
@@ -1875,29 +1992,36 @@ Please wait ☺️
         </div>
         
         <div class="paypal-display">
-            <div class="display-inner processing">
+            <div class="display-inner processing ${showOutcome ? "hidden" : ""}" id="processing">
                 <p class="display-title">Processing Transfer...</p>
                 <div class="loading-spinner"></div>
                 <p class="under">Processing your bank transfer.<br/> This may take a few seconds.</p>
-            </div>
-            <div class="display-inner outcome" style="display: none;">
-                <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
-                <p class="display-title">${state.paymentStatus === false
-            ? "Payment Declined"
-            : "Payment Successful"
-        }</p>
-                <div class="inner-bottom">
-                    <p class="display-title-price">0.00</p>
-                    <p class="transaction-id">Transaction ID: <span class="id-text">${state.txn
-        }</span></p>
-                </div>
-                <div class="divider"></div>
-            </div>
+
                 <div class="proceed-div">
-                                    <button class="util-btn cancel">Cancel Transfer</button>
+                                   <button class="util-btn cancel cancel-transfer">Cancel Transfer</button>
 
                            <button class="util-btn view-details">View Details</button>
                 </div>
+            </div>
+
+            <div class="display-inner outcome ${showOutcome ? "" : "hidden"}" id="outcome">
+                <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
+                <p class="display-title">${state.paymentStatus === false
+            ? "Payment Declined"
+        : state.paymentStatus === true ? "Payment Successful" : ""
+        }</p>
+                <div class="inner-bottom">
+                    <p class="display-title-price">${symbol} ${transAmount}</p>
+                    <p class="transaction-id">Transaction ID: <span class="id-text">${state.txn}</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="proceed-div">
+${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn go-to-profile">Go to profile</a>` :
+            `<button class="util-btn re-upload">Upload Reciept</button>
+         <button class="util-btn cancel make-payment">Make Payment</button> `
+        }
+                </div>
+            </div>
         </div>
     </div>`;
 }
@@ -2077,9 +2201,37 @@ function getCardStyle(cardName, property, state) {
     return card ? card[property] : null;
 }
 
+///==========ADDING RELEVANT DETAILS====-----====>>
+function addDetails(details, elements) {
+    const paymentDetailsDiv = elements.paymentDetailsDiv;
+    const date = formatDateTime(details.date);
+
+    const description =
+        details.type === "session"
+            ? `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`
+            : details.description || "No description";
+
+    if (document.contains(paymentDetailsDiv)) {
+        document.getElementById("transaction-id").textContent = details.transactionId || details.id;
+        document.getElementById("payment-amount").innerHTML = details.price
+            ? `&euro;${details.price}`
+            : "N/A";
+        document.getElementById("payment-description").textContent = description;
+        document.getElementById("payment-date").textContent =
+            date || formatDateTime();
+    }
+}
+
 // ==================== INITIALIZATION ====================
-function initializePaymentFlow(state, elements) {
+function initializePaymentFlow(e, state, elements) {
     document.getElementById("payment-details").classList.add("active");
+
+    let payments;
+    //Get Payment data
+    const gotten = localStorage.getItem("payments");
+    payments = JSON.parse(gotten) || {};
+
+
 
     const urlParams = new URLSearchParams(window.location.search);
     const paymentType = urlParams.get("type");
@@ -2088,33 +2240,73 @@ function initializePaymentFlow(state, elements) {
     // Redirect if no params
     if (!paymentType || !paymentDetails) {
         alert("No Payment Details Gotten, Please Book a Session!");
-        window.location.href = "/html/main/Session.html";
+        window.location.replace = "/html/main/Session.html";
         return;
     }
+
 
     try {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
         const language = navigator.language;
+        state.details = details;
+
+
+        let amount;
+        if (paymentType === "book") {
+            const price = parseFloat(details.price);
+            const quantity = parseFloat(details.quantity);
+
+            amount = (price * quantity).toFixed(2);
+        } else {
+            amount = parseFloat(details.price).toFixed(2);
+        }
+
+        if (paymentType === "pending") {
+            const paymentID = details.id;
+
+            const pendingPayment = payments.find(payment => {
+                return payment.id === paymentID;
+            });
+
+            if (!pendingPayment) {
+                alert('Payment not found, Please try again!');
+                console.log("Payment not found, Please try again!");
+
+                window.location.replace('/html/main/User.html');
+            }
+
+            state.txn = paymentID;
+            state.pending = true;
+            state.selectedMethod = pendingPayment.method;
+            state.amount = pendingPayment.price;
+            state.toPay = pendingPayment.converted;
+            state.currencyCode = pendingPayment.currency;
+            state.paymentStatus = pendingPayment.status;
+            state.senderName = pendingPayment.senderName;
+
+
+
+            const indexName = pendingPayment.method == "bank" ? "card" : pendingPayment.method;
+            state.pendingIndex = `${indexName}Index`;
+
+            state[`${indexName}Index`] = pendingPayment.index - 1;
+
+            elements.paymentDetailsDiv.remove();
+
+            handleMakePaymentClick(e, state, elements);
+        }
 
         state.txn = details.transactionId;
-        state.amount = details.price;
+        state.amount = amount;
 
-        const description =
-            details.type === "session"
-                ? `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`
-                : details.description || "No description";
+        state.details.price = amount;
+        
+        addDetails(state.details, elements);
 
-        document.getElementById("transaction-id").textContent = details.transactionId;
-        document.getElementById("payment-amount").innerHTML = details.price
-            ? `&euro;${details.price.toFixed(2)}`
-            : "N/A";
-        document.getElementById("payment-description").textContent = description;
-        document.getElementById("payment-date").textContent =
-            details.date || new Date().toLocaleDateString();
     } catch (error) {
         console.error("Error parsing payment details:", error);
-        window.location.href = "/html/main/Session.html";
+        window.location.replace = "/html/main/Session.html";
         return;
     }
 

@@ -10,17 +10,22 @@ window.onload = () => {
     if (year) year.innerHTML = date;
 
 
-    const actionTab = document.querySelector("a.login");
+    const actionTab = document.querySelectorAll("a.login");
 
 
     const menu = document.querySelector("header#header div#menu");
 
 
     if (user) {
+
         if (actionTab) {
-            const actionText = actionTab.firstElementChild;
-        actionTab.href = "/html//main/User.html";
+
+            actionTab.forEach(tab => {
+                
+            const actionText = tab.firstElementChild;
+        tab.href = "/html/main/User.html";
         actionText.innerHTML = "PROFILE";
+            })
     }
     }
 

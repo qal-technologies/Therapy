@@ -1,211 +1,294 @@
 // Generate random user data
 const userEmail = "user" + Math.floor(Math.random() * 1000) + "@example.com";
-const joinDate = new Date();
-joinDate.setMonth(joinDate.getMonth() - Math.floor(Math.random() * 12));
+const userName = "John Doe";
 
-// Set user profile
-document.getElementById('userEmail').textContent = userEmail || "user123@gmail.com";
-document.getElementById('joinDate').textContent = joinDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+//Create user object:
+const userObj = {
+    email: userEmail,
+    name: userName,
+}
 
-// Generate profile avatar
-const profileAvatar = document.getElementById('profileAvatar');
-const firstLetter = userEmail.charAt(0).toUpperCase();
-const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
-const randomColor = colors[Math.floor(Math.random() * colors.length)];
+// Payslip modal functionality
+const modal = document.getElementById('payslipModal');
 
-profileAvatar.textContent = firstLetter;
-profileAvatar.style.backgroundColor = randomColor;
+function getCurrencySymbol(currencyCode) {
+    const symbols = {
+        EUR: "€",
+        USD: "$",
+        CAD: "$",
+        AUD: "$",
+        GBP: "£",
+        CHF: "₣",
+    };
+    return symbols[currencyCode] || currencyCode;
+}
 
-// Payment data
-const payments = [
+const storedPayments = [
     {
-        id: 'PAY-' + Math.floor(Math.random() * 1000000),
-        type: 'Virtual Session',
-        date: new Date(2023, 5, 15),
-        amount: '800.00',
-        status: 'completed',
-        description: '1-hour virtual healing session'
-    },
-    {
-        id: 'PAY-' + Math.floor(Math.random() * 1000000),
-        type: 'In-Person Session',
+        id: "TXN-1239796-GR",
+        paymentType: "session",
+        title: 'Inner Circle',
+        price: "200.00",
+        currency: "AUD",
+        converted: "189",
+        method: "creditCard",
+        status: true,
+        statusName: "Completed",
+        senderName: "Paschal Ngaoka",
+        date: new Date(2024, 5, 4),
+        description: "Premium healing experience",
+        index: 3,
+    }, {
+        id: "TXN-149656-GR",
+        paymentType: "book",
+        title: 'Best Therapy Book',
+        price: '550.00',
+        currency: "CHF",
+        converted: "790",
+        method: "bank",
+        status: false,
+        statusName: "Failed",
+        senderName: "John Doe",
+        date: new Date(2025, 4, 10),
+        description: "Best relief book you'll ever read",
+        index: 5,
+    }, {
+        id: "TXN-123456-EN",
+        paymentType: "session",
+        title: 'Virtual Session',
+        price: '800.00',
+        currency: "GBP",
+        converted: "1200.00",
+        method: "paypal",
+        status: null,
+        statusName: "Pending",
+        senderName: "Lucy Jay",
+        description: '1-hour virtual healing session',
+        date: new Date(2025, 2, 1),
+        index: 5
+    }, {
+        id: 'TXN-03964283-ES',
+        paymentType: 'session',
+        title: 'In-Person Session',
+        price: '1600.00',
+        currency: "CHF",
+        converted: "2400",
+        method: "paypal",
+        status: true,
+        statusName: 'Completed',
+        senderName: "Johnson Alfred",
+        description: '2-hour in-person session in Monaco',
         date: new Date(2023, 6, 2),
-        amount: '1600.00',
-        status: 'completed',
-        description: '2-hour in-person session in Monaco'
+        index: 5
     },
-    {
-        id: 'PAY-' + Math.floor(Math.random() * 1000000),
-        type: 'Community Session',
-        date: new Date(2023, 6, 20),
-        amount: '550.00',
-        status: 'pending',
-        description: 'Accessible healing session'
-    },
-    {
-        id: 'PAY-' + Math.floor(Math.random() * 1000000),
-        type: 'Inner Circle',
-        date: new Date(2023, 4, 10),
-        amount: '$6,850.00',
-        status: 'failed',
-        description: 'Premium healing experience'
-    }
-];
+]
 
-// Render payment cards
-const paymentsGrid = document.getElementById('paymentsGrid');
+localStorage.setItem("payments", JSON.stringify(storedPayments));
 
-payments.forEach(payment => {
-    const paymentCard = document.createElement('div');
-    paymentCard.className = 'payment-card';
 
-    let statusClass = '';
-    if (payment.status === 'completed') statusClass = 'status-completed';
-    else if (payment.status === 'pending') statusClass = 'status-pending';
-    else statusClass = 'status-failed';
+let payments;
+//Get Payment data
+const gotten = localStorage.getItem("payments");
+payments = JSON.parse(gotten) || {};
 
-    paymentCard.innerHTML = `
+
+if (userObj && payments) {
+    // Set user profile:
+    document.getElementById('userEmail').textContent = userObj.email || "user123@gmail.com";
+    document.getElementById('full-name').textContent = userObj.name;
+
+    //get all necessary parameters:
+    const firstLetter = userObj.name.charAt(0).toUpperCase();
+    const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+
+    // Generate and set profile avatar
+    const profileAvatar = document.getElementById('profileAvatar');
+    profileAvatar.textContent = firstLetter;
+    profileAvatar.style.backgroundColor = randomColor;
+
+    //cart data:
+    const carts = [
+        {
+            id: "01",
+            type: "book",
+            description: "something short",
+            title: "Book 1",
+            price: "2.00",
+            date: new Date(2025, 5, 15),
+            quantity: 2,
+            transactionId: "TXN-622134WER-FR"
+        },
+        {
+            id: "02",
+            type: "book",
+            description: "something about the book or author",
+            title: "Book 2",
+            price: "9.40",
+            date: new Date(2025, 4, 10),
+            quantity: 1,
+            transactionId: "TXN-1998255-ES"
+        },
+        {
+            id: "03",
+            type: "book",
+            description: "all about this book here",
+            title: "Book 3",
+            price: "3.80",
+            date: new Date(2023, 5, 15),
+            quantity: 3,
+            transactionId: "TXN-1256789-GR"
+        }, {
+            id: "04",
+            type: "book",
+            description: "book description",
+            title: "Book 4",
+            price: "6.99",
+            date: new Date(2023, 5, 15),
+            quantity: 1,
+            transactionId: "TXN-0988765-EN"
+        }
+    ];
+
+    const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
+        count.innerHTML = carts.length;
+    });
+
+    // Render payment cards:
+    const paymentsGrid = document.getElementById('paymentsGrid');
+
+    payments.forEach(payment => {
+        const paymentCard = document.createElement('div');
+        paymentCard.className = 'payment-card';
+
+        let statusClass = '';
+        if (payment.status === true) statusClass = 'status-completed';
+        else if (payment.status === false) statusClass = 'status-pending';
+        else statusClass = 'status-failed';
+
+        paymentCard.innerHTML = `
                 <div class="payment-header">
                     <span class="payment-code">${payment.id}</span>
-                    <span class="payment-status ${statusClass}">${payment.status.toUpperCase()}</span>
+                    <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
                 </div>
-                <div class="payment-type">${payment.type}</div>
+                <div class="payment-type">${payment.title.toUpperCase()}</div>
                 <div class="payment-details">
                     <div class="payment-detail">
                         <span class="detail-label">Date:</span>
-                        <span class="detail-value">${payment.date.toLocaleDateString()}</span>
+                        <span class="detail-value">${new Date(payment.date).toLocaleDateString()}</span>
                     </div>
                     <div class="payment-detail">
                         <span class="detail-label">Amount:</span>
                         <span class="detail-value">
-                        &euro; ${payment.amount}</span>
+                        &euro; ${parseFloat(payment.price).toFixed(2)}</span>
                     </div>
                 </div>
             `;
 
-    paymentCard.addEventListener('click', () => {
-        if (payment.status === 'completed' || payment.status === 'failed') {
-            showPayslip(payment);
+        paymentCard.addEventListener('click', () => {
+            if (payment.status === true) {
+                showPayslip(payment);
+            } else {
+                const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
+
+                setTimeout(() => {
+                    window.location.href = `/html/main/payment.html?${params}`;
+                }, 1000)
+            }
+        });
+
+        if (payments.length < 1) {
+            paymentsGrid.style.display = "flex";
+
+            paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
         } else {
-            window.location.href = `/payment?code=${payment.id}`;
+            paymentsGrid.appendChild(paymentCard)
         }
     });
 
-    paymentsGrid.appendChild(paymentCard);
-});
 
-// Payslip modal functionality
-const modal = document.getElementById('payslipModal');
-const closeModal = document.getElementById('closeModal');
+    const closeModal = document.getElementById('closeModal');
 
-function showPayslip(payment) {
-    const icon = document.getElementById('icon');
-    icon.classList.add(`${payment.status.toLowerCase()}`);
-    icon.textContent = payment.status.toUpperCase();
+    function showPayslip(payment) {
+        const icon = document.getElementById('icon');
+        icon.classList.add(`${payment.statusName.toLowerCase()}`);
+        icon.innerHTML += payment.statusName.toUpperCase();
+        const symbol = getCurrencySymbol(payment.currency)
 
-    document.getElementById('receiptId').textContent = payment.id;
-    document.getElementById('receiptType').textContent = payment.type;
-    document.getElementById('receiptAmount').textContent = payment.amount;
-    document.getElementById('receiptStatus').textContent = payment.status.charAt(0).toUpperCase() + payment.status.slice(1);
-    document.getElementById('receiptDescription').textContent = payment.description;
-    document.getElementById('receiptDate').textContent = 'Date: ' + payment.date.toLocaleDateString();
+        document.getElementById('receiptId').textContent = payment.id;
+        document.getElementById('receiptType').textContent = payment.title;
+        document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
+        document.getElementById('receiptMethod').textContent = payment.method;
+        document.getElementById('receiptCurrency').textContent = payment.currency;
+        document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
+        document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
+        document.getElementById('receiptDescription').textContent = payment.description;
+        document.getElementById('receiptDate').textContent = 'Date: ' + new Date(payment.date).toLocaleDateString();
 
-    modal.style.display = 'flex';
+        modal.style.display = 'flex';
+    }
+
+
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    const cartContainer = document.querySelector("div.cart-container");
+
+    carts.forEach(cart => {
+        const cartDiv = document.createElement("div");
+        cartDiv.classList.add("cart-div");
+
+        cartDiv.innerHTML = `
+	<div class="upper">
+		<p class="cart-title">${cart.title.toUpperCase()}</p>
+		<p class="cart-date">${cart.date.toLocaleDateString().replaceAll("/", "-")}</p>
+	</div>
+
+	<div class="lower">
+		<p class="description">${cart.description}.</p>
+
+		<div class="under">
+			<div class="right">
+				<p class="cart-price">${parseFloat(cart.price).toFixed(2)}</p>
+		<p class="quantity-div"> Quantity: <span class="quantity">${cart.quantity}</span></p>
+			</div>
+				<button class="continue-purchase" title="Continue Purchase">Pay</button>
+		</div>
+	</div>
+        `
+
+        const payButton = cartDiv.querySelector("button.continue-purchase");
+
+        cartDiv.addEventListener("click", () => {
+            window.location.href = "/html/main/Shop.html";
+        });
+
+        payButton.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const params = new URLSearchParams({
+                type: "book", details: JSON.stringify(cart)
+            });
+
+            setTimeout(() => {
+                window.location.href = `/html/main/Payment.html?${params}`
+            }, 800);
+        });
+
+        if (carts.length < 1) {
+            cartContainer.style.display = "flex";
+
+            cartContainer.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Cart Yet</p>`
+        } else {
+            cartContainer.appendChild(cartDiv)
+        }
+    });
+
+
 }
-
-
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    // Reset icon class
-});
-
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.style.display = 'none';
     }
-});
-
-// FAQ data
-const faqs = [
-    { question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation — raw, compassionate, and transformative — designed to help you reconnect with your inner truth." },
-    {
-        question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
-    },
-    {
-        question: "Can I book if I live outside Europe?", answer: "Yes! You can book a virtual session from anywhere in the world. If you wish to attend in person, you’re warmly welcome to travel to Europe (Monaco) for your session."
-    }, {
-        question: "What happens after I make a payment?",
-        answer: "Once your payment is verified, you’ll receive a confirmation message, and your booking will be officially secured. From there, you’ll receive full session details and preparation instructions."
-    }, {
-        question: "Can I sponsor someone else’s healing?",
-        answer: "Yes. If you’d like to gift a session to someone in need, you can select the Sponsor a Session option at checkout. Your generosity could change a life."
-    }, {
-        question: "Are the books available worldwide?",
-        answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
-    },
-    {
-        question: "Why do you accept gift cards as a payment method?", answer: "Gift cards allow fans from all over the world — regardless of country or banking restrictions — to easily and securely support their healing journey. They also help us confirm your place faster and securely."
-    }
-];
-
-// Render FAQs
-const FAQ = document.querySelector("section#faq div.answers");
-
-FAQ.innerHTML = faqs.map((faq) => {
-    const checks = () => {
-        if (faq.extra) {
-            return `
-				<a class="extra" target="_blank" href="${faq.extra.link}">
-				${faq.extra.text.toLowerCase()}
-				</a>
-				`;
-        } else {
-            return "";
-        }
-    };
-    return `
-		     <div class="answer">
-            <div class="upper">
-              <p class="question">${faq.question}?</p>
-
-              <p class="open">></p>
-            </div>
-            <div class="lower">
-            ${faq.answer}
-			 ${checks()}
-            </div>
-          </div>
-		`;
-}).join("");
-
-const questions = document.querySelectorAll(
-    " section#faq div.answer"
-);
-
-questions.forEach((question) => {
-    const upper = question.querySelector(".upper");
-    const lower = question.querySelector(".lower");
-    const arrow = question.querySelector(".open");
-
-    lower.style.maxHeight = "0px";
-    arrow.style.transform = "rotate(0deg)";
-
-    upper.addEventListener("click", () => {
-        const isOpen = lower.style.maxHeight !== "0px";
-
-        if (isOpen) {
-            lower.style.maxHeight = "0px";
-            arrow.style.transform = "rotate(0deg)";
-        } else {
-            document.querySelectorAll(".lower").forEach((l) => {
-                l.style.maxHeight = "0px";
-            });
-            document.querySelectorAll(".open").forEach((a) => {
-                a.style.transform = "rotate(0deg)";
-            });
-
-            lower.style.maxHeight = "300px";
-            arrow.style.transform = "rotate(90deg)";
-        }
-    });
 });

@@ -72,7 +72,6 @@
 					<p id="nav-text">ABOUT</p>
 				</a>
 				<a class="login">
-					
 					<p class="login-text">REGISTER</p>
 				</a>
 			</div>
@@ -81,10 +80,23 @@
 			<div id="container" class="container">
 				<!-- User Profile Section -->
 				<section class="profile-section">
-					<div class="profile-avatar" id="profileAvatar"></div>
-					<div class="profile-info">
-						<h2 id="userEmail">user@example.com</h2>
-						<p>Member since <span id="joinDate">January 2023</span></p>
+					<div class="left">
+						<div class="profile-avatar" id="profileAvatar"></div>
+						<div class="profile-info">
+							<h2 id="full-name">John Doe</h2>
+							<p id="userEmail">user@example.com</p>
+						</div>
+					</div>
+
+					<div class="others">
+					<a href="#cart-section"  title="View Cart" class="cart-button"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart4"
+						viewBox="0 0 16 16">
+						<path
+							d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+					</svg>
+					
+					<span class="cart-count"></span>
+					</a>
 					</div>
 				</section>
 			
@@ -95,47 +107,12 @@
 						<!-- Payment cards will be inserted here by JavaScript -->
 					</div>
 				</section>
-				
-				<section id="discover">
-				
-					<div class="parent">
-						<p class="text">
-							Discover insights and tools for navigating a world on edge at
-							<i style="font-weight: bold">Healing with Charlotte Casiraghi</i>.
-						</p>
-				
-						<a id="login" href="/html/regs/Sessions.html">CHECK SESSIONS</a>
-					</div>
-				</section>
-				<!-- FAQ Section -->
-				<section id="faq">
-					<div class="title">Frequently Asked Questions</div>
-				
-					<div class="answers"></div>
-				
-					<div class="bottom">
-						For any additional questions, please review our complete
-						<a href="/html/main/FAQ.html" class="faq"><span class="highlight">FAQs</span></a> or
-						contact
-						<a target="_blank" rel="noopener noreferrer" href="mailto:healingwithcharlottecasiraghi@gmail.com" class="faq">
-							<span class="highlight">healingwithcharlottecasiraghi@gmail.com</span></a>
-					</div>
-				</section>
-				
-				<section id="newsletter">
-					<div class="container">
-						<h2>Stay Connected with Charlotte</h2>
-						<p class="subtext">Receive healing insights, exclusive updates, and special offers directly to your inbox</p>
-				
-						<form class="newsletter-form">
-							<input type="email" placeholder="Enter your email address" required
-								aria-label="Email address for newsletter">
-							<button type="submit">
-								<p class="text">Subscribe</p>
-								<p class="svg">>></p>
-							</button>
-						</form>
-					</div>
+
+				<section class="cart-section" id="cart-section">
+				<h2 class="section-title">My Cart <span class="cart-count">0</span></h2>
+
+<div class="cart-container">
+</div>
 				</section>
 				
 				<!-- Payslip Modal -->
@@ -145,7 +122,11 @@
 						<div class="payslip-header">
 							<h2 class="payslip-title">Payment Receipt</h2>
 						<div id="icon">
-							success
+							<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle-fill"
+								viewBox="0 0 16 16">
+								<path
+									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+							</svg>
 						</div>
 							<p id="receiptDate">Date: </p>
 						</div>
@@ -159,61 +140,40 @@
 								<span id="receiptType"></span>
 							</div>
 							<div class="payslip-row">
+								<span>Description:</span>
+								<span id="receiptDescription"></span>
+							</div>
+							<div class="payslip-row">
 								<span>Amount:</span>
 								<span id="receiptAmount"></span>
 							</div>
+
+							<div class="payslip-row">
+								<span>Currency:</span>
+								<span id="receiptCurrency"></span>
+							</div>
+
+							<div class="payslip-row">
+								<span>Converted To:</span>
+								<span id="receiptConverted"></span>
+							</div>
+
+							<div class="payslip-row">
+								<span>Method:</span>
+								<span id="receiptMethod"></span>
+							</div>
+
 							<div class="payslip-row">
 								<span>Status:</span>
 								<span id="receiptStatus"></span>
 							</div>
-							<div class="payslip-row">
-								<span>Description:</span>
-								<span id="receiptDescription"></span>
-							</div>
+
+							
 						</div>
 					</div>
 				</div>
 				</div>
-
-				 <footer>
-        <div class="upper">
-          <p class="name">Charlotte Casiraghi</p>
-          <div class="navs">
-            <a class="nav" href="/html/main/Home.html" >HOME</a>
-            <a class="nav" href="/html/main/Session.html">SESSIONS</a>
-            <a class="nav" href="/html/main/Courses.html">COURSES</a>
-            <a class="nav" href="/html/main/Shop.html">BOOKS</a>
-            <a class="nav" href="/html/main/About.html">ABOUT</a>
-            <a href="/html//regs/Signup.html" class="login nav">
-              <p class="login-text">REGISTER</p>
-            </a>
-          </div>
-        </div>
-
-<div class="others">
-<a href="/html/main/FAQ.html">FAQ</a>
-
-<a href="/html/main/Privacy.html">PRIVACY POLICY</a>
-
-<a href="/html/main/Donation.html">DONATION</a>
-
-<a href="mailto:healingwithcharlottecasiraghi@gmail.com">EMAIL US</a>
-</div>
-
-        <div class="copyright">
-          Copyright &copy; <span id="year">2025</span>
-        </div>
-      </footer>
 			</div>
-
-	<a id="scrollUp" href="#container" title="Scroll Up" class="moveUpNfadeIn">
-		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--link)" class="up" viewBox="0 0 16 16">
-			<path fill-rule="evenodd"
-				d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708z" />
-			<path fill-rule="evenodd"
-				d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
-		</svg>
-	</a>
 	</body>
 </html>
 

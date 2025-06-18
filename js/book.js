@@ -306,22 +306,6 @@ DOM.acceptRadio.disabled = false;
     proceedButton.addEventListener('click', () => {
       if (!DOM.acceptRadio.checked) return;
 
-function formatDateTime() {
-  const now = new Date();
-
-  const options = {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric', 
-  };
-
-  return now.toLocaleString('en-US', options) + ' at ' + now.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true
-  });
-}
-
       const language = navigator.language;
 
       const transactionId = `TXN-${Math.random()
@@ -334,8 +318,8 @@ function formatDateTime() {
         type: "session",
         description: session.description,
         title: session.name,
-        price: parseInt(session.price.replace(',', '')),
-        date: formatDateTime(),
+        price: parseFloat(session.price.replace(',', '')),
+        date: new Date(),
         transactionId: transactionId,
       };
 

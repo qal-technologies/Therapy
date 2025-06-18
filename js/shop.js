@@ -8,6 +8,8 @@ const State = {
     }
 };
 
+let quantity = 1;
+
 // Book Data
 const BOOKS = [
     {
@@ -48,23 +50,49 @@ function renderBooks() {
         alt="${book.title}"
         id="${book.id}"
       >
-      <div class="book-info">
-        <svg class="favorite-btn" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
+      <div class="book-info" id="book-info">
+      <button class="favorite-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-to-cart" viewBox="0 0 16 16">
+  <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+</svg>
+</button>
         <div class="upper">
             <h3>${book.title}</h3>
             <h4>&euro; ${book.price}</h4>
         </div>
         <p>${book.description}</p>
       </div>
+
+      <div class="favorite-btn bottom-btn"> Add to cart  <span>+</span></div>
     </div>
   `).join('');
 
-    // Add click handlers
-    document.querySelectorAll('.book-card').forEach(card => {
+    // // Add click handlers
+    document.querySelectorAll('.book-image').forEach(card => {
         card.addEventListener('click', handleBookClick);
     });
+
+    document.querySelectorAll(".favorite-btn").forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const bookTitle = e.currentTarget.parentElement.querySelector(".upper h3").textContent;
+
+
+            btn.classList.toggle("clicked");
+            const active = btn.classList.contains("clicked");
+            const icon = e.currentTarget;
+            const BUTTON =icon.tagName == "BUTTON";
+
+           BUTTON ? active  ? [
+                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-to-cart" viewBox="0 0 16 16">
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/></svg>`, alert(`Item (${bookTitle}) added to cart!`)] : [
+                    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-to-cart" viewBox="0 0 16 16">
+  <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg>`
+                , alert(`Item (${bookTitle}) removed from cart!`)] : ""
+        });
+    });
+
 }
 
 // Handle Book Click
@@ -81,20 +109,13 @@ function handleBookClick(e) {
     window.location.href = `/html/main/read.html?id=${bookId}`;
 }
 
-function formatDateTime() {
-    const now = new Date();
-
-    const options = {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-    };
-
-    return now.toLocaleString('en-US', options) + ' at ' + now.toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: '2-digit',
-        hour12: true
-    });
+// for quantitySelection :
+function selectQuantity() {
+    quantity++;
+}
+// reseting quantity:
+function resetQuantity() {
+    quantity = 1;
 }
 
 // Show Payment Modal
@@ -115,11 +136,12 @@ function showPaymentModal(bookId) {
     const details = {
         id: bookId,
         type: "book",
-        description: `PURCHASE OF BOOK (${book.title}) - ${book.description}`,
+        description: `PURCHASE OF BOOK (${book.title}) - ${book.description} ${quantity > 1 ? "[2 Copies]" : ''}`,
         title: book.title,
         price: book.price,
-        date: formatDateTime(),
+        date: new Date(),
         transactionId: transactionId,
+        quantity: quantity,
     };
 
     const params = new URLSearchParams({
