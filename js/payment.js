@@ -2083,7 +2083,7 @@ function createGiftCardTutorialSection(state) {
     <div class="payment-section active tutorial-section" id="gift-card-tutorial">
         <div class="tutorial-header">
         <div class="header-top">
-            <p>How to Redeem Gift Cards</p>
+            <p>How to get and use a Giftcard</p>
             <button class="close-tutorial">&times;</button>
         </div>
         <div class="tutorial-tab">
@@ -2128,7 +2128,7 @@ function createGiftCardRedeemPage(state) {
             <div class="form-group">
                 <label for="gift-card-code">Gift Card Code</label>
                 <div class="input-with-scan">
-                    <input type="text" id="gift-card-code" placeholder="Enter code" ${state.scannedImage ? 'disabled' : ''}>
+                    <input type="text" id="gift-card-code" placeholder="Enter code">
                     <button class="scan-btn" id="scan-code-btn" ${state.scannedImage ? 'disabled' : ''}>
                         <i class="fas fa-camera"></i> Scan Code
                     </button>

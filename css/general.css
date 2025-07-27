@@ -250,14 +250,7 @@ div#back-button {
   left: 20px;
   border: 0.5px solid var(--accent);
   cursor: pointer;
-}
 
-div#back-button:active, div#back-button:hover{
-  transform: scale(85%);
-  border-color: var(--link);
-}
-
-.button {
   background-color: var(--accentTrans);
   padding: 10px;
   width: 40px;
@@ -270,6 +263,32 @@ div#back-button:active, div#back-button:hover{
   place-items: center;
   font-size: 25px;
   font-weight: bolder;
+  z-index: 999999;
+}
+
+div#refresh-button {
+  right: 20px;
+  position: absolute;
+  top: 20px;
+  border: 0.5px solid var(--accentTrans);
+  cursor: pointer;
+
+  background-color: var(--primary);
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: var(--link);
+  display: flex;
+  place-content: center;
+  place-items: center;
+  font-size: 25px;
+  font-weight: bolder;
+  z-index: 999999;
+}
+
+div#back-button:active, div#back-button:hover, div#refresh-button:active, div#refresh-button:hover {
+  transform: scale(85%);
+  border-color: var(--link);
 }
 
 span.highlight {
