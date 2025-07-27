@@ -9,7 +9,7 @@ section.parent {
     background-color: #ebebeb;
     background-color: white;
     position: relative;
-    padding-top: 25px;
+    margin-top: 25px;
     font-family: PoppinsLight;
     overflow-y: scroll;
 }
