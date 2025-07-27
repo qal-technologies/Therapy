@@ -4,6 +4,7 @@ window.onload = () => {
     let user = true;
 
     const year = document.querySelector("footer span#year");
+    const backButton = document.querySelector("div#back-button");
 
 
     const date = new Date().getFullYear();
@@ -116,6 +117,7 @@ window.onload = () => {
         window.history.back();
     }
 
+    backButton.addEventListener("click", goBackButton);
     initTicker();
 }
 
