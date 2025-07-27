@@ -244,6 +244,34 @@ div#nav a.login:hover {
   box-shadow: 0px 1px 8px var(--accent);
 }
 
+div#back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 0.5px solid var(--accent);
+  cursor: pointer;
+}
+
+div#back-button:active, div#back-button:hover{
+  transform: scale(85%);
+  border-color: var(--link);
+}
+
+.button {
+  background-color: var(--accentTrans);
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--link);
+  text-shadow: 0px 1px 4px rgba(128, 128, 128, 0.13);
+  display: flex;
+  place-content: center;
+  place-items: center;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
 span.highlight {
   font-family: PoppinsSemi;
   color: var(--highlight);

@@ -112,6 +112,10 @@ window.onload = () => {
         });
     }
 
+    function goBackButton() {
+        window.history.back();
+    }
+
     initTicker();
 }
 
