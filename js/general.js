@@ -119,9 +119,12 @@ window.onload = () => {
     }
 
 
-    backButton.addEventListener("click", goBackButton);
-    refreshButton.addEventListener("click", () => {
-        window.location.reload();
+    backButton && backButton.addEventListener("click", goBackButton);
+    refreshButton && refreshButton.addEventListener("click", () => {
+        const ask = confirm("Are you sure you want to reload the page?");
+        const proceed = ask && confirm("All saved progress would be erased if you refresh this page");
+
+        proceed && window.location.reload();
     })
     initTicker();
 }

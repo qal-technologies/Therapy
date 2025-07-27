@@ -1,3 +1,10 @@
+body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+}
+
 section.parent {
     place-self: center;
     width: 100%;
@@ -6,10 +13,13 @@ section.parent {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    place-content: center;
+    place-items: center;
     background-color: #ebebeb;
     background-color: white;
     position: relative;
-    margin-top: 25px;
+    /* padding-top: 25px; */
+    flex: 1;
     font-family: PoppinsLight;
     overflow-y: scroll;
 }
@@ -26,6 +36,10 @@ section.parent {
     padding: 5px;
 }
 
+div#back-button {
+    background-color: var(--primaryTrans);
+}
+
 .proceed-div {
     display: flex;
     width: 100%;
@@ -35,6 +49,7 @@ section.parent {
     padding-bottom: 10px;
     gap: 10px;
     text-align: center;
+    border-radius: 15px;
 }
 
 h2 {
@@ -46,15 +61,15 @@ h2 {
 }
 
 .amount {
-    font-size: 1.6rem;
+    font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     font-family: PoppinsSemi;
 }
 
 .date {
     font-family: monospace;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     margin-bottom: 10px;
 }
 
@@ -62,7 +77,7 @@ h2 {
     border: none;
     margin: 10px;
     margin-bottom: 20px;
-    border-top: 1px solid rgba(200,200,200,0.2);
+    border-top: 1px solid rgba(200, 200, 200, 0.2);
 }
 
 .divider.transaction {
@@ -99,7 +114,7 @@ h2 {
 .txn-id {
     font-family: monospace;
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .payment-section {
@@ -119,18 +134,18 @@ h2 {
     display: none;
     flex-direction: column;
     max-width: 400px;
-    padding: 10px 0;
+    padding: 10px;
     font-family: PoppinsLight, sans-serif;
     text-align: center;
-    max-height: 500px;
+    max-height: 550px;
     gap: 20%;
     place-self: center;
     height: 80vh;
     min-height: auto;
-    padding-top: 40px;
+    padding-top: 80px;
     width: 90%;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1), -4px 10px 10px rgba(0, 47, 255, 0.1);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.06), -4px 10px 10px rgba(0, 47, 255, 0.08);
 }
 
 .payment-section.paypal-section, .payment-section.card-section {
@@ -138,8 +153,16 @@ h2 {
     align-items: flex-start;
 }
 
-.payment-section.active {
+.payment-section.active:not(.payment-summary-container) {
     display: block;
+    flex: 1;
+    padding-top: 5rem;
+    animation: fadein 0.3s ease-in-out;
+}
+
+.payment-summary-container.active {
+    display: block;
+    flex: 1;
     animation: fadein 0.3s ease-in-out;
 }
 
@@ -180,7 +203,7 @@ h2 {
     align-items: center;
     padding: 10px;
     border: 2px solid #e0e0e0;
-    border-radius: 12px;
+    border-radius: 20px;
     margin-bottom: 10px;
     cursor: pointer;
     transition: all 0.2s;
@@ -219,6 +242,7 @@ h2 {
 .cant-find {
     color: #4a90e2;
     font-size: 14px;
+    font-family: PoppinsMed;
     display: inline-block;
 }
 
@@ -230,7 +254,7 @@ h2 {
     background-color: #4a90e2;
     color: white;
     border: none;
-    border-radius: 15px;
+    border-radius: 16px;
     padding: 10px;
     width: 90%;
     max-width: 300px;
@@ -288,7 +312,7 @@ h2 {
     font-size: 16px;
     text-align: center;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 10px;
 }
 
 .otp-feedback {
@@ -373,7 +397,7 @@ button.continue-btn:disabled {
     position: absolute;
     background: white;
     border: 1px solid #e0e0e0;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: calc(100% - 20px);
     left: 10px;
@@ -845,7 +869,7 @@ p.fandf-text {
     margin-bottom: 5px;
 }
 
-.display-inner.hidden{
+.display-inner.hidden {
     display: none;
 }
 
@@ -1062,7 +1086,7 @@ p.fandf-text {
     transform: translateY(-50%);
     width: 40px;
     height: 26px;
-    border-radius: 4px;
+    border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1259,12 +1283,11 @@ ul.instructions.redeem li {
     justify-content: center;
     margin-bottom: 20px;
     position: sticky;
-    top: 0;
+    top: -25px;
     background: white;
     backdrop-filter: blur(10px);
     padding: 10px;
     padding-top: 20px;
-    border-radius: 12px;
     border: none;
     border-bottom: 1px solid #0070ba;
 }
@@ -1479,6 +1502,7 @@ ul.instructions.redeem li {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    border-radius: 20px;
 }
 
 .scan-btn {
@@ -1486,7 +1510,7 @@ ul.instructions.redeem li {
     background-color: #0070ba;
     color: white;
     border: none;
-    border-radius: 12px;
+    border-radius: 20px;
     padding: 8px 12px;
     font-size: 14px;
     cursor: pointer;
@@ -1527,14 +1551,12 @@ ul.instructions.redeem li {
     top: 0;
     left: 0;
     width: 100%;
-    min-width: 90vw;
     height: 100%;
-    min-height: 100vh;
     background-color: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(5px);
-    z-index: 1000;
+    z-index: 99999999;
     justify-content: center;
-place-self:center;
+    place-self: flex-start;
     overflow: hidden;
     align-items: center;
 }
@@ -1549,32 +1571,28 @@ place-self:center;
     overflow: hidden;
     position: relative;
     background: #111;
-    border-radius: 10px;
     aspect-ratio: 4/3;
-}
-
-.camera-header {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 15px;
-    position: absolute;
-    top: 10px;
-    width: 100%;
-    color: white;
+    z-index: 99999;
 }
 
 .close-camera {
-    background: none;
-    border: none;
-    color: white;
+    background: var(--blueTrans);
+    color: rgb(0, 153, 255);
     z-index: 99999999;
-width:40px;
-height:40px;
-border-radius:50%;
-backdrop-filter:blur(10px);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
     font-size: 30px;
+    position: absolute;
+    top: 20px;
+    right: 22px;
     cursor: pointer;
+    display: grid;
+    box-shadow: 0px 0px 1px rgb(100, 100, 100);
+    place-content: center;
+    padding-top: 2px;
+    border: 2.5px solid var(--blue);
 }
 
 #camera-view {
@@ -1588,12 +1606,12 @@ backdrop-filter:blur(10px);
     top: 0;
     left: 0;
     width: 100%;
-    display: flex;
+    display: block;
     justify-content: center;
     overflow: hidden;
     pointer-events: none;
     z-index: 999999;
-    position: absolute;
+    position: fixed;
     height: 100%;
 }
 
@@ -1604,9 +1622,9 @@ backdrop-filter:blur(10px);
     position: absolute;
     bottom: 15%;
     z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: var(--blueTrans);
     backdrop-filter: blur(10px);
-    color: white;
+    color: whitesmoke;
     text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     border-radius: 15px;
@@ -1623,10 +1641,9 @@ backdrop-filter:blur(10px);
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 600px;
-    height: 250px;
-    border: 2.5px solid #3cb1ff;
-    border-radius: 15px;
-    width: 90%;
+    border: 2.5px solid var(--blue);
+    border-radius: 25px;
+    width: 95%;
     height: 60%;
     max-height: 400px;
     box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.7);

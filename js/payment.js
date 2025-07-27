@@ -2179,9 +2179,7 @@ function createGiftCardRedeemPage(state) {
         <!-- Camera Modal -->
         <div class="camera-modal" id="camera-modal">
             <div class="camera-container">
-                <div class="camera-header">
                     <button class="close-camera">&times;</button>
-                </div>
                 <div class="scanner-overlay">
                     <div class="scanning-area"></div>
                 </div>
