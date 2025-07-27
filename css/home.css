@@ -1,32 +1,56 @@
 section#banner {
-  margin-top: 15vmin;
-  width: 100%;
   padding: 10px;
+  padding-top: 20vmin;
+  padding-bottom: 20px;
+  width: 100%;
   overflow: hidden;
   height: auto;
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-evenly;
   flex-wrap: wrap-reverse;
-  gap: 50px;
+  gap: 45px;
   column-gap: 15%;
   transition: all ease 400ms;
+  background: linear-gradient(rgb(255, 247, 200), rgb(255, 223, 154));
 }
 
-div#banner-circle {
-  width: 90%;
-  height: 90%;
-  max-width: 500px;
-  max-height: 500px;
-  background: var(--circle-gradient-color);
-  border-radius: 50%;
-  box-shadow: 0px 1px 10px var(--accentTrans);
-  filter: blur(20px);
+
+#banner .circle {
+  display: flex;
   position: absolute;
-  left: -5%;
-  top: 8%;
+  z-index: -9999;
+  border-radius: 50%;
+}
+
+#banner .banner-circle1 {
+  display: flex;
+  position: absolute;
+  background-color: rgb(252, 255, 241);
+  width: 60%;
+  height: 60%;
+  top: -10%;
+  left: 5%;
+  filter: blur(50px);
+  border-radius: 50%;
+  opacity: 0.66;
+  box-shadow: 0px 2px 5px rgb(60, 255, 0);
+  border: 10px solid var(--blueTrans);
+}
+
+#banner .banner-circle2 {
+  display: flex;
+  position: absolute;
+  background-color: rgb(255, 248, 226);
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 30%;
+  filter: blur(70px);
+  border-radius: 50%;
+  opacity: 0.66;
 }
 
 #banner #banner-upper {
@@ -158,26 +182,35 @@ div#banner-upper a.register p {
 
 div#banner-lower {
   width: 90%;
-  max-width: 500px;
-  height: 500px;
+  max-width: 550px;
+  height: 600px;
   display: flex;
-  place-content: center;
-  border-bottom-right-radius: 50vw;
+  place-content: flex-end;
+  border-bottom-right-radius: 30vw;
   border-bottom-left-radius: 50vw;
   border-top-left-radius: 50vw;
   border-left: 3px dotted var(--link);
-  overflow: hidden;
+  overflow:hidden;
+  position: relative;
 }
 
 #banner-lower img {
   user-select: none;
   display: flex;
-  width: 600px;
-  place-self: center;
-  transform: rotateY(180deg);
+  width: 450px;
+  place-self: flex-end;
   height: 100%;
   object-fit: cover;
-  filter: brightness(110%) saturate(105%);
+  filter: brightness(120%) saturate(115%) contrast(110%);
+}
+
+#banner-lower img.second-image {
+  object-fit: contain;
+  top: 35px;
+  right: 5%;
+  position: absolute;
+  z-index: -9999;
+  filter: blur(20px) brightness(40%) opacity(0.3);
 }
 
 div#bottom {

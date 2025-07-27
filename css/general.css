@@ -103,14 +103,16 @@ header#header {
   padding-top: 20px;
   padding-inline: 20px;
   padding-bottom: 20px;
-  background-color: rgba(255, 255, 240, 0.85);
+  background: transparent;
+  /* background-color: rgba(255, 255, 240, 0.85); */
+  /* background-color: rgb(255, 247, 190); */
   backdrop-filter: blur(20px);
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 99999;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  border-bottom: 1px solid var(--accentTrans);
+  /* border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px; */
+  /* border-bottom: 1px solid var(--accentTrans); */
 }
 
 .heightShow {
@@ -123,8 +125,8 @@ div.logoSection {
   flex-direction: row;
   gap: 10px;
   align-items: center;
-  width: 30%;
-  min-width: 250px;
+  width: 50%;
+  min-width: 350px;
 }
 
 div#logo-div {
@@ -147,7 +149,7 @@ img#nav-logo {
 p#web-name {
   width: auto;
   font-family: PoppinsSemi;
-  font-size: 18px;
+  font-size: 1.6rem;
   line-height: 20px;
   color: var(--link);
 }
@@ -222,6 +224,7 @@ a.nav-main p#nav-text {
   font-size: 16px;
   font-family: PoppinsMed;
   color: var(--mainText);
+  text-shadow: 0px 2px 2px rgba(255, 255, 255, 0.377), -2px -1px 0.6px var(--accentTrans);
 }
 
 a.nav-main p#nav-text.active {
@@ -246,6 +249,7 @@ div#nav a.login:hover {
   box-shadow: 0px 1px 8px var(--accent);
 }
 
+
 div#back-button {
   position: absolute;
   top: 20px;
@@ -266,6 +270,7 @@ div#back-button {
   font-size: 25px;
   font-weight: bolder;
   z-index: 99;
+  backdrop-filter: var(--blur);
 }
 
 div#refresh-button {
@@ -283,6 +288,7 @@ div#refresh-button {
   color: var(--blue);
   display: flex;
   align-items: center;
+  backdrop-filter: var(--blur);
   font-size: 25px;
   font-weight: bolder;
   z-index: 99;
