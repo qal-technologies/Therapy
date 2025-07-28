@@ -210,7 +210,7 @@ div#banner-lower {
   right: 10%;
   position: absolute;
   z-index: -9999;
-  filter: blur(20px) brightness(40%) opacity(0.13);
+  filter: blur(20px) brightness(40%) opacity(0.23);
 }
 
 div#bottom {
