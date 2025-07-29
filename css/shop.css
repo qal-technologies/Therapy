@@ -81,11 +81,11 @@ padding-top:4rem;
     user-select: text;
 }
 
-.book-info h3 {
+.book-info h3, .book-description {
     font-family: PoppinsSemi;
 }
 
-.book-info h4 {
+.book-info h4, .book-price{
     padding: 2px;
     padding-inline: 10px;
     border-radius: 50px;
@@ -112,7 +112,7 @@ padding-top:4rem;
     transition: fill 0.3s ease;
 }
 
-.book-card div.bottom-btn{
+.book-item div.bottom-btn, .add-to-cart, .book-items .btn{
     width: 80%;
     max-width: 300px;
     background-color: var(--link);
