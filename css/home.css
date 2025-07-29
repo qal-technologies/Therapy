@@ -15,7 +15,7 @@ section#banner {
   column-gap: 15%;
   transition: all ease 400ms;
   background: linear-gradient(rgb(255, 247, 200), rgb(255, 223, 154));
-background:var(--primary);
+background:var(--accent);
 }
 
 
