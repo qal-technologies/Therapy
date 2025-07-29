@@ -201,7 +201,7 @@ div#banner-lower {
   place-self: flex-end;
   height: 100%;
   object-fit: cover;
-  filter: brightness(120%) saturate(115%);
+  /*filter: brightness(120%) saturate(105%);*/
 }
 
 #banner-lower img.second-image {
