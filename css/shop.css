@@ -221,7 +221,7 @@ section#discover {
   background: #fff;
 border-radius:20px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-gap:10px
+margin-bottom:2em;
 }
 
 #book-main .book-title {
