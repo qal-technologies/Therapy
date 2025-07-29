@@ -229,14 +229,14 @@ function renderBookCollection() {
   collectionContainer.innerHTML = BOOK_COLLECTION.map(book => `
     <div class="book-item" data-id="${book.id}">
       <img src="${book.image}" alt="${book.title}">
-      <h3>${book.title}</h3>
-      <p>${book.author}</p>
-      <p>${book.downloads}</p>
-      <p>${book.formats.join(' • ')}</p>
-      <p class="price">${book.price}</p>
-      <p class="sold-out">${book.status}</p>
-      <p>${book.description}</p>
-      <button class="add-to-cart">Add to Cart</button>
+      <h3 class="book-title" >${book.title}</h3>
+      <p class="book-author">${book.author}</p>
+      <p class="book-downloads">${book.downloads}</p>
+      <p class="book-format" >${book.formats.join(' • ')}</p>
+      <p class="book-price">&euro; ${book.price}</p>
+      <p class="sold-out status">${book.status}</p>
+      <p class="book-description">${book.description}</p>
+      <button class="add-to-cart btn">Add to Cart</button>
     </div>
   `).join('');
   
