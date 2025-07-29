@@ -4,6 +4,7 @@
     align-items: center;
     width: 100%;
     padding: 2.5rem;
+padding-top:4rem;
     background: var(--vert-gradient-color);
     display: flex;
     flex-direction: row;
@@ -46,34 +47,27 @@
     padding: 2rem;
 }
 
-.book-grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    place-content: center;
-    gap: 1.5rem;
-    padding: 1rem;
-}
-
-.book-card {
+.book-item {
     background: var(--primaryTrans);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     width: 100%;
-    max-width: 350px;
     min-width: 300px;
     border: 0.5px solid var(--accentTrans);
-    padding: 1rem;
+    padding: 2rem;
     transition: transform 0.3s ease;
     cursor: pointer;
+  max-width: 400px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+text-align:left;
 }
 
-.book-card:hover {
+.book-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.5)
+    box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.4)
 }
 
-.book-image {
+.book-item img {
     width: 100%;
     height: 300px;
     object-fit: cover;
@@ -86,13 +80,15 @@
     padding: 1rem 0;
     cursor: text;
     user-select: text;
+text-align:left;
+font-family:PoppinsSemi
 }
 
-.book-info h3 {
+.book-info h3{
     font-family: PoppinsSemi;
 }
 
-.book-info h4 {
+.book-info .book-price{
     padding: 2px;
     padding-inline: 10px;
     border-radius: 50px;
@@ -103,23 +99,13 @@
     font-family: PoppinsLight;
 }
 
-.book-card button.favorite-btn {
-    padding: 4px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    background: none;
-    border: none;
+.book-item .book-description{
+margin-top:10px;
+font-family:PoppinsMed;
+text-align:left;
 }
 
-.book-card svg:first-child {
-    width: 25px;
-    height: 25px;
-    transition: fill 0.3s ease;
-}
-
-.book-card div.bottom-btn{
+.book-item .add-to-cart, .book-item .btn{
     width: 80%;
     max-width: 300px;
     background-color: var(--link);
@@ -219,4 +205,268 @@ section#discover {
     text-align: center;
     display: flex;
     place-content: center;
+}
+
+
+
+/*/----------
+//New code::
+//---------
+//------------------------*/
+#book-main {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: #fff;
+border-radius:20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+margin-bottom:2em;
+}
+
+#book-main .book-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+font-family:PoppinsSemi;
+}
+
+#book-main .book-author {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+font-family:PoppinsMed;
+}
+
+#book-main .book-meta {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+border-radius:20px;
+  color: #555;
+}
+
+#book-main .book-meta .price {
+  font-weight: bold;
+  color: #000;
+}
+
+#book-main .book-meta .status {
+  color: #d00;
+  flex-basis: 100%;
+}
+
+#book-main .book-description {
+  text-align: left;
+  line-height: 1.6;
+  margin: 2rem 0;
+  padding: 1rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+#book-main .book-cta {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+border-radius:20px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+#book-main .book-cta:hover {
+  opacity: 0.9;
+}
+
+/* Book Collection Styles */
+.book-collection {
+  padding: 3rem 1rem;
+  background: #f9f9f9;
+gap:10px;
+}
+
+.book-collection h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+font-family: PoppinsSemi,PoppinsBold;
+}
+
+.book-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.book-quote {
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+.book-quote blockquote {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 1rem;
+}
+
+.book-info h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.book-info .author {
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.book-info .subtitle {
+  font-style: italic;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.book-info .description {
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.book-item .add-to-cart {
+  width: 100%;
+  padding: 1rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.book-item .add-to-cart:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  #book-main {
+    padding: 1rem;
+  }
+  
+  .book-item {
+    padding: 1.5rem;
+  }
+}
+
+#book-main {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#book-main .book-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+#book-main .book-subtitle {
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+#book-main .book-description {
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+#book-main .book-cta {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 2rem;
+  transition: all 0.3s;
+}
+
+#book-main .book-cta:hover {
+  opacity: 0.9;
+}
+
+/* Book Collection Styles */
+.book-collection {
+  padding: 2rem;
+}
+
+.book-collection h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.book-flex {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.book-item {
+  width: 300px;
+  border: 1px solid #eee;
+  padding: 1rem;
+  text-align: center;
+}
+
+.book-item img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.book-item h3 {
+  margin: 0.5rem 0;
+}
+
+.book-item .price {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.book-item .sold-out {
+  color: #ff0000;
+  margin: 0.5rem 0;
+}
+
+.book-item .add-to-cart {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.book-item .add-to-cart:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .book-flex {
+    flex-direction: column;
+    align-items: center;
+  }
 }

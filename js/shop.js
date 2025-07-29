@@ -157,5 +157,135 @@ function showPaymentModal(bookId) {
     }, 2000);
 }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', renderBooks);
+const FEATURED_BOOK = {
+  title: "Guérir n'est pas joli",
+  author: "Charlotte Casiraghi",
+  description: `"I didn't write this book to be sold. I wrote it to survive." These pages were my secret. My breath between battles. My whispers in the dark. Now, I'm offering them to you. Not on Amazon. Not in bookstores. Just here. Just us.`,
+  subtitle: "Healing isn't always beautiful.",
+  cta: "GET YOUR COPY"
+};
+
+const BOOK_COLLECTION = [
+  {
+    id: 'book-5',
+    title: "THE BOOK TITLE",
+    author: "Author Name",
+    downloads: "5000+ Downloads",
+    formats: ["eBook", "Hardcopy"],
+    price: "2.50",
+    status: "Sold Out",
+    description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
+    image: "/src/images/logo.jpg"
+  },
+  {
+    id: 'book-6',
+    title: "ANOTHER BOOK",
+    author: "Another Author",
+    downloads: "3000+ Downloads",
+    formats: ["eBook", "Audio"],
+    price: "1.80",
+    status: "Available",
+    description: "Another inspiring story that will change your perspective on healing and growth.",
+    image: "/src/images/logo.jpg"
+  }
+];
+
+// Render Main Book Page
+function renderBookMain() {
+  const mainSection = document.createElement('section');
+  mainSection.id = 'book-main';
+  mainSection.innerHTML = `
+    <h1 class="book-title">${FEATURED_BOOK.title}</h1>
+    <p class="book-subtitle">${FEATURED_BOOK.subtitle}</p>
+    <p class="book-description">${FEATURED_BOOK.description}</p>
+    <button class="book-cta">${FEATURED_BOOK.cta}</button>
+  `;
+  
+  // Insert after the banner section
+  const banner = document.getElementById('banner');
+  banner.insertAdjacentElement('afterend', mainSection);
+  
+  // Add click handler for CTA button
+  mainSection.querySelector('.book-cta').addEventListener('click', () => {
+    showPaymentModal('book-featured');
+  });
+}
+
+// Render Book Collection
+function renderBookCollection() {
+  const collectionSection = document.createElement('section');
+  collectionSection.className = 'book-collection';
+  collectionSection.innerHTML = `
+    <h2>BOOK COLLECTION</h2>
+    <div class="book-flex" id="bookCollection"></div>
+  `;
+  
+  // Insert after the main book section
+  const mainSection = document.getElementById('book-main');
+  mainSection.insertAdjacentElement('afterend', collectionSection);
+  
+  // Render book items
+  const collectionContainer = document.getElementById('bookCollection');
+  collectionContainer.innerHTML = BOOK_COLLECTION.map(book => `
+    <div class="book-item" data-id="${book.id}">
+      <img src="${book.image}" alt="${book.title}">
+<div class="book-info">
+      <h3 class="book-title">${book.title}</h3>
+      <p class="book-author">${book.author}</p>
+<p class="book-price">&euro; ${book.price}</p>
+  </div>    
+
+      <p class="book-downloads">${book.downloads}</p>
+      <p class="book-format" >${book.formats.join(' • ')}</p>
+      <p class="sold-out status">${book.status}</p>
+      <p class="book-description">${book.description}</p>
+      <button class="add-to-cart btn">Add to Cart</button>
+    </div>
+  `).join('');
+  
+  // Add click handlers for Add to Cart buttons
+  document.querySelectorAll('.book-item .add-to-cart').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const bookItem = e.target.closest('.book-item');
+      const bookId = bookItem.dataset.id;
+      const book = BOOK_COLLECTION.find(b => b.id === bookId);
+      
+      if (book) {
+        addToCart(book);
+        alert(`${book.title} added to cart!`);
+      }
+    });
+  });
+}
+
+// Add to Cart Function
+function addToCart(book) {
+  let cart = JSON.parse(localStorage.getItem('carts')) || [];
+  
+  // Check if book already in cart
+  const existingItem = cart.find(item => item.id === book.id);
+  
+  if (existingItem) {
+    existingItem.quantity = (existingItem.quantity || 1) + 1;
+  } else {
+    cart.push({
+      id: book.id,
+      title: book.title,
+      author: book.author,
+      price: book.price,
+      image: book.image,
+      quantity: 1
+    });
+  }
+  
+  localStorage.setItem('carts', JSON.stringify(cart));
+}
+
+// Initialize both sections
+document.addEventListener('DOMContentLoaded', () => {
+  /*renderBooks();*/
+  renderBookMain();
+  renderBookCollection();
+});
+
+
