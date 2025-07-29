@@ -54,16 +54,17 @@ padding-top:4rem;
     width: 100%;
     min-width: 300px;
     border: 0.5px solid var(--accentTrans);
-    padding: 1.5rem;
+    padding: 2rem;
     transition: transform 0.3s ease;
     cursor: pointer;
   max-width: 400px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+text-align:left;
 }
 
 .book-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.5)
+    box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.4)
 }
 
 .book-item img {
@@ -220,18 +221,21 @@ section#discover {
   background: #fff;
 border-radius:20px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+gap:10px
 }
 
 #book-main .book-title {
   font-size: 2.5rem;
   font-weight: 300;
   margin-bottom: 0.5rem;
+font-family:PoppinsSemi;
 }
 
 #book-main .book-author {
   font-size: 1.2rem;
   color: #666;
   margin-bottom: 2rem;
+font-family:PoppinsMed;
 }
 
 #book-main .book-meta {
@@ -282,7 +286,7 @@ border-radius:20px;
 .book-collection {
   padding: 3rem 1rem;
   background: #f9f9f9;
-
+gap:10px;
 }
 
 .book-collection h2 {
@@ -290,6 +294,7 @@ border-radius:20px;
   font-size: 2.5rem;
   margin-bottom: 2rem;
   font-weight: 300;
+font-family: PoppinsSemi,PoppinsBold;
 }
 
 .book-flex {
