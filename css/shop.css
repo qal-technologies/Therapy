@@ -79,6 +79,8 @@ padding-top:4rem;
     padding: 1rem 0;
     cursor: text;
     user-select: text;
+text-align:left;
+font-family:PoppinsSemi
 }
 
 .book-info h3{
@@ -97,8 +99,9 @@ padding-top:4rem;
 }
 
 .book-item .book-description{
-margin-top:15px;
+margin-top:10px;
 font-family:PoppinsMed;
+text-align:left;
 }
 
 .book-item .add-to-cart, .book-item .btn{
