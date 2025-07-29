@@ -1,11 +1,11 @@
 section#banner {
   padding: 10px;
-  padding-top: 25vmin;
+  padding-top: 10pc;
   padding-bottom: 20px;
   width: 100%;
   overflow: hidden;
   height: auto;
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -14,7 +14,6 @@ section#banner {
   gap: 45px;
   column-gap: 15%;
   transition: all ease 400ms;
-  /*background: linear-gradient(rgb(255, 247, 200), rgb(255, 223, 154));*/
 background:var(--accentTrans);
 }
 
@@ -184,35 +183,26 @@ div#banner-upper a.register p {
 div#banner-lower {
   width: 90%;
   max-width: 550px;
-  height: 600px;
+  /* height: 600px; */
   display: flex;
   place-content: flex-end;
-  border-bottom-right-radius: 30vw;
-  border-bottom-left-radius: 50vw;
-  border-top-left-radius: 50vw;
+  justify-content: flex-end;
+  border-bottom-right-radius: 50vw;
+  border-bottom-left-radius: 100vw;
+  border-top-left-radius: 100vw;
   border-left: 3px dotted var(--link);
   overflow: hidden;
+  object-fit: fill;
   position: relative;
 }
 
 #banner-lower img {
   user-select: none;
   display: flex;
-  width: 450px;
+  width: 300px;
   place-self: flex-end;
   height: 100%;
-  object-fit: cover;
-  /*filter: brightness(120%) saturate(105%);*/
-}
-
-#banner-lower img.second-image {
-  object-fit: contain;
-  top: 35px;
-  right: 10%;
-display:none;
-  position: absolute;
-  z-index: -9999;
-  filter: blur(20px) brightness(40%) opacity(0.23);
+  object-fit:cover;
 }
 
 div#bottom {

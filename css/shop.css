@@ -1,300 +1,278 @@
 #banner {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 2.5rem;
-padding-top:4rem;
-    background: var(--vert-gradient-color);
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow: hidden;
-    position: relative;
-    min-height: 45%;
-    padding-bottom: 5.5rem;
-    font-size: 1.2rem;
-    text-align: left;
-    gap: 15px;
+  width: 100%;
+  display: none;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+  padding-top: 10pc;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow: hidden;
+  position: relative;
+  min-height: 45%;
+  padding-bottom: 5.5rem;
+  font-size: 1.2rem;
+  text-align: left;
+  gap: 15px;
 }
 
 
 #banner .circle {
-    width: 90vw;
-    height: 90vw;
-    max-width: 800px;
-    max-height: 800px;
-    background: rgba(255, 210, 86, 0.5);
-    position: absolute;
-    right: -20%;
-    top: -30px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
+  width: 90vw;
+  height: 90vw;
+  max-width: 800px;
+  max-height: 800px;
+  background: rgba(255, 210, 86, 0.5);
+  position: absolute;
+  right: -20%;
+  top: -30px;
+  border-radius: 50%;
+  filter: opacity(0.4) blur(20px);
+  display: flex;
+  flex-direction: column;
 }
 
 #banner h1, #books h1 {
-    position: relative;
-    font-family: PoppinsSemi;
-    font-size: 30px;
+  position: relative;
+  font-family: PoppinsSemi;
+  font-size: 30px;
 }
 
 #banner .header p {
-    font-size: 18px;
+  font-size: 18px;
 }
 
-#books {
-    padding: 2rem;
-}
-
-.book-item {
-    background: var(--primaryTrans);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    width: 100%;
-    min-width: 300px;
-    border: 0.5px solid var(--accentTrans);
-    padding: 2rem;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-  max-width: 400px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-text-align:left;
-}
-
-.book-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.4)
-}
-
-.book-item img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 15px;
-    cursor: pointer;
-}
-
-.book-info {
-    position: relative;
-    padding: 1rem 0;
-    cursor: text;
-    user-select: text;
-text-align:left;
-font-family:PoppinsSemi
-}
-
-.book-info h3{
-    font-family: PoppinsSemi;
-}
-
-.book-info .book-price{
-    padding: 2px;
-    padding-inline: 10px;
-    border-radius: 50px;
-    background-color: var(--accentTrans);
-    width: max-content;
-    font-size: 14px;
-    margin-bottom: 10px;
-    font-family: PoppinsLight;
-}
-
-.book-item .book-description{
-margin-top:10px;
-font-family:PoppinsMed;
-text-align:left;
-}
-
-.book-item .add-to-cart, .book-item .btn{
-    width: 80%;
-    max-width: 300px;
-    background-color: var(--link);
-    border-radius: 20px;
-    color: white;
-    place-self: center;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    padding: 6px;
-    font-family: PoppinsMed;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.bottom-btn span{
-    font-family: PoppinsSemi;
-    color: white;
-}
-
-div#paymentModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    backdrop-filter: blur(2px);
-}
-
-.modal-content {
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
-    background: white;
-    border-radius: 20px;
-    width: 90%;
-    max-width: 600px;
-    padding: 1rem;
-    position: relative;
-    padding-left: 1.5rem;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-content p {
-    font-family: PoppinsSemi;
-    font-size: 16px;
-}
-
-section#discover {
-    padding-block: 10%;
-    width: 100%;
-    background: rgba(255, 252, 250, 0.85);
-    padding-inline: 10px;
-    display: flex;
-    place-content: center;
-}
-
-#discover div.parent {
-    width: 90%;
-    max-width: 1000px;
-    padding: 2.5rem;
-    border: 2px solid var(--link);
-    background: var(--accentTrans);
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    place-content: center;
-    justify-content: center;
-    gap: 2rem;
-    min-height: 200px;
-}
-
-#discover div.parent p {
-    text-align: left;
-    font-size: 1.4rem;
-    font-family: PoppinsLight;
-}
-
-#discover .parent a {
-    cursor: pointer;
-    border: none;
-    background-color: var(--link);
-    border-radius: 30px;
-    padding: 10px;
-    padding-inline: 15px;
-    width: 80%;
-    max-width: 300px;
-    place-self: center;
-    color: var(--primary);
-    font-size: 16px;
-    font-family: PoppinsSemi;
-    text-align: center;
-    display: flex;
-    place-content: center;
-}
-
-
-
-/*/----------
-//New code::
-//---------
-//------------------------*/
 #book-main {
-  max-width: 600px;
-  margin: 2rem auto;
+  width: 100%;
   padding: 2rem;
   text-align: center;
-  background: #fff;
-border-radius:20px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-margin-bottom:2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #book-main .book-title {
   font-size: 2.5rem;
   font-weight: 300;
-  margin-bottom: 0.5rem;
-font-family:PoppinsSemi;
-}
-
-#book-main .book-author {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 2rem;
-font-family:PoppinsMed;
-}
-
-#book-main .book-meta {
-  margin: 1.5rem 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-border-radius:20px;
-  color: #555;
-}
-
-#book-main .book-meta .price {
-  font-weight: bold;
-  color: #000;
-}
-
-#book-main .book-meta .status {
-  color: #d00;
-  flex-basis: 100%;
+  font-family: PoppinsSemi;
 }
 
 #book-main .book-description {
   text-align: left;
   line-height: 1.6;
-  margin: 2rem 0;
+  margin: 2rem 0 1.5rem;
   padding: 1rem;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
+  max-width: 500px;
+  align-self: center;
+  justify-self: center;
 }
 
 #book-main .book-cta {
-  background: #000;
+  width: 80%;
+  max-width: 300px;
+  background: var(--link);
   color: #fff;
   border: none;
-  padding: 1rem 2rem;
+  padding: 10px;
   font-size: 1rem;
-border-radius:20px;
+  border-radius: 20px;
+  font-family: PoppinsMed;
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: opacity 0.53s;
 }
 
 #book-main .book-cta:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
-/* Book Collection Styles */
-.book-collection {
+.book-item {
+  background: var(--primaryTrans);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  width: 100%;
+  min-width: 300px;
+  border: 0.5px solid var(--accentTrans);
+  padding: 2rem;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+  max-width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.book-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.4)
+}
+
+.book-item img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.book-info {
+  position: relative;
+  min-width: 100%;
+  margin-top: 10px;
+  text-align: left;
+  font-family: PoppinsSemi;
+}
+
+.book-info h3.book-title {
+  font-size: 1.5rem;
+  font-family: PoppinsSemi;
+  user-select: text;
+}
+
+.book-info .book-author {
+  width: 100%;
+  font-size: 16px;
+  margin-top: -5px;
+}
+
+.book-info .book-downloads {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-block: 10px;
+  font-family: PoppinsMed;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.book-info .book-downloads .download-stars {
+  font-family: PoppinsBold;
+  font-size: 20px;
+  fill: rgb(255, 187, 0);
+  color: gold;
+  margin-bottom: -10px;
+}
+
+.book-info .book-format {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.book-info .book-format .format-div {
+  width: 45%;
+  max-width: 200px;
+  display: flex;
+  flex-direction: row;
+  border-right: 1px solid var(--accentTrans);
+  align-items: center;
+  gap: 10px;
+  font-family: PoppinsMed;
+}
+
+.book-info .format-div.last {
+  border-right: none;
+}
+
+.format-div input {
+  cursor: pointer;
+  width: 20px;
+  fill: var(--link);
+  color: var(--link);
+  background: var(--link);
+}
+
+.format-div .side {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.format-div p.format-name {
+  font-weight: bold;
+  font-family: PoppinsMed;
+  text-align: center;
+  letter-spacing: 1.2px;
+  font-size: 16px;
+}
+
+.format-div .format-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: PoppinsSemi;
+}
+
+.format-div .format-status {
+  padding-inline: 15px;
+  min-width: max-content;
+  border-radius: 20px;
+  font-family: PoppinsMed;
+  border: 1px solid var(--accentTrans);
+}
+
+.format-div .format-status.available {
+  background-color: rgba(195, 255, 176, 0.5);
+  border-color: rgb(0, 165, 0);
+  color: rgb(0, 165, 0);
+}
+
+.format-div .format-status.sold {
+  background-color: rgba(255, 176, 176, 0.5);
+  border-color: rgb(165, 0, 0);
+  color: rgb(165, 0, 0);
+}
+
+
+.book-item .book-description-div {
+  font-family: PoppinsMed;
+  text-align: left;
+  user-select: text;
+  border-top: 1px solid #eee;
+  padding-block: 15px;
+}
+
+.book-item .description-title {
+  font-weight: bold;
+  font-family: PoppinsMed;
+  letter-spacing: 1px;
+}
+
+.book-item .add-to-cart, .book-item .btn {
+  width: 80%;
+  max-width: 250px;
+  background-color: var(--link);
+  border-radius: 20px;
+  color: white;
+  justify-self: center;
+  text-align: center;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-family: PoppinsMed;
+  gap: 10px;
+}
+
+
+.book-section {
   padding: 3rem 1rem;
-  background: #f9f9f9;
-gap:10px;
+  background: #fffcfcb7;
+  gap: 10px;
 }
 
-.book-collection h2 {
+.book-section h2 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 2rem;
   font-weight: 300;
-font-family: PoppinsSemi,PoppinsBold;
+  font-family: PoppinsSemi, PoppinsBold;
 }
 
 .book-flex {
@@ -302,166 +280,17 @@ font-family: PoppinsSemi,PoppinsBold;
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
-  max-width: 1200px;
   margin: 0 auto;
-}
-
-.book-quote {
-  font-style: italic;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  color: #555;
-}
-
-.book-quote blockquote {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #000;
-  margin-bottom: 1rem;
-}
-
-.book-info h3 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-}
-
-.book-info .author {
-  color: #666;
-  margin-bottom: 1rem;
-}
-
-.book-info .subtitle {
-  font-style: italic;
-  margin-bottom: 1rem;
-  color: #333;
-}
-
-.book-info .description {
-  line-height: 1.6;
-  margin-bottom: 2rem;
-}
-
-.book-item .add-to-cart {
-  width: 100%;
-  padding: 1rem;
-  background: #000;
-  color: #fff;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: opacity 0.3s;
-}
-
-.book-item .add-to-cart:hover {
-  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
   #book-main {
     padding: 1rem;
   }
-  
+
   .book-item {
     padding: 1.5rem;
   }
-}
-
-#book-main {
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-#book-main .book-title {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  font-weight: 300;
-}
-
-#book-main .book-subtitle {
-  font-style: italic;
-  margin-bottom: 2rem;
-}
-
-#book-main .book-description {
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-
-#book-main .book-cta {
-  background-color: #000;
-  color: #fff;
-  padding: 1rem 2rem;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 2rem;
-  transition: all 0.3s;
-}
-
-#book-main .book-cta:hover {
-  opacity: 0.9;
-}
-
-/* Book Collection Styles */
-.book-collection {
-  padding: 2rem;
-}
-
-.book-collection h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 2rem;
-}
-
-.book-flex {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.book-item {
-  width: 300px;
-  border: 1px solid #eee;
-  padding: 1rem;
-  text-align: center;
-}
-
-.book-item img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
-.book-item h3 {
-  margin: 0.5rem 0;
-}
-
-.book-item .price {
-  font-weight: bold;
-  margin: 0.5rem 0;
-}
-
-.book-item .sold-out {
-  color: #ff0000;
-  margin: 0.5rem 0;
-}
-
-.book-item .add-to-cart {
-  background-color: #000;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.book-item .add-to-cart:hover {
-  opacity: 0.9;
 }
 
 @media (max-width: 768px) {
@@ -469,4 +298,84 @@ font-family: PoppinsSemi,PoppinsBold;
     flex-direction: column;
     align-items: center;
   }
+}
+
+div#paymentModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
+  background: white;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  padding: 1rem;
+  position: relative;
+  padding-left: 1.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-content p {
+  font-family: PoppinsSemi;
+  font-size: 16px;
+}
+
+section#discover {
+  padding-block: 10%;
+  width: 100%;
+  background: rgba(255, 252, 250, 0.85);
+  padding-inline: 10px;
+  display: flex;
+  place-content: center;
+}
+
+#discover div.parent {
+  width: 90%;
+  max-width: 1000px;
+  padding: 2.5rem;
+  border: 2px solid var(--link);
+  background: var(--accentTrans);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  justify-content: center;
+  gap: 2rem;
+  min-height: 200px;
+}
+
+#discover div.parent p {
+  text-align: left;
+  font-size: 1.4rem;
+  font-family: PoppinsLight;
+}
+
+#discover .parent a {
+  cursor: pointer;
+  border: none;
+  background-color: var(--link);
+  border-radius: 30px;
+  padding: 10px;
+  padding-inline: 15px;
+  width: 80%;
+  max-width: 300px;
+  place-self: center;
+  color: var(--primary);
+  font-size: 16px;
+  font-family: PoppinsSemi;
+  text-align: center;
+  display: flex;
+  place-content: center;
 }
