@@ -81,11 +81,11 @@ padding-top:4rem;
     user-select: text;
 }
 
-.book-info h3, .book-description {
+.book-info h3{
     font-family: PoppinsSemi;
 }
 
-.book-info h4, .book-price{
+.book-info .book-price{
     padding: 2px;
     padding-inline: 10px;
     border-radius: 50px;
@@ -96,23 +96,12 @@ padding-top:4rem;
     font-family: PoppinsLight;
 }
 
-.book-card button.favorite-btn {
-    padding: 4px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    background: none;
-    border: none;
+.book-item .book-description{
+margin-top:15px;
+font-family:PoppinsMed;
 }
 
-.book-card svg:first-child {
-    width: 25px;
-    height: 25px;
-    transition: fill 0.3s ease;
-}
-
-.book-item div.bottom-btn, .add-to-cart, .book-items .btn{
+.book-item .add-to-cart, .book-item .btn{
     width: 80%;
     max-width: 300px;
     background-color: var(--link);
