@@ -280,7 +280,7 @@ function addToCart(book) {
 
 // Initialize both sections
 document.addEventListener('DOMContentLoaded', () => {
-  renderBooks(); // Your existing function
+  /*renderBooks();*/
   renderBookMain();
   renderBookCollection();
 });
