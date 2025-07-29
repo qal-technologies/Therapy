@@ -234,7 +234,7 @@ section#discover {
   padding: 2rem;
   text-align: center;
   background: #fff;
-border-radius:18px;
+border-radius:20px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
@@ -256,6 +256,7 @@ border-radius:18px;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+border-radius:20px;
   color: #555;
 }
 
@@ -284,6 +285,7 @@ border-radius:18px;
   border: none;
   padding: 1rem 2rem;
   font-size: 1rem;
+border-radius:20px;
   cursor: pointer;
   transition: opacity 0.3s;
 }
@@ -301,7 +303,7 @@ border-radius:18px;
 
 .book-collection h2 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 2rem;
   font-weight: 300;
 }
