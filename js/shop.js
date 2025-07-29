@@ -172,7 +172,7 @@ const BOOK_COLLECTION = [
     author: "Author Name",
     downloads: "5000+ Downloads",
     formats: ["eBook", "Hardcopy"],
-    price: "#2.500",
+    price: "2.50",
     status: "Sold Out",
     description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
     image: "/src/images/logo.jpg"
@@ -183,7 +183,7 @@ const BOOK_COLLECTION = [
     author: "Another Author",
     downloads: "3000+ Downloads",
     formats: ["eBook", "Audio"],
-    price: "#1.800",
+    price: "1.80",
     status: "Available",
     description: "Another inspiring story that will change your perspective on healing and growth.",
     image: "/src/images/logo.jpg"
