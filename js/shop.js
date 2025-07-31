@@ -8,91 +8,90 @@ const State = {
   }
 };
 
+//default quantity:
 let quantity = 1;
 
-// Book Data
-const BOOKS = [
+//Audio source:
+const audioSrc = {
+  session: {
+    "en": "/src/audio/book-audio.mp3",
+    "fr": "/src/audio/book-audio.mp3",
+  }
+};
+
+// Book Data:
+const BOOK_COLLECTION = [
   {
     id: 'book-1',
-    image: '/src/images/logo.jpg',
-    title: "Journey to Self",
-    description: "A guide to inner healing...",
-    price: 129.99
-  }, {
+    title: "THE BEAUTY OF LIVES",
+    downloads: "5000+ Downloads",
+    formats: ["eBook", "Hardcopy"],
+    price: "20.00",
+    status: "Sold Out",
+    description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
+    image: "/src/images/book1.jpg",
+    quantity:1,
+  },
+  {
     id: 'book-2',
-    image: '/src/images/logo.jpg',
-    title: "Best Therapy",
-    description: "A guide to inner healing...",
-    price: 119.99
-  }, {
-    id: 'book-3',
-    image: '/src/images/logo.jpg',
-    title: "Self Motivation",
-    description: "A guide to inner healing...",
-    price: 149.99
-  }, {
-    id: 'book-4',
-    image: '/src/images/logo.jpg',
-    title: "Best Words for You",
-    description: "A guide to inner healing...",
-    price: 319.99
+    title: "THE ELEGANT STORY",
+    downloads: "3000+ Downloads",
+    formats: ["eBook", "Hardcopy"],
+    price: "25.00",
+    status: "Sold Out",
+    description: "Another inspiring story that will change your perspective on healing and growth.",
+    image: "/src/images/book2.jpg",
+    quantity:1
   }
 ];
 
-// Render Books
-function renderBooks() {
-  const container = document.getElementById('bookContainer');
-  container.innerHTML = BOOKS.map(book => `
-    <div class="book-card">
-      <img 
-        src="${book.image}" 
-        class="book-image" 
-        alt="${book.title}"
-        id="${book.id}"
-      >
-      <div class="book-info" id="book-info">
-      <button class="favorite-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-to-cart" viewBox="0 0 16 16">
-  <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
-  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-</svg>
-</button>
-        <div class="upper">
-            <h3>${book.title}</h3>
-            <h4>&euro; ${book.price}</h4>
-        </div>
-        <p>${book.description}</p>
-      </div>
-
-      <div class="favorite-btn bottom-btn"> Add to cart  <span>+</span></div>
-    </div>
-  `).join('');
-
-  // // Add click handlers
-  document.querySelectorAll('.book-image').forEach(card => {
-    card.addEventListener('click', handleBookClick);
-  });
-
-  document.querySelectorAll(".favorite-btn").forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const bookTitle = e.currentTarget.parentElement.querySelector(".upper h3").textContent;
+function handleAudio(lang) {
+  const audioMessage = document.querySelector('#banner audio#book-audio-message');
 
 
-      btn.classList.toggle("clicked");
-      const active = btn.classList.contains("clicked");
-      const icon = e.currentTarget;
-      const BUTTON = icon.tagName == "BUTTON";
+  audioMessage.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
 
-      BUTTON ? active ? [
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-to-cart" viewBox="0 0 16 16">
-  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/></svg>`, alert(`Item (${bookTitle}) added to cart!`)] : [
-        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="add-to-cart" viewBox="0 0 16 16">
-  <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9z"/>
-  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg>`
-        , alert(`Item (${bookTitle}) removed from cart!`)] : ""
+  const listenBTN = document.querySelector("#banner button#play");
+
+  if (listenBTN && audioMessage) {
+    listenBTN.addEventListener('click', () => {
+      if (!audioMessage.paused) {
+        listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+        audioMessage.pause();
+      } else {
+        listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+        audioMessage.play();
+      }
     });
-  });
+  }
 
+  audioMessage.addEventListener("ended", () => {
+    listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+  });
 }
 
 // Handle Book Click
@@ -109,106 +108,92 @@ function handleBookClick(e) {
   window.location.href = `/html/main/read.html?id=${bookId}`;
 }
 
-// for quantitySelection :
-function selectQuantity() {
-  quantity++;
-}
-// reseting quantity:
-function resetQuantity() {
-  quantity = 1;
-}
-
-// Show Payment Modal
-function showPaymentModal(bookId) {
-  const book = BOOKS.filter(book => {
-    return book.id == bookId;
-  })[0];
+// // Show Payment Modal
+// function showPaymentModal(bookId) {
+//   const book = BOOKS.filter(book => {
+//     return book.id == bookId;
+//   })[0];
 
 
-  const language = navigator.language;
+//   const language = navigator.language;
 
 
-  const transactionId = `TXN-${Math.random()
-    .toString(36)
-    .substring(2, 10)
-    .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+//   const transactionId = `TXN-${Math.random()
+//     .toString(36)
+//     .substring(2, 10)
+//     .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 
-  const details = {
-    id: bookId,
-    type: "book",
-    description: `PURCHASE OF BOOK (${book.title}) - ${book.description} ${quantity > 1 ? "[2 Copies]" : ''}`,
-    title: book.title,
-    price: book.price,
-    date: new Date(),
-    transactionId: transactionId,
-    quantity: quantity,
-  };
+//   const details = {
+//     id: bookId,
+//     type: "book",
+//     description: `PURCHASE OF BOOK (${book.title}) - ${book.description} ${quantity > 1 ? "[2 Copies]" : ''}`,
+//     title: book.title,
+//     price: book.price,
+//     date: new Date(),
+//     transactionId: transactionId,
+//     quantity: quantity,
+//   };
 
-  const params = new URLSearchParams({
-    type: "book",
-    details: JSON.stringify(details)
-  }).toString();
+//   const params = new URLSearchParams({
+//     type: "book",
+//     details: JSON.stringify(details)
+//   }).toString();
 
-  const modal = document.getElementById('paymentModal');
-  modal.style.display = 'flex';
+//   const modal = document.getElementById('paymentModal');
+//   modal.style.display = 'flex';
 
-  setTimeout(() => {
-    window.location.href = `/html/main/payment.html?${params}`;
-  }, 2000);
+//   setTimeout(() => {
+//     window.location.href = `/html/main/payment.html?${params}`;
+//   }, 2000);
+// }
+
+
+function removeDetailsModal() {
+  const modal = document.querySelector("#details-div");
+
+  modal.style.display = "none";
 }
 
-const FEATURED_BOOK = {
-  title: "Guérir n'est pas joli",
-  author: "Charlotte Casiraghi",
-  description: `"I didn't write this book to be sold. I wrote it to survive."`,
-  description2: `These pages were my secret. My breath between battles. My whispers in the dark. Now, I'm offering them to you. Not on Amazon. Not in bookstores. Just here. Just us.`,
-  subtitle: "Healing isn't always beautiful.",
-  cta: "GET YOUR COPY"
-};
+function showDetailsModal() {
+  const modal = document.querySelector("#details-div");
 
-const BOOK_COLLECTION = [
-  {
-    id: 'book-5',
-    title: "THE BOOK TITLE",
-    author: "Author Name",
-    downloads: "5000+ Downloads",
-    formats: ["eBook", "Hardcopy"],
-    price: "2.50",
-    status: "Sold Out",
-    description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
-    image: "/src/images/logo.jpg"
-  },
-  {
-    id: 'book-6',
-    title: "ANOTHER BOOK",
-    author: "Another Author",
-    downloads: "3000+ Downloads",
-    formats: ["eBook", "Audio"],
-    price: "1.80",
-    status: "Available",
-    description: "Another inspiring story that will change your perspective on healing and growth.",
-    image: "/src/images/logo.jpg"
-  }
-];
+  modal.style.display = "block";
+  renderBookCollection();
 
-// Render Main Book Page
-function renderBookMain() {
-  const mainSection = document.createElement('div');
-  mainSection.id = 'book-main';
-  mainSection.innerHTML = `
-    <h1 class="book-title">${FEATURED_BOOK.title}</h1>
-    <p class="book-subtitle">${FEATURED_BOOK.subtitle}</p>
-    <div class="book-description">
-    ${FEATURED_BOOK.description}
-    <br/>
-    ${FEATURED_BOOK.description2}
-    </div>
-    <a class="book-cta" href="#book-section">${FEATURED_BOOK.cta}</a>
-  `;
+  const close = document.querySelector("#details-div button.close-details");
+  const add = document.querySelectorAll(".book-item .qty-main-div span.add");
+  const minus = document.querySelectorAll(".book-item .qty-main-div span.minus");
 
-  // Insert after the banner section
-  const banner = document.getElementById('banner');
-  banner.appendChild(mainSection);
+  add.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const parentId = e.target.parentElement.dataset.id;
+      
+      const matchBook = BOOK_COLLECTION.find(book => {
+        return book.id == parentId;
+      });
+
+      matchBook.quantity++;
+      renderBookCollection();
+      console.log(matchBook.quantity);
+    })
+  });
+
+  minus.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const parentId = e.target.parentElement.dataset.id;
+
+      const matchBook = BOOK_COLLECTION.find(book => {
+        return book.id == parentId;
+      });
+
+      matchBook.quantity--;
+      renderBookCollection();
+      console.log(matchBook.quantity);
+    })
+  })
+
+
+  close && close.addEventListener("click", removeDetailsModal);
 }
 
 // Render Book Collection
@@ -247,11 +232,21 @@ function renderBookCollection() {
 
       <div class="book-description-div">
       <p class="description-title">
-      Description
+      eBook Description
       </p>
       <p class="description-text">
       ${book.description}
       </p>
+
+      <div class="quantity">
+      <p class="quantity-text">Qty</p>
+
+      <div class="qty-main-div"  data-id="${book.id}">
+      <span class="qty-arrow minus">-</span>
+      <p class="qty-text">${book.quantity}</p>
+      <span class="qty-arrow add">+</span>
+      </div>
+      </div>
       </div>
       <button class="add-to-cart btn">Add to Cart</button>
     </div>
@@ -297,9 +292,17 @@ function addToCart(book) {
 
 // Initialize both sections
 document.addEventListener('DOMContentLoaded', () => {
-  /*renderBooks();*/
-  renderBookMain();
-  renderBookCollection();
+  const language = navigator.language;
+  const lang = language.toLowerCase().substring(0, 2);
+
+  handleAudio(lang);
+  // renderBookCollection();
+
+  const book = document.querySelector("#preview button.get-copy");
+  const close = document.querySelector("#details-div button.close-details");
+
+  book && book.addEventListener("click", showDetailsModal);
+  close && close.addEventListener("click", removeDetailsModal);
 });
 
 

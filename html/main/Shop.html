@@ -69,17 +69,65 @@
 
 <section id="banner">
   <div class="rightIntro circle"></div>
-  <!-- <div class="header leftIntro">
-    <h1>Healing Books & Resources</h1>
-    <p>Curated collection by <b>Charlotte Casiraghi</b></p>
-  </div> -->
-</section>
+  <div class="top">
+  <p class="top-text dropdown">"I didn't write this book to be sold. I wrote it to survive."</p>
+
+  <div class="top-image-div rightIntro">
+  <img src="/src/images/book-person.png" alt="Charlotte Casiraghi" class="top-image "/>
+  </div>
+  </div>
+
+<audio src="/src/audio/book-audio.mp3" id="book-audio-message" hidden></audio>
 
 
-<section id="book-section" class="book-section">
-<h2>BOOK COLLECTION</h2>
-<div class="book-flex" id="bookCollection"></div>
+  <div class="under-text-div">
+<div class="player moveUpNfadeIn">
+  <p class="indication">Listen >></p>
+
+  <button id="play" type="button" title="Play Audio Message">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+      <path
+        d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+    </svg>
+  </button>
+</div>
+
+<div class="under-text">
+
+  <p class="first">These pages are my secret, my breath between battles, my whispers in the dark.</p>
+
+  <p class="second">Now, I'm offering them to you.</p>
+  <p class="last">Not on Amazon. Not in bookstores. Just here. Just us.</p>
+
+  <p class="author-name">Charlotte Casiraghi</p>
+</div>
+  </div>
 </section>
+
+<section id="preview">
+<div class="preview-details-div sub-preview">
+<h2>THE BOOK</h2>
+
+<div class="details">
+<p class="upper">Guerir n'est pas jolr' is not a manul, it's a mirror.</p>
+
+<p class="second">It's the raw, unfiltered truth of healing - the parts no one talks about. The nights that ache. The mornings that feel heavy.</p>
+
+<p class="last">This book is collection of Charlotte's most intimate reflections - written not for an audience,  but as a form of survival. It's for anyone who has carried invisble wounds and still chosen to rise.
+
+<br/><br />
+Healing isn't always beautiful.
+</p>
+</div>
+</div>
+
+<div class="preview-image-div sub-preview">
+<img src="/src/images/logo.jpg" alt="" class="preview-image">
+
+<button type="button" title="GET YOUR COPY" class="get-copy">GET YOUR COPY</button>
+</div>
+</section>
+
 <section id="discover">
   <div class="parent">
     <p class="text">
@@ -106,10 +154,10 @@
   </div>
 </section>
 
-<!-- Payment Modal -->
-<div id="paymentModal" class="modal">
-  <div class="modal-content">
-    <p>This book requires purchase. Redirecting to payment...</p>
+<!-- Details Modal -->
+<div id="details-div" class="modal">
+<button type="button" title="Close Details" class="close-details"><</button>
+  <div class="modal-content book-flex" id="bookCollection">
   </div>
 </div>
       

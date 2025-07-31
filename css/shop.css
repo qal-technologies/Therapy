@@ -3,8 +3,7 @@
   display: none;
   align-items: center;
   width: 100%;
-  padding: 2rem;
-  padding-top: 10pc;
+  padding-top: 8pc;
   background: white;
   display: flex;
   flex-direction: row;
@@ -12,24 +11,23 @@
   overflow: hidden;
   position: relative;
   min-height: 45%;
-  padding-bottom: 5.5rem;
   font-size: 1.2rem;
   text-align: left;
   gap: 15px;
 }
-
 
 #banner .circle {
   width: 90vw;
   height: 90vw;
   max-width: 800px;
   max-height: 800px;
-  background: rgba(255, 210, 86, 0.5);
+  background: rgba(255, 200, 49, 0.25);
   position: absolute;
-  right: -20%;
+  left: -20%;
   top: -30px;
+  border: 20px solid rgb(94, 255, 0);
   border-radius: 50%;
-  filter: opacity(0.4) blur(20px);
+  filter: opacity(0.54) blur(60px);
   display: flex;
   flex-direction: column;
 }
@@ -44,59 +42,243 @@
   font-size: 18px;
 }
 
-#book-main {
+#banner .top {
   width: 100%;
-  padding: 2rem;
-  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  min-height: 80vh;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 20%;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 20px;
+  z-index: 99;
+}
+
+#banner .top p.top-text {
+  width: 100%;
+  max-width: 400px;
+  margin-inline: 5vw;
+  font-size: 2rem;
+  color: #000;
+  font-family: PoppinsMed;
+  line-height: 2.5rem;
+  margin-block: 10px;
+}
+
+#banner .top .top-image-div {
+  width: 100vw;
+  border-top-right-radius: 2vw;
+  border-top-left-radius: 10vw;
+  border-bottom-left-radius: 4vw;
+  border-bottom-right-radius: 25vw;
+  overflow: hidden;
+  max-width: 650px;
+  height: 500px;
+  display: flex;
+  place-content: center;
+  place-items: center;
+  background-color: rgb(255, 216, 107);
+}
+
+#banner .top .top-image-div img {
+  width: 140%;
+  max-width: 350px;
+  height: 175%;
+  max-height: 500px;
+}
+
+#banner .under-text-div {
+  min-width: 100vw;
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  background-color: rgba(255, 224, 206, 0.5);
+  padding-block: 4pc;
+}
+
+#banner .player {
+  margin-bottom: 10px;
+  width: 70%;
+  place-self: center;
+  max-width: 200px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
   align-items: center;
+  justify-content: space-between;
+  background: var(--accent);
+  padding: 5px;
+  border-radius: 50px;
+  height: 50px;
+}
+
+.player .indication {
+  color: var(--mainText);
+  font-family: PoppinsSemi;
+  padding-inline-start: 10px;
+}
+
+#banner .player button#play {
+  display: flex;
+  z-index: 99;
+  justify-content: center;
+  align-items: center;
+  padding-inline-start: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  border: none;
+  text-align: center;
+  background: var(--link);
+  height: 40px;
+}
+
+#banner .player svg {
+  fill: var(--primary);
+}
+
+#banner .under-text-div .under-text {
+  place-self: center;
+  width: 95%;
+  max-width: 600px;
+  padding: 10px;
+  text-align: center;
+  place-content: center;
+  align-items: center;
+}
+
+.under-text p {
+  font-family: PoppinsLight;
+  margin-bottom: 6px;
+}
+
+.under-text p.first {
+  margin-bottom: 10px;
+}
+
+.under-text p.last {
+  margin-bottom: 15px;
+}
+
+.under-text p.author-name {
+  width: 70%;
+  place-self: center;
+  padding-top: 12px;
+  border-top: 1px solid #d1d1d1;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.4rem;
+}
+
+#preview {
+  min-width: 100vw;
+  display: flex;
+  padding: 10px;
+  gap: 20px;
+  background: rgb(252, 252, 252);
+  flex-wrap: wrap;
+  column-gap: 20%;
+  align-items: flex-start;
+  padding-block: 3pc;
   justify-content: center;
 }
 
-#book-main .book-title {
-  font-size: 2.5rem;
-  font-weight: 300;
-  font-family: PoppinsSemi;
-}
-
-#book-main .book-description {
-  text-align: left;
-  line-height: 1.6;
-  margin: 2rem 0 1.5rem;
-  padding: 1rem;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+#preview .sub-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
   max-width: 500px;
-  align-self: center;
-  justify-self: center;
+  text-align: left;
+  margin-bottom: 20px;
 }
 
-#book-main .book-cta {
-  width: 80%;
-  max-width: 300px;
-  background: var(--link);
-  color: #fff;
-  border: none;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 20px;
+.sub-preview.preview-details-div h2 {
+  font-size: 2rem;
+  color: rgb(255, 187, 0);
+  font-weight: bolder;
+  font-family: PoppinsSemi;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.sub-preview .details {
+  padding-inline: 20px;
+  font-size: 1.2rem;
   font-family: PoppinsMed;
-  cursor: pointer;
-  transition: opacity 0.53s;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-#book-main .book-cta:hover {
-  opacity: 0.8;
+.sub-preview img {
+  width: 100%;
+  max-width: 600px;
+  place-self: center;
+  display: flex;
+  border-radius: 20px;
+  object-fit: cover;
+  max-height: 700px;
 }
+
+.sub-preview button {
+  border: none;
+  width: 60%;
+  min-width: 200px;
+  background: none;
+  color: orange;
+  font-size: 1.2rem;
+  font-family: PoppinsSemi;
+  font-weight: bolder;
+  place-self: center;
+  display: flex;
+  border: 1px solid orange;
+  text-align: center;
+  border-radius: 20px;
+  padding: 6px;
+  cursor: pointer;
+  justify-content: center;
+}
+
+.sub-preview button:hover {
+  opacity: 0.66;
+}
+
+.book-section {
+  padding: 3rem 1rem;
+  background: rgba(255, 255, 255, 0.815);
+  gap: 10px;
+}
+
+.book-section h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  font-family: PoppinsSemi, PoppinsBold;
+}
+
+.book-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 auto;
+}
+
 
 .book-item {
-  background: var(--primaryTrans);
+  background: white;
   backdrop-filter: blur(10px);
   border-radius: 20px;
   width: 100%;
-  min-width: 300px;
-  border: 0.5px solid var(--accentTrans);
+  min-width: 350px;
   padding: 2rem;
   transition: transform 0.3s ease;
   display: flex;
@@ -104,20 +286,22 @@
   justify-content: center;
   gap: 10px;
   flex-direction: column;
-  max-width: 400px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  box-shadow: 0 0px 6px rgba(0, 0, 0, 0.05);
 }
 
 .book-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 1px 10px rgba(185, 159, 109, 0.4)
+  transform: translateY(-2px);
+  box-shadow: 0px 0px 8px rgba(185, 159, 109, 0.14)
 }
 
 .book-item img {
   width: 100%;
-  height: 300px;
-  object-fit: cover;
+  height: 400px;
+  object-fit: contain;
   border-radius: 15px;
+  border: 1px solid #eee;
+  background: white;
 }
 
 .book-info {
@@ -245,86 +429,125 @@
   letter-spacing: 1px;
 }
 
-.book-item .add-to-cart, .book-item .btn {
-  width: 80%;
-  max-width: 250px;
+.book-item .quantity {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.book-item .quantity .quantity-text {
+  font-weight: bolder;
+  font-family: PoppinsMed;
+}
+
+.book-item .quantity .qty-main-div {
+  width: 120px;
+  height: 40px;
+  padding: 10px;
+  padding-inline: 5px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: relative;
+}
+
+.book-item .quantity .qty-main-div span {
+  cursor: pointer;
+  background: var(--accentTrans);
+  padding: 8px;
+  width: 30px;
+  height: 30px;
+  font-family: PoppinsSemi;
+  font-size: 18px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 0.5px solid var(--accent);
+  text-align: center;
+  user-select: none;
+}
+
+.book-item .quantity .qty-main-div span:active, .book-item .quantity .qty-main-div span:hover{
+  opacity: 0.8;
+  transform: scale(90%);
+} 
+
+ .book-item .add-to-cart, .book-item .btn {
+  width: 100%;
   background-color: var(--link);
-  border-radius: 20px;
+  border-radius: 10px;
   color: white;
   justify-self: center;
   text-align: center;
   border: none;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   font-family: PoppinsMed;
   gap: 10px;
 }
 
 
-.book-section {
-  padding: 3rem 1rem;
-  background: #fffcfcb7;
-  gap: 10px;
-}
-
-.book-section h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  font-weight: 300;
-  font-family: PoppinsSemi, PoppinsBold;
-}
-
-.book-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  margin: 0 auto;
-}
-
 @media (max-width: 768px) {
-  #book-main {
-    padding: 1rem;
-  }
-
   .book-item {
     padding: 1.5rem;
   }
-}
 
-@media (max-width: 768px) {
   .book-flex {
     flex-direction: column;
     align-items: center;
   }
 }
 
-div#paymentModal {
+div#details-div {
   display: none;
   position: fixed;
   top: 0;
+  padding-top: 10vh;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.99);
+  z-index: 99999;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(2px);
 }
 
+#details-div button[title="Close Details"] {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--accentTrans);
+  backdrop-filter: blur(10px);
+  color: var(--link);
+  z-index: 9999;
+  font-family: PoppinsSemi;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  cursor: pointer;
+  border: 1px solid var(--accent);
+}
+
 .modal-content {
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.08);
-  background: white;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 600px;
+  display: grid;
+  width: 100%;
+  max-width: 800px;
   padding: 1rem;
   position: relative;
-  padding-left: 1.5rem;
-  max-height: 90vh;
   overflow-y: auto;
+  max-height: 90vh;
+  height: auto;
 }
 
 .modal-content p {
