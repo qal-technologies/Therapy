@@ -70,7 +70,7 @@
 }
 
 #banner .top .top-image-div {
-  width: 100vw;
+  width: 98vw;
   border-top-right-radius: 2vw;
   border-top-left-radius: 10vw;
   border-bottom-left-radius: 4vw;
@@ -416,7 +416,7 @@
 
 
 .book-item .book-description-div {
-  font-family: PoppinsMed;
+  font-family: PoppinsLight;
   text-align: left;
   user-select: text;
   border-top: 1px solid #eee;
