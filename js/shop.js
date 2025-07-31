@@ -286,6 +286,9 @@ function addToCart(book) {
     // Update quantity of existing item
     cart[existingItemIndex].quantity += book.quantity;
   } else {
+
+const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+
     // Adding new item to cart
     cart.push({
       id: book.id,
@@ -294,6 +297,9 @@ function addToCart(book) {
       price: book.price,
       image: book.image,
       quantity: book.quantity,
+transactionId: transactionId,
+description:book.description,
+image:book.image,
       format: selectedFormat?.name || book.formats[0]
     });
   }
