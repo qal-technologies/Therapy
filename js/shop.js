@@ -8,9 +8,6 @@ const State = {
   }
 };
 
-//default quantity:
-let quantity = 1;
-
 //Audio source:
 const audioSrc = {
   session: {
