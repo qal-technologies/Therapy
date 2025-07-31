@@ -225,7 +225,7 @@ function renderBookCollection() {
       <p class="description-text">
       ${book.description}
       </p>
-</div>
+
 
        <div class="quantity">
         <p class="quantity-text">Qty</p>
@@ -235,7 +235,8 @@ function renderBookCollection() {
           <span class="qty-arrow add">+</span>
         </div>
       </div>
-      
+     </div>
+
       <button class="add-to-cart btn">Add to Cart</button>
     </div>
 
