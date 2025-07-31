@@ -1,17 +1,17 @@
 // Generate random user data
 const userEmail = "user" + Math.floor(Math.random() * 1000) + "@example.com";
-const userName = "John Doe";
+const userNames = ["John Doe", "Jane Smith", "Alex Johnson", "Emily Brown"];
+const userName = userNames[Math.floor(Math.random() * userNames.length)];
 
-//Create user object:
+
+// Create user object with validation
 const userObj = {
-    email: userEmail,
-    name: userName,
-}
+    email: userEmail || "user123@gmail.com",
+    name: userName || "Guest User",
+};
 
-// Payslip modal functionality
-const modal = document.getElementById('payslipModal');
 
-function getCurrencySymbol(currencyCode) {
+function getCurrencySymbol(currencyCode) { 
     const symbols = {
         EUR: "€",
         USD: "$",
@@ -20,11 +20,25 @@ function getCurrencySymbol(currencyCode) {
         GBP: "£",
         CHF: "₣",
     };
+    
     return symbols[currencyCode] || currencyCode;
 }
 
-const storedPayments = [
-    {
+// DOM Elements - cached for better performance
+const domElements = {
+    userEmail: document.getElementById('userEmail'),
+    fullName: document.getElementById('full-name'),
+    profileAvatar: document.getElementById('profileAvatar'),
+    paymentsGrid: document.getElementById('paymentsGrid'),
+    cartContainer: document.querySelector("div.cart-container"),
+    modal: document.getElementById('payslipModal'),
+    closeModal: document.getElementById('closeModal')
+};
+
+
+function initializePaymentData() {
+    const defaultPayments = [
+         {
         id: "TXN-1239796-GR",
         paymentType: "session",
         title: 'Inner Circle',
@@ -81,35 +95,50 @@ const storedPayments = [
         date: new Date(2023, 6, 2),
         index: 5
     },
-]
+    ];
 
-localStorage.setItem("payments", JSON.stringify(storedPayments));
+    try {
+        const stored = localStorage.getItem("payments");
+        if (!stored) {
+            localStorage.setItem("payments", JSON.stringify(defaultPayments));
+            return defaultPayments;
+        }
+        return JSON.parse(stored);
+    } catch (e) {
+        console.error("Error loading payments:", e);
+        return defaultPayments;
+    }
+}
+
+const payments = initializePaymentData();
 
 
-let payments;
-//Get Payment data
-const gotten = localStorage.getItem("payments");
-payments = JSON.parse(gotten) || {};
+// Initialize user profile
+function initializeUserProfile() {
+    if (!domElements.userEmail || !domElements.fullName || !domElements.profileAvatar) return;
 
+    domElements.userEmail.textContent = userObj.email;
+    domElements.fullName.textContent = userObj.name;
 
-if (userObj && payments) {
-    // Set user profile:
-    document.getElementById('userEmail').textContent = userObj.email || "user123@gmail.com";
-    document.getElementById('full-name').textContent = userObj.name;
-
-    //get all necessary parameters:
-    const firstLetter = userObj.name.charAt(0).toUpperCase();
     const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    
+    domElements.profileAvatar.textContent = userObj.name.charAt(0).toUpperCase();
+    domElements.profileAvatar.style.backgroundColor = randomColor;
+}
 
-
-    // Generate and set profile avatar
-    const profileAvatar = document.getElementById('profileAvatar');
-    profileAvatar.textContent = firstLetter;
-    profileAvatar.style.backgroundColor = randomColor;
-
-    //cart data:
-    const carts = [
+function initializeCartData() {
+    const defaultCart = [
+        {
+            id: "01",
+            type: "book",
+            description: "something short",
+            title: "Book 1",
+            price: "2.00",
+            date: new Date(),
+            quantity: 2,
+            transactionId: "TXN-" + Math.random().toString(36).substr(2, 8).toUpperCase()
+        },
         {
             id: "01",
             type: "book",
@@ -148,193 +177,222 @@ if (userObj && payments) {
             date: new Date(2023, 5, 15),
             quantity: 1,
             transactionId: "TXN-0988765-EN"
-        }
+        },
     ];
 
-    const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
-        count.innerHTML = carts.length;
+    try {
+        return defaultCart;
+    } catch (e) {
+        console.error("Error loading cart:", e);
+        return defaultCart;
+    }
+}
+
+//carts:
+const carts = initializeCartData();
+
+    // Update cart count
+function updateCartCount() {
+    const cartCountElements = document.querySelectorAll("span.cart-count");
+    cartCountElements.forEach(el => {
+        el.textContent = carts.length;
     });
+}
 
-    // Render payment cards:
-    const paymentsGrid = document.getElementById('paymentsGrid');
+    / Render payment cards with better error handling
+function renderPaymentCards() {
+    if (!domElements.paymentsGrid) return;
 
+    if (payments.length === 0) {
+        domElements.paymentsGrid.innerHTML = `
+            <p style="min-width:100%; text-align:center; font-size:16px; 
+                      font-family:PoppinsSemi; color:gray;">
+                No Payment Yet
+            </p>`;
+        return;
+    }
+
+    domElements.paymentsGrid.innerHTML = '';
+    
     payments.forEach(payment => {
-        const paymentCard = document.createElement('div');
-        paymentCard.className = 'payment-card';
+        try {
+            const paymentCard = document.createElement('div');
+            paymentCard.className = 'payment-card';
 
-        let statusClass = '';
-        if (payment.status === true) statusClass = 'status-completed';
-        else if (payment.status === false) statusClass = 'status-pending';
-        else statusClass = 'status-failed';
+            let statusClass = '';
+            if (payment.status === true) statusClass = 'status-completed';
+            else if (payment.status === false) statusClass = 'status-failed';
+            else statusClass = 'status-pending';
 
-        paymentCard.innerHTML = `
+            paymentCard.innerHTML = `
                 <div class="payment-header">
-                    <span class="payment-code">${payment.id}</span>
-                    <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
+                    <span class="payment-code">${payment.id || 'N/A'}</span>
+                    <span class="payment-status ${statusClass}">
+                        ${(payment.statusName || 'Pending').toUpperCase()}
+                    </span>
                 </div>
-                <div class="payment-type">${payment.title.toUpperCase()}</div>
+                <div class="payment-type">${(payment.title || 'Untitled').toUpperCase()}</div>
                 <div class="payment-details">
                     <div class="payment-detail">
                         <span class="detail-label">Date:</span>
-                        <span class="detail-value">${new Date(payment.date).toLocaleDateString()}</span>
+                        <span class="detail-value">
+                            ${payment.date ? new Date(payment.date).toLocaleDateString() : 'N/A'}
+                        </span>
                     </div>
                     <div class="payment-detail">
                         <span class="detail-label">Amount:</span>
                         <span class="detail-value">
-                        &euro; ${parseFloat(payment.price).toFixed(2)}</span>
+                            €${payment.price ? parseFloat(payment.price).toFixed(2) : '0.00'}
+                        </span>
                     </div>
                 </div>
             `;
 
-        paymentCard.addEventListener('click', () => {
-            if (payment.status === true) {
-                showPayslip(payment);
-            } else {
-                const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
-
-                setTimeout(() => {
-                    window.location.href = `/html/main/payment.html?${params}`;
-                }, 1000)
-            }
-        });
-
-        if (payments.length < 1) {
-            paymentsGrid.style.display = "flex";
-
-            paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
-        } else {
-            paymentsGrid.appendChild(paymentCard)
+            paymentCard.addEventListener('click', () => handlePaymentClick(payment));
+            domElements.paymentsGrid.appendChild(paymentCard);
+        } catch (e) {
+            console.error("Error rendering payment card:", e);
         }
     });
-
-
-    const closeModal = document.getElementById('closeModal');
-
-    function showPayslip(payment) {
-        const icon = document.getElementById('icon');
-        icon.classList.add(`${payment.statusName.toLowerCase()}`);
-        icon.innerHTML += payment.statusName.toUpperCase();
-        const symbol = getCurrencySymbol(payment.currency)
-
-        document.getElementById('receiptId').textContent = payment.id;
-        document.getElementById('receiptType').textContent = payment.title;
-        document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
-        document.getElementById('receiptMethod').textContent = payment.method;
-        document.getElementById('receiptCurrency').textContent = payment.currency;
-        document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-        document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
-        document.getElementById('receiptDescription').textContent = payment.description;
-        document.getElementById('receiptDate').textContent = 'Date: ' + new Date(payment.date).toLocaleDateString();
-
-        modal.style.display = 'flex';
-    }
-
-
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    const cartContainer = document.querySelector("div.cart-container");
-
-    carts.forEach(cart => {
-const price = cart.price * cart.quantity;
-        const cartDiv = document.createElement("div");
-        cartDiv.classList.add("cart-item");
-
-
-        cartDiv.innerHTML = `
-	<div class="upper item-info">
-		<h3 class="cart-title">${cart.title.toUpperCase()}</h3>
-		<p class="item-format">eBook · Read instantly on all devices</p>
-        <p class="item-price">${cart.price}</p>
-
-	</div>
-
-	 <div class="cart-summary">
-<div class="subtotal quantity">
-        <span>Quantity:</span>
-        <span class="amount quantity">${cart.quantity}</span>
-      </div>
-      
-      <div class="subtotal">
-        <span>Subtotal:</span>
-        <span class="amount">€ ${price}</span>
-      </div>
-      
-      <div class="checkout-controls">
-        <label class="checkbox-container">
-          <input type="checkbox" checked>
-          <span class="checkmark"></span>
-          <span class="checkout-label">Proceed to Checkout</span>
-        </label>
-        <p class="secure-payment">Secure payment · Encrypted</p>
-      </div>
-    </div>
-
-<div class="testimonial">
-      <p class="testimonial-title">Why readers love it ★★★★★★</p>
-      <p class="testimonial-text">"Profound and life-changing" - Marie, Paris</p>
-    </div>
-	</div>
-        `
-
-
-
-        const payButton = cartDiv.querySelector("span.checkout-label");
-
-        
-        payButton.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const params = new URLSearchParams({
-                type: "book", details: JSON.stringify(cart)
-            });
-
-            setTimeout(() => {
-                window.location.href = `/html/main/Payment.html?${params}`
-            }, 800);
-        });
-
-        if (carts.length < 1) {
-            cartContainer.style.display = "flex";
-
-            cartContainer.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Cart Yet</p>`
-        } else {
-            cartContainer.appendChild(cartDiv)
-        }
-    });
-
-
 }
 
+function handlePaymentClick(payment) {
+    if (payment.status === true) {
+        showPayslip(payment);
+    } else {
+        const params = new URLSearchParams({
+            type: "pending",
+            details: JSON.stringify(payment)
+        }).toString();
 
-        
-        <button class="remove-btn">Remove</button>
-      </div>
-    </div>
-    
-    <div class="cart-summary">
-      <div class="subtotal">
-        <span>Subtotal:</span>
-        <span class="amount">€20</span>
-      </div>
-      
-      <div class="checkout-controls">
-        <label class="checkbox-container">
-          <input type="checkbox" checked>
-          <span class="checkmark"></span>
-          <span class="checkout-label">Proceed to Checkout</span>
-        </label>
-        <p class="secure-payment">Secure payment · Encrypted</p>
-      </div>
-    </div>
-    
-    <div class="testimonial">
-      <p class="testimonial-title">Why readers love it ★★★★★★</p>
-      <p class="testimonial-text">"Profound and life-changing" - Marie, Paris</p>
-    </div>
-
-window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
+        setTimeout(() => {
+            window.location.href = `/html/main/payment.html?${params}`;
+        }, 1000);
     }
+}
+
+    // Show payslip with validation
+function showPayslip(payment) {
+    if (!domElements.modal) return;
+
+    const symbol = getCurrencySymbol(payment.currency || 'EUR');
+    
+    document.getElementById('receiptId').textContent = payment.id || 'N/A';
+    document.getElementById('receiptType').textContent = payment.title || 'Untitled';
+    document.getElementById('receiptAmount').textContent = 
+        `€${payment.price ? parseFloat(payment.price).toFixed(2) : '0.00'}`;
+    document.getElementById('receiptMethod').textContent = payment.method || 'Unknown';
+    document.getElementById('receiptCurrency').textContent = payment.currency || 'EUR';
+    document.getElementById('receiptConverted').textContent = 
+        `${symbol}${payment.converted ? parseFloat(payment.converted).toFixed(2) : '0.00'}`;
+    document.getElementById('receiptStatus').textContent = 
+        payment.statusName ? 
+        payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1) : 
+        'Pending';
+    document.getElementById('receiptDescription').textContent = payment.description || 'No description';
+    document.getElementById('receiptDate').textContent = 
+        'Date: ' + (payment.date ? new Date(payment.date).toLocaleDateString() : 'N/A');
+
+    domElements.modal.style.display = 'flex';
+}
+
+// Render cart items with improved structure
+function renderCartItems() {
+    if (!domElements.cartContainer) return;
+
+    if (carts.length === 0) {
+        domElements.cartContainer.innerHTML = `
+            <p style="min-width:100%; text-align:center; 
+                      font-size:16px; font-family:PoppinsSemi; color:gray;">
+                No Items in Cart
+            </p>`;
+        return;
+    }
+
+    domElements.cartContainer.innerHTML = '';
+
+    carts.forEach(cart => {
+        try {
+            const cartDiv = document.createElement("div");
+            cartDiv.classList.add("cart-item");
+
+            const price = (parseFloat(cart.price) || 0) * (cart.quantity || 1);
+            
+            cartDiv.innerHTML = `
+                <div class="upper item-info">
+                    <h3 class="cart-title">${(cart.title || 'Untitled').toUpperCase()}</h3>
+                    <p class="item-format">eBook · Read instantly on all devices</p>
+                    <p class="item-price">${cart.price || '0.00'}</p>
+                </div>
+
+                <div class="cart-summary">
+                    <div class="subtotal quantity">
+                        <span>Quantity:</span>
+                        <span class="amount quantity">${cart.quantity || 1}</span>
+                    </div>
+                    
+                    <div class="subtotal">
+                        <span>Subtotal:</span>
+                        <span class="amount">€ ${price.toFixed(2)}</span>
+                    </div>
+                    
+                    <div class="checkout-controls">
+                        <label class="checkbox-container">
+                            <input type="checkbox" checked>
+                            <span class="checkmark"></span>
+                            <span class="checkout-label">Proceed to Checkout</span>
+                        </label>
+                        <p class="secure-payment">Secure payment · Encrypted</p>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-title">Why readers love it ★★★★★★</p>
+                    <p class="testimonial-text">"Profound and life-changing" - Marie, Paris</p>
+                </div>
+            `;
+
+
+        const payButton = cartDiv.querySelector(".checkout-label");
+            if (payButton) {
+                payButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const params = new URLSearchParams({
+                        type: "book", 
+                        details: JSON.stringify(cart)
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = `/html/main/Payment.html?${params}`;
+                    }, 800);
+                });
+            }
+
+            domElements.cartContainer.appendChild(cartDiv);
+        } catch (e) {
+            console.error("Error rendering cart item:", e);
+        }
+    });
+}
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeUserProfile();
+    updateCartCount();
+    renderPaymentCards();
+    renderCartItems();
+
+    if (domElements.closeModal) {
+        domElements.closeModal.addEventListener('click', () => {
+            if (domElements.modal) {
+                domElements.modal.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (domElements.modal && e.target === domElements.modal) {
+            domElements.modal.style.display = 'none';
+        }
+    });
 });
