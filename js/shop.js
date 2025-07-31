@@ -158,45 +158,36 @@ function showDetailsModal() {
   renderBookCollection();
 
   const close = document.querySelector("#details-div button.close-details");
-  const add = document.querySelectorAll(".book-item .qty-main-div span.add");
-  const minus = document.querySelectorAll(".book-item .qty-main-div span.minus");
-
-  add.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const parentId = e.target.parentElement.dataset.id;
-      
-      const matchBook = BOOK_COLLECTION.find(book => {
-        return book.id == parentId;
-      });
-
-      matchBook.quantity++;
-      renderBookCollection();
-      console.log(matchBook.quantity);
-    })
-  });
-
-  minus.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const parentId = e.target.parentElement.dataset.id;
-
-      const matchBook = BOOK_COLLECTION.find(book => {
-        return book.id == parentId;
-      });
-
-      matchBook.quantity--;
-      renderBookCollection();
-      console.log(matchBook.quantity);
-    })
-  })
 
 
   close && close.addEventListener("click", removeDetailsModal);
 }
 
-// Render Book Collection
+function handleQuantityChange(e) {
+  const parentId = e.target.closest('.qty-main-div').dataset.id;
+  const book = BOOK_COLLECTION.find(b => b.id === parentId);
+  
+  if (!book) return;
+
+  if (e.target.classList.contains('add')) {
+    book.quantity++;
+  } else if (e.target.classList.contains('minus')) {
+    // Prevent quantity from going below 1
+    book.quantity = Math.max(1, book.quantity - 1);
+  }
+
+  // Update the displayed quantity
+  const qtyText = e.target.closest('.qty-main-div').querySelector('.qty-text');
+  if (qtyText) {
+    qtyText.textContent = book.quantity;
+  }
+}
+
+// Render Book Collection:
 function renderBookCollection() {
-  // Render book items
   const collectionContainer = document.getElementById('bookCollection');
+  if (!collectionContainer) return;
+
   collectionContainer.innerHTML = BOOK_COLLECTION.map(book => `
     <div class="book-item" data-id="${book.id}">
       <img src="${book.image}" alt="${book.title}">
@@ -235,56 +226,78 @@ function renderBookCollection() {
       ${book.description}
       </p>
 
-      <div class="quantity">
-      <p class="quantity-text">Qty</p>
-
-      <div class="qty-main-div"  data-id="${book.id}">
-      <span class="qty-arrow minus">-</span>
-      <p class="qty-text">${book.quantity}</p>
-      <span class="qty-arrow add">+</span>
+       <div class="quantity">
+        <p class="quantity-text">Qty</p>
+        <div class="qty-main-div" data-id="${book.id}">
+          <span class="qty-arrow minus">-</span>
+          <p class="qty-text">${book.quantity}</p>
+          <span class="qty-arrow add">+</span>
+        </div>
       </div>
-      </div>
-      </div>
+      
       <button class="add-to-cart btn">Add to Cart</button>
     </div>
+
   `).join('');
 
-  // Add click handlers for Add to Cart buttons
-  document.querySelectorAll('.book-item .add-to-cart').forEach(button => {
+  document.querySelectorAll('.qty-arrow').forEach(btn => {
+    btn.addEventListener('click', handleQuantityChange);
+  });
+
+  // Add event listeners for Add to Cart buttons
+  document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
       const bookItem = e.target.closest('.book-item');
       const bookId = bookItem.dataset.id;
       const book = BOOK_COLLECTION.find(b => b.id === bookId);
 
       if (book) {
-        addToCart(book);
-        alert(`${book.title} added to cart!`);
+        if (addToCart(book)) {
+          alert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`);
+          // Reset quantity after adding to cart
+          book.quantity = 1;
+          renderBookCollection();
+        }
       }
     });
   });
 }
 
-// Add to Cart Function
+
+// Improved Add to Cart Function
 function addToCart(book) {
   let cart = JSON.parse(localStorage.getItem('carts')) || [];
+  
+  // Get selected format
+  const selectedFormat = document.querySelector(`.book-item[data-id="${book.id}"] input[type="radio"]:checked`);
+  if (!selectedFormat && book.formats.length > 0) {
+    alert('Please select a format before adding to cart');
+    return false;
+  }
 
-  // Check if book already in cart
-  const existingItem = cart.find(item => item.id === book.id);
+  // Check if book already in cart with same format
+  const existingItemIndex = cart.findIndex(item => 
+    item.id === book.id && item.format === selectedFormat?.name
+  );
 
-  if (existingItem) {
-    existingItem.quantity = (existingItem.quantity || 1) + 1;
+  if (existingItemIndex !== -1) {
+    // Update quantity of existing item
+    cart[existingItemIndex].quantity += book.quantity;
   } else {
+    // Adding new item to cart
     cart.push({
       id: book.id,
       title: book.title,
-      author: book.author,
+      author: "Charlotte Casiraghi", 
       price: book.price,
       image: book.image,
-      quantity: 1
+      quantity: book.quantity,
+      format: selectedFormat?.name || book.formats[0]
     });
   }
 
   localStorage.setItem('carts', JSON.stringify(cart));
+  return true;
 }
 
 // Initialize both sections
