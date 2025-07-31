@@ -225,6 +225,7 @@ function renderBookCollection() {
       <p class="description-text">
       ${book.description}
       </p>
+</div>
 
        <div class="quantity">
         <p class="quantity-text">Qty</p>
