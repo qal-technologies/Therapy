@@ -237,34 +237,52 @@ if (userObj && payments) {
     const cartContainer = document.querySelector("div.cart-container");
 
     carts.forEach(cart => {
+const price = cart.price * cart.quantity;
         const cartDiv = document.createElement("div");
-        cartDiv.classList.add("cart-div");
+        cartDiv.classList.add("cart-item");
+
 
         cartDiv.innerHTML = `
-	<div class="upper">
-		<p class="cart-title">${cart.title.toUpperCase()}</p>
-		<p class="cart-date">${cart.date.toLocaleDateString().replaceAll("/", "-")}</p>
+	<div class="upper item-info">
+		<h3 class="cart-title">${cart.title.toUpperCase()}</h3>
+		<p class="item-format">eBook · Read instantly on all devices</p>
+        <p class="item-price">${cart.price}</p>
+
 	</div>
 
-	<div class="lower">
-		<p class="description">${cart.description}.</p>
+	 <div class="cart-summary">
+<div class="subtotal quantity">
+        <span>Quantity:</span>
+        <span class="amount quantity">${cart.quantity}</span>
+      </div>
+      
+      <div class="subtotal">
+        <span>Subtotal:</span>
+        <span class="amount">€ ${price}</span>
+      </div>
+      
+      <div class="checkout-controls">
+        <label class="checkbox-container">
+          <input type="checkbox" checked>
+          <span class="checkmark"></span>
+          <span class="checkout-label">Proceed to Checkout</span>
+        </label>
+        <p class="secure-payment">Secure payment · Encrypted</p>
+      </div>
+    </div>
 
-		<div class="under">
-			<div class="right">
-				<p class="cart-price">${parseFloat(cart.price).toFixed(2)}</p>
-		<p class="quantity-div"> Quantity: <span class="quantity">${cart.quantity}</span></p>
-			</div>
-				<button class="continue-purchase" title="Continue Purchase">Pay</button>
-		</div>
+<div class="testimonial">
+      <p class="testimonial-title">Why readers love it ★★★★★★</p>
+      <p class="testimonial-text">"Profound and life-changing" - Marie, Paris</p>
+    </div>
 	</div>
         `
 
-        const payButton = cartDiv.querySelector("button.continue-purchase");
 
-        cartDiv.addEventListener("click", () => {
-            window.location.href = "/html/main/Shop.html";
-        });
 
+        const payButton = cartDiv.querySelector("span.checkout-label");
+
+        
         payButton.addEventListener("click", (e) => {
             e.stopPropagation();
             const params = new URLSearchParams({
@@ -287,6 +305,34 @@ if (userObj && payments) {
 
 
 }
+
+
+        
+        <button class="remove-btn">Remove</button>
+      </div>
+    </div>
+    
+    <div class="cart-summary">
+      <div class="subtotal">
+        <span>Subtotal:</span>
+        <span class="amount">€20</span>
+      </div>
+      
+      <div class="checkout-controls">
+        <label class="checkbox-container">
+          <input type="checkbox" checked>
+          <span class="checkmark"></span>
+          <span class="checkout-label">Proceed to Checkout</span>
+        </label>
+        <p class="secure-payment">Secure payment · Encrypted</p>
+      </div>
+    </div>
+    
+    <div class="testimonial">
+      <p class="testimonial-title">Why readers love it ★★★★★★</p>
+      <p class="testimonial-text">"Profound and life-changing" - Marie, Paris</p>
+    </div>
+
 window.addEventListener('click', (e) => {
     if (e.target === modal) {
         modal.style.display = 'none';
