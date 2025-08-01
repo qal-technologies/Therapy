@@ -196,7 +196,7 @@ function renderBookCollection() {
       <p class="book-author">Charlotte Casiraghi</p>
 
       <div class="book-downloads">
-      <div class="download-stars">*****</div>
+      <div class="download-stars">★★★★★</div>
       <p class="download-text">${book.downloads}</p>
       </div>
       <div class="book-format">
@@ -286,6 +286,8 @@ function addToCart(book) {
     // Update quantity of existing item
     cart[existingItemIndex].quantity += book.quantity;
   } else {
+
+    const language = navigator.language;
 
 const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 

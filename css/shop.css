@@ -1,3 +1,7 @@
+#body {
+  overflow-x: hidden;
+}
+
 #banner {
   width: 100%;
   display: none;
@@ -32,16 +36,6 @@
   flex-direction: column;
 }
 
-#banner h1, #books h1 {
-  position: relative;
-  font-family: PoppinsSemi;
-  font-size: 30px;
-}
-
-#banner .header p {
-  font-size: 18px;
-}
-
 #banner .top {
   width: 100%;
   overflow: hidden;
@@ -60,17 +54,17 @@
 
 #banner .top p.top-text {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   margin-inline: 5vw;
   font-size: 2rem;
   color: #000;
-  font-family: PoppinsMed;
-  line-height: 2.5rem;
+  font-family: PoppinsSemi;
+  line-height: 2.1rem;
   margin-block: 10px;
 }
 
 #banner .top .top-image-div {
-  width: 98vw;
+  width: 95vw;
   border-top-right-radius: 2vw;
   border-top-left-radius: 10vw;
   border-bottom-left-radius: 4vw;
@@ -81,7 +75,7 @@
   display: flex;
   place-content: center;
   place-items: center;
-  background-color: rgb(255, 216, 107);
+  background: var(--accentTrans);
 }
 
 #banner .top .top-image-div img {
@@ -200,7 +194,7 @@
 
 .sub-preview.preview-details-div h2 {
   font-size: 2rem;
-  color: rgb(255, 187, 0);
+  color: var(--link);
   font-weight: bolder;
   font-family: PoppinsSemi;
   text-align: center;
@@ -232,16 +226,16 @@
   width: 60%;
   min-width: 200px;
   background: none;
-  color: orange;
+  color: var(--link);
   font-size: 1.2rem;
   font-family: PoppinsSemi;
   font-weight: bolder;
   place-self: center;
   display: flex;
-  border: 1px solid orange;
+  border: 1px solid var(--link);
   text-align: center;
-  border-radius: 20px;
-  padding: 6px;
+  border-radius: 50px;
+  padding: 5px;
   cursor: pointer;
   justify-content: center;
 }
@@ -336,10 +330,10 @@
 
 .book-info .book-downloads .download-stars {
   font-family: PoppinsBold;
-  font-size: 20px;
-  fill: rgb(255, 187, 0);
-  color: gold;
-  margin-bottom: -10px;
+  font-size: 25px;
+  color: rgb(253, 200, 100);
+  fill: rgb(253, 200, 100);
+  margin-bottom: -5px;
 }
 
 .book-info .book-format {
@@ -372,6 +366,7 @@
   fill: var(--link);
   color: var(--link);
   background: var(--link);
+  accent-color: var(--link);
 }
 
 .format-div .side {
@@ -398,26 +393,22 @@
   padding-inline: 15px;
   min-width: max-content;
   border-radius: 20px;
+  font-size: 14px;
   font-family: PoppinsMed;
   border: 1px solid var(--accentTrans);
 }
 
-.format-div .format-status.available {
-  background-color: rgba(195, 255, 176, 0.5);
-  border-color: rgb(0, 165, 0);
-  color: rgb(0, 165, 0);
-}
-
 .format-div .format-status.sold {
-  background-color: rgba(255, 176, 176, 0.5);
-  border-color: rgb(165, 0, 0);
-  color: rgb(165, 0, 0);
+  background-color: rgba(255, 241, 241, 0.1);
+  border-color: rgb(148, 148, 148);
+  color: rgb(148, 148, 148);
+  cursor: not-allowed;
 }
-
 
 .book-item .book-description-div {
   font-family: PoppinsLight;
   text-align: left;
+  margin-top: 5px;
   user-select: text;
   border-top: 1px solid #eee;
   padding-block: 15px;
@@ -428,6 +419,11 @@
   font-family: PoppinsMed;
   letter-spacing: 1px;
 }
+
+.book-item .description-text {
+  font-family: PoppinsLight;
+}
+
 
 .book-item .quantity {
   margin-top: 15px;
@@ -475,12 +471,12 @@
   user-select: none;
 }
 
-.book-item .quantity .qty-main-div span:active, .book-item .quantity .qty-main-div span:hover{
+.book-item .quantity .qty-main-div span:active, .book-item .quantity .qty-main-div span:hover {
   opacity: 0.8;
   transform: scale(90%);
-} 
+}
 
- .book-item .add-to-cart, .book-item .btn {
+.book-item .add-to-cart, .book-item .btn {
   width: 100%;
   background-color: var(--link);
   border-radius: 10px;
