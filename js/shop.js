@@ -91,60 +91,6 @@ function handleAudio(lang) {
   });
 }
 
-// Handle Book Click
-function handleBookClick(e) {
-  const bookId = e.target.id;
-  const hasAccess = State.paidFeatures.includes(bookId);
-
-  if (!hasAccess) {
-    showPaymentModal(bookId);
-    return;
-  }
-
-  // Open book reader
-  window.location.href = `/html/main/read.html?id=${bookId}`;
-}
-
-// // Show Payment Modal
-// function showPaymentModal(bookId) {
-//   const book = BOOKS.filter(book => {
-//     return book.id == bookId;
-//   })[0];
-
-
-//   const language = navigator.language;
-
-
-//   const transactionId = `TXN-${Math.random()
-//     .toString(36)
-//     .substring(2, 10)
-//     .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
-
-//   const details = {
-//     id: bookId,
-//     type: "book",
-//     description: `PURCHASE OF BOOK (${book.title}) - ${book.description} ${quantity > 1 ? "[2 Copies]" : ''}`,
-//     title: book.title,
-//     price: book.price,
-//     date: new Date(),
-//     transactionId: transactionId,
-//     quantity: quantity,
-//   };
-
-//   const params = new URLSearchParams({
-//     type: "book",
-//     details: JSON.stringify(details)
-//   }).toString();
-
-//   const modal = document.getElementById('paymentModal');
-//   modal.style.display = 'flex';
-
-//   setTimeout(() => {
-//     window.location.href = `/html/main/payment.html?${params}`;
-//   }, 2000);
-// }
-
-
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 

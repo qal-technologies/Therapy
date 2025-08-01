@@ -1,36 +1,3 @@
-
-
-// elements.cartContainer.innerHTML = cart.map(item => `
-//   <div class="cart-item" data-id="${item.id}">
-//     <div class="item-info">
-//       <h3>${item.title}</h3>
-//       <p>eBook · Instant download</p>
-//       <p>€${item.price.toFixed(2)}</p>
-//     </div>
-
-//     <div class="item-controls">
-//       <div class="quantity">
-//         <button class="minus">-</button>
-//         <span>${item.quantity}</span>
-//         <button class="plus">+</button>
-//       </div>
-
-//       <div class="subtotal">
-//         <span>Subtotal:</span>
-//         <span>€${(item.price * item.quantity).toFixed(2)}</span>
-//       </div>
-
-//       <button class="remove">Remove</button>
-//       <button class="checkout">Checkout</button>
-//     </div>
-
-//     <div class="testimonial">
-//       <p>★★★★★ "Life-changing!" - Marie</p>
-//     </div>
-//   </div>
-// `).join('');
-
-
 // Generate random user data
 const userEmail = "user" + Math.floor(Math.random() * 1000) + "@example.com";
 const userName = "John Doe";
@@ -145,19 +112,19 @@ const payments = getPayments();
 
 if (userObj && payments) {
   // Set user profile:
-  // document.getElementById('userEmail').textContent = userObj.email || "user123@gmail.com";
-  // document.getElementById('full-name').textContent = userObj.name;
+  document.getElementById('userEmail').textContent = userObj.email || "user123@gmail.com";
+  document.getElementById('full-name').textContent = userObj.name;
 
-  // //get all necessary parameters:
-  // const firstLetter = userObj.name.charAt(0).toUpperCase();
-  // const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
-  // const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  //get all necessary parameters:
+  const firstLetter = userObj.name.charAt(0).toUpperCase();
+  const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
 
-  // // Generate and set profile avatar
-  // const profileAvatar = document.getElementById('profileAvatar');
-  // profileAvatar.textContent = firstLetter;
-  // profileAvatar.style.backgroundColor = randomColor;
+  // Generate and set profile avatar
+  const profileAvatar = document.getElementById('profileAvatar');
+  profileAvatar.textContent = firstLetter;
+  profileAvatar.style.backgroundColor = randomColor;
 
 
   function getCarts() {
@@ -232,79 +199,79 @@ if (userObj && payments) {
   });
 
   // Render payment cards:
-  // const paymentsGrid = document.getElementById('paymentsGrid');
+  const paymentsGrid = document.getElementById('paymentsGrid');
   
-  // payments.forEach(payment => {
-  //   const paymentCard = document.createElement('div');
-  //   paymentCard.className = 'payment-card';
+  payments.forEach(payment => {
+    const paymentCard = document.createElement('div');
+    paymentCard.className = 'payment-card';
 
     
-  //   let statusClass = '';
-  //   if (payment.status === true) statusClass = 'status-completed';
-  //   else if (payment.status === false) statusClass = 'status-pending';
-  //   else statusClass = 'status-failed';
+    let statusClass = '';
+    if (payment.status === true) statusClass = 'status-completed';
+    else if (payment.status === false) statusClass = 'status-pending';
+    else statusClass = 'status-failed';
 
-  //   paymentCard.innerHTML = `
-  //               <div class="payment-header">
-  //                   <span class="payment-code">${payment.id}</span>
-  //                   <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
-  //               </div>
-  //               <div class="payment-type">${payment.title.toUpperCase()}</div>
-  //               <div class="payment-details">
-  //                   <div class="payment-detail">
-  //                       <span class="detail-label">Date:</span>
-  //                       <span class="detail-value">${new Date(payment.date).toLocaleDateString()}</span>
-  //                   </div>
-  //                   <div class="payment-detail">
-  //                       <span class="detail-label">Amount:</span>
-  //                       <span class="detail-value">
-  //                       &euro; ${parseFloat(payment.price).toFixed(2)}</span>
-  //                   </div>
-  //               </div>
-  //           `;
+    paymentCard.innerHTML = `
+                <div class="payment-header">
+                    <span class="payment-code">${payment.id}</span>
+                    <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
+                </div>
+                <div class="payment-type">${payment.title.toUpperCase()}</div>
+                <div class="payment-details">
+                    <div class="payment-detail">
+                        <span class="detail-label">Date:</span>
+                        <span class="detail-value">${new Date(payment.date).toLocaleDateString()}</span>
+                    </div>
+                    <div class="payment-detail">
+                        <span class="detail-label">Amount:</span>
+                        <span class="detail-value">
+                        &euro; ${parseFloat(payment.price).toFixed(2)}</span>
+                    </div>
+                </div>
+            `;
 
-  //   paymentCard.addEventListener('click', () => {
-  //     if (payment.status === true) {
-  //       showPayslip(payment);
-  //     } else {
-  //       const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
+    paymentCard.addEventListener('click', () => {
+      if (payment.status === true) {
+        showPayslip(payment);
+      } else {
+        const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
 
-  //       setTimeout(() => {
-  //         window.location.href = `/html/main/payment.html?${params}`;
-  //       }, 1000)
-  //     }
-  //   });
+        setTimeout(() => {
+          window.location.href = `/html/main/payment.html?${params}`;
+        }, 1000)
+      }
+    });
 
-  //   if (payments.length < 1) {
-  //     paymentsGrid.style.display = "flex";
+    if (payments.length < 1) {
+      paymentsGrid.style.display = "flex";
 
-  //     paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
-  //   } else {
-  //     paymentsGrid.appendChild(paymentCard)
-  //   }
-  // });
+      paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
+    } else {
+      paymentsGrid.appendChild(paymentCard)
+    }
+  });
 
 
-  // const closeModal = document.getElementById('closeModal');
+  const closeModal = document.getElementById('closeModal');
 
-  // function showPayslip(payment) {
-  //   const icon = document.getElementById('icon');
-  //   icon.classList.add(`${payment.statusName.toLowerCase()}`);
-  //   icon.innerHTML += payment.statusName.toUpperCase();
-  //   const symbol = getCurrencySymbol(payment.currency)
+  function showPayslip(payment) {
+    const icon = document.getElementById('icon');
+    icon.classList.add(`${payment.statusName.toLowerCase()}`);
+    icon.innerHTML += payment.statusName.toUpperCase();
+    const symbol = getCurrencySymbol(payment.currency)
 
-  //   document.getElementById('receiptId').textContent = payment.id;
-  //   document.getElementById('receiptType').textContent = payment.title;
-  //   document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
-  //   document.getElementById('receiptMethod').textContent = payment.method;
-  //   document.getElementById('receiptCurrency').textContent = payment.currency;
-  //   document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-  //   document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
-  //   document.getElementById('receiptDescription').textContent = payment.description;
-  //   document.getElementById('receiptDate').textContent = 'Date: ' + new Date(payment.date).toLocaleDateString();
+    document.getElementById('receiptId').textContent = payment.id;
+    document.getElementById('receiptType').textContent = payment.title;
+    document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
+    document.getElementById('receiptMethod').textContent = payment.method;
+    document.getElementById('receiptCurrency').textContent = payment.currency;
+    document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
+    document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
+    document.getElementById('receiptDescription').textContent = payment.description;
+    document.getElementById('receiptDate').textContent = 'Date: ' + new Date(payment.date).toLocaleDateString();
 
-  //   modal.style.display = 'flex';
-  // }
+    modal.style.display = 'flex';
+  }
 
 
   closeModal.addEventListener('click', () => {

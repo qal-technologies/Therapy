@@ -537,7 +537,7 @@
 
   .cart-div button.checkout {
     place-self: center;
-    width: 90%;
+    width: 100%;
     border-radius: 14px;
     background-color: var(--link);
     color: white;
