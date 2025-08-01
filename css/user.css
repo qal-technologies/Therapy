@@ -8,7 +8,7 @@
 }
 
 #container {
-  width: 100%;
+  width: 100vw;
   display: flex;
   gap: 20px;
   flex-direction: row;
@@ -28,7 +28,6 @@
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
   padding: 1.8rem;
-  padding-inline: 2.5rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -37,7 +36,7 @@
   justify-content: space-between;
   gap: 2rem;
   overflow: hidden;
-  min-width: 95%;
+  min-width: 98%;
   max-width: 1200px;
   user-select: text;
 }
@@ -123,16 +122,13 @@
 
 /* Payments Section */
 .payments-section {
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
   border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  padding: 1.2rem;
+  padding: 0.8rem;
   padding-top: 1.5rem;
-  width: 95%;
-  max-width: 600px;
+  width: 98%;
+  max-width: 750px;
   height: max-content;
-  max-height: 500px;
+  max-height: 600px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -371,15 +367,13 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  width: 95%;
+  width: 98%;
   max-width: 700px;
   height: max-content;
   max-height: 800px;
   overflow: hidden;
-  padding: 1.2rem;
+  padding: 0.8rem;
   padding-top: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(10px);
   border-radius: 20px;
 }
 
