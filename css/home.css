@@ -189,7 +189,7 @@ div#banner-lower {
   justify-content: flex-end;
   border-bottom-right-radius: 50vw;
   border-bottom-left-radius: 100vw;
-  border-top-left-radius: 100vw;
+  border-top-left-radius: 60vw;
   border-left: 3px dotted var(--link);
   overflow: hidden;
   object-fit: fill;
