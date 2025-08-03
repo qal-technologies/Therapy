@@ -1,7 +1,8 @@
-div#back-button{
-    top: 2.5rem;
+div#back-button {
+    top: 2.1rem;
+    left: 1.8rem;
+    z-index: 9999;
 }
-
 
 .cart-section {
     display: flex;
@@ -9,22 +10,28 @@ div#back-button{
     align-items: flex-start;
     justify-content: center;
     width: 100%;
-    height: max-content;
+    height: 100%;
     padding: 0.8rem;
     padding-top: 2.5rem;
 }
 
 .cart-section h2 {
-    width: 100%;
+    width: 90%;
+    max-width: 800px;
     display: flex;
     flex-direction: row;
+    align-self: center;
     gap: 10px;
-    padding-inline-start: 4rem;
+    padding-inline-start: 4.5rem;
     align-items: center;
     font-size: 1.6rem;
-    color: var(--link);
-    padding-bottom: 0.2rem;
-    width: 100%;
+    position: fixed;
+    top: 1.5rem;
+    z-index: 999;
+    background-color: var(--primary);
+    border-radius: 20px;
+    color: black;
+    padding-block: 0.5rem;
     font-family: PoppinsSemi;
 }
 
@@ -52,9 +59,9 @@ div#back-button{
     height: max-content;
     max-height: 900px;
     overflow-y: auto;
-    padding-top: 20px;
+    padding-top: 4rem;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .cart-section .cart-container .cart-div {

@@ -165,7 +165,6 @@ function handleCartUpdate(count) {
   cartCount.textContent = count;
   cartParent.classList.add("bounce");
 
-  console.log('fone')
   setTimeout(() => {
     cartParent.classList.remove("bounce");
   }, 1000);
@@ -256,8 +255,8 @@ function renderBookCollection(book) {
 
           // Reset quantity after adding to cart
           book.quantity = 1;
-          renderBookCollection();
-          handleCartUpdate(count)
+          renderBookCollection(book);
+          handleCartUpdate(count);
         }
       }
     });

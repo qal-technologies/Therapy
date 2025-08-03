@@ -76,13 +76,15 @@
   place-content: center;
   place-items: center;
   background: var(--accentTrans);
+  /* box-shadow: 0px 2px 50px var(--accent), 1px -2px 12px var(--accentTrans); */
 }
 
 #banner .top .top-image-div img {
   width: 140%;
-  max-width: 350px;
-  height: 175%;
+  max-width: 380px;
+  height: 180%;
   max-height: 500px;
+  filter: brightness(110%);
 }
 
 #banner .under-text-div {
@@ -601,6 +603,8 @@ div#details-div .details-top {
 }
 
 #details-div .alert-text {
+  width: 90%;
+  max-width: 400px;
   text-align: center;
   padding: 8px;
   padding-inline: 18px;

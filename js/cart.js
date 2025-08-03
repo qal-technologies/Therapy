@@ -1,48 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
     function getCarts() {
         //cart data:
-        const demoCarts = [
-            {
-                id: "01",
-                type: "book",
-                description: "something short",
-                title: "Book 1",
-                price: "2.00",
-                date: new Date(),
-                quantity: 2,
-                transactionId: "TXN-622134WER-FR"
-            },
-            {
-                id: "02",
-                type: "book",
-                description: "something about the book or author",
-                title: "Book 2",
-                price: "9.40",
-                date: new Date(),
-                quantity: 1,
-                transactionId: "TXN-1998255-ES"
-            },
-            {
-                id: "03",
-                type: "book",
-                description: "all about this book here",
-                title: "Book 3",
-                price: "3.80",
-                date: new Date(),
-                quantity: 3,
-                transactionId: "TXN-1256789-GR"
-            }, {
-                id: "04",
-                type: "book",
-                description: "book description",
-                title: "Book 4",
-                price: "6.99",
-                date: new Date(),
-                quantity: 1,
-                transactionId: "TXN-0988765-EN"
-            }
-        ];
-
         try {
             const fetchedCarts = localStorage.getItem("carts");
 
@@ -50,11 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (fetchedCarts) {
                 output = JSON.parse(fetchedCarts);
             } else {
-                output = demoCarts;
-
-                // const saved = JSON.stringify(demoCarts)
-                // localStorage.setItem("cart", saved);
-
+                output = [];
             }
             return output;
         } catch (error) {
@@ -65,12 +19,33 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     const carts = getCarts();
-    const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
+    document.querySelectorAll("span.cart-count").forEach(count => {
         count.innerHTML = carts.length;
     });
 
     const cartContainer = document.querySelector("div.cart-container");
 
+    function removeCart(id) {
+        const bookId = id;
+        let carts = getCarts();
+
+        if (carts) {
+            carts = carts.filter(book => book.id !== bookId);
+            const output = JSON.stringify(carts);
+            localStorage.setItem("carts", output);
+
+            window.location.reload();
+            console.log("Cart item removed!");
+        } else {
+            console.log("Cart item not found!");
+        }
+    }
+
+    if (carts.length == 0) {
+        cartContainer.style.display = "flex";
+
+        cartContainer.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; padding-block:10vh; font-family:PoppinsMed; color:gray;">No Orders Yet</p>`
+    } else {
 
     carts.forEach(cart => {
         const cartDiv = document.createElement("div");
@@ -90,8 +65,6 @@ window.addEventListener("DOMContentLoaded", () => {
       <button class="remove">Remove</button>
       </div>
     </div>
-
-
 </div>
 
     <div class="item-controls">
@@ -110,6 +83,7 @@ window.addEventListener("DOMContentLoaded", () => {
     </div>
         `
 
+        const removeButton = cartDiv.querySelector("button.remove");
         const payButton = cartDiv.querySelector("button.checkout");
 
         payButton.addEventListener("click", (e) => {
@@ -123,12 +97,13 @@ window.addEventListener("DOMContentLoaded", () => {
             }, 800);
         });
 
-        if (carts.length < 1) {
-            cartContainer.style.display = "flex";
+        removeButton.addEventListener("click", () => {
+            const id = cartDiv.dataset.id;
+            removeCart(id);
 
-            cartContainer.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Orders Yet</p>`
-        } else {
-            cartContainer.appendChild(cartDiv)
-        }
+        })
+
+        cartContainer.appendChild(cartDiv);
     });
+    }
 });

@@ -246,7 +246,7 @@ if (userObj && payments) {
 
   const carts = getCarts();
   const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
-    count.innerHTML = carts.length;
+    count.innerHTML = carts.length || 0;
   });
 
   const closeModal = document.getElementById('closeModal');
