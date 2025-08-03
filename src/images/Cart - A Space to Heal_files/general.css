@@ -280,14 +280,14 @@ div#refresh-button {
   position: absolute;
   top: 25px;
   cursor: pointer;
-  background-color: var(--accentTrans);
+  background-color: var(--blueTrans);
   gap: 10px;
   width: 38px;
   height: 38px;
   overflow: hidden;
   border-radius: 30px;
   padding-inline: 10px;
-  color: var(--link);
+  color: var(--blue);
   display: flex;
   align-items: center;
   backdrop-filter: var(--blur);
@@ -308,7 +308,7 @@ div#back-button:active, div#back-button:hover {
 div#refresh-button:active, div#refresh-button:hover {
   transform: scale(90%);
   width: 180px;
-  border: 1px solid var(--link);
+  border: 1px solid var(--blue);
 }
 
 span.highlight {

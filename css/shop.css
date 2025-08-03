@@ -8,7 +8,7 @@
   align-items: center;
   width: 100%;
   padding-top: 8pc;
-  background: white;
+  background: var(--primaryTrans);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -174,7 +174,7 @@
   display: flex;
   padding: 10px;
   gap: 20px;
-  background: rgb(252, 252, 252);
+  background: rgb(250, 250, 250);
   flex-wrap: wrap;
   column-gap: 20%;
   align-items: flex-start;
@@ -211,28 +211,41 @@
   gap: 10px;
 }
 
-.sub-preview img {
+.preview-image-div {
+  width: 100%;
+  background-color: white;
+  padding: 10px;
+  padding-bottom: 20px;
+  border-radius: 20px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* box-shadow: 0px 0px 1px grey; */
+}
+
+.preview-image-div img {
   width: 100%;
   max-width: 600px;
   place-self: center;
   display: flex;
-  border-radius: 20px;
+  border-radius: 30px;
   object-fit: cover;
   max-height: 700px;
+  margin-bottom: 10px;
 }
 
-.sub-preview button {
+.preview-image-div button {
   border: none;
   width: 60%;
   min-width: 200px;
-  background: none;
-  color: var(--link);
+  background: var(--link);
+  color: white;
   font-size: 1.2rem;
   font-family: PoppinsSemi;
   font-weight: bolder;
   place-self: center;
   display: flex;
-  border: 1px solid var(--link);
   text-align: center;
   border-radius: 50px;
   padding: 5px;
@@ -240,7 +253,7 @@
   justify-content: center;
 }
 
-.sub-preview button:hover {
+.preview-image-div button:hover {
   opacity: 0.66;
 }
 
@@ -292,8 +305,8 @@
 .book-item img {
   width: 100%;
   height: 400px;
-  object-fit: contain;
-  border-radius: 15px;
+  object-fit: cover;
+  border-radius: 20px;
   border: 1px solid #eee;
   background: white;
 }
@@ -424,7 +437,6 @@
   font-family: PoppinsLight;
 }
 
-
 .book-item .quantity {
   margin-top: 15px;
   display: flex;
@@ -445,7 +457,7 @@
   padding: 10px;
   padding-inline: 5px;
   border: 1px solid var(--accent);
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -479,7 +491,7 @@
 .book-item .add-to-cart, .book-item .btn {
   width: 100%;
   background-color: var(--link);
-  border-radius: 10px;
+  border-radius: 20px;
   color: white;
   justify-self: center;
   text-align: center;
@@ -489,7 +501,6 @@
   font-family: PoppinsMed;
   gap: 10px;
 }
-
 
 @media (max-width: 768px) {
   .book-item {
@@ -517,6 +528,21 @@ div#details-div {
   backdrop-filter: blur(2px);
 }
 
+div#details-div .details-top {
+  min-width: 100%;
+  top: 0;
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 1px 1px 10px rgb(125, 125, 125, 0.08);
+}
+
 #details-div button[title="Close Details"] {
   width: 40px;
   height: 40px;
@@ -528,11 +554,60 @@ div#details-div {
   font-family: PoppinsSemi;
   font-weight: bolder;
   font-size: 1.2rem;
-  position: absolute;
-  left: 20px;
-  top: 20px;
   cursor: pointer;
   border: 1px solid var(--accent);
+}
+
+#details-div a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  text-align: center;
+  max-width: 100px;
+  height: 40px;
+  padding-inline: 15px;
+  gap: 10px;
+  background-color: var(--primary);
+  backdrop-filter: blur(10px);
+  color: var(--link);
+  z-index: 9999;
+  font-family: PoppinsSemi;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 18px;
+  border: 1px solid var(--accentTrans);
+}
+
+.bounce {
+  animation: bounce 600ms;
+}
+
+#details-div .alert-message {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  display: none;
+  flex: 1;
+  background: none;
+  justify-content: center;
+  padding-bottom: 30vh;
+  align-items: flex-end;
+}
+
+#details-div .alert-text {
+  text-align: center;
+  padding: 8px;
+  padding-inline: 18px;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: white;
+  border-radius: 18px;
 }
 
 .modal-content {
@@ -549,52 +624,4 @@ div#details-div {
 .modal-content p {
   font-family: PoppinsSemi;
   font-size: 16px;
-}
-
-section#discover {
-  padding-block: 10%;
-  width: 100%;
-  background: rgba(255, 252, 250, 0.85);
-  padding-inline: 10px;
-  display: flex;
-  place-content: center;
-}
-
-#discover div.parent {
-  width: 90%;
-  max-width: 1000px;
-  padding: 2.5rem;
-  border: 2px solid var(--link);
-  background: var(--accentTrans);
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  justify-content: center;
-  gap: 2rem;
-  min-height: 200px;
-}
-
-#discover div.parent p {
-  text-align: left;
-  font-size: 1.4rem;
-  font-family: PoppinsLight;
-}
-
-#discover .parent a {
-  cursor: pointer;
-  border: none;
-  background-color: var(--link);
-  border-radius: 30px;
-  padding: 10px;
-  padding-inline: 15px;
-  width: 80%;
-  max-width: 300px;
-  place-self: center;
-  color: var(--primary);
-  font-size: 16px;
-  font-family: PoppinsSemi;
-  text-align: center;
-  display: flex;
-  place-content: center;
 }

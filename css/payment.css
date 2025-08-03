@@ -18,7 +18,6 @@ section.parent {
     background-color: #ebebeb;
     background-color: white;
     position: relative;
-    /* padding-top: 25px; */
     flex: 1;
     font-family: PoppinsLight;
     overflow-y: scroll;
@@ -34,10 +33,6 @@ section.parent {
     text-align: left;
     height: auto;
     padding: 5px;
-}
-
-div#back-button {
-    background-color: var(--primaryTrans);
 }
 
 .proceed-div {
@@ -211,17 +206,21 @@ h2 {
 
 .option-item:hover {
     border-color: #4a90e2;
+    border-color: var(--link);
 }
 
 .option-item.selected {
     border-color: #4a90e2;
+    border-color: var(--link);
     background-color: #f0f7ff;
+    background-color: var(--accentTrans);
 }
 
 .option-radio {
     margin-inline: 5px;
     margin-right: 15px;
     accent-color: #4a90e2;
+    accent-color: var(--link);
     width: 20px;
     height: 20px;
 }
@@ -241,6 +240,7 @@ h2 {
 
 .cant-find {
     color: #4a90e2;
+    color: var(--link);
     font-size: 14px;
     font-family: PoppinsMed;
     display: inline-block;
@@ -250,8 +250,10 @@ h2 {
     text-decoration: underline;
 }
 
-.continue-btn, .util-btn {
+.continue-btn, .util-btn,
+.card-section .continue-btn, .util-btn {
     background-color: #4a90e2;
+    background: var(--link);
     color: white;
     border: none;
     border-radius: 16px;
@@ -275,6 +277,7 @@ h2 {
     border: 3px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
     border-top: 3px solid #3498db;
+    border-top: 3px solid var(--link);
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
@@ -380,8 +383,10 @@ button.continue-btn:disabled {
 
 .option-item.selected .currency-icon, .option-item.selected .payment-icon {
     background-color: #4a90e2;
+    background-color: var(--link);
     color: white;
     border-color: #4a90e2;
+    border-color: var(--link);
 }
 
 .currency-toggle .toggle-left {
@@ -426,6 +431,7 @@ button.continue-btn:disabled {
     margin-right: 8px;
     font-family: PoppinsSemi;
     color: #4a90e2;
+    color: var(--link);
 }
 
 .currency-option-container {
@@ -463,6 +469,7 @@ button.continue-btn:disabled {
     font-size: 16px;
     margin-bottom: 2rem;
     color: #0278ff;
+    color: var(--link);
 }
 
 .option-list .title span {
@@ -486,6 +493,7 @@ button.continue-btn:disabled {
 
 .option-list h2.converted span.choosen-currency-code {
     color: #0278ff;
+    color: var(--link);
 }
 
 div.paypal-header, div.method-header {
@@ -494,7 +502,7 @@ div.paypal-header, div.method-header {
     align-items: center;
     width: 100%;
     padding: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 2px solid var(--accent);
     margin-bottom: 25px;
     justify-content: center;
 }
@@ -556,6 +564,7 @@ div.method-header {
     height: auto;
     font-size: 2.5rem;
     color: #0048ce;
+    color: var(--link);
     place-self: center;
 }
 
@@ -586,6 +595,7 @@ div.paypal-header p {
     font-size: 1.5rem;
     margin: 25px 0 15px 0;
     color: #003087;
+    color: var(--link);
     text-align: left;
     font-family: PoppinsSemi;
 }
@@ -606,8 +616,7 @@ div.paypal-header p {
     margin: 20px 0;
 }
 
-.paypal-section .continue-btn,
-.card-section .continue-btn, .util-btn {
+.paypal-section .continue-btn {
     background-color: #0d50cc;
     border-radius: 20px;
 }
@@ -788,12 +797,15 @@ p.fandf-text {
 
 .upload-box:hover {
     border-color: #0070ba;
+    border-color: var(--link);
     background-color: #f5f9ff;
+    background-color: var(--accentTrans);
 }
 
 .upload-box i {
     font-size: 2.5rem;
     color: #0070ba;
+    color: var(--link);
     margin-bottom: 10px;
 }
 
@@ -826,7 +838,7 @@ p.fandf-text {
 .sender-name input {
     width: 100%;
     padding: 10px;
-    border: 1.5px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 10px;
     outline: none;
     box-sizing: border-box;
@@ -834,6 +846,7 @@ p.fandf-text {
 
 .sender-name input:focus {
     border-color: #0070ba;
+    border-color: var(--link);
 }
 
 #paypal-processing .paypal-display {
@@ -917,6 +930,7 @@ p.fandf-text {
 .cc-header i {
     font-size: 3rem;
     color: #4a90e2;
+    color: var(--link);
     margin-bottom: 10px;
 }
 
@@ -928,6 +942,7 @@ p.fandf-text {
     font-size: 1.2rem;
     font-family: PoppinsSemi;
     color: #003087;
+    color: var(--link);
 }
 
 .cc-icons {
@@ -973,6 +988,7 @@ p.fandf-text {
 
 .form-group input:focus {
     border-color: #0048ce;
+    border-color: var(--link);
 }
 
 .form-row {
@@ -993,6 +1009,7 @@ p.fandf-text {
 .amount-display span {
     font-weight: bold;
     color: #2a6496;
+    color: var(--link);
 }
 
 .processing-content {
@@ -1151,7 +1168,7 @@ p.fandf-text {
 .accepted-cards .card-icon:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #0070ba;
+    border: 1px solid var(--link);
 }
 
 .accepted-cards .card-icon img {
@@ -1250,10 +1267,11 @@ ul.instructions.redeem li {
 
 #gift-card-instructions button.learn-more.redeem {
     background: transparent;
-    border: 1px solid #0070ba;
+    border: 1px solid var(--link);
     text-align: center;
     border-radius: 10px;
     color: #0070ba;
+    color: var(--link);
     max-width: 300px;
     font-size: 14px;
     padding: 6px;
@@ -1267,6 +1285,7 @@ ul.instructions.redeem li {
 
 #gift-card-instructions .method-header .gift-logo i {
     color: #0070ba;
+    color: var(--link);
     font-size: 3.5rem;
 }
 
@@ -1290,6 +1309,7 @@ ul.instructions.redeem li {
     padding-top: 20px;
     border: none;
     border-bottom: 1px solid #0070ba;
+    border-bottom: 1px solid var(--link);
 }
 
 .tutorial-header .header-top {
@@ -1349,9 +1369,9 @@ ul.instructions.redeem li {
 }
 
 .tutorial-tab .tab.active {
-    color: rgba(39, 79, 255, 0.8);
-    border-color: rgba(39, 79, 255, 0.5);
-    background-color: #92c5ff3f;
+    color: var(--link);
+    border-color: var(--link);
+    background-color: var(--accentTrans);
 }
 
 .tutorial-image-container {
@@ -1384,6 +1404,7 @@ ul.instructions.redeem li {
 .tutorial-text h3 {
     font-size: 20px;
     color: #0070ba;
+    color: var(--link);
     margin-block: 10px;
     font-family: PoppinsSemi;
 }
@@ -1408,6 +1429,7 @@ ul.instructions.redeem li {
     border: none;
     border-radius: 25px;
     background: #0070ba;
+    background: var(--link);
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -1508,6 +1530,7 @@ ul.instructions.redeem li {
 .scan-btn {
     align-self: flex-end;
     background-color: #0070ba;
+    background-color: var(--link);
     color: white;
     border: none;
     border-radius: 20px;
@@ -1576,8 +1599,9 @@ ul.instructions.redeem li {
 }
 
 .close-camera {
-    background: var(--blueTrans);
+    background: var(--accent);
     color: rgb(0, 153, 255);
+    color: var(--link);
     z-index: 99999999;
     width: 40px;
     height: 40px;
@@ -1592,7 +1616,7 @@ ul.instructions.redeem li {
     box-shadow: 0px 0px 1px rgb(100, 100, 100);
     place-content: center;
     padding-top: 2px;
-    border: 2.5px solid var(--blue);
+    border: 2.5px solid var(--link);
 }
 
 #camera-view {
@@ -1622,7 +1646,7 @@ ul.instructions.redeem li {
     position: absolute;
     bottom: 15%;
     z-index: 9999;
-    background-color: var(--blueTrans);
+    background-color: var(--accentTrans);
     backdrop-filter: blur(10px);
     color: whitesmoke;
     text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
@@ -1641,7 +1665,7 @@ ul.instructions.redeem li {
     left: 50%;
     transform: translate(-50%, -50%);
     max-width: 600px;
-    border: 2.5px solid var(--blue);
+    border: 2.5px solid var(--link);
     border-radius: 25px;
     width: 95%;
     height: 60%;
@@ -1656,6 +1680,7 @@ ul.instructions.redeem li {
     left: 50%;
     transform: translateX(-50%);
     background: #0070ba;
+    background: var(--link);
     color: white;
     border: none;
     border-radius: 20px;

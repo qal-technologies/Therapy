@@ -27,7 +27,7 @@ const BOOK_COLLECTION = [
     status: "Sold Out",
     description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
     image: "/src/images/book1.jpg",
-    quantity:1,
+    quantity: 1,
   },
   {
     id: 'book-2',
@@ -38,7 +38,7 @@ const BOOK_COLLECTION = [
     status: "Sold Out",
     description: "Another inspiring story that will change your perspective on healing and growth.",
     image: "/src/images/book2.jpg",
-    quantity:1
+    quantity: 1
   }
 ];
 
@@ -94,14 +94,25 @@ function handleAudio(lang) {
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 
-  modal.style.display = "none";
+  // modal.style.display = "none";
+  modal.classList.toggle("fadeOut");
 }
 
-function showDetailsModal() {
+function showDetailsModal(e) {
   const modal = document.querySelector("#details-div");
+  const cartCount = document.querySelector(".details-top span.cart-count");
+
+  const contains = modal.classList.contains("fadeOut");
+  contains && modal.classList.remove("fadeOut");
+
+  const bookId = e.target.closest(".sub-preview").dataset.id;
+  const book = BOOK_COLLECTION.find(b => b.id == bookId);
 
   modal.style.display = "block";
-  renderBookCollection();
+  renderBookCollection(book);
+
+  const existing = JSON.parse(localStorage.getItem("carts")) || [];
+  cartCount.textContent = existing.length;
 
   const close = document.querySelector("#details-div button.close-details");
 
@@ -112,7 +123,7 @@ function showDetailsModal() {
 function handleQuantityChange(e) {
   const parentId = e.target.closest('.qty-main-div').dataset.id;
   const book = BOOK_COLLECTION.find(b => b.id === parentId);
-  
+
   if (!book) return;
 
   if (e.target.classList.contains('add')) {
@@ -129,12 +140,43 @@ function handleQuantityChange(e) {
   }
 }
 
+function handleAlert(message) {
+  const parent = document.querySelector("#details-div .alert-message");
+  const text = document.querySelector("#details-div .alert-message .alert-text");
+
+  const contains = parent.classList.contains("fadeOut");
+  contains && parent.classList.remove("fadeOut");
+
+  parent.style.display = "flex";
+  text.textContent = message;
+
+  setTimeout(() => {
+    parent.classList.add("fadeOut");
+
+    text.textContent = "";
+    parent.style.display = "none";
+  }, 4000);
+}
+
+function handleCartUpdate(count) {
+  const cartParent = document.querySelector(".details-top a.open-cart");
+  const cartCount = document.querySelector(".details-top span.cart-count");
+
+  cartCount.textContent = count;
+  cartParent.classList.add("bounce");
+
+  console.log('fone')
+  setTimeout(() => {
+    cartParent.classList.remove("bounce");
+  }, 1000);
+}
+
 // Render Book Collection:
-function renderBookCollection() {
+function renderBookCollection(book) {
   const collectionContainer = document.getElementById('bookCollection');
   if (!collectionContainer) return;
 
-  collectionContainer.innerHTML = BOOK_COLLECTION.map(book => `
+  collectionContainer.innerHTML = `
     <div class="book-item" data-id="${book.id}">
       <img src="${book.image}" alt="${book.title}">
 <div class="book-info">
@@ -186,11 +228,15 @@ function renderBookCollection() {
       <button class="add-to-cart btn">Add to Cart</button>
     </div>
 
-  `).join('');
+  `;
 
   document.querySelectorAll('.qty-arrow').forEach(btn => {
     btn.addEventListener('click', handleQuantityChange);
   });
+
+  document.querySelector(".book-info .format-div.last").addEventListener("click", () => {
+    handleAlert("Temporarily Unavailable. Only eBook Available now.");
+  })
 
   // Add event listeners for Add to Cart buttons
   document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -201,10 +247,17 @@ function renderBookCollection() {
 
       if (book) {
         if (addToCart(book)) {
-          alert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`);
+          const cartCount = document.querySelector(".details-top span.cart-count");
+          const existing = JSON.parse(localStorage.getItem("carts")) || [];
+          const count = existing.length;
+
+
+          handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`);
+
           // Reset quantity after adding to cart
           book.quantity = 1;
           renderBookCollection();
+          handleCartUpdate(count)
         }
       }
     });
@@ -215,16 +268,16 @@ function renderBookCollection() {
 // Improved Add to Cart Function
 function addToCart(book) {
   let cart = JSON.parse(localStorage.getItem('carts')) || [];
-  
+
   // Get selected format
   const selectedFormat = document.querySelector(`.book-item[data-id="${book.id}"] input[type="radio"]:checked`);
   if (!selectedFormat && book.formats.length > 0) {
-    alert('Please select a format before adding to cart');
+    handleAlert('Please select a format before adding to cart');
     return false;
   }
 
   // Check if book already in cart with same format
-  const existingItemIndex = cart.findIndex(item => 
+  const existingItemIndex = cart.findIndex(item =>
     item.id === book.id && item.format === selectedFormat?.name
   );
 
@@ -235,19 +288,20 @@ function addToCart(book) {
 
     const language = navigator.language;
 
-const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+    const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 
-    // Adding new item to cart
+    // Adding new item to cart:
     cart.push({
       id: book.id,
       title: book.title,
-      author: "Charlotte Casiraghi", 
+      author: "Charlotte Casiraghi",
       price: book.price,
       image: book.image,
       quantity: book.quantity,
-transactionId: transactionId,
-description:book.description,
-image:book.image,
+      transactionId: transactionId,
+      description: book.description,
+      image: book.image,
+      date: new Date(),
       format: selectedFormat?.name || book.formats[0]
     });
   }
@@ -262,12 +316,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const lang = language.toLowerCase().substring(0, 2);
 
   handleAudio(lang);
-  // renderBookCollection();
 
-  const book = document.querySelector("#preview button.get-copy");
+  const book = document.querySelectorAll("#preview button.get-copy");
   const close = document.querySelector("#details-div button.close-details");
 
-  book && book.addEventListener("click", showDetailsModal);
+  book && book.forEach(btn => btn.addEventListener("click", showDetailsModal));
   close && close.addEventListener("click", removeDetailsModal);
 });
 

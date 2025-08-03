@@ -8,7 +8,7 @@
 }
 
 #container {
-  width: 100vw;
+  width: 100%;
   display: flex;
   gap: 20px;
   flex-direction: row;
@@ -32,12 +32,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 20px;
-  align-self: center;
+  align-self: flex-start;
   justify-content: space-between;
   gap: 2rem;
   overflow: hidden;
-  min-width: 98%;
-  max-width: 1200px;
+  width: 95%;
+  max-width: 600px;
   user-select: text;
 }
 
@@ -102,7 +102,6 @@
   justify-content: center;
 }
 
-
 .profile-section .others a {
   display: flex;
   flex-direction: row;
@@ -124,24 +123,27 @@
 .payments-section {
   border-radius: 20px;
   padding: 0.8rem;
-  padding-top: 1.5rem;
-  width: 98%;
-  max-width: 750px;
+  width: 95%;
+  max-width: 800px;
   height: max-content;
-  max-height: 600px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
 }
 
 .section-title {
-  font-size: 1.6rem;
+  font-size: 2rem;
   color: var(--link);
-  padding-bottom: 0.2rem;
-  width: 100%;
+  width: max-content;
+  text-align: center;
   font-family: PoppinsSemi;
+  background-color: var(--accentTrans);
+  padding: 5px;
+  padding-inline: 25px;
+  place-self: center;
+  border-radius: 30px;
 }
 
 .payments-grid {
@@ -151,8 +153,6 @@
   flex-wrap: wrap;
   gap: 1.2rem;
   height: max-content;
-  max-height: 600px;
-  overflow-y: auto;
   padding-top: 15px;
   align-items: center;
   justify-content: space-evenly;
@@ -160,7 +160,7 @@
 
 .payment-card {
   width: 100%;
-  max-width: 600px;
+  max-width: 580px;
   height: max-content;
   border: 1px solid var(--accent);
   border-radius: 20px;
@@ -500,12 +500,12 @@
   border: 1px solid red;
   color: red;
   border-radius: 10px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .cart-div .item-controls {
   margin-top: 10px;
-  border-block: 1px solid #eee;
+  border-top: 1px solid #eee;
   padding-block: 15px;
   width: 100%;
   display: flex;
@@ -529,37 +529,37 @@
   letter-spacing: 0.5px;
 }
 
-  .cart-div button.checkout {
-    place-self: center;
-    width: 100%;
-    border-radius: 14px;
-    background-color: var(--link);
-    color: white;
-    border: none;
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 15px;
-  }
+.cart-div button.checkout {
+  place-self: center;
+  width: 100%;
+  border-radius: 14px;
+  background-color: var(--link);
+  color: white;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 15px;
+}
 
-  .cart-div p.under-btn-text{
-    margin-top: -5px;
-    font-size: 14px;
-  }
+.cart-div p.under-btn-text {
+  margin-top: -5px;
+  font-size: 12px;
+}
 
-  .cart-div .testimonial{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-  }
+.cart-div .testimonial {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
 
-  .cart-div .testimonial .stars{
-    font-size: 20px;
-    color: #f8961e;
-  }
+.cart-div .testimonial .stars {
+  font-size: 20px;
+  color: #f8961e;
+}
 
-  .cart-div .testimonial .profound{
-    font-weight: bold;
-  }
+.cart-div .testimonial .profound {
+  font-weight: bold;
+}
