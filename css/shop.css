@@ -311,7 +311,8 @@
   border-radius: 20px;
   border: 1px solid #eee;
   background: white;
-  transition:  transform 0.3s;
+  position: relative;
+  transition: transform 0.3s;
 }
 
 .book-info {
@@ -505,24 +506,31 @@
   gap: 10px;
 }
 
-.fly-to-cart{
-  position: fixed;
+.fly-to-cart {
+  position: absolute;
   z-index: 99999999999999999999;
   pointer-events: none;
-  animation: fly 800ms forwards;
+  animation: fly 1.5s forwards;
+  overflow: hidden;
 }
 
 @keyframes fly {
-  0%{
+  0% {
     transform: scale(1) translate(0, 0);
     opacity: 1;
+    border-radius: 0%;
   }
-  50%{
-    transform: scale(0.3) translate(80%, -50px);
+
+  50% {
+    transform: scale(0.4) translate(50vw, 100vh);
     opacity: 0.8;
-  }100%{
-    transform: scale(0.05) translate(100%, -100%);
+    border-radius: 5%;
+  }
+
+  to {
+    transform: scale(0) translate(380vw, -450vh);
     opacity: 0;
+    border-radius: 10%;
   }
 }
 
