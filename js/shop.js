@@ -16,32 +16,6 @@ const audioSrc = {
   }
 };
 
-// Book Data:
-const BOOK_COLLECTION = [
-  {
-    id: 'book-1',
-    title: "THE BEAUTY OF LIVES",
-    downloads: "5000+ Downloads",
-    formats: ["eBook", "Hardcopy"],
-    price: "20.00",
-    status: "Sold Out",
-    description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
-    image: "/src/images/book1.jpg",
-    quantity: 1,
-  },
-  {
-    id: 'book-2',
-    title: "THE ELEGANT STORY",
-    downloads: "3000+ Downloads",
-    formats: ["eBook", "Hardcopy"],
-    price: "25.00",
-    status: "Sold Out",
-    description: "Another inspiring story that will change your perspective on healing and growth.",
-    image: "/src/images/book2.jpg",
-    quantity: 1
-  }
-];
-
 function handleAudio(lang) {
   const audioMessage = document.querySelector('#banner audio#book-audio-message');
 
@@ -91,10 +65,36 @@ function handleAudio(lang) {
   });
 }
 
+
+// Book Data:
+const BOOK_COLLECTION = [
+  {
+    id: 'book-1',
+    title: "THE BEAUTY OF LIVES",
+    downloads: "5000+ Downloads",
+    formats: ["eBook", "Hardcopy"],
+    price: "20.00",
+    status: "Sold Out",
+    description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
+    image: "/src/images/book1.jpg",
+    quantity: 1,
+  },
+  {
+    id: 'book-2',
+    title: "THE ELEGANT STORY",
+    downloads: "3000+ Downloads",
+    formats: ["eBook", "Hardcopy"],
+    price: "25.00",
+    status: "Sold Out",
+    description: "Another inspiring story that will change your perspective on healing and growth.",
+    image: "/src/images/book2.jpg",
+    quantity: 1
+  }
+];
+
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 
-  // modal.style.display = "none";
   modal.classList.toggle("fadeOut");
 }
 
@@ -168,6 +168,37 @@ function handleCartUpdate(count) {
   setTimeout(() => {
     cartParent.classList.remove("bounce");
   }, 1000);
+}
+
+function handleCartAnimation( count) {
+  const cartParent = document.querySelector(".details-top a.open-cart");
+  const cartImage = document.querySelector(".book-item img");
+
+  const flyingImage = cartImage.cloneNode();
+  flyingImage.classList.add("fly-to-cart");
+
+  const productRect = cartImage.getBoundingClientRect();
+  const cartRect = cartParent.getBoundingClientRect();
+
+  const targetX = cartRect.left + cartRect.width / 2 - productRect.left - productRect.width / 2;
+  const targetY = cartRect.top + cartRect.height / 2 - productRect.top - productRect.height / 2;
+
+  flyingImage.style.setProperty("--target-x", `${targetX}px`);
+  flyingImage.style.setProperty("--target-y", `${targetY}px`);
+
+  flyingImage.style.position = "absolute";
+  flyingImage.style.top = `${productRect.top}px`;
+  flyingImage.style.left = `${productRect.left}px`;
+  flyingImage.style.width = `${productRect.width}px`;
+  flyingImage.style.height = `${productRect.height}px`;
+
+  document.body.appendChild(flyingImage);
+
+  flyingImage.addEventListener("animationend", () => {
+    handleCartUpdate(count);
+
+    flyingImage.remove();
+  })
 }
 
 // Render Book Collection:
@@ -255,8 +286,8 @@ function renderBookCollection(book) {
 
           // Reset quantity after adding to cart
           book.quantity = 1;
+          handleCartAnimation(count);
           renderBookCollection(book);
-          handleCartUpdate(count);
         }
       }
     });

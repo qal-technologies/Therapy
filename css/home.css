@@ -187,7 +187,7 @@ div#banner-lower {
   display: flex;
   place-content: flex-end;
   justify-content: flex-end;
-  border-bottom-right-radius: 50vw;
+  border-bottom-right-radius: 60vw;
   border-bottom-left-radius: 100vw;
   border-top-left-radius: 60vw;
   border-left: 3px dotted var(--link);

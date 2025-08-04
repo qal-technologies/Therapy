@@ -104,12 +104,13 @@ header#header {
   background: transparent;
   background-color: var(--primaryTrans);
   backdrop-filter: blur(20px);
+  background-clip: border-box;
   position: fixed;
   top: 0;
   z-index: 99999;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  border-bottom: 0.5px solid var(--accentTrans);
+  border-bottom-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom: 0.2px solid var(--accentTrans);
 }
 
 .heightShow {

@@ -81,7 +81,7 @@
 
 #banner .top .top-image-div img {
   width: 140%;
-  max-width: 380px;
+  max-width: 350px;
   height: 180%;
   max-height: 500px;
   filter: brightness(110%);
@@ -281,7 +281,6 @@
   margin: 0 auto;
 }
 
-
 .book-item {
   background: white;
   backdrop-filter: blur(10px);
@@ -296,6 +295,7 @@
   gap: 10px;
   flex-direction: column;
   max-width: 500px;
+  position: relative;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.05);
 }
 
@@ -311,6 +311,7 @@
   border-radius: 20px;
   border: 1px solid #eee;
   background: white;
+  transition:  transform 0.3s;
 }
 
 .book-info {
@@ -502,6 +503,27 @@
   cursor: pointer;
   font-family: PoppinsMed;
   gap: 10px;
+}
+
+.fly-to-cart{
+  position: fixed;
+  z-index: 99999999999999999999;
+  pointer-events: none;
+  animation: fly 800ms forwards;
+}
+
+@keyframes fly {
+  0%{
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+  }
+  50%{
+    transform: scale(0.3) translate(80%, -50px);
+    opacity: 0.8;
+  }100%{
+    transform: scale(0.05) translate(100%, -100%);
+    opacity: 0;
+  }
 }
 
 @media (max-width: 768px) {

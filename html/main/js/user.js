@@ -24,65 +24,65 @@ function getCurrencySymbol(currencyCode) {
 }
 
 function getPayments() {
-  const demoPayments = [
-    {
-      id: "TXN-1239796-GR",
-      paymentType: "session",
-      title: 'Inner Circle',
-      price: "200.00",
-      currency: "AUD",
-      converted: "189",
-      method: "creditCard",
-      status: true,
-      statusName: "Completed",
-      senderName: "Paschal Ngaoka",
-      date: new Date(2024, 5, 4),
-      description: "Premium healing experience",
-      index: 3,
-    }, {
-      id: "TXN-149656-GR",
-      paymentType: "book",
-      title: 'Best Therapy Book',
-      price: '550.00',
-      currency: "CHF",
-      converted: "790",
-      method: "bank",
-      status: false,
-      statusName: "Failed",
-      senderName: "John Doe",
-      date: new Date(2025, 4, 10),
-      description: "Best relief book you'll ever read",
-      index: 5,
-    }, {
-      id: "TXN-123456-EN",
-      paymentType: "session",
-      title: 'Virtual Session',
-      price: '800.00',
-      currency: "GBP",
-      converted: "1200.00",
-      method: "paypal",
-      status: null,
-      statusName: "Pending",
-      senderName: "Lucy Jay",
-      description: '1-hour virtual healing session',
-      date: new Date(2025, 2, 1),
-      index: 5
-    }, {
-      id: 'TXN-03964283-ES',
-      paymentType: 'session',
-      title: 'In-Person Session',
-      price: '1600.00',
-      currency: "CHF",
-      converted: "2400",
-      method: "paypal",
-      status: true,
-      statusName: 'Completed',
-      senderName: "Johnson Alfred",
-      description: '2-hour in-person session in Monaco',
-      date: new Date(2023, 6, 2),
-      index: 5
-    },
-  ];
+  // const demoPayments = [
+  //   {
+  //     id: "TXN-1239796-GR",
+  //     paymentType: "session",
+  //     title: 'Inner Circle',
+  //     price: "200.00",
+  //     currency: "AUD",
+  //     converted: "189",
+  //     method: "creditCard",
+  //     status: true,
+  //     statusName: "Completed",
+  //     senderName: "Paschal Ngaoka",
+  //     date: new Date(2024, 5, 4),
+  //     description: "Premium healing experience",
+  //     index: 3,
+  //   }, {
+  //     id: "TXN-149656-GR",
+  //     paymentType: "book",
+  //     title: 'Best Therapy Book',
+  //     price: '550.00',
+  //     currency: "CHF",
+  //     converted: "790",
+  //     method: "bank",
+  //     status: false,
+  //     statusName: "Failed",
+  //     senderName: "John Doe",
+  //     date: new Date(2025, 4, 10),
+  //     description: "Best relief book you'll ever read",
+  //     index: 5,
+  //   }, {
+  //     id: "TXN-123456-EN",
+  //     paymentType: "session",
+  //     title: 'Virtual Session',
+  //     price: '800.00',
+  //     currency: "GBP",
+  //     converted: "1200.00",
+  //     method: "paypal",
+  //     status: null,
+  //     statusName: "Pending",
+  //     senderName: "Lucy Jay",
+  //     description: '1-hour virtual healing session',
+  //     date: new Date(2025, 2, 1),
+  //     index: 5
+  //   }, {
+  //     id: 'TXN-03964283-ES',
+  //     paymentType: 'session',
+  //     title: 'In-Person Session',
+  //     price: '1600.00',
+  //     currency: "CHF",
+  //     converted: "2400",
+  //     method: "paypal",
+  //     status: true,
+  //     statusName: 'Completed',
+  //     senderName: "Johnson Alfred",
+  //     description: '2-hour in-person session in Monaco',
+  //     date: new Date(2023, 6, 2),
+  //     index: 5
+  //   },
+  // ];
 
   try {
     const fetchedPayment = localStorage.getItem("payments");
@@ -94,8 +94,8 @@ function getPayments() {
     } else {
       output = demoPayments;
 
-      const saved = JSON.stringify(demoPayments)
-      localStorage.setItem("payments", saved);
+      // const saved = JSON.stringify(demoPayments)
+      // localStorage.setItem("payments", saved);
     }
     
     return output;
@@ -108,47 +108,6 @@ function getPayments() {
 
 function getCarts() {
   //cart data:
-  const demoCarts = [
-    {
-      id: "01",
-      type: "book",
-      description: "something short",
-      title: "Book 1",
-      price: "2.00",
-      date: new Date(2025, 5, 15),
-      quantity: 2,
-      transactionId: "TXN-622134WER-FR"
-    },
-    {
-      id: "02",
-      type: "book",
-      description: "something about the book or author",
-      title: "Book 2",
-      price: "9.40",
-      date: new Date(2025, 4, 10),
-      quantity: 1,
-      transactionId: "TXN-1998255-ES"
-    },
-    {
-      id: "03",
-      type: "book",
-      description: "all about this book here",
-      title: "Book 3",
-      price: "3.80",
-      date: new Date(2023, 5, 15),
-      quantity: 3,
-      transactionId: "TXN-1256789-GR"
-    }, {
-      id: "04",
-      type: "book",
-      description: "book description",
-      title: "Book 4",
-      price: "6.99",
-      date: new Date(2023, 5, 15),
-      quantity: 1,
-      transactionId: "TXN-0988765-EN"
-    }
-  ];
 
   try {
     const fetchedCarts = localStorage.getItem("carts");
@@ -158,10 +117,6 @@ function getCarts() {
       output = JSON.parse(fetchedCarts);
     } else {
       output = demoCarts;
-
-      // const saved = JSON.stringify(demoCarts)
-      // localStorage.setItem("cart", saved);
-
     }
     return output;
   } catch (error) {
