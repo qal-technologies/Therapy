@@ -279,6 +279,8 @@
   justify-content: center;
   gap: 2rem;
   margin: 0 auto;
+overflow:hidden;
+overflow-y:auto;
 }
 
 .book-item {
@@ -650,10 +652,9 @@ div#details-div .details-top {
   width: 100%;
   max-width: 800px;
   padding: 1rem;
-  position: relative;
   overflow-y: auto;
-  max-height: 90vh;
-  height: auto;
+height: auto;
+  max-height: 80vh;
 }
 
 .modal-content p {
