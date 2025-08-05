@@ -557,7 +557,8 @@ div#details-div {
   z-index: 99999;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px); 
+overflow:hidden;
 }
 
 div#details-div .details-top {
