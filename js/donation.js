@@ -7,6 +7,18 @@ const audioSrc = {
     }
 };
 
+//categoriess:
+const categories = [
+    { name: "Medical", image: "/src/svg/heart-pulse-fill.svg" },
+    { name: "Memorial", image: "/src/svg/candle-heart-love-svgrepo-com.svg" },
+    { name: "Education", image: "/src/svg/education.svg" },
+    { name: "Animal", image: "/src/svg/animal.svg" },
+    { name: "Faith", image: "/src/svg/cloud.svg" },
+    { name: "Family", image: "/src/svg/family.svg" },
+    { name: "Environment", image: "/src/svg/environment.svg" },
+    { name: "Community", image: "/src/svg/community.svg" },
+];
+
 function handleAudio(lang) {
     const audioMessage = document.querySelector('.banner .message audio#audio-message');
 
@@ -55,9 +67,32 @@ function handleAudio(lang) {
     });
 }
 
+function renderCategory() {
+    const categoryFlex = document.querySelector(".category .category-flex");
+
+    if (!categoryFlex) return;
+    
+    categoryFlex.innerHTML = "";
+    
+    categories.forEach(div => {
+        const cartegory = document.createElement("div");
+        cartegory.classList.add("category-div");
+        cartegory.dataset.id = div.name;
+        
+        cartegory.innerHTML = `
+            <div class="category-image"><img src="${div.image}"  alt="${div.image}"></div>
+
+            <p class="category-name">${div.name}</p>
+       `
+        
+        categoryFlex.appendChild(cartegory);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const language = navigator.language;
     const lang = language.toLowerCase().substring(0, 2);
 
     handleAudio(lang);
+    renderCategory();
 });
