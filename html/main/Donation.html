@@ -44,7 +44,7 @@
                     <p id="nav-text">FAQ</p>
                 </a>
 
-<a class="nav-main" href="/html/main/Privacy.html">
+                <a class="nav-main" href="/html/main/Privacy.html">
                     <p id="nav-text">PRIVACY</p>
                 </a>
 
@@ -54,64 +54,101 @@
             </div>
         </header>
 
-<section id="discover">
+        <section class="banner">
+            <div class="upper">
+                <div class="image-div"><img src="/src/images/donation.png" alt="Charlotte Casiragi - Donation Page"
+                        class="donation-image"></div>
 
-    <div class="parent">
-        <p class="text">
-            Discover insights and tools for navigating a world on edge at
-            <i style="font-weight: bold">Healing with Charlotte Casiraghi</i>.
-        </p>
+                <div class="message">
+                    <audio src="" id="audio-message" hidden></audio>
+                    <p class="text">
+                        A voice message from
+                        <span class="highlight">Charlotte Casiraghi</span>
+                    </p>
+                    <div class="player moveUpNfadeIn">
+                        <p class="indication">Play >></p>
+                        <button id="play" title="Play Audio">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
 
-        <a id="login" href="/html/regs/Signup.html">REGISTER NOW</a>
-    </div>
+            </div>
+
+            <div class="write-up">
+                <h2>THE HEART OF GIVING -<span class="not-bold"> A Message from Charlotte Casiraghi</span></h2>
+
+                <p class="donation-text">
+                    At the heart of our humanity lies a profound capacity for compassion, a timeless tradition of
+                    reaching out to those in need. In extending a hand to others, we not only offer relief from
+                    suffering but also affirm our shared bonds of love and kindness.</p>
+            </div>
+        </section>
+
+        <section class="category">
+            <h1>Select Donation by Category</h1>
+
+            <div class="category-flex">
+                <div class="category-div">
+                    <div class="category-image"><img src="/src/images/logo.jpg" alt="category-name"></div>
+
+                    <p class="category-name">Category 1</p>
+                </div>
+
+                <div class="category-div">
+                    <div class="category-image"><img src="/src/images/logo.jpg" alt="category-name"></div>
+                
+                    <p class="category-name">Category 1</p>
+                </div>
+
+                <div class="category-div">
+                    <div class="category-image"><img src="/src/images/logo.jpg" alt="category-name"></div>
+                
+                    <p class="category-name">Category 1</p>
+                </div>
+            </div>
+        </section>
+
+<section class="stories">
+
 </section>
 
-<section id="newsletter">
-    <div class="container">
-        <h2>Stay Connected with Charlotte</h2>
-        <p class="subtext">Receive healing insights, exclusive updates, and special offers directly to your inbox</p>
+        <footer>
+            <div class="upper">
+                <p class="name">Charlotte Casiraghi</p>
+                <div class="navs">
+                    <a class="nav" href="/html/main/Home.html">HOME</a>
+                    <a class="nav" href="/html/main/Session.html">SESSIONS</a>
+                    <a class="nav" href="/html/main/Donation.html">DONATION</a>
+                    <a class="nav" href="/html/main/Shop.html">BOOKS</a>
+                    <a href="/html//regs/Signup.html" class="login nav">
+                        <p class="login-text">REGISTER</p>
+                    </a>
+                </div>
+            </div>
 
-        <form class="newsletter-form">
-            <input type="email" placeholder="Enter your email address" required
-                aria-label="Email address for newsletter">
-            <button type="submit">
-                <p class="text">Subscribe</p>
-                <p class="svg">>></p>
-            </button>
-        </form>
+            <div class="others">
+                <a href="/html/main/FAQ.html">FAQ</a>
+
+                <a href="/html/main/Privacy.html">PRIVACY POLICY</a>
+
+                <a href="/html/main/Donation.html">DONATION</a>
+
+                <a href="mailto:healingwithcharlottecasiraghi@gmail.com">EMAIL US</a>
+            </div>
+
+            <div class="copyright">
+                Copyright &copy; <span id="year">2025</span>
+            </div>
+        </footer>
     </div>
-</section>
-
- <footer>
-        <div class="upper">
-          <p class="name">Charlotte Casiraghi</p>
-          <div class="navs">
-            <a class="nav" href="/html/main/Home.html" >HOME</a>
-            <a class="nav" href="/html/main/Session.html">SESSIONS</a>
-            <a class="nav" href="/html/main/Donation.html">DONATION</a>
-            <a class="nav" href="/html/main/Shop.html">BOOKS</a>
-            <a href="/html//regs/Signup.html" class="login nav">
-              <p class="login-text">REGISTER</p>
-            </a>
-          </div>
-        </div>
-
-<div class="others">
-<a href="/html/main/FAQ.html">FAQ</a>
-
-<a href="/html/main/Privacy.html">PRIVACY POLICY</a>
-
-<a href="/html/main/Donation.html">DONATION</a>
-
-<a href="mailto:healingwithcharlottecasiraghi@gmail.com">EMAIL US</a>
-</div>
-
-        <div class="copyright">
-          Copyright &copy; <span id="year">2025</span>
-        </div>
-      </footer>
-</div>
 </body>
+
 </html>
 
 <script src="/js/general.js"></script>
+<script src="/js/donation.js"></script>

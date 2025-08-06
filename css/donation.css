@@ -1,47 +1,195 @@
-section#discover {
-    padding-block: 10%;
+section.banner {
     width: 100%;
-    background: rgba(255, 252, 250, 0.85);
-    padding-inline: 10px;
+    height: max-content;
+    min-height: 80vh;
+    overflow: hidden;
     display: flex;
-    place-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10%;
+    column-gap: 20px;
+    row-gap: 30%;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    padding-top: 8pc;
+    padding-bottom: 20px;
+    background-color: var(--accentTrans);
 }
 
-#discover div.parent {
-    width: 90%;
-    max-width: 1000px;
-    padding: 2.5rem;
-    border: 2px solid var(--link);
-    background: var(--accentTrans);
-    border-radius: 15px;
+.banner .upper {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+.upper .image-div {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
     place-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 50px;
+    overflow: hidden;
+    background-color: var(--accent);
     justify-content: center;
-    gap: 2rem;
-    min-height: 200px;
+    border-top-left-radius: 2vw;
+    border-bottom-left-radius: 50vw;
+    border-top-right-radius: 40vw;
+    border-bottom-right-radius: 60vw;
 }
 
-#discover div.parent p {
-    text-align: left;
-    font-size: 1.4rem;
-    font-family: PoppinsLight;
+.image-div img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: brightness(105%);
 }
 
-#discover .parent a {
-    cursor: pointer;
-    border: none;
-    background-color: var(--link);
-    border-radius: 30px;
-    padding: 10px;
-    padding-inline: 15px;
-    width: 80%;
-    max-width: 300px;
-    place-self: center;
-    color: var(--primary);
-    font-size: 16px;
-    font-family: PoppinsSemi;
-    text-align: center;
+.banner div.message {
+    min-width: 100%;
     display: flex;
     place-content: center;
+    flex-wrap: wrap;
+    padding-block: 20px;
+    gap: 10px;
+}
+
+.banner .message .text {
+    font-family: PoppinsSemi;
+    font-size: 1rem;
+    max-width: 200px;
+}
+
+.banner .message .player {
+    width: 60%;
+    max-width: 150px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--accent);
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid var(--highlight);
+    height: 50px;
+    box-shadow: inset -20px 0px 20px var(--primaryTrans);
+}
+
+.banner .message .indication {
+    color: var(--mainText);
+    font-family: PoppinsSemi;
+    padding-inline-start: 10px;
+}
+
+.banner .message button {
+    display: flex;
+    z-index: 99;
+    justify-content: center;
+    align-items: center;
+    padding-inline-start: 2px;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    border: none;
+    text-align: center;
+    background: var(--link);
+    height: 40px;
+}
+
+.banner .message button svg {
+    fill: var(--primary);
+}
+
+.banner .write-up {
+    max-width: 600px;
+    padding-inline: 30px;
+    margin-top: 8vw;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.banner .write-up h2 {
+    font-family: PoppinsBold;
+    font-size: 2.2rem;
+    line-height: 2.5rem;
+}
+
+.banner .write-up h2 span {
+    font-family: PoppinsLight;
+    color: var(--mainText);
+    font-size: 1.8rem;
+    line-height: 1.4rem;
+}
+
+.banner .write-up p {
+    font-size: 18px;
+    font-family: PoppinsLight;
+    padding-bottom: 10px;
+}
+
+section.category {
+    width: 100vw;
+    padding-inline: 10px;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(252, 252, 252);
+}
+
+.category h1 {
+    min-width: 100%;
+    font-family: PoppinsSemi;
+    padding-inline: 10px;
+}
+
+.category .category-flex {
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.category .category-div {
+    width: 145px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 15px;
+    background: white;
+    padding: 5px;
+    padding-bottom: 10px;
+    text-align: center;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.category .category-div .category-image {
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.category-div .category-image img {
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
 }

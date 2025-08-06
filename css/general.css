@@ -60,6 +60,7 @@ div#body {
   background-repeat: no-repeat;
   display: block;
   width: 100%;
+  overflow: hidden;
   overflow-y: auto;
   height: 100%;
   position: relative;
@@ -103,7 +104,7 @@ header#header {
   padding-block: 20px;
   background: transparent;
   background-color: var(--primaryTrans);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(50px);
   background-clip: border-box;
   position: fixed;
   top: 0;
