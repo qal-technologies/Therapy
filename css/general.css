@@ -47,6 +47,10 @@
   list-style: none;
 }
 
+*:focus, *:active{
+outline:none !important;
+}
+
 html,
 body,
 div#body {
