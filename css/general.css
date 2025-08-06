@@ -45,6 +45,7 @@
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
   transition: all 400ms ease-in-out;
   list-style: none;
+-webkit-tap-highlight-color: transparent;
 }
 
 *:focus, *:active{
