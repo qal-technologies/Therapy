@@ -2,8 +2,8 @@
 //Audio source:
 const audioSrc = {
     session: {
-        "en": "/src/audio/book-audio.mp3",
-        "fr": "/src/audio/book-audio.mp3",
+        "en": "/src/audio/donation-audio.mp3",
+        "fr": "/src/audio/donation-audio.mp3",
     }
 };
 
@@ -22,7 +22,7 @@ const categories = [
 function handleAudio(lang) {
     const audioMessage = document.querySelector('.banner .message audio#audio-message');
 
-    audioMessage.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
+    audioMessage.src = audioSrc.session[lang] || "/src/audio/donation-audio.mp3";
 
     const listenBTN = document.querySelector(".banner .message button#play");
 
