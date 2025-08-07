@@ -25,6 +25,7 @@ section.banner {
     max-width: 400px;
     max-height: 80vh;
     overflow: hidden;
+padding-inline:20px
 }
 
 .upper .image-div {
