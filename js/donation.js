@@ -25,7 +25,7 @@ const stories = [
     stories: [
       {
         images: ["/src/images/logo.jpg",], location: "Tallahassee, FL", title: "Being Weezy Ain't Easy - Help Jessie Get New Lungs", target: "50K", raised: "233,563", donations: "7.7K",
-        percentage: "99%", description: "My name is Joshua Blood, and I’m reaching out to ask for support for my incredible wife, Jessie. Jessie has been diagnosed with Interstitial Lung Disease, caused by Mixed Connective Tissue Disease, a rare and aggressive condition that continues to destroy her lungs even with treatment. Despite her strength and determination, her lung function has dropped below 45%, and doctors have confirmed that she will need a double lung transplant within the next year to survive.
+        percentage: "99%", description: `My name is Joshua Blood, and I’m reaching out to ask for support for my incredible wife, Jessie. Jessie has been diagnosed with Interstitial Lung Disease, caused by Mixed Connective Tissue Disease, a rare and aggressive condition that continues to destroy her lungs even with treatment. Despite her strength and determination, her lung function has dropped below 45%, and doctors have confirmed that she will need a double lung transplant within the next year to survive.
 
 Jessie is a devoted mother to our 8-year-old daughter, and a loving stepmom to our 12 and 14-year-old children. Without this transplant, she may never get to see them graduate, go to prom, or walk down the aisle. We are fighting with everything we have to give her that chance.
 
@@ -40,7 +40,7 @@ If you’re unable to give, please share our story. Your kindness and prayers me
 
 From the bottom of our hearts, thank you.
 
-— Josh, Jessie & family", organizer: "Josh Blood", just: {
+— Josh, Jessie & family`, organizer: "Josh Blood", just: {
           number: 74,
           top: [
             { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
