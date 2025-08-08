@@ -282,7 +282,7 @@ section.stories {
 
 .stories .story .story-image {
     display: flex;
-    width: 220px;
+    width: 180px;
     height: 180px;
     align-self: center;
     place-content: center;
