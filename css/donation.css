@@ -231,9 +231,8 @@ section.stories {
 
 .stories .story-category {
     border-top: 1px solid #c7c7c7;
-    width: 98%;
+    width: 100%;
     align-self: center;
-    padding-inline-end: 10px;
     padding-block: 40px;
     display: flex;
     flex-direction: column;
@@ -269,7 +268,7 @@ section.stories {
     flex-direction: row;
     gap: 10px;
     cursor: pointer;
-    padding: 6px;
+    padding: 4px;
     justify-content: flex-start;
     height: auto;
     background-color: white;
@@ -282,8 +281,8 @@ section.stories {
 
 .stories .story .story-image {
     display: flex;
-    width: 220px;
-    height: 180px;
+    width: 180px;
+    height: 160px;
     align-self: center;
     place-content: center;
     border-radius: 16px;
@@ -309,7 +308,7 @@ section.stories {
 }
 
 .story .story-info p.story-location {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: lighter;
     font-family: PoppinsLight;
     letter-spacing: 1px;
@@ -317,7 +316,7 @@ section.stories {
 
 .story .story-info p.story-title {
     margin-bottom: 20%;
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height:1.1rem;
     max-width: 80%;
     text-align: left;
@@ -327,7 +326,7 @@ section.stories {
 
 
 .story .story-info div.wrapper {
-    width: 98%;
+    width: 95%;
     background-color: rgb(240, 240, 240);
     height: 8px;
     border-radius: 100px;
