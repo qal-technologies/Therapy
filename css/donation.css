@@ -396,7 +396,7 @@ section.donation-viewer {
     overflow: hidden;
     background: white;
     backdrop-filter: blur(20px);
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
 }
