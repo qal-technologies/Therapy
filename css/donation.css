@@ -401,7 +401,7 @@ section.donation-viewer {
     overflow: hidden;
     background: white;
     backdrop-filter: blur(20px);
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -429,7 +429,7 @@ section.donation-viewer {
     right: 40px;
     display: flex;
     align-items: center;
-    background-color: rgba(255, 241, 241, 0.6);
+    background-color: rgba(245, 255, 241, 0.6);
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -437,17 +437,17 @@ section.donation-viewer {
     justify-content: center;
     font-size: 1.8em;
     backdrop-filter: blur(20px);
-    border: 2px solid rgba(255, 0, 0, 0.6);
-    box-shadow: 0px 0px 10px rgba(255, 0, 0, 0.1);
-    color: rgba(255, 0, 0, 0.6);
+    border: 2px solid rgba(73, 184, 0, 0.6);
+    box-shadow: 0px 0px 10px rgba(157, 255, 0, 0.1);
+    color: rgba(73, 184, 0, 0.6);
     z-index: 999999;
     cursor: pointer;
 }
 
 .donation-viewer .container .image {
     width: 100%;
-    min-height: 250px;
-    border-radius: 10px;
+    min-height: 300px;
+    border-radius: 12px;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -458,7 +458,8 @@ section.donation-viewer {
     width: 100%;
     height: 100%;
     filter: brightness(102%);
-    object-fit: cover;
+    object-fit:cover;
+    object-position: 0% 50%;
 }
 
 .container h2 {
@@ -466,8 +467,8 @@ section.donation-viewer {
     min-width: 100%;
     text-align: left;
     font-family: PoppinsBold;
-    font-size: 1.5rem;
-    padding-inline-start: 10px;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
 }
 
 .container .donation-details {
@@ -475,10 +476,11 @@ section.donation-viewer {
     padding: 20px;
     text-align: left;
     border: 1px solid #dcdc;
-    border-radius: 15px;
+    border-radius: 20px;
     display: flex;
     flex-direction: row;
     gap: 10px;
+    max-height: 100px;
     justify-content: space-between;
     align-items: center;
 }
@@ -527,17 +529,9 @@ section.donation-viewer {
     transition: stroke-dashoffset 1s;
 }
 
-.donation-details .percentage-div .loader {
-    position: absolute;
-    width: 75px;
-    min-height: 75px;
-    background: linear-gradient(120deg, rgb(136, 255, 0), rgb(0, 75, 0));
-    border-radius: 100%;
-}
-
 .donation-details .percentage-div p {
-    width: 65px;
-    min-height: 65px;
+    width: 60px;
+    min-height: 60px;
     background: white;
     z-index: 9999;
     text-align: center;
@@ -545,13 +539,12 @@ section.donation-viewer {
     place-items: center;
     font-weight: bolder;
     font-family: PoppinsBold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     border-radius: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
 }
 
 .donation-buttons {
@@ -568,6 +561,7 @@ section.donation-viewer {
 .donation-buttons button {
     width: 100%;
     height: 50px;
+    cursor: pointer;
     padding: 15px;
     border-radius: 50px;
     border: none;

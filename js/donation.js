@@ -1,5 +1,5 @@
 let pageState = {
-  clickedDonation: "",
+  clickedDonation: null,
 };
 
 //Audio source:
@@ -10,16 +10,21 @@ const audioSrc = {
   }
 };
 
+const BASE_PATHS = {
+  images: "/src/images",
+  svg: "/src/svg",
+};
+
 //categoriess:
 const categories = [
-  { name: "Medical", image: "/src/svg/heart-pulse-fill.svg" },
-  { name: "Memorial", image: "/src/svg/candle-heart-love-svgrepo-com.svg" },
-  { name: "Education", image: "/src/svg/education.svg" },
-  { name: "Animal", image: "/src/svg/animal.svg" },
-  { name: "Faith", image: "/src/svg/cloud.svg" },
-  { name: "Family", image: "/src/svg/family.svg" },
-  { name: "Environment", image: "/src/svg/environment.svg" },
-  { name: "Community", image: "/src/svg/community.svg" },
+  { name: "Medical", image: `${BASE_PATHS.svg}/heart-pulse-fill.svg` },
+  { name: "Memorial", image: `${BASE_PATHS.svg}/candle-heart-love-svgrepo-com.svg` },
+  { name: "Education", image: `${BASE_PATHS.svg}/education.svg` },
+  { name: "Animal", image: `${BASE_PATHS.svg}/animal.svg` },
+  { name: "Faith", image: `${BASE_PATHS.svg}/cloud.svg` },
+  { name: "Family", image: `${BASE_PATHS.svg}/family.svg` },
+  { name: "Environment", image: `${BASE_PATHS.svg}/environment.svg` },
+  { name: "Community", image: `${BASE_PATHS.svg}/community.svg` },
 ];
 
 const stories = [
@@ -27,8 +32,8 @@ const stories = [
     name: "Medical",
     stories: [
       {
-        images: ["/src/images/medical/01/IMG-20250807-WA0054.jpg", "/src/images/medical/01/IMG-20250807-WA0055.jpg", "/src/images/medical/01/IMG-20250807-WA0056.jpg", "/src/images/medical/01/IMG-20250807-WA0057.jpg", "/src/images/medical/01/IMG-20250807-WA0058.jpg"], location: "Tallahassee, FL", title: "Being Weezy Ain't Easy - Help Jessie Get New Lungs", target: "50K", raised: "233,563", donations: "7.7K",
-        percentage: "99%", description: `My name is Joshua Blood, and I’m reaching out to ask for support for my incredible wife, Jessie. Jessie has been diagnosed with Interstitial Lung Disease, caused by Mixed Connective Tissue Disease, a rare and aggressive condition that continues to destroy her lungs even with treatment. Despite her strength and determination, her lung function has dropped below 45%, and doctors have confirmed that she will need a double lung transplant within the next year to survive.
+        images: [`${BASE_PATHS.images}/medical/01/IMG-20250807-WA0054.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0055.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0056.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0057.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0058.jpg`], location: `Tallahassee, FL`, title: `Being Weezy Ain't Easy - Help Jessie Get New Lungs`, target: `50K`, raised: `233,563`, donations: `7.7K`,
+        percentage: `99%`, description: `My name is Joshua Blood, and I’m reaching out to ask for support for my incredible wife, Jessie. Jessie has been diagnosed with Interstitial Lung Disease, caused by Mixed Connective Tissue Disease, a rare and aggressive condition that continues to destroy her lungs even with treatment. Despite her strength and determination, her lung function has dropped below 45%, and doctors have confirmed that she will need a double lung transplant within the next year to survive.
 
 Jessie is a devoted mother to our 8-year-old daughter, and a loving stepmom to our 12 and 14-year-old children. Without this transplant, she may never get to see them graduate, go to prom, or walk down the aisle. We are fighting with everything we have to give her that chance.
 
@@ -43,20 +48,20 @@ If you’re unable to give, please share our story. Your kindness and prayers me
 
 From the bottom of our hearts, thank you.
 
-— Josh, Jessie & family`, organizer: "Josh Blood", just: {
+— Josh, Jessie & family`, organizer: `Josh Blood`, just: {
           number: 74,
           top: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
 
-            { name: "Amber Hodges", amount: "1,200", rank: "Top donation", time: "1 hr" },
+            { name: `Amber Hodges`, amount: `1,200`, rank: `Top donation`, time: `1 hr` },
 
-            { name: "Anonymous", amount: "100", rank: "First donation", time: "30 mins" },
+            { name: `Anonymous`, amount: `100`, rank: `First donation`, time: `30 mins` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -64,8 +69,8 @@ From the bottom of our hearts, thank you.
         }
       },
       {
-        images: ["/src/images/medical/02/IMG-20250807-WA0066.jpg", "/src/images/medical/02/IMG-20250807-WA0067.jpg", "/src/images/medical/02/IMG-20250807-WA0068.jpg", "/src/images/medical/02/IMG-20250807-WA0072.jpg"], location: "Monoroeville, PA", title: "Support Tracey's Fight Against Severe Illness", target: "25K", raised: "24,086", donations: "314",
-        percentage: "96%", description: `My name is Mike, and I’m starting this fundraiser for my wife, Tracey.
+        images: [`${BASE_PATHS.images}/medical/02/IMG-20250807-WA0066.jpg`, `${BASE_PATHS.images}/medical/02/IMG-20250807-WA0067.jpg`, `${BASE_PATHS.images}/medical/02/IMG-20250807-WA0068.jpg`, `${BASE_PATHS.images}/medical/02/IMG-20250807-WA0072.jpg`], location: `Monoroeville, PA`, title: `Support Tracey's Fight Against Severe Illness`, target: `25K`, raised: `24,086`, donations: `314`,
+        percentage: `96%`, description: `My name is Mike, and I’m starting this fundraiser for my wife, Tracey.
 
 Just a few weeks ago, we were living our normal life—raising our kids, working, doing what families do. Then, everything changed. Tracey became seriously ill and was hospitalized. What started as a suspected neurological issue quickly escalated into a life-threatening medical crisis.
 
@@ -76,20 +81,20 @@ We are trying to stay hopeful, but we are also preparing for the long road ahead
 I never thought I’d be doing something like this I’m trying to keep as much pride as possible, but we will need help. If you feel moved to support us—whether it’s $5 or simply by sharing this page—we are so grateful. Your help allows me to focus on my wife and our children during the most difficult time of our lives.
 
 From the bottom of my heart, thank you.
-—Mike`, organizer: "Mike Warywoda", just: {
+—Mike`, organizer: `Mike Warywoda`, just: {
           number: 91,
           top: [
-            { name: "Stacey Snead-Peterson", amount: "25", rank: "Recent donation", time: "30 mins" },
-            { name: "Heather Cope", amount: "500", rank: "Top donation", time: "16 mins" },
+            { name: `Stacey Snead-Peterson`, amount: `25`, rank: `Recent donation`, time: `30 mins` },
+            { name: `Heather Cope`, amount: `500`, rank: `Top donation`, time: `16 mins` },
 
-            { name: "Madison Hickman", amount: "100", rank: "First donation", time: "1 hr" },
+            { name: `Madison Hickman`, amount: `100`, rank: `First donation`, time: `1 hr` },
 
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -97,8 +102,8 @@ From the bottom of my heart, thank you.
         }
       },
       {
-        images: ["/src/images/medical/03/IMG-20250807-WA0070.jpg", "/src/images/medical/03/IMG-20250807-WA0065.jpg", "/src/images/medical/03/IMG-20250807-WA0065.jpg", "/src/images/medical/03/IMG-20250807-WA0071.jpg", "/src/images/medical/03/IMG-20250807-WA0073.jpg"], location: "Goochland, VA", title: "Support Parker Forcke's Fight Against Stage 4 Colon Cancer", target: "40K", raised: "35,483", donations: "332",
-        percentage: "89%", description: `On June 18th, our lives were turned upside down. My 23-year-old son, Parker Forcke, was diagnosed with Stage 4 colon cancer. It has metastasized to his liver, lymph nodes, and 3 of his bones. He has a huge fight ahead of him. We never thought in a million years that we would ever have to ask for help. It has truly humbled us.
+        images: [`${BASE_PATHS.images}/medical/03/IMG-20250807-WA0070.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0065.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0065.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0071.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0073.jpg`], location: `Goochland, VA`, title: `Support Parker Forcke's Fight Against Stage 4 Colon Cancer`, target: `40K`, raised: `35,483`, donations: `332`,
+        percentage: `89%`, description: `On June 18th, our lives were turned upside down. My 23-year-old son, Parker Forcke, was diagnosed with Stage 4 colon cancer. It has metastasized to his liver, lymph nodes, and 3 of his bones. He has a huge fight ahead of him. We never thought in a million years that we would ever have to ask for help. It has truly humbled us.
 
 We don’t know what the future holds, but we know one thing: Parker is going to fight like hell. He is a believer, and he knows that God has him no matter what. Anyone who knows him knows he is one amazing human being. He has been through a lot in his short life. His father passed unexpectedly when he was only 4 years old. He grew up always wanting to take care of me and his little sister. He has grown into such a wonderful young man. Parker is a hard worker; he is kind, compassionate, and would give the shirt off his back to anyone in need.
 
@@ -106,20 +111,20 @@ We know there will be expenses that we cannot afford. Cancer treatments are incr
 
 As most of you know, Parker is a successful business owner of Forcke Enterprises. Landscaping and Property Management is his passion. He takes his work very seriously and, with the help of his team, he plans to keep things operating throughout his journey. Please continue to reach out to him for your property service needs, which will also help to support him and his team while he is battling this.
 
-We truly believe that Parker will beat this thing. God has something greater planned for him. He is going to have one heck of a testimony to share with others when this is over. If you are able to help with this fundraiser, we will be forever grateful. If not, that’s okay too. We just ask that everyone please keep him, his girlfriend Rylee, and our family in your prayers during the biggest fight of his life… and please share this with anyone and everyone you know. May God bless you and your family with good health, as I hope and pray that none of you are ever faced with this horrible disease. Thank you.`, organizer: "Stacey Forcke", just: {
+We truly believe that Parker will beat this thing. God has something greater planned for him. He is going to have one heck of a testimony to share with others when this is over. If you are able to help with this fundraiser, we will be forever grateful. If not, that’s okay too. We just ask that everyone please keep him, his girlfriend Rylee, and our family in your prayers during the biggest fight of his life… and please share this with anyone and everyone you know. May God bless you and your family with good health, as I hope and pray that none of you are ever faced with this horrible disease. Thank you.`, organizer: `Stacey Forcke`, just: {
           number: 178,
           top: [
-            { name: "Elizabeth Ann Kuhns-Boyle", amount: "200", rank: "First donation", time: "16 mins" },
+            { name: `Elizabeth Ann Kuhns-Boyle`, amount: `200`, rank: `First donation`, time: `16 mins` },
 
-            { name: "Emily Branch", amount: "100", time: "30 mins" },
+            { name: `Emily Branch`, amount: `100`, time: `30 mins` },
 
-            { name: "Thomas Layman", amount: "25", time: "1 hr" },
+            { name: `Thomas Layman`, amount: `25`, time: `1 hr` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -127,8 +132,8 @@ We truly believe that Parker will beat this thing. God has something greater pla
         }
       },
       {
-        images: ["/src/images/medical/04/IMG-20250807-WA0076.jpg", "/src/images/medical/04/IMG-20250807-WA0077.jpg", "/src/images/medical/04/IMG-20250807-WA0078.jpg"], location: "New York, NY", title: "Support Sheila Jordan's Hospice Care", target: "120K", raised: "118,147", donations: "1.1K",
-        percentage: "98%", description: `Dear Friends, Jazz Family & Colleagues,
+        images: [`${BASE_PATHS.images}/medical/04/IMG-20250807-WA0076.jpg`, `${BASE_PATHS.images}/medical/04/IMG-20250807-WA0077.jpg`, `${BASE_PATHS.images}/medical/04/IMG-20250807-WA0078.jpg`], location: `New York, NY`, title: `Support Sheila Jordan's Hospice Care`, target: `120K`, raised: `118,147`, donations: `1.1K`,
+        percentage: `98%`, description: `Dear Friends, Jazz Family & Colleagues,
 As you may have heard, my mom, NEA Jazzmaster Sheila Jordan, is not doing well. She is no longer at the Actors Fund Nursing Home, where she received 100 days of excellent round-the-clock care. It truly is a wonderful organization. She is now at home under hospice care through her Medicare coverage. Unfortunately, Medicare only provides 10 hours of Home Hospice Care Aide services per week. Per WEEK!
 
 As a result, we have been paying out of pocket for a private Home Care Aide to come during the day for a few hours, and I've been spending the remainder of the time nursing my mom since July 7th. The emotional toll of watching my mom's health decline is immense, and I'm physically and emotionally exhausted while being financially drained.
@@ -139,20 +144,20 @@ The healthcare system in our country is broken. Medicare limits her health-care 
 
 My mom is a living bridge to the great musicians who created Bebop and beyond, and she has treated her legacy with deep respect and generously passed on her transformative message to thousands of grateful people.
 
-At this point in her long and full life, she now needs us to show her our love. Your support could make a significant difference in my mom's life, ensuring she receives the best care possible. Thank you in advance for your time and consideration.`, organizer: "Tracy Jordan", just: {
+At this point in her long and full life, she now needs us to show her our love. Your support could make a significant difference in my mom's life, ensuring she receives the best care possible. Thank you in advance for your time and consideration.`, organizer: `Tracy Jordan`, just: {
           number: 0,
           top: [
-            { name: "Ben Ruben-Schnirman", amount: "5", rank: "First donation", time: "16 mins" },
+            { name: `Ben Ruben-Schnirman`, amount: `5`, rank: `First donation`, time: `16 mins` },
 
-            { name: "Francis Dance", amount: "10", time: "27 mins" },
+            { name: `Francis Dance`, amount: `10`, time: `27 mins` },
 
-            { name: "Emilie Conway", amount: "115", time: "36 mins" },
+            { name: `Emilie Conway`, amount: `115`, time: `36 mins` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -162,26 +167,26 @@ At this point in her long and full life, she now needs us to show her our love. 
     ]
   },
   {
-    name: "Memorial",
+    name: `Memorial`,
     stories: [
       {
-        images: ["/src/images/logo.jpg",], location: "Honey Hill Mobile Home Park, FL", title: "Honor Grandma Madie's Legacy and Wishes", target: "24K", raised: "20,345", donations: "625",
-        percentage: "85%", description: `I am Shanika, the granddaughter of 107-year-old Madie. Many of you may know her as Grandma Madie, a very well-known social media sensation. She has gone viral in several videos on TikTok, Facebook, and Instagram. Madie was born in December of 1917. Yes! That would make her 107, and if it’s God’s will, in December she will be 108. Madie was a woman who worked all her life and retired at the age of 85. She loved working. My grandma had one child who preceded her in death many, many years ago. That left her to raise me and my three brothers by herself. She did this without a complaint, and she was 76 years old starting all over again. That didn’t stop her from showing us love and support until we were able to do for ourselves.
+        images: [`${BASE_PATHS.images}/logo.jpg`,], location: `Honey Hill Mobile Home Park, FL`, title: `Honor Grandma Madie's Legacy and Wishes`, target: `24K`, raised: `20,345`, donations: `625`,
+        percentage: `85%`, description: `I am Shanika, the granddaughter of 107-year-old Madie. Many of you may know her as Grandma Madie, a very well-known social media sensation. She has gone viral in several videos on TikTok, Facebook, and Instagram. Madie was born in December of 1917. Yes! That would make her 107, and if it’s God’s will, in December she will be 108. Madie was a woman who worked all her life and retired at the age of 85. She loved working. My grandma had one child who preceded her in death many, many years ago. That left her to raise me and my three brothers by herself. She did this without a complaint, and she was 76 years old starting all over again. That didn’t stop her from showing us love and support until we were able to do for ourselves.
 
-However, within the last week, Madie has been facing some health challenges. She has been in and out of the hospital, which has now led her to be in hospice care at home 24/7. As her health has now been on the decline, I want to start preparing for her transition. Madie has insurance, but unfortunately, it’s not enough to fulfill her wishes of getting her back home to Vidalia, GA, where she was born, to be buried next to her mother, whom she loved so much. I am praying that the Lord touches the hearts of the people who genuinely loved my grandma to help her fulfill her wishes.`, organizer: "Shanika Bradshaw", just: {
+However, within the last week, Madie has been facing some health challenges. She has been in and out of the hospital, which has now led her to be in hospice care at home 24/7. As her health has now been on the decline, I want to start preparing for her transition. Madie has insurance, but unfortunately, it’s not enough to fulfill her wishes of getting her back home to Vidalia, GA, where she was born, to be buried next to her mother, whom she loved so much. I am praying that the Lord touches the hearts of the people who genuinely loved my grandma to help her fulfill her wishes.`, organizer: `Shanika Bradshaw`, just: {
           number: 299,
           top: [
-            { name: "Brandolyn Jones", amount: "20", rank: "Recent donation", time: "16 mins" },
+            { name: `Brandolyn Jones`, amount: `20`, rank: `Recent donation`, time: `16 mins` },
 
-            { name: "Andrea Bland", amount: "25", time: "24 mins" },
+            { name: `Andrea Bland`, amount: `25`, time: `24 mins` },
 
-            { name: "Sabrina Philips", amount: "100", time: "33 mins" },
+            { name: `Sabrina Philips`, amount: `100`, time: `33 mins` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -189,8 +194,8 @@ However, within the last week, Madie has been facing some health challenges. She
         }
       },
       {
-        images: ["/src/images/memory/02/IMG-20250807-WA0085.jpg", "/src/images/memory/02/IMG-20250807-WA0084.jpg", "/src/images/memory/02/IMG-20250807-WA0083.jpg", "/src/images/memory/02/IMG-20250807-WA0086.jpg"], location: "Santa Ana, CA", title: "In Memory of Leticia Placencia Alvarado: Funeral Fund", target: "24K", raised: "13,062", donations: "290",
-        percentage: "54%", description: `Hello Everyone,
+        images: [`${BASE_PATHS.images}/memory/02/IMG-20250807-WA0085.jpg`, `${BASE_PATHS.images}/memory/02/IMG-20250807-WA0084.jpg`, `${BASE_PATHS.images}/memory/02/IMG-20250807-WA0083.jpg`, `${BASE_PATHS.images}/memory/02/IMG-20250807-WA0086.jpg`], location: `Santa Ana, CA`, title: `In Memory of Leticia Placencia Alvarado: Funeral Fund`, target: `24K`, raised: `13,062`, donations: `290`,
+        percentage: `54%`, description: `Hello Everyone,
 
 
 It is with heavy hearts that we share the tragic passing of our beloved Leticia Placencia Alvarado, aka Letita, a daughter, wife, cousin and friend. Letita was taken from us far too soon.
@@ -205,19 +210,19 @@ Thank you for all your love, prayers and support.
 
 With Gratitude & Love,
 
-The Alvarado, Placencia, Hernandez Family.`, organizer: "Wendy Perez", just: {
+The Alvarado, Placencia, Hernandez Family.`, organizer: `Wendy Perez`, just: {
           number: 288,
           top: [
-            { name: "Jose Fontao", amount: "100", rank: "First donation", time: "30 mins" },
-            { name: "Darlene Fuertes", amount: "10", time: "20 mins" },
+            { name: `Jose Fontao`, amount: `100`, rank: `First donation`, time: `30 mins` },
+            { name: `Darlene Fuertes`, amount: `10`, time: `20 mins` },
 
-            { name: "Ricardo De Los Keyes", amount: "50", time: "26 mins" },
+            { name: `Ricardo De Los Keyes`, amount: `50`, time: `26 mins` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -225,25 +230,25 @@ The Alvarado, Placencia, Hernandez Family.`, organizer: "Wendy Perez", just: {
         }
       },
       {
-        images: ["/src/images/memory/04/IMG-20250807-WA0093.jpg", "/src/images/memory/04/IMG-20250807-WA0091.jpg", "/src/images/memory/04/IMG-20250807-WA0092.jpg"], location: "Centennial, CO", title: "In Memory of Naomi Alene: Funeral Support", target: "65K", raised: "56,380", donations: "402",
-        percentage: "87%", description: `With heavy hearts, we mourn the passing of our beloved Naomi Alene, daughter of Ketema Alene and Solome Tsehay, and sister to Nazrawi, Nehemiah, and Nava. Naomi was a bright light: loving, full of life, and cherished by all who knew her. Though her time with us was brief, we treasure the beautiful memories we shared with her and the gift from God she was to us all.
+        images: [`${BASE_PATHS.images}/memory/04/IMG-20250807-WA0093.jpg`, `${BASE_PATHS.images}/memory/04/IMG-20250807-WA0091.jpg`, `${BASE_PATHS.images}/memory/04/IMG-20250807-WA0092.jpg`], location: `Centennial, CO`, title: `In Memory of Naomi Alene: Funeral Support`, target: `65K`, raised: `56,380`, donations: `402`,
+        percentage: `87%`, description: `With heavy hearts, we mourn the passing of our beloved Naomi Alene, daughter of Ketema Alene and Solome Tsehay, and sister to Nazrawi, Nehemiah, and Nava. Naomi was a bright light: loving, full of life, and cherished by all who knew her. Though her time with us was brief, we treasure the beautiful memories we shared with her and the gift from God she was to us all.
 
 We are raising funds to help cover funeral and related expenses during this difficult time. Any contribution, big or small, is deeply appreciated.
 
-May the Father of mercies and the God of all comfort be near to all who are devastated by this tragic and untimely loss.`, organizer: "Dawit Agonafer", just: {
+May the Father of mercies and the God of all comfort be near to all who are devastated by this tragic and untimely loss.`, organizer: `Dawit Agonafer`, just: {
           number: 90,
           top: [
-            { name: "Dawit Agonafer", amount: "1000", rank: "First donation", time: "16 mins" },
+            { name: `Dawit Agonafer`, amount: `1000`, rank: `First donation`, time: `16 mins` },
 
-            { name: "Anonymous", amount: "50", time: "2 hrs" },
+            { name: `Anonymous`, amount: `50`, time: `2 hrs` },
 
-            { name: "Anonymous", amount: "50", time: "3 hrs" },
+            { name: `Anonymous`, amount: `50`, time: `3 hrs` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -251,8 +256,8 @@ May the Father of mercies and the God of all comfort be near to all who are deva
         }
       },
       {
-        images: ["/src/images/memory/03/IMG-20250807-WA0089.jpg", "/src/images/memory/03/IMG-20250807-WA0090.jpg", "/src/images/memory/03/IMG-20250807-WA0094.jpg"], location: "Stamford, CT", title: "Help Lay Rest 12 year old Brisley Reyes", target: "45K", raised: "31,698", donations: "628",
-        percentage: "70%", description: `Help Lay 12-Year-Old Brisley Reyes to Rest After Tragic Accident
+        images: [`${BASE_PATHS.images}/memory/03/IMG-20250807-WA0089.jpg`, `${BASE_PATHS.images}/memory/03/IMG-20250807-WA0090.jpg`, `${BASE_PATHS.images}/memory/03/IMG-20250807-WA0094.jpg`], location: `Stamford, CT`, title: `Help Lay Rest 12 year old Brisley Reyes`, target: `45K`, raised: `31,698`, donations: `628`,
+        percentage: `70%`, description: `Help Lay 12-Year-Old Brisley Reyes to Rest After Tragic Accident
 
 It is with broken hearts that we share the devastating loss of 12-year-old Brisley Reyes, a kind and hard-working boy whose life was tragically cut short on August 2nd, 2025 after being struck by a vehicle while riding his electric bike with his dad.
 
@@ -260,20 +265,20 @@ We are asking for your support to help Brisley’s grieving family with funeral 
 
 All funds raised will go directly to Brisley’s family to cover funeral arrangements, burial costs, and support them in the days ahead as they navigate this tragic loss.
 
-If you’re unable to donate, please consider sharing this page and keeping Brisley’s family in your prayers.`, organizer: "Olga Reyes Gramajo and BRISLY REYES", just: {
+If you’re unable to donate, please consider sharing this page and keeping Brisley’s family in your prayers.`, organizer: `Olga Reyes Gramajo and BRISLY REYES`, just: {
           number: 244,
           top: [
-            { name: "Justin Duarte", amount: "100", rank: "First donation", time: "16 mins" },
+            { name: `Justin Duarte`, amount: `100`, rank: `First donation`, time: `16 mins` },
 
-            { name: "Anonymous", amount: "25", time: "35 mins" },
+            { name: `Anonymous`, amount: `25`, time: `35 mins` },
 
-            { name: "Strawberry Hill PTO", amount: "200", time: "3 hrs" },
+            { name: `Strawberry Hill PTO`, amount: `200`, time: `3 hrs` },
           ],
           upper: [
-            { name: "Jennifer Hall", amount: "50", rank: "Recent donation", time: "16 mins" },
-            { name: "Edythe Synder Sanders", amount: "25", rank: "Recent donation", time: "36 mins" },
-            { name: "Christopher Parsons", amount: "10", rank: "Recent donation", time: "40 mins" },
-            { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
+            { name: `Jennifer Hall`, amount: `50`, rank: `Recent donation`, time: `16 mins` },
+            { name: `Edythe Synder Sanders`, amount: `25`, rank: `Recent donation`, time: `36 mins` },
+            { name: `Christopher Parsons`, amount: `10`, rank: `Recent donation`, time: `40 mins` },
+            { name: `Christopher Youngman`, amount: `25`, rank: `Recent donation`, time: `50 mins` },
           ],
           others: [
 
@@ -333,18 +338,6 @@ function handleAudio(lang) {
   });
 }
 
-function handlePercentage(percent) {
-  const circle = document.querySelector("div.percentage-div");
-  const bar = document.querySelector(".percentage-div circle.progress-bar");
-  const text = document.querySelector(".percentage-div .percentage");
-
-  //::::
-  const dashOffset = 283 - (percent / 100) * 283;
-
-  bar.style.strokeDashoffset = dashOffset;
-  text.textContent = `${percent}%`;
-}
-
 function renderCategory() {
   const categoryFlex = document.querySelector(".category .category-flex");
 
@@ -353,39 +346,44 @@ function renderCategory() {
   categoryFlex.innerHTML = "";
 
   categories.forEach(div => {
-    const cartegory = document.createElement("div");
-    cartegory.classList.add("category-div");
-    cartegory.dataset.id = div.name;
+    const category = document.createElement("div");
+    category.classList.add("category-div");
+    category.dataset.id = div.name;
 
-    cartegory.innerHTML = `
+    category.innerHTML = `
             <div class="category-image"><img src="${div.image}"  alt="${div.image}"></div>
 
             <p class="category-name">${div.name}</p>
        `
 
-    categoryFlex.appendChild(cartegory);
+    categoryFlex.appendChild(category);
   });
 }
 
 function handleStoryClick(e) {
-  const storyType = e.target.closest(".story-category").dataset.id;
-  const storyTitle = e.target.closest(".story").querySelector(".story-info .story-title").textContent;
+  const storyCategory = e.target.closest(".story-category");
+  const storyDiv = e.target.closest(".story");
 
-  const type = stories.find(cart => {
-    const found = cart.name = storyType;
-    console.log(found);
-    return found;
-  });
+  if (!storyCategory || !storyDiv) return;
 
-  const story = type.stories.find(story => {
-    const found = story.title == storyTitle;
+  const storyType = storyCategory.dataset.id;
+  const titleDiv = storyDiv.querySelector(".story-info .story-title");
 
-    console.log(found);
-    return found;
-  });
+  if (!titleDiv) return;
 
-  pageState.clickedDonation = story;
-  console.log(story);
+  const storyTitle = titleDiv.textContent;
+
+  const type = stories.find(cart => cart.name === storyType);
+
+  if (!type) return;
+
+  const story = type.stories.find(story => story.title === storyTitle);
+  if (!story) return;
+
+  // pageState.clickedDonation = story;
+  // console.log(story);
+
+  viewDonation(story);
 }
 
 function renderStories() {
@@ -407,7 +405,7 @@ function renderStories() {
                 <div class="stories">
 ${preview.map(el => {
       const story = `<div class="story">
-                        <div class="story-image"><img src="${el.images[0] || "/src/images/logo.jpg"}" alt=""></div>
+                        <div class="story-image"><img src="${el.images[0] || "${BASE_PATHS.images}/logo.jpg"}" alt=""></div>
 
                         <div class="story-info">
                             <p class="story-location">${el.location}</p>
@@ -428,22 +426,106 @@ ${preview.map(el => {
             </div>`;
 
     storiesSection.appendChild(parent);
-    document.querySelectorAll(".story").forEach(story => {
-      story.addEventListener("click", (e) => {
-        handleStoryClick(e);
-      })
+  })
+
+  document.querySelectorAll(".story").forEach(story => {
+    story.addEventListener("click", (e) => {
+      handleStoryClick(e);
     })
   })
 
 }
 
+function viewDonation(donation) {
+  const modal = document.createElement("section");
+  modal.classList.add("donation-viewer", "moveUpNfadeIn");
+
+  modal.innerHTML = `
+    <div class="container">
+    <span class="cancel">X</span>
+
+        <div class="image">
+            <img src="${donation.images[0]}" alt="">
+        </div>
+
+        <h2 class="title">${donation.title}</h2>
+
+        <div class="donation-details">
+            <div class="left">
+                <p class="goal">${donation.target} goal</p> &diams; <p class="donations">${donation.donations} donations</p>
+            </div>
+
+            <div class="percentage-div">
+                <svg>
+                <circle cx="50%" cy="50%" r="35" class="progress-bg"/>
+                <circle cx="50%" cy="50%" r="35" class="progress-bar" />
+                </svg>
+                <p class="percentage">${donation.percentage}</p>
+            </div>
+        </div>
+
+        <div class="donation-buttons">
+            <button class="share">Share</button>
+            <button class="donate">Donate now</button>
+        </div>
+
+        <div class="organizer">
+            <div class="user-svg">))</div>
+
+            <p class="organizer-name">${donation.organizer} ${donation.organizer.includes(" and ") ? "are" : "is"} organizing this fundraiser</p>
+        </div>
+
+        <div class="tag">
+            <div class="inner">
+                <div class="icon">))</div>
+                <p class="tag-text">Donation protected</p>
+            </div>
+        </div>
+
+        <div class="donation-description">
+            <p class="description-text">${donation.description}</p>
+            <button class="read-more">Read more</button>
+        </div>
+
+        <div class="reactions">
+            <div class="add-reaction"></div>
+
+            <div class="reaction-emoji">
+                <span class="hand">0</span>
+                <span class="heart">1</span>
+                <span class="love-green">2</span>
+                <span class="flower">3</span>
+                <span class="clap">4</span>
+                <p class="react-numbers">31</p>
+            </div>
+        </div>
+
+        <div class="gallery">
+            ${donation.images.map(image => {
+    return `<img src="${image}" alt="${donation.title}">`
+  })}
+        </div>
+    </div>`;
+
+  document.body.appendChild(modal);
+  const circle = document.querySelector("div.percentage-div");
+  const bar = document.querySelector(".percentage-div circle.progress-bar");
+  const text = document.querySelector(".percentage-div .percentage");
+
+  const percent = parseInt(donation.percentage.slice(0, 2));
+  //::::
+  const dashOffset = 283 - (percent / 100) * 283;
+
+  bar.style.strokeDashoffset = dashOffset;
+  text.textContent = `${percent}%`;
+  console.log(percent)
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
 
-  handlePercentage(80);
   handleAudio(lang);
   renderCategory();
   renderStories();
-  // pageState({ "me": 123 });
 });
