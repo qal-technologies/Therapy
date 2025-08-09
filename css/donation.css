@@ -315,7 +315,7 @@ section.stories {
 }
 
 .story .story-info p.story-title {
-    margin-bottom: 20%;
+    margin-bottom: 15%;
     font-size: 0.9rem;
     line-height: 1.1rem;
     max-width: 80%;
@@ -502,8 +502,29 @@ section.donation-viewer {
     place-content: center;
     place-items: center;
     width: 100px;
-    min-height: 60px;
+    max-height: 100px;
     position: relative;
+}
+
+.percentage-div svg {
+    transform: rotate(-90deg);
+}
+
+.percentage-div svg .progress-bg {
+    fill: none;
+    stroke: rgb(193, 255, 123);
+    stroke-width: 10;
+    backdrop-filter: blur(10px);
+}
+
+.percentage-div .progress-bar {
+    fill: none;
+    stroke-width: 10;
+    stroke: #01bd07;
+    stroke-dasharray: 283;
+    stroke-dashoffset: 283;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s;
 }
 
 .donation-details .percentage-div .loader {
@@ -526,6 +547,11 @@ section.donation-viewer {
     font-family: PoppinsBold;
     font-size: 1.2rem;
     border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
 }
 
 .donation-buttons {

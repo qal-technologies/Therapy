@@ -1,22 +1,25 @@
+let pageState = {
+  clickedDonation: "",
+};
 
 //Audio source:
 const audioSrc = {
-    session: {
-        "en": "/src/audio/donation-audio.mp3",
-        "fr": "/src/audio/donation-audio.mp3",
-    }
+  session: {
+    "en": "/src/audio/donation-audio.mp3",
+    "fr": "/src/audio/donation-audio.mp3",
+  }
 };
 
 //categoriess:
 const categories = [
-    { name: "Medical", image: "/src/svg/heart-pulse-fill.svg" },
-    { name: "Memorial", image: "/src/svg/candle-heart-love-svgrepo-com.svg" },
-    { name: "Education", image: "/src/svg/education.svg" },
-    { name: "Animal", image: "/src/svg/animal.svg" },
-    { name: "Faith", image: "/src/svg/cloud.svg" },
-    { name: "Family", image: "/src/svg/family.svg" },
-    { name: "Environment", image: "/src/svg/environment.svg" },
-    { name: "Community", image: "/src/svg/community.svg" },
+  { name: "Medical", image: "/src/svg/heart-pulse-fill.svg" },
+  { name: "Memorial", image: "/src/svg/candle-heart-love-svgrepo-com.svg" },
+  { name: "Education", image: "/src/svg/education.svg" },
+  { name: "Animal", image: "/src/svg/animal.svg" },
+  { name: "Faith", image: "/src/svg/cloud.svg" },
+  { name: "Family", image: "/src/svg/family.svg" },
+  { name: "Environment", image: "/src/svg/environment.svg" },
+  { name: "Community", image: "/src/svg/community.svg" },
 ];
 
 const stories = [
@@ -56,7 +59,7 @@ From the bottom of our hearts, thank you.
             { name: "Christopher Youngman", amount: "25", rank: "Recent donation", time: "50 mins" },
           ],
           others: [
-            
+
           ]
         }
       },
@@ -94,7 +97,7 @@ From the bottom of my heart, thank you.
         }
       },
       {
-        images: ["/src/images/medical/03/IMG-20250807-WA0070.jpg", "/src/images/medical/03/IMG-20250807-WA0065.jpg", "/src/images/medical/03/IMG-20250807-WA0065.jpg", "/src/images/medical/03/IMG-20250807-WA0071.jpg", "/src/images/medical/03/IMG-20250807-WA0073.jpg" ], location: "Goochland, VA", title: "Support Parker Forcke's Fight Against Stage 4 Colon Cancer", target: "40K", raised: "35,483", donations: "332",
+        images: ["/src/images/medical/03/IMG-20250807-WA0070.jpg", "/src/images/medical/03/IMG-20250807-WA0065.jpg", "/src/images/medical/03/IMG-20250807-WA0065.jpg", "/src/images/medical/03/IMG-20250807-WA0071.jpg", "/src/images/medical/03/IMG-20250807-WA0073.jpg"], location: "Goochland, VA", title: "Support Parker Forcke's Fight Against Stage 4 Colon Cancer", target: "40K", raised: "35,483", donations: "332",
         percentage: "89%", description: `On June 18th, our lives were turned upside down. My 23-year-old son, Parker Forcke, was diagnosed with Stage 4 colon cancer. It has metastasized to his liver, lymph nodes, and 3 of his bones. He has a huge fight ahead of him. We never thought in a million years that we would ever have to ask for help. It has truly humbled us.
 
 We don’t know what the future holds, but we know one thing: Parker is going to fight like hell. He is a believer, and he knows that God has him no matter what. Anyone who knows him knows he is one amazing human being. He has been through a lot in his short life. His father passed unexpectedly when he was only 4 years old. He grew up always wanting to take care of me and his little sister. He has grown into such a wonderful young man. Parker is a hard worker; he is kind, compassionate, and would give the shirt off his back to anyone in need.
@@ -277,44 +280,21 @@ If you’re unable to donate, please consider sharing this page and keeping Bris
           ]
         }
       },
-     
+
     ]
   },
 ];
 
 function handleAudio(lang) {
-    const audioMessage = document.querySelector('.banner .message audio#audio-message');
+  const audioMessage = document.querySelector('.banner .message audio#audio-message');
 
-    audioMessage.src = audioSrc.session[lang] || "/src/audio/donation-audio.mp3";
+  audioMessage.src = audioSrc.session[lang] || "/src/audio/donation-audio.mp3";
 
-    const listenBTN = document.querySelector(".banner .message button#play");
+  const listenBTN = document.querySelector(".banner .message button#play");
 
-    if (listenBTN && audioMessage) {
-        listenBTN.addEventListener('click', () => {
-            if (!audioMessage.paused) {
-                listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-                audioMessage.pause();
-            } else {
-                listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-                audioMessage.play();
-            }
-        });
-    }
-
-    audioMessage.addEventListener("ended", () => {
+  if (listenBTN && audioMessage) {
+    listenBTN.addEventListener('click', () => {
+      if (!audioMessage.paused) {
         listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -327,50 +307,106 @@ function handleAudio(lang) {
                     d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
                   />
                 </svg>`;
+        audioMessage.pause();
+      } else {
+        listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+        audioMessage.play();
+      }
     });
+  }
+
+  audioMessage.addEventListener("ended", () => {
+    listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+  });
+}
+
+function handlePercentage(percent) {
+  const circle = document.querySelector("div.percentage-div");
+  const bar = document.querySelector(".percentage-div circle.progress-bar");
+  const text = document.querySelector(".percentage-div .percentage");
+
+  //::::
+  const dashOffset = 283 - (percent / 100) * 283;
+
+  bar.style.strokeDashoffset = dashOffset;
+  text.textContent = `${percent}%`;
 }
 
 function renderCategory() {
-    const categoryFlex = document.querySelector(".category .category-flex");
+  const categoryFlex = document.querySelector(".category .category-flex");
 
-    if (!categoryFlex) return;
-    
-    categoryFlex.innerHTML = "";
-    
-    categories.forEach(div => {
-        const cartegory = document.createElement("div");
-        cartegory.classList.add("category-div");
-        cartegory.dataset.id = div.name;
-        
-        cartegory.innerHTML = `
+  if (!categoryFlex) return;
+
+  categoryFlex.innerHTML = "";
+
+  categories.forEach(div => {
+    const cartegory = document.createElement("div");
+    cartegory.classList.add("category-div");
+    cartegory.dataset.id = div.name;
+
+    cartegory.innerHTML = `
             <div class="category-image"><img src="${div.image}"  alt="${div.image}"></div>
 
             <p class="category-name">${div.name}</p>
        `
-        
-        categoryFlex.appendChild(cartegory);
-    });
+
+    categoryFlex.appendChild(cartegory);
+  });
 }
 
-function handleStories() {
+function handleStoryClick(e) {
+  const storyType = e.target.closest(".story-category").dataset.id;
+  const storyTitle = e.target.closest(".story").querySelector(".story-info .story-title").textContent;
+
+  const type = stories.find(cart => {
+    const found = cart.name = storyType;
+    console.log(found);
+    return found;
+  });
+
+  const story = type.stories.find(story => {
+    const found = story.title == storyTitle;
+
+    console.log(found);
+    return found;
+  });
+
+  pageState.clickedDonation = story;
+  console.log(story);
+}
+
+function renderStories() {
   const storiesSection = document.querySelector("section.stories");
 
   storiesSection.innerHTML = "";
-  
+
   stories.forEach(category => {
     const title = `${category.name} Fundraisers`;
     const preview = category.stories.slice(0, 3);
 
     const parent = document.createElement("div");
     parent.classList.add("story-category");
-
+    parent.dataset.id = category.name;
 
     parent.innerHTML = `
                 <h2 class="story-category-title">${title}</h2>
 
                 <div class="stories">
-${ preview.map(el => {
-        const story = `<div class="story">
+${preview.map(el => {
+      const story = `<div class="story">
                         <div class="story-image"><img src="${el.images[0] || "/src/images/logo.jpg"}" alt=""></div>
 
                         <div class="story-info">
@@ -383,24 +419,31 @@ ${ preview.map(el => {
                             <p class="story-amount-raised">$${el.raised} raised</p>
                         </div>
                     </div>`
-        return story;
-}).join("")
-}
+      return story;
+    }).join("")
+      }
                 </div>
 
                 <button class="see-more" title="See More">See more   ></button>
             </div>`;
-    
-    storiesSection.appendChild(parent)
+
+    storiesSection.appendChild(parent);
+    document.querySelectorAll(".story").forEach(story => {
+      story.addEventListener("click", (e) => {
+        handleStoryClick(e);
+      })
+    })
   })
 
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const language = navigator.language;
-    const lang = language.toLowerCase().substring(0, 2);
+  const language = navigator.language;
+  const lang = language.toLowerCase().substring(0, 2);
 
-    handleAudio(lang);
+  handlePercentage(80);
+  handleAudio(lang);
   renderCategory();
-  handleStories();
+  renderStories();
+  // pageState({ "me": 123 });
 });
