@@ -431,7 +431,7 @@ function handleAlert(message) {
 
     text.textContent = "";
     parent.style.display = "none";
-  }, 2000);
+  }, 6000);
 }
 
 function renderCategory() {
