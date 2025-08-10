@@ -210,6 +210,8 @@ section.category {
     width: 60%;
     place-self: center;
     height: 60%;
+color:var(--link);
+fill:var(--link);
 }
 
 .category .category-div p {
