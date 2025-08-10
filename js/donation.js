@@ -518,7 +518,7 @@ ${preview.map(el => {
                                 <div class="meter" style="width:${el.percentage}"></div>
                             </div>
 
-                            <p class="story-amount-raised">£${el.raised} raised</p>
+                            <p class="story-amount-raised">€${el.raised} raised</p>
                         </div>
                     </div>`
       return story;
@@ -558,7 +558,7 @@ function viewDonation(donation) {
 
         <div class="donation-details">
             <div class="left">
-                <p class="goal">£${donation.target} goal</p> &diams; <p class="donations">${donation.donations} donations</p>
+                <p class="goal">€${donation.target} goal</p> &diams; <p class="donations">${donation.donations} donations</p>
             </div>
 
             <div class="percentage-div">
