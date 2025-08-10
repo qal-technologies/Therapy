@@ -368,7 +368,7 @@ section.stories {
 
 .story .story-info .wrapper .meter {
     width: 60%;
-    background: linear-gradient(90deg, var(--accentTrans), var(--link));
+    background: linear-gradient(90deg, var(--highlight), var(--link));
     height: 100%;
     border-radius: 100px;
     /* background-size: 200% 100%; */
