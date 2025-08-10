@@ -658,7 +658,7 @@ section.donation-viewer {
     width: auto;
     padding: 4px;
     padding-inline: 8px;
-    background-color: var(--accent);
+    background-color: var(--accentTrans);
     border: 1px solid var(--link);
     display: flex;
     flex-direction: row;
