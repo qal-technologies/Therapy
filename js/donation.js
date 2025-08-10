@@ -599,11 +599,11 @@ function viewDonation(donation) {
             <div class="add-reaction"><img src="/src/svg/Heart-Plus.svg" alt="add-reaction svg"/></div>
 
             <div class="reaction-emoji">
-                <span class="hand">0</span>
-                <span class="heart">1</span>
-                <span class="love-green">2</span>
-                <span class="flower">3</span>
-                <span class="clap">4</span>
+                <span class="hand">🙏</span>
+                <span class="heart">❤️</span>
+                <span class="love-green">💚</span>
+                <span class="flower">🌹</span>
+                <span class="clap">👏</span>
                 <p class="react-numbers">31</p>
             </div>
         </div>
