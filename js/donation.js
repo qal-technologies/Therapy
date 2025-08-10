@@ -640,7 +640,7 @@ function viewDonation(donation) {
 
   const percent = Math.min(100, Math.max(0, number));
   //::::
-  const dashOffset = circumference - (percent / 100) * circumference - 20;
+  const dashOffset = circumference - (percent / 100) * circumference;
 
   bar.style.strokeDashoffset = dashOffset;
   text.textContent = `${percent}%`;
