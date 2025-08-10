@@ -407,7 +407,7 @@ section.stories {
     min-width: 60px;
     max-width: 160px;
     background: none;
-    border: 1px solid #afafaf;
+    border: 1px solid var(--accentTrans);
     border-radius: 50px;
     padding: 8px;
     color: black;
@@ -458,7 +458,7 @@ section.donation-viewer {
     right: 20px;
     display: flex;
     align-items: center;
-    background-color: rgba(245, 255, 241, 0.6);
+    background-color: var(--accent);
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -466,8 +466,8 @@ section.donation-viewer {
     justify-content: center;
     font-size: 1.8em;
     backdrop-filter: blur(20px);
-    box-shadow: 0px 0px 14px rgba(96, 156, 0, 0.3), 0px 0px 20px rgba(210, 255, 137, 0.4);
-    fill: #01bd07;
+    box-shadow: 0px 0px 12px var(--accentTrans), 0px 0px 20px var(--primaryTrans);
+    fill: var(--link);
     z-index: 999999;
     cursor: pointer;
 }
@@ -504,7 +504,7 @@ section.donation-viewer {
     padding: 20px;
     padding-inline-end: 10px;
     text-align: left;
-    border: 1px solid #dcdc;
+    border: 1px solid var(--accentTrans);
     border-radius: 20px;
     display: flex;
     flex-direction: row;
@@ -516,14 +516,14 @@ section.donation-viewer {
 
 .donation-details .left {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     color: grey;
     align-items: center;
 }
 
 .donation-details .left p {
     color: rgb(158, 151, 151);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-family: PoppinsMed;
 }
 
@@ -543,7 +543,7 @@ section.donation-viewer {
 
 .percentage-div svg .progress-bg {
     fill: none;
-    stroke: rgb(193, 255, 123);
+    stroke: var(--accentTrans);
     stroke-width: 10;
     backdrop-filter: blur(10px);
 }
@@ -551,7 +551,7 @@ section.donation-viewer {
 .percentage-div .progress-bar {
     fill: none;
     stroke-width: 10;
-    stroke: #01bd07;
+    stroke: var(--link);
     stroke-linecap: round;
     transition: stroke-dashoffset 0.5s ease-out;
 }
@@ -600,13 +600,13 @@ section.donation-viewer {
 }
 
 .donation-buttons button.share {
-    color: rgb(136, 255, 0);
-    background: rgb(0, 75, 0);
+    color: var(--accent);
+    background: var(--link);
 }
 
 .donation-buttons button.donate {
-    color: rgb(0, 75, 0);
-    background: rgb(136, 255, 0);
+    color: var(--link);
+    background: var(--accent);
 }
 
 .organizer {
