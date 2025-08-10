@@ -457,7 +457,8 @@ function renderCategory() {
       if (category.dataset.id === "Memorial" || category.dataset.id == "Medical") {
         return;
       } else {
-        handleAlert(``);
+        handleAlert(`This category is empty for now,because lives here have already been touched and transformed. ❤️
+Every need in this section has been fully met thanks to the kindness of people like you. Smiles have replaced tears, and hope has returned to homes that once felt empty. But life never stops needing love. New stories will appear soon,and your heart could be the first to answer them. Please check back later, and be ready to make that difference.`);
       }
     })
   });
