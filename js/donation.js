@@ -34,19 +34,36 @@ const stories = [
       {
         images: [`${BASE_PATHS.images}/medical/01/IMG-20250807-WA0054.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0055.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0056.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0057.jpg`, `${BASE_PATHS.images}/medical/01/IMG-20250807-WA0058.jpg`], location: `Tallahassee, FL`, title: `Being Weezy Ain't Easy - Help Jessie Get New Lungs`, target: `50K`, raised: `233,563`, donations: `7.7K`,
         percentage: `99%`, description: `My name is Joshua Blood, and I’m reaching out to ask for support for my incredible wife, Jessie. Jessie has been diagnosed with Interstitial Lung Disease, caused by Mixed Connective Tissue Disease, a rare and aggressive condition that continues to destroy her lungs even with treatment. Despite her strength and determination, her lung function has dropped below 45%, and doctors have confirmed that she will need a double lung transplant within the next year to survive.
+<br/>
+<br/>
 
 Jessie is a devoted mother to our 8-year-old daughter, and a loving stepmom to our 12 and 14-year-old children. Without this transplant, she may never get to see them graduate, go to prom, or walk down the aisle. We are fighting with everything we have to give her that chance.
+<br/>
+<br/>
 
 A transplant is just the beginning of a long and demanding recovery journey. Jessie and I will need to relocate near the Mayo Clinic for 3 to 4 months after surgery for intensive follow-up care, physical therapy, and constant medical monitoring. During this time:
+<br/>
+
 • Jessie will be unable to work, and we will lose a major portion of our household income.
+<br/>
+
 • We will still be responsible for our regular household bills back home.
+<br/>
 • We will face costs for temporary housing, medications, fuel, childcare, and co-pays for frequent medical appointments.
+<br/>
+<br/>
 
 We humbly ask for your support in this fight. Every donation—no matter the size—will help us breathe a little easier and focus on what truly matters: giving Jessie a future.
+<br/>
+<br/>
 
 If you’re unable to give, please share our story. Your kindness and prayers mean more than we can express.
+<br/>
+<br/>
 
 From the bottom of our hearts, thank you.
+<br/>
+<br/>
 
 — Josh, Jessie & family`, organizer: `Josh Blood`, just: {
           number: 74,
@@ -71,16 +88,27 @@ From the bottom of our hearts, thank you.
       {
         images: [`${BASE_PATHS.images}/medical/02/IMG-20250807-WA0066.jpg`, `${BASE_PATHS.images}/medical/02/IMG-20250807-WA0067.jpg`, `${BASE_PATHS.images}/medical/02/IMG-20250807-WA0068.jpg`, `${BASE_PATHS.images}/medical/02/IMG-20250807-WA0072.jpg`], location: `Monoroeville, PA`, title: `Support Tracey's Fight Against Severe Illness`, target: `25K`, raised: `24,086`, donations: `314`,
         percentage: `96%`, description: `My name is Mike, and I’m starting this fundraiser for my wife, Tracey.
+<br/>
+<br/>
 
 Just a few weeks ago, we were living our normal life—raising our kids, working, doing what families do. Then, everything changed. Tracey became seriously ill and was hospitalized. What started as a suspected neurological issue quickly escalated into a life-threatening medical crisis.
-
+<br/>
+<br/>
 She is now in the ICU, receiving treatment for a rare condition called transverse myelitis, and most recently severe complications affecting her heart—including myocarditis. She is on IV medications, a dopamine drip, and potentially life-saving immunosuppressants.
+<br/>
+<br/>
 
 We are trying to stay hopeful, but we are also preparing for the long road ahead. Whether she stays in the hospital for weeks or comes home needing in-home care or rehabilitation and we’re just getting started.
+<br/>
+<br/>
 
 I never thought I’d be doing something like this I’m trying to keep as much pride as possible, but we will need help. If you feel moved to support us—whether it’s $5 or simply by sharing this page—we are so grateful. Your help allows me to focus on my wife and our children during the most difficult time of our lives.
-
+<br/>
+<br/>
 From the bottom of my heart, thank you.
+
+<br/>
+
 —Mike`, organizer: `Mike Warywoda`, just: {
           number: 91,
           top: [
@@ -102,16 +130,26 @@ From the bottom of my heart, thank you.
         }
       },
       {
-        images: [`${BASE_PATHS.images}/medical/03/IMG-20250807-WA0070.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0065.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0065.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0071.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0073.jpg`], location: `Goochland, VA`, title: `Support Parker Forcke's Fight Against Stage 4 Colon Cancer`, target: `40K`, raised: `35,483`, donations: `332`,
-        percentage: `89%`, description: `On June 18th, our lives were turned upside down. My 23-year-old son, Parker Forcke, was diagnosed with Stage 4 colon cancer. It has metastasized to his liver, lymph nodes, and 3 of his bones. He has a huge fight ahead of him. We never thought in a million years that we would ever have to ask for help. It has truly humbled us.
+        images: [`${BASE_PATHS.images}/medical/03/IMG-20250807-WA0070.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0065.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0071.jpg`, `${BASE_PATHS.images}/medical/03/IMG-20250807-WA0073.jpg`], location: `Goochland, VA`, title: `Support Parker Forcke's Fight Against Stage 4 Colon Cancer`, target: `40K`, raised: `35,483`, donations: `332`,
+        percentage: `89%`, description: `On June 18th, our lives were turned upside down. My 23-year-old son, <b>Parker Forcke</b>, was diagnosed with Stage 4 colon cancer. It has metastasized to his liver, lymph nodes, and 3 of his bones. He has a huge fight ahead of him. We never thought in a million years that we would ever have to ask for help. It has truly humbled us.
+<br/>
 
 We don’t know what the future holds, but we know one thing: Parker is going to fight like hell. He is a believer, and he knows that God has him no matter what. Anyone who knows him knows he is one amazing human being. He has been through a lot in his short life. His father passed unexpectedly when he was only 4 years old. He grew up always wanting to take care of me and his little sister. He has grown into such a wonderful young man. Parker is a hard worker; he is kind, compassionate, and would give the shirt off his back to anyone in need.
+<br/>
+<br/>
 
 We know there will be expenses that we cannot afford. Cancer treatments are incredibly expensive, involving chemotherapy, targeted therapy, surgeries, immunotherapy, and more. My insurance is not the greatest, so this fund will help us to pay for things that are not covered, copays, high deductibles, and medication expenses. He has already made one trip to New York City to meet with a top colon cancer doctor from Cornell University, who has agreed to take Parker on. Flights for us, hotel rooms, meals, etc., will add up quickly. We are hoping his treatments and scans will continue to be performed locally by another center that the Cornell doctor has agreed to work with. At this time, we believe anything surgical will be performed in New York. We are working through the details of what will be covered in-network and what won’t. The important thing is for my son to get the best possible care we can find, no matter the cost.
+<br/>
 
 As most of you know, Parker is a successful business owner of Forcke Enterprises. Landscaping and Property Management is his passion. He takes his work very seriously and, with the help of his team, he plans to keep things operating throughout his journey. Please continue to reach out to him for your property service needs, which will also help to support him and his team while he is battling this.
+<br/>
+<br/>
 
-We truly believe that Parker will beat this thing. God has something greater planned for him. He is going to have one heck of a testimony to share with others when this is over. If you are able to help with this fundraiser, we will be forever grateful. If not, that’s okay too. We just ask that everyone please keep him, his girlfriend Rylee, and our family in your prayers during the biggest fight of his life… and please share this with anyone and everyone you know. May God bless you and your family with good health, as I hope and pray that none of you are ever faced with this horrible disease. Thank you.`, organizer: `Stacey Forcke`, just: {
+We truly believe that Parker will beat this thing. God has something greater planned for him. He is going to have one heck of a testimony to share with others when this is over. If you are able to help with this fundraiser, we will be forever grateful. If not, that’s okay too. We just ask that everyone please keep him, his girlfriend Rylee, and our family in your prayers during the biggest fight of his life… and please share this with anyone and everyone you know.
+<br/>
+<br/>
+
+May God bless you and your family with good health, as I hope and pray that none of you are ever faced with this horrible disease. Thank you.`, organizer: `Stacey Forcke`, just: {
           number: 178,
           top: [
             { name: `Elizabeth Ann Kuhns-Boyle`, amount: `200`, rank: `First donation`, time: `16 mins` },
@@ -134,15 +172,25 @@ We truly believe that Parker will beat this thing. God has something greater pla
       {
         images: [`${BASE_PATHS.images}/medical/04/IMG-20250807-WA0076.jpg`, `${BASE_PATHS.images}/medical/04/IMG-20250807-WA0077.jpg`, `${BASE_PATHS.images}/medical/04/IMG-20250807-WA0078.jpg`], location: `New York, NY`, title: `Support Sheila Jordan's Hospice Care`, target: `120K`, raised: `118,147`, donations: `1.1K`,
         percentage: `98%`, description: `Dear Friends, Jazz Family & Colleagues,
-As you may have heard, my mom, NEA Jazzmaster Sheila Jordan, is not doing well. She is no longer at the Actors Fund Nursing Home, where she received 100 days of excellent round-the-clock care. It truly is a wonderful organization. She is now at home under hospice care through her Medicare coverage. Unfortunately, Medicare only provides 10 hours of Home Hospice Care Aide services per week. Per WEEK!
+As you may have heard, my mom, <b>NEA Jazzmaster Sheila Jordan</b>, is not doing well. She is no longer at the Actors Fund Nursing Home, where she received 100 days of excellent round-the-clock care. It truly is a wonderful organization. She is now at home under hospice care through her Medicare coverage. Unfortunately, Medicare only provides 10 hours of Home Hospice Care Aide services per week. Per WEEK!
+<br/>
+<br/>
 
 As a result, we have been paying out of pocket for a private Home Care Aide to come during the day for a few hours, and I've been spending the remainder of the time nursing my mom since July 7th. The emotional toll of watching my mom's health decline is immense, and I'm physically and emotionally exhausted while being financially drained.
+<br/>
+<br/>
+<br/>
 
 A few of my mom’s friends have been incredibly supportive, either by donating funds or offering to spend a few nights or afternoons with her, or both. I am deeply grateful for these recent donations. But unfortunately, it’s not enough.
-
+<br/>
+<br/>
 The healthcare system in our country is broken. Medicare limits her health-care coverage and doesn’t come close to covering our expenses.
+<br/>
+<br/>
 
 My mom is a living bridge to the great musicians who created Bebop and beyond, and she has treated her legacy with deep respect and generously passed on her transformative message to thousands of grateful people.
+<br/>
+<br/>
 
 At this point in her long and full life, she now needs us to show her our love. Your support could make a significant difference in my mom's life, ensuring she receives the best care possible. Thank you in advance for your time and consideration.`, organizer: `Tracy Jordan`, just: {
           number: 0,
@@ -170,8 +218,10 @@ At this point in her long and full life, she now needs us to show her our love. 
     name: `Memorial`,
     stories: [
       {
-        images: [`${BASE_PATHS.images}/logo.jpg`,], location: `Honey Hill Mobile Home Park, FL`, title: `Honor Grandma Madie's Legacy and Wishes`, target: `24K`, raised: `20,345`, donations: `625`,
+        images: [`${BASE_PATHS.images}/memory/01/IMG-20250808-WA0026.jpg`, `${BASE_PATHS.images}/memory/01/IMG-20250808-WA0025.jpg`,], location: `Honey Hill Mobile Home Park, FL`, title: `Honor Grandma Madie's Legacy and Wishes`, target: `24K`, raised: `20,345`, donations: `625`,
         percentage: `85%`, description: `I am Shanika, the granddaughter of 107-year-old Madie. Many of you may know her as Grandma Madie, a very well-known social media sensation. She has gone viral in several videos on TikTok, Facebook, and Instagram. Madie was born in December of 1917. Yes! That would make her 107, and if it’s God’s will, in December she will be 108. Madie was a woman who worked all her life and retired at the age of 85. She loved working. My grandma had one child who preceded her in death many, many years ago. That left her to raise me and my three brothers by herself. She did this without a complaint, and she was 76 years old starting all over again. That didn’t stop her from showing us love and support until we were able to do for ourselves.
+<br/>
+<br/>
 
 However, within the last week, Madie has been facing some health challenges. She has been in and out of the hospital, which has now led her to be in hospice care at home 24/7. As her health has now been on the decline, I want to start preparing for her transition. Madie has insurance, but unfortunately, it’s not enough to fulfill her wishes of getting her back home to Vidalia, GA, where she was born, to be buried next to her mother, whom she loved so much. I am praying that the Lord touches the hearts of the people who genuinely loved my grandma to help her fulfill her wishes.`, organizer: `Shanika Bradshaw`, just: {
           number: 299,
@@ -197,18 +247,30 @@ However, within the last week, Madie has been facing some health challenges. She
         images: [`${BASE_PATHS.images}/memory/02/IMG-20250807-WA0085.jpg`, `${BASE_PATHS.images}/memory/02/IMG-20250807-WA0084.jpg`, `${BASE_PATHS.images}/memory/02/IMG-20250807-WA0083.jpg`, `${BASE_PATHS.images}/memory/02/IMG-20250807-WA0086.jpg`], location: `Santa Ana, CA`, title: `In Memory of Leticia Placencia Alvarado: Funeral Fund`, target: `24K`, raised: `13,062`, donations: `290`,
         percentage: `54%`, description: `Hello Everyone,
 
+<br/>
 
 It is with heavy hearts that we share the tragic passing of our beloved Leticia Placencia Alvarado, aka Letita, a daughter, wife, cousin and friend. Letita was taken from us far too soon.
+<br/>
+<br/>
 
 On August 4th, 2025, at approximately 6:30 PM, Letita was just five minutes away from home when her vehicle was struck head-on by a grey BMW driving in the wrong lane. Tragically, she was pronounced deceased at the scene. Her sudden loss has left our family completely devastated.
+<br/>
+<br/>
 
 Letita was full of life, love, and kindness. She had a smile that could light up any room and a heart that was always ready to help others. Her sudden passing left in void that words cannot fill.
+<br/>
+<br/>
 
 We are asking for your help to cover the the funeral and memorial expenses during this incredibly difficult time. Any amount, no matter how small, will help us honor her memory and say goodbye in the way she deserves.
+<br/>
+<br/>
 
 Thank you for all your love, prayers and support.
+<br/>
+<br/>
 
 With Gratitude & Love,
+<br/>
 
 The Alvarado, Placencia, Hernandez Family.`, organizer: `Wendy Perez`, just: {
           number: 288,
@@ -231,10 +293,13 @@ The Alvarado, Placencia, Hernandez Family.`, organizer: `Wendy Perez`, just: {
       },
       {
         images: [`${BASE_PATHS.images}/memory/04/IMG-20250807-WA0093.jpg`, `${BASE_PATHS.images}/memory/04/IMG-20250807-WA0091.jpg`, `${BASE_PATHS.images}/memory/04/IMG-20250807-WA0092.jpg`], location: `Centennial, CO`, title: `In Memory of Naomi Alene: Funeral Support`, target: `65K`, raised: `56,380`, donations: `402`,
-        percentage: `87%`, description: `With heavy hearts, we mourn the passing of our beloved Naomi Alene, daughter of Ketema Alene and Solome Tsehay, and sister to Nazrawi, Nehemiah, and Nava. Naomi was a bright light: loving, full of life, and cherished by all who knew her. Though her time with us was brief, we treasure the beautiful memories we shared with her and the gift from God she was to us all.
+        percentage: `87%`, description: `With heavy hearts, we mourn the passing of our beloved <b>Naomi Alene</b>, daughter of Ketema Alene and Solome Tsehay, and sister to Nazrawi, Nehemiah, and Nava. Naomi was a bright light: loving, full of life, and cherished by all who knew her. Though her time with us was brief, we treasure the beautiful memories we shared with her and the gift from God she was to us all.
+<br/>
+<br/>
 
 We are raising funds to help cover funeral and related expenses during this difficult time. Any contribution, big or small, is deeply appreciated.
-
+<br/>
+<br/>
 May the Father of mercies and the God of all comfort be near to all who are devastated by this tragic and untimely loss.`, organizer: `Dawit Agonafer`, just: {
           number: 90,
           top: [
@@ -257,13 +322,23 @@ May the Father of mercies and the God of all comfort be near to all who are deva
       },
       {
         images: [`${BASE_PATHS.images}/memory/03/IMG-20250807-WA0089.jpg`, `${BASE_PATHS.images}/memory/03/IMG-20250807-WA0090.jpg`, `${BASE_PATHS.images}/memory/03/IMG-20250807-WA0094.jpg`], location: `Stamford, CT`, title: `Help Lay Rest 12 year old Brisley Reyes`, target: `45K`, raised: `31,698`, donations: `628`,
-        percentage: `70%`, description: `Help Lay 12-Year-Old Brisley Reyes to Rest After Tragic Accident
+        percentage: `70%`, description: `Help Lay 12-Year-Old <b>Brisley Reyes</b> to Rest After Tragic Accident
+<br/>
+<br/>
 
 It is with broken hearts that we share the devastating loss of 12-year-old Brisley Reyes, a kind and hard-working boy whose life was tragically cut short on August 2nd, 2025 after being struck by a vehicle while riding his electric bike with his dad.
+<br/>
+<br/>
+
 
 We are asking for your support to help Brisley’s grieving family with funeral and burial expenses during this unimaginable time. No parent should ever have to bury their child, and the burden of unexpected funeral costs only deepens the pain.
+<br/>
+<br/>
 
 All funds raised will go directly to Brisley’s family to cover funeral arrangements, burial costs, and support them in the days ahead as they navigate this tragic loss.
+<br/>
+<br/>
+<br/>
 
 If you’re unable to donate, please consider sharing this page and keeping Brisley’s family in your prayers.`, organizer: `Olga Reyes Gramajo and BRISLY REYES`, just: {
           number: 244,
@@ -338,6 +413,27 @@ function handleAudio(lang) {
   });
 }
 
+let timer;
+function handleAlert(message) {
+  const parent = document.querySelector(".alert-message");
+  const text = document.querySelector(".alert-message .alert-text");
+
+  clearTimeout(timer);
+
+  const contains = parent.classList.contains("fadeOut");
+  contains && parent.classList.remove("fadeOut");
+
+  parent.style.display = "flex";
+  text.textContent = message;
+
+  timer = setTimeout(() => {
+    parent.classList.add("fadeOut");
+
+    text.textContent = "";
+    parent.style.display = "none";
+  }, 2000);
+}
+
 function renderCategory() {
   const categoryFlex = document.querySelector(".category .category-flex");
 
@@ -357,6 +453,13 @@ function renderCategory() {
        `
 
     categoryFlex.appendChild(category);
+    category.addEventListener("click", (e) => {
+      if (category.dataset.id === "Memorial" || category.dataset.id == "Medical") {
+        return;
+      } else {
+        handleAlert(``);
+      }
+    })
   });
 }
 
@@ -442,7 +545,9 @@ function viewDonation(donation) {
 
   modal.innerHTML = `
     <div class="container">
-    <span class="cancel">X</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="cancel" viewBox="0 0 16 16">
+  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"></path>
+</svg>
 
         <div class="image">
             <img src="${donation.images[0]}" alt="">
@@ -470,25 +575,27 @@ function viewDonation(donation) {
         </div>
 
         <div class="organizer">
-            <div class="user-svg">))</div>
+            <div class="user-svg"><img src="/src/svg/person.svg" alt="user svg"/></div>
 
             <p class="organizer-name">${donation.organizer} ${donation.organizer.includes(" and ") ? "are" : "is"} organizing this fundraiser</p>
         </div>
 
         <div class="tag">
             <div class="inner">
-                <div class="icon">))</div>
+                <div class="icon"><img src="/src/svg/shield2.png" alt="donation-protection svg"/></div>
                 <p class="tag-text">Donation protected</p>
             </div>
         </div>
 
         <div class="donation-description">
             <p class="description-text">${donation.description}</p>
+             <div class="read-more-div">
             <button class="read-more">Read more</button>
+            </div>
         </div>
 
         <div class="reactions">
-            <div class="add-reaction"></div>
+            <div class="add-reaction"><img src="/src/svg/Heart-Plus.svg" alt="add-reaction svg"/></div>
 
             <div class="reaction-emoji">
                 <span class="hand">0</span>
@@ -503,22 +610,55 @@ function viewDonation(donation) {
         <div class="gallery">
             ${donation.images.map(image => {
     return `<img src="${image}" alt="${donation.title}">`
-  })}
+            }).join("")}
         </div>
     </div>`;
 
   document.body.appendChild(modal);
+
+  //for closing the donation viewer:
+  let timer;
+  document.querySelector(".container .cancel").addEventListener("click", () => {
+    modal.classList.toggle("fadeOut");
+
+    timer = setTimeout(() => {
+      modal.remove();
+    }, 1000);
+  });
+
+  //for donation percentage:
   const circle = document.querySelector("div.percentage-div");
   const bar = document.querySelector(".percentage-div circle.progress-bar");
   const text = document.querySelector(".percentage-div .percentage");
+  const r = 35;
+  const circumference = 2 * Math.PI * r;
+  bar.style.strokeDasharray = circumference;
+  bar.style.strokeDashoffset = circumference
 
-  const percent = parseInt(donation.percentage.slice(0, 2));
+  const number = parseInt(donation.percentage.slice(0, 2));
+
+  const percent = Math.min(100, Math.max(0, number));
   //::::
-  const dashOffset = 283 - (percent / 100) * 283;
+  const dashOffset = circumference - (percent / 100) * circumference - 10;
 
   bar.style.strokeDashoffset = dashOffset;
   text.textContent = `${percent}%`;
-  console.log(percent)
+
+
+  //for reading more info:
+  document.querySelector("button.read-more").addEventListener("click", (e) => {
+    const des = modal.querySelector("p.description-text");
+
+    const viewing = des.style.maxHeight == "max-content";
+
+    if (!viewing) {
+      des.style.maxHeight = "max-content";
+      e.target.textContent = "Read Less"
+    } else {
+      des.style.maxHeight = "250px";
+      e.target.textContent = "Read More";
+    }
+  })
 };
 
 document.addEventListener('DOMContentLoaded', () => {

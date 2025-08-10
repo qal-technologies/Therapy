@@ -1,13 +1,3 @@
-// Global State Management (localStorage)
-const State = {
-  get paidFeatures() {
-    return JSON.parse(localStorage.getItem('paidFeatures')) || [];
-  },
-  set paidFeatures(items) {
-    localStorage.setItem('paidFeatures', JSON.stringify(items));
-  }
-};
-
 //Audio source:
 const audioSrc = {
   session: {
@@ -80,81 +70,121 @@ A book that speaks to every woman you have been,and every woman you are becoming
 Half of her is young, glowing, full of dreams.
 The other half carries years, stories, and scars.
 
+<br/>
 She is you.
 All of you 
 the girl you once were,
 the woman you are now,
 and the one you are still becoming.
+<br/>
+<br/>
 
 The Moment This Book Was Born
-
+<br/>
 I began writing this book on a night when I sat alone on my kitchen floor, holding a cup of cold tea I’d forgotten to drink. I had been strong for everyone else,again,and no one noticed I was crumbling inside.
-
+<br/>
 That night, I promised myself: If I ever find the way back to myself, I will leave a map for other women.
-
+<br/>
 This book is that map.
-
+<br/>
 This Is Not Just a Book
+<br/>
 
 It is a companion for your soul,through heartbreak, through silence, through the nights you’ve forgotten how to breathe.
+<br/>
+<br/>
 
 It was written for:
-
+<br/>
 The woman who holds everyone else together, but has no one to hold her.
 Therapists in Paris, Milan, and Rome call this emotional overfunctioning,giving without replenishment. You fear that if you let go, everything will collapse. And yet you quietly wonder: If I disappeared, would anyone notice?
+<br/>
+<br/>
 
 The woman who has loved until she is empty and been left with nothing.
 This is affective exhaustion,pouring out love until there is nothing left for you. You’ve mistaken self-erasure for devotion, and when they left, all that remained was the echo of your own absence.
 
+<br/>
+<br/>
 
 The woman who hides her pain behind a perfect smile.
 In France, it’s la façade impeccable. In Italy, il sorriso di resistenza. You’ve mastered the art of looking fine while storms rage inside. But the armor is heavy, and you long for someone who loves the woman without the smile.
+<br/>
 
 The woman who feels time slipping through her fingers.
 Therapists call it temporal anxiety,the fear that the “right time” for love, children, career, or adventure has already passed. The years slip like sand through your hands, and you whisper in the dark: Did I live, or did I just wait?
 
-
+<br/>
+<br/>
 Inside These 412 Pages, You Will:
+<br/>
 
-> Meet yourself again,before the disappointments, before the doubt.
+> Meet yourself again, before the disappointments, before the doubt.
+<br/>
 
 > Heal wounds you didn’t even know you still carried.
+<br/>
 
 > Release the guilt, the shame, and the voices that told you you weren’t enough.
+<br/>
 
 > Reclaim your softness without losing your strength.
+<br/>
 
 > Finally understand why you have felt lost,and exactly how to come home to yourself.
 
+<br/>
+<br/>
 
 Every word is written like a hand reaching for yours in the dark.
 Every chapter is a mirror, showing you your fragility and your power.
 Every page is proof that someone finally, truly sees you.
 
+<br/>
+<br/>
+<br/>
 
 💬 Women are saying:
+<br/>
 
 > “The book I didn’t know I was waiting for my whole life.”
-> “It saved me without trying to fix me.”
-> “I bought one for myself,then six more for every woman I love.”
+<br/>
 
+> “It saved me without trying to fix me.”
+<br/>
+
+> “I bought one for myself,then six more for every woman I love.”
+<br/>
+
+<br/>
+<br/>
 
 Why You Can’t Walk Away Without It
+<br/>
 
 If you leave this page without this book, life will go on,but you will keep carrying the weight you were never meant to bear alone.
+<br/>
 
 This is your mirror.
 Your healing.
 Your reminder that you were never broken,only buried under the years.
+<br/>
 
 Compagnon Féminin will not just sit on your shelf.
 It will live on your nightstand, travel in your bag, and rest in your hands on the days you feel like disappearing.
+<br/>
 
 It is more than a book.
-It is the voice you needed when you thought you had no one.
+<br/>
 
+It is the voice you needed when you thought you had no one.
+<br/>
+<br/>
+<br/>
 
 🌹 Click “Add to cart.”
+<br/>
+
 She has been waiting for you.`,
     image: "/src/images/book1.jpg",
     quantity: 1,
