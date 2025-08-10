@@ -70,12 +70,92 @@ function handleAudio(lang) {
 const BOOK_COLLECTION = [
   {
     id: 'book-1',
-    title: "THE BEAUTY OF LIVES",
+    title: "COMPAGNON FÉMININ",
     downloads: "5000+ Downloads",
     formats: ["eBook", "Hardcopy"],
     price: "20.00",
     status: "Sold Out",
-    description: "Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click.",
+    description: `
+A book that speaks to every woman you have been,and every woman you are becoming. You see her on the cover.
+Half of her is young, glowing, full of dreams.
+The other half carries years, stories, and scars.
+
+She is you.
+All of you 
+the girl you once were,
+the woman you are now,
+and the one you are still becoming.
+
+The Moment This Book Was Born
+
+I began writing this book on a night when I sat alone on my kitchen floor, holding a cup of cold tea I’d forgotten to drink. I had been strong for everyone else,again,and no one noticed I was crumbling inside.
+
+That night, I promised myself: If I ever find the way back to myself, I will leave a map for other women.
+
+This book is that map.
+
+This Is Not Just a Book
+
+It is a companion for your soul,through heartbreak, through silence, through the nights you’ve forgotten how to breathe.
+
+It was written for:
+
+The woman who holds everyone else together, but has no one to hold her.
+Therapists in Paris, Milan, and Rome call this emotional overfunctioning,giving without replenishment. You fear that if you let go, everything will collapse. And yet you quietly wonder: If I disappeared, would anyone notice?
+
+The woman who has loved until she is empty and been left with nothing.
+This is affective exhaustion,pouring out love until there is nothing left for you. You’ve mistaken self-erasure for devotion, and when they left, all that remained was the echo of your own absence.
+
+
+The woman who hides her pain behind a perfect smile.
+In France, it’s la façade impeccable. In Italy, il sorriso di resistenza. You’ve mastered the art of looking fine while storms rage inside. But the armor is heavy, and you long for someone who loves the woman without the smile.
+
+The woman who feels time slipping through her fingers.
+Therapists call it temporal anxiety,the fear that the “right time” for love, children, career, or adventure has already passed. The years slip like sand through your hands, and you whisper in the dark: Did I live, or did I just wait?
+
+
+Inside These 412 Pages, You Will:
+
+> Meet yourself again,before the disappointments, before the doubt.
+
+> Heal wounds you didn’t even know you still carried.
+
+> Release the guilt, the shame, and the voices that told you you weren’t enough.
+
+> Reclaim your softness without losing your strength.
+
+> Finally understand why you have felt lost,and exactly how to come home to yourself.
+
+
+Every word is written like a hand reaching for yours in the dark.
+Every chapter is a mirror, showing you your fragility and your power.
+Every page is proof that someone finally, truly sees you.
+
+
+💬 Women are saying:
+
+> “The book I didn’t know I was waiting for my whole life.”
+> “It saved me without trying to fix me.”
+> “I bought one for myself,then six more for every woman I love.”
+
+
+Why You Can’t Walk Away Without It
+
+If you leave this page without this book, life will go on,but you will keep carrying the weight you were never meant to bear alone.
+
+This is your mirror.
+Your healing.
+Your reminder that you were never broken,only buried under the years.
+
+Compagnon Féminin will not just sit on your shelf.
+It will live on your nightstand, travel in your bag, and rest in your hands on the days you feel like disappearing.
+
+It is more than a book.
+It is the voice you needed when you thought you had no one.
+
+
+🌹 Click “Add to cart.”
+She has been waiting for you.`,
     image: "/src/images/book1.jpg",
     quantity: 1,
   },
@@ -210,7 +290,7 @@ function renderBookCollection(book) {
     <div class="book-item" data-id="${book.id}">
       <img src="${book.image}" alt="${book.title}">
 <div class="book-info">
-      <h3 class="book-title">${book.title}</h3>
+      <h3 class="book-title">${book.title.toUpperCase()}</h3>
       <p class="book-author">Charlotte Casiraghi</p>
 
       <div class="book-downloads">
