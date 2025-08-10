@@ -658,13 +658,13 @@ section.donation-viewer {
     width: auto;
     padding: 4px;
     padding-inline: 8px;
-    background-color: rgb(193, 255, 123);
-    border: 1px solid rgb(30, 49, 0);
+    background-color: var(--accent);
+    border: 1px solid var(--link);
     display: flex;
     flex-direction: row;
     gap: 5px;
     border-radius: 6px;
-    color: rgb(30, 49, 0);
+    color: var(--link);
     font-family: PoppinsMed;
     align-items: center;
     justify-content: center;
@@ -687,7 +687,7 @@ section.donation-viewer {
     font-family: PoppinsMed;
     font-weight: bolder;
     font-size: 0.8rem;
-    color: rgb(30, 49, 0);
+    color: var(--link);
 }
 
 .donation-description {
@@ -721,7 +721,7 @@ z-index:999;
 .donation-description .read-more-div button {
     border: none;
     background: none;
-    font-size: 1rem;
+    font-size: 0.8rem;
     text-decoration: underline;
     text-align: left;
     cursor: pointer;
