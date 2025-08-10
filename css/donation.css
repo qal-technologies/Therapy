@@ -238,7 +238,7 @@ section.category {
 .alert-text {
     width: 92%;
     max-width: 400px;
-    text-align: center;
+    text-align: left;
     padding: 10px;
     padding-inline: 16px;
     background-color: rgba(0, 0, 0, 0.8);
