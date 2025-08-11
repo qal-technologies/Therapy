@@ -210,8 +210,8 @@ section.category {
     width: 60%;
     place-self: center;
     height: 60%;
-color:var(--link);
-fill:var(--link);
+    color: var(--link);
+    fill: var(--link);
 }
 
 .category .category-div p {
@@ -225,28 +225,72 @@ fill:var(--link);
     width: 100%;
     height: 100%;
     position: absolute;
-    pointer-events: none;
+    overflow: hidden;
+    overflow-y: auto;
     top: 0;
     left: 0;
     z-index: 9999999;
     display: none;
     flex: 1;
-    background: none;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px) brightness(80%);
     justify-content: center;
-    padding-bottom: 30vh;
-    align-items: flex-end;
+    align-items: center;
+}
+
+.alert-message .alert-div{
+    width: 92%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-top: 30px;
+    background: rgba(255, 255, 255, 0.99);
+    border-radius: 20px;
+    gap: 5px;
+}
+
+.alert-message .alert-icon svg{
+    fill: rgb(255, 100, 0);
+    width: 50px;
+    height: 50px;
+    fill-opacity: 0.6;
+}
+
+.alert-title {
+    font-weight: bolder;
+    font-family: PoppinsMed;
+    text-align: center;
+    font-size: 1.4rem;
 }
 
 .alert-text {
-    width: 92%;
-    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     text-align: left;
+    color: black;
+    font-family: PoppinsLight;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.alert-text span{
+    min-width: 100%;
+    min-height: 10px;
+}
+
+.alert-button {
+    width: 100%;
+    background-color: var(--link);
     padding: 10px;
-    padding-inline: 16px;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    color: white;
     border-radius: 20px;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
 
@@ -409,10 +453,10 @@ section.stories {
     min-width: 60px;
     max-width: 160px;
     background: none;
-    border: 1px solid var(--accentTrans);
+    border: 1px solid var(--accent);
     border-radius: 50px;
     padding: 8px;
-    color: black;
+    color: var(--link);
     font-size: 16px;
     font-family: PoppinsSemi;
     cursor: pointer;
@@ -503,8 +547,8 @@ section.donation-viewer {
 
 .container .donation-details {
     width: 100%;
-    padding: 20px;
-    padding-inline-end: 10px;
+    padding: 10px;
+    padding-inline-start: 15px;
     text-align: left;
     border: 1px solid var(--accentTrans);
     border-radius: 20px;
@@ -517,16 +561,48 @@ section.donation-viewer {
 }
 
 .donation-details .left {
+    width: auto;
     display: flex;
+    flex-direction: column;
     gap: 5px;
-    color: grey;
     align-items: center;
 }
 
-.donation-details .left p {
+.donation-details .left .upper {
+    width: 100%;
+}
+
+.left .upper p.amount-raised {
+    font-size: 1.5rem;
+    color: black;
+    font-family: PoppinsSemi;
+    font-weight: bolder;
+}
+
+.left .upper .amount-raised span.small {
+    font-size: 1.4rem;
+}
+
+.donation-details .left .lower {
+    display: flex;
+    flex-direction: row;
+    color: grey;
+    gap: 5px;
+    align-items: center;
+    margin-top: -6px;
+    justify-content: flex-start;
+}
+
+
+.donation-details .left .lower p {
     color: rgb(158, 151, 151);
-    font-size: 0.85rem;
-    font-family: PoppinsMed;
+    font-size: 0.8rem;
+    font-family: PoppinsLight;
+    font-weight: bold;
+}
+
+.left .lower p.goal {
+    text-decoration: underline;
 }
 
 .donation-details .percentage-div {
@@ -545,7 +621,7 @@ section.donation-viewer {
 
 .percentage-div svg .progress-bg {
     fill: none;
-    stroke: var(--accentTrans);
+    stroke: #d7ffd8ad;
     stroke-width: 10;
     backdrop-filter: blur(10px);
 }
@@ -553,7 +629,7 @@ section.donation-viewer {
 .percentage-div .progress-bar {
     fill: none;
     stroke-width: 10;
-    stroke: var(--link);
+    stroke: #01bd07;
     stroke-linecap: round;
     transition: stroke-dashoffset 0.5s ease-out;
 }
@@ -601,15 +677,15 @@ section.donation-viewer {
     font-size: 1rem;
 }
 
-.donation-buttons button.share {
-    color: var(--accent);
+.donation-buttons button {
+    color: white;
     background: var(--link);
 }
 
-.donation-buttons button.donate {
+/* .donation-buttons button.donate {
     color: var(--link);
     background: var(--accent);
-}
+} */
 
 .organizer {
     width: 100%;
@@ -626,7 +702,7 @@ section.donation-viewer {
 .organizer .user-svg {
     width: 35px;
     height: 35px;
-    background-color: #f1f1f1;
+    background-color: var(--accentTrans);
     padding: 10px;
     display: flex;
     flex-direction: row;
@@ -715,16 +791,18 @@ section.donation-viewer {
     padding-top: 30px;
     position: absolute;
     bottom: 0;
-z-index:999;
+    z-index: 999;
 }
 
 .donation-description .read-more-div button {
     border: none;
     background: none;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-decoration: underline;
     text-align: left;
     cursor: pointer;
+    font-weight: bold;
+    color: var(--link);
 }
 
 .reactions {
@@ -735,9 +813,10 @@ z-index:999;
 }
 
 .reactions .add-reaction {
-    width: 40px;
-    height: 40px;
-    background-color: #f3f3f39f;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    background-color: var(--accentTrans);
     border-radius: 50%;
     display: flex;
     flex-direction: row;
@@ -763,7 +842,7 @@ z-index:999;
 .reactions .reaction-emoji span {
     width: 35px;
     height: 35px;
-    background-color: #fcfcfca9;
+    background-color: #fff6fda9;
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -60,6 +60,45 @@
   }
 }
 
+/* zoom in effect  */
+.zoom-in {
+  animation-duration: 500ms;
+  animation-name: zoomin;
+  animation-timing-function: ease;
+  animation-delay: 10ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes zoomin {
+  0% {
+    scale: 0%;
+    filter: blur(10px);
+  }
+
+  100% {
+    scale: 100%;
+    filter: blur(0px);
+  }
+
+}
+
+.zoom-out {
+  animation-duration: 500ms;
+  animation-name: zoomout;
+  animation-timing-function: ease;
+  animation-delay: 10ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes zoomout {
+  0%{
+    scale: 100%;
+  }
+  100%{
+    scale: 0%;
+  }
+}
+
 /* fade in effect for menu  */
 .menu-fadeIn {
   animation-duration: 500ms;
@@ -71,7 +110,7 @@
 
 @keyframes menu-fadein {
   0% {
-    display: block;
+    display: initial;
     opacity: 0;
     filter: blur(5px);
   }
@@ -118,15 +157,15 @@
 @keyframes fadeout {
   0% {
     opacity: 1;
-    display: block;
-    transform: translateY(0px) scale(100%);
+    display:initial;
+    /* transform: translateY(0px) scale(100%); */
     pointer-events: all;
   }
 
   100% {
     opacity: 0;
     display: none;
-    transform: translateY(10px) scale(60%);
+    /* transform: translateY(10px) scale(60%); */
     pointer-events: none;
   }
 }

@@ -416,22 +416,31 @@ function handleAudio(lang) {
 let timer;
 function handleAlert(message) {
   const parent = document.querySelector(".alert-message");
+  const div = document.querySelector(".alert-div");
   const text = document.querySelector(".alert-message .alert-text");
+  const close = document.querySelector(".alert-message .alert-button");
 
-  clearTimeout(timer);
-
-  const contains = parent.classList.contains("fadeOut");
-  contains && parent.classList.remove("fadeOut");
+  if (parent.classList.contains("fadeOut")) {
+    parent.classList.remove("fadeOut");
+    div.classList.remove("zoom-out");
+  }
 
   parent.style.display = "flex";
-  text.textContent = message;
+  text.innerHTML = message;
 
-  timer = setTimeout(() => {
-    parent.classList.add("fadeOut");
+  close.addEventListener("click", () => {
+    clearTimeout(timer);
 
-    text.textContent = "";
+    const adding = div.classList.add("zoom-out");
+
+    text.innerHTML = "";
+      parent.classList.add("fadeOut");
+
+    timer = adding && setTimeout(() => {
     parent.style.display = "none";
-  }, 6000);
+    }, 1000);
+  })
+
 }
 
 function renderCategory() {
@@ -457,8 +466,14 @@ function renderCategory() {
       if (category.dataset.id === "Memorial" || category.dataset.id == "Medical") {
         return;
       } else {
-        handleAlert(`This category is empty for now,because lives here have already been touched and transformed. ❤️
-Every need in this section has been fully met thanks to the kindness of people like you. Smiles have replaced tears, and hope has returned to homes that once felt empty. But life never stops needing love. New stories will appear soon,and your heart could be the first to answer them. Please check back later, and be ready to make that difference.`);
+        handleAlert(`The needs here have already been met, lives have been touched, and hearts have been healed thanks to the kindness of people like you 
+        <br/>
+<span></span>
+Tears have turned into smiles, and homes once heavy with worry now echo with hope. But life never stops calling for compassion. Soon, new stories will arrive - and your heart could be the first to answer them.
+<br/>
+<span></span>
+Check back soon to meet the next story you can change.
+`);
       }
     })
   });
@@ -558,7 +573,12 @@ function viewDonation(donation) {
 
         <div class="donation-details">
             <div class="left">
-                <p class="goal">€${donation.target} goal</p> &diams; <p class="donations">${donation.donations} donations</p>
+<div class="upper">
+            <p class="amount-raised">€${donation.raised} <span class="small">raised</span></p>
+            </div>
+            <div class="lower">
+               <p class="goal">€${donation.target} goal</p> &diams; <p class="donations">${donation.donations} donations</p>
+                </div>
             </div>
 
             <div class="percentage-div">
