@@ -573,14 +573,14 @@ section.donation-viewer {
 }
 
 .left .upper p.amount-raised {
-    font-size: 1.5em;
+    font-size: 16px;
     color: black;
     font-family: PoppinsSemi;
     font-weight: bolder;
 }
 
 .left .upper .amount-raised span.small {
-    font-size: 1.3em;
+    font-size: 15px;
 }
 
 .donation-details .left .lower {
@@ -596,7 +596,7 @@ section.donation-viewer {
 
 .donation-details .left .lower p {
     color: rgb(158, 151, 151);
-    font-size: 0.8rem;
+    font-size: 14px;
     font-family: PoppinsLight;
     font-weight: bold;
 }
