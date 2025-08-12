@@ -438,10 +438,10 @@ function handleAlert(message) {
     const adding = div.classList.add("zoom-out");
 
     text.innerHTML = "";
-      parent.classList.add("fadeOut");
+    parent.classList.add("fadeOut");
 
     timer = adding && setTimeout(() => {
-    parent.style.display = "none";
+      parent.style.display = "none";
     }, 1000);
   })
 
@@ -559,9 +559,32 @@ ${preview.map(el => {
 
 }
 
+function handleScroll(element) {
+  const parent = element;
+  if (!parent) return;
+
+  const container = parent.querySelector(".container");
+  container.addEventListener("scroll", () => {
+
+    const bottom = container.querySelector(".bottom-buttons");
+
+    if (bottom) {
+      const buttonDiv = container.querySelector(".donation-buttons");
+
+      const rect = buttonDiv.getBoundingClientRect();
+
+      if (rect.bottom < 0 || rect.top > window.innerHeight) {
+        bottom.style.display = "flex";
+      } else {
+        bottom.style.display = "none";
+      }
+    };
+  });
+}
+
 function viewDonation(donation) {
   const modal = document.createElement("section");
-  modal.classList.add("donation-viewer", "moveUpNfadeIn");
+  modal.classList.add("donation-viewer", "moveUp");
 
   modal.innerHTML = `
     <div class="container">
@@ -619,6 +642,7 @@ function viewDonation(donation) {
             </div>
         </div>
 
+    <div class="second-section">
         <div class="reactions">
             <div class="add-reaction"><img src="/src/svg/Heart-Plus.svg" alt="add-reaction svg"/></div>
 
@@ -635,9 +659,58 @@ function viewDonation(donation) {
         <div class="gallery">
             ${donation.images.map(image => {
     return `<img src="${image}" alt="${donation.title}">`
-            }).join("")}
+  }).join("")}
         </div>
-    </div>`;
+
+     <div class="image-buttons">
+            <button class="donate">Donate</button>
+            <button class="share">Share</button>
+        </div>
+    </div>
+    
+    <div class="donators-info">
+
+        <div class="top">
+
+            <p class="title">Donations <span class="donation-count">0</span></p>
+
+            <div class="see-top">
+            <span class="star">*</span>
+            <p class="text">See top</p>
+            </div>
+        </div>
+
+        <div class="others">
+            <div class="top">
+                <div class="trend">/</div>
+                <p class-others-top-text">200 people just donated</p>
+            </div>
+
+        <div class="people">
+            <div class="people-div">
+                <div class="people-icon">-</div>
+                <div class="people-details">
+                    <p class="people-name">Name here</p>
+                    <p class="people-under">
+                        <span class="people-price">0.00</span> | <span class="status-type">First Donation</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <button class="see-all-btn">See all</button>
+    </div>
+    
+    <div class="bottom-buttons moveUp">
+        <button class="share">Share</button>
+        <button class="donate">Donate</button>
+    </div>
+</div>
+
+    `;
+
 
   document.body.appendChild(modal);
 
@@ -683,7 +756,10 @@ function viewDonation(donation) {
       des.style.maxHeight = "250px";
       e.target.textContent = "Read More";
     }
-  })
+  });
+
+  // for bottom button animation:
+  handleScroll(modal);
 };
 
 document.addEventListener('DOMContentLoaded', () => {

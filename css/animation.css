@@ -91,10 +91,11 @@
 }
 
 @keyframes zoomout {
-  0%{
+  0% {
     scale: 100%;
   }
-  100%{
+
+  100% {
     scale: 0%;
   }
 }
@@ -123,7 +124,7 @@
 
 /* MOVING UP AND FADE  */
 .moveUpNfadeIn {
-  animation-duration: 1s;
+  animation-duration: 500ms;
   animation-name: movenfd;
   animation-timing-function: linear;
   animation-delay: 10ms;
@@ -157,7 +158,7 @@
 @keyframes fadeout {
   0% {
     opacity: 1;
-    display:initial;
+    display: initial;
     /* transform: translateY(0px) scale(100%); */
     pointer-events: all;
   }
@@ -462,5 +463,24 @@
 
   50% {
     transform: translateY(-20px);
+  }
+}
+
+.slideInBottom {
+  animation-name: slidein-bottom;
+  animation-timing-function: linear;
+  animation-delay: 10ms;
+  animation-direction: alternate;
+}
+
+@keyframes slidein-bottom {
+  from {
+    display: none;
+    transform: translateY(10%);
+  }
+
+  to {
+    display: flex;
+    transform: translateY(0%);
   }
 }
