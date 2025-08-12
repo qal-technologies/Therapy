@@ -122,14 +122,25 @@ const faq = [
 	}
 ]
 
+const BASE_PATHS = {
+	audio: "/src/audio"
+};
+
+//Audio source:
 const audioSrc = {
 	banner: {
-		"en": "/src/audio/AUD-20250421-WA0054.mp3",
-		"fr": "/src/audio/AUD-20250421-WA0052.mp3"
+		"en": `${BASE_PATHS.audio}/home-english.mp3`,
+		"fr": `${BASE_PATHS.audio}/home-french.mp3`,
+		"es": `${BASE_PATHS.audio}/home-spanish.mp3`,
+		"de": `${BASE_PATHS.audio}/home-german.mp3`,
+		"it": `${BASE_PATHS.audio}/home-italian.mp3`
 	},
 	session: {
-		"en": "/src/audio/AUD-20250424-WA0159.mp3",
-		"fr": "/src/audio/AUD-20250424-WA0165.mp3",
+		"en": `${BASE_PATHS.audio}/session-english.mp3`,
+		"fr": `${BASE_PATHS.audio}/session-french.mp3`,
+		"es": `${BASE_PATHS.audio}/session-spanish.mp3`,
+		"de": `${BASE_PATHS.audio}/session-german.mp3`,
+		"it": `${BASE_PATHS.audio}/session-italian.mp3`
 	}
 };
 

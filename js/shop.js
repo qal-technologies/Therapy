@@ -1,8 +1,18 @@
 //Audio source:
+const BASE_PATHS = {
+  images: "/src/images",
+  svg: "/src/svg",
+  audio: "/src/audio"
+};
+
+//Audio source:
 const audioSrc = {
   session: {
-    "en": "/src/audio/book-audio.mp3",
-    "fr": "/src/audio/book-audio.mp3",
+    "en": `${BASE_PATHS.audio}/book-english.mp3`,
+    "fr": `${BASE_PATHS.audio}/book-french.mp3`,
+    "es": `${BASE_PATHS.audio}/book-spanish.mp3`,
+    "de": `${BASE_PATHS.audio}/book-german.mp3`,
+    "it": `${BASE_PATHS.audio}/book-italian.mp3`
   }
 };
 

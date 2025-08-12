@@ -2,17 +2,21 @@ let pageState = {
   clickedDonation: null,
 };
 
-//Audio source:
-const audioSrc = {
-  session: {
-    "en": "/src/audio/donation-audio.mp3",
-    "fr": "/src/audio/donation-audio.mp3",
-  }
-};
-
 const BASE_PATHS = {
   images: "/src/images",
   svg: "/src/svg",
+  audio: "/src/audio"
+};
+
+//Audio source:
+const audioSrc = {
+  session: {
+    "en": `${BASE_PATHS.audio}/donation-english.mp3`,
+    "fr": `${BASE_PATHS.audio}/donation-french.mp3`,
+    "es": `${BASE_PATHS.audio}/donation-spanish.mp3`,
+    "de": `${BASE_PATHS.audio}/donation-german.mp3`,
+    "it": `${BASE_PATHS.audio}/donation-italian.mp3`
+  }
 };
 
 //categoriess:
