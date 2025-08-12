@@ -625,7 +625,7 @@ function viewDonation(donation) {
         <div class="organizer">
             <div class="user-svg"><img src="/src/svg/person.svg" alt="user svg"/></div>
 
-            <p class="organizer-name">${donation.organizer} ${donation.organizer.includes(" and ") ? "are" : "is"} organizing this fundraiser</p>
+            <p class="organizer-name">${donation.organizer} ${donation.organizer.includes(" and ") ? "are" : "is"} organizing this donation</p>
         </div>
 
         <div class="tag">
