@@ -573,14 +573,14 @@ section.donation-viewer {
 }
 
 .left .upper p.amount-raised {
-    font-size: 1.5rem;
+    font-size: 20px;
     color: black;
     font-family: PoppinsSemi;
     font-weight: bolder;
 }
 
 .left .upper .amount-raised span.small {
-    font-size: 1.4rem;
+    font-size: 18px;
 }
 
 .donation-details .left .lower {
@@ -596,7 +596,7 @@ section.donation-viewer {
 
 .donation-details .left .lower p {
     color: rgb(158, 151, 151);
-    font-size: 0.8rem;
+    font-size: 14px;
     font-family: PoppinsLight;
     font-weight: bold;
 }
@@ -644,7 +644,7 @@ section.donation-viewer {
     place-items: center;
     font-weight: bolder;
     font-family: PoppinsBold;
-    font-size: 1rem;
+    font-size: 18px;
     border-radius: 100%;
     position: absolute;
     top: 50%;
@@ -718,7 +718,7 @@ section.donation-viewer {
 }
 
 .organizer .organizer-name {
-    font-size: 0.9rem;
+    font-size: 16px;
     font-family: PoppinsLight;
 }
 

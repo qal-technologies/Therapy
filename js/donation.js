@@ -581,7 +581,7 @@ function viewDonation(donation) {
             <p class="amount-raised">€${donation.raised} <span class="small">raised</span></p>
             </div>
             <div class="lower">
-               <p class="goal">€${donation.target} goal</p> &diams; <p class="donations">${donation.donations} donations</p>
+               <p class="goal">€${donation.target} goal</p> • <p class="donations">${donation.donations} donations</p>
                 </div>
             </div>
 
