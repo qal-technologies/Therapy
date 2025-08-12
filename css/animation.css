@@ -39,7 +39,7 @@
 
 /* A fade in animation that just increases opacity with time. */
 .fadeIn {
-  animation-duration: 1s;
+  animation-duration: 500ms;
   animation-name: fadein;
   animation-timing-function: ease-in;
   animation-delay: 10ms;
