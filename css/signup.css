@@ -197,12 +197,28 @@ header.header h3 {
 
 .form-group {
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   gap: 5px;
 }
 
 .form-group#session {
   display: none;
+}
+
+.form-group.forgot {
+  margin-top: -0.5rem;
+  padding-inline-start: 5px;
+  color: var(--link);
+  margin-bottom: 1rem;
+}
+
+.form-group.forgot p{
+  font-weight: bold;
+  font-size: 14px;
+  color: var(--link);
+  text-decoration: underline;
+  cursor: pointer;
+  width: max-content;
 }
 
 label {

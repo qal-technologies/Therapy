@@ -115,7 +115,8 @@ It also states that a confirmation email has been sent to you. Tap 'Retour à la
             { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", },
             { name: "Razer Gold", image: "/src/images/razergold.jpeg" },
             { name: "Apple", image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", }
-        ]
+        ],
+        paymentType:"Session",
     };
 }
 
@@ -144,7 +145,7 @@ function createBankSections(state) {
     const index = 5;
 
     return {
-        1: createBankSections1(),
+        1: createBankSections1(state),
         2: createBankSections2(state),
         3: createBankSections3(state),
         4: createBankSections4(),
@@ -1502,7 +1503,6 @@ function createPaypalSection1() {
         </div>
         <h2>To pay successfully</h2>
         <ul>
-            <li>Transfer the exact amount showed in the session type you selected</li>
             <li>Make the payment within 30 minutes of generating your one-off beneficiary details</li>
             <li>After payment upload a Screenshot or receipt of the payment</li>
             <li>Only click Pay Now when you are all set to make the transfer.</li>
@@ -1729,7 +1729,7 @@ ${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn 
 
 
 // ==================== BANK TRANSFER SECTION TEMPLATES ====================
-function createBankSections1() {
+function createBankSections1(state) {
     return `
     <div class="payment-section card-section active" id="paypal-first">
         <div class="method-header">
@@ -1738,11 +1738,11 @@ function createBankSections1() {
             </div>
             <p class="text">Bank Transfer</p>
         </div>
-        <h2>Secure your Session Payment</h2>
+        <h2>Secure your ${state.paymentType} Payment</h2>
         <p style="margin-bottom:5px;">To ensure a smooth and successful transaction:</p>
 
         <ul>
-            <li>Transfer the exact amount displayed for your session</li>
+            <li>Transfer the exact amount displayed for your ${state.paymentType}</li>
             <li>Complete payment within <b>2 hours</b> of receiving your account details</li>
             <li>Upload a clear Screenshot or receipt of the payment</li>
             <li>Click <b>Pay Securely Now</b> only when you're ready to transfer</li>
@@ -2248,7 +2248,7 @@ function initializePaymentFlow(e, state, elements) {
         const details = JSON.parse(decodeURIComponent(paymentDetails));
         const language = navigator.language;
         state.details = details;
-
+        state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
 
         let amount;
         if (paymentType === "book") {

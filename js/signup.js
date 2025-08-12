@@ -10,9 +10,14 @@ const TEMPLATE = {
             <label for="login-email">Email *</label>
             <input type="email" id="login-email" required />
           </div>
+
           <div class="form-group">
             <label for="login-password">Password *</label>
             <input type="password" id="login-password" required />
+          </div>
+
+<div class="form-group forgot">
+            <p class="forgot-password">Forgot Password?</p>
           </div>
 
           <div id="checkout">
@@ -70,8 +75,7 @@ const TEMPLATE = {
                   </div>
 
 
-                  <!-- <div class="form-group">
-                                                                                                                                                                                      <label for="adminCode">Admin Code (Optional)</label>
+                  <!-- <div class="form-group">                                                              <label for="adminCode">Admin Code (Optional)</label>
                                                                                                                                                                                       <input type="text" id="adminCode" />
                   </div> -->
 
@@ -86,7 +90,7 @@ const TEMPLATE = {
         </div>
         <div id="checkout">
           <button disabled>
-            <p class="text">PROCEED</p>
+            <p class="text">REGISTER</p>
           </button>
         </div>
         </div>
@@ -111,7 +115,7 @@ function init() {
   if (DOM.registerForm) {
     state.originalRegisterFormHTML = DOM.registerForm.outerHTML;
   }
-  
+
   setupEventListeners();
 }
 
@@ -136,13 +140,13 @@ function reAttach() {
 function handleTabClick(e) {
   const tab = e.currentTarget;
   const formToShow = tab.dataset.form;
-  
+
   if (tab.classList.contains('active') || formToShow === state.currentForm) return;
-  
+
   // Update UI
   document.querySelector('.tab.active').classList.remove('active');
   tab.classList.add('active');
-  
+
   switchForm(formToShow);
 }
 
@@ -164,7 +168,7 @@ function switchForm(formType) {
     DOM.formSection.insertAdjacentHTML('beforeend', TEMPLATE.register);
     const registerForm = document.getElementById('register-form');
     registerForm.classList.add('active');
-    
+
   }
 
   // Update state and reattach all DOM references

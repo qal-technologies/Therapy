@@ -593,7 +593,7 @@ function viewDonation(donation) {
 </svg>
 
         <div class="image">
-            <img src="${donation.images[0]}" alt="">
+            <img src="${donation.images[0]}" alt="" class="view-image">
         </div>
 
         <h2 class="title">${donation.title}</h2>
@@ -658,7 +658,7 @@ function viewDonation(donation) {
 
         <div class="gallery">
             ${donation.images.map(image => {
-    return `<img src="${image}" alt="${donation.title}">`
+    return `<img src="${image}" alt="${donation.title}" class="view-image">`
   }).join("")}
         </div>
 
@@ -757,6 +757,31 @@ function viewDonation(donation) {
       e.target.textContent = "Read More";
     }
   });
+
+  //for viewing images in full screen:
+  modal.querySelectorAll("img.view-image").forEach(image => {
+    image.addEventListener("click", (e) => {
+
+      const src = e.target.src;
+      const alt = e.target.alt;
+
+      const imageDisplayer = document.createElement("div");
+      imageDisplayer.classList.add("image-displayer", "moveUpNfadeIn");
+
+      imageDisplayer.innerHTML = `
+       <span class="cancel-display">X</span>
+        <img src="${src}" alt="${alt}" class="display-image">
+      `;
+
+      document.body.insertAdjacentElement("beforebegin", imageDisplayer);
+
+      document.querySelector("span.cancel-display").addEventListener("click", () => {
+        imageDisplayer.remove();
+      })
+    });
+
+
+  })
 
   // for bottom button animation:
   handleScroll(modal);
