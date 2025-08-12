@@ -646,10 +646,9 @@ section.donation-viewer {
     font-family: PoppinsBold;
     font-size: 18px;
     border-radius: 100%;
-    position: absolute;
+   /* position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 50%;*/
 }
 
 .donation-buttons {
@@ -677,15 +676,16 @@ section.donation-viewer {
     font-size: 1rem;
 }
 
-.donation-buttons button {
+.donation-buttons button.share{
+    
+color: var(--link);
+    background: var(--accent);
+}
+
+.donation-buttons button.donate {
     color: white;
     background: var(--link);
 }
-
-/* .donation-buttons button.donate {
-    color: var(--link);
-    background: var(--accent);
-} */
 
 .organizer {
     width: 100%;

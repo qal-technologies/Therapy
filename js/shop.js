@@ -73,7 +73,7 @@ const BOOK_COLLECTION = [
     title: "COMPAGNON FÉMININ",
     downloads: "5000+ Downloads",
     formats: ["eBook", "Hardcopy"],
-    price: "20.00",
+    price: "25.00",
     status: "Sold Out",
     description: `Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click`,
     image: "/src/images/book1.jpg",
