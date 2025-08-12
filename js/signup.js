@@ -29,14 +29,13 @@ const TEMPLATE = {
             <div class="register-upper upper">
               <div class="header register-header">
                 <h1>Register</h1>
-                <p>
-                  Welcome! complete the form below to become a better version of
-                  yourself.
+ <p>
+                  Welcome! complete the form below to begin
                 </p>
-                <p>
-                  Discover insights and tools to navigate a world on edge. Learn
-                  to become a better version of yourself.
+             <p>
+                  Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself
                 </p>
+
                 </div>
 
               <div class="bottom">
@@ -64,6 +63,12 @@ const TEMPLATE = {
                     <label for="reg-password">Password *</label>
                     <input type="password" id="reg-password" required />
                   </div>
+
+<div class="form-group">
+                    <label for="confirm-reg-password">Confirm Password *</label>
+                    <input type="password" id="confirm-reg-password" required />
+                  </div>
+
 
                   <!-- <div class="form-group">
                                                                                                                                                                                       <label for="adminCode">Admin Code (Optional)</label>

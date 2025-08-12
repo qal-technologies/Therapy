@@ -642,8 +642,7 @@ section.donation-viewer {
     text-align: center;
     place-content: center;
     place-items: center;
-    font-weight: bolder;
-    font-family: PoppinsBold;
+    font-family: PoppinsSemi;
     font-size: 18px;
     border-radius: 100%;
     position: absolute;
