@@ -646,9 +646,7 @@ section.donation-viewer {
     font-family: PoppinsBold;
     font-size: 18px;
     border-radius: 100%;
-   /* position: absolute;
-    top: 50%;
-    left: 50%;*/
+    position: absolute;
 }
 
 .donation-buttons {
@@ -677,9 +675,8 @@ section.donation-viewer {
 }
 
 .donation-buttons button.share{
-    
 color: var(--link);
-    background: var(--accent);
+    background: var(--accentTrans);
 }
 
 .donation-buttons button.donate {
