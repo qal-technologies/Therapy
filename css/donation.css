@@ -293,7 +293,6 @@ section.category {
     cursor: pointer;
 }
 
-
 section.stories {
     width: 100vw;
     height: max-content;
@@ -490,6 +489,7 @@ section.donation-viewer {
     background-color: white;
     padding: 10px;
     padding-block: 4rem;
+    padding-bottom: 5rem;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -617,7 +617,9 @@ section.donation-viewer {
 }
 
 .percentage-div svg {
-    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg)
 }
 
 .percentage-div svg .progress-bg {
@@ -884,11 +886,11 @@ section.donation-viewer {
     cursor: pointer;
 }
 
-.gallery img:hover{
+.gallery img:hover {
     scale: 95%;
 }
 
-.image-displayer{
+.image-displayer {
     display: flex;
     width: 100%;
     height: 100%;
@@ -898,7 +900,7 @@ section.donation-viewer {
     backdrop-filter: blur(10px);
 }
 
-.image-displayer span.cancel-display{
+.image-displayer span.cancel-display {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -921,7 +923,7 @@ section.donation-viewer {
 }
 
 
-div.image-displayer img{
+div.image-displayer img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -1001,6 +1003,8 @@ div.image-displayer img{
     gap: 10px;
     align-items: center;
     justify-content: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
 }
 
 .donators-info .top {
@@ -1015,28 +1019,154 @@ div.image-displayer img{
     font-weight: bold;
     font-family: PoppinsMed;
     font-size: 18px;
-    letter-spacing: 1px;
-    word-spacing: 2px;
 }
+
+.donators-info .top p.title span {
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
 
 .donators-info .top .see-top {
     display: flex;
     gap: 10px;
     align-items: center;
     width: max-content;
-    padding: 3px;
-    padding-inline: 14px;
+    padding: 2px;
+    padding-inline: 12px;
     border: 1px solid var(--accent);
     border-radius: 20px;
     color: var(--link);
     fill: var(--link);
+    cursor: pointer;
+}
+
+.donators-info .top .see-top span {
+    display: flex;
+    align-items: center;
 }
 
 .donators-info .top .see-top p {
     font-family: PoppinsMed;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .donators-info .others {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding-block: 10px;
+    justify-content: center;
+}
+
+.donators-info .others .top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.donators-info .others .top .trend {
+    width: 35px;
+    height: 35px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accentTrans);
+    border-radius: 50%;
+}
+
+.donators-info .others .top .trend svg {
+    color: var(--link);
+    stroke: var(--link);
+    stroke-width: 30px;
+    width: 140%;
+    height: 140%;
+}
+
+
+.donators-info .others .top p {
+    color: var(--link);
+    font-size: 16px;
+    font-family: PoppinsMed;
+    font-weight: bolder;
+}
+
+.donators-info .others .people {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    padding-top: 10px;
+    justify-content: flex-start;
+}
+
+.others .people .people-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.others .people-div .people-icon {
+    width: 35px;
+    height: 35px;
+    padding: 10px;
+    border-radius: 50%;
+    color: black;
+    fill: black;
+    background: rgba(200, 220, 220, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.others .people-div .people-icon svg{
+    stroke: black;
+    width: 200%;
+    height: 200%;
+}
+
+.others .people-div .people-details {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-family: PoppinsLight;
+    font-size: 15px;
+    font-weight: lighter;
+}
+
+.people-details .people-under {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.people-details .people-under span.people-price {
+    font-weight: bolder;
+    font-family: PoppinsSemi;
+}
+
+.people-details .people-under span.status-type {
+    text-decoration: underline;
+}
+
+.donation-viewer .see-all-btn {
+    width: 100%;
+    background: none;
+    border: 1px solid var(--accentTrans);
+    border-radius: 20px;
+    text-align: center;
+    font-family: PoppinsSemi;
+    font-size: 16px;
+    padding: 6px;
+    cursor: pointer;
 }

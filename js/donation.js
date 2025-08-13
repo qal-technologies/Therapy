@@ -583,6 +583,19 @@ function viewDonation(donation) {
   const modal = document.createElement("section");
   modal.classList.add("donation-viewer", "moveUp");
 
+  //for just donated:
+  // const contains = donation.donations.includes("K") ?
+  //   donation.donations.slice(0, donation.donations.length - 1) : donation.donations;
+  // const math = (parseInt(contains[0]) * 1000) + (parseInt(contains[2]) * 100);
+
+  // const donations = donation.donations.includes("K") ? math : parseInt(donation.donations);
+
+  
+  //for donators preview:
+  const preview = donation.just.top;
+  const all = [preview, donation.just.upper, donation.just.others];
+  console.log(preview);
+
   modal.innerHTML = `
     <div class="container">
     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="cancel" viewBox="0 0 16 16">
@@ -669,30 +682,42 @@ function viewDonation(donation) {
 
         <div class="top">
 
-            <p class="title">Donations <span class="donation-count">0</span></p>
+            <p class="title">Donations <span class="donation-count">(${donation.donations})</span></p>
 
             <div class="see-top">
-            <span class="star">*</span>
+            <span class="star">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+  <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
+</svg></span>
             <p class="text">See top</p>
             </div>
         </div>
 
         <div class="others">
             <div class="top">
-                <div class="trend">/</div>
-                <p class-others-top-text">200 people just donated</p>
+                <div class="trend">
+<svg width="200%" height="200%" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.5 18.5L11.5 10.5L13.5 14.5L20.5 6.5" stroke="var(--link)" stroke-width="3"/>
+<path d="M20.5 11V6.5H16" stroke="var(--link)" stroke-width="3"/>
+</svg></div>
+                <p class-others-top-text">${donation.just.number} people just donated</p>
             </div>
 
         <div class="people">
-            <div class="people-div">
-                <div class="people-icon">-</div>
+
+        ${preview.map(div => {
+         return `<div class="people-div">
+                <div class="people-icon">
+<svg class="svg-icon" style="width: 1.0498046875em;height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1075 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M0 409.648841a51.19593 51.19593 0 1 1 102.39186 0v563.155229a51.19593 51.19593 0 0 1-102.39186 0V409.648841z" fill="#313645" /><path d="M83.602954 589.192967A51.19593 51.19593 0 0 1 18.788906 509.941668L142.324685 408.77851a153.58779 153.58779 0 0 1 155.840411-23.14056L433.117567 441.287926c93.278984 40.598372 130.140054 112.119087 91.640715 195.670844-40.956744 89.080918-136.385957 92.920613-263.761431 32.765395a51.19593 51.19593 0 1 1 43.721324-92.562241c82.681427 39.011299 117.597051 37.629008 127.068298 16.945852 12.082239-26.109924 5.221985-39.420866-38.601731-58.516947L259.153797 480.299224a51.19593 51.19593 0 0 0-51.912673 7.67939l-123.63817 101.214353z" fill="#313645" /><path d="M837.36063 517.518665c69.524073-31.639085 130.856797-26.109924 167.66667 26.877863 44.386871 63.841325 20.273588 127.42667-37.219441 181.233592-21.143919 19.761629-129.372115 104.593285-331.852017 260.433696a153.58779 153.58779 0 0 1-144.577307 23.191756l-310.605706-109.047331a51.19593 51.19593 0 1 1 33.942901-96.606719l310.605707 109.04733a51.19593 51.19593 0 0 0 48.124174-7.679389c196.541175-151.232777 307.073188-237.958682 324.428608-254.187792 24.932418-23.294148 30.307991-37.475421 23.038168-47.919391-3.327735-4.812417-11.621476-5.631552-39.062494 6.860255l-297.85792 152.359088a51.19593 51.19593 0 0 1-38.908907 3.174147l-278.557055-89.080918a51.19593 51.19593 0 0 1 31.178322-97.528246l258.48825 82.63023 281.168047-143.758171zM752.938541 317.0866l97.272267-97.272267a68.756134 68.756134 0 1 0-97.272267-97.221071L716.743019 158.83998l-36.195523-36.246718a68.756134 68.756134 0 1 0-97.272266 97.272267l97.272266 97.272267c9.727227 9.727227 22.679797 14.949212 36.195523 14.949211a50.888754 50.888754 0 0 0 36.195522-15.000407zM922.601853 50.253413a171.147994 171.147994 0 0 1 0 242.054357l-97.272267 97.272266c-29.18168 29.18168-68.141783 44.950026-108.586567 44.950027s-79.456083-15.819542-108.586567-44.950027l-97.272267-97.272266A171.147994 171.147994 0 0 1 716.743019 22.505219a171.250386 171.250386 0 0 1 205.807638 27.696998z" fill="#313645" /></svg>
+                </div>
                 <div class="people-details">
-                    <p class="people-name">Name here</p>
+                    <p class="people-name">${div.name}</p>
                     <p class="people-under">
-                        <span class="people-price">0.00</span> | <span class="status-type">First Donation</span>
+                        <span class="people-price">€${div.amount}</span> | ${div.rank ? `<span class="status-type">${div.rank}</span>` : `<span class="status-time" > ${div.time}</span>`}
                     </p>
                 </div>
-            </div>
+            </div>`
+        }).join("")}
         </div>
 
         </div>
