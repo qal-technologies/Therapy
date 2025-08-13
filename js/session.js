@@ -331,7 +331,19 @@ ${bonuses.join('')}
 
   document.querySelector("#sessions #waitlist.inner a").addEventListener("click", () => {
     handleAlert(`
-	joined!	Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering	`
+Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+
+<br/>
+📩 What’s next:
+<br/>
+You’ll receive a confirmation email shortly.
+<br/>
+We’ll personally notify you the moment a spot becomes available.
+<br/>
+Priority is given in the order sign-ups are received, so you’re in line.
+
+<br/><br/>
+Until then, breathe deeply and know,your sanctuary is waiting.`
     )
   })
 });
