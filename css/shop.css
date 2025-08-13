@@ -29,7 +29,6 @@
   position: absolute;
   left: -20%;
   top: -30px;
-  border: 20px solid rgb(94, 255, 0);
   border-radius: 50%;
   filter: opacity(0.54) blur(60px);
   display: flex;
