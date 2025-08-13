@@ -56,22 +56,23 @@ A padlock icon appears in the address bar, confirming it’s secure. Once you’
                 {
                     image: "/src/images/online-2.jpg",
                     title: "Step 2: Choose the Gift Card Type",
-                    description:"From the available options on the secure website, select your preferred gift card. Only choose from the accepted brands: Steam, Apple, or Razer Gold.
+                    description: `From the available options on the secure website, select your preferred gift card. Only choose from the accepted brands: Steam, Apple, or Razer Gold.
+                    
 Before continuing, make sure:
-The card clearly displays the correct value (e.g., $50, £50, €50, or your local currency equivalent). The brand logo is correct and matches the one you need. In the example shown, the user selects a $50 Apple card, but you can choose any of the accepted brands based on your preference."
+The card clearly displays the correct value (e.g., $50, £50, €50, or your local currency equivalent). The brand logo is correct and matches the one you need. In the example shown, the user selects a $50 Apple card, but you can choose any of the accepted brands based on your preference.`
                 },
                 {
                     image: "/src/images/online-3.jpg",
                     title: "Step 3: Enter Payment Details Securely",
                     description: `Once you reach the secure payment page, enter your credit or debit card information, including:
 <br/>
-Card number
+> Card number
 <br/>
-Expiration date
+> Expiration date
 <br/>
-CVV/security code (the 3-digit code on the back of your card)
+> CVV/security code (the 3-digit code on the back of your card)
 <br/>
-Billing address
+> Billing address
 <br/><br/>
 
 Double-check that all details are correct before proceeding.
@@ -101,8 +102,8 @@ You should also receive a confirmation email containing your purchase details. I
                 {
                     image: "/src/images/store-2.jpg",
                     title: "Step 2: Locate the Gift Card Section and Select an Accepted Card",
-                    description: "Inside the store, head to the area where gift cards are displayed. This is often a dedicated rack or wall near the electronics section, the checkout counters, or the customer service desk. You’ll find many brands available, but only choose from these accepted options: Steam, Apple, or Razer Gold. Before purchasing, make sure:
-The card is sealed and undamaged. The amount is clearly marked (e.g., $20, $50, £20, €50, or the local currency equivalent). Avoid buying unaccepted cards such as Amazon, Netflix, or PlayStation."
+                    description: `Inside the store, head to the area where gift cards are displayed. This is often a dedicated rack or wall near the electronics section, the checkout counters, or the customer service desk. You’ll find many brands available, but only choose from these accepted options: Steam, Apple, or Razer Gold. Before purchasing, make sure:
+The card is sealed and undamaged. The amount is clearly marked (e.g., $20, $50, £20, €50, or the local currency equivalent). Avoid buying unaccepted cards such as Amazon, Netflix, or PlayStation.`
                 },
                 {
                     image: "/src/images/store-3.jpg",

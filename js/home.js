@@ -144,6 +144,36 @@ const audioSrc = {
 	}
 };
 
+let timer;
+function handleAlert(message) {
+	const parent = document.querySelector(".alert-message");
+	const div = document.querySelector(".alert-div");
+	const text = document.querySelector(".alert-message .alert-text");
+	const close = document.querySelector(".alert-message .alert-button");
+
+	if (parent.classList.contains("fadeOut")) {
+		parent.classList.remove("fadeOut");
+		div.classList.remove("zoom-out");
+	}
+
+	parent.style.display = "flex";
+	text.innerHTML = message;
+
+	close.addEventListener("click", () => {
+		clearTimeout(timer);
+
+		const adding = div.classList.add("zoom-out");
+
+		text.innerHTML = "";
+		parent.classList.add("fadeOut");
+
+		timer = adding && setTimeout(() => {
+			parent.style.display = "none";
+		}, 1000);
+	})
+
+}
+
 window.addEventListener("DOMContentLoaded", () => {
 	let user = true;
 
@@ -566,4 +596,10 @@ ${bonuses.join('')}
 			}
 		});
 	});
+
+	document.querySelector("#sessions #waitlist.inner a").addEventListener("click", () => {
+		handleAlert(`
+	joined!	Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering	`
+		)
+	})
 });

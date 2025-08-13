@@ -503,9 +503,6 @@ function handleStoryClick(e) {
   const story = type.stories.find(story => story.title === storyTitle);
   if (!story) return;
 
-  // pageState.clickedDonation = story;
-  // console.log(story);
-
   viewDonation(story);
 }
 
