@@ -713,7 +713,7 @@ function viewDonation(donation) {
                 <div class="people-details">
                     <p class="people-name">${div.name}</p>
                     <p class="people-under">
-                        <span class="people-price">€${div.amount}</span> | ${div.rank ? `<span class="status-type">${div.rank}</span>` : `<span class="status-time" > ${div.time}</span>`}
+                        <span class="people-price">€${div.amount}</span> • ${div.rank ? `<span class="status-type">${div.rank}</span>` : `<span class="status-time" > ${div.time}</span>`}
                     </p>
                 </div>
             </div>`
