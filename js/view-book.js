@@ -1,113 +1,117 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const book = document.getElementById('book');
-    const pages = Array.from(book.querySelectorAll('.page'));
-    const cover = book.querySelector('.cover');
-    const backCover = book.querySelector('.back-cover');
-    const prevPageBtn = document.getElementById('prev-page-btn');
-    const nextPageBtn = document.getElementById('next-page-btn');
-    const pageNumberInput = document.getElementById('page-number-input');
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const zoomInBtn = document.getElementById('zoom-in-btn');
-    const zoomOutBtn = document.getElementById('zoom-out-btn');
+// document.addEventListener('DOMContentLoaded', () => {
+//     const book = document.getElementById('book');
+//     const pages = Array.from(book.querySelectorAll('.page'));
+//     const cover = book.querySelector('.cover');
+//     const backCover = book.querySelector('.back-cover');
+//     const prevPageBtn = document.getElementById('prev-page-btn');
+//     const nextPageBtn = document.getElementById('next-page-btn');
+//     const pageNumberInput = document.getElementById('page-number-input');
+//     const fullscreenBtn = document.getElementById('fullscreen-btn');
+//     const zoomInBtn = document.getElementById('zoom-in-btn');
+//     const zoomOutBtn = document.getElementById('zoom-out-btn');
 
-    let currentPage = 0;
-    let numPages = pages.length;
-    let zoomLevel = 1;
+//     let currentPage = 0;
+//     let numPages = pages.length;
+//     let zoomLevel = 1;
 
-    const pageTurnSound = new Audio('/src/audio/page-turn.mp3'); // Placeholder
-    const thudSound = new Audio('/src/audio/thud.mp3'); // Placeholder
+//     // const pageTurnSound = new Audio('/src/audio/page-turn.mp3');
+//     // const thudSound = new Audio('/src/audio/thud.mp3'); 
 
-    function updatePage() {
-        if (currentPage === 0) {
-            cover.classList.remove('flipped');
-        } else {
-            cover.classList.add('flipped');
-        }
+//     function updatePage() {
+//         if (currentPage === 0) {
+//             cover.classList.remove('flipped');
+//         } else {
+//             cover.classList.add('flipped');
+//         }
 
-        if (currentPage === numPages) {
-            backCover.classList.add('flipped');
-        } else {
-            backCover.classList.remove('flipped');
-        }
+//         if (currentPage === numPages) {
+//             backCover.classList.add('flipped');
+//         } else {
+//             backCover.classList.remove('flipped');
+//         }
 
-        pages.forEach((page, index) => {
-            if (index < currentPage) {
-                page.classList.add('flipped');
-                page.style.zIndex = index;
-            } else {
-                page.classList.remove('flipped');
-                page.style.zIndex = numPages - index;
-            }
-        });
+//         pages.forEach((page, index) => {
+//             if (index < currentPage) {
+//                 page.classList.add('flipped');
+//                 page.style.zIndex = index;
+//             } else {
+//                 page.classList.remove('flipped');
+//                 page.style.zIndex = numPages - index;
+//             }
+//         });
 
-        pageNumberInput.value = currentPage;
-    }
+//         pageNumberInput.value = currentPage;
+//     }
 
-    function turnPage(direction) {
-        const newPage = currentPage + direction;
+//     pages.forEach((page, index) => {
+//         page.style.marginLeft = `${index * 2 + 10}px`
+//     })
 
-        if (newPage >= 0 && newPage <= numPages) {
-            currentPage = newPage;
-            updatePage();
-            pageTurnSound.play();
-        } else {
-            thudSound.play();
-        }
-    }
+//     function turnPage(direction) {
+//         const newPage = currentPage + direction;
 
-    nextPageBtn.addEventListener('click', () => turnPage(1));
-    prevPageBtn.addEventListener('click', () => turnPage(-1));
+//         if (newPage >= 0 && newPage <= numPages) {
+//             currentPage = newPage;
+//             updatePage();
+//             // pageTurnSound.play();
+//         } else {
+//             // thudSound.play();
+//         }
+//     }
 
-    pageNumberInput.addEventListener('change', () => {
-        let newPage = parseInt(pageNumberInput.value, 10) - 1;
-        if (newPage >= 0 && newPage < numPages) {
-            currentPage = newPage;
-            updatePage();
-        } else {
-            pageNumberInput.value = currentPage + 1;
-        }
-    });
+//     nextPageBtn.addEventListener('click', () => turnPage(1));
+//     prevPageBtn.addEventListener('click', () => turnPage(-1));
 
-    fullscreenBtn.addEventListener('click', () => {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        } else {
-            book.requestFullscreen();
-        }
-    });
+//     pageNumberInput.addEventListener('change', () => {
+//         let newPage = parseInt(pageNumberInput.value, 10) - 1;
+//         if (newPage >= 0 && newPage < numPages) {
+//             currentPage = newPage;
+//             updatePage();
+//         } else {
+//             pageNumberInput.value = currentPage + 1;
+//         }
+//     });
 
-    zoomInBtn.addEventListener('click', () => {
-        zoomLevel = Math.min(2, zoomLevel + 0.1);
-        book.style.transform = `scale(${zoomLevel})`;
-    });
+//     fullscreenBtn.addEventListener('click', () => {
+//         if (document.fullscreenElement) {
+//             document.exitFullscreen();
+//         } else {
+//             book.requestFullscreen();
+//         }
+//     });
 
-    zoomOutBtn.addEventListener('click', () => {
-        zoomLevel = Math.max(0.5, zoomLevel - 0.1);
-        book.style.transform = `scale(${zoomLevel})`;
-    });
+//     zoomInBtn.addEventListener('click', () => {
+//         zoomLevel = Math.min(2, zoomLevel + 0.1);
+//         book.style.transform = `scale(${zoomLevel})`;
+//     });
 
-    // Swipe gestures
-    let touchstartX = 0;
-    let touchendX = 0;
+//     zoomOutBtn.addEventListener('click', () => {
+//         zoomLevel = Math.max(0.5, zoomLevel - 0.1);
+//         book.style.transform = `scale(${zoomLevel})`;
+//     });
 
-    book.addEventListener('touchstart', e => {
-        touchstartX = e.changedTouches[0].screenX;
-    });
+//     // Swipe gestures
+//     let touchstartX = 0;
+//     let touchendX = 0;
 
-    book.addEventListener('touchend', e => {
-        touchendX = e.changedTouches[0].screenX;
-        handleGesture();
-    });
+//     book.addEventListener('touchstart', e => {
+//         touchstartX = e.changedTouches[0].screenX;
+//     });
 
-    function handleGesture() {
-        if (touchendX < touchstartX) {
-            turnPage(1);
-        }
+//     book.addEventListener('touchend', e => {
+//         touchendX = e.changedTouches[0].screenX;
+//         handleGesture();
+//     });
 
-        if (touchendX > touchstartX) {
-            turnPage(-1);
-        }
-    }
+//     function handleGesture() {
+//         if (touchendX < touchstartX) {
+//             turnPage(1);
+//         }
 
-    updatePage();
-});
+//         if (touchendX > touchstartX) {
+//             turnPage(-1);
+//         }
+//     }
+
+//     updatePage();
+// });
