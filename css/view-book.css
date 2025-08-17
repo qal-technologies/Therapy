@@ -124,12 +124,13 @@ overflow: visible;
     border: 1px solid #ccc;
     overflow: hidden;
 z-index:9;
-border-radius:5px;
+border-radius:12px 12px 5px 5px;
 }
 
 .page.flipped {
     transform: rotateY(-180deg) skewY(4deg);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+border-radius:5px 5px 12px 12px;
 }
 
 .page.flipping::before {
