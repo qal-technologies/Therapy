@@ -21,9 +21,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 10px;
+padding-inline:10px;
     box-sizing: border-box;
-overflow:hidden;
 }
 
 /* Toolbars */
@@ -91,6 +90,7 @@ bottom:0;
     perspective: 1200px;
     transition: width 0.5s ease;
 padding-top:3rem;
+overflow:hidden;
 }
 
 .pages-container {
