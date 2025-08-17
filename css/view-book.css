@@ -11,6 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+overflow:hidden;
     font-family: Arial, sans-serif;
 border:1px solid green;
 }
@@ -88,7 +89,7 @@ bottom:0;
 /* Book */
 .book {
     width:100%;
-height:85vh;
+height:100%;
 /*max-width:800px;*/
 display:flex;
 flex-direction:row;
@@ -108,7 +109,7 @@ display:flex;
     width: var(--book-width);
     height: var(--book-height);
 align-items:center;
-justify-content:center;
+justify-content: flex-end;
     position: absolute;
     transform-style: preserve-3d;
 
