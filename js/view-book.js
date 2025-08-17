@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             page.dataset.pageNum = i;
 
             const content = document.createElement('img');
-            content.src = `/src/images/medical/01/${i}.jpg`;
+            content.src = `/src/images/book2.jpg`;
             content.style.width = '100%';
             content.style.height = '100%';
             content.style.objectFit = 'cover';
