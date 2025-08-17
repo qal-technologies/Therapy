@@ -162,6 +162,10 @@ border-radius:5px;
     box-sizing: border-box;
 }
 
+.page.flipped .page-content{
+transform:rotateY(0)
+}
+
 /* Page Edges */
 .page-edges {
     position: absolute;
