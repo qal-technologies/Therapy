@@ -89,6 +89,7 @@ bottom:0;
     position: relative;
     perspective: 1200px;
     transition: width 0.5s ease;
+padding-top:3rem;
 }
 
 .pages-container {
