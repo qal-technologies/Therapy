@@ -128,7 +128,7 @@ border-radius:5px;
 }
 
 .page.flipped {
-    transform: skewY(4deg);
+    transform: rotateY(-180deg) skewY(4deg);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
