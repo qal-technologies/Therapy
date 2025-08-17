@@ -25,7 +25,6 @@ overflow:hidden;
 padding-inline:10px;
     box-sizing: border-box;
 overflow: hidden;
-/*border:1px solid white;*/
 }
 
 /* Toolbars */
@@ -126,8 +125,6 @@ overflow: visible;
     overflow: hidden;
 z-index:9;
 border-radius:5px;
-
-border:1px solid yellow;
 }
 
 .page.flipped {
@@ -173,7 +170,7 @@ border:1px solid yellow;
     width: 10px;
     background: repeating-linear-gradient(to bottom, #eee, #ddd 1px);
     box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.2);
-z-index:-2;
+/*z-index:-2;*/
 }
 
 #page-edges-left {
