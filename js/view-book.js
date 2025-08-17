@@ -32,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
             page.dataset.pageNum = i;
 
             const content = document.createElement('p');
+content.classList.add('page-content');
+
             content.innerText = `This is Page ${i}`
             content.style.width = '100%';
             content.style.height = '100%';
