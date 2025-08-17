@@ -116,7 +116,7 @@ border-radius:5px;
 }
 
 .page.flipped {
-    transform: skewY(5deg);
+    transform: rotate(-180deg) skewY(5deg);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -131,9 +131,9 @@ border-radius:5px;
     z-index: 10;
 }
 
-/*.hard.front-cover.flipped {
+.hard.front-cover.flipped {
     transform: rotateY(-180deg);
-}*/
+}
 
 .hard.back-cover {
     transform: rotateY(0);
