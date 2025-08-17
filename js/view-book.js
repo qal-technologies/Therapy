@@ -31,17 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
             page.classList.add('page');
             page.dataset.pageNum = i;
 
-            const content = document.createElement('img');
-            content.src = `/src/images/book1.jpg`;
+            const content = document.createElement('p');
+            content.innerText = `This is Page ${i}`
             content.style.width = '100%';
             content.style.height = '100%';
             content.style.objectFit = 'cover';
             page.appendChild(content);
-
-            // For double-page layout
-           if (i % 2 !== 0) {
-                page.classList.add('odd');
-            }
 
             pagesContainer.insertBefore(page, document.querySelector('.back-cover'));
         }
