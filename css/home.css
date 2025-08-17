@@ -323,14 +323,16 @@ section.testimonies {
   padding-block: 5%;
   background: rgba(255, 255, 255, 0.62);
   backdrop-filter: blur(20px);
-  min-height: 100vh;
 }
 
 .carousel-container {
 	width: 100%;
 	max-width: 400px;
-	overflow: hidden;
+	overflow: visible;
 	margin: 0 auto;
+  height: 80vh;
+  display: flex;
+  align-items: center;
 }
 
 .carousel-slide {

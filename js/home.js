@@ -331,7 +331,12 @@ window.addEventListener("DOMContentLoaded", () => {
 	const prevBtn = document.querySelector(".prev-btn");
 
 	const updateCarousel = () => {
-		slide.style.transform = `translateX(${-currentReview * 100}%)`;
+    const testimonyWidth = testimonies.clientWidth;
+    const xOffset = -currentReview * testimonyWidth;
+    const activeTestimony = slide.children[currentReview];
+    const yOffset = (testimonies.clientHeight - activeTestimony.clientHeight) / 2;
+
+    slide.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
 	};
 
 	nextBtn.addEventListener("click", () => {
