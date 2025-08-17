@@ -33,7 +33,7 @@ overflow: hidden;
     width: 100%;
     max-width: calc(var(--book-width) * 2 + 40px);
     height: var(--toolbar-height);
-    background: #040404ce;
+    background: #040404ae;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -41,7 +41,7 @@ overflow: hidden;
     padding: 0 20px;
 backdrop-filter:blur(10px);
     box-sizing: border-box;
-    border-radius: 12px;
+    border-radius: 15px;
 position: absolute;
 z-index:99999;
 }
@@ -228,8 +228,8 @@ border-radius:5px;
         position: absolute;
         top: var(--toolbar-height);
         right: 10px;
-        background: #444;
+        background: #040404ac;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 15px;
     }
 }
