@@ -39,9 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
             page.appendChild(content);
 
             // For double-page layout
-            /*if (i % 2 !== 0) {
+            if (i % 2 !== 0) {
                 page.classList.add('odd');
-            }*/
+            }
 
             pagesContainer.insertBefore(page, document.querySelector('.back-cover'));
         }
