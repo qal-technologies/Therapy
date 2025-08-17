@@ -13,7 +13,6 @@ body {
     height: 100vh;
 overflow:hidden;
     font-family: Arial, sans-serif;
-border:1px solid green;
 }
 
 .book-viewer-container {
@@ -89,19 +88,17 @@ bottom:0;
 /* Book */
 .book {
     width:100%;
-height:100%;
+height:90%;
 /*max-width:800px;*/
 display:flex;
 flex-direction:row;
-justify-content:flex-end;
-align-items:flex-start;
+justify-content:center;
+align-items:center;
     position: relative;
     perspective: 1200px;
     transition: width 0.5s ease;
 padding-top:3rem;
 overflow:hidden;
-
-border:1px solid red;
 }
 
 .pages-container {
@@ -112,7 +109,6 @@ align-items:center;
 justify-content: flex-end;
     position: absolute;
     transform-style: preserve-3d;
-
 border:1px solid blue;
 }
 
