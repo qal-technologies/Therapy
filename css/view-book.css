@@ -125,15 +125,16 @@ overflow: visible;
     overflow: hidden;
 z-index:9;
 border-radius:5px;
-border-top-left-radius:12px;
-border-bottom-left-radius:12px;
+border-top-left-radius:20px;
+border-bottom-left-radius:20px;
 }
 
 .page.flipped {
     transform: rotateY(-180deg) skewY(4deg);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-border-top-right-radius:12px;
-border-bottom-right-radius:12px;
+border-radius:5px;
+border-top-right-radius:20px;
+border-bottom-right-radius:20px;
 }
 
 .page.flipping::before {
