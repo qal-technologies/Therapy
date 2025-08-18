@@ -1,57 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book Viewer</title>
-    <link rel="stylesheet" href="/css/view-book.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Book</title>
+<style>
+  body {
+    margin: 0;
+    background: #3b2f2f;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Georgia, serif;
+    overflow: hidden;
+  }
+
+  header, footer {
+    background: #222;
+    color: #fff;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5em 1em;
+  }
+
+  header input {
+    flex: 1;
+    margin-right: .5em;
+    padding: .3em;
+  }
+
+  footer {
+    justify-content: center;
+    gap: 1em;
+  }
+  footer button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2000px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .book {
+    position: relative;
+    display: flex;
+    transform-style: preserve-3d;
+  }
+
+  .page {
+    width: 45vw;
+    max-width: 500px;
+    height: 70vh;
+    background: #fdf6e3;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    padding: 2em;
+    font-size: 1.2em;
+    line-height: 1.5;
+    position: relative;
+    user-select: none;
+    transform-origin: left center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  @media (max-width: 768px) {
+    .page {
+      width: 90vw;
+    }
+  }
+</style>
 </head>
-
 <body>
-    
-        <!-- Top Toolbar -->
-        <div class="top-toolbar">
-            <input type="search" id="search-bar" placeholder="Search by chapter or page..." />
-            <div class="top-toolbar-icons">
-                <button id="sound-toggle-btn" title="Toggle Sound"><i class="fas fa-volume-up"></i></button>
-                <button id="fullscreen-btn" title="Fullscreen"><i class="fas fa-expand"></i></button>
-                <button id="bookmark-btn" title="Bookmark Page"><i class="far fa-bookmark"></i></button>
-            </div>
-            <button class="hamburger-menu">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
 
-        <!-- Book -->
-        <div id="book" class="book">
-            <div id="page-edges-left" class="page-edges"></div>
-            <div class="pages-container">
-                <!-- Pages will be injected by JS -->
-                <div class="hard back-cover">
-                    <div class="page-content">
-                        <h2>The End</h2>
-                    </div>
-                </div>
-            </div>
-            <div id="page-edges-right" class="page-edges"></div>
-        </div>
+<header>
+  <input type="text" placeholder="Search chapter or page">
+  <div class="tools">
+    <button id="sound">🔊</button>
+    <button id="menu">☰</button>
+  </div>
+</header>
 
+<main>
+  <div class="book" id="book"></div>
+</main>
 
-        <!-- Bottom Toolbar -->
-        <div class="bottom-toolbar">
-            <button id="zoom-out-btn" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
-            <div class="page-navigation">
-                <button id="prev-page-btn"><i class="fas fa-chevron-left"></i></button>
-                <span id="page-indicator">1 / 10</span>
-                <button id="next-page-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <button id="zoom-in-btn" title="Zoom In"><i class="fas fa-search-plus"></i></button>
-        </div>
-    
+<footer>
+  <button id="prev">⟨</button>
+  <span id="pageIndicator"></span>
+  <button id="next">⟩</button>
+</footer>
 
-    <script src="/js/view-book.js"></script>
+<script>
+const totalPages = 20;
+let currentPage = 1;
+let soundOn = true;
+
+const bookEl = document.getElementById("book");
+const indicator = document.getElementById("pageIndicator");
+
+function renderBook() {
+  bookEl.innerHTML = "";
+  const page = document.createElement("div");
+  page.className = "page";
+  page.innerHTML = `<p>This is Page ${currentPage}</p>`;
+  bookEl.appendChild(page);
+  indicator.textContent = `${currentPage}/${totalPages}`;
+}
+renderBook();
+
+function playFlipSound() {
+  if (!soundOn) return;
+  const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+  audio.play();
+}
+
+function flipForward() {
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderBook();
+    playFlipSound();
+  }
+}
+function flipBack() {
+  if (currentPage > 1) {
+    currentPage--;
+    renderBook();
+    playFlipSound();
+  }
+}
+
+document.getElementById("next").onclick = flipForward;
+document.getElementById("prev").onclick = flipBack;
+document.getElementById("sound").onclick = () => {
+  soundOn = !soundOn;
+  document.getElementById("sound").textContent = soundOn ? "🔊" : "🔇";
+};
+
+/* --- Drag-follow flipping --- */
+let startX = 0;
+let isDragging = false;
+let pageEl;
+
+bookEl.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+  pageEl = bookEl.querySelector(".page");
+  pageEl.style.transition = "none";
+});
+
+bookEl.addEventListener("touchmove", e => {
+  if (!isDragging) return;
+  let currentX = e.touches[0].clientX;
+  let deltaX = currentX - startX;
+  let rotation = Math.min(Math.max(deltaX / 3, -180), 0); // clamp
+  pageEl.style.transform = `rotateY(${rotation}deg)`;
+  pageEl.style.boxShadow = `${Math.abs(rotation) / 5}px 0 30px rgba(0,0,0,0.5)`;
+});
+
+bookEl.addEventListener("touchend", e => {
+  if (!isDragging) return;
+  isDragging = false;
+  let endX = e.changedTouches[0].clientX;
+  let deltaX = endX - startX;
+
+  pageEl.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
+
+  if (deltaX < -50) { // swipe left → next page
+    pageEl.style.transform = "rotateY(-180deg)";
+    setTimeout(flipForward, 300);
+  } else if (deltaX > 50) { // swipe right → prev page
+    pageEl.style.transform = "rotateY(0deg)";
+    setTimeout(flipBack, 300);
+  } else { // snap back
+    pageEl.style.transform = "rotateY(0deg)";
+    pageEl.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
+  }
+});
+</script>
+
 </body>
-
 </html>
