@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookmarkBtn = document.getElementById('bookmark-btn');
     const hamburgerMenu = document.querySelector('.hamburger-menu');
     const topToolbarIcons = document.querySelector('.top-toolbar-icons');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
 
     // Configuration
     const NUM_PAGES = 10; // Total number of pages
-    const PAGE_TURN_SOUND_SRC = '/src/audio/page-turn.mp3';
-    const THUD_SOUND_SRC = '/src/audio/thud.mp3';
+    const PAGE_TURN_SOUND_SRC = 'https://actions.google.com/sounds/v1/ui/page_turn.ogg';
+    const THUD_SOUND_SRC = 'https://actions.google.com/sounds/v1/impacts/thud.ogg';
     const pageTurnSound = new Audio(PAGE_TURN_SOUND_SRC);
     const thudSound = new Audio(THUD_SOUND_SRC);
 
@@ -22,29 +24,60 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage: 0,
         soundEnabled: true,
         bookmarks: [],
+        zoomLevel: 1,
     };
 
     // --- Page Creation ---
     function createPages() {
+        // Front Cover
+        const frontCover = document.createElement('div');
+        frontCover.classList.add('hard', 'front-cover');
+        const frontContent = document.createElement('div');
+        frontContent.classList.add('page-content');
+        frontContent.innerHTML = `<h1>The Book Title</h1><img src="/src/images/book1.jpg" alt="Book Cover" style="width:100%;height:100%;object-fit:cover;">`;
+        frontCover.appendChild(frontContent);
+        pagesContainer.appendChild(frontCover);
+
+
         for (let i = 1; i <= NUM_PAGES; i++) {
             const page = document.createElement('div');
             page.classList.add('page');
             page.dataset.pageNum = i;
 
-            const content = document.createElement('img');
-            content.src = `/src/images/medical/01/${i}.jpg`;
-            content.style.width = '100%';
-            content.style.height = '100%';
-            content.style.objectFit = 'cover';
-            page.appendChild(content);
+            const front = document.createElement('div');
+            front.classList.add('page-face', 'front');
+            const frontImg = document.createElement('img');
+            frontImg.src = `/src/images/medical/01/${i}.jpg`;
+            front.appendChild(frontImg);
+
+            const back = document.createElement('div');
+            back.classList.add('page-face', 'back');
+            if (i < NUM_PAGES) {
+                const backImg = document.createElement('img');
+                backImg.src = `/src/images/medical/01/${i + 1}.jpg`;
+                back.appendChild(backImg);
+            }
+
+
+            page.appendChild(front);
+            page.appendChild(back);
 
             // For double-page layout
             if (i % 2 !== 0) {
                 page.classList.add('odd');
             }
 
-            pagesContainer.insertBefore(page, document.querySelector('.back-cover'));
+            pagesContainer.appendChild(page);
         }
+
+        // Back Cover
+        const backCover = document.createElement('div');
+        backCover.classList.add('hard', 'back-cover');
+        const backContent = document.createElement('div');
+        backContent.classList.add('page-content');
+        backContent.innerHTML = `<h2>The End</h2>`;
+        backCover.appendChild(backContent);
+        pagesContainer.appendChild(backCover);
     }
 
     // --- State Management & Persistence ---
@@ -82,12 +115,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Handle cover
+        // Handle covers
         const frontCover = document.querySelector('.front-cover');
         if (state.currentPage > 0) {
             frontCover.classList.add('flipped');
         } else {
             frontCover.classList.remove('flipped');
+        }
+
+        const backCover = document.querySelector('.back-cover');
+        if (state.currentPage === NUM_PAGES) {
+            backCover.classList.add('flipped');
+        } else {
+            backCover.classList.remove('flipped');
         }
     }
 
@@ -97,10 +137,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const direction = pageNumber > state.currentPage ? 'forward' : 'backward';
         const pageToFlip = direction === 'forward' ? document.querySelector(`.page[data-page-num="${pageNumber}"]`) : document.querySelector(`.page[data-page-num="${state.currentPage}"]`);
 
+        book.classList.add('flipping');
         if (pageToFlip) {
-            pageToFlip.classList.add('flipping');
             pageToFlip.addEventListener('transitionend', () => {
-                pageToFlip.classList.remove('flipping');
+                book.classList.remove('flipping');
             }, { once: true });
         }
 
@@ -148,6 +188,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hamburgerMenu.addEventListener('click', () => {
         topToolbarIcons.classList.toggle('open');
+    });
+
+    zoomInBtn.addEventListener('click', () => {
+        state.zoomLevel = Math.min(2, state.zoomLevel + 0.1);
+        book.style.transform = `scale(${state.zoomLevel})`;
+        saveState();
+    });
+
+    zoomOutBtn.addEventListener('click', () => {
+        state.zoomLevel = Math.max(0.5, state.zoomLevel - 0.1);
+        book.style.transform = `scale(${state.zoomLevel})`;
+        saveState();
     });
 
     // Search
