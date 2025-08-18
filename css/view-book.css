@@ -125,7 +125,7 @@ overflow: visible;
     overflow: hidden;
 z-index:9;
 border-radius:5px;
-box-shadow: 0 6px 18px rgba(0,0,0,.25);
+box-shadow: 0 6px 18px rgba(0,0,0,.05);
 
 /*
 border-top-left-radius:20px;
