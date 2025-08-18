@@ -63,9 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
             page.appendChild(back);
 
             // For double-page layout
-            if (i % 2 !== 0) {
+           /* if (i % 2 !== 0) {
                 page.classList.add('odd');
-            }
+            }*/
 
             pagesContainer.appendChild(page);
         }
