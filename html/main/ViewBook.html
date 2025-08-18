@@ -3,45 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Book</title>
+<title>Book Flip</title>
 <style>
   body {
     margin: 0;
     background: #3b2f2f;
+    font-family: Georgia, serif;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     height: 100vh;
-    font-family: Georgia, serif;
-    overflow: hidden;
   }
 
-  header, footer {
+  header {
     background: #222;
     color: #fff;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: .5em 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
   }
-
-  header input {
-    flex: 1;
-    margin-right: .5em;
-    padding: .3em;
-  }
-
-  footer {
-    justify-content: center;
-    gap: 1em;
-  }
-  footer button {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5em;
-    cursor: pointer;
-  }
+  header input { flex: 1; margin-right: .5em; padding: .3em; }
+  header .tools { display: flex; gap: .5em; }
 
   main {
     flex: 1;
@@ -49,35 +33,88 @@
     justify-content: center;
     align-items: center;
     perspective: 2000px;
-    overflow: hidden;
     position: relative;
+    overflow: hidden;
   }
 
   .book {
     position: relative;
     display: flex;
+    height: 80vh;
     transform-style: preserve-3d;
   }
 
   .page {
     width: 45vw;
     max-width: 500px;
-    height: 70vh;
+    height: 100%;
     background: #fdf6e3;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
     padding: 2em;
     font-size: 1.2em;
     line-height: 1.5;
-    position: relative;
-    user-select: none;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
     transform-origin: left center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
   }
 
+  .page.right {
+    left: 50%;
+    transform-origin: left center;
+  }
+  .page.left {
+    left: 0;
+    transform-origin: right center;
+  }
+
+  .edges {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    background: repeating-linear-gradient(
+      to bottom,
+      #cfc6b8,
+      #cfc6b8 2px,
+      #e2dcd2 4px
+    );
+    box-shadow: inset 2px 0 5px rgba(0,0,0,0.3);
+  }
+  .edges.left { left: -20px; }
+  .edges.right { right: -20px; }
+
+  /* Mobile: single page */
   @media (max-width: 768px) {
+    .book { width: 90vw; }
     .page {
-      width: 90vw;
+      position: relative;
+      width: 100%;
+      left: 0;
+      transform-origin: right center;
     }
+    .edges.left { display: none; }
+  }
+
+  footer {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    background: #222;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    padding: .5em;
+  }
+  footer button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
   }
 </style>
 </head>
@@ -92,7 +129,10 @@
 </header>
 
 <main>
-  <div class="book" id="book"></div>
+  <div class="book" id="book">
+    <div class="edges left"></div>
+    <div class="edges right"></div>
+  </div>
 </main>
 
 <footer>
@@ -105,30 +145,44 @@
 const totalPages = 20;
 let currentPage = 1;
 let soundOn = true;
-
-const bookEl = document.getElementById("book");
+const book = document.getElementById("book");
 const indicator = document.getElementById("pageIndicator");
 
 function renderBook() {
-  bookEl.innerHTML = "";
-  const page = document.createElement("div");
-  page.className = "page";
-  page.innerHTML = `<p>This is Page ${currentPage}</p>`;
-  bookEl.appendChild(page);
+  book.querySelectorAll(".page").forEach(p => p.remove());
+  let isMobile = window.innerWidth <= 768;
+
+  if (isMobile) {
+    let page = createPage(currentPage, "single");
+    book.appendChild(page);
+  } else {
+    let left = createPage(currentPage, "left");
+    let right = createPage(currentPage+1, "right");
+    book.appendChild(left);
+    if (currentPage+1 <= totalPages) book.appendChild(right);
+  }
   indicator.textContent = `${currentPage}/${totalPages}`;
 }
-renderBook();
-
-function playFlipSound() {
-  if (!soundOn) return;
-  const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
-  audio.play();
+function createPage(n, side) {
+  let div = document.createElement("div");
+  div.className = `page ${side}`;
+  div.innerHTML = `<p>This is Page ${n}</p>`;
+  return div;
 }
 
 function flipForward() {
   if (currentPage < totalPages) {
-    currentPage++;
-    renderBook();
+    let rightPage = book.querySelector(".page.right");
+    if (rightPage) {
+      rightPage.style.transform = "rotateY(-180deg)";
+      setTimeout(() => {
+        currentPage++;
+        renderBook();
+      }, 600);
+    } else {
+      currentPage++;
+      renderBook();
+    }
     playFlipSound();
   }
 }
@@ -140,6 +194,12 @@ function flipBack() {
   }
 }
 
+function playFlipSound() {
+  if (!soundOn) return;
+  const audio = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+  audio.play();
+}
+
 document.getElementById("next").onclick = flipForward;
 document.getElementById("prev").onclick = flipBack;
 document.getElementById("sound").onclick = () => {
@@ -147,46 +207,8 @@ document.getElementById("sound").onclick = () => {
   document.getElementById("sound").textContent = soundOn ? "🔊" : "🔇";
 };
 
-/* --- Drag-follow flipping --- */
-let startX = 0;
-let isDragging = false;
-let pageEl;
-
-bookEl.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-  isDragging = true;
-  pageEl = bookEl.querySelector(".page");
-  pageEl.style.transition = "none";
-});
-
-bookEl.addEventListener("touchmove", e => {
-  if (!isDragging) return;
-  let currentX = e.touches[0].clientX;
-  let deltaX = currentX - startX;
-  let rotation = Math.min(Math.max(deltaX / 3, -180), 0); // clamp
-  pageEl.style.transform = `rotateY(${rotation}deg)`;
-  pageEl.style.boxShadow = `${Math.abs(rotation) / 5}px 0 30px rgba(0,0,0,0.5)`;
-});
-
-bookEl.addEventListener("touchend", e => {
-  if (!isDragging) return;
-  isDragging = false;
-  let endX = e.changedTouches[0].clientX;
-  let deltaX = endX - startX;
-
-  pageEl.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
-
-  if (deltaX < -50) { // swipe left → next page
-    pageEl.style.transform = "rotateY(-180deg)";
-    setTimeout(flipForward, 300);
-  } else if (deltaX > 50) { // swipe right → prev page
-    pageEl.style.transform = "rotateY(0deg)";
-    setTimeout(flipBack, 300);
-  } else { // snap back
-    pageEl.style.transform = "rotateY(0deg)";
-    pageEl.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
-  }
-});
+window.addEventListener("resize", renderBook);
+renderBook();
 </script>
 
 </body>
