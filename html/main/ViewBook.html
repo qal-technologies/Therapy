@@ -453,7 +453,12 @@ bookEl.addEventListener('touchend', e => {
     (function init() {
       // Title & search placeholder
       document.getElementById('bookTitle').textContent = BOOK.title;
-      document.getElementById('search').placeholder = `Search chapter or page – ${BOOK.title}`;
+   
+if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+      else document.exitFullscreen();
+   
+
+ document.getElementById('search').placeholder = `Search chapter or page – ${BOOK.title}`;
 
       // Start from last read, otherwise bookmark if present
       state.page = loadReadingPosition();
