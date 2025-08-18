@@ -335,6 +335,18 @@ footer.viewer-bottom {
     document.getElementById('nextBtn').addEventListener('click', () => flip(true));
     document.getElementById('prevBtn').addEventListener('click', () => flip(false));
 
+let startX = 0;
+bookEl.addEventListener('touchstart', e => {
+  startX = e.changedTouches[0].screenX;
+});
+bookEl.addEventListener('touchend', e => {
+  let endX = e.changedTouches[0].screenX;
+  if (endX - startX > 50) flip(false);
+  else if (startX - endX > 50) flip(true);
+});
+
+
+
     // Keyboard
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === 'PageDown') flip(true);
