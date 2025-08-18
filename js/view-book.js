@@ -29,55 +29,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Page Creation ---
     function createPages() {
-        // Front Cover
-        const frontCover = document.createElement('div');
-        frontCover.classList.add('hard', 'front-cover');
-        const frontContent = document.createElement('div');
-        frontContent.classList.add('page-content');
-        frontContent.innerHTML = `<h1>The Book Title</h1><img src="/src/images/book1.jpg" alt="Book Cover" style="width:100%;height:100%;object-fit:cover;">`;
-        frontCover.appendChild(frontContent);
-        pagesContainer.appendChild(frontCover);
-
-
         for (let i = 1; i <= NUM_PAGES; i++) {
             const page = document.createElement('div');
             page.classList.add('page');
             page.dataset.pageNum = i;
 
-            const front = document.createElement('div');
-            front.classList.add('page-face', 'front');
-            const frontImg = document.createElement('img');
-            frontImg.src = `/src/images/book2.jpg`;
-            front.appendChild(frontImg);
+            const content = document.createElement('p');
+content.classList.add('page-content');
 
-            const back = document.createElement('div');
-            back.classList.add('page-face', 'back');
-            if (i < NUM_PAGES) {
-                const backImg = document.createElement('img');
-                backImg.src = `/src/images/book2.jpg`;
-                back.appendChild(backImg);
-            }
+            content.innerText = `This is Page ${i}`
+            content.style.width = '100%';
+            content.style.height = '100%';
+            content.style.objectFit = 'cover';
+            page.appendChild(content);
 
-
-            page.appendChild(front);
-            page.appendChild(back);
-
-            // For double-page layout
-           /* if (i % 2 !== 0) {
-                page.classList.add('odd');
-            }*/
-
-            pagesContainer.appendChild(page);
+            pagesContainer.insertBefore(page, document.querySelector('.back-cover'));
         }
-
-        // Back Cover
-        const backCover = document.createElement('div');
-        backCover.classList.add('hard', 'back-cover');
-        const backContent = document.createElement('div');
-        backContent.classList.add('page-content');
-        backContent.innerHTML = `<h2>The End</h2>`;
-        backCover.appendChild(backContent);
-        pagesContainer.appendChild(backCover);
     }
 
     // --- State Management & Persistence ---
