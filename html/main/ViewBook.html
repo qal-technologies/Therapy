@@ -236,7 +236,8 @@ transform-origin: center;
   transition: transform .2s ease;
   width: min(92vw, 1180px); 
 height: min(70vh, 820px);
-  display: grid; 
+  display: flex; 
+flex-direction:row;
 grid-template-columns: 1fr;
 gap: 0; 
 background: transparent;
@@ -333,7 +334,10 @@ footer.viewer-bottom {
   .menu-only { display: none; }
 .brand{display:flex;}
 
-.spread { grid-template-columns: 1fr 1fr; }
+.spread { 
+display:grid;
+grid-template-columns: 1fr 1fr; 
+}
 /*.page {max-width:50%}*/
 }
 
