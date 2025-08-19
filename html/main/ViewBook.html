@@ -229,15 +229,18 @@ overflow:hidden;
 }
 
 .book {
-  position: relative; perspective: 2000px; transform: scale(var(--zoom)); transform-origin: center;
+  position: relative; 
+perspective: 2000px; 
+transform: scale(var(--zoom)); 
+transform-origin: center;
   transition: transform .2s ease;
-  width: min(92vw, 1180px); height: min(70vh, 820px);
+  width: min(92vw, 1180px); 
+height: min(70vh, 820px);
   display: grid; 
-/*grid-template-columns: 1fr;*/
-gap: 0; background: transparent;
+grid-template-columns: 1fr;
+gap: 0; 
+background: transparent;
 }
-
-.spread { grid-template-columns: 1fr 1fr; }
 
 .cover-shadow { position:absolute; inset:-24px; pointer-events:none; filter: drop-shadow(0 30px 40px rgba(0,0,0,.4)); }
 
@@ -329,6 +332,8 @@ footer.viewer-bottom {
   .tools-inline { display: flex; }
   .menu-only { display: none; }
 .brand{display:flex;}
+
+.spread { grid-template-columns: 1fr 1fr; }
 /*.page {max-width:50%}*/
 }
 
@@ -413,7 +418,7 @@ footer.viewer-bottom {
 
 <!-- ===== Stage / Book ===== -->  
     <div class="stage">
-      <div class="book" id="book">
+      <div class="book spread" id="book">
         <div class="book-edges" aria-hidden="true"></div>
         <div class="page left" id="leftPage"><div class="content"></div></div>
         <div class="page right" id="rightPage"><div class="content"></div></div>
