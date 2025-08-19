@@ -431,7 +431,8 @@ footer.viewer-bottom {
       page: 1, 
       zoom: 1,
       soundOn: true,
-      spread: true
+      spread: true,
+bookmarks:[]
     };
 
     // ===== Elements =====
@@ -571,30 +572,67 @@ bookEl.addEventListener('touchend', e => {
     qsa('#zoomIn, #zoomInBottom, [data-hook="zoom-in"]').forEach(btn => btn.addEventListener('click', () => zoom(0.1)));
     qsa('#zoomOut, #zoomOutBottom, [data-hook="zoom-out"]').forEach(btn => btn.addEventListener('click', () => zoom(-0.1)));
 
+
     // Sound toggle
     function toggleSound() {
       state.soundOn = !state.soundOn;
       qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.setAttribute('aria-pressed', state.soundOn));
-      const icon = state.soundOn ? '🔊' : '🔈';
-      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.textContent = icon + (b.dataset.hook ? ' Toggle' : ''));
+
+      const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+
+      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.innerHTML = icon + (b.dataset.hook ? ' Toggle' : ''));
     }
     qsa('#soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
+
+
+
 
     // Bookmark
     function saveBookmark(page = state.page) {
       localStorage.setItem('bookmarkPage', String(page));
+
       qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(b => {
         b.setAttribute('aria-pressed', 'true');
       });
+
+const icon = state.bookmarks.includes(state.page) ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+
+qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(b => b.innerHTML = icon + (b.dataset.hook ? ' bookmark' : ''));
     }
+
+qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', saveBookmark));
+
+
+
+// --- State Management & Persistence ---
+    function saveState() {
+        localStorage.setItem('bookState', JSON.stringify(state));
+    }
+
+    function loadState() {
+        const savedState = localStorage.getItem('bookState');
+        if (savedState) {
+            state = JSON.parse(savedState);
+        }
+    }
+
+
+    // --- UI Update ---
+    function updateUI() {
+        toogleSound();
+saveBookmark(); 
+}
+
     function loadBookmark() {
       const p = parseInt(localStorage.getItem('bookmarkPage') || '');
       return Number.isFinite(p) ? clamp(p, 1, BOOK.pages.length) : null;
     }
+
     function gotoBookmark() {
       const p = loadBookmark();
       if (p) { state.page = p; render(); }
     }
+
     qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', () => saveBookmark(state.page)));
 
     // Fullscreen
