@@ -1,0 +1,717 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <title>Compagnon Féminin - Book Viewer</title>
+  <style>
+
+    :root {
+      --bg: #1c1b1a;
+      --panel: #2a2826;
+      --paper: #efe5d1;
+      --ink: #1b1b1b;
+      --muted: #a29a8c;
+      --accent: #d2b48c;
+      --shadow: rgba(0,0,0,.35);
+      --zoom: 1;
+      --gutter: clamp(8px, 2vw, 24px);
+      --toolbar-h: 54px;
+      --footer-h: 54px;
+ --book-width: 350px;
+    --book-height: 500px;
+    }
+
+/* Toolbars */
+.top-toolbar,
+.bottom-toolbar {
+    width: 100%;
+    max-width: calc(var(--book-width) * 2 + 40px);
+    height: var(--toolbar-height);
+    background: #040404ae;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+backdrop-filter:blur(10px);
+    box-sizing: border-box;
+    border-radius: 16px;
+position: absolute;
+z-index:99999;
+}
+
+.top-toolbar{
+top:0;
+}
+
+.bottom-toolbar{
+bottom:0;
+}
+
+.top-toolbar button,
+.bottom-toolbar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.hamburger-menu {
+    display: none;
+}
+
+/* Book 
+.book {
+    width:100%;
+height:100%;
+max-width:800px;
+display:flex;
+flex-direction:row;
+justify-content:center;
+    position: relative;
+    perspective: 1200px;
+    transition: width 0.5s ease;
+padding:10px;
+padding-top:10rem;
+overflow:hidden;
+}*/
+
+.pages-container {
+display:flex;
+    width: var(--book-width);
+    height: var(--book-height);
+align-items:center;
+justify-content: flex-end;
+    position: absolute;
+    transform-style: preserve-3d;
+overflow: visible;
+}
+
+.page,
+.hard {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #efe5d1;
+    transform-origin: left center;
+    transition: transform 0.6s ease-in-out;
+    border: 1px solid #ccc;
+    overflow: hidden;
+z-index:9;
+border-radius:5px;
+box-shadow: 0 6px 18px rgba(0,0,0,.05);
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0; 
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  color: #f6f4ef; 
+background: var(--bg);
+  display: flex;
+flex-direction:column;
+align-items:center;
+justify-content:space-between;
+}
+
+/* ===== Top Toolbar ===== */
+header.viewer-top {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px var(--gutter);
+  background: linear-gradient(180deg, #2c2a28, #232220);
+  border-bottom: 1px solid #3a3835;
+z-index:999;
+
+width: 100%;
+    max-width: calc(var(--book-width) * 2 + 40px);
+    height: var(--toolbar-height);
+    background: #040404ae;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+backdrop-filter:blur(10px);
+    box-sizing: border-box;
+    border-radius: 16px;
+position: absolute;
+z-index:99999;
+
+top:0;
+}
+
+.brand {
+  display: none; align-items: center; gap: 10px; font-weight: 600;
+  white-space: nowrap;
+}
+.brand .title {
+  opacity: .9
+85; 
+letter-spacing: .2px; 
+font-size: 14px;
+}
+
+.search-wrap { flex: 1; min-width: 150px; }
+
+.search {
+  width: 100%; 
+height: 38px; 
+border-radius: 15px; 
+border: 1px solid #3b3936;
+  background: #201f1d; 
+color: #fff; 
+padding: 0 14px 0 38px; 
+outline: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a8a29e"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5L20.49 19l-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
+  background-repeat: no-repeat; background-position: 10px 50%; background-size: 18px;
+}
+
+.tools-inline { display: none; align-items: center; gap: 8px; }
+
+.icon-btn {
+  display: inline-grid; 
+place-items: center; 
+min-width: 38px; 
+height: 38px; 
+padding: 0 10px;
+  border-radius: 10px; 
+border: 1px solid #3b3936; 
+background: #201f1d; 
+color: #e8e6e3;
+  cursor: pointer; 
+user-select: none; 
+font-size: 14px;
+}
+
+.icon-btn[aria-pressed="true"] { 
+outline: 2px solid #7c6f62; }
+
+.icon-btn:hover { background: #242321; }
+
+.menu-panel { 
+position: absolute; 
+top: calc(var(--toolbar-h) + 6px); 
+right: var(--gutter); background: #201f1d; border: 1px solid #3b3936; border-radius: 12px; padding: 10px; width: min(360px, 92vw); box-shadow: 0 20px 40px var(--shadow); display: none; }
+
+
+.menu-panel.open { display: grid; gap: 10px; }
+.menu-panel .tool-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.menu-panel label { color: #cfc7bb; font-size: 13px; }
+
+/* Large screens: show inline tools */
+
+
+/* ===== Main Book Area ===== */
+main {
+  display: grid; place-items: center; padding: 10px; overflow: hidden;
+
+padding-top:4rem;
+}
+
+.stage { 
+width: 100%; 
+height: 100%; 
+display: flex; 
+place-items: flex-start; 
+justify-content:center;
+position: relative; 
+padding-top:5rem;
+overflow:hidden;
+}
+
+.book {
+  position: relative; perspective: 2000px; transform: scale(var(--zoom)); transform-origin: center;
+  transition: transform .2s ease;
+  width: min(92vw, 1180px); height: min(70vh, 820px);
+  display: grid; 
+/*grid-template-columns: 1fr;*/
+gap: 0; background: transparent;
+}
+
+.spread { grid-template-columns: 1fr 1fr; }
+
+.cover-shadow { position:absolute; inset:-24px; pointer-events:none; filter: drop-shadow(0 30px 40px rgba(0,0,0,.4)); }
+
+.page { position: relative; background: var(--paper); color: var(--ink); border-radius: 8px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.25); 
+}
+
+.page::before { /* page edge texture */
+  content:""; position:absolute; inset:0; background:
+    radial-gradient(120% 100% at 0% 50%, rgba(0,0,0,.10), transparent 50%),
+    linear-gradient(90deg, rgba(0,0,0,.10), transparent 20%, transparent 80%, rgba(0,0,0,.1));
+  pointer-events:none;
+}
+
+.page.left { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+
+.page.right { border-top-left-radius: 0; border-bottom-left-radius: 0; }
+
+.page .content { position:absolute; inset:0; display:grid; place-items:center; }
+
+.page .content img { width: 100%; height: 100%; object-fit: cover; }
+
+.page .content p { width: 100%; height: 100%; object-fit: cover; }
+
+/* Book thickness/extends */
+.book-edges { position:absolute; inset:0; pointer-events:none; }
+
+.book-edges::before, .book-edges::after {
+  content:""; position:absolute; top: 8px; bottom: 8px; width: 14px; background:
+    repeating-linear-gradient( to bottom, #d7cbb2, #d7cbb2 3px, #e9dfca 3px, #e9dfca 6px);
+  box-shadow: inset 0 0 10px rgba(0,0,0,.2);
+}
+.book-edges::before { left: -14px; display: none; }
+
+.book-edges::after { right: -14px; }
+.spread .book-edges::before { display: block; }
+
+/* Flipping page */
+.flip {
+  position: absolute; top: 0; bottom: 0; width: 50%; background: var(--paper);
+  transform-origin: left center; right: 0; border-left: 1px solid rgba(0,0,0,.12);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+
+.flip > .face { position:absolute; inset:0; backface-visibility:hidden; }
+
+.flip .front { transform: rotateY(0deg); }
+
+.flip .back { transform: rotateY(180deg); }
+
+.flip .shade { position:absolute; inset:0; background: linear-gradient(90deg, rgba(0,0,0,.25), rgba(0,0,0,0)); opacity:.4; mix-blend-mode: multiply; }
+
+.flip.anim-forward { animation: turnForward .7s ease forwards; }
+
+.flip.anim-back { left:0; right:auto; transform-origin:right center; animation: turnBack .7s ease forwards; }
+
+@keyframes turnForward {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-180deg); }
+}
+@keyframes turnBack {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(180deg); }
+}
+
+/* ===== Footer / Bottom Bar ===== */
+footer.viewer-bottom {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  gap: 10px; padding: 8px var(--gutter); background: linear-gradient(180deg, #232220, #1d1c1a);
+  border-top: 1px solid #3a3835; position: relative;
+}
+
+.bottom-right { display: flex; gap: 8px; align-items: center; }
+
+.pager { display: flex; gap: 12px; align-items: center; justify-content: center; align-self:center}
+.pager .page-info { min-width: 120px; text-align: center; opacity: .85; font-variant-numeric: tabular-nums; }
+.dots-menu { display: inline-flex; }
+
+@media (max-width: 640px) {
+  .bottom-left, .bottom-right { display: none; }
+  .dots-menu { display: inline-flex; justify-self: end; }
+}
+
+/* Utility */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Large screens: show inline tools */
+@media (min-width: 980px) {
+  .tools-inline { display: flex; }
+  .menu-only { display: none; }
+.brand{display:flex;}
+/*.page {max-width:50%}*/
+}
+
+  </style>
+</head>
+<body>
+  <!-- ===== Top Bar ===== -->
+  <header class="viewer-top top-toolbar">
+    <div class="brand" title="Book tools">
+      <span class="title" id="bookTitle">Compagnon Féminin</span>
+    </div>
+    <div class="search-wrap">
+      <input id="search" class="search" type="search" placeholder="Search page – Compagnon Féminin" />
+    </div>
+
+<!-- Inline tools for wide screens -->
+<div class="tools-inline" aria-label="tools">
+  <button class="icon-btn" id="soundToggle" title="Sound on/off" aria-pressed="true"><i class="fas fa-volume-up"></i></button>
+
+  <button class="icon-btn" id="bookmarkBtn" title="Bookmark this page"><i class="far fa-bookmark"></i></button>
+
+  <button class="icon-btn" id="zoomOut" title="Zoom out">−</button>
+
+  <button class="icon-btn" id="zoomIn" title="Zoom in">＋</button>
+
+  <button class="icon-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+</div>
+
+<!-- Menu for small screens -->
+<button class="icon-btn menu-only" id="menuBtn" title="Menu" aria-expanded="false">☰</button>
+<div class="menu-panel" id="menuPanel" role="dialog" aria-label="Tools">
+
+  <div class="tool-row">
+<label>Sound</label>
+<button class="icon-btn" data-hook="sound"><i class="fas fa-volume-up"></i></button></div>
+
+  <div class="tool-row">
+<label>Bookmark</label>
+<button class="icon-btn" data-hook="bookmark">
+<i class="far fa-bookmark"></i>
+</button>
+</div>
+
+  <div class="tool-row"><label>Zoom</label><div style="display:flex;gap:8px">
+<button class="icon-btn" data-hook="zoom-out">−</button>
+<button class="icon-btn" data-hook="zoom-in">＋</button>
+</div>
+</div>
+
+  <div class="tool-row"><label>Fullscreen</label><button class="icon-btn" data-hook="fullscreen">⛶</button></div>
+</div>
+
+  </header>  
+
+<!-- ===== Stage / Book ===== -->  
+    <div class="stage">
+      <div class="book spread" id="book">
+        <div class="book-edges" aria-hidden="true"></div>
+        <div class="page left" id="leftPage"><div class="content"></div></div>
+        <div class="page right" id="rightPage"><div class="content"></div></div>
+        <svg class="cover-shadow" width="0" height="0" aria-hidden="true"></svg>
+      </div>
+    </div>
+ 
+
+<!-- ===== Bottom Bar ===== -->  
+
+  <!-- Bottom Toolbar -->
+        <div class="bottom-toolbar">
+            <button id="zoomOutBottom" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+            <div class="page-navigation">
+                <button id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <span id="pageInfo">1 / 10</span>
+                <button id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <button id="zoomInBottom" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+        </div>
+
+
+
+<!-- Sound -->  <audio id="flipAudio">
+    <!-- Replace src with your flip sound. Using a short base64 click as a tiny fallback. -->
+    <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQAA" type="audio/mpeg">
+  </audio>  <script>
+    
+    const BOOK = {
+      title: 'Compagnon Féminin',
+      pages: Array.from({ length: 16 }, (_, i) => `This is book${i+1}`),
+      // Chapter index: title -> page number (1-indexed)
+      chapters: [
+        { title: 'Introduction — You Are Alone', page: 1 },
+        { title: 'Part I — Seeing Clearly', page: 4 },
+        { title: 'Part II — Turning Points', page: 8 },
+        { title: 'Part III — Practice', page: 12 },
+      ]
+    };
+
+    // ===== State =====
+    const state = {
+      page: 1, 
+      zoom: 1,
+      soundOn: true,
+      spread: true,
+bookmarks:[]
+    };
+
+    // ===== Elements =====
+    const bookEl = document.getElementById('book');
+    const leftEl = document.getElementById('leftPage').querySelector('.content');
+    const rightEl = document.getElementById('rightPage').querySelector('.content');
+    const infoEl = document.getElementById('pageInfo');
+    const audioEl = document.getElementById('flipAudio');
+
+    const qs = (sel, root=document) => root.querySelector(sel);
+    const qsa = (sel, root=document) => [...root.querySelectorAll(sel)];
+
+    // ===== Responsive: single vs spread =====
+    const mq = window.matchMedia('(min-width: 980px)');
+    function applyLayout() {
+      state.spread = mq.matches;
+      bookEl.classList.toggle('spread', state.spread);
+
+      // Ensure left page is odd
+      if (state.spread && state.page % 2 === 0) state.page -= 1;
+      render();
+    }
+    mq.addEventListener('change', applyLayout);
+
+    // ===== Render pages =====
+    function render() {
+      const total = BOOK.pages.length;
+      const p = clamp(state.page, 1, total);
+      state.page = p;
+
+      leftEl.innerHTML = '';
+      rightEl.innerHTML = '';
+
+      if (state.spread) {
+        const leftIdx = Math.max(1, p);
+        const rightIdx = Math.min(total, p + 1);
+        leftEl.appendChild(makeImg(BOOK.pages[leftIdx - 1]));
+        rightEl.appendChild(makeImg(BOOK.pages[rightIdx - 1]));
+        infoEl.textContent = `${rightIdx} / ${total}`;
+      } else {
+        leftEl.appendChild(makeImg(BOOK.pages[p - 1]));
+        rightEl.appendChild(document.createElement('div')); // keep layout
+        infoEl.textContent = `${p} / ${total}`;
+      }
+
+      // Update bookmark state
+      const bm = loadBookmark();
+      const onThis = bm === state.page;
+      qsa('#bookmarkBtn, #bookmarkBtnBottom').forEach(b => b.setAttribute('aria-pressed', onThis));
+    }
+
+    function makeImg(src) {
+      const img = document.createElement('p');
+ img.innerText = src; img.alt = 'Book page';
+      img.draggable = false; return img;
+    }
+
+    function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
+
+    // ===== Flip animation =====
+    function flip(forward=true) {
+      // Determine which side to animate
+      const total = BOOK.pages.length;
+      if (forward && state.page >= (state.spread ? total - 1 : total)) return;
+      if (!forward && state.page <= 1) return;
+
+      const flip = document.createElement('div');
+      flip.className = 'flip ' + (forward ? 'anim-forward' : 'anim-back');
+
+      const front = document.createElement('div'); front.className = 'face front';
+      const back = document.createElement('div'); back.className = 'face back';
+      const shade = document.createElement('div'); shade.className = 'shade';
+
+      // Snapshot current visible side
+      if (forward) {
+        // Animate right page to the left
+        flip.style.right = 0; flip.style.left = 'auto';
+        front.appendChild(makeImg(BOOK.pages[(state.spread ? state.page+1 : state.page) - 1]));
+        const nextIdx = clamp((state.spread ? state.page + 2 : state.page + 1), 1, total);
+        back.appendChild(makeImg(BOOK.pages[nextIdx - 1]));
+      } else {
+        // Animate left page back to the right
+        flip.style.left = 0; flip.style.right = 'auto';
+        front.appendChild(makeImg(BOOK.pages[state.page - 1]));
+        const prevIdx = clamp((state.spread ? state.page - 1 : state.page - 1), 1, total);
+        back.appendChild(makeImg(BOOK.pages[prevIdx - 1]));
+      }
+
+      flip.append(front, back, shade);
+      bookEl.appendChild(flip);
+
+      if (state.soundOn) { try { audioEl.currentTime = 0; audioEl.play(); } catch(e){} }
+
+      flip.addEventListener('animationend', () => {
+        flip.remove();
+        // Update logical page index
+        if (forward) {
+          state.page += (state.spread ? 2 : 1);
+        } else {
+          state.page -= (state.spread ? 2 : 1);
+          if (state.spread) state.page = Math.max(1, state.page - (state.page % 2 === 0 ? 1 : 0));
+        }
+        render();
+        saveReadingPosition();
+      }, { once: true });
+    }
+
+    // ===== Controls =====
+    document.getElementById('nextBtn').addEventListener('click', () => flip(true));
+    document.getElementById('prevBtn').addEventListener('click', () => flip(false));
+
+let startX = 0;
+bookEl.addEventListener('touchstart', e => {
+  startX = e.changedTouches[0].screenX;
+});
+bookEl.addEventListener('touchend', e => {
+  let endX = e.changedTouches[0].screenX;
+  if (endX - startX > 50) flip(false);
+  else if (startX - endX > 50) flip(true);
+});
+
+
+
+    // Keyboard
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') flip(true);
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') flip(false);
+      if ((e.ctrlKey || e.metaKey) && e.key === '+') zoom(0.1);
+      if ((e.ctrlKey || e.metaKey) && (e.key === '-' || e.key === '_')) zoom(-0.1);
+    });
+
+    // Zoom
+    function zoom(delta) {
+      state.zoom = clamp(Number((state.zoom + delta).toFixed(2)), .6, 2.0);
+      document.documentElement.style.setProperty('--zoom', state.zoom);
+    }
+    qsa('#zoomIn, #zoomInBottom, [data-hook="zoom-in"]').forEach(btn => btn.addEventListener('click', () => zoom(0.1)));
+    qsa('#zoomOut, #zoomOutBottom, [data-hook="zoom-out"]').forEach(btn => btn.addEventListener('click', () => zoom(-0.1)));
+
+
+    // Sound toggle
+    function toggleSound() {
+      state.soundOn = !state.soundOn;
+      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.setAttribute('aria-pressed', state.soundOn));
+
+      const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+
+      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.innerHTML = icon);
+    }
+    qsa('#soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
+
+
+
+
+    // Bookmark
+    function saveBookmark(page = state.page) {
+      localStorage.setItem('bookmarkPage', String(page));
+
+      qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(b => {
+        b.setAttribute('aria-pressed', 'true');
+      });
+
+const icon = state.bookmarks.includes(state.page) ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+
+qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(b => b.innerHTML = icon);
+    }
+
+qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', saveBookmark));
+
+
+
+// --- State Management & Persistence ---
+    function saveState() {
+        localStorage.setItem('bookState', JSON.stringify(state));
+    }
+
+    function loadState() {
+        const savedState = localStorage.getItem('bookState');
+        if (savedState) {
+            state = JSON.parse(savedState);
+        }
+    }
+
+
+    // --- UI Update ---
+    function updateUI() {
+        toogleSound();
+saveBookmark(); 
+}
+
+    function loadBookmark() {
+      const p = parseInt(localStorage.getItem('bookmarkPage') || '');
+      return Number.isFinite(p) ? clamp(p, 1, BOOK.pages.length) : null;
+    }
+
+    function gotoBookmark() {
+      const p = loadBookmark();
+      if (p) { state.page = p; render(); }
+    }
+
+    qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', () => saveBookmark(state.page)));
+
+    // Fullscreen
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+      else document.exitFullscreen();
+    }
+    qsa('#fullscreenBtn, [data-hook="fullscreen"]').forEach(btn => btn.addEventListener('click', toggleFullscreen));
+
+    // Menu panel (top) and bottom three-dots
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+    menuBtn.addEventListener('click', () => {
+      const open = !menuPanel.classList.contains('open');
+      menuPanel.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.getElementById('dotsMenu').addEventListener('click', () => {
+      // Reuse the same panel; open it near bottom on mobile
+      menuPanel.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!menuPanel.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
+        menuPanel.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Search (by chapter title or page number)
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const q = searchInput.value.trim();
+      if (!q) return;
+      const pageNum = parseInt(q, 10);
+      if (Number.isFinite(pageNum)) {
+        goToPage(pageNum);
+        return;
+      }
+      // Match chapter title (case-insensitive contains)
+      const match = BOOK.chapters.find(ch => ch.title.toLowerCase().includes(q.toLowerCase()));
+      if (match) goToPage(match.page);
+    });
+
+    function goToPage(num) {
+      num = clamp(num, 1, BOOK.pages.length);
+      // ensure left page is odd on spread
+      if (state.spread && num % 2 === 0) num -= 1;
+      state.page = num; render(); saveReadingPosition();
+    }
+
+    // Persist last read position
+    function saveReadingPosition() {
+      localStorage.setItem('lastReadPage', String(state.page));
+    }
+    function loadReadingPosition() {
+      const p = parseInt(localStorage.getItem('lastReadPage') || '');
+      if (Number.isFinite(p)) return clamp(p, 1, BOOK.pages.length);
+      return 1;
+    }
+
+    // Init
+    (function init() {
+      // Title & search placeholder
+      document.getElementById('bookTitle').textContent = BOOK.title;
+   
+ document.getElementById('search').placeholder = `Search chapter or page – ${BOOK.title}`;
+
+      // Start from last read, otherwise bookmark if present
+      state.page = loadReadingPosition();
+      const bm = loadBookmark();
+      if (bm && !Number.isFinite(parseInt(localStorage.getItem('lastReadPage') || ''))) state.page = bm;
+
+if (!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{});
+} else {
+document.exitFullscreen();
+}
+   
+      applyLayout();
+    })();
+  </script></body>
+</html>
