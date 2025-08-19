@@ -499,8 +499,8 @@ bookmarks:[]
       if (state.spread) {
         const leftIdx = Math.max(1, p);
         const rightIdx = Math.min(total, p + 1);
-        leftEl.appendChild(makeImg(BOOK.pages[leftIdx - 1], state.page-1));
-        rightEl.appendChild(makeImg(BOOK.pages[rightIdx - 1], state.page));
+        leftEl.appendChild(makeImg(BOOK.pages[leftIdx - 1], state.page));
+        rightEl.appendChild(makeImg(BOOK.pages[rightIdx - 1], state.page + 1));
         infoEl.textContent = `${rightIdx} / ${total}`;
       } else {
         leftEl.appendChild(makeImg(BOOK.pages[p - 1], state.page));
