@@ -499,7 +499,7 @@ bookmarks:[]
       if (state.spread) {
         const leftIdx = Math.max(1, p);
         const rightIdx = Math.min(total, p + 1);
-        leftEl.appendChild(makeImg(BOOK.pages[leftIdx - 1], state.page));
+        leftEl.appendChild(makeImg(BOOK.pages[leftIdx - 1], state.page-1));
         rightEl.appendChild(makeImg(BOOK.pages[rightIdx - 1], state.page));
         infoEl.textContent = `${rightIdx} / ${total}`;
       } else {
@@ -550,7 +550,7 @@ function makeCover(type) {
     </div>
     <div class="page-middle">${src}</div>
     <div class="page-bottom">
-      <span class="page-num">${pageIdx+1}</span>
+      <span class="page-num">${pageIdx}</span>
     </div>
   `;
   return div;
