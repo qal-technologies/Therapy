@@ -259,18 +259,33 @@ footer.viewer-bottom {
 
 <!-- ===== Bottom Bar ===== -->  <footer class="viewer-bottom">
     <div class="pager">
-  <button class="icon-btn" id="prevBtn" title="Previous page">◀</button>
-  <div class="page-info" id="pageInfo">1 / 1</div>
-  <button class="icon-btn" id="nextBtn" title="Next page">▶</button>
+  <button class="icon-btn"  title="Previous page">◀</button>
+  <div class="page-info" >1 / 1</div>
+  <button class="icon-btn"  title="Next page">▶</button>
 </div>
 
 <div class="bottom-right">
-  <button class="icon-btn" id="zoomOutBottom" title="Zoom out">−</button>
-  <button class="icon-btn" id="zoomInBottom" title="Zoom in">＋</button>
+  <button class="icon-btn"  title="Zoom out">−</button>
+  <button class="icon-btn"  title="Zoom in">＋</button>
   <button class="icon-btn dots-menu" id="dotsMenu" title="More">⋮</button>
 </div>
 
-  </footer>  <!-- Sound -->  <audio id="flipAudio">
+  </footer>  
+
+  <!-- Bottom Toolbar -->
+        <div class="bottom-toolbar">
+            <button id="zoom-out-btn" id="zoomOutBottom" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
+            <div class="page-navigation">
+                <button id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                <span id="pageInfo">1 / 10</span>
+                <button id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <button id="zoom-in-btn" id="zoomInBottom" title="Zoom In"><i class="fas fa-search-plus"></i></button>
+        </div>
+
+
+
+<!-- Sound -->  <audio id="flipAudio">
     <!-- Replace src with your flip sound. Using a short base64 click as a tiny fallback. -->
     <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQAA" type="audio/mpeg">
   </audio>  <script>
