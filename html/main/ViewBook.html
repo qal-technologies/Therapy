@@ -269,7 +269,7 @@ box-shadow: 0 6px 18px rgba(0,0,0,.25);
 
 .page.left { border-top-right-radius: 0; border-bottom-right-radius: 0; left:0;}
 
-.page.right { border-top-left-radius: 0; border-bottom-left-radius: 0; right:0; background: green}
+.page.right { border-top-left-radius: 0; border-bottom-left-radius: 0; right:0;}
 
 .page .content { position:absolute; inset:0; display:grid; place-items:center; }
 
@@ -367,8 +367,6 @@ width:50%;
   0% { transform: rotateY(0deg); }
   100% { transform: rotateY(180deg); }
 }
-
-
 
 }
 
@@ -578,7 +576,7 @@ function renderEndCover() {
 function makeCover(type) {
   const div = document.createElement('div');
   div.className = 'cover content';
-  div.innerHTML = `<h1>${BOOK.title}</h1><p>${type === 'cover' ? 'Book by XYZ' : 'Thanks for reading!'}</p>`;
+  div.innerHTML = `<h1>${BOOK.title}</h1><p>${type === 'cover' ? 'Book by Charlotte Casiraghi' : 'Thanks for reading!'}</p>`;
   return div;
 }
 
