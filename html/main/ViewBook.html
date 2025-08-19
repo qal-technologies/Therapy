@@ -21,10 +21,16 @@
 * { box-sizing: border-box; }
 
 html, body { height: 100%; }
+
 body {
-  margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-  color: #f6f4ef; background: var(--bg);
-  display: grid; grid-template-rows: var(--toolbar-h) 1fr var(--footer-h);
+  margin: 0; 
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  color: #f6f4ef; 
+background: var(--bg);
+  display: flex;
+flex-direction:column;
+align-items:center;
+justify-content:space-between;
 }
 
 /* ===== Top Toolbar ===== */
@@ -40,39 +46,69 @@ z-index:999;
   white-space: nowrap;
 }
 .brand .title {
-  opacity: .9; letter-spacing: .2px; font-size: 14px;
+  opacity: .9
+85; 
+letter-spacing: .2px; 
+font-size: 14px;
 }
-.search-wrap { flex: 1; min-width: 160px; }
+
+.search-wrap { flex: 1; min-width: 150px; }
+
 .search {
-  width: 100%; height: 38px; border-radius: 10px; border: 1px solid #3b3936;
-  background: #201f1d; color: #eee; padding: 0 14px 0 38px; outline: none;
+  width: 100%; 
+height: 38px; 
+border-radius: 15px; 
+border: 1px solid #3b3936;
+  background: #201f1d; 
+color: #fff; 
+padding: 0 14px 0 38px; 
+outline: none;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23a8a29e"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 5L20.49 19l-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
   background-repeat: no-repeat; background-position: 10px 50%; background-size: 18px;
 }
+
 .tools-inline { display: none; align-items: center; gap: 8px; }
+
 .icon-btn {
-  display: inline-grid; place-items: center; min-width: 38px; height: 38px; padding: 0 10px;
-  border-radius: 10px; border: 1px solid #3b3936; background: #201f1d; color: #e8e6e3;
-  cursor: pointer; user-select: none; font-size: 14px;
+  display: inline-grid; 
+place-items: center; 
+min-width: 38px; 
+height: 38px; 
+padding: 0 10px;
+  border-radius: 10px; 
+border: 1px solid #3b3936; 
+background: #201f1d; 
+color: #e8e6e3;
+  cursor: pointer; 
+user-select: none; 
+font-size: 14px;
 }
-.icon-btn[aria-pressed="true"] { outline: 2px solid #7c6f62; }
+
+.icon-btn[aria-pressed="true"] { 
+outline: 2px solid #7c6f62; }
+
 .icon-btn:hover { background: #242321; }
-.menu-panel { position: absolute; top: calc(var(--toolbar-h) + 6px); right: var(--gutter); background: #201f1d; border: 1px solid #3b3936; border-radius: 12px; padding: 10px; width: min(360px, 92vw); box-shadow: 0 20px 40px var(--shadow); display: none; }
+
+.menu-panel { 
+position: absolute; 
+top: calc(var(--toolbar-h) + 6px); 
+right: var(--gutter); background: #201f1d; border: 1px solid #3b3936; border-radius: 12px; padding: 10px; width: min(360px, 92vw); box-shadow: 0 20px 40px var(--shadow); display: none; }
+
+
 .menu-panel.open { display: grid; gap: 10px; }
 .menu-panel .tool-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
 .menu-panel label { color: #cfc7bb; font-size: 13px; }
 
 /* Large screens: show inline tools */
-@media (min-width: 980px) {
-  .tools-inline { display: flex; }
-  .menu-only { display: none; }
-}
+
 
 /* ===== Main Book Area ===== */
 main {
   display: grid; place-items: center; padding: 10px; overflow: hidden;
 }
+
 .stage { width: 100%; height: 100%; display: grid; place-items: center; position: relative; }
+
 .book {
   position: relative; perspective: 2000px; transform: scale(var(--zoom)); transform-origin: center;
   transition: transform .2s ease;
@@ -80,11 +116,15 @@ main {
   display: grid; 
 /*grid-template-columns: 1fr;*/ gap: 0; background: transparent;
 }
+
 .spread { grid-template-columns: 1fr 1fr; }
 
 .cover-shadow { position:absolute; inset:-24px; pointer-events:none; filter: drop-shadow(0 30px 40px rgba(0,0,0,.4)); }
 
-.page { position: relative; background: var(--paper); color: var(--ink); border-radius: 8px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.page { position: relative; background: var(--paper); color: var(--ink); border-radius: 8px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,.25); 
+width:100%;
+}
+
 .page::before { /* page edge texture */
   content:""; position:absolute; inset:0; background:
     radial-gradient(120% 100% at 0% 50%, rgba(0,0,0,.10), transparent 50%),
@@ -137,8 +177,10 @@ footer.viewer-bottom {
   gap: 10px; padding: 8px var(--gutter); background: linear-gradient(180deg, #232220, #1d1c1a);
   border-top: 1px solid #3a3835; position: relative;
 }
-.bottom-left, .bottom-right { display: flex; gap: 8px; align-items: center; }
-.pager { display: flex; gap: 12px; align-items: center; justify-content: center; }
+
+.bottom-right { display: flex; gap: 8px; align-items: center; }
+
+.pager { display: flex; gap: 12px; align-items: center; justify-content: center; align-self:center}
 .pager .page-info { min-width: 120px; text-align: center; opacity: .85; font-variant-numeric: tabular-nums; }
 .dots-menu { display: inline-flex; }
 
@@ -149,6 +191,13 @@ footer.viewer-bottom {
 
 /* Utility */
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* Large screens: show inline tools */
+@media (min-width: 980px) {
+  .tools-inline { display: flex; }
+  .menu-only { display: none; }
+.page{max-width:50%}
+}
 
   </style>
 </head>
@@ -172,8 +221,11 @@ footer.viewer-bottom {
 <!-- Menu for small screens -->
 <button class="icon-btn menu-only" id="menuBtn" title="Menu" aria-expanded="false">☰</button>
 <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Tools">
-  <div class="tool-row"><label>Sound</label><button class="icon-btn" data-hook="sound">🔊 Toggle</button></div>
+
+  <div class="tool-row"><label>Sound</label><button class="icon-btn" data-hook="sound"><i class="fas fa-volume-up"></i> Toggle</button></div>
+
   <div class="tool-row"><label>Bookmark</label><button class="icon-btn" data-hook="bookmark"><i class="far fa-bookmark"></i> Save</button></div>
+
   <div class="tool-row"><label>Zoom</label><div style="display:flex;gap:8px"><button class="icon-btn" data-hook="zoom-out">−</button><button class="icon-btn" data-hook="zoom-in">＋</button></div></div>
   <div class="tool-row"><label>Fullscreen</label><button class="icon-btn" data-hook="fullscreen">⛶ Enter</button></div>
 </div>
@@ -188,9 +240,7 @@ footer.viewer-bottom {
       </div>
     </div>
   </main>  <!-- ===== Bottom Bar ===== -->  <footer class="viewer-bottom">
-    <div class="bottom-left">
-      <button class="icon-btn" id="bookmarkBtnBottom" title="Bookmark this page">🔖</button>
-    </div><div class="pager">
+    <div class="pager">
   <button class="icon-btn" id="prevBtn" title="Previous page">◀</button>
   <div class="page-info" id="pageInfo">1 / 1</div>
   <button class="icon-btn" id="nextBtn" title="Next page">▶</button>
@@ -206,10 +256,9 @@ footer.viewer-bottom {
     <!-- Replace src with your flip sound. Using a short base64 click as a tiny fallback. -->
     <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQAA" type="audio/mpeg">
   </audio>  <script>
-    // ===== Demo data: replace with your own page image URLs and chapter index =====
+    
     const BOOK = {
       title: 'Compagnon Féminin',
-      // Pages are images. You can also use local images.
       pages: Array.from({ length: 16 }, (_, i) => `This is book${i+1}`),
       // Chapter index: title -> page number (1-indexed)
       chapters: [
@@ -222,7 +271,7 @@ footer.viewer-bottom {
 
     // ===== State =====
     const state = {
-      page: 1, // 1-indexed current logical page (left page on spread; only page on mobile)
+      page: 1, 
       zoom: 1,
       soundOn: true,
       spread: true
@@ -243,6 +292,7 @@ footer.viewer-bottom {
     function applyLayout() {
       state.spread = mq.matches;
       bookEl.classList.toggle('spread', state.spread);
+
       // Ensure left page is odd
       if (state.spread && state.page % 2 === 0) state.page -= 1;
       render();
