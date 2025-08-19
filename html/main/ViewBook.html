@@ -64,7 +64,7 @@ bottom:0;
     display: none;
 }
 
-/* Book */
+/* Book 
 .book {
     width:100%;
 height:100%;
@@ -78,7 +78,7 @@ justify-content:center;
 padding:10px;
 padding-top:10rem;
 overflow:hidden;
-}
+}*/
 
 .pages-container {
 display:flex;
@@ -139,7 +139,7 @@ width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 10px 20px;
 backdrop-filter:blur(10px);
     box-sizing: border-box;
     border-radius: 16px;
@@ -148,6 +148,7 @@ z-index:99999;
 
 top:0;
 }
+
 .brand {
   display: none; align-items: center; gap: 10px; font-weight: 600;
   white-space: nowrap;
@@ -218,13 +219,14 @@ padding-top:4rem;
 
 .stage { width: 100%; height: 100%; display: grid; place-items: center; position: relative; }
 
-/*.book {
+.book {
   position: relative; perspective: 2000px; transform: scale(var(--zoom)); transform-origin: center;
   transition: transform .2s ease;
   width: min(92vw, 1180px); height: min(70vh, 820px);
   display: grid; 
-grid-template-columns: 1fr; gap: 0; background: transparent;
-}*/
+/*grid-template-columns: 1fr;*/
+gap: 0; background: transparent;
+}
 
 .spread { grid-template-columns: 1fr 1fr; }
 
@@ -331,12 +333,18 @@ footer.viewer-bottom {
     </div>
     <div class="search-wrap">
       <input id="search" class="search" type="search" placeholder="Search chapter or page – Compagnon Féminin" />
-    </div><!-- Inline tools for wide screens -->
+    </div>
+
+<!-- Inline tools for wide screens -->
 <div class="tools-inline" aria-label="tools">
   <button class="icon-btn" id="soundToggle" title="Sound on/off" aria-pressed="true"><i class="fas fa-volume-up"></i></button>
+
   <button class="icon-btn" id="bookmarkBtn" title="Bookmark this page"><i class="far fa-bookmark"></i></button>
+
   <button class="icon-btn" id="zoomOut" title="Zoom out">−</button>
+
   <button class="icon-btn" id="zoomIn" title="Zoom in">＋</button>
+
   <button class="icon-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
 </div>
 
@@ -344,11 +352,23 @@ footer.viewer-bottom {
 <button class="icon-btn menu-only" id="menuBtn" title="Menu" aria-expanded="false">☰</button>
 <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Tools">
 
-  <div class="tool-row"><label>Sound</label><button class="icon-btn" data-hook="sound"><i class="fas fa-volume-up"></i> Toggle</button></div>
+  <div class="tool-row">
+<label>Sound</label>
+<button class="icon-btn" data-hook="sound"><i class="fas fa-volume-up"></i> Toggle</button></div>
 
-  <div class="tool-row"><label>Bookmark</label><button class="icon-btn" data-hook="bookmark"><i class="far fa-bookmark"></i> Save</button></div>
+  <div class="tool-row">
+<label>Bookmark</label>
+<button class="icon-btn" data-hook="bookmark">
+<i class="far fa-bookmark"></i> Save
+</button>
+</div>
 
-  <div class="tool-row"><label>Zoom</label><div style="display:flex;gap:8px"><button class="icon-btn" data-hook="zoom-out">−</button><button class="icon-btn" data-hook="zoom-in">＋</button></div></div>
+  <div class="tool-row"><label>Zoom</label><div style="display:flex;gap:8px">
+<button class="icon-btn" data-hook="zoom-out">−</button>
+<button class="icon-btn" data-hook="zoom-in">＋</button>
+</div>
+</div>
+
   <div class="tool-row"><label>Fullscreen</label><button class="icon-btn" data-hook="fullscreen">⛶ Enter</button></div>
 </div>
 
