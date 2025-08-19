@@ -131,20 +131,27 @@ width:100%;
     linear-gradient(90deg, rgba(0,0,0,.10), transparent 20%, transparent 80%, rgba(0,0,0,.1));
   pointer-events:none;
 }
+
 .page.left { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+
 .page.right { border-top-left-radius: 0; border-bottom-left-radius: 0; }
 
-.content { position:absolute; inset:0; display:grid; place-items:center; }
-.content img { width: 100%; height: 100%; object-fit: cover; }
+.page .content { position:absolute; inset:0; display:grid; place-items:center; }
+
+.page .content img { width: 100%; height: 100%; object-fit: cover; }
+
+.page .content p { width: 100%; height: 100%; object-fit: cover; }
 
 /* Book thickness/extends */
 .book-edges { position:absolute; inset:0; pointer-events:none; }
+
 .book-edges::before, .book-edges::after {
   content:""; position:absolute; top: 8px; bottom: 8px; width: 14px; background:
     repeating-linear-gradient( to bottom, #d7cbb2, #d7cbb2 3px, #e9dfca 3px, #e9dfca 6px);
   box-shadow: inset 0 0 10px rgba(0,0,0,.2);
 }
 .book-edges::before { left: -14px; display: none; }
+
 .book-edges::after { right: -14px; }
 .spread .book-edges::before { display: block; }
 
@@ -155,11 +162,17 @@ width:100%;
   box-shadow: 0 6px 18px rgba(0,0,0,.25);
   overflow:hidden;
 }
+
 .flip > .face { position:absolute; inset:0; backface-visibility:hidden; }
+
 .flip .front { transform: rotateY(0deg); }
+
 .flip .back { transform: rotateY(180deg); }
+
 .flip .shade { position:absolute; inset:0; background: linear-gradient(90deg, rgba(0,0,0,.25), rgba(0,0,0,0)); opacity:.4; mix-blend-mode: multiply; }
+
 .flip.anim-forward { animation: turnForward .7s ease forwards; }
+
 .flip.anim-back { left:0; right:auto; transform-origin:right center; animation: turnBack .7s ease forwards; }
 
 @keyframes turnForward {
@@ -196,7 +209,7 @@ footer.viewer-bottom {
 @media (min-width: 980px) {
   .tools-inline { display: flex; }
   .menu-only { display: none; }
-.page{max-width:50%}
+/*.page{max-width:50%}*/
 }
 
   </style>
@@ -230,7 +243,10 @@ footer.viewer-bottom {
   <div class="tool-row"><label>Fullscreen</label><button class="icon-btn" data-hook="fullscreen">⛶ Enter</button></div>
 </div>
 
-  </header>  <!-- ===== Stage / Book ===== -->  <main>
+  </header>  
+
+<!-- ===== Stage / Book ===== -->  
+<main>
     <div class="stage">
       <div class="book spread" id="book">
         <div class="book-edges" aria-hidden="true"></div>
@@ -239,7 +255,9 @@ footer.viewer-bottom {
         <svg class="cover-shadow" width="0" height="0" aria-hidden="true"></svg>
       </div>
     </div>
-  </main>  <!-- ===== Bottom Bar ===== -->  <footer class="viewer-bottom">
+  </main>  
+
+<!-- ===== Bottom Bar ===== -->  <footer class="viewer-bottom">
     <div class="pager">
   <button class="icon-btn" id="prevBtn" title="Previous page">◀</button>
   <div class="page-info" id="pageInfo">1 / 1</div>
