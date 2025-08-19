@@ -332,6 +332,30 @@ footer.viewer-bottom {
 /*.page {max-width:50%}*/
 }
 
+.cover.content {
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  height: 100%; width: 100%; font-size: 2rem;
+}
+
+@media (max-width: 640px) {
+  .cover.content { margin: 0 auto; }
+  /* Only right border for cover on small */
+  .cover.content { border-right: 3px solid #d2b48c; border-left: none; }
+}
+
+@media (max-width: 640px) {
+  .book-edges::after { right: -14px; }
+  .book-edges::before { display: none; }
+}
+
+.page-content { display:flex; flex-direction:column; height:100%; }
+.page-top { display:flex; justify-content:space-between; font-size:0.7rem; padding:4px 10px; }
+.page-middle { flex:1; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+.page-bottom { text-align:center; font-size:0.65rem; padding-bottom:2px; }
+.page-num { opacity:0.5; }
+
+
+
   </style>
 </head>
 <body>
@@ -451,10 +475,16 @@ bookmarks:[]
       state.spread = mq.matches;
       bookEl.classList.toggle('spread', state.spread);
 
-      // Ensure left page is odd
+      /* Ensure left page is odd
       if (state.spread && state.page % 2 === 0) state.page -= 1;
-      render();
-    }
+      render();*/
+
+
+  // First page is cover
+  if (state.page === 1) renderCover();
+  else if (state.page > BOOK.pages.length) renderEndCover();
+  else renderPages();
+}
     mq.addEventListener('change', applyLayout);
 
     // ===== Render pages =====
@@ -484,11 +514,49 @@ bookmarks:[]
       qsa('#bookmarkBtn, #bookmarkBtnBottom').forEach(b => b.setAttribute('aria-pressed', onThis));
     }
 
-    function makeImg(src) {
-      const img = document.createElement('p');
- img.innerText = src; img.alt = 'Book page';
-      img.draggable = false; return img;
-    }
+
+function renderCover() {
+  leftEl.innerHTML = '';
+  rightEl.innerHTML = '';
+  // On spread, show cover as single on left, blank right
+  leftEl.appendChild(makeCover('cover'));
+  if (state.spread) rightEl.innerHTML = ''; // blank
+  infoEl.textContent = `Cover`;
+}
+function renderEndCover() {
+  leftEl.innerHTML = '';
+  rightEl.innerHTML = '';
+  // On spread, show cover as single on right, blank left
+  if (state.spread) leftEl.innerHTML = '';
+  rightEl.appendChild(makeCover('end'));
+  infoEl.textContent = `End`;
+}
+function makeCover(type) {
+  const div = document.createElement('div');
+  div.className = 'cover content';
+  div.innerHTML = `<h1>${BOOK.title}</h1><p>${type === 'cover' ? 'Book by XYZ' : 'Thanks for reading!'}</p>`;
+  return div;
+}
+
+
+    function makeImg(src, pageIdx) {
+  const div = document.createElement('div');
+  div.className = 'page-content';
+  // Top: Chapter (left), Title (right)
+  const chapter = BOOK.chapters.findLast(ch => ch.page <= pageIdx+1) || {};
+  div.innerHTML = `
+    <div class="page-top">
+      <span class="chapter">${chapter.title || ''}</span>
+      <span class="page-title">${BOOK.title}</span>
+    </div>
+    <div class="page-middle">${src}</div>
+    <div class="page-bottom">
+      <span class="page-num">${pageIdx+1}</span>
+    </div>
+  `;
+  return div;
+}
+
 
     function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
 
@@ -573,7 +641,7 @@ bookEl.addEventListener('touchend', e => {
     qsa('#zoomOut, #zoomOutBottom, [data-hook="zoom-out"]').forEach(btn => btn.addEventListener('click', () => zoom(-0.1)));
 
 
-    // Sound toggle
+    /*Sound toggle
     function toggleSound() {
       state.soundOn = !state.soundOn;
       qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.setAttribute('aria-pressed', state.soundOn));
@@ -581,11 +649,32 @@ bookEl.addEventListener('touchend', e => {
       const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
 
       qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.innerHTML = icon);
-    }
-    qsa('#soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
+    }*/
+    
 
+// Toggle icon class between solid/regular
+function toggleBookmark() {
+  let btn = document.getElementById('bookmarkBtn');
+  let isBookmarked = state.bookmarks.includes(state.page);
 
+  btn.innerHTML = isBookmarked ?
+    '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
+  btn.setAttribute('aria-pressed', isBookmarked);
+}
 
+// Similarly for sound
+function toggleSound() {
+
+state.soundOn = !state.soundOn;
+      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.setAttribute('aria-pressed', state.soundOn));
+
+  qsa('#soundToggle, [data-hook="sound"]').forEach(b => {
+    b.innerHTML = state.soundOn ?
+      '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+  });
+}
+
+qsa('#soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
 
     // Bookmark
     function saveBookmark(page = state.page) {
@@ -693,6 +782,49 @@ saveBookmark();
       if (Number.isFinite(p)) return clamp(p, 1, BOOK.pages.length);
       return 1;
     }
+
+
+let dragging = false;
+let dragFlipEl = null;
+let dragStartX = 0;
+
+bookEl.addEventListener('mousedown', e => {
+  dragging = true;
+  dragStartX = e.clientX;
+  dragFlipEl = startDragFlip(e.clientX);
+});
+window.addEventListener('mousemove', e => {
+  if (!dragging || !dragFlipEl) return;
+  updateDragFlip(dragFlipEl, e.clientX - dragStartX);
+});
+window.addEventListener('mouseup', e => {
+  if (!dragging) return;
+  finishDragFlip(dragFlipEl, e.clientX - dragStartX);
+  dragging = false; dragFlipEl = null;
+});
+
+function startDragFlip(x) {
+  // Create flip element, like in flip(), but set initial transform
+  const flip = document.createElement('div');
+  flip.className = 'flip';
+  flip.style.transform = 'rotateY(0deg)';
+  // ...add child nodes...
+  bookEl.appendChild(flip);
+  return flip;
+}
+function updateDragFlip(flipEl, deltaX) {
+  // Calculate rotation based on drag distance
+  const angle = Math.max(-180, Math.min(0, -deltaX/2));
+  flipEl.style.transform = `rotateY(${angle}deg)`;
+  // Show the underneath page by adjusting opacity or z-index behind the flip
+}
+function finishDragFlip(flipEl, deltaX) {
+  // If drag passes threshold, complete flip
+  if (deltaX < -80) flip(true);
+  else if (deltaX > 80) flip(false);
+  flipEl.remove();
+}
+
 
     // Init
     (function init() {
