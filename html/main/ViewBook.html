@@ -361,6 +361,10 @@ width:50%;
 
 .flip.anim-back { left:0; right:auto; transform-origin:right center; animation: turnBack .7s ease forwards; }
 
+@keyframes turnBack {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-180deg); }
+}
 }
 
 .cover.content {
