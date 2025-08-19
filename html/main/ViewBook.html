@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Book Viewer – Demo</title>
   <style>
+
     :root {
       --bg: #1c1b1a;
       --panel: #2a2826;
@@ -16,7 +17,36 @@
       --gutter: clamp(8px, 2vw, 24px);
       --toolbar-h: 54px;
       --footer-h: 54px;
+ --book-width: 350px;
+    --book-height: 500px;
     }
+
+/* Toolbars */
+.top-toolbar,
+.bottom-toolbar {
+    width: 100%;
+    max-width: calc(var(--book-width) * 2 + 40px);
+    height: var(--toolbar-height);
+    background: #040404ae;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+backdrop-filter:blur(10px);
+    box-sizing: border-box;
+    border-radius: 16px;
+position: absolute;
+z-index:99999;
+}
+
+.top-toolbar{
+top:0;
+}
+
+.bottom-toolbar{
+bottom:0;
+}
 
 * { box-sizing: border-box; }
 
@@ -40,6 +70,23 @@ header.viewer-top {
   background: linear-gradient(180deg, #2c2a28, #232220);
   border-bottom: 1px solid #3a3835;
 z-index:999;
+
+width: 100%;
+    max-width: calc(var(--book-width) * 2 + 40px);
+    height: var(--toolbar-height);
+    background: #040404ae;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+backdrop-filter:blur(10px);
+    box-sizing: border-box;
+    border-radius: 16px;
+position: absolute;
+z-index:99999;
+
+top:0;
 }
 .brand {
   display: none; align-items: center; gap: 10px; font-weight: 600;
@@ -258,14 +305,6 @@ footer.viewer-bottom {
   </main>  
 
 <!-- ===== Bottom Bar ===== -->  
-
-<div class="bottom-right">
-  <button class="icon-btn"  title="Zoom out">−</button>
-  <button class="icon-btn"  title="Zoom in">＋</button>
-  <button class="icon-btn dots-menu" id="dotsMenu" title="More">⋮</button>
-</div>
-
-  </footer>  
 
   <!-- Bottom Toolbar -->
         <div class="bottom-toolbar">
