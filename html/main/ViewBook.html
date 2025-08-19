@@ -637,4 +637,81 @@ saveBookmark();
 
     // Fullscreen
     function toggleFullscreen() {
-      if (!document.fullscreenElement) document.documentElement.requestFullscr
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+      else document.exitFullscreen();
+    }
+    qsa('#fullscreenBtn, [data-hook="fullscreen"]').forEach(btn => btn.addEventListener('click', toggleFullscreen));
+
+    // Menu panel (top) and bottom three-dots
+    const menuBtn = document.getElementById('menuBtn');
+    const menuPanel = document.getElementById('menuPanel');
+    menuBtn.addEventListener('click', () => {
+      const open = !menuPanel.classList.contains('open');
+      menuPanel.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.getElementById('dotsMenu').addEventListener('click', () => {
+      // Reuse the same panel; open it near bottom on mobile
+      menuPanel.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!menuPanel.contains(e.target) && e.target !== menuBtn && !menuBtn.contains(e.target)) {
+        menuPanel.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Search (by chapter title or page number)
+    const searchInput = document.getElementById('search');
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      const q = searchInput.value.trim();
+      if (!q) return;
+      const pageNum = parseInt(q, 10);
+      if (Number.isFinite(pageNum)) {
+        goToPage(pageNum);
+        return;
+      }
+      // Match chapter title (case-insensitive contains)
+      const match = BOOK.chapters.find(ch => ch.title.toLowerCase().includes(q.toLowerCase()));
+      if (match) goToPage(match.page);
+    });
+
+    function goToPage(num) {
+      num = clamp(num, 1, BOOK.pages.length);
+      // ensure left page is odd on spread
+      if (state.spread && num % 2 === 0) num -= 1;
+      state.page = num; render(); saveReadingPosition();
+    }
+
+    // Persist last read position
+    function saveReadingPosition() {
+      localStorage.setItem('lastReadPage', String(state.page));
+    }
+    function loadReadingPosition() {
+      const p = parseInt(localStorage.getItem('lastReadPage') || '');
+      if (Number.isFinite(p)) return clamp(p, 1, BOOK.pages.length);
+      return 1;
+    }
+
+    // Init
+    (function init() {
+      // Title & search placeholder
+      document.getElementById('bookTitle').textContent = BOOK.title;
+   
+ document.getElementById('search').placeholder = `Search chapter or page – ${BOOK.title}`;
+
+      // Start from last read, otherwise bookmark if present
+      state.page = loadReadingPosition();
+      const bm = loadBookmark();
+      if (bm && !Number.isFinite(parseInt(localStorage.getItem('lastReadPage') || ''))) state.page = bm;
+
+if (!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{});
+} else {
+document.exitFullscreen();
+}
+   
+      applyLayout();
+    })();
+  </script></body>
+</html>
