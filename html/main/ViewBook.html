@@ -661,10 +661,6 @@ bookEl.addEventListener('touchend', e => {
       // Title & search placeholder
       document.getElementById('bookTitle').textContent = BOOK.title;
    
-if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
-      else document.exitFullscreen();
-   
-
  document.getElementById('search').placeholder = `Search chapter or page – ${BOOK.title}`;
 
       // Start from last read, otherwise bookmark if present
@@ -672,6 +668,11 @@ if (!document.fullscreenElement) document.documentElement.requestFullscreen().ca
       const bm = loadBookmark();
       if (bm && !Number.isFinite(parseInt(localStorage.getItem('lastReadPage') || ''))) state.page = bm;
 
+if (!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{});
+} else {
+document.exitFullscreen();
+}
+   
       applyLayout();
     })();
   </script></body>
