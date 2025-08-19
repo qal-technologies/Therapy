@@ -580,7 +580,7 @@ bookEl.addEventListener('touchend', e => {
 
       const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
 
-      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.innerHTML = icon + (b.dataset.hook ? ' Toggle' : ''));
+      qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.innerHTML = icon);
     }
     qsa('#soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
 
@@ -597,7 +597,7 @@ bookEl.addEventListener('touchend', e => {
 
 const icon = state.bookmarks.includes(state.page) ? '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
 
-qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(b => b.innerHTML = icon + (b.dataset.hook ? ' bookmark' : ''));
+qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(b => b.innerHTML = icon);
     }
 
 qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', saveBookmark));
