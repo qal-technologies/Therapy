@@ -1,92 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    //book array:
     const BOOK = {
         title: 'Compagnon Féminin',
-        // pages: Array.from({ length: 16 }, (_, i) => `This is book${i + 1}`),
         pages: [
-            {
-                chapter: 1,
-                title: "title of chapter 1",
-                inner: [
-                    [
-                        "<p>This content is supposed to be in chapter 1, page 1.</p> <p> This is extra text for page 1</p>"
-                    ],
-                    [
-                        "<p>This content is supposed to be in chapter 1, page 2.</p> <p> This is extra text for page 2</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 1, page 3.</p> <p> This is extra text for page 3</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 1, page 4.</p> <p> This is extra text for page 4</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 1, page 5.</p> <p> This is extra text for page 5</p>"
-                    ],
-
-                ]
-            }, {
-                chapter: 2,
-                title: "title of chapter 2",
-                inner: [
-                    [
-                        "<p>This content is supposed to be in chapter 2, page 1.</p> <p> This is extra text for page 1</p>"
-                    ],
-                    [
-                        "<p>This content is supposed to be in chapter 2, page 2.</p> <p> This is extra text for page 2</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 2, page 3.</p> <p> This is extra text for page 3</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 2, page 4.</p> <p> This is extra text for page 4</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 2, page 5.</p> <p> This is extra text for page 5</p>"
-                    ],
-
-                ]
-            },
-
-            {
-                chapter: 3,
-                title: "title of chapter 3",
-                inner: [
-                    [
-                        "<p>This content is supposed to be in chapter 3, page 1.</p> <p> This is extra text for page 1</p>"
-                    ],
-                    [
-                        "<p>This content is supposed to be in chapter 3, page 2.</p> <p> This is extra text for page 2</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 3, page 3.</p> <p> This is extra text for page 3</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 3, page 4.</p> <p> This is extra text for page 4</p>"
-                    ],
-
-                    [
-                        "<p>This content is supposed to be in chapter 3, page 5.</p> <p> This is extra text for page 5</p>"
-                    ],
-
-                ]
-            }
-        ],
-
-        chapters: [
-            { title: 'Introduction — You Are Alone', page: 1 },
-            { title: 'Part I — Seeing Clearly', page: 4 },
-            { title: 'Part II — Turning Points', page: 8 },
-            { title: 'Part III — Practice', page: 12 },
-        ],
+            `<img src="/src/images/book1.jpg" alt="cover-page"/>`,
+            `<p> This is in page 1</p>`,
+            `<p> This is in page 2</p>`,
+            `<p> This is in page 3</p>`,
+            `<p> This is in page 4</p>`,
+            `<p> This is in page 5</p>`,
+            `<p> This is in page 6</p>`,
+            `<p> This is in page 7</p>`,
+            `<p> This is in page 8</p>`,
+            `<p> This is in page 9</p>`,
+            `<p> This is in page 10</p>`,
+            `<p> This is in page 11</p>`,
+            `<p> This is in page 12</p>`,
+            `<p> This is in page 13</p>`,
+            `<div><p> This is the end page</p></div>`,
+        ]
     };
 
     // DOM Elements
@@ -96,54 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pageIndicator = document.getElementById('pageInfo');
     const audioEl = document.getElementById('flipAudio');
 
+    // ===== Responsive: single vs spread =====
+    const mq = window.matchMedia('(min-width: 980px)');
+
 
     // helper methods:
     const qs = (sel, root = document) => root.querySelector(sel);
     const qsa = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-
-    // ===== Responsive: single vs spread =====
-    const mq = window.matchMedia('(min-width: 980px)');
-
-    const chapters = BOOK.pages.map(obj => {
-        return [obj.chapter];
-    });
-    const pages = BOOK.pages.map(obj => {
-        return [obj.inner.map(pages => {
-            return pages;
-        })];
-    });
-
-    const titles = BOOK.pages.map
-
-    //state:
-    let state = {
-        chapter: 1,
-        page: 1,
-        zoom: 1,
-        soundOn: true,
-        spread: true,
-        bookmarks: [],
-        total: pages.length,
-    };
-
-    const currentChapter = BOOK.pages.find(page => {
-
-        return page.chapter === state.chapter;
-
-    });
-
-    console.log(currentChapter.inner);
-
-    // Configuration
-    const NUM_PAGES = state.total;
-
-
-
-    function clamp(n, a, b) {
-        const number = Math.max(a, Math.min(b, n));
-        return number;
-    }
 
     //////
     const PAGE_TURN_SOUND_SRC = '/src/audio/page-flip.mp3';
@@ -152,29 +43,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const thudSound = new Audio(THUD_SOUND_SRC);
 
 
-    /*--- Page Creation --
-    // function createPages() {
-    //     for (let i = 1; i <= NUM_PAGES; i++) {
-    //         const page = document.createElement('div');
-    //         page.classList.add('page');
-    //         page.dataset.pageNum = i;
+    const LAST = BOOK.pages.length - 1;
+    const INTERIOR_COUNT = Math.max(0, BOOK.pages.length - 2);
 
-    //         const content = document.createElement('p');
-    //         content.classList.add('page-content');
+    //state:
+    let state = {
+        page: 0,
+        zoom: 1,
+        soundOn: true,
+        spread: mq.matches,
+        bookmarks: [],
+        total: BOOK.pages.length,
+    };
 
-    //         content.innerText = `This is Page ${i}`
-    //         content.style.width = '100%';
-    //         content.style.height = '100%';
-    //         content.style.objectFit = 'cover';
-    //         page.appendChild(content);
+    // Utils: =====>>>>>
+    const clamp = (n, min, max) => {
+        const number = Math.max(min, Math.min(max, n));
+        return number;
+    }
+    const isCover = (idx) => idx === 0;
+    const isEnd = (idx) => idx === LAST;
 
-    //         pagesContainer.insertBefore(page, document.querySelector('.back-cover'));
-    //     }
-    // }
 
-    
-    //*/
-
+    // Configuration
+    const NUM_PAGES = state.total;
 
     // --- State Management & Persistence ---
     function saveState() {
@@ -183,257 +75,333 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadState() {
         const savedState = localStorage.getItem('bookState');
+        if (!savedState) return;
+
         if (savedState) {
-            state = JSON.parse(savedState);
+            state = { ...state, ...JSON.parse(savedState) };
         }
     }
 
+
+    // creating pages======>
+    function makePage(html, pageIdx) {
+        const div = document.createElement('div');
+        div.className = 'page-content content';
+        const checks = isCover(pageIdx) || isEnd(pageIdx);
+        
+        const label = isCover(pageIdx) ? "" : isEnd(pageIdx) ? "" : `${pageIdx}`;
+        const title = isCover(pageIdx) ? "" : isEnd(pageIdx) ? "" : BOOK.title;
+
+        div.innerHTML = `
+    ${!checks ?`<div class="page-top">
+      <span class="chapter">${title}</span>
+    </div>` : ""}
+
+    <div class="page-middle">${html}</div>
+    ${!checks ?`<div class="page-bottom">
+      <span class="page-num">${label}</span>
+    </div>` :""}
+  `;
+        return div;
+    }
+
+    // for indicators======>
+    function setIndicator() {
+        if (isCover(state.page)) {
+            pageIndicator.textContent = "Cover Page";
+            return;
+        }
+        if (isEnd(state.page)) {
+            pageIndicator.textContent = "The End"
+            return;
+        }
+
+        //for wider screen:=======>
+        if (state.spread) {
+            const leftIdx = state.page % 2 === 0 ? state.page + 2 : state.page + 1;
+            const rightIdx = Math.min(LAST - 1, leftIdx + 1);
+
+            const leftNum = leftIdx - 1;
+            const rightNum = rightIdx - 1;
+
+            pageIndicator.textContent = `${leftNum}-${rightNum} / ${INTERIOR_COUNT}`;
+        } else {
+            pageIndicator.textContent = `${state.page - 1} / ${INTERIOR_COUNT}`;
+        }
+    }
+
+
+
     function applyLayout() {
-        loadState();
+        // loadState();
         state.spread = mq.matches;
         bookEl.classList.toggle('spread', state.spread);
 
-        /* Ensure left page is odd
-        if (state.spread && state.page % 2 === 0) state.page -= 1;
-        render();*/
-
+        if (state.spread && !isCover(state.page) && !isEnd(state.page) && state.page % 2 === 0) {
+            state.page = Math.min(LAST - 1, state.page + 1);
+        }
 
         // First page is cover
-        if (state.page === 1) renderCover();
-        else if (state.page > BOOK.pages.length) renderEndCover();
-        else render();
+        render();
 
-    }
-    mq.addEventListener('change', applyLayout);
-
-    function makePage(text, pageIdx) {
-        const div = document.createElement('div');
-        div.classList.add('page-content', "content");
-
-        // Top: Chapter (left), Title (right)
-        // const chapter = BOOK.chapters.findLast(ch => ch.page <= pageIdx + 1) || {};
-
-        const direction = pageIdx > state.page ? true : false;
-        // flip(direction);
-
-        div.innerHTML = `
-    <div class="page-top">
-      <span class="chapter">${BOOK.title || ''}</span>
-    </div>
-    <div class="page-middle">${text}</div>
-    <div class="page-bottom">
-      <span class="page-num">${pageIdx}</span>
-    </div>
-  `;
-        return div;
     }
 
 
     // ===== Render pages =====
     function render() {
-        loadState();
-        const total = BOOK.pages.length;
-        const p = Math.max(state.page, Math.min(1, total));
-
-        state.page = p;
-
         leftEl.innerHTML = '';
         rightEl.innerHTML = '';
+        bookEl.classList.remove('single-right', 'single-left');
 
-        if (state.spread) {
-            const leftIdx = Math.max(1, p);
-            const rightIdx = Math.min(total, p + 1);
-
-            leftEl.appendChild(makePage(BOOK.pages[leftIdx - 1], state.page));
-            rightEl.appendChild(makePage(BOOK.pages[rightIdx - 1], state.page + 1));
-
-
-            pageIndicator.textContent = `${rightIdx} / ${total}`;
-        } else {
-            leftEl.appendChild(makePage(BOOK.pages[p - 1], state.page));
-            rightEl.appendChild(document.createElement('div'));
-
-            pageIndicator.textContent = `${p} / ${total}`;
+        if (isCover(state.page)) {
+            rightEl.appendChild(makePage(BOOK.pages[0], 0));
+            bookEl.classList.add('single-right');
+            setIndicator();
+            return;
         }
 
-        // Update bookmark state
-        const bm = loadBookmark();
-        const onThis = bm === state.page;
+        if (isEnd(state.page)) {
+            leftEl.appendChild(makePage(BOOK.pages[LAST], LAST));
+            bookEl.classList.add('single-left');
+            setIndicator();
+            return;
+        }
 
-        qsa('#bookmarkBtn, #bookmarkBtnBottom').forEach(b => b.setAttribute('aria-pressed', onThis));
+        if (state.spread) {
+            const leftIdx = (state.page % 2 === 0) ? state.page + 1 : state.page;
+            const rightIdx = Math.min(LAST - 1, leftIdx + 1);
+
+            leftEl.appendChild(makePage(BOOK.pages[leftIdx], leftIdx));
+            rightEl.appendChild(makePage(BOOK.pages[rightIdx], rightIdx));
+        } else {
+            rightEl.appendChild(makePage(BOOK.pages[state.page], state.page));
+            bookEl.classList.add('single-right');
+        }
+
+        setIndicator();
+        document.documentElement.style.setProperty('--zoom', state.zoom);
     }
 
-    //rendering covers and ends::::
-    function renderCover() {
-        leftEl.innerHTML = '';
-        rightEl.innerHTML = '';
+    function playTurnSound(isClosing) {
+        if (!state.soundOn) return;
+        const endSound = isCover(state.page) || isEnd(state.page);
 
-        // On spread, show cover as single on left, blank right
-        leftEl.appendChild(makeCover('cover'));
-        if (state.spread) rightEl.innerHTML = '';
-        pageIndicator.textContent = `Cover Page`;
-    }
-
-    function renderEndCover() {
-        leftEl.innerHTML = '';
-        rightEl.innerHTML = '';
-
-        // On spread, show cover as single on right, blank left
-        if (state.spread) leftEl.innerHTML = '';
-        rightEl.appendChild(makeCover('end'));
-        pageIndicator.textContent = `The End`;
-    }
-
-    function makeCover(type) {
-        console.log(state.page);
-
-        const div = document.createElement('div');
-        div.className = 'cover content';
-
-        div.innerHTML = `
-        <h1>${BOOK.title}</h1>
-        <p>${type === 'cover' ? 'Book by Charlotte Casiraghi' : 'Thanks for reading!'}</p>`;
-        return div;
+        try {
+            if (isClosing) {
+                thudSound.currentTime = 0;
+                thudSound.play();
+            } else if (!isClosing && endSound) {
+                return;
+            } else if (!isClosing) {
+                pageTurnSound.currentTime = 0;
+                pageTurnSound.play();
+            }
+        } catch { }
     }
 
     // ===== Flip animation =====
     function flip(forward = true) {
-        // Determine which side to animate
-        const total = BOOK.pages.length;
-        if (forward && state.page >= (total)) return;
-        if (!forward && state.page <= 1) return;
+        if (isCover(state.page) || isEnd(state.page)) return;
+
 
         const flip = document.createElement('div');
-        flip.className = 'flip ' + (forward ? 'anim-forward' : 'anim-back');
+        flip.className = 'flip ';
 
+        
         const front = document.createElement('div'); front.className = 'face front';
         const back = document.createElement('div'); back.className = 'face back';
         const shade = document.createElement('div'); shade.className = 'shade';
 
-        // Snapshot current visible side
+        const isSinglePage = bookEl.classList.contains("single-left") || bookEl.classList.contains("single-right") || !state.spread;
+
+        flip.style.width = isSinglePage ? "100%" : "50%";
+
         if (forward) {
-            // Animate right page to the left
-            flip.style.right = 0; flip.style.left = 'auto';
-            front.appendChild(makePage(BOOK.pages[(state.spread ? state.page + 1 : state.page) - 1]));
-            const nextIdx = clamp((state.spread ? state.page + 2 : state.page + 1), 1, total);
-            back.appendChild(makePage(BOOK.pages[nextIdx - 1]));
+            flip.style.right = 0;
+            flip.style.left = 'auto';
+            flip.style.transformOrigin = "left center";
+            flip.classList.add("anim-forward");
+
+            const current = currentRightIndex();
+            front.appendChild(makePage(BOOK.pages[current], current));
+
+
+            const nextIdx = nextRightSnapshotIndex();
+            back.appendChild(makePage(BOOK.pages[nextIdx], nextIdx));
         } else {
-            // Animate left page back to the right
-            flip.style.left = 0; flip.style.right = 'auto';
-            front.appendChild(makePage(BOOK.pages[state.page - 1]));
-            const prevIdx = clamp((state.spread ? state.page - 1 : state.page - 1), 1, total);
-            back.appendChild(makePage(BOOK.pages[prevIdx - 1]));
+            flip.style.left = 0;
+            flip.style.right = 'auto';
+            flip.style.transformOrigin = "right center";
+            flip.classList.add("anim-back");
+
+
+            const current = currentLeftIndex();
+            front.appendChild(makePage(BOOK.pages[current], current));
+
+
+            const prevIdx = prevLeftSnapshotIndex();
+            back.appendChild(makePage(BOOK.pages[prevIdx], prevIdx));
 
         }
 
         flip.append(front, back, shade);
         bookEl.appendChild(flip);
 
-        if (state.soundOn) {
-            try {
-                audioEl.currentTime = 0;
-                audioEl.play();
-            }
-            catch (e) {
-                console.error("This is the error: ", e);
-            }
-        }
+        flip.addEventListener('animationend', () => flip.remove(), { once: true });
+    }
 
-        flip.addEventListener('animationend', () => {
-            applyLayout();
-            flip.remove();
-            // Update logical page index
-            if (forward) {
-                state.page += (state.spread ? 2 : 1);
+    // Helpers for snapshots
+    function currentLeftIndex() {
+        if (isCover(state.page)) return 0;
+        if (isEnd(state.page)) return LAST;
+        if (state.spread) return (state.page % 2 === 0) ? state.page + 1 : state.page;
+        
+        return Math.max(1, state.page - 1);
+    }
+    function currentRightIndex() {
+        if (isCover(state.page)) return 0;
+        if (isEnd(state.page)) return LAST;
+        if (state.spread) {
+            const leftIdx = (state.page % 2 === 0) ? state.page + 1 : state.page;
+            return Math.min(LAST - 1, leftIdx + 1);
+        }
+        return state.page;
+    }
+    function nextRightSnapshotIndex() {
+        // what content will appear "under" when turning right page forward
+        if (isCover(state.page)) return Math.min(LAST - 1, 1); // next visible after cover
+        if (state.spread) return Math.min(LAST - 1, currentRightIndex() + 2);
+        return Math.min(LAST, state.page + 1);
+    }
+    function prevLeftSnapshotIndex() {
+        // what content will appear when turning left page backward
+        if (isEnd(state.page)) return Math.max(1, LAST - 1);
+        if (state.spread) return Math.max(1, currentLeftIndex() - 2);
+        return Math.max(0, state.page - 1);
+    }
+
+    // ===== Navigation (returns true if a "closing" move) =====
+    function goNext() {
+        if (isEnd(state.page)) return false; // already closed at end
+
+        const wasCover = isCover(state.page);
+
+        if (state.spread) {
+            if (wasCover) {
+                // open to first interior spread (1–2) -> set left=1
+                state.page = 1;
             } else {
-                state.page -= (state.spread ? 2 : 1);
-                if (state.spread) state.page = Math.max(1, state.page - (state.page % 2 === 0 ? 1 : 0));
+                // advance a leaf (2 pages)
+                state.page = Math.min(LAST, state.page + 2);
+                // if we hit LAST (end) or LAST-1+2 >= LAST -> close to end
+                if (state.page >= LAST) {
+                    state.page = LAST;
+                    return true; // closing
+                }
+                // keep left odd
+                if (state.page % 2 === 0) state.page += 1;
+                state.page = Math.min(LAST - 1, state.page);
             }
-            saveState();
-            console.log(state.page);
-        }, { once: true });
-    }
-
-    // Keyboard
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight' || e.key === 'PageDown') flip(true);
-        if (e.key === 'ArrowLeft' || e.key === 'PageUp') flip(false);
-        if ((e.ctrlKey || e.metaKey) && e.key === '+') zoom(0.1);
-        if ((e.ctrlKey || e.metaKey) && (e.key === '-' || e.key === '_')) zoom(-0.1);
-    });
-
-    // --- UI Update ---
-    function updateUI() {
-        loadState();
-
-        // Update page indicator
-        pageIndicator.textContent = `${state.page} / ${state.total}`;
-
-        // Update sound button
-        toggleSound();
-
-        // Update bookmark button
-        gotoBookmark();
-        toggleBookmark();
-
-        // // Handle covers
-        // const frontCover = document.querySelector('.front-cover');
-        // if (state.page > 0) {
-        //     frontCover.classList.add('flipped');
-        // } else {
-        //     frontCover.classList.remove('flipped');
-        // }
-
-        // const backCover = document.querySelector('.back-cover');
-        if (state.page === 1) {
-            renderCover();
         } else {
-            applyLayout();
+            // single page
+            state.page = Math.min(LAST, state.page + 1);
+            if (isEnd(state.page)) return true; // closing
         }
+        return wasCover ? false : false;
     }
 
-    // --- Event Handlers ---
-    function goToPage(pageNumber) {
-        const direction = pageNumber > state.page ? true : false;
+    function goPrev() {
+        if (isCover(state.page)) return false; // already closed at cover
 
-        const index = clamp(pageNumber, 1, state.total);
-        flip(direction);
+        const wasEnd = isEnd(state.page);
 
-        if (state.spread && index % 2 === 0) index -= 1;
-
-        state.page = index;
-
-        if (state.soundEnabled) {
-            pageTurnSound.play().catch(e => console.error("Sound play failed:", e));
+        if (state.spread) {
+            if (wasEnd) {
+                // open back to last interior spread
+                state.page = Math.max(1, LAST - 1);
+            } else {
+                // go back a leaf (2 pages)
+                state.page = Math.max(0, state.page - 2);
+                if (state.page <= 0) {
+                    state.page = 0; // cover
+                    return true; // closing
+                }
+                // ensure left odd
+                if (state.page % 2 === 0) state.page += 1;
+                state.page = Math.max(1, state.page);
+            }
+        } else {
+            // single page
+            state.page = Math.max(0, state.page - 1);
+            if (isCover(state.page)) return true; // closing
         }
+        return wasEnd ? false : false;
+    }
 
-        updateUI();
-        updatePageEdges();
+    function flipForward() {
+        const closing = goNext();        // compute new target state
+        playTurnSound(closing);
+        flip(true);               // play correct forward animation
+        render();
+        saveState();
+    }
+    function flipBack() {
+        const closing = goPrev();        // compute new target state
+        playTurnSound(closing);
+        flip(false);              // play correct backward animation
+        render();
         saveState();
     }
 
+    // ===== Controls =====>>>>
     /*Sound toggle*/
     function toggleSound() {
         state.soundOn = !state.soundOn;
-        qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.setAttribute('aria-pressed', state.soundOn));
-
         const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
-
-        qsa('#soundToggle, [data-hook="sound"]').forEach(b => b.innerHTML = icon);
+        document.querySelector('.soundToggle').innerHTML = icon;
+        document.querySelectorAll('[data-hook="sound"]').forEach(b => (b.innerHTML = icon));
+        saveState();
     }
-    qsa('#soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
-
 
 
     // Zoom
     function zoom(delta) {
         state.zoom = clamp(Number((state.zoom + delta).toFixed(2)), .6, 2.0);
-
         document.documentElement.style.setProperty('--zoom', state.zoom);
+        saveState();
     }
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { });
+        else document.exitFullscreen();
+    }
+    qsa('#fullscreenBtn, [data-hook="fullscreen"]').forEach(btn => btn.addEventListener('click', toggleFullscreen));
 
     qsa('#zoomIn, #zoomInBottom, [data-hook="zoom-in"]').forEach(btn => btn.addEventListener('click', () => zoom(0.1)));
     qsa('#zoomOut, #zoomOutBottom, [data-hook="zoom-out"]').forEach(btn => btn.addEventListener('click', () => zoom(-0.1)));
+
+    // Keyboard
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'PageDown') flipForward();
+        if (e.key === 'ArrowLeft' || e.key === 'PageUp') flipBack();
+        if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=')) zoom(0.1);
+        if ((e.ctrlKey || e.metaKey) && (e.key === '-' || e.key === '_')) zoom(-0.1);
+    });
+
+    // Swipe (mobile)
+    let touchStartX = 0;
+    const SWIPE_MIN = 40;
+    bookEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    bookEl.addEventListener('touchend', (e) => {
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        if (dx <= -SWIPE_MIN) flipForward();
+        else if (dx >= SWIPE_MIN) flipBack();
+    }, { passive: true });
+
+    ///event listerners:
+    document.getElementById('prevBtn').addEventListener('click', flipBack);
+    document.getElementById('nextBtn').addEventListener('click', flipForward);
 
 
     // Toggle bookmark
@@ -446,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         qsa('#bookmarkBtn, #bookmark, [data-hook="bookmark"]').forEach(btn => btn.innerHTML = icon);
     }
+
     qsa('#bookmarkBtn, #bookmark, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', toggleBookmark));
 
     function saveBookmark(number) {
@@ -455,18 +424,19 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             state.bookmarks.push(page);
         }
-        updateUI();
+        localStorage.setItem("bookmarkPages", JSON.stringify(number));
+        toggleBookmark();
         saveState();
     }
 
     function loadBookmark() {
-        const p = parseInt(localStorage.getItem('bookmarkPage') || '');
-        return Number.isFinite(p) ? clamp(p, 1, BOOK.pages.length) : null;
-    }
+        const saved = localStorage.getItem('bookmarkPage');
+        if (!saved) return;
 
-    function gotoBookmark() {
-        const p = loadBookmark();
-        if (p) { state.page = p; render(); }
+        const p = parseInt(saved);
+
+        console.log("loaded", p);
+        return Number.isFinite(p) ? p : null;
     }
 
     qsa('#bookmarkBtn, #bookmarkBtnBottom, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', () => saveBookmark(state.page)));
@@ -474,9 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /////
     //////
-    ///////
-
-
     // for menu and expandablesss:
 
     // Menu panel (top) and bottom three-dots
@@ -495,116 +462,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-
-    qsa("#prevBtn").forEach(btn => btn.addEventListener("click", () => {
-        flip(false);
-    }));
-    qsa("#nextBtn").forEach(btn => btn.addEventListener("click", () => {
-        flip(true);
-    }));
-
-    // prevPageBtn.addEventListener('click', () => {
-    //     if (state.page > 0) {
-    //         goToPage(state.page - 1);
-    //     } else {
-    //         if (state.soundEnabled) thudSound.play();
-    //     }
-    // });
-
-    // nextPageBtn.addEventListener('click', () => {
-    //     if (state.page < NUM_PAGES) {
-    //         goToPage(state.page + 1);
-    //     } else {
-    //         if (state.soundEnabled) thudSound.play();
-    //     }
-    // });
-
-
     // Search
     const searchBar = document.getElementById('search');
     searchBar.addEventListener('change', () => {
         const value = searchBar.value.trim();
-        if (!value) return;
-
-        const pageNum = parseInt(value, 10);
-        if (!isNaN(pageNum) && pageNum > 0 && pageNum <= NUM_PAGES) {
-            goToPage(pageNum);
-        }
-
-        // for titles:
-        const match = BOOK.chapters.find(ch => ch.title.toLowerCase().includes(value.toLowerCase()));
-        if (match) goToPage(match.page);
-
         searchBar.value = '';
+        if (!value) return;
+        if (value.toLowerCase().includes("e")) {
+            let direction = true;
+            value.toLowerCase().includes("cover") ? [state.page = 0, direction = false]
+                : value.toLowerCase().includes("end") ? [state.page = LAST, direction = true]
+                    : "";
+
+            flip(direction);
+            playTurnSound(true);
+            render();
+            saveState();
+        }
+
+        
+        const pageNum = parseInt(value, 10);
+        if (!Number.isFinite(pageNum) || pageNum < 0) return;
+
+        const idx = clamp(pageNum, 1, LAST - 1); 
+        state.page = idx;
+        flip(true);
+        playTurnSound(false);
+        render();
+        saveState();
     });
 
-
-    // Fullscreen
-    function toggleFullscreen() {
-        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => { });
-        else document.exitFullscreen();
-    }
-    qsa('#fullscreenBtn, [data-hook="fullscreen"]').forEach(btn => btn.addEventListener('click', toggleFullscreen));
-
-
-    // --- Page Edges ---
-    function updatePageEdges() {
-        const leftEdges = document.getElementById('page-edges-left');
-        const rightEdges = document.getElementById('page-edges-right');
-        leftEdges.innerHTML = '';
-        rightEdges.innerHTML = '';
-
-        const edgeThickness = 0.5; // in px
-        for (let i = 0; i < state.page; i++) {
-            const edge = document.createElement('div');
-            edge.className = 'page-edge';
-            edge.style.left = `${i * edgeThickness}px`;
-            leftEdges.appendChild(edge);
-        }
-
-        for (let i = state.page; i < NUM_PAGES; i++) {
-            const edge = document.createElement('div');
-            edge.className = 'page-edge';
-            edge.style.right = `${(NUM_PAGES - 1 - i) * edgeThickness}px`;
-            rightEdges.appendChild(edge);
-        }
-    }
-
-    // --- Swipe Gestures ---
-    let touchstartX = 0;
-    let touchendX = 0;
-
-    function handleGesture() {
-        if (touchendX < touchstartX) {
-            if (state.page < state.total) {
-                goToPage(state.page + 1);
-            }
-        }
-
-        if (touchendX > touchstartX) {
-            if (state.page > 0) {
-                goToPage(state.page - 1);
-            }
-        }
-    }
-
-    bookEl.addEventListener('touchstart', e => {
-        touchstartX = e.changedTouches[0].screenX;
-    });
-
-    bookEl.addEventListener('touchend', e => {
-        touchendX = e.changedTouches[0].screenX;
-        handleGesture();
-    });
+    mq.addEventListener('change', applyLayout);
 
     // Init
     (function init() {
         // Title & search placeholder
         document.getElementById('bookTitle').textContent = BOOK.title;
 
-        document.getElementById('search').placeholder = `Search chapter or page – ${BOOK.title}`;
+        document.getElementById('search').placeholder = `Search page – ${BOOK.title}`;
 
-    // Start from last read, otherwise bookmark if present
+        // Start from last read, otherwise bookmark;
         loadState();
         const bm = loadBookmark();
 
