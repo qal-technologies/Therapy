@@ -3,7 +3,32 @@ document.addEventListener('DOMContentLoaded', () => {
         title: 'Compagnon Féminin',
         pages: [
             `<img src="/src/images/book1.jpg" alt="cover-page"/>`,
-            `<p> This is in page 1</p>`,
+`<div>
+<h1 style="font-weight:bold;">COMPAGNON FÉMININ</h1>
+<p>A Journey Through Womanhood, Healing, and Hope</p>
+
+<div class="inner-content bottom flex column" style="margin-top:20%" >
+<p>AUTHOR</p>
+<b style="font-size:1.2rem" >Charlotte Casiraghi </b>
+</div>
+</div>`,
+            `<div>
+<h1 style="font-weight:bold;" >Copyright © 2025 by Charlotte Casiraghi.</h1>
+All rights reserved. 
+<br/>
+<br/>
+First Edition. 
+<br/>
+No part of this book may be reproduced without permission. 
+
+<br/>
+<br/>
+Published by Monaco Press, Avenue du Palais, Monaco.
+<br/>
+Printed in France.
+<br/>
+Library of Congress Cataloging-in-Publication Data forthcoming.
+</div>`,
             `<p> This is in page 2</p>`,
             `<p> This is in page 3</p>`,
             `<p> This is in page 4</p>`,
