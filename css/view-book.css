@@ -217,7 +217,7 @@ body {
 .book {
     width: 100%;
     height: 100%;
-    width: min(95vw, calc(var(--book-width) + 60px));
+    width: min(95vw, calc(var(--book-width) + 80px));
     height: min(70vh, 820px);
     max-width: 1180px;
     display: flex;
