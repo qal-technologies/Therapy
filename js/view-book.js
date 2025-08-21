@@ -54,10 +54,10 @@ Avenue du Palais, Monaco.
             `
             <h1>DEDICATION</h1>
 
-> To the silent ones. <br/>
-> To the women who cry behind closed doors.<br/>
-> To the ones who stayed strong for too long.<br/>
-> To the souls whoever felt invisible, unloved, or forgotten.
+• To the silent ones. <br/>
+• To the women who cry behind closed doors.<br/>
+• To the ones who stayed strong for too long.<br/>
+• To the souls whoever felt invisible, unloved, or forgotten.
 
 <br/>
 <br/>
@@ -108,17 +108,26 @@ This book was born from a place of inquiry and compassionâ€”a desire to wea
 I grew up in an extraordinary world of elegance and tradition, one forever marked by the early loss of my father. My childhood oscillated between the polished grandeur of royal halls and the quiet, dusty arenas where I learned to ride horses. Those horses became my sanctuary and teachers. In their eyes, I found a mirror for my own fears and strengths; in their gallop, I learned the discipline and grace that carry a woman through life.
 </p>
 
-Later, as I studied philosophy in Paris, the questions deepened. I realised that philosophyâ€”a discipline that seeks to make sense of life had the power to speak directly to the heart. 
+
             `,
-            `Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Lesâ€¯Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
+`
+<p>
+Later, as I studied philosophy in Paris, the questions deepened. I realised that philosophyâ€”a discipline that seeks to make sense of life had the power to speak directly to the heart. 
+</p>
+        
+Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Lesâ€¯Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
 
 <p>
 Throughout this book, I share lessons and reflections drawn from my own path and from the wisdom of thinkers, poets, and everyday heroines. My goal is not to prescribe a one-size-fits-all solution but to offer a companion for the many seasons of life. We will explore sorrow and joy, strength and vulnerability, solitude and connection. We will walk through the forests of healing and emerge with tools to cultivate confidence and purpose. Most of all, I hope these chapters remind you that you are never aloneâ€”that your experiences, however difficult or hidden, are understood and shared by women across the world.
 </p>
+ `,
 
-When I reflect on my journey so farâ€”from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms. `,
+            `
+<p>
+When I reflect on my journey so farâ€”from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
+</p>
 
-            `I see someone who sought freedom and found it not by escaping the past but by integrating it, transforming pain into wisdom and tradition into personal meaning.
+I see someone who sought freedom and found it not by escaping the past but by integrating it, transforming pain into wisdom and tradition into personal meaning.
 
 <p>
 If this book encourages you to do the same if it helps you to heal deeply, to live authentically, and to love boldly then I am grateful. My wish is for Compagnon Féminin to be a guide and a gentle friend, accompanying you through the peaks and valleys, holding space for your sorrow and celebrating your joy.</p>`,
