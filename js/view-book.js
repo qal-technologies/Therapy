@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 `<p>---</p>`,
 `
 <div class="inner-content flex center-self text-center fx-top-30p">
-    <h1 style="margin-bottom:-10px;">COMPAGNON FÉMININ</h1>
+    <h1 style="margin-bottom:-5px;">COMPAGNON FÉMININ</h1>
     <p class="text-center">A Journey Through Womanhood, Healing, and Hope</p>
 </div>
 
     <div class="inner-content fx-btm-5p text-center">
         AUTHOR
-        <h3 style="margin-top:2px;">Charlotte Casiraghi</h3>
+        <h3>Charlotte Casiraghi</h3>
 </div>`,
 
 
