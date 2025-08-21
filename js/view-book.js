@@ -118,11 +118,15 @@ Later, as I studied philosophy in Paris, the questions deepened. I realised that
 Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Lesâ€¯Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
 
 <p>
-Throughout this book, I share lessons and reflections drawn from my own path and from the wisdom of thinkers, poets, and everyday heroines. My goal is not to prescribe a one-size-fits-all solution but to offer a companion for the many seasons of life. We will explore sorrow and joy, strength and vulnerability, solitude and connection. We will walk through the forests of healing and emerge with tools to cultivate confidence and purpose. Most of all, I hope these chapters remind you that you are never aloneâ€”that your experiences, however difficult or hidden, are understood and shared by women across the world.
+Throughout this book, I share lessons and reflections drawn from my own path and from the wisdom of thinkers, poets, and everyday heroines. My goal is not to prescribe a one-size-fits-all solution but to offer a companion for the many seasons of life. We will explore sorrow and joy, strength and vulnerability, solitude and connection. 
 </p>
  `,
 
             `
+<p>
+We will walk through the forests of healing and emerge with tools to cultivate confidence and purpose. Most of all, I hope these chapters remind you that you are never aloneâ€”that your experiences, however difficult or hidden, are understood and shared by women across the world.
+</p>
+
 <p>
 When I reflect on my journey so farâ€”from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
 </p>
