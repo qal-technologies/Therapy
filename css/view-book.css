@@ -4,7 +4,7 @@
     --toolbar-height: 50px;
     --bg: #1c1b1a;
     --panel: #2a2826;
-    --paper: #efe5d1;
+    --paper: #f7edd9;
     --ink: #1b1b1b;
     --muted: #a29a8c;
     --accent: #d2b48c;
@@ -268,8 +268,8 @@ body {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(120% 100% at 0% 50%, rgba(0, 0, 0, .10), transparent 50%),
-        linear-gradient(90deg, rgba(0, 0, 0, .10), transparent 20%, transparent 80%, rgba(0, 0, 0, .1));
+        radial-gradient(120% 100% at 0% 50%, rgba(0, 0, 0, .05), transparent 10%),
+        linear-gradient(90deg, rgba(0, 0, 0, .05), transparent 10%, transparent 40%, rgba(0, 0, 0, .05));
     pointer-events: none;
 }
 
@@ -283,67 +283,6 @@ body {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     right: 0;
-}
-
-.page .content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    place-items: center;
-    place-self: center;
-    /* padding: 8px; */
-    overflow: hidden;
-}
-
-.page .content p {
-    width: 100%;
-    height: 100%;
-    text-align: left;
-}
-
-.page .content img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.cover.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    font-size: 1.5rem;
-}
-
-.page-top {
-    display: flex;
-    justify-content: flex-start;
-    font-size: 0.7rem;
-    padding: 4px 10px;
-}
-
-.page-middle {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-
-}
-
-.page-bottom {
-    text-align: center;
-    font-size: 0.65rem;
-    padding-bottom: 4px;
-}
-
-.page-num {
-    opacity: 0.5;
 }
 
 /* Book thickness/extends */

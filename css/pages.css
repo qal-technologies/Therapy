@@ -1,0 +1,370 @@
+.page .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    place-items: center;
+    place-self: center;
+    overflow: hidden;
+}
+
+.page .content img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cover.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.page-top {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 0.7rem;
+    padding: 6px 10px;
+}
+
+.page-bottom {
+    text-align: center;
+    font-size: 0.65rem;
+    padding-bottom: 4px;
+}
+
+.page-num {
+    opacity: 0.5;
+}
+
+.content {
+    position: relative;
+    overflow: hidden;
+}
+
+.page-middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    justify-content: flex-start;
+    padding: 6px;
+    padding-inline: 10px;
+    width: 95%;
+    flex: 1;
+    font-size: 1rem;
+    font-size: 0.95rem;
+}
+
+.content .page-middle h1 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.content .page-middle h2 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.content .page-middle h3 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.content .page-middle h4 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.content .page-middle h5 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.content .page-middle h6 {
+    font-weight: bolder;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.content .page-middle p {
+    font-family: PoppinsLight, PoppinsMed, sans-serif;
+}
+
+.outer-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid blue;
+    place-self: center;
+}
+
+.inner-content {
+    width: 100%;
+    display: flex;
+    /* place-self: center; */
+    flex-direction: column;
+}
+
+.page-middle .flex {
+    display: flex;
+}
+
+.page-middle .column {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-middle .row {
+    display: flex;
+    flex-direction: row;
+}
+
+.page-middle .fx-btm {
+    position: fixed;
+    bottom: 0;
+}
+
+.page-middle .fx-btm-5 {
+    position: fixed;
+    bottom: 5px;
+}
+
+
+.page-middle .fx-btm-10 {
+    position: fixed;
+    bottom: 10px;
+}
+
+.page-middle .fx-btm-20 {
+    position: fixed;
+    bottom: 20px;
+}
+
+
+.page-middle .fx-btm-30 {
+    position: fixed;
+    bottom: 30px;
+}
+
+
+.page-middle .fx-btm-40 {
+    position: fixed;
+    bottom: 40px;
+}
+
+.page-middle .fx-btm-5p {
+    position: fixed;
+    bottom: 5%;
+}
+
+
+.page-middle .fx-btm-10p {
+    position: fixed;
+    bottom: 10%;
+}
+
+.page-middle .fx-btm-20p {
+    position: fixed;
+    bottom: 20%;
+}
+
+
+.page-middle .fx-btm-30p {
+    position: fixed;
+    bottom: 30%;
+}
+
+
+.page-middle .fx-btm-40p {
+    position: fixed;
+    bottom: 40%;
+}
+
+
+.page-middle .fx-top {
+    position: fixed;
+    top: 0;
+}
+
+.page-middle .fx-top-5 {
+    position: fixed;
+    top: 5px;
+}
+
+
+.page-middle .fx-top-10 {
+    position: fixed;
+    top: 10px;
+}
+
+.page-middle .fx-top-20 {
+    position: fixed;
+    top: 20px;
+}
+
+
+.page-middle .fx-top-30 {
+    position: fixed;
+    top: 30px;
+}
+
+
+.page-middle .fx-top-40 {
+    position: fixed;
+    top: 40px;
+}
+
+.page-middle .fx-top-5p {
+    position: fixed;
+    top: 5%;
+}
+
+.page-middle .fx-top-10p {
+    position: fixed;
+    top: 10%;
+}
+
+.page-middle .fx-top-20p {
+    position: fixed;
+    top: 20%;
+}
+
+
+.page-middle .fx-top-30p {
+    position: fixed;
+    top: 30%;
+}
+
+
+.page-middle .fx-top-40p {
+    position: fixed;
+    top: 40%;
+}
+
+
+.page-middle .text-center {
+    text-align: center;
+}
+
+.page-middle .mgbtm-5 {
+    margin-bottom: 5;
+}
+
+.page-middle .mgbtm-10 {
+    margin-bottom: 10;
+}
+
+.page-middle .mgbtm-15 {
+    margin-bottom: 15;
+}
+
+.page-middle .mgbtm-20 {
+    margin-bottom: 20;
+}
+
+.page-middle .mgtop-5 {
+    margin-top: 5;
+}
+
+.page-middle .mgtop-10 {
+    margin-top: 10;
+}
+
+.page-middle .mgtop-15 {
+    margin-top: 15;
+}
+
+.page-middle .mgtop-20 {
+    margin-top: 20;
+}
+
+.page-middle .pdbtm-5 {
+    padding-bottom: 5;
+}
+
+.page-middle .pdbtm-10 {
+    padding-bottom: 10;
+}
+
+.page-middle .pdbtm-15 {
+    padding-bottom: 15;
+}
+
+.page-middle .pdbtm-20 {
+    padding-bottom: 20;
+}
+
+.page-middle .pdtop-5 {
+    padding-top: 5;
+}
+
+.page-middle .pdtop-10 {
+    padding-top: 10;
+}
+
+.page-middle .pdtop-15 {
+    padding-top: 15;
+}
+
+.page-middle .pdtop-20 {
+    padding-top: 20;
+}
+
+.page-middle .wdth-10p {
+    width: 10%;
+}
+
+.page-middle .wdth-20p {
+    width: 20%;
+}
+
+.page-middle .wdth-30p {
+    width: 30%;
+}
+
+.page-middle .wdth-40p {
+    width: 40%;
+}
+
+.page-middle .wdth-50p {
+    width: 50%;
+}
+
+.page-middle .wdth-60p {
+    width: 60%;
+}
+
+.page-middle .wdth-70p {
+    width: 70%;
+}
+
+.page-middle .wdth-80p {
+    width: 80%;
+}
+
+.page-middle .wdth-90p {
+    width: 90%;
+}
+
+.page-middle .wdth-100p {
+    width: 100%;
+}
+
+.page-middle .center-self {
+    width: 90%;
+    place-content: center;
+    align-self: center;
+    place-self: center;
+}
