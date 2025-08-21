@@ -8,6 +8,12 @@
     place-items: center;
     place-self: center;
     overflow: hidden;
+position: relative;
+}
+
+.content *{
+margin:0;
+padding:0;
 }
 
 .page .content img {
@@ -43,19 +49,14 @@
     opacity: 0.5;
 }
 
-.content {
-    position: relative;
-    overflow: hidden;
-}
-
 .page-middle {
     display: flex;
     flex-direction: column;
     align-items: center;
+align-self: center;
     gap: 0;
     justify-content: flex-start;
-    padding: 6px;
-    padding-inline: 10px;
+    padding: 4px;
     width: 95%;
     flex: 1;
     font-size: 1rem;
@@ -66,6 +67,7 @@
     font-weight: bolder;
     text-align: center;
     font-size: 1.8rem;
+line-height:1.9rem;
 }
 
 .content .page-middle h2 {
