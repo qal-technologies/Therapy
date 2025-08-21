@@ -60,14 +60,14 @@ align-self: center;
     width: 95%;
     flex: 1;
     font-size: 1rem;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
 }
 
 .content .page-middle h1 {
     font-weight: bolder;
     text-align: center;
     font-size: 1.8rem;
-line-height:1.9rem;
+line-height:2rem;
 }
 
 .content .page-middle h2 {
@@ -102,6 +102,7 @@ line-height:1.9rem;
 
 .content .page-middle p {
     font-family: PoppinsLight, PoppinsMed, sans-serif;
+margin-block:10px;
 }
 
 .outer-content {
