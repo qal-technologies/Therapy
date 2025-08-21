@@ -686,6 +686,7 @@ qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(btn => btn.addEven
         // Start from last read, otherwise bookmark;
         loadState();
         const bm = loadBookmark();
+state.zoom = 1;
 
         if (bm && !Number.isFinite(parseInt(localStorage.getItem('bookState') || ''))) state.page = bm;
 
