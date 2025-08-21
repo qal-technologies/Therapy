@@ -339,16 +339,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function flipForward() {
-        const closing = goNext();        // compute new target state
+        const closing = goNext();   
         playTurnSound(closing);
-        flip(true);               // play correct forward animation
+        flip(true);             
         render();
         saveState();
     }
     function flipBack() {
-        const closing = goPrev();        // compute new target state
+        const closing = goPrev(); 
         playTurnSound(closing);
-        flip(false);              // play correct backward animation
+        flip(false);            
         render();
         saveState();
     }
@@ -358,10 +358,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleSound() {
         state.soundOn = !state.soundOn;
         const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
-        document.querySelector('.soundToggle').innerHTML = icon;
-        document.querySelectorAll('[data-hook="sound"]').forEach(b => (b.innerHTML = icon));
+      
+        qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(b => (b.innerHTML = icon));
         saveState();
     }
+qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
+
 
 
     // Zoom
