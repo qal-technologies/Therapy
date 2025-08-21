@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             pageIndicator.textContent = `${leftNum}-${rightNum} / ${INTERIOR_COUNT}`;
         } else {
-            pageIndicator.textContent = `${state.page - 1} / ${INTERIOR_COUNT}`;
+            pageIndicator.textContent = `${state.page} / ${INTERIOR_COUNT}`;
         }
     }
 
