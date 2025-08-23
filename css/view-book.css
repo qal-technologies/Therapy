@@ -400,7 +400,7 @@ body {
 /* Large screens: show inline tools */
 @media (min-width: 980px) {
     .book {
-        width: calc(var(--book-width) * 2.5 + 60px);
+        width: calc(var(--book-width) * 2.5);
     }
 
     .page {
