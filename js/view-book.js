@@ -8,21 +8,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 `<p>---</p>`,
 `
-<div class="inner-content flex center-self text-center fx-top-30p">
+<div class="inner-content flex center-self text-center fx-top-30p  align-center">
     <h1 style="margin-bottom:-5px;">COMPAGNON FÉMININ</h1>
     <p class="text-center">A Journey Through Womanhood, Healing, and Hope</p>
 </div>
 
-    <div class="inner-content fx-btm-5p text-center">
+    <div class="inner-content fx-btm-5p text-center justify-center align-center">
         AUTHOR
         <h3>Charlotte Casiraghi</h3>
 </div>`,
 
 
             `
-<p class="wdth-100p pdtop-20">
 <br/>
 <br/>
+<p>
 <b>Copyright, © 2025 by Charlotte Casiraghi.</b>
 <br/>
 <span style="font-style:italic;">All rights reserved.</span>
@@ -34,10 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
 <i>First Edition.</i> 
 <br/>
 No part of this book may be reproduced without permission. 
-</p>
+
+
 
 <br/>
-<p>
+<br/>
+<br/>
+
 <b>Published by Monaco Press,</b>
 <br/>
 Avenue du Palais, Monaco.
@@ -71,7 +74,7 @@ I wrote it with trembling hands and an open heart,for you.
             <h1>EPIGRAPH</h1>
 And the day came when the pain to remain the same was greater than the fear to change.
 <br/>
-â€” AnaÃ¯s Nin
+— Anaïs Nin
             `,
 
             `<h1>Foreword</h1>
@@ -102,7 +105,7 @@ As you turn these pages, you will feel the presence of a friend who understands 
 May Compagnon Féminin be the gentle hand that accompanies you through your hardest days and your brightest mornings. I believe these pages will become a refuge, a source of courage, and a cherished companion for women everywhere.`,
             `
             <h1> Preface</h1>
-This book was born from a place of inquiry and compassionâ€”a desire to weave together the threads of my own experience into a companion that could travel with other women on their journeys. Over the years, I found myself asking the same question: how can we remain grounded in our own truth while navigating the complexities of modern womanhood? How can we honour our past, heal our pain, and create a life that is deeply our own?
+This book was born from a place of inquiry and compassion—a desire to weave together the threads of my own experience into a companion that could travel with other women on their journeys. Over the years, I found myself asking the same question: how can we remain grounded in our own truth while navigating the complexities of modern womanhood? How can we honour our past, heal our pain, and create a life that is deeply our own?
 
 <p>
 I grew up in an extraordinary world of elegance and tradition, one forever marked by the early loss of my father. My childhood oscillated between the polished grandeur of royal halls and the quiet, dusty arenas where I learned to ride horses. Those horses became my sanctuary and teachers. In their eyes, I found a mirror for my own fears and strengths; in their gallop, I learned the discipline and grace that carry a woman through life.
@@ -112,10 +115,10 @@ I grew up in an extraordinary world of elegance and tradition, one forever marke
             `,
 `
 <p>
-Later, as I studied philosophy in Paris, the questions deepened. I realised that philosophyâ€”a discipline that seeks to make sense of life had the power to speak directly to the heart. 
+Later, as I studied philosophy in Paris, the questions deepened. I realised that I realised that philosophy—a  discipline that seeks to make sense of life had the power to speak directly to the heart.
 </p>
         
-Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Lesâ€¯Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
+Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Les Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
 
 <p>
 Throughout this book, I share lessons and reflections drawn from my own path and from the wisdom of thinkers, poets, and everyday heroines. My goal is not to prescribe a one-size-fits-all solution but to offer a companion for the many seasons of life. We will explore sorrow and joy, strength and vulnerability, solitude and connection. 
@@ -124,11 +127,11 @@ Throughout this book, I share lessons and reflections drawn from my own path and
 
             `
 <p>
-We will walk through the forests of healing and emerge with tools to cultivate confidence and purpose. Most of all, I hope these chapters remind you that you are never aloneâ€”that your experiences, however difficult or hidden, are understood and shared by women across the world.
+We will walk through the forests of healing and emerge with tools to cultivate confidence and purpose. Most of all, I hope these chapters remind you that you are never alone—that your experiences, however difficult or hidden, are understood and shared by women across the world.
 </p>
 
 <p>
-When I reflect on my journey so farâ€”from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
+When I reflect on my journey so far-from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
 </p>
 
 I see someone who sought freedom and found it not by escaping the past but by integrating it, transforming pain into wisdom and tradition into personal meaning.
@@ -146,11 +149,11 @@ I owe thanks to many who made this book possible:
 </p>
 
 <p>
-<b>Children:</b> My sons RaphaÃ«l and Balthazar, who bring daily purpose to my life.
+<b>Children:</b> My sons Raphaël and Balthazar, who bring daily purpose to my life.
 </p>
 
 <p>
-<b>Mentors and Friends:</b> Albina du Boisrouvray (godmother) for her unwavering support of humanitarian causes; Julia Kristeva, whose friendship and mentorship in philosophy sustain me; Robert Maggiori, Joseph Cohen, and RaphaÃ«l Zagury-Orly, co-founders of our philosophical meetings; Anne Dufourmantelle, whose memory lives on in our letters and essays.
+<b>Mentors and Friends:</b> Albina du Boisrouvray (godmother) for her unwavering support of humanitarian causes; Julia Kristeva, whose friendship and mentorship in philosophy sustain me; Robert Maggiori, Joseph Cohen, and Raphaël Zagury-Orly, co-founders of our philosophical meetings; Anne Dufourmantelle, whose memory lives on in our letters and essays.
 </p>
 
 <p>
@@ -159,27 +162,199 @@ I owe thanks to many who made this book possible:
 `,
             `
 <p>
-<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at AnOther Magazine, Above, and The Independent; Chanelâ€™s communications team for believing in my voice; the editors at Ã‰ditions du Seuil who brought Archipel des Passions to life.
+<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at AnOther Magazine, Above, and The Independent; Chanel’s communications team for believing in my voice; the editors at Éditions du Seuil who brought Archipel des Passions to life.
 </p>
 
 <p>
-<b>Philanthropic Partners:</b> The organizations for which I am honored to workâ€”UNAIDS, FXB France (founded by Albina du Boisrouvray), UNICEF Monacoâ€”and all who joined me on the Ever Manifesto project with Stella McCartney.
+<b>Philanthropic Partners:</b> The organizations for which I am honored to work-UNAIDS, FXB France (founded by Albina du Boisrouvray), UNICEF Monaco-and all who joined me on the Ever Manifesto project with Stella McCartney.
 </p>
 <p>
-<b>Readers:</b> To every person who has ridden alongside me in spirit â€“ thank you.
+<b>Readers:</b> To every person who has ridden alongside me in spirit - thank you.
 </p>
 `,
             `<h1>TABLE OF CONTENTS </h1>
-Added later....
+            <div class="inner-content">
+<h4 style="text-align:left;">Introduction</h4>
+– A warm welcome and assurance that the reader is part of a sisterhood
+<br/>
+– A promise of transformation and healing<br/>
+– The author’s personal journey and why she wrote this book<br/>
+</div>
+
+<div class="inner-content">
+<h4 class="text-left">Part I – Understanding Our Struggles</h4>
+<h4>Chapter 1:</h4>
+<span>
+<b style="font-style:italic;">The Weight of the World</b> – When Sadness and Depression Overwhelm
+</span>
+<span>
+<b style="font-style:italic;">Understanding Depression</b> – what it is and how it feels
+</span>
+
+<span>
+<b style="font-style:italic;">Why Depression Hits Women Hard </b> – societal and biological factors
+</span>
+<span>
+<b style="font-style:italic;">Finding the Name for the Pain</b> – recognizing symptoms and acknowledging the struggle
+</span>
+<span>
+<b style="font-style:italic;">You Are Not Alone in This Darkness</b> – stories of others who have faced similar battles
+</span>
+<span>
+<b style="font-style:italic;">A Glimmer of Hope</b> – the first signs of healing and resilience
+</span>
+
+<span>
+<b style="font-style:italic;">Key Takeaways</b> – summarizing the chapter’s essential lessons
+</span>
+
+<br/>
+<br/>
+<h4>Chapter 2:</h4>
+<span>
+<b style="font-style:italic;">Alone in a Crowded World</b> – Coping with Loneliness
+</span>
+</div>
+            `,
+            `
+<div class="inner-content text-left align-flex-start">
+
+
+<span>
+<b style="font-style:italic;">Maria’s Story: Feeling Alone in a Sea of People</b> – a relatable narrative
+</span>
+
+<span>
+<b style="font-style:italic;">The Paradox of Digital Connection and Isolation</b> – how technology can both help and harm
+</span>
+
+<span>
+<b style="font-style:italic;">What Does Loneliness Really Mean? </b> – defining different types of loneliness
+</span>
+
+<span>
+<b style="font-style:italic;">
+Why We Feel Lonely: Common Causes in Women’s Lives </b> – life circumstances that contribute
+</span>
+
+<span>
+<b style="font-style:italic;">A Glimmer of Hope</b> – the first signs of healing and resilience
+</span>
+
+<span>
+<b style="font-style:italic;">The Toll Loneliness Takes: Mind, Body, and Soul</b> – physical and emotional effects
+</span>
+
+<span>
+<b style="font-style:italic;">Loneliness as Part of the Human Condition</b> – an evolutionary perspective
+</span>
+
+<span>
+<b style="font-style:italic;">From Loneliness to Solitude: First Step Toward Healing </b> – embracing nourishing solitude
+</span>
+
+<span>
+<b style="font-style:italic;">Practical Ways to Nourish Yourself in Solitude </b> – self-care practices
+</span>
+
+<span>
+<b style="font-style:italic;">
+Reaching Out: Rebuilding Authentic Connections </b> – making community and micro‑connections
+</span>
+
+<span>
+<b style="font-style:italic;">Key Takeaways </b> – practical summary and encouragement
+</span>
+
+<br/>
+<br/>
+
+<h4>Chapter 3:</h4>
+<span>
+<b style="font-style:italic;">Heartbreaks and Hope</b> – Navigating Relationship Pain
+</span>
+
+<span>
+<b style="font-style:italic;">
+The Pain of Letting Go</b> – grieving the end of relationships
+</span>
+</div>`,
+            
+            `
+            <div class="inner-content text-left align-flex-start">
+
+
+<span>
+<b style="font-style:italic;">
+Losing Yourself in Love</b> – codependency and loss of identity
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+When Love Turns Toxic</b> – recognising manipulation and abuse
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Fears of Abandonment and Rejection</b> – understanding deep-seated insecurities
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Guilt and Shame in Love</b> – addressing mistakes and self-blame
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+A Woman’s Heart: Unique Challenges, Resilient Spirit</b> – cultural pressures and strength
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Rebuilding After Heartbreak</b> – steps for emotional recovery
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Finding Yourself Again</b> – reconnecting with your authentic self
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Setting Healthy Boundaries and Recognizing Red Flags </b> – protecting yourself in future relationships
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Trusting Love Again Without Losing Yourself </b> – opening up while staying grounded
+</span>
+
+
+<span>
+<b style="font-style:italic;">
+Reclaiming Self‑Worth and Inner Stability</b> – cultivating inner security
+</span>
+
+<span>
+<b style="font-style:italic;">
+Key Takeaways</b> – consolidating insights and next steps</span>
+</div>
 
             `,
-            `<p> Page is empty for now</p>`,
             `<h1>About the Author</h1>
             
             <p>
-            <b>Charlotte Casiraghi</b> (b. 1986) is a MonÃ©gasque public figure known for her diverse pursuits.  She serves on the boards of cultural and charitable organizations (including the Princess Grace Foundation and UNICEF Monaco) and is an advocate for youth education and womenâ€™s empowerment.
+            <b>Charlotte Casiraghi</b> (b. 1986) is a is a Monégasque public figure known for her diverse pursuits.  She serves on the boards of cultural and charitable organizations (including the Princess Grace Foundation and UNICEF Monaco) and is an advocate for youth education and women's empowerment.
             <br/>
-            A former competitive show jumper, Charlotte also has a career in journalism and fashion media.  In 2015 she was appointed as an Ambassador for UNESCOâ€™s philosophy program.  She lives in Monaco and Paris with her two sons.
+            A former competitive show jumper, Charlotte also has a career in journalism and fashion media.  In 2015 she was appointed as an Ambassador for UNESCO's philosophy program.  She lives in Monaco and Paris with her two sons.
             </p>
             `,
 

@@ -8,12 +8,12 @@
     place-items: center;
     place-self: center;
     overflow: hidden;
-position: relative;
+    position: relative;
 }
 
-.content *{
-margin:0;
-padding:0;
+.content * {
+    margin: 0;
+    padding: 0;
 }
 
 .page .content img {
@@ -43,6 +43,9 @@ padding:0;
     text-align: center;
     font-size: 0.65rem;
     padding-bottom: 4px;
+    position: absolute;
+    bottom: 0;
+    z-index: 99;
 }
 
 .page-num {
@@ -53,46 +56,59 @@ padding:0;
     display: flex;
     flex-direction: column;
     align-items: center;
-align-self: center;
+    align-self: center;
     gap: 0;
     justify-content: flex-start;
     padding: 4px;
-    width: 95%;
+    width: 100%;
+    padding-inline: 15px;
     flex: 1;
-    font-size: 1rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    line-height: 1rem;
 }
 
 .content .page-middle h1 {
     font-weight: bolder;
     text-align: center;
     font-size: 1.8rem;
-line-height:2rem;
-margin-block:10px;
+    font-size: clamp(100%, 1.6rem, 1.8rem);
+    /* line-height: 2rem; */
+    margin-block: 10px;
 }
 
 .content .page-middle h2 {
     font-weight: bolder;
     text-align: center;
     font-size: 1.6rem;
+    font-size: clamp(90%, 1.4rem, 1.6rem);
+    /* line-height: 1.8rem; */
+
 }
 
 .content .page-middle h3 {
     font-weight: bolder;
     text-align: center;
     font-size: 1.4rem;
+    font-size: clamp(80%, 1.2rem, 1.4rem);
+    /* line-height: 1.6rem; */
+
 }
 
 .content .page-middle h4 {
     font-weight: bolder;
     text-align: center;
     font-size: 1.2rem;
+    font-size: clamp(70%, 1.1rem, 1.2rem);
+    /* line-height: 1.4rem; */
+    margin-bottom: 5px;
 }
 
 .content .page-middle h5 {
     font-weight: bolder;
     text-align: center;
     font-size: 1rem;
+    font-size: clamp(60%, 0.8rem, 1rem);
+    /* line-height: 1.2rem; */
 }
 
 .content .page-middle h6 {
@@ -103,8 +119,15 @@ margin-block:10px;
 
 .content .page-middle p {
     font-family: PoppinsLight, PoppinsMed, sans-serif;
-margin-block:10px;
+    margin-block: 10px;
+    width: 100%;
 }
+
+.content .page-middle span {
+    font-family: PoppinsLight, PoppinsMed, sans-serif;
+    margin-top: 6px;
+}
+
 
 .outer-content {
     width: 100%;
@@ -117,8 +140,11 @@ margin-block:10px;
 .inner-content {
     width: 100%;
     display: flex;
-    /* place-self: center; */
+    place-self: center;
+    align-items: flex-start;
     flex-direction: column;
+    margin-block-end: 10px;
+    padding-block-start: 10px;
 }
 
 .page-middle .flex {
@@ -261,6 +287,39 @@ margin-block:10px;
 .page-middle .text-center {
     text-align: center;
 }
+
+.page-middle .text-left {
+    text-align: left;
+}
+
+.page-middle .text-right {
+    text-align: right;
+}
+
+.page-middle .align-center {
+    align-items: center;
+}
+
+.page-middle .justify-center {
+    justify-content: center;
+}
+
+.page-middle .align-flex-start {
+    align-items: flex-start;
+}
+
+.page-middle .align-flex-end {
+    align-items: flex-end;
+}
+
+.page-middle .justify-flex-start {
+    justify-content: flex-start;
+}
+
+.page-middle .justify-flex-end {
+    justify-content: flex-end;
+}
+
 
 .page-middle .mgbtm-5 {
     margin-bottom: 5;
