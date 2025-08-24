@@ -72,7 +72,7 @@
     text-align: center;
     font-size: 1.8rem;
     font-size: clamp(100%, 1.6rem, 1.8rem);
-    /* line-height: 2rem; */
+    line-height: 2rem;
     margin-block: 10px;
 }
 
@@ -81,7 +81,7 @@
     text-align: center;
     font-size: 1.6rem;
     font-size: clamp(90%, 1.4rem, 1.6rem);
-    /* line-height: 1.8rem; */
+    line-height: 1.8rem;
 
 }
 
@@ -90,7 +90,7 @@
     text-align: center;
     font-size: 1.4rem;
     font-size: clamp(80%, 1.2rem, 1.4rem);
-    /* line-height: 1.6rem; */
+    line-height: 1.6rem;
 
 }
 
@@ -99,7 +99,7 @@
     text-align: center;
     font-size: 1.2rem;
     font-size: clamp(70%, 1.1rem, 1.2rem);
-    /* line-height: 1.4rem; */
+    line-height: 1.4rem;
     margin-bottom: 5px;
 }
 
@@ -108,7 +108,7 @@
     text-align: center;
     font-size: 1rem;
     font-size: clamp(60%, 0.8rem, 1rem);
-    /* line-height: 1.2rem; */
+    line-height: 1.2rem;
 }
 
 .content .page-middle h6 {
@@ -128,7 +128,6 @@
     margin-top: 6px;
 }
 
-
 .outer-content {
     width: 100%;
     display: flex;
@@ -145,6 +144,11 @@
     flex-direction: column;
     margin-block-end: 10px;
     padding-block-start: 10px;
+}
+
+.content b{
+    font-weight: bolder;
+    font-size: 0.84rem;
 }
 
 .page-middle .flex {

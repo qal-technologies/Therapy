@@ -127,6 +127,11 @@ body {
     background-size: 18px;
 }
 
+.search:focus{
+    background-color: #1b1b1b;
+    border-color: var(--accent);
+} 
+
 .tools-inline {
     display: none;
     align-items: center;
@@ -152,6 +157,7 @@ body {
     border: 1px solid #3b3936;
     background: #201f1d;
     color: #e8e6e3;
+    color:var(--accent);
     cursor: pointer;
     user-select: none;
     font-size: 14px;
@@ -217,7 +223,7 @@ body {
     width: 100%;
     height: 100%;
     width: min(95vw, calc(var(--book-width) + 60px));
-    height: min(72vh, 820px);
+    height: min(75vh, 820px);
     max-width: 1180px;
     display: flex;
     flex-direction: row;
@@ -330,13 +336,11 @@ body {
     position: absolute;
     top: 0;
     bottom: 0;
-    /* width: 100%; */
     background: var(--paper);
     transform-origin: left center;
     border-left: 1px solid rgba(0, 0, 0, .12);
     box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
     overflow: hidden;
-
     z-index: 99;
 }
 
@@ -406,8 +410,6 @@ body {
     .page {
         width: 50%;
     }
-
-
 
     .tools-inline {
         display: flex;
