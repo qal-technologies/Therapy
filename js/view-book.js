@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const BOOK = {
         title: 'Compagnon Féminin',
@@ -1264,7 +1262,10 @@ Other Works by the Author
         spread: mq.matches,
         bookmarks: [],
         total: BOOK.pages.length,
+        pages: [],
+        numPages: 0,
     };
+
 
     // Utils: =====>>>>>
     const clamp = (n, min, max) => {
@@ -1274,9 +1275,6 @@ Other Works by the Author
     const isCover = (idx) => idx === 0;
     const isEnd = (idx) => idx === LAST;
 
-
-    // Configuration
-    const NUM_PAGES = state.total;
 
     // --- State Management & Persistence ---
     function saveState() {

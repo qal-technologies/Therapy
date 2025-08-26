@@ -19,7 +19,7 @@
       <span class="title" id="bookTitle">Compagnon Féminin</span>
     </div>
     <div class="search-wrap">
-      <input id="search" class="search" type="search" placeholder="Search page – Compagnon Féminin" />
+    <input type="search" id="search" class="search" placeholder="Search by chapter or page..." />
     </div>
 
     <!-- Inline tools for wide screens -->
@@ -105,70 +105,9 @@
   <audio id="flipAudio">
     <source src="/src/audio/page-flip.mp3" type="audio/mpeg">
   </audio>
-  <!-- <script>
-
-    const BOOK = {
-      title: 'Compagnon Féminin',
-       pages: Array.from({ length: 16 }, (_, i) => `This is book${i + 1}`), 
-      pages: [
-        {
-          chapter: 1,
-          pages: [
-
-          ]
-        }
-      ],
-      chapters: [
-        { title: 'Introduction — You Are Alone', page: 1 },
-        { title: 'Part I — Seeing Clearly', page: 4 },
-        { title: 'Part II — Turning Points', page: 8 },
-        { title: 'Part III — Practice', page: 12 },
-      ]
-    }
-
-    let dragging = false;
-    let dragFlipEl = null;
-    let dragStartX = 0;
-
-    bookEl.addEventListener('mousedown', e => {
-      dragging = true;
-      dragStartX = e.clientX;
-      dragFlipEl = startDragFlip(e.clientX);
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging || !dragFlipEl) return;
-      updateDragFlip(dragFlipEl, e.clientX - dragStartX);
-    });
-    window.addEventListener('mouseup', e => {
-      if (!dragging) return;
-      finishDragFlip(dragFlipEl, e.clientX - dragStartX);
-      dragging = false; dragFlipEl = null;
-    });
-
-    function startDragFlip(x) {
-      // Create flip element, like in flip(), but set initial transform
-      const flip = document.createElement('div');
-      flip.className = 'flip';
-      flip.style.transform = 'rotateY(0deg)';
-      // ...add child nodes...
-      bookEl.appendChild(flip);
-      return flip;
-    }
-    function updateDragFlip(flipEl, deltaX) {
-      // Calculate rotation based on drag distance
-      const angle = Math.max(-180, Math.min(0, -deltaX / 2));
-      flipEl.style.transform = `rotateY(${angle}deg)`;
-      // Show the underneath page by adjusting opacity or z-index behind the flip
-    }
-    function finishDragFlip(flipEl, deltaX) {
-      // If drag passes threshold, complete flip
-      if (deltaX < -80) flip(true);
-      else if (deltaX > 80) flip(false);
-      flipEl.remove();
-    }
-
-  </script> -->
 </body>
 
 </html>
+
+<script src="/js/stores.js"></script>
 <script src="/js/view-book.js"></script>
