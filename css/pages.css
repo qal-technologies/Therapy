@@ -65,6 +65,7 @@
     flex: 1;
     font-size: 0.8rem;
     line-height: 1rem;
+    /* overflow-y: auto; */
 }
 
 .content .page-middle h1 {
@@ -146,7 +147,7 @@
     padding-block-start: 10px;
 }
 
-.content b{
+.content b {
     font-weight: bolder;
     font-size: 0.84rem;
 }
@@ -434,4 +435,50 @@
     place-content: center;
     align-self: center;
     place-self: center;
+}
+
+
+/* Responsive scaling for smaller screens */
+@media (max-width: 768px) {
+
+    .page-middle {
+        font-size: 0.75rem;
+        line-height: 0.8rem;
+    }
+
+    .content h1 {
+        font-size: 1.2rem;
+    }
+
+    .content h3 {
+        font-size: 1rem;
+    }
+
+    .content h4 {
+        font-size: 0.9rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .page-middle {
+        font-size: 0.65rem;
+        line-height: 0.7rem;
+    }
+
+    .content h1 {
+        font-size: 1rem;
+    }
+
+    .content h3 {
+        font-size: 0.9rem;
+    }
+
+    .content h4 {
+        font-size: 0.8rem;
+    }
+
+    .content b {
+        font-size: 0.65rem;
+    }
 }
