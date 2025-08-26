@@ -442,8 +442,8 @@
 @media (max-width: 768px) {
 
     .page-middle {
-        font-size: 0.76rem;
-        line-height: 0.8rem;
+        font-size: 0.8rem;
+        line-height: 0.85rem;
     }
 
     .content h1 {
@@ -462,8 +462,8 @@
 
 @media (max-width: 480px) {
     .page-middle {
-        font-size: 0.66rem;
-        line-height: 0.7rem;
+        font-size: 0.7rem;
+        line-height: 0.75rem;
     }
 
     .content h1 {
@@ -476,9 +476,5 @@
 
     .content h4 {
         font-size: 0.8rem;
-    }
-
-    .content b {
-        font-size: 0.65rem;
     }
 }
