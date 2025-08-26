@@ -28,48 +28,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const thudSound = new Audio('/src/audio/thud.mp3');
 
     // --- Page Creation & Pagination ---
-    async function paginateBook() {
-        const response = await fetch('/src/book-content.html');
-        const bookHTML = await response.text();
-
-        const tempRenderDiv = document.createElement('div');
-        tempRenderDiv.innerHTML = bookHTML;
-
-        const allNodes = Array.from(tempRenderDiv.childNodes);
-
+    function paginateBook() {
         const measuringDiv = document.createElement('div');
         measuringDiv.style.position = 'absolute';
         measuringDiv.style.left = '-9999px';
         measuringDiv.style.width = '310px'; // var(--book-width) - padding
         measuringDiv.style.height = '460px'; // var(--book-height) - padding
         measuringDiv.style.visibility = 'hidden';
+        measuringDiv.classList.add('page-content'); // Use the same styles
         document.body.appendChild(measuringDiv);
 
         let pageContents = [];
-        let currentPageContent = '';
+        let currentPageContainer = document.createElement('div');
 
-        for (const node of allNodes) {
-            if (node.nodeType !== Node.ELEMENT_NODE && !node.textContent.trim()) continue;
+        function newPage() {
+            if (currentPageContainer.innerHTML.trim() !== '') {
+                pageContents.push(currentPageContainer.innerHTML);
+            }
+            currentPageContainer = document.createElement('div');
+        }
 
-            if (node.nodeName === 'H1') {
-                if (currentPageContent) {
-                    pageContents.push(currentPageContent);
-                }
-                currentPageContent = node.outerHTML;
-                continue;
+        bookData.forEach(item => {
+            const el = document.createElement(item.type);
+            el.innerHTML = item.content;
+
+            if (item.type === 'h1') {
+                newPage();
             }
 
-            measuringDiv.innerHTML = currentPageContent + node.outerHTML;
+            measuringDiv.innerHTML = currentPageContainer.innerHTML + el.outerHTML;
+
             if (measuringDiv.scrollHeight > measuringDiv.clientHeight) {
-                pageContents.push(currentPageContent);
-                currentPageContent = node.outerHTML;
+                // Handle overflow (this is the complex part)
+                // For now, we will just put the overflowing element on a new page
+                newPage();
+                currentPageContainer.appendChild(el);
             } else {
-                currentPageContent += node.outerHTML;
+                currentPageContainer.appendChild(el);
             }
-        }
-        if (currentPageContent) {
-            pageContents.push(currentPageContent);
-        }
+        });
+
+        newPage(); // Add the last page
 
         document.body.removeChild(measuringDiv);
 
@@ -196,9 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchendX = 0;
 
     // --- Initialization ---
-    async function init() {
+    function init() {
         loadState();
-        await paginateBook();
+        paginateBook();
         updateUI();
         updatePageEdges();
 
