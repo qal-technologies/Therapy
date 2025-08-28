@@ -9,11 +9,16 @@
     place-self: center;
     overflow: hidden;
     position: relative;
+    user-select: none;
 }
 
 .content * {
     margin: 0;
     padding: 0;
+    -webkit-scrollbar-color: transparent;
+    scrollbar-color: transparent;
+    -ms-behavior: inherit;
+    behavior: inherit;
 }
 
 .page .content img {
@@ -40,16 +45,30 @@
 }
 
 .page-bottom {
+    width: 100%;
     text-align: center;
-    font-size: 0.65rem;
-    padding-bottom: 4px;
+    padding-block: 6px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     position: absolute;
     bottom: 0;
     z-index: 99;
+    place-items: center;
+    /* backdrop-filter: blur(2px); */
+    background: linear-gradient(transparent, var(--paper-trans), var(--paper));
 }
 
 .page-num {
-    opacity: 0.5;
+    opacity: 0.85;
+    font-size: 0.7rem;
+    background: var(--paper);
+    padding: 6px;
+    display: grid;
+    color: black;
+    box-shadow: 0px 0px 12px var(--paper);
+    border-radius: 50%;
 }
 
 .page-middle {
@@ -59,13 +78,17 @@
     align-self: center;
     gap: 0;
     justify-content: flex-start;
-    padding: 4px;
+    padding: 4px 4px 20px;
     width: 100%;
     padding-inline: 15px;
     flex: 1;
-    font-size: 0.8rem;
-    line-height: 1rem;
-    /* overflow-y: auto; */
+    font-size: 0.85rem;
+    line-height: 1.1rem;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: proximity;
+    user-select: text;
+    font-family: PoppinsLight, PoppinsMed, sans-serif;
 }
 
 .content .page-middle h1 {
@@ -119,13 +142,11 @@
 }
 
 .content .page-middle p {
-    font-family: PoppinsLight, PoppinsMed, sans-serif;
     margin-block: 10px;
     width: 100%;
 }
 
 .content .page-middle span {
-    font-family: PoppinsLight, PoppinsMed, sans-serif;
     margin-top: 6px;
 }
 
@@ -439,8 +460,7 @@
 
 
 /* Responsive scaling for smaller screens */
-@media (max-width: 768px) {
-
+/*@media (max-width: 800px) {
     .page-middle {
         font-size: 0.8rem;
         line-height: 0.85rem;
@@ -462,19 +482,19 @@
 
 @media (max-width: 480px) {
     .page-middle {
-        font-size: 0.7rem;
-        line-height: 0.75rem;
+        font-size: 0.76rem;
+        line-height: 0.8rem;
     }
 
     .content h1 {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .content h3 {
-        font-size: 0.9rem;
+        font-size: 0.92rem;
     }
 
     .content h4 {
-        font-size: 0.8rem;
+        font-size: 0.82rem;
     }
-}
+} */
