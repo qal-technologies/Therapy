@@ -2124,7 +2124,12 @@ Above all, reclaim your self-worth and inner stability. You are deserving of lov
 Each heartbreak, as cruel as it may seem, is not the end of your story – it can be the dawn of a new chapter where you come back to yourself, wiser, stronger, and still open to the hope of love, beginning with love for you.
         `,
 
-        `I am resting for now..... pasqal//`,
+       `
+<p>
+<h1>Chapter 4</h1>
+The Mirror of Self-Doubt – Understanding Low Self-Esteem</p>
+
+`,
         `<h1>About the Author</h1>
             
             <p>
