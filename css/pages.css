@@ -83,7 +83,7 @@
     padding-inline: 15px;
     flex: 1;
     font-size: 0.85rem;
-    line-height: 1.1rem;
+    line-height: 1.06rem;
     overflow-y: auto;
     scroll-behavior: smooth;
     scroll-snap-type: proximity;
@@ -97,7 +97,7 @@
     font-size: 1.8rem;
     font-size: clamp(100%, 1.6rem, 1.8rem);
     line-height: 2rem;
-    margin-block: 10px;
+    margin-block: 8px;
 }
 
 .content .page-middle h2 {
