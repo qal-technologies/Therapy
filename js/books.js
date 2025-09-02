@@ -128,7 +128,7 @@ We will walk through the forests of healing and emerge with tools to cultivate c
 </p>
 
 <p>
-When I reflect on my journey so far-from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
+When I reflect on my journey so far, from the balmy evenings of Monaco Rose Ball to the early-morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
 </p>
 
 I see someone who sought freedom and found it not by escaping the past but by integrating it, transforming pain into wisdom and tradition into personal meaning.
@@ -163,10 +163,10 @@ I owe thanks to many who made this book possible:
 </p>
 
 <p>
-<b>Philanthropic Partners:</b> The organizations for which I am honored to work-UNAIDS, FXB France (founded by Albina du Boisrouvray), UNICEF Monaco-and all who joined me on the Ever Manifesto project with Stella McCartney.
+<b>Philanthropic Partners:</b> The organizations for which I am honored to work, UNAIDS, FXB France (founded by Albina du Boisrouvray), UNICEF Monaco, and all who joined me on the Ever Manifesto project with Stella McCartney.
 </p>
 <p>
-<b>Readers:</b> To every person who has ridden alongside me in spirit - thank you.
+<b>Readers:</b> To every person who has ridden alongside me in spirit, thank you.
 </p>
 `,
         `<h1>TABLE OF CONTENTS </h1>
@@ -928,14 +928,14 @@ A Letter to My Dear Friend</b> – a heartfelt farewell and invitation to contin
 
             <div class="inner-content text-left align-flex-start">
 
-<p>Do you feel invisible? Overwhelmed by sadness when you wake up? Lonely even in a crowd? Heartbroken or struggling in your relationships? If you are nodding silently, dear reader, you are not alone. In fact, you are part of a vast sisterhood of women who have felt these same aches in the soul. This book, Compagnon Féminin, was written for you – to be the gentle hand on your shoulder through the dark times and the encouraging voice that says, "Keep going, we will find the light together."</p>
+<p>Do you feel invisible? Overwhelmed by sadness when you wake up? Lonely even in a crowd? Heartbroken or struggling in your relationships? If you are nodding silently, dear reader, you are not alone. In fact, you are part of a vast sisterhood of women who have felt these same aches in the soul. This book, Compagnon Féminin, was written for you, to be the gentle hand on your shoulder through the dark times and the encouraging voice that says, "Keep going, we will find the light together."</p>
 
 <p>
 From the very first page, I want you to feel a warm embrace, as if I'm right there with you. I may not know your name, but I know the pain and uncertainty that can fill a woman's heart, because I have lived through my own storms and have walked beside many women on their journeys.
 </p>
 
 <p>
-As a philosopher and a mother, a friend and a lifelong student of life, I have seen how despair can turn into hope, how a seed of courage can crack open the hardest sorrow, and how no one is truly beyond healing. Consider this book your companion – one you can turn to on the loneliest nights or the hardest mornings. I promise, within these pages, you will find understanding, comfort, and real solutions.
+As a philosopher and a mother, a friend and a lifelong student of life, I have seen how despair can turn into hope, how a seed of courage can crack open the hardest sorrow, and how no one is truly beyond healing. Consider this book your companion, one you can turn to on the loneliest nights or the hardest mornings. I promise, within these pages, you will find understanding, comfort, and real solutions.
 </p>
 
             </div>
@@ -951,11 +951,11 @@ our journey together, you will have not only healed wounds you once thought perm
 </p>
 
 <p>
-You might be thinking, "Is that really possible for me?" Or, "I've tried before and failed." It's natural to be skeptical – after all, life can be terribly hard. But sometimes the difference between those who overcome and those who remain stuck is not that one is more deserving or lucky, it's often having the right support and guidance. Think of this book as your support system in print form. I wrote it to be that trusty guide and friend you can
+You might be thinking, "Is that really possible for me?" Or, "I've tried before and failed." It's natural to be skeptical, after all, life can be terribly hard. But sometimes the difference between those who overcome and those who remain stuck is not that one is more deserving or lucky, it's often having the right support and guidance. Think of this book as your support system in print form. I wrote it to be that trusty guide and friend you can
 </p>
 
 <p>
-always carry with you. We will draw on deep insights from psychology and philosophy, but in a way that's easy to understand. More importantly, we will apply them to your daily life. With each chapter, you'll gain practical tools and comforting wisdom. It's like packing a toolkit for life's journey – and trust me, you'll want these tools when the road gets rough.
+always carry with you. We will draw on deep insights from psychology and philosophy, but in a way that's easy to understand. More importantly, we will apply them to your daily life. With each chapter, you'll gain practical tools and comforting wisdom. It's like packing a toolkit for life's journey, and trust me, you'll want these tools when the road gets rough.
 </p>
 
             `,
@@ -964,14 +964,14 @@ always carry with you. We will draw on deep insights from psychology and philoso
             <h2>My Journey, Our Journey</h2>
 
 <p>
-Before we dive in, let me share a bit of why I’m here with you. As a young woman, I often faced my own demons of doubt and anxiety. There were days I looked in the mirror and did not recognize the smiling face I presented to the world; inside, I felt insecure and at times terribly alone. Coming from a well-known family and later engaging deeply with philosophy, people might assume I had it all figured out. But the truth is, every woman – no matter her background – encounters struggles. I have learned that pain is a universal human experience, uniting us in a way that transcends status or geography.
+Before we dive in, let me share a bit of why I’m here with you. As a young woman, I often faced my own demons of doubt and anxiety. There were days I looked in the mirror and did not recognize the smiling face I presented to the world; inside, I felt insecure and at times terribly alone. Coming from a well-known family and later engaging deeply with philosophy, people might assume I had it all figured out. But the truth is, every woman, no matter her background, encounters struggles. I have learned that pain is a universal human experience, uniting us in a way that transcends status or geography.
 </p>
 
-<span>In my life I sought answers in books, in conversations with wise mentors, and even in academic study of philosophy and psychology. But some of the most profound lessons came from personal experiences – falling and getting back up, losing and finding myself again, and witnessing the resilience of other women who shared their stories with me.
+<span>In my life I sought answers in books, in conversations with wise mentors, and even in academic study of philosophy and psychology. But some of the most profound lessons came from personal experiences: falling and getting back up, losing and finding myself again, and witnessing the resilience of other women who shared their stories with me.
 </span>
 
 <p>
-One such story stays with me: a dear friend (I’ll call her "A") who fell into a deep depression after losing her job – something she had tied her identity to for years. When we first talked, she whispered through tears that she felt like a failure and feared she would never feel happy again. But somewhere in that darkness, she found a tiny spark of fight. Together we explored small steps – a morning walk here, a journaling exercise there – and gradually, A found her way out of the fog. She not only recovered, she started a new career path that fulfilled her in ways her old job never did. Her story is just one example. Throughout this book, I will share more like it: of women who faced heartbreak, loneliness, self-doubt – and how they turned things around (to be detailed later)
+One such story stays with me: a dear friend (I’ll call her "A") who fell into a deep depression after losing her job, something she had tied her identity to for years. When we first talked, she whispered through tears that she felt like a failure and feared she would never feel happy again. But somewhere in that darkness, she found a tiny spark of fight. Together we explored small steps – a morning walk here, a journaling exercise there – and gradually, A found her way out of the fog. She not only recovered, she started a new career path that fulfilled her in ways her old job never did. Her story is just one example. Throughout this book, I will share more like it: of women who faced heartbreak, loneliness, self-doubt, and how they turned things around (to be detailed later)
 </p>
             `,
 
@@ -1095,7 +1095,7 @@ Sometimes, knowing that what you’re feeling has a name and is shared by others
             </p>
 
              <h4>A Glimmer of Hope</h4>
-<p>Let’s peek ahead just a bit. Remember Anna, sitting in her dark room? Her story doesn’t end with tears by the window. In a later chapter, we will revisit Anna and see how she found a tiny spark of hope and followed it out of the darkness – step by step. *Spoiler alert* : she does not stay stuck forever. Not only does she find a new job, but more importantly, she finds herself again, piece by piece, and even discovers a new passion that she’d never pursued before. Her depression eventually became a chapter in her life, not the whole story.</p>
+<p>Let’s peek ahead just a bit. Remember Anna, sitting in her dark room? Her story doesn’t end with tears by the window. In a later chapter, we will revisit Anna and see how she found a tiny spark of hope and followed it out of the darkness – step by step. Spoiler alert: she does not stay stuck forever. Not only does she find a new job, but more importantly, she finds herself again, piece by piece, and even discovers a new passion that she’d never pursued before. Her depression eventually became a chapter in her life, not the whole story.</p>
             </div>
             `,
         `
@@ -1835,7 +1835,7 @@ Picking up the pieces after a heartbreak is a tender and gradual process. In the
 
         `
         <div class="inner-content text-left">
-        You will build a life where the breakup is a chapter, not the whole story. No matter who or what caused the heartbreak, you remain the author of your own life. As one article put it, *“remember that you are the architect of your own future”*. This means you have the power to design a life that feels fulfilling to you, with or without a partner. That might sound like cold comfort when you miss someone, but it is actually empowering: you get to decide what comes next, how you spend your days, what dreams to pursue now.
+        You will build a life where the breakup is a chapter, not the whole story. No matter who or what caused the heartbreak, you remain the author of your own life. As one article put it, “remember that you are the architect of your own future”. This means you have the power to design a life that feels fulfilling to you, with or without a partner. That might sound like cold comfort when you miss someone, but it is actually empowering: you get to decide what comes next, how you spend your days, what dreams to pursue now.
 
         <p>
         In rebuilding after heartbreak, patience is your ally. Don’t rush yourself. Healing has its own timeline. But as surely as winter turns to spring, your season of pain will thaw, and tender new things will grow from it. Keep tending to yourself with love and trust that healing is happening, even when you can’t feel it in the moment.
@@ -2313,7 +2313,7 @@ love and compassion toward oneself. This sounds straightforward, but for someone
 <p>
 One misconception is that being kind to oneself is self-indulgent or will make you complacent. On the contrary, research by Dr. Kristin Neff and others has shown that self-compassion actually provides a more sustainable motivation for growth than
 
-self-criticism. Consider this poignant comparison: *“Unlike self-criticism, which asks if you’re good enough, self-compassion asks what’s good for you?”*. In other words, beating yourself up only makes you feel worse and more stuck, whereas comforting and encouraging yourself leads to healthier choices and positive change. Think about it – if you slip up on a diet, the self-critical approach would be to call yourself a failure and maybe even give up. The self-compassionate approach would be to forgive yourself for being human, figure out what led to the slip, and kindly recommit to your goals because you care about your well-being. As Neff notes, *“If you care about yourself, you’ll do what you need to do in order to learn and grow.”* Self-compassion isn’t complacency; it’s a motivator rooted in love rather than fear.
+self-criticism. Consider this poignant comparison: “Unlike self-criticism, which asks if you’re good enough, self-compassion asks what’s good for you?”. In other words, beating yourself up only makes you feel worse and more stuck, whereas comforting and encouraging yourself leads to healthier choices and positive change. Think about it – if you slip up on a diet, the self-critical approach would be to call yourself a failure and maybe even give up. The self-compassionate approach would be to forgive yourself for being human, figure out what led to the slip, and kindly recommit to your goals because you care about your well-being. As Neff notes, “If you care about yourself, you’ll do what you need to do in order to learn and grow.” Self-compassion isn’t complacency; it’s a motivator rooted in love rather than fear.
 </p>
             `,
             `
@@ -2323,7 +2323,7 @@ first, but with repetition it can truly change your internal climate.
 
 
 <p>
-Crucially, self-compassion also involves forgiving yourself for past mistakes or perceived failures. Every single person on this planet has made mistakes – it’s how we learn and grow. Holding onto self-blame and regret keeps you tied to a version of yourself that no longer exists. If guilt or shame about the past is a heavy component of your low self-esteem, it’s time to practice letting it go. Remind yourself: *“I was doing the best I could with the knowledge and resources I had at the time.”*. If that sounds familiar, it’s because it is a common refrain in therapy for healing guilt.</p>
+Crucially, self-compassion also involves forgiving yourself for past mistakes or perceived failures. Every single person on this planet has made mistakes – it’s how we learn and grow. Holding onto self-blame and regret keeps you tied to a version of yourself that no longer exists. If guilt or shame about the past is a heavy component of your low self-esteem, it’s time to practice letting it go. Remind yourself: “I was doing the best I could with the knowledge and resources I had at the time.”. If that sounds familiar, it’s because it is a common refrain in therapy for healing guilt.</p>
 `,
             
             `
@@ -2952,9 +2952,9 @@ them.
 What Emotional Healing Really Means
 </h4>
              <p>
-             A broken heart, when gently tended, can become a source of strength and wisdom. Emotional healing is not about “forgetting” our wounds or pretending they never existed. It is about transforming our pain into understanding, acceptance, and renewed wholeness. Emotional healing isn’t simply “getting over it” or “moving on” as quickly as possible. In fact, trying to rush past emotional pain or repress it usually doesn’t work – the hurt remains just below the surface, unresolved. True emotional healing means honoring the reality of what happened and what we felt, and giving ourselves the time and compassion to process it. It’s often said that you have to feel it to heal it, and this is a core truth of healing. As one psychologist wisely put it, *“How does one get over a hurt? There is not ‘getting over.’ You go through it. You have to feel it to
+             A broken heart, when gently tended, can become a source of strength and wisdom. Emotional healing is not about “forgetting” our wounds or pretending they never existed. It is about transforming our pain into understanding, acceptance, and renewed wholeness. Emotional healing isn’t simply “getting over it” or “moving on” as quickly as possible. In fact, trying to rush past emotional pain or repress it usually doesn’t work – the hurt remains just below the surface, unresolved. True emotional healing means honoring the reality of what happened and what we felt, and giving ourselves the time and compassion to process it. It’s often said that you have to feel it to heal it, and this is a core truth of healing. As one psychologist wisely put it, “How does one get over a hurt? There is not ‘getting over.’ You go through it. You have to feel it to
 
-heal it.”*.
+heal it.”.
              </p>
             `,
 
@@ -3044,7 +3044,7 @@ indication of an unhealed wound beneath the surface. This is not meant to alarm 
             `,
 
             `
-            The good news is, once we start that tending – even just acknowledging, “Yes, that really did hurt and it still affects me” – we’ve taken a crucial step. The wound begins to shift from festering in darkness to healing in the light of awareness. As the Persian poet Rumi is often quoted, *“The wound is the place where the light enters you.”* In embracing our wounded places and bringing them into the light, we actually
+            The good news is, once we start that tending – even just acknowledging, “Yes, that really did hurt and it still affects me” – we’ve taken a crucial step. The wound begins to shift from festering in darkness to healing in the light of awareness. As the Persian poet Rumi is often quoted, “The wound is the place where the light enters you.”. In embracing our wounded places and bringing them into the light, we actually
 
 create the conditions for that light of healing and wisdom to enter and transform our pain.
 
@@ -3126,7 +3126,7 @@ feeling. The breath is like a lifeline; it connects the emotional mind with the 
 Remember, feelings are meant to be felt.
 </h4>
 
-They don’t vanish by being ignored; they simply go quiet until an opportunity to emerge. Giving yourself permission to experience your emotions fully is one of the most loving acts you can do in service of your own healing. It doesn’t mean you’ll act on every emotion (feeling anger doesn’t mean you’ll go shout at someone; you can feel it privately and let it pass). It just means you stop fighting your own heart. In that allowance, there is tremendous healing. As one wise saying goes: *“Emotional pain cannot kill you, but running from it can. Allow. Embrace. Let yourself feel. Let yourself heal.”*. By feeling our feelings fully, we give them the chance to teach us and then to leave us, carrying away the hurt and making room for new light.
+They don’t vanish by being ignored; they simply go quiet until an opportunity to emerge. Giving yourself permission to experience your emotions fully is one of the most loving acts you can do in service of your own healing. It doesn’t mean you’ll act on every emotion (feeling anger doesn’t mean you’ll go shout at someone; you can feel it privately and let it pass). It just means you stop fighting your own heart. In that allowance, there is tremendous healing. As one wise saying goes: “Emotional pain cannot kill you, but running from it can. Allow. Embrace. Let yourself feel. Let yourself heal.”. By feeling our feelings fully, we give them the chance to teach us and then to leave us, carrying away the hurt and making room for new light.
 <br/>
 <br/>
 
@@ -3145,7 +3145,7 @@ When we carry emotional pain, especially over long periods, we often develop def
             <b>
             Numbing:</b> This is one of the most universal defense mechanisms. Numbing means we try to dull our emotional pain through
 
-various distractions or substances. We might numb by overeating, drinking alcohol, binge-watching TV, scrolling on our phones for hours, overworking, or even by constantly helping others so that we don’t have to feel our own feelings. Numbing provides temporary relief – it “takes the edge off” our pain – but it comes at a cost. As researcher Brené Brown points out, *“Numbing vulnerability also dulls our experiences of joy, love, belonging, creativity, and empathy. We can’t selectively numb emotion: numb the dark and you numb the light.”*. In other words, when we shut down pain, we inevitably shut down positive feelings too. For example, if you numb out sadness by drinking wine every evening, you may also find that you don’t feel as excited or passionate about things you used to love – that’s the blunting effect.
+various distractions or substances. We might numb by overeating, drinking alcohol, binge-watching TV, scrolling on our phones for hours, overworking, or even by constantly helping others so that we don’t have to feel our own feelings. Numbing provides temporary relief – it “takes the edge off” our pain – but it comes at a cost. As researcher Brené Brown points out, “Numbing vulnerability also dulls our experiences of joy, love, belonging, creativity, and empathy. We can’t selectively numb emotion: numb the dark and you numb the light.”. In other words, when we shut down pain, we inevitably shut down positive feelings too. For example, if you numb out sadness by drinking wine every evening, you may also find that you don’t feel as excited or passionate about things you used to love – that’s the blunting effect.
 
 <br/>
 
@@ -3180,7 +3180,7 @@ even if not all tasks are done. These small acts chip away at the perfectionist 
             `,
 
             `
-            In fact, psychologists note that *“over-functioning is an expression of underlying anxiety.”* We might have learned early on that to receive love or to feel safe, we had to be very good, very responsible, and take care of others’ needs (perhaps as a child in a chaotic family, for example). So as adults,
+            In fact, psychologists note that “over-functioning is an expression of underlying anxiety.”. We might have learned early on that to receive love or to feel safe, we had to be very good, very responsible, and take care of others’ needs (perhaps as a child in a chaotic family, for example). So as adults,
 
 when we feel internal discomfort or pain, we instinctively start doing more – cleaning the whole house, organizing everyone’s schedule, excelling at work, solving friends’ problems – anything to not sit still with our own painful feelings. Over-functioning can also look like control: we try to control every detail around us to compensate for the inner feeling of chaos or hurt. While being responsible and helpful are positive traits in balance, over-functioning becomes a defense when it’s compulsive and when it’s used to avoid vulnerability. It blocks healing because as long as we’re constantly doing, we’re not feeling. Imagine someone sprinting on a treadmill – they might be exhausted at the end of the day, but they haven’t moved emotionally anywhere if all that busyness was to avoid their thoughts. Over-functioning can also strain relationships, ironically, because it often pairs with its
 
@@ -3213,7 +3213,7 @@ inward but also to close off – we may stop trusting our feelings, or we may fe
 </p>
 
 
-So how do we listen to the heart? It starts with stillness and presence. In our fast-paced, think-with-your-head world, the heart’s voice is soft. We need to slow down to hear it. Remember the earlier passage about how, *“in stillness our heart finally starts to answer the questions our mind has failed to thus far”*. This insight is profound: often our minds race, trying to
+So how do we listen to the heart? It starts with stillness and presence. In our fast-paced, think-with-your-head world, the heart’s voice is soft. We need to slow down to hear it. Remember the earlier passage about how, “in stillness our heart finally starts to answer the questions our mind has failed to thus far”. This insight is profound: often our minds race, trying to
 
 “figure out” why we’re hurt or how to feel better, but we go in circles. The mind alone can’t solve certain soul-level pains. We need the heart’s wisdom, which often arises in quiet, non-linear ways – a feeling, an intuition, an image, a subtle knowing. By sitting in stillness – whether through meditation, prayer, or a simple quiet moment with a cup of tea – we create a space for the heart’s voice to emerge.
             `,
@@ -3330,7 +3330,7 @@ that comment. That feeling is legitimate. It’s okay that it bothered me.” Th
             `,
 
             `
-It means saying “I’m hurt” or “I need help” or “I love you” without armor. How does that build resilience? It sounds like it would do the opposite! But here’s the beautiful paradox: vulnerability is actually a form of strength. When we are vulnerable (with the right people and in the right context), we invite genuine connection and support, which fortifies us. We also prove to ourselves that we can tolerate the discomfort of being seen as we are. That self-proof is huge for resilience. It’s like saying, “I faced my fear of opening up, and I survived – not only that, my relationships deepened and I felt more free.” Brené Brown, who has studied vulnerability extensively, found that *“vulnerability is the birthplace of love, belonging, joy, courage, and creativity”*. All of those – love,
+It means saying “I’m hurt” or “I need help” or “I love you” without armor. How does that build resilience? It sounds like it would do the opposite! But here’s the beautiful paradox: vulnerability is actually a form of strength. When we are vulnerable (with the right people and in the right context), we invite genuine connection and support, which fortifies us. We also prove to ourselves that we can tolerate the discomfort of being seen as we are. That self-proof is huge for resilience. It’s like saying, “I faced my fear of opening up, and I survived – not only that, my relationships deepened and I felt more free.” Brené Brown, who has studied vulnerability extensively, found that “vulnerability is the birthplace of love, belonging, joy, courage, and creativity”. All of those – love,
 
 belonging, joy, etc. – are sources of profound resilience and happiness. When you allow vulnerability, you allow those good things to flow in. On the flip side, if you stay armored up (never showing emotion, never admitting need), you might feel “safe” from judgment but you also cut yourself off from support and true intimacy. Facing life alone behind thick walls is exhausting; it weakens resilience over time.
 

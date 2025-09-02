@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="/css/view-book.css">
+  <link rel="stylesheet" href="/css/pages.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <title>Compagnon Féminin - Book Viewer</title>
+</head>
+
+<body>
+  <!-- ===== Top Bar ===== -->
+  <header class="top-toolbar">
+    <div class="brand" title="Book tools">
+      <span class="title" id="bookTitle">Compagnon Féminin</span>
+    </div>
+    <div class="search-wrap">
+    <input type="search" id="search" class="search" placeholder="Search by chapter or page..." />
+    </div>
+
+    <!-- Inline tools for wide screens -->
+    <div class="tools-inline" aria-label="tools">
+      <button class="icon-btn soundToggle" title="Sound on/off">
+        <i class="fas fa-volume-up"></i>
+      </button>
+
+      <button class="icon-btn" id="bookmarkBtn" title="Bookmark this page">
+        <i class="far fa-bookmark"></i>
+      </button>
+
+      <button class="icon-btn" id="zoomOut" title="Zoom out">−</button>
+
+      <button class="icon-btn" id="zoomIn" title="Zoom in">＋</button>
+
+      <button class="icon-btn" id="fullscreenBtn" title="Fullscreen">⛶</button>
+    </div>
+
+    <!-- Menu for small screens -->
+    <button class="icon-btn menu-only" id="menuBtn" title="Menu" aria-expanded="false">☰</button>
+
+    <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Tools">
+
+      <div class="tool-row">
+        <label>Sound</label>
+        <button title="Sound Button" class="icon-btn soundToggle"  data-hook="sound"><i class="fas fa-volume-up"></i></button>
+      </div>
+
+      <div class="tool-row">
+        <label>Bookmark</label>
+        <button title="Bookmark this Page" class="icon-btn" data-hook="bookmark">
+          <i class="far fa-bookmark"></i>
+        </button>
+      </div>
+
+      <div class="tool-row"><label>Zoom</label>
+        <div style="display:flex;gap:8px">
+          <button class="icon-btn" data-hook="zoom-out">−</button>
+          <button class="icon-btn" data-hook="zoom-in">＋</button>
+        </div>
+      </div>
+
+      <div class="tool-row"><label>Fullscreen</label><button class="icon-btn" data-hook="fullscreen">⛶</button></div>
+    </div>
+
+  </header>
+
+  <!-- ===== Stage / Book ===== -->
+  <div class="stage">
+    <div class="book spread" id="book">
+      <div class="book-edges" aria-hidden="true"></div>
+      <div class="page left" id="leftPage">
+        <div class="content"></div>
+      </div>
+      <div class="page right" id="rightPage">
+        <div class="content"></div>
+      </div>
+      <svg class="cover-shadow" width="0" height="0" aria-hidden="true"></svg>
+    </div>
+  </div>
+
+  <!-- Bottom Toolbar -->
+  <div class="bottom-toolbar">
+    <button id="zoomOutBottom" title="Zoom Out">
+      <i class="fas fa-search-minus"></i>
+    </button>
+    <div class="page-navigation">
+      <button title="Previous Button" id="prevBtn">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span id="pageInfo" class="page-info">0 / 0</span>
+      <button title="Next Button" id="nextBtn">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <button id="zoomInBottom" title="Zoom In">
+      <i class="fas fa-search-plus"></i>
+    </button>
+  </div>
+
+  <!-- Sound -->
+  <audio id="flipAudio">
+    <source src="/src/audio/page-flip.mp3" type="audio/mpeg">
+  </audio>
+</body>
+
+</html>
+
+<script src="/js/books.js"></script>
+<script src="/js/view-book.js"></script>
