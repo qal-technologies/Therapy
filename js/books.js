@@ -112,7 +112,7 @@ I grew up in an extraordinary world of elegance and tradition, one forever marke
             `,
         `
 <p>
-Later, as I studied philosophy in Paris, the questions deepened. I realised that I realised that philosophy—a  discipline that seeks to make sense of life had the power to speak directly to the heart.
+Later, as I studied philosophy in Paris, the questions deepened. I realised that I realised that philosophy, a  discipline that seeks to make sense of life had the power to speak directly to the heart.
 </p>
         
 Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Les Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
