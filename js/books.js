@@ -1095,7 +1095,7 @@ Sometimes, knowing that what you’re feeling has a name and is shared by others
             </p>
 
              <h4>A Glimmer of Hope</h4>
-<p>Let’s peek ahead just a bit. Remember Anna, sitting in her dark room? Her story doesn’t end with tears by the window. In a later chapter, we will revisit Anna and see how she found a tiny spark of hope and followed it out of the darkness – step by step. *Spoiler alert* : she does not stay stuck forever. Not only does she find a new job, but more importantly, she finds herself again, piece by piece, and even discovers a new passion that she’d never pursued before. Her depression eventually became a chapter in her life, not the whole story.</p>
+<p>Let’s peek ahead just a bit. Remember Anna, sitting in her dark room? Her story doesn’t end with tears by the window. In a later chapter, we will revisit Anna and see how she found a tiny spark of hope and followed it out of the darkness – step by step. Spoiler alert : she does not stay stuck forever. Not only does she find a new job, but more importantly, she finds herself again, piece by piece, and even discovers a new passion that she’d never pursued before. Her depression eventually became a chapter in her life, not the whole story.</p>
             </div>
             `,
         `
@@ -1244,7 +1244,7 @@ Breakups, divorce, and loss. The end of a relationship can trigger profound lone
         Loneliness after a breakup is not a sign of weakness; it’s a natural part of grieving the loss of connection. Similarly, losing a loved one to death can leave a person feeling isolated even if others are around offering condolences. There is a particular loneliness in missing that one irreplaceable person. Even women who chose to end a toxic relationship may find themselves surprised by waves of loneliness afterward. It’s part of the healing process.
 
         <p>
-        New motherhood and caregiving. Bringing a new baby home is often portrayed as a joyous, bonding time – yet for many women it is one of the loneliest periods of life. The reality of modern motherhood, where a woman might be at home alone with an infant for long stretches, can be isolating and overwhelming. Studies suggest 80–90% of new mothers feel lonely in some way. Think of that: nearly all new moms, even those with partners or family around, experience loneliness. One UK survey found 43% of mothers under 30 reported feeling lonely **“all the time”**. The reasons vary – friends might not visit as much, the mother might be too exhausted to socialize, or she may feel that no one else understands what she’s going through. Society often downplays this, leaving mothers feeling ashamed to admit they’re lonely when they “should” feel happy. But the truth is that loneliness in motherhood is incredibly common, even when you adore your child. Long days spent with only a baby for company, sleep deprivation, and the weight of new responsibilities can create a perfect storm where a woman feels profoundly isolated. As one new mom confessed, “new motherhood was the loneliest time of my life,” despite having a supportive partner. The isolated arrangement of caring for a young child without the community support that was common in past generations leaves many mothers feeling unseen and overwhelmed. (We will discuss later how collective child-rearing used to buffer this loneliness, and what it means for us today.)
+        New motherhood and caregiving. Bringing a new baby home is often portrayed as a joyous, bonding time – yet for many women it is one of the loneliest periods of life. The reality of modern motherhood, where a woman might be at home alone with an infant for long stretches, can be isolating and overwhelming. Studies suggest 80–90% of new mothers feel lonely in some way. Think of that: nearly all new moms, even those with partners or family around, experience loneliness. One UK survey found 43% of mothers under 30 reported feeling lonely “all the time”. The reasons vary – friends might not visit as much, the mother might be too exhausted to socialize, or she may feel that no one else understands what she’s going through. Society often downplays this, leaving mothers feeling ashamed to admit they’re lonely when they “should” feel happy. But the truth is that loneliness in motherhood is incredibly common, even when you adore your child. Long days spent with only a baby for company, sleep deprivation, and the weight of new responsibilities can create a perfect storm where a woman feels profoundly isolated. As one new mom confessed, “new motherhood was the loneliest time of my life,” despite having a supportive partner. The isolated arrangement of caring for a young child without the community support that was common in past generations leaves many mothers feeling unseen and overwhelmed. (We will discuss later how collective child-rearing used to buffer this loneliness, and what it means for us today.)
         </p>
         `,
         `
@@ -1288,7 +1288,7 @@ Comparisons and self-doubt in the age of social media. As mentioned earlier, the
         `
         Loneliness literally hurts – not just emotionally, but it exacts a physical price.
 <br/>
-It’s associated with higher blood pressure and poorer sleep, which in turn affect overall health. Perhaps most strikingly, long-term loneliness has been shown to **increase the chances of early death by around 20%**.
+It’s associated with higher blood pressure and poorer sleep, which in turn affect overall health. Perhaps most strikingly, long-term loneliness has been shown to increase the chances of early death by around 20%.
 
         <p>
 Why would loneliness affect the body so strongly? From an evolutionary standpoint, being isolated triggers a stress response. Our ancestors survived by being in groups; someone isolated was in danger. So our bodies interpret loneliness as a threat: stress hormones like cortisol rise, we stay in a vigilant “fight or flight” mode. Over time, this chronic stress wears on our organs and systems. It’s as if the body is sounding an alarm that something is wrong – that we need to seek connection – but if that connection doesn’t happen, the alarm keeps ringing internally, draining our batteries.
@@ -1835,7 +1835,7 @@ Picking up the pieces after a heartbreak is a tender and gradual process. In the
 
         `
         <div class="inner-content text-left">
-        You will build a life where the breakup is a chapter, not the whole story. No matter who or what caused the heartbreak, you remain the author of your own life. As one article put it, *“remember that you are the architect of your own future”*. This means you have the power to design a life that feels fulfilling to you, with or without a partner. That might sound like cold comfort when you miss someone, but it is actually empowering: you get to decide what comes next, how you spend your days, what dreams to pursue now.
+        You will build a life where the breakup is a chapter, not the whole story. No matter who or what caused the heartbreak, you remain the author of your own life. As one article put it, “remember that you are the architect of your own future”. This means you have the power to design a life that feels fulfilling to you, with or without a partner. That might sound like cold comfort when you miss someone, but it is actually empowering: you get to decide what comes next, how you spend your days, what dreams to pursue now.
 
         <p>
         In rebuilding after heartbreak, patience is your ally. Don’t rush yourself. Healing has its own timeline. But as surely as winter turns to spring, your season of pain will thaw, and tender new things will grow from it. Keep tending to yourself with love and trust that healing is happening, even when you can’t feel it in the moment.
@@ -2313,7 +2313,7 @@ love and compassion toward oneself. This sounds straightforward, but for someone
 <p>
 One misconception is that being kind to oneself is self-indulgent or will make you complacent. On the contrary, research by Dr. Kristin Neff and others has shown that self-compassion actually provides a more sustainable motivation for growth than
 
-self-criticism. Consider this poignant comparison: *“Unlike self-criticism, which asks if you’re good enough, self-compassion asks what’s good for you?”*. In other words, beating yourself up only makes you feel worse and more stuck, whereas comforting and encouraging yourself leads to healthier choices and positive change. Think about it – if you slip up on a diet, the self-critical approach would be to call yourself a failure and maybe even give up. The self-compassionate approach would be to forgive yourself for being human, figure out what led to the slip, and kindly recommit to your goals because you care about your well-being. As Neff notes, *“If you care about yourself, you’ll do what you need to do in order to learn and grow.”* Self-compassion isn’t complacency; it’s a motivator rooted in love rather than fear.
+self-criticism. Consider this poignant comparison: “Unlike self-criticism, which asks if you’re good enough, self-compassion asks what’s good for you?”. In other words, beating yourself up only makes you feel worse and more stuck, whereas comforting and encouraging yourself leads to healthier choices and positive change. Think about it – if you slip up on a diet, the self-critical approach would be to call yourself a failure and maybe even give up. The self-compassionate approach would be to forgive yourself for being human, figure out what led to the slip, and kindly recommit to your goals because you care about your well-being. As Neff notes, “If you care about yourself, you’ll do what you need to do in order to learn and grow.” Self-compassion isn’t complacency; it’s a motivator rooted in love rather than fear.
 </p>
             `,
             `
@@ -2323,7 +2323,7 @@ first, but with repetition it can truly change your internal climate.
 
 
 <p>
-Crucially, self-compassion also involves forgiving yourself for past mistakes or perceived failures. Every single person on this planet has made mistakes – it’s how we learn and grow. Holding onto self-blame and regret keeps you tied to a version of yourself that no longer exists. If guilt or shame about the past is a heavy component of your low self-esteem, it’s time to practice letting it go. Remind yourself: *“I was doing the best I could with the knowledge and resources I had at the time.”*. If that sounds familiar, it’s because it is a common refrain in therapy for healing guilt.</p>
+Crucially, self-compassion also involves forgiving yourself for past mistakes or perceived failures. Every single person on this planet has made mistakes – it’s how we learn and grow. Holding onto self-blame and regret keeps you tied to a version of yourself that no longer exists. If guilt or shame about the past is a heavy component of your low self-esteem, it’s time to practice letting it go. Remind yourself: “I was doing the best I could with the knowledge and resources I had at the time.”. If that sounds familiar, it’s because it is a common refrain in therapy for healing guilt.</p>
 `,
             
             `
@@ -2517,7 +2517,7 @@ Pause for a moment and consider the beliefs you hold about yourself and the worl
 blueprint for our lives. They influence how we interpret our experiences, how we feel in response, and how we choose to act. In a very real sense, beliefs shape our reality.
             </p>
 
-            Modern psychology reinforces this ancient wisdom. As researcher Carol Dweck famously noted, *“Our conscious and unconscious thoughts affect us, and something as simple as wording can have a powerful impact on our ability to improve”*. In other words, the way we think about ourselves can either spur us forward or hold us back.
+            Modern psychology reinforces this ancient wisdom. As researcher Carol Dweck famously noted, “Our conscious and unconscious thoughts affect us, and something as simple as wording can have a powerful impact on our ability to improve”. In other words, the way we think about ourselves can either spur us forward or hold us back.
             `,
             `
              Dweck’s work demonstrated “the power of our most basic beliefs” – whether we see traits like intelligence or resilience as fixed or changeable – and how those beliefs directly affect our motivation and the outcomes we achieve.
@@ -2538,7 +2538,7 @@ outcome wasn’t due to innate talent, but the difference in belief. Our beliefs
 
             `
 
-It’s often said that thoughts are the seeds of our destiny. This isn’t just a poetic metaphor – it reflects a psychological truth: beliefs and thoughts set the stage for how we experience life. As the Buddha wisely observed long ago, *“We are what we think. All that we are arises with our thoughts. With our thoughts, we make the world.”*. In a very real way, the world we experience is filtered through the mind. For instance, if you carry a belief that “people can’t be trusted,” you’ll feel suspicious or fearful in relationships, and you may keep others at a distance – thus experiencing a lonely world that seems to confirm your belief. Change that core belief to “some
+It’s often said that thoughts are the seeds of our destiny. This isn’t just a poetic metaphor – it reflects a psychological truth: beliefs and thoughts set the stage for how we experience life. As the Buddha wisely observed long ago, “We are what we think. All that we are arises with our thoughts. With our thoughts, we make the world.”. In a very real way, the world we experience is filtered through the mind. For instance, if you carry a belief that “people can’t be trusted,” you’ll feel suspicious or fearful in relationships, and you may keep others at a distance – thus experiencing a lonely world that seems to confirm your belief. Change that core belief to “some
 
 people can be trusted, and I can learn who,” and your emotions soften; you feel more hopeful, you open up gradually, and lo and behold, you start to find trustworthy people and nurturing connections. The external world didn’t magically change – your mind changed, and so did your experience of life.
 
@@ -2952,9 +2952,9 @@ them.
 What Emotional Healing Really Means
 </h4>
              <p>
-             A broken heart, when gently tended, can become a source of strength and wisdom. Emotional healing is not about “forgetting” our wounds or pretending they never existed. It is about transforming our pain into understanding, acceptance, and renewed wholeness. Emotional healing isn’t simply “getting over it” or “moving on” as quickly as possible. In fact, trying to rush past emotional pain or repress it usually doesn’t work – the hurt remains just below the surface, unresolved. True emotional healing means honoring the reality of what happened and what we felt, and giving ourselves the time and compassion to process it. It’s often said that you have to feel it to heal it, and this is a core truth of healing. As one psychologist wisely put it, *“How does one get over a hurt? There is not ‘getting over.’ You go through it. You have to feel it to
+             A broken heart, when gently tended, can become a source of strength and wisdom. Emotional healing is not about “forgetting” our wounds or pretending they never existed. It is about transforming our pain into understanding, acceptance, and renewed wholeness. Emotional healing isn’t simply “getting over it” or “moving on” as quickly as possible. In fact, trying to rush past emotional pain or repress it usually doesn’t work – the hurt remains just below the surface, unresolved. True emotional healing means honoring the reality of what happened and what we felt, and giving ourselves the time and compassion to process it. It’s often said that you have to feel it to heal it, and this is a core truth of healing. As one psychologist wisely put it, “How does one get over a hurt? There is not ‘getting over.’ You go through it. You have to feel it to
 
-heal it.”*.
+heal it.”.
              </p>
             `,
 
@@ -3010,7 +3010,7 @@ the past can color our present emotions. We may not consciously connect the dots
 
 One way to understand this is through the concept of the inner child or the part of us that was hurt long ago and still carries that pain. When we haven’t healed a childhood hurt (or a hurt from any earlier time in life), that part of us stays kind of “frozen” at the age of the wound. We might be adults on the outside, coping with adult life, yet inside there’s a younger self – maybe a 7-year-old who felt unloved, or a 16-year-old who felt betrayed – who is still aching and waiting for comfort. Until we acknowledge and heal those parts, they keep
 
-resurfacing and “showing up” in our adult life, often through intense emotions or knee-jerk reactions that echo the past. As one therapist describes, an unhealed emotional wound tends to remain *“frozen and suppressed, but [it keeps] resurfacing and showing up as dramatic reactions to similar situations that once hurt us”*. In other words, the unresolved pain finds a way to make itself known – perhaps through an unexpected burst of anger, a wave of sadness, or a pattern of anxiety in certain scenarios that mirror the original hurt.
+resurfacing and “showing up” in our adult life, often through intense emotions or knee-jerk reactions that echo the past. As one therapist describes, an unhealed emotional wound tends to remain “frozen and suppressed, but [it keeps] resurfacing and showing up as dramatic reactions to similar situations that once hurt us”. In other words, the unresolved pain finds a way to make itself known – perhaps through an unexpected burst of anger, a wave of sadness, or a pattern of anxiety in certain scenarios that mirror the original hurt.
 </p>
             `,
 
@@ -3044,7 +3044,7 @@ indication of an unhealed wound beneath the surface. This is not meant to alarm 
             `,
 
             `
-            The good news is, once we start that tending – even just acknowledging, “Yes, that really did hurt and it still affects me” – we’ve taken a crucial step. The wound begins to shift from festering in darkness to healing in the light of awareness. As the Persian poet Rumi is often quoted, *“The wound is the place where the light enters you.”* In embracing our wounded places and bringing them into the light, we actually
+            The good news is, once we start that tending – even just acknowledging, “Yes, that really did hurt and it still affects me” – we’ve taken a crucial step. The wound begins to shift from festering in darkness to healing in the light of awareness. As the Persian poet Rumi is often quoted, “The wound is the place where the light enters you.” In embracing our wounded places and bringing them into the light, we actually
 
 create the conditions for that light of healing and wisdom to enter and transform our pain.
 
@@ -3126,7 +3126,7 @@ feeling. The breath is like a lifeline; it connects the emotional mind with the 
 Remember, feelings are meant to be felt.
 </h4>
 
-They don’t vanish by being ignored; they simply go quiet until an opportunity to emerge. Giving yourself permission to experience your emotions fully is one of the most loving acts you can do in service of your own healing. It doesn’t mean you’ll act on every emotion (feeling anger doesn’t mean you’ll go shout at someone; you can feel it privately and let it pass). It just means you stop fighting your own heart. In that allowance, there is tremendous healing. As one wise saying goes: *“Emotional pain cannot kill you, but running from it can. Allow. Embrace. Let yourself feel. Let yourself heal.”*. By feeling our feelings fully, we give them the chance to teach us and then to leave us, carrying away the hurt and making room for new light.
+They don’t vanish by being ignored; they simply go quiet until an opportunity to emerge. Giving yourself permission to experience your emotions fully is one of the most loving acts you can do in service of your own healing. It doesn’t mean you’ll act on every emotion (feeling anger doesn’t mean you’ll go shout at someone; you can feel it privately and let it pass). It just means you stop fighting your own heart. In that allowance, there is tremendous healing. As one wise saying goes: “Emotional pain cannot kill you, but running from it can. Allow. Embrace. Let yourself feel. Let yourself heal.”. By feeling our feelings fully, we give them the chance to teach us and then to leave us, carrying away the hurt and making room for new light.
 <br/>
 <br/>
 
@@ -3145,7 +3145,7 @@ When we carry emotional pain, especially over long periods, we often develop def
             <b>
             Numbing:</b> This is one of the most universal defense mechanisms. Numbing means we try to dull our emotional pain through
 
-various distractions or substances. We might numb by overeating, drinking alcohol, binge-watching TV, scrolling on our phones for hours, overworking, or even by constantly helping others so that we don’t have to feel our own feelings. Numbing provides temporary relief – it “takes the edge off” our pain – but it comes at a cost. As researcher Brené Brown points out, *“Numbing vulnerability also dulls our experiences of joy, love, belonging, creativity, and empathy. We can’t selectively numb emotion: numb the dark and you numb the light.”*. In other words, when we shut down pain, we inevitably shut down positive feelings too. For example, if you numb out sadness by drinking wine every evening, you may also find that you don’t feel as excited or passionate about things you used to love – that’s the blunting effect.
+various distractions or substances. We might numb by overeating, drinking alcohol, binge-watching TV, scrolling on our phones for hours, overworking, or even by constantly helping others so that we don’t have to feel our own feelings. Numbing provides temporary relief – it “takes the edge off” our pain – but it comes at a cost. As researcher Brené Brown points out, “Numbing vulnerability also dulls our experiences of joy, love, belonging, creativity, and empathy. We can’t selectively numb emotion: numb the dark and you numb the light.”. In other words, when we shut down pain, we inevitably shut down positive feelings too. For example, if you numb out sadness by drinking wine every evening, you may also find that you don’t feel as excited or passionate about things you used to love – that’s the blunting effect.
 
 <br/>
 
@@ -3170,7 +3170,7 @@ won’t have to feel shame.” So perfectionism becomes an emotional armor. It b
             `
             If you identify as a perfectionist, consider this:
 
-sometimes striving for perfection is a way to avoid dealing with messy emotions. If everything looks perfect on the outside, maybe we can convince ourselves everything is fine within. But healing asks us to embrace our humanity, imperfections and all. It’s when we let those cracks show that the light can get in – recall Leonard Cohen’s lyric, *“There’s a crack in everything. That’s how the light gets in.”*. In practice, overcoming the perfectionism defense might mean allowing yourself to be in progress, to not be okay sometimes, and to reach out for help or comfort without shame. It means telling that inner critic that it’s okay to have flaws, to have emotions, to not be a superhero. You might start by intentionally doing something “imperfectly” on purpose and seeing that the world doesn’t end – maybe invite a friend over even if your home isn’t spotless, or allow yourself a day of rest
+sometimes striving for perfection is a way to avoid dealing with messy emotions. If everything looks perfect on the outside, maybe we can convince ourselves everything is fine within. But healing asks us to embrace our humanity, imperfections and all. It’s when we let those cracks show that the light can get in – recall Leonard Cohen’s lyric, “There’s a crack in everything. That’s how the light gets in.”. In practice, overcoming the perfectionism defense might mean allowing yourself to be in progress, to not be okay sometimes, and to reach out for help or comfort without shame. It means telling that inner critic that it’s okay to have flaws, to have emotions, to not be a superhero. You might start by intentionally doing something “imperfectly” on purpose and seeing that the world doesn’t end – maybe invite a friend over even if your home isn’t spotless, or allow yourself a day of rest
 
 even if not all tasks are done. These small acts chip away at the perfectionist armor and let your real, vulnerable self (the one who needs healing and love) come forward.
 
@@ -3180,7 +3180,7 @@ even if not all tasks are done. These small acts chip away at the perfectionist 
             `,
 
             `
-            In fact, psychologists note that *“over-functioning is an expression of underlying anxiety.”* We might have learned early on that to receive love or to feel safe, we had to be very good, very responsible, and take care of others’ needs (perhaps as a child in a chaotic family, for example). So as adults,
+            In fact, psychologists note that “over-functioning is an expression of underlying anxiety.” We might have learned early on that to receive love or to feel safe, we had to be very good, very responsible, and take care of others’ needs (perhaps as a child in a chaotic family, for example). So as adults,
 
 when we feel internal discomfort or pain, we instinctively start doing more – cleaning the whole house, organizing everyone’s schedule, excelling at work, solving friends’ problems – anything to not sit still with our own painful feelings. Over-functioning can also look like control: we try to control every detail around us to compensate for the inner feeling of chaos or hurt. While being responsible and helpful are positive traits in balance, over-functioning becomes a defense when it’s compulsive and when it’s used to avoid vulnerability. It blocks healing because as long as we’re constantly doing, we’re not feeling. Imagine someone sprinting on a treadmill – they might be exhausted at the end of the day, but they haven’t moved emotionally anywhere if all that busyness was to avoid their thoughts. Over-functioning can also strain relationships, ironically, because it often pairs with its
 
@@ -3213,7 +3213,7 @@ inward but also to close off – we may stop trusting our feelings, or we may fe
 </p>
 
 
-So how do we listen to the heart? It starts with stillness and presence. In our fast-paced, think-with-your-head world, the heart’s voice is soft. We need to slow down to hear it. Remember the earlier passage about how, *“in stillness our heart finally starts to answer the questions our mind has failed to thus far”*. This insight is profound: often our minds race, trying to
+So how do we listen to the heart? It starts with stillness and presence. In our fast-paced, think-with-your-head world, the heart’s voice is soft. We need to slow down to hear it. Remember the earlier passage about how, “in stillness our heart finally starts to answer the questions our mind has failed to thus far”. This insight is profound: often our minds race, trying to
 
 “figure out” why we’re hurt or how to feel better, but we go in circles. The mind alone can’t solve certain soul-level pains. We need the heart’s wisdom, which often arises in quiet, non-linear ways – a feeling, an intuition, an image, a subtle knowing. By sitting in stillness – whether through meditation, prayer, or a simple quiet moment with a cup of tea – we create a space for the heart’s voice to emerge.
             `,
@@ -3330,7 +3330,7 @@ that comment. That feeling is legitimate. It’s okay that it bothered me.” Th
             `,
 
             `
-It means saying “I’m hurt” or “I need help” or “I love you” without armor. How does that build resilience? It sounds like it would do the opposite! But here’s the beautiful paradox: vulnerability is actually a form of strength. When we are vulnerable (with the right people and in the right context), we invite genuine connection and support, which fortifies us. We also prove to ourselves that we can tolerate the discomfort of being seen as we are. That self-proof is huge for resilience. It’s like saying, “I faced my fear of opening up, and I survived – not only that, my relationships deepened and I felt more free.” Brené Brown, who has studied vulnerability extensively, found that *“vulnerability is the birthplace of love, belonging, joy, courage, and creativity”*. All of those – love,
+It means saying “I’m hurt” or “I need help” or “I love you” without armor. How does that build resilience? It sounds like it would do the opposite! But here’s the beautiful paradox: vulnerability is actually a form of strength. When we are vulnerable (with the right people and in the right context), we invite genuine connection and support, which fortifies us. We also prove to ourselves that we can tolerate the discomfort of being seen as we are. That self-proof is huge for resilience. It’s like saying, “I faced my fear of opening up, and I survived – not only that, my relationships deepened and I felt more free.” Brené Brown, who has studied vulnerability extensively, found that “vulnerability is the birthplace of love, belonging, joy, courage, and creativity”. All of those – love,
 
 belonging, joy, etc. – are sources of profound resilience and happiness. When you allow vulnerability, you allow those good things to flow in. On the flip side, if you stay armored up (never showing emotion, never admitting need), you might feel “safe” from judgment but you also cut yourself off from support and true intimacy. Facing life alone behind thick walls is exhausting; it weakens resilience over time.
 
