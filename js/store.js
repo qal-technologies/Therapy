@@ -29,7 +29,7 @@ const bookData = [
     },
     {
         type: 'p',
-        content: 'Atherian lore speaks of a chosen one, a traveler from another world who would unite the scattered elemental crystals and restore balance to their land. The symbol on the book was the mark of this chosen one. It was now clear to Elara that her grandfather\'s legacy was now her destiny.'
+        content: "Atherian lore speaks of a chosen one, a traveler from another world who would unite the scattered elemental crystals and restore balance to their land. The symbol on the book was the mark of this chosen one. It was now clear to Elara that her grandfather's legacy was now her destiny."
     },
     {
         type: 'h1',
@@ -41,11 +41,11 @@ const bookData = [
     },
     {
         type: 'p',
-        content: 'The journey was perilous. The winds howled, and the path was treacherous. But Elara was resilient. She remembered her grandfather\'s words: <span>"The greatest treasures are protected by the greatest challenges."</span>'
+        content: 'The journey was perilous. The winds howled, and the path was treacherous. But Elara was resilient. She remembered her grandfather’s words: <span>"The greatest treasures are protected by the greatest challenges."</span>'
     },
     {
         type: 'h2',
-        content: 'The Guardian\'s Riddle'
+        content: 'The Guardian’s Riddle'
     },
     {
         type: 'p',
@@ -65,6 +65,6 @@ const bookData = [
     },
     {
         type: 'p',
-        content: 'As she ventured deeper, the whispers grew louder. They spoke of forgotten histories, of triumphs and tragedies. It was easy to get lost in the voices, to lose one\'s path. But Elara focused on the steady rhythm of her own heartbeat, a reminder of the present.'
+        content: 'As she ventured deeper, the whispers grew louder. They spoke of forgotten histories, of triumphs and tragedies. It was easy to get lost in the voices, to lose one’s path. But Elara focused on the steady rhythm of her own heartbeat, a reminder of the present.'
     }
 ];
