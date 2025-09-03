@@ -322,6 +322,14 @@
     text-align: right;
 }
 
+.page-middle .text-italics{
+    font-style: italic;
+}
+
+.page-middle .text-oblique{
+    font-style: oblique;
+}
+
 .page-middle .align-center {
     align-items: center;
 }
