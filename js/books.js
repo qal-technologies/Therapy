@@ -6489,13 +6489,14 @@ world that is constantly trying to make you something else is the greatest accom
           </p>
           
           Now, as I pen this farewell, my heart is full and hopeful. It’s hard to say goodbye, but I prefer to think of it as “until we meet again.” Though this book is coming to a close, our connection does not have to end in spirit. Wherever life takes you next, know that I am silently rooting for you,celebrating your victories and holding hope for you in your trials. You have a friend in me always; whenever you need a gentle reminder of how far you’ve come, remember that these pages will be here for you. Thank you, from the bottom of my heart, for giving me the chance to share my story and that of other women with you, and for opening your heart to them. I am endlessly grateful for the connection we share. 
+          <br/>
           As I close this letter, I send you all my love, my gratitude, and my unwavering belief in you.
           `,
                 `
 Dear reader, it has been my honor to walk with you on this journey. We began as companions, and now you have discovered that the most loyal companion is always within yourself. You have blossomed into a woman of profound depth and quiet power. Thank you for trusting these words and for trusting yourself. Always remember the love and hope you’ve given to yourself, and know that you deserve no less than the universe’s brightest joys.
 
 <p class="wdth-100p text-left">
-With all my love and pride,
+With all my love and light,
 <br/>
 <b>Charlotte</b>
 </p>
