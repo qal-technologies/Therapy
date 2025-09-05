@@ -6479,16 +6479,19 @@ world that is constantly trying to make you something else is the greatest accom
           
           <span> As you turn the final page, I want to leave you with this truth: you are capable of profound healing and growth. Life will continue to challenge you, but within you is a light that can never be extinguished, no matter how dark the night may seem. You have shown courage just by being willing to reflect on these pages and on your own life.
           </span>
-          <br/>
-          <br/>
+          `,
+
+                `
           
           Remember, the end of this book is not the end of your journey, it is a new beginning, and you are not alone in it. In me, you have a friend who truly cares. I hope these pages offered you a gentle and protected space for reflection,one built on compassion and free of judgment. 
           
-          <span>In our shared moments through this book, I tried to hold your heart with tenderness and understanding. You may have felt alone at times in your life, but please believe that as you read, I was silently by your side, cheering you on. As friends, we don’t judge each other; we welcome each other and hold one another’s worries gently. I embrace every part of you, just as you have embraced every part of these stories. 
-          </span>
+          <p>In our shared moments through this book, I tried to hold your heart with tenderness and understanding. You may have felt alone at times in your life, but please believe that as you read, I was silently by your side, cheering you on. As friends, we don’t judge each other; we welcome each other and hold one another’s worries gently. I embrace every part of you, just as you have embraced every part of these stories. 
+          </p>
           
-          Now, as I pen this farewell, my heart is full and hopeful. It’s hard to say goodbye, but I prefer to think of it as “until we meet again.” Though this book is coming to a close, our connection does not have to end in spirit. Wherever life takes you next, know that I am silently rooting for you,celebrating your victories and holding hope for you in your trials. You have a friend in me always; whenever you need a gentle reminder of how far you’ve come, remember that these pages will be here for you. Thank you, from the bottom of my heart, for giving me the chance to share my story and that of other women with you, and for opening your heart to them. I am endlessly grateful for the connection we share. As I close this letter, I send you all my love, my gratitude, and my unwavering belief in you.
-          <br/><br/>
+          Now, as I pen this farewell, my heart is full and hopeful. It’s hard to say goodbye, but I prefer to think of it as “until we meet again.” Though this book is coming to a close, our connection does not have to end in spirit. Wherever life takes you next, know that I am silently rooting for you,celebrating your victories and holding hope for you in your trials. You have a friend in me always; whenever you need a gentle reminder of how far you’ve come, remember that these pages will be here for you. Thank you, from the bottom of my heart, for giving me the chance to share my story and that of other women with you, and for opening your heart to them. I am endlessly grateful for the connection we share. 
+          As I close this letter, I send you all my love, my gratitude, and my unwavering belief in you.
+          `,
+                `
 Dear reader, it has been my honor to walk with you on this journey. We began as companions, and now you have discovered that the most loyal companion is always within yourself. You have blossomed into a woman of profound depth and quiet power. Thank you for trusting these words and for trusting yourself. Always remember the love and hope you’ve given to yourself, and know that you deserve no less than the universe’s brightest joys.
 
 <p class="wdth-100p text-left">
