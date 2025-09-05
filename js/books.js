@@ -6460,16 +6460,35 @@ world that is constantly trying to make you something else is the greatest accom
 <p>
 
 <i>Yet remember: </i>this is not the end of the road, but a beautiful milestone on a lifelong journey. As Rick Warren observes, “Transformation is a process, and as life happens there are moments on mountaintops and moments in deep valleys of despair.” There will be challenges ahead, days when old habits whisper and doubt may knock. But now you have the tools and the wisdom to keep going. Each setback is just a curve in the path, each triumph a view to savor. Growth truly is continuous, and you are ready for whatever comes.</p>
-
-
-Now, more than ever, trust the strength within you. You have become your own true companion. This book has not ended; it has become part of your own voice, a reflection of the courage and love that were already inside you. 
              `,
             
             `
-            Whenever you feel lost, remember how far you’ve come. The answers and resilience you need have been there, growing with you.
-
+            Now, more than ever, trust the strength within you. You have become your own true companion. This book has not ended; it has become part of your own voice, a reflection of the courage and love that were already inside you. 
+            <p>
+            Whenever you feel lost, remember how far you’ve come. The answers and resilience you need have been there, growing with you.</p>
+`,
+                `
+          <h4>A Letter to My Dear Friend</h4>
+          
+          Dear Friend,From the moment you opened this book, you became a part of my journey and I became a part of yours. Thank you for taking the time to walk beside me through these pages. Sharing my story and that of other women I shared with you has been one of the most vulnerable and rewarding experiences of my life. 
+          
+          <p>
+          I call you friend because that's truly how I feel,your presence, though unseen, has been felt with every word. It feels as if we've been sitting together, heart to heart, learning and healing side by side. In writing this memoir, I opened up wounds and wonders from my past, as well as those entrusted to me by other women, and knowing you were there listening made that process feel safe and meaningful. Together we’ve explored moments of heartbreak and of hope, of loss and of love, all woven with the thread of resilience. </p>
+          
+          If something within these stories resonated with you, then our pain and our joy have found purpose. I hope you felt, in these stories, not only the struggles but also the strength that carried us through,and I hope it reminds you of the strength that lives in you too. 
+          
+          <span> As you turn the final page, I want to leave you with this truth: you are capable of profound healing and growth. Life will continue to challenge you, but within you is a light that can never be extinguished, no matter how dark the night may seem. You have shown courage just by being willing to reflect on these pages and on your own life.
+          </span>
           <br/>
           <br/>
+          
+          Remember, the end of this book is not the end of your journey, it is a new beginning, and you are not alone in it. In me, you have a friend who truly cares. I hope these pages offered you a gentle and protected space for reflection,one built on compassion and free of judgment. 
+          
+          <span>In our shared moments through this book, I tried to hold your heart with tenderness and understanding. You may have felt alone at times in your life, but please believe that as you read, I was silently by your side, cheering you on. As friends, we don’t judge each other; we welcome each other and hold one another’s worries gently. I embrace every part of you, just as you have embraced every part of these stories. 
+          </span>
+          
+          Now, as I pen this farewell, my heart is full and hopeful. It’s hard to say goodbye, but I prefer to think of it as “until we meet again.” Though this book is coming to a close, our connection does not have to end in spirit. Wherever life takes you next, know that I am silently rooting for you,celebrating your victories and holding hope for you in your trials. You have a friend in me always; whenever you need a gentle reminder of how far you’ve come, remember that these pages will be here for you. Thank you, from the bottom of my heart, for giving me the chance to share my story and that of other women with you, and for opening your heart to them. I am endlessly grateful for the connection we share. As I close this letter, I send you all my love, my gratitude, and my unwavering belief in you.
+          <br/><br/>
 Dear reader, it has been my honor to walk with you on this journey. We began as companions, and now you have discovered that the most loyal companion is always within yourself. You have blossomed into a woman of profound depth and quiet power. Thank you for trusting these words and for trusting yourself. Always remember the love and hope you’ve given to yourself, and know that you deserve no less than the universe’s brightest joys.
 
 <p class="wdth-100p text-left">
