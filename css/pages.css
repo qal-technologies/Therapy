@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     place-items: center;
     place-self: center;
     overflow: hidden;
@@ -15,8 +14,6 @@
 .content * {
     margin: 0;
     padding: 0;
-    -webkit-scrollbar-color: transparent;
-    scrollbar-color: transparent;
     -ms-behavior: inherit;
     behavior: inherit;
 }
@@ -56,7 +53,6 @@
     bottom: 0;
     z-index: 99;
     place-items: center;
-    /* backdrop-filter: blur(2px); */
     background: linear-gradient(transparent, var(--paper-trans), var(--paper));
 }
 
@@ -78,12 +74,14 @@
     align-self: center;
     gap: 0;
     justify-content: flex-start;
-    padding: 4px 4px 20px;
     width: 100%;
+    padding: 4px;
+    padding-bottom: 30px;
     padding-inline: 15px;
-    flex: 1;
+    flex: 0.994;
     font-size: 0.85rem;
-    line-height: 1.06rem;
+    line-height: 110%;
+
     overflow-y: auto;
     scroll-behavior: smooth;
     scroll-snap-type: proximity;
@@ -322,11 +320,15 @@
     text-align: right;
 }
 
-.page-middle .text-italics{
+.page-middle .text-italics {
     font-style: italic;
 }
 
-.page-middle .text-oblique{
+.page-middle .bold {
+    font-weight: bold;
+}
+
+.page-middle .text-oblique {
     font-style: oblique;
 }
 
