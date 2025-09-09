@@ -622,7 +622,7 @@ Priority is given in the order sign-ups are received, so you’re in line.
 Until then, breathe deeply and know,your sanctuary is waiting.`
 			);
 
-			waitlistBTN.textContent = 'Added to queue!';
+			waitlistBTN.textContent = '✅ Added to waitlist!';
 		}, 2000);
 	});
 });
