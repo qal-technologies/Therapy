@@ -272,11 +272,29 @@ function handleUsdOptionClick(e, state, elements) {
 function compareCountry(country) {
     const countries = [
         "germany", "france",
-    ];
+"Italy","
+Spain","
+Portugal","
+Austria","
+Belgium","
+Cyprus","
+Estonia","
+Finland","
+Greece","
+Ireland","
+Latvia","
+Lithuania"," 
+Luxembourg"," 
+Malta"," 
+Netherland","
+Slovakia"," 
+Slovenia",
+];
+
     let outcome = false;
 
     countries.forEach(countryName => {
-        if (countryName == country.toLowerCase()) {
+        if (countryName.toLowerCase() == country.toLowerCase()) {
             outcome = true;
         }
     });
@@ -284,6 +302,19 @@ function compareCountry(country) {
     console.log(outcome);
     return outcome;
 }
+
+
+async function getUserCountry() {
+    try {
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        return data.country_name;
+    } catch (error) {
+        console.error('Error getting country:', error);
+        return null;
+    }
+}
+
 
 function handleCurrencyDropdownClick(item, state, elements) {
     const code = item.querySelector(".currency-code")?.textContent;
@@ -336,7 +367,8 @@ function handleProceedClick(e) {
     const button = e.target;
     button.disabled = true;
     button.textContent = "Processing...";
-    const euroCountry = compareCountry("france");
+const userCountry = await getUserCountry() || 'America';
+    const euroCountry = compareCountry(userCountry);
 
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
