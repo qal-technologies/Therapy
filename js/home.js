@@ -596,9 +596,17 @@ ${bonuses.join('')}
 			}
 		});
 	});
+	const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
-	document.querySelector("#sessions #waitlist.inner a").addEventListener("click", () => {
-		handleAlert(`
+	waitlistBTN.addEventListener("click", (e) => {
+		if (waitlistBTN.disabled == true) return;
+
+		waitlistBTN.disabled = true;
+		waitlistBTN.ariaDisabled = true;
+		waitlistBTN.textContent = 'Adding you to the queue...';
+
+		setTimeout(() => {
+			handleAlert(`
 Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
 
 <br/>
@@ -612,6 +620,9 @@ Priority is given in the order sign-ups are received, so you’re in line.
 
 <br/><br/>
 Until then, breathe deeply and know,your sanctuary is waiting.`
-		)
-	})
+			);
+
+			waitlistBTN.textContent = 'Added to queue!';
+		}, 2000);
+	});
 });

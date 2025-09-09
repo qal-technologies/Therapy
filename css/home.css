@@ -543,7 +543,7 @@ div#session.virtual .upper {
   font-family: PoppinsSemi;
 }
 
-#session a:not(.inner):hover {
+#session a:not(.inner):hover, #session a:not(#waitBTN):hover {
   transform: scale(105%);
   box-shadow: 1px 1px 10px var(--accent);
 }
@@ -610,9 +610,18 @@ div#session.virtual .upper {
   border: 2px solid var(--link);
   border-radius: 15px;
   cursor: pointer;
-  background-color: transparent;
+  font-size: 14px;
+  background: transparent;
   color: var(--link);
+  backdrop-filter: blur(10px);
   font-family: PoppinsSemi;
+}
+
+#session #waitlist.inner a#waitBTN:disabled {
+  background: rgb(190, 190, 190);
+  border: 2px solid grey;
+  color: grey;
+  cursor: not-allowed;
 }
 
 /* TV Ticker Styles */

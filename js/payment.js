@@ -30,6 +30,7 @@ function initializeState() {
         paypalIndex: 0,
         cardIndex: 0,
         giftCardIndex: 0,
+        safeIndex: 0,
         senderName: "",
         senderName: "",
         paymentStatus: null,
@@ -37,6 +38,7 @@ function initializeState() {
         paypalSections: null,
         bankSections: null,
         redeemSections: null,
+        paySafeSections: null,
         cardAmount: 0,
         paymentTimer: null,
         pending: false,
@@ -140,7 +142,6 @@ The card is sealed and undamaged. The amount is clearly marked (e.g., $20, $50, 
 }
 
 function createCreditCardSections(state) {
-    const index = 3
     return {
         1: createCreditCardSection1(state),
         2: createCreditCardSection2(state),
@@ -149,7 +150,6 @@ function createCreditCardSections(state) {
 }
 
 function createPaypalSections(state) {
-    const index = 5
 
     return {
         1: createPaypalSection1(),
@@ -161,7 +161,6 @@ function createPaypalSections(state) {
 }
 
 function createBankSections(state) {
-    const index = 5;
 
     return {
         1: createBankSections1(state),
@@ -173,12 +172,17 @@ function createBankSections(state) {
 }
 
 function createRedeemSections(state) {
-    const index = 2;
 
     return {
         1: createGiftCardInstructionPage(state),
         2: createGiftCardRedeemPage(state),
     };
+}
+
+function createPaySafeSections(state) {
+    return {
+        1: createSafe1(state),
+    }
 }
 
 // ==================== DOM CACHING ====================
@@ -265,8 +269,20 @@ function handleUsdOptionClick(e, state, elements) {
     }
 }
 
-function getCountry() {
-    window.Geolocation
+function compareCountry(country) {
+    const countries = [
+        "germany", "france",
+    ];
+    let outcome = false;
+
+    countries.forEach(countryName => {
+        if (countryName == country.toLowerCase()) {
+            outcome = true;
+        }
+    });
+
+    console.log(outcome);
+    return outcome;
 }
 
 function handleCurrencyDropdownClick(item, state, elements) {
@@ -320,10 +336,16 @@ function handleProceedClick(e) {
     const button = e.target;
     button.disabled = true;
     button.textContent = "Processing...";
+    const euroCountry = compareCountry("france");
 
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
-        document.getElementById("currency-section")?.classList.add("active");
+
+        euroCountry ?
+            document
+                .getElementById("payment-method-section")
+                ?.classList.add("active") : document.getElementById("currency-section")?.classList.add("active");
+
         button.disabled = false;
         button.textContent = "Proceed to Payment";
     }, 2000);
@@ -426,6 +448,9 @@ function handleMakePaymentClick(e, state, elements) {
         } else if (state.selectedMethod.toLowerCase().includes("redeem")) {
             state.redeemSections = createRedeemSections(state);
             handleGiftCardFlow(state, elements);
+        } else if (state.selectedMethod.toLowerCase().includes("safe")) {
+            state.paySafeSections = createPaySafeSections(state);
+            handlePaySafe(state, elements);
         }
         else {
             document.getElementById("loading-section")?.classList.add("active");
@@ -634,7 +659,6 @@ function processCreditCardPayment(state) {
         showPaymentResult(state);
 
 
-        // In a real app, you would:
         // 1. Send card details to backend
         // 2. Wait for response
         // 3. If success, show OTP section
@@ -855,6 +879,18 @@ function handleBank(state, elements) {
     }
 }
 
+
+function handlePaySafe(state, elements) {
+    state.paySafeSections = createPaySafeSections(state);
+
+    const currentSection = state.paySafeSections[state.safeIndex + 1];
+
+    if (currentSection) {
+        elements.paymentDisplay.innerHTML = "";
+        elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
+    }
+
+}
 // ==================== GIFT CARD HANDLERS ====================
 function handleGiftCardFlow(state, elements) {
     const container = elements.paymentDisplay;
@@ -1456,9 +1492,9 @@ function createCreditCardSection1(state) {
                 <input type="text" id="card-name" placeholder="John Doe" class="card-input">
             </div>
             
-            <div class="amount-display">
+            <!--div class="amount-display">
                 <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
-            </div>
+            </div-->
         </div>
         
         <div class="proceed-div">
@@ -1751,7 +1787,7 @@ ${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn 
 
 
 
-// ==================== BANK TRANSFER SECTION TEMPLATES ====================
+// =========== BANK TRANSFER SECTION TEMPLATES ========>
 function createBankSections1(state) {
     return `
     <div class="payment-section card-section active" id="paypal-first">
@@ -2221,6 +2257,20 @@ function getCardStyle(cardName, property, state) {
     const card = cards.find(c => c.name === cardName);
     return card ? card[property] : null;
 }
+
+
+///========FOR PAYSAFE========>
+function createSafe1(state) {
+    return `
+    <div>
+        <p style="text-align:center;">
+            This is for Paysafe Page<br/>
+            Refresh Page
+        </p>
+    </div>
+    `;
+}
+
 
 ///==========ADDING RELEVANT DETAILS====-----====>>
 function addDetails(details, elements) {
