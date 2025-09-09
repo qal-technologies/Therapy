@@ -57,13 +57,13 @@ Avenue du Palais, Monaco.
 • To the silent ones. <br/>
 • To the women who cry behind closed doors.<br/>
 • To the ones who stayed strong for too long.<br/>
-• To the souls whoever felt invisible, unloved, or forgotten.
+• To the souls who have ever felt invisible, unloved, or forgotten.
 
 <br/>
 <br/>
 This is your book.
 <br/>
-I wrote it with trembling hands and an open heart,for you.
+I wrote it with trembling hands and an open heart, for you.
 
 
             `,
@@ -79,15 +79,15 @@ And the day came when the pain to remain the same was greater than the fear to c
 <p>
 <b>by Gabriela Ramos</b>
 <br/>
-<i>Assistant Directorate<br/>
-General for Social and Human Sciences, UNESCO
+<i>Assistant Director-General<br/>
+for Social and Human Sciences, UNESCO
 </i>
 </p>
 
 ----
 <br/>
 <p>
-When I first met Charlotte Casiraghi at UNESCO's World Philosophy Day, she spoke with such grace and conviction about the importance of inner growth that I felt immediately drawn to her vision. She sees philosophy not as an abstract pursuit, but as a living practice, one that can help each of us understand ourselves and heal. In <b>Compagnon Féminin</b>, Charlotte has channelled that vision into a profound companion for women at every stage of life.
+When I first met Charlotte Casiraghi at UNESCO's World Philosophy Day, she spoke with such grace and conviction about the importance of inner growth that I felt immediately drawn to her vision. She sees philosophy not as an abstract pursuit, but as a living practice, one that can help each of us understand ourselves and heal. In <i><b>Compagnon Féminin</b></i>, Charlotte has channelled that vision into a profound companion for women at every stage of life.
 </p>
 
 As you turn these pages, you will feel the presence of a friend who understands your fears, honours your strength, and speaks to your deepest desires. 
@@ -102,7 +102,7 @@ As you turn these pages, you will feel the presence of a friend who understands 
 May Compagnon Féminin be the gentle hand that accompanies you through your hardest days and your brightest mornings. I believe these pages will become a refuge, a source of courage, and a cherished companion for women everywhere.`,
                 `
             <h1> Preface</h1>
-This book was born from a place of inquiry and compassion—a desire to weave together the threads of my own experience into a companion that could travel with other women on their journeys. Over the years, I found myself asking the same question: how can we remain grounded in our own truth while navigating the complexities of modern womanhood? How can we honour our past, heal our pain, and create a life that is deeply our own?
+This book was born from a place of inquiry and compassion, a desire to weave together the threads of my own experience into a companion that could travel with other women on their journeys. Over the years, I found myself asking the same question: how can we remain grounded in our own truth while navigating the complexities of modern womanhood? How can we honour our past, heal our pain, and create a life that is deeply our own?
 
 <p>
 I grew up in an extraordinary world of elegance and tradition, one forever marked by the early loss of my father. My childhood oscillated between the polished grandeur of royal halls and the quiet, dusty arenas where I learned to ride horses. Those horses became my sanctuary and teachers. In their eyes, I found a mirror for my own fears and strengths; in their gallop, I learned the discipline and grace that carry a woman through life.
@@ -112,13 +112,13 @@ I grew up in an extraordinary world of elegance and tradition, one forever marke
             `,
                 `
 <p>
-Later, as I studied philosophy in Paris, the questions deepened. I realised that I realised that philosophy, a  discipline that seeks to make sense of life had the power to speak directly to the heart.
+Later, as I studied philosophy in Paris, the questions deepened. I realised that philosophy, a  discipline that seeks to make sense of life, had the power to speak directly to the heart.
 </p>
         
-Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found Les Rencontres Philosophiques de Monaco, an open forum for discussing ideas that matter. It also led me here, to these pages.
+Rather than remaining a purely intellectual pursuit, philosophy became a lens through which I began to understand grief, love, courage, and the importance of listening to our inner voice. These explorations led me to co-found <i>Les Rencontres Philosophiques de Monaco</i>, an open forum for discussing ideas that matter. It also led me here, to these pages.
 
 <p>
-Throughout this book, I share lessons and reflections drawn from my own path and from the wisdom of thinkers, poets, and everyday heroines. My goal is not to prescribe a one-size-fits-all solution but to offer a companion for the many seasons of life. We will explore sorrow and joy, strength and vulnerability, solitude and connection. 
+Throughout this book, I share lessons and reflections drawn from my own path and from the wisdom of thinkers, poets, and everyday heroines. My goal is not to prescribe a one-size-fits-all solution, but to offer a companion for the many seasons of life. We will explore sorrow and joy, strength and vulnerability, solitude and connection. 
 </p>
  `,
 
@@ -128,7 +128,7 @@ We will walk through the forests of healing and emerge with tools to cultivate c
 </p>
 
 <p>
-When I reflect on my journey so far from the balmy evenings of Monaco Rose Ball to the early morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
+When I reflect on my journey so far from the balmy evenings of Monaco Rose Ball to the early morning arena runs, from the rigour of philosophy lectures to the quiet moments of parenting, I see not a princess fleeing her destiny, but a woman embracing it on her own terms.
 </p>
 
 I see someone who sought freedom and found it not by escaping the past but by integrating it, transforming pain into wisdom and tradition into personal meaning.
@@ -146,11 +146,11 @@ I owe thanks to many who made this book possible:
 </p>
 
 <p>
-<b>Children:</b> My sons Raphaël and Balthazar, who bring daily purpose to my life.
+<b>Children:</b> My sons, Raphaël and Balthazar, who bring daily purpose to my life.
 </p>
 
 <p>
-<b>Mentors and Friends:</b> Albina du Boisrouvray (godmother) for her unwavering support of humanitarian causes; Julia Kristeva, whose friendship and mentorship in philosophy sustain me; Robert Maggiori, Joseph Cohen, and Raphaël Zagury-Orly, co-founders of our philosophical meetings; Anne Dufourmantelle, whose memory lives on in our letters and essays.
+<b>Mentors and Friends:</b> Albina du Boisrouvray (godmother), for her unwavering support of humanitarian causes; Julia Kristeva, whose friendship and mentorship in philosophy sustain me; Robert Maggiori, Joseph Cohen, and Raphaël Zagury-Orly, co-founders of our philosophical meetings; Anne Dufourmantelle, whose memory lives on in our letters and essays.
 </p>
 
 <p>
@@ -159,11 +159,11 @@ I owe thanks to many who made this book possible:
 `,
                 `
 <p>
-<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at AnOther Magazine, Above, and The Independent; Chanel’s communications team for believing in my voice; the editors at Éditions du Seuil who brought Archipel des Passions to life.
+<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at <i>AnOther Magazine, Above,</i> and <i>The Independent</i>; Chanel’s communications team, for believing in my voice; the editors at Éditions du Seuil, who brought <i>Archipel des Passions</i> to life.
 </p>
 
 <p>
-<b>Philanthropic Partners:</b> The organizations for which I am honored to work-UNAIDS, FXB France (founded by Albina du Boisrouvray), UNICEF Monaco-and all who joined me on the Ever Manifesto project with Stella McCartney.
+<b>Philanthropic Partners:</b> The organizations for which I am honored to work with UNAIDS, FXB France (founded by Albina du Boisrouvray), UNICEF Monaco and all who joined me on the <i>Ever Manifesto</i> project with Stella McCartney.
 </p>
 <p>
 <b>Readers:</b> To every person who has ridden alongside me in spirit - thank you.
