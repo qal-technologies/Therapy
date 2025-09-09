@@ -20,7 +20,7 @@ const BOOK = {
 <br/>
 <br/>
 <p>
-<b>Copyright, © 2025 by Charlotte Casiraghi.</b>
+<b>Copyright © 2025 by Charlotte Casiraghi.</b>
 <br/>
 <span style="font-style:italic;">All rights reserved.</span>
 </p>
@@ -28,9 +28,9 @@ const BOOK = {
 
 <br/>
 <p>
-<i>First Edition.</i> 
+<i>First Edition</i> 
 <br/>
-No part of this book may be reproduced without permission. 
+No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the publisher.
 
 
 
@@ -38,7 +38,7 @@ No part of this book may be reproduced without permission.
 <br/>
 <br/>
 
-<b>Published by Monaco Press,</b>
+<b>Published by Monaco Press</b>
 <br/>
 Avenue du Palais, Monaco.
 <br/>
@@ -46,7 +46,7 @@ Avenue du Palais, Monaco.
 
 <b>Printed in France.</b>
 <br/>
-<i>Library of Congress Cataloging-in-Publication Data forthcoming.</i>
+<i>Library of Congress Cataloging-in-Publication Data: forthcoming.</i>
 </p>
 `,
 
