@@ -277,8 +277,8 @@
   justify-content: center;
   gap: 2rem;
   margin: 0 auto;
-overflow:hidden;
-overflow-y:auto;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .book-item {
@@ -514,6 +514,20 @@ overflow-y:auto;
   overflow: hidden;
 }
 
+.view-all-button {
+  width: 80%;
+  max-width: 250px;
+  padding: 5px;
+  border: 1px solid var(--link);
+  display: flex;
+  text-align: center;
+  font-weight: bolder;
+  color: var(--link);align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  align-self: center;
+}
+
 @keyframes fly {
   0% {
     transform: scale(1) translate(0, 0);
@@ -557,8 +571,8 @@ div#details-div {
   z-index: 99999;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(2px); 
-overflow:hidden;
+  backdrop-filter: blur(2px);
+  overflow: hidden;
 }
 
 div#details-div .details-top {
@@ -651,7 +665,7 @@ div#details-div .details-top {
   max-width: 800px;
   padding: 1rem;
   overflow-y: auto;
-height: auto;
+  height: auto;
   max-height: 80vh;
 }
 

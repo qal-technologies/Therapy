@@ -1,3 +1,5 @@
+const waitlist = false;
+
 const TOPICS_DATA = {
   virtual: {
     name: "VIRTUAL SESSION",
@@ -174,6 +176,8 @@ function populateDropdown() {
   DOM.dropdownOptions.innerHTML = '';
 
   Object.entries(TOPICS_DATA).forEach(([key, topic]) => {
+    if (topic.name == "INNER CIRCLE EXPERIENCE" && !waitlist) return;
+
     const option = document.createElement('div');
     option.className = 'option';
     option.textContent = topic.name;

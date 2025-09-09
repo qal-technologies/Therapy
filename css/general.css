@@ -45,11 +45,11 @@
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
   transition: all 400ms ease-in-out;
   list-style: none;
--webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
-*:focus, *:active{
-outline:none !important;
+*:focus, *:active {
+  outline: none !important;
 }
 
 html,
@@ -84,6 +84,7 @@ a#scrollUp {
   z-index: 9999;
   display: flex;
   box-shadow: 1px 1px 10px var(--accent);
+  text-shadow: 1px 1px 10px white;
   align-items: center;
   justify-content: center;
   border-radius: 50%;

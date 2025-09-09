@@ -43,6 +43,7 @@ function initializeState() {
         pendingIndex: "",
         initialContent: "",
         details: "",
+        counry:"",
         giftCardTutorial: {
             currentStep: 0,
             type: "store",
@@ -262,6 +263,10 @@ function handleUsdOptionClick(e, state, elements) {
         elements.usdDropdown.classList.toggle("show");
         state.currencySelected = true;
     }
+}
+
+function getCountry() {
+    window.Geolocation
 }
 
 function handleCurrencyDropdownClick(item, state, elements) {
