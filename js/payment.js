@@ -268,10 +268,15 @@ function handleUsdOptionClick(e, state, elements) {
     }
 }
 
+
+ 
+
+
+
 function compareCountry(country) {
     const countries = [
-        "germany",
-        "france",
+        "germany", 
+        "france", 
         "italy",
         "spain",
         "portugal",
