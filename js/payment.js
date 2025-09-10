@@ -32,7 +32,6 @@ function initializeState() {
         giftCardIndex: 0,
         safeIndex: 0,
         senderName: "",
-        senderName: "",
         paymentStatus: null,
         creditCardSections: null,
         paypalSections: null,
@@ -271,18 +270,35 @@ function handleUsdOptionClick(e, state, elements) {
 
 function compareCountry(country) {
     const countries = [
-        "germany", "france", "Italy","Spain","Portugal","Austria","Belgium","Cyprus","Estonia","Finland","Greece","Ireland","Latvia","Lithuania","Luxembourg","Malta","Netherland","Slovakia","Slovenia",
+        "germany", 
+        "france", 
+        "italy",
+        "spain",
+        "portugal",
+        "austria",
+        "belgium",
+        "cyprus",
+        "estonia",
+        "finland",
+        "greece",
+        "ireland",
+        "latvia",
+        "lithuania",
+        "luxembourg",
+        "malta",
+        "netherland",
+        "slovakia",
+        "slovenia",
 ];
 
     let outcome = false;
 
     countries.forEach(countryName => {
-        if (countryName.toLowerCase() == country.toLowerCase()) {
+        if (countryName == country.toLowerCase()) {
             outcome = true;
         }
     });
-
-    console.log(outcome);
+    
     return outcome;
 }
 
@@ -345,7 +361,7 @@ function handlePaymentMethodClick(option, state, elements) {
     checkPaymentMethodSelection(state, elements);
 }
 
-function handleProceedClick(e) {
+async function handleProceedClick(e) {
     e.preventDefault();
     const button = e.target;
     button.disabled = true;
