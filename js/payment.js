@@ -271,24 +271,7 @@ function handleUsdOptionClick(e, state, elements) {
 
 function compareCountry(country) {
     const countries = [
-        "germany", "france",
-"Italy","
-Spain","
-Portugal","
-Austria","
-Belgium","
-Cyprus","
-Estonia","
-Finland","
-Greece","
-Ireland","
-Latvia","
-Lithuania"," 
-Luxembourg"," 
-Malta"," 
-Netherland","
-Slovakia"," 
-Slovenia",
+        "germany", "france", "Italy","Spain","Portugal","Austria","Belgium","Cyprus","Estonia","Finland","Greece","Ireland","Latvia","Lithuania","Luxembourg","Malta","Netherland","Slovakia","Slovenia",
 ];
 
     let outcome = false;
