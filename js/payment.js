@@ -83,18 +83,6 @@ Click the Continue or Pay button to confirm your payment.<br/>
 Always make sure the website is secure (look for “https://” and a padlock icon in the address bar) before entering any personal or payment information.`
                 },
                 {
-                    image: "/src/images/online-4.jpg",
-                    title: "Step 4: Payment Confirmation Screen",
-                    description: `After completing your payment, you’ll see a confirmation message on the website, such as “Thank you for your order.”
-<br/>
-You should also receive a confirmation email containing your purchase details. If there’s an option to return to the order page or view more details, you can click it to check the status of your purchase. Next, open your email inbox and look for the confirmation email. Inside, you’ll find your digital gift card code or instructions on how to access it.`
-                },
-                {
-                    image: "/src/images/online-5.jpg",
-                    title: "Step 5: Open Your Email and Copy the Gift Card Code",
-                    description: "You’ll receive an email with your digital gift card code. This code is required to redeem your gift card on our redeem code payment method. Carefully copy the code exactly as it appears in the email to avoid errors. Keep the email saved in a safe place in case you need to refer to it again later. Once you have the code, you can proceed to our redeem code payment method to activate and use your gift card balance."
-                }
-            ],
             store: [
                 {
                     image: "/src/images/store-1.jpg",
