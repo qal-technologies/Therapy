@@ -1,318 +1,10 @@
-document.addEventListener("DOMContentLoaded", (e) => {
-    // Initialize state and DOM elements
-    const state = initializeState();
-    const elements = cacheDOMElements();
-
-    // Setup event listeners
-    setupEventListeners(state, elements);
-
-    //saving initial content:
-    state.initialContent = elements.paymentDisplay.innerHTML; 
-
-    // Initialize payment flow
-    initializePaymentFlow(e, state, elements);
-});
-
-// ==================== STATE MANAGEMENT ====================
-function initializeState() {
-    return {
-        currencySelected: false,
-        methodSelected: false,
-        selectedCurrency: "",
-        currencyCode: "EUR",
-        selectedMethod: "",
-        converted: "",
-        amount: 0,
-        txn: "",
-        charge: 0.98,
-        toPay: 0,
-        creditCardIndex: 0,
-        paypalIndex: 0,
-        cardIndex: 0,
-        giftCardIndex: 0,
-        safeIndex: 0,
-        senderName: "",
-        senderName: "",
-        paymentStatus: null,
-        creditCardSections: null,
-        paypalSections: null,
-        bankSections: null,
-        redeemSections: null,
-        paySafeSections: null,
-        cardAmount: 0,
-        paymentTimer: null,
-        pending: false,
-        pendingIndex: "",
-        initialContent: "",
-        details: "",
-        country: "",
-        giftCardTutorial: {
-            currentStep: 0,
-            type: "store",
-            online: [
-                {
-                    image: "/src/images/online-1.jpg",
-                    title: "Step 1: Visit a Trusted Gift Card Website",
-                    description: `Start by visiting a secure and trusted website in your country where digital gift cards are sold. Look for reputable platforms that list Steam, Apple, and Razer Gold cards. Before proceeding, always check that: The web address begins with “https://”
-A padlock icon appears in the address bar, confirming it’s secure. Once you’re sure the site is legitimate, browse the available cards and choose your preferred option.`
-                },
-                {
-                    image: "/src/images/online-2.jpg",
-                    title: "Step 2: Choose the Gift Card Type",
-                    description: `From the available options on the secure website, select your preferred gift card. Only choose from the accepted brands: Steam, Apple, or Razer Gold.
-                    
-Before continuing, make sure:
-The card clearly displays the correct value (e.g., $50, £50, €50, or your local currency equivalent). The brand logo is correct and matches the one you need. In the example shown, the user selects a $50 Apple card, but you can choose any of the accepted brands based on your preference.`
-                },
-                {
-                    image: "/src/images/online-3.jpg",
-                    title: "Step 3: Enter Payment Details Securely",
-                    description: `Once you reach the secure payment page, enter your credit or debit card information, including:
-<br/>
-> Card number
-<br/>
-> Expiration date
-<br/>
-> CVV/security code (the 3-digit code on the back of your card)
-<br/>
-> Billing address
-<br/><br/>
-
-Double-check that all details are correct before proceeding.
-<br/>
-Click the Continue or Pay button to confirm your payment.<br/>
-Always make sure the website is secure (look for “https://” and a padlock icon in the address bar) before entering any personal or payment information.`
-                },
-                {
-                    image: "/src/images/online-4.jpg",
-                    title: "Step 4: Payment Confirmation Screen",
-                    description: `After completing your payment, you’ll see a confirmation message on the website, such as “Thank you for your order.”
-<br/>
-You should also receive a confirmation email containing your purchase details. If there’s an option to return to the order page or view more details, you can click it to check the status of your purchase. Next, open your email inbox and look for the confirmation email. Inside, you’ll find your digital gift card code or instructions on how to access it.`
-                },
-                {
-                    image: "/src/images/online-5.jpg",
-                    title: "Step 5: Open Your Email and Copy the Gift Card Code",
-                    description: "You’ll receive an email with your digital gift card code. This code is required to redeem your gift card on our redeem code payment method. Carefully copy the code exactly as it appears in the email to avoid errors. Keep the email saved in a safe place in case you need to refer to it again later. Once you have the code, you can proceed to our redeem code payment method to activate and use your gift card balance."
-                }
-            ],
-            store: [
-                {
-                    image: "/src/images/store-1.jpg",
-                    title: "Step 1: Walk Into the Store",
-                    description: "Start the physical gift card process by walking into a major retail store, supermarket, or electronics shop in your country. Look for well-known chains or local stores that sell gift cards,these can often be found in supermarkets, convenience stores, tech shops, bookstores, or department stores. Most places have a dedicated section for gift cards, usually located near the electronics area, the checkout counters, or the prepaid card display. Once inside, simply head to that section to browse the available options."
-                },
-                {
-                    image: "/src/images/store-2.jpg",
-                    title: "Step 2: Locate the Gift Card Section and Select an Accepted Card",
-                    description: `Inside the store, head to the area where gift cards are displayed. This is often a dedicated rack or wall near the electronics section, the checkout counters, or the customer service desk. You’ll find many brands available, but only choose from these accepted options: Steam, Apple, or Razer Gold. Before purchasing, make sure:
-The card is sealed and undamaged. The amount is clearly marked (e.g., $20, $50, £20, €50, or the local currency equivalent). Avoid buying unaccepted cards such as Amazon, Netflix, or PlayStation.`
-                },
-                {
-                    image: "/src/images/store-3.jpg",
-                    title: "Step 3: Make Payment for the Gift Card",
-                    description: "Once you've chosen your Steam, Apple, or Razer Gold gift card, take it to the checkout counter. The cashier will scan and activate it. Pay using cash, credit card, or mobile payment.\n Only after payment will the gift card be usable, so always ask for a receipt as proof."
-                },
-                {
-                    image: "/src/images/store-4.jpg",
-                    title: "Step 4: Scratch the Card to Reveal the Code",
-                    description: "After payment, gently scratch the silver coating on the back of the card using a coin or key. This will uncover your gift card code, which is needed to redeem or make a payment. Be careful not to damage the numbers or letters. Keep the card safe and readable."
-                },
-                {
-                    image: "/src/images/store-5.jpg",
-                    title: "Step 5: Enter the Code on Our Payment Platform",
-                    description: "Once the code is revealed, visit our redeem code payment method. Type in the exact characters shown on the card into the Enter Code box. Select the correct Card Type (Steam, Apple, or Razer Gold), enter the Amount, and then tap Redeem to finalize the process. <br/>Make sure the code is correctly entered — no spaces or typos."
-                },
-                {
-                    image: "/src/images/store-6.jpg",
-                    title: "Step 6: Use Scan Code to Upload the Card Photo", description: " Instead of typing the code manually, you can scan the gift card using your phone. Just tap the Scan Code button and position the card in front of your camera. <br/>Make sure the code is clearly visible and fully within the frame. The system will automatically read and extract the code from the image for payment.",
-                },
-            ]
-        },
-        selectedCardType: null,
-        scannedImage: null,
-        giftCardCode: "",
-        acceptedCards: [
-            { name: "Steam", image: "https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg", },
-            { name: "Razer Gold", image: "/src/images/razergold.jpeg" },
-            { name: "Apple", image: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg", }
-        ],
-        paymentType: "Session",
-    };
-}
-
-function createCreditCardSections(state) {
-    return {
-        1: createCreditCardSection1(state),
-        2: createCreditCardSection2(state),
-        3: createCreditCardSection3(state)
-    };
-}
-
-function createPaypalSections(state) {
-
-    return {
-        1: createPaypalSection1(),
-        2: createPaypalSection2(state),
-        3: createPaypalSection3(state),
-        4: createPaypalSection4(),
-        5: createPaypalSection5(state),
-    };
-}
-
-function createBankSections(state) {
-
-    return {
-        1: createBankSections1(state),
-        2: createBankSections2(state),
-        3: createBankSections3(state),
-        4: createBankSections4(),
-        5: createBankSections5(state),
-    };
-}
-
-function createRedeemSections(state) {
-
-    return {
-        1: createGiftCardInstructionPage(state),
-        2: createGiftCardRedeemPage(state),
-    };
-}
-
-function createPaySafeSections(state) {
-    return {
-        1: createSafe1(state),
-    }
-}
-
-// ==================== DOM CACHING ====================
-function cacheDOMElements() {
-    return {
-        currencyContinueBtn: document.getElementById("currency-continue"),
-        makePaymentBtn: document.getElementById("make-payment-btn"),
-        usdOption: document.getElementById("usd-option"),
-        usdDropdown: document.getElementById("usd-dropdown"),
-        currencyOptions: document.querySelectorAll(
-            "#currency-section .option-item"
-        ),
-        currencyDropdownItems: document.querySelectorAll(".currency-dropdown-item"),
-        paymentMethodOptions: document.querySelectorAll(
-            "#payment-method-section label.option-item"
-        ),
-        currencyCode: document.querySelector("span.choosen-currency-code"),
-        convertedText: document.querySelector("h2.converted"),
-        titleDiv: document.querySelector(
-            "#conversion-section .option-list p.title"
-        ),
-        paymentDisplay: document.querySelector("section#display.parent"),
-        paymentDetailsDiv: document.querySelector(".payment-summary-container#payment-details"),
-    };
-}
-
-// ==================== EVENT LISTENERS ====================
-function setupEventListeners(state, elements) {
-    // Currency selection
-    elements.usdOption.addEventListener("click", (e) =>
-        handleUsdOptionClick(e, state, elements)
-    );
-    elements.currencyDropdownItems.forEach((item) => {
-        item.addEventListener("click", () =>
-            handleCurrencyDropdownClick(item, state, elements)
-        );
-    });
-    elements.currencyOptions.forEach((option) => {
-        option.addEventListener("click", (e) =>
-            handleCurrencyOptionClick(e, option, state, elements)
-        );
-    });
-
-    // Payment method selection
-    elements.paymentMethodOptions.forEach((option) => {
-        option.addEventListener("click", () =>
-            handlePaymentMethodClick(option, state, elements)
-        );
-    });
-
-    // Button actions
-    document
-        .getElementById("proceed-button")
-        ?.addEventListener("click", (e) => handleProceedClick(e));
-    elements.currencyContinueBtn?.addEventListener("click", (e) =>
-        handleCurrencyContinueClick(e, state, elements)
-    );
-    document
-        .getElementById("choose-method-btn")
-        ?.addEventListener("click", (e) => handleChooseMethodClick(e));
-    elements.makePaymentBtn?.addEventListener("click", (e) =>
-        handleMakePaymentClick(e, state, elements)
-    );
-
-    document.addEventListener('click', function (e) {
-        if (e.target.closest('.learn-more.redeem')) {
-            e.preventDefault();
-            state.giftCardTutorial.currentStep = 0;
-            elements.paymentDisplay.innerHTML = '';
-            elements.paymentDisplay.insertAdjacentHTML('beforeend', createGiftCardTutorialSection(state));
-            setupTutorialNavigation(state, elements);
-        }
-    });
-}
-
-// ==================== EVENT HANDLERS ====================
-function handleUsdOptionClick(e, state, elements) {
-    if (!e.target.closest(".currency-dropdown-item")) {
-        document
-            .querySelector(".currency-option-container")
-            .classList.toggle("open");
-        elements.usdDropdown.classList.toggle("show");
-        state.currencySelected = true;
-    }
-}
-
-
-function compareCountry(country) {
-    const countries = [
-        "germany", 
-        "france", 
-        "italy",
-        "spain",
-        "portugal",
-        "austria",
-        "belgium",
-        "cyprus",
-        "estonia",
-        "finland",
-        "greece",
-        "ireland",
-        "latvia",
-        "lithuania",
-        "luxembourg",
-        "malta",
-        "netherland",
-        "slovakia",
-        "slovenia",
-    ];
-
-    return countries.includes(country.toLowerCase());
-}
-
-
-async function getUserCountry() {
-    try {
-        const response = await fetch('https://ipapi.co/json/');
-        const data = await response.json();
-        console.log(data.country_name);
-        return data.country_name;
-    } catch (error) {
-        console.error('Error getting country:', error);
-        return null;
-    }
-}
 
 
 function handleCurrencyDropdownClick(item, state, elements) {
-    const code = item.dataset.value;
-    const currency = item.querySelector("p").textContent;
+    const code = item.querySelector(".currency-code")?.textContent;
+    const currency =
+        item.querySelector("p")?.textContent ||
+        item.textContent.trim().split(" ").slice(1).join(" ");
 
     const optionLabel = elements.usdOption.querySelector(".option-label");
     optionLabel.innerHTML = `${currency} <span class="option-subtext">${code}</span>`;
@@ -331,12 +23,10 @@ function handleCurrencyOptionClick(e, option, state, elements) {
         option !== elements.usdOption &&
         !e.target.closest(".currency-dropdown")
     ) {
-        const subtextElement = option.querySelector(".option-subtext");
-        const labelElement = option.querySelector(".option-label");
-
-        const code = subtextElement?.textContent || "";
-        // Replace the subtext span to get only the main label text
-        const currency = labelElement?.innerHTML.replace(/<span.*<\/span>/, '').trim() || "";
+        const code = option.querySelector(".option-subtext")?.textContent || "";
+        const currency =
+            option.querySelector(".option-label")?.textContent ||
+            option.textContent.trim().split(" ").slice(1).join(" ");
 
         updateSelectionStyles(option, elements.currencyOptions);
         updateCurrencyState(state, code, currency);
@@ -356,20 +46,20 @@ function handlePaymentMethodClick(option, state, elements) {
     checkPaymentMethodSelection(state, elements);
 }
 
-async function handleProceedClick(e) {
+function handleProceedClick(e) {
     e.preventDefault();
     const button = e.target;
     button.disabled = true;
     button.textContent = "Processing...";
-    const userCountry = (await getUserCountry()) || "Unknown";
-    const euroCountry = compareCountry(userCountry);
+    const euroCountry = compareCountry("france");
 
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
-        euroCountry
-            ? document.getElementById("payment-method-section")?.classList.add("active")
-            : document.getElementById("currency-section")?.classList.add("active");
+        euroCountry ?
+            document
+                .getElementById("payment-method-section")
+                ?.classList.add("active") : document.getElementById("currency-section")?.classList.add("active");
 
         button.disabled = false;
         button.textContent = "Proceed to Payment";
@@ -391,7 +81,7 @@ function rePay(e, state, elements) {
 
         addDetails(state.details, element);
 
-        document.querySelector(".payment-section")?.classList.remove("active");
+        document.querySelector("payment-section")?.classList.remove("active");
 
         document.getElementById("payment-details")?.classList.add("active");
 
@@ -461,24 +151,23 @@ function handleMakePaymentClick(e, state, elements) {
             ).toFixed(2);
         }
 
-        const method = state.selectedMethod.toLowerCase();
-
-        if (method === "paypal") {
+        if (state.selectedMethod.toLowerCase() === "paypal") {
             state.paypalSections = createPaypalSections(state);
             handlePaypal(state, elements);
-        } else if (method.includes("bank")) {
+        } else if (state.selectedMethod.toLowerCase().includes("bank")) {
             state.bankSections = createBankSections(state);
             handleBank(state, elements);
-        } else if (method.includes("credit") && !method.includes("safe")) {
+        } else if (state.selectedMethod.toLowerCase().includes("credit")) {
             state.creditCardSections = createCreditCardSections(state);
             handleCreditCard(state, elements);
-        } else if (method.includes("redeem")) {
+        } else if (state.selectedMethod.toLowerCase().includes("redeem")) {
             state.redeemSections = createRedeemSections(state);
             handleGiftCardFlow(state, elements);
-        } else if (method.includes("safe")) {
+        } else if (state.selectedMethod.toLowerCase().includes("safe")) {
             state.paySafeSections = createPaySafeSections(state);
             handlePaySafe(state, elements);
-        } else {
+        }
+        else {
             document.getElementById("loading-section")?.classList.add("active");
         }
     }, 2000);
@@ -546,18 +235,27 @@ function handleCreditCard(state, elements) {
             btn.addEventListener('click', () => {
                 state.creditCardIndex++;
 
+                // // Handle form submission on last section
+                if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
+                    processCreditCardPayment(state);
+
+                }
+
                 if (btn.classList.contains('verify-otp')) {
                     verifyOTP(state, elements);
-                } else if (state.creditCardIndex === 1) {
-                    processCreditCardPayment(state, elements);
-                } else {
-                    handleCreditCard(state, elements);
+                    return;
                 }
+
+                handleCreditCard(state, elements);
             });
         });
 
         if (state.creditCardIndex === 0) {
             setupCreditCardInputs(state);
+        }
+
+        if (state.creditCardIndex === 1) {
+            processCreditCardPayment(state);
         }
     }
 }
@@ -664,19 +362,27 @@ function setupCreditCardInputs(state) {
     validateInputs();
 }
 
-function processCreditCardPayment(state, elements) {
+function processCreditCardPayment(state) {
     handleCreditCard(state, elements);
 
     setTimeout(() => {
         // After "backend" responds, show OTP section
         state.creditCardIndex++;
+        state.paymentStatus = true;
+
         handleCreditCard(state, elements);
+        showPaymentResult(state);
+
 
         // 1. Send card details to backend
         // 2. Wait for response
         // 3. If success, show OTP section
         // 4. If error, show error message
     }, 2000);
+
+    // setTimeout(() => {
+    //     state.paymentStatus = true; 
+    // }, 3000);
 }
 
 function verifyOTP(state, elements) {
@@ -707,7 +413,7 @@ function verifyOTP(state, elements) {
             // Process to success screen
             setTimeout(() => {
                 state.paymentStatus = true;
-                showPaymentResult(state, elements);
+                showPaymentResult(state);
             }, 1000);
         } else {
             showOTPFeedback(otpFeedback, otpMessage, "Incorrect OTP code", false);
@@ -734,7 +440,7 @@ function showOTPFeedback(container, messageEl, message, isSuccess) {
     }
 }
 
-function showPaymentResult(state, elements) {
+function showPaymentResult(state) {
     const resultHTML = `
     <div class="payment-section credit-card-section active" id="payment-result">
         <div class="result-content">
@@ -757,7 +463,7 @@ function showPaymentResult(state, elements) {
         </div>
     </div>`;
 
-    elements.paymentDisplay.innerHTML = resultHTML;
+    document.querySelector("section#display.parent").innerHTML = resultHTML;
 }
 
 
@@ -1370,7 +1076,7 @@ function checkPaymentMethodSelection(state, elements) {
 
 function formatDateTime(date) {
     const now = new Date(date);
-    
+
     const options = {
         month: "long",
         day: "numeric",
@@ -1777,7 +1483,7 @@ Please wait ☺️
                 <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
                 <p class="display-title">${state.paymentStatus === false
             ? "Payment Declined"
-        : state.paymentStatus === true ? "Payment Successful" : ""
+            : state.paymentStatus === true ? "Payment Successful" : ""
         }</p>
                 <div class="inner-bottom">
                     <p class="display-title-price">${symbol} ${transAmount}</p>
@@ -2076,7 +1782,7 @@ Please wait ☺️
                 <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
                 <p class="display-title">${state.paymentStatus === false
             ? "Payment Declined"
-        : state.paymentStatus === true ? "Payment Successful" : ""
+            : state.paymentStatus === true ? "Payment Successful" : ""
         }</p>
                 <div class="inner-bottom">
                     <p class="display-title-price">${symbol} ${transAmount}</p>
@@ -2271,18 +1977,13 @@ function getCardStyle(cardName, property, state) {
 ///========FOR PAYSAFE========>
 function createSafe1(state) {
     return `
-    <div class="payment-section paysafe-section active" id="paysafe-instructions">
-        <div class="paysafe-header">
-            <div class="logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Paysafecard_logo.svg/1200px-Paysafecard_logo.svg.png" alt="paysafe-logo">
-            </div>
-        </div>
-        <h2>Pay with paysafecard</h2>
-        <p>Not page here yet sir, Just refresh page.</p>
-        <div class="proceed-div">
-            <button class="continue-btn" onclick="window.location.reload">Reload Page</button>
-        </div>
-    </div>`;
+    <div>
+        <p style="text-align:center;">
+            This is for Paysafe Page<br/>
+            Refresh Page
+        </p>
+    </div>
+    `;
 }
 
 
@@ -2386,7 +2087,7 @@ function initializePaymentFlow(e, state, elements) {
         state.amount = amount;
 
         state.details.price = amount;
-        
+
         addDetails(state.details, elements);
 
     } catch (error) {

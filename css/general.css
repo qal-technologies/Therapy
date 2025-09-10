@@ -335,6 +335,27 @@ span.bold {
   font-family: PoppinsSemi;
 }
 
+.spinner-container {
+  width: max-content;
+  height: max-content;
+  display: grid;
+  place-content: center;
+  background: var(--accentTrans);
+  border-radius: 100%;
+  padding: 2px;
+  align-self: flex-start;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 5px solid transparent;
+  border-left: 2px dotted var(--link);
+  border-top: 2px dotted var(--link);
+  border-radius: 50%;
+  animation: spin 1.5s linear 100ms infinite alternate forwards;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
 footer {
   width: 100%;

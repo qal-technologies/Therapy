@@ -484,3 +484,23 @@
     transform: translateY(0%);
   }
 }
+
+/* spin effect  */
+.spin {
+  animation-duration: 500ms;
+  animation-name: spin;
+  animation-timing-function: ease;
+  animation-delay: 10ms;
+  animation-fill-mode: forwards;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
+}

@@ -235,7 +235,7 @@
   margin-bottom: 10px;
 }
 
-.preview-image-div button {
+.preview-image-div button, .preview-image-div a {
   border: none;
   width: 60%;
   min-width: 200px;
@@ -253,7 +253,7 @@
   justify-content: center;
 }
 
-.preview-image-div button:hover {
+.preview-image-div button:hover, .preview-image-div a:hover {
   opacity: 0.66;
 }
 
@@ -522,7 +522,8 @@
   display: flex;
   text-align: center;
   font-weight: bolder;
-  color: var(--link);align-items: center;
+  color: var(--link);
+  align-items: center;
   justify-content: center;
   border-radius: 20px;
   align-self: center;

@@ -471,10 +471,12 @@ window.addEventListener("DOMContentLoaded", () => {
 			<div id="message" class="${session.type}">
 ${bonuses.join('')}
 		  </div>
-
+${ session.type == "inner" ? 
+			`
 		  <div id="waitlist" class="${session.type}">
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
-		  </div>
+		  </div>` : ""
+}
         </div>`
 	}).join("");
 
@@ -603,7 +605,8 @@ ${bonuses.join('')}
 
 		waitlistBTN.disabled = true;
 		waitlistBTN.ariaDisabled = true;
-		waitlistBTN.textContent = 'Adding you to the queue...';
+		waitlistBTN.style.fontSize = "12px";
+		waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
 		setTimeout(() => {
 			handleAlert(`
@@ -622,7 +625,8 @@ Priority is given in the order sign-ups are received, so you’re in line.
 Until then, breathe deeply and know,your sanctuary is waiting.`
 			);
 
+			waitlistBTN.style.fontSize = "13.5px";
 			waitlistBTN.textContent = '✅ Added to waitlist!';
-		}, 2000);
+		}, 2500);
 	});
 });

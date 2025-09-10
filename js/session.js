@@ -223,9 +223,12 @@ window.addEventListener("DOMContentLoaded", () => {
 ${bonuses.join('')}
 		  </div>
 
+		 ${ session.type == "inner" ?
+        `
 		  <div id="waitlist" class="${session.type}">
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
-		  </div>
+		  </div>` : ``
+}
         </div>`
   }).join("");
 
@@ -331,15 +334,16 @@ ${bonuses.join('')}
 
   const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
-	waitlistBTN.addEventListener("click", (e) => {
-		if (waitlistBTN.disabled == true) return;
+  waitlistBTN.addEventListener("click", (e) => {
+    if (waitlistBTN.disabled == true) return;
 
-		waitlistBTN.disabled = true;
-		waitlistBTN.ariaDisabled = true;
-		waitlistBTN.textContent = 'Adding you to the queue...';
+    waitlistBTN.disabled = true;
+    waitlistBTN.ariaDisabled = true;
+    waitlistBTN.style.fontSize = "12px";
+    waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-		setTimeout(() => {
-			handleAlert(`
+    setTimeout(() => {
+      handleAlert(`
 Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
 
 <br/>
@@ -353,9 +357,10 @@ Priority is given in the order sign-ups are received, so you’re in line.
 
 <br/><br/>
 Until then, breathe deeply and know,your sanctuary is waiting.`
-			);
+      );
 
-			waitlistBTN.textContent = '✅ Added to waitlist!';
-		}, 2000);
-	});
+      waitlistBTN.style.fontSize = "13.5px";
+      waitlistBTN.textContent = '✅ Added to waitlist!';
+    }, 2500);
+  });
 });
