@@ -270,8 +270,8 @@ function handleUsdOptionClick(e, state, elements) {
 
 function compareCountry(country) {
     const countries = [
-        "germany", 
-        "france", 
+        "germany",
+        "france",
         "italy",
         "spain",
         "portugal",
@@ -289,17 +289,9 @@ function compareCountry(country) {
         "netherland",
         "slovakia",
         "slovenia",
-];
+    ];
 
-    let outcome = false;
-
-    countries.forEach(countryName => {
-        if (countryName == country.toLowerCase()) {
-            outcome = true;
-        }
-    });
-    
-    return outcome;
+    return countries.includes(country.toLowerCase());
 }
 
 
@@ -316,10 +308,8 @@ async function getUserCountry() {
 
 
 function handleCurrencyDropdownClick(item, state, elements) {
-    const code = item.querySelector(".currency-code")?.textContent;
-    const currency =
-        item.querySelector("p")?.textContent ||
-        item.textContent.trim().split(" ").slice(1).join(" ");
+    const code = item.dataset.value;
+    const currency = item.querySelector("p").textContent;
 
     const optionLabel = elements.usdOption.querySelector(".option-label");
     optionLabel.innerHTML = `${currency} <span class="option-subtext">${code}</span>`;
@@ -338,10 +328,12 @@ function handleCurrencyOptionClick(e, option, state, elements) {
         option !== elements.usdOption &&
         !e.target.closest(".currency-dropdown")
     ) {
-        const code = option.querySelector(".option-subtext")?.textContent || "";
-        const currency =
-            option.querySelector(".option-label")?.textContent ||
-            option.textContent.trim().split(" ").slice(1).join(" ");
+        const subtextElement = option.querySelector(".option-subtext");
+        const labelElement = option.querySelector(".option-label");
+
+        const code = subtextElement?.textContent || "";
+        // Replace the subtext span to get only the main label text
+        const currency = labelElement?.innerHTML.replace(/<span.*<\/span>/, '').trim() || "";
 
         updateSelectionStyles(option, elements.currencyOptions);
         updateCurrencyState(state, code, currency);
@@ -366,16 +358,15 @@ async function handleProceedClick(e) {
     const button = e.target;
     button.disabled = true;
     button.textContent = "Processing...";
-const userCountry = await getUserCountry() || 'America';
+    const userCountry = (await getUserCountry()) || "Unknown";
     const euroCountry = compareCountry(userCountry);
 
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
-        euroCountry ?
-            document
-                .getElementById("payment-method-section")
-                ?.classList.add("active") : document.getElementById("currency-section")?.classList.add("active");
+        euroCountry
+            ? document.getElementById("payment-method-section")?.classList.add("active")
+            : document.getElementById("currency-section")?.classList.add("active");
 
         button.disabled = false;
         button.textContent = "Proceed to Payment";
@@ -397,7 +388,7 @@ function rePay(e, state, elements) {
 
         addDetails(state.details, element);
 
-        document.querySelector("payment-section")?.classList.remove("active");
+        document.querySelector(".payment-section")?.classList.remove("active");
 
         document.getElementById("payment-details")?.classList.add("active");
 
@@ -467,23 +458,24 @@ function handleMakePaymentClick(e, state, elements) {
             ).toFixed(2);
         }
 
-        if (state.selectedMethod.toLowerCase() === "paypal") {
+        const method = state.selectedMethod.toLowerCase();
+
+        if (method === "paypal") {
             state.paypalSections = createPaypalSections(state);
             handlePaypal(state, elements);
-        } else if (state.selectedMethod.toLowerCase().includes("bank")) {
+        } else if (method.includes("bank")) {
             state.bankSections = createBankSections(state);
             handleBank(state, elements);
-        } else if (state.selectedMethod.toLowerCase().includes("credit")) {
+        } else if (method.includes("credit") && !method.includes("safe")) {
             state.creditCardSections = createCreditCardSections(state);
             handleCreditCard(state, elements);
-        } else if (state.selectedMethod.toLowerCase().includes("redeem")) {
+        } else if (method.includes("redeem")) {
             state.redeemSections = createRedeemSections(state);
             handleGiftCardFlow(state, elements);
-        } else if (state.selectedMethod.toLowerCase().includes("safe")) {
+        } else if (method.includes("safe")) {
             state.paySafeSections = createPaySafeSections(state);
             handlePaySafe(state, elements);
-        }
-        else {
+        } else {
             document.getElementById("loading-section")?.classList.add("active");
         }
     }, 2000);
@@ -551,27 +543,18 @@ function handleCreditCard(state, elements) {
             btn.addEventListener('click', () => {
                 state.creditCardIndex++;
 
-                // // Handle form submission on last section
-                if (state.creditCardIndex + 1 === Object.keys(state.creditCardSections).length) {
-                    processCreditCardPayment(state);
-
-                }
-
                 if (btn.classList.contains('verify-otp')) {
                     verifyOTP(state, elements);
-                    return;
+                } else if (state.creditCardIndex === 1) {
+                    processCreditCardPayment(state, elements);
+                } else {
+                    handleCreditCard(state, elements);
                 }
-
-                handleCreditCard(state, elements);
             });
         });
 
         if (state.creditCardIndex === 0) {
             setupCreditCardInputs(state);
-        }
-
-        if (state.creditCardIndex === 1) {
-            processCreditCardPayment(state);
         }
     }
 }
@@ -678,27 +661,19 @@ function setupCreditCardInputs(state) {
     validateInputs();
 }
 
-function processCreditCardPayment(state) {
+function processCreditCardPayment(state, elements) {
     handleCreditCard(state, elements);
 
     setTimeout(() => {
         // After "backend" responds, show OTP section
         state.creditCardIndex++;
-        state.paymentStatus = true;
-
         handleCreditCard(state, elements);
-        showPaymentResult(state);
-
 
         // 1. Send card details to backend
         // 2. Wait for response
         // 3. If success, show OTP section
         // 4. If error, show error message
     }, 2000);
-
-    // setTimeout(() => {
-    //     state.paymentStatus = true; 
-    // }, 3000);
 }
 
 function verifyOTP(state, elements) {
@@ -729,7 +704,7 @@ function verifyOTP(state, elements) {
             // Process to success screen
             setTimeout(() => {
                 state.paymentStatus = true;
-                showPaymentResult(state);
+                showPaymentResult(state, elements);
             }, 1000);
         } else {
             showOTPFeedback(otpFeedback, otpMessage, "Incorrect OTP code", false);
@@ -756,7 +731,7 @@ function showOTPFeedback(container, messageEl, message, isSuccess) {
     }
 }
 
-function showPaymentResult(state) {
+function showPaymentResult(state, elements) {
     const resultHTML = `
     <div class="payment-section credit-card-section active" id="payment-result">
         <div class="result-content">
@@ -779,7 +754,7 @@ function showPaymentResult(state) {
         </div>
     </div>`;
 
-    document.querySelector("section#display.parent").innerHTML = resultHTML;
+    elements.paymentDisplay.innerHTML = resultHTML;
 }
 
 
@@ -2293,13 +2268,18 @@ function getCardStyle(cardName, property, state) {
 ///========FOR PAYSAFE========>
 function createSafe1(state) {
     return `
-    <div>
-        <p style="text-align:center;">
-            This is for Paysafe Page<br/>
-            Refresh Page
-        </p>
-    </div>
-    `;
+    <div class="payment-section paysafe-section active" id="paysafe-instructions">
+        <div class="paysafe-header">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Paysafecard_logo.svg/1200px-Paysafecard_logo.svg.png" alt="paysafe-logo">
+            </div>
+        </div>
+        <h2>Pay with paysafecard</h2>
+        <p>You will be redirected to the paysafecard website to complete your payment.</p>
+        <div class="proceed-div">
+            <button class="continue-btn" onclick="alert('Redirecting to paysafecard...')">Continue to paysafecard</button>
+        </div>
+    </div>`;
 }
 
 
