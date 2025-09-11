@@ -421,7 +421,6 @@ button.continue-btn:disabled {
     width: 120px;
     height: 50px;
     scale: 400%;
-border:1px solid red;
 }
 
 .paysafe-header .logo {
