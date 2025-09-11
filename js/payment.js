@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", async (e) => {
     // Initialize state and DOM elements
     const state = initializeState();
     const elements = cacheDOMElements();
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     state.initialContent = elements.paymentDisplay.innerHTML;
 
     // Initialize payment flow
-    initializePaymentFlow(e, state, elements);
+    await initializePaymentFlow(e, state, elements);
 });
 
 // ==================== STATE MANAGEMENT ====================
@@ -2384,7 +2384,7 @@ function addDetails(details, elements) {
 }
 
 // ==================== INITIALIZATION ====================
-function initializePaymentFlow(e, state, elements) {
+async function initializePaymentFlow(e, state, elements) {
     document.getElementById("payment-details").classList.add("active");
 
     let payments;
@@ -2468,7 +2468,7 @@ function initializePaymentFlow(e, state, elements) {
 const userCountryData = await getUserCountryInfo();
 
 state.currencyCode = userCountryData.currencyCode || userCountryData.currency;
-state.currencySelected = userCountryData.country;
+state.selectedCurrency = userCountryData.country;
 state.country = userCountryData.country;
 
 
