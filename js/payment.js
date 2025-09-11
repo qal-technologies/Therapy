@@ -32,7 +32,7 @@ function initializeState() {
         giftCardIndex: 0,
         safeIndex: 0,
         senderName: "",
-        senderName: "",
+    
         paymentStatus: null,
         creditCardSections: null,
         creditCardError: false,
@@ -1572,7 +1572,7 @@ Your card was declined. <span class="another-method-button">Try another payment 
             
            <div class="amount-display">
                 <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode}${state.toPay}</strong></p>
-            </div
+            </div>
         </div>
         
         <div class="proceed-div">
@@ -2356,7 +2356,7 @@ function createSafe1(state) {
         <h2>Pay with paysafecard</h2>
         <p>Not page here yet sir, Just refresh page.</p>
         <div class="proceed-div">
-            <button class="continue-btn" onclick="window.location.reload">Reload Page</button>
+            <button class="continue-btn" onclick="window.location.reload()">Reload Page</button>
         </div>
     </div>`;
 }
