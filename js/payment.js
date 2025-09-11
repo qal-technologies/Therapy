@@ -300,12 +300,19 @@ function compareCountry(country) {
 }
 
 
-async function getUserCountry() {
+async function getUserCountryInfo() {
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         console.log(data);
-        return data.country_name;
+        
+        return {
+            country: data.country_name,
+            currency: data.currency || data.currency_code,
+currencyCode:data.currency_code,
+            countryCode: data.country_code,
+            currencyName: data.currency_name
+        };
     } catch (error) {
         console.error('Error getting country:', error);
         return null;
@@ -364,7 +371,7 @@ async function handleProceedClick(e) {
     const button = e.target;
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
-    const userCountry = (await getUserCountry()) || "unkown";
+    const userCountry = (await getUserCountryInfo().country) || "unkown";
     const euroCountry = compareCountry(userCountry);
 
     setTimeout(() => {
@@ -372,7 +379,8 @@ async function handleProceedClick(e) {
 
         euroCountry
             ? document.getElementById("payment-method-section")?.classList.add("active")
-            : document.getElementById("currency-section")?.classList.add("active");
+            :
+ document.getElementById("currency-section")?.classList.add("active");
 
         button.disabled = false;
         button.innerHTML = "Proceed to Payment";
@@ -1562,9 +1570,9 @@ Your card was declined. <span class="another-method-button">Try another payment 
                 <input type="text" id="card-name" placeholder="John Doe" class="card-input">
             </div>
             
-            <!--div class="amount-display">
-                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode)}${state.toPay}</strong></p>
-            </div-->
+           <div class="amount-display">
+                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode}${state.toPay}</strong></p>
+            </div
         </div>
         
         <div class="proceed-div">
@@ -2456,6 +2464,13 @@ function initializePaymentFlow(e, state, elements) {
         state.details.price = amount;
 
         addDetails(state.details, elements);
+
+const userCountryData = await getUserCountryInfo();
+
+state.currencyCode = userCountryData.currencyCode || userCountryData.currency;
+state.currencySelected = userCountryData.country;
+state.country = userCountryData.country;
+
 
     } catch (error) {
         console.error("Error parsing payment details:", error);
