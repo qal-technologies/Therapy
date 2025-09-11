@@ -17,12 +17,13 @@ const audioSrc = {
 };
 
 function handleAudio(lang) {
-  const audioMessage = document.querySelector('#banner audio#book-audio-message');
+  const audioMessage = document.querySelector('.preview-banner audio#book-audio-message');
 
+if (!audioMessage) return;
 
   audioMessage.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
 
-  const listenBTN = document.querySelector("#banner button#play");
+  const listenBTN = document.querySelector(".preview-banner button#preview-play");
 
   if (listenBTN && audioMessage) {
     listenBTN.addEventListener('click', () => {
@@ -95,7 +96,9 @@ const BOOK_COLLECTION = [
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 
+if (modal) {
   modal.classList.toggle("fadeOut");
+};
 }
 
 function showDetailsModal(e) {
@@ -144,6 +147,8 @@ function handleAlert(message) {
   const parent = document.querySelector("#details-div .alert-message");
   const text = document.querySelector("#details-div .alert-message .alert-text");
 
+if (!parent) return;
+
   const contains = parent.classList.contains("fadeOut");
   contains && parent.classList.remove("fadeOut");
 
@@ -161,6 +166,8 @@ function handleAlert(message) {
 function handleCartUpdate(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartCount = document.querySelector(".details-top span.cart-count");
+
+if (!cartParent) return;
 
   cartCount.textContent = count;
   cartParent.classList.add("bounce");
@@ -213,13 +220,18 @@ function renderBookCollection(book) {
       <h3 class="book-title">${book.title.toUpperCase()}</h3>
       <p class="book-author">Charlotte Casiraghi</p>
 
-      <div class="book-downloads">
+      <!--div class="book-downloads">
       <div class="download-stars">★★★★★</div>
       <p class="download-text">${book.downloads}</p>
-      </div>
+      </div-->
+
       <div class="book-format">
+<p style="font-weight:bolder; min-width:100%; text-align:left; margin-top:10px; font-size:18px;" >
+Select Book Format
+</p>
         <div class="format-div">
         <input type="radio" name=${book.formats[0]} id=${book.formats[0]}>
+
         <div class="side">
           <p class="format-name">${book.formats[0]}</p>
           <p class="format-price">&euro; ${book.price}</p>
@@ -228,6 +240,7 @@ function renderBookCollection(book) {
 
 <div class="format-div last">
 <input type="radio" name=${book.formats[1]} id=${book.formats[1]} ${book.status.toLowerCase() === "sold out" ? "disabled" : ""}>
+
           <div class="side">
           <p class="format-name">${book.formats[1]}</p>
           <p class="format-status ${book.status.toLowerCase()}">${book.status}</p>
@@ -246,7 +259,7 @@ function renderBookCollection(book) {
 
 
        <div class="quantity">
-        <p class="quantity-text">Qty</p>
+        <p class="quantity-text">Select No. of Copies</p>
         <div class="qty-main-div" data-id="${book.id}">
           <span class="qty-arrow minus">-</span>
           <p class="qty-text">${book.quantity}</p>
@@ -288,6 +301,8 @@ function renderBookCollection(book) {
           book.quantity = 1;
           handleCartAnimation(count);
           renderBookCollection(book);
+
+window.location.replace('/html/main/cart.html');
         }
       }
     });

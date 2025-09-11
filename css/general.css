@@ -353,8 +353,9 @@ span.bold {
   border-left: 2px dotted var(--link);
   border-top: 2px dotted var(--link);
   border-radius: 50%;
-  animation: spin 1.5s linear 100ms infinite alternate forwards;
-  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: spin 600ms linear 100ms infinite alternate forwards;
+  margin-right: 4px;
+   animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 footer {

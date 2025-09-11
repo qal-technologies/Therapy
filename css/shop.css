@@ -2,7 +2,7 @@
   overflow-x: hidden;
 }
 
-#banner {
+.preview-banner {
   width: 100%;
   display: none;
   align-items: center;
@@ -20,7 +20,7 @@
   gap: 15px;
 }
 
-#banner .circle {
+.preview-banner .circle {
   width: 90vw;
   height: 90vw;
   max-width: 800px;
@@ -35,7 +35,7 @@
   flex-direction: column;
 }
 
-#banner .top {
+.preview-banner .top {
   width: 100%;
   overflow: hidden;
   display: flex;
@@ -51,7 +51,7 @@
   z-index: 99;
 }
 
-#banner .top p.top-text {
+.preview-banner .top p.top-text {
   width: 100%;
   max-width: 450px;
   margin-inline: 5vw;
@@ -62,7 +62,7 @@
   margin-block: 10px;
 }
 
-#banner .top .top-image-div {
+.preview-banner .top .top-image-div {
   width: 95vw;
   border-top-right-radius: 2vw;
   border-top-left-radius: 10vw;
@@ -77,7 +77,8 @@
   background: var(--accentTrans);
 }
 
-#banner .top .top-image-div img {
+
+.preview-banner .top .top-image-div img {
   width: 100%;
   height: 100%;
   object-position: 50% 10%;
@@ -85,7 +86,7 @@
   filter: brightness(110%);
 }
 
-#banner .under-text-div {
+.preview-banner .under-text-div {
   min-width: 100vw;
   display: flex;
   flex-direction: column;
@@ -94,7 +95,7 @@
   padding-block: 4pc;
 }
 
-#banner .player {
+.preview-banner .player {
   margin-bottom: 10px;
   width: 70%;
   place-self: center;
@@ -116,7 +117,7 @@
   padding-inline-start: 10px;
 }
 
-#banner .player button#play {
+.preview-banner .player button#preview-play {
   display: flex;
   z-index: 99;
   justify-content: center;
@@ -131,11 +132,11 @@
   height: 40px;
 }
 
-#banner .player svg {
+.preview-banner .player svg {
   fill: var(--primary);
 }
 
-#banner .under-text-div .under-text {
+.preview-banner .under-text-div .under-text {
   place-self: center;
   width: 95%;
   max-width: 600px;

@@ -122,25 +122,25 @@ const faq = [
 	}
 ]
 
-const BASE_PATHS = {
+const HOME_BASE_PATH = {
 	audio: "/src/audio"
 };
 
 //Audio source:
-const audioSrc = {
+const HOME_AUDIO_SRC = {
 	banner: {
-		"en": `${BASE_PATHS.audio}/home-english.mp3`,
-		"fr": `${BASE_PATHS.audio}/home-french.mp3`,
-		"es": `${BASE_PATHS.audio}/home-spanish.mp3`,
-		"de": `${BASE_PATHS.audio}/home-german.mp3`,
-		"it": `${BASE_PATHS.audio}/home-italian.mp3`
+		"en": `${HOME_BASE_PATH.audio}/home-english.mp3`,
+		"fr": `${HOME_BASE_PATH.audio}/home-french.mp3`,
+		"es": `${HOME_BASE_PATH.audio}/home-spanish.mp3`,
+		"de": `${HOME_BASE_PATH.audio}/home-german.mp3`,
+		"it": `${HOME_BASE_PATH.audio}/home-italian.mp3`
 	},
 	session: {
-		"en": `${BASE_PATHS.audio}/session-english.mp3`,
-		"fr": `${BASE_PATHS.audio}/session-french.mp3`,
-		"es": `${BASE_PATHS.audio}/session-spanish.mp3`,
-		"de": `${BASE_PATHS.audio}/session-german.mp3`,
-		"it": `${BASE_PATHS.audio}/session-italian.mp3`
+		"en": `${HOME_BASE_PATH.audio}/session-english.mp3`,
+		"fr": `${HOME_BASE_PATH.audio}/session-french.mp3`,
+		"es": `${HOME_BASE_PATH.audio}/session-spanish.mp3`,
+		"de": `${HOME_BASE_PATH.audio}/session-german.mp3`,
+		"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
 	}
 };
 
@@ -194,8 +194,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	const lang = language.toLowerCase().substring(0, 2);
 	
-	audioMessage.src = audioSrc.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
-	audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+	audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
+	audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
 	if (user) {
 		bannerBTN.href = "/html/main/Book.html";
