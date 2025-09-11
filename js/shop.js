@@ -17,12 +17,13 @@ const audioSrc = {
 };
 
 function handleAudio(lang) {
-  const audioMessage = document.querySelector('#banner audio#book-audio-message');
+  const audioMessage = document.querySelector('.preview-banner audio#book-audio-message');
 
+if (!audioMessage) return;
 
   audioMessage.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
 
-  const listenBTN = document.querySelector("#banner button#play");
+  const listenBTN = document.querySelector(".preview-banner button#preview-play");
 
   if (listenBTN && audioMessage) {
     listenBTN.addEventListener('click', () => {
@@ -95,7 +96,9 @@ const BOOK_COLLECTION = [
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 
+if (modal) {
   modal.classList.toggle("fadeOut");
+};
 }
 
 function showDetailsModal(e) {
@@ -144,6 +147,8 @@ function handleAlert(message) {
   const parent = document.querySelector("#details-div .alert-message");
   const text = document.querySelector("#details-div .alert-message .alert-text");
 
+if (!parent) return;
+
   const contains = parent.classList.contains("fadeOut");
   contains && parent.classList.remove("fadeOut");
 
@@ -161,6 +166,8 @@ function handleAlert(message) {
 function handleCartUpdate(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartCount = document.querySelector(".details-top span.cart-count");
+
+if (!cartParent) return;
 
   cartCount.textContent = count;
   cartParent.classList.add("bounce");
