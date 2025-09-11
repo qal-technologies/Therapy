@@ -219,7 +219,7 @@ function renderBookCollection(book) {
       </div-->
 
       <div class="book-format">
-<p style="font-weight:bolder; min-width:100%; text-align:left;" >
+<p style="font-weight:bolder; min-width:100%; text-align:left; margin-top:10px; font-size:18px;" >
 Select Book Format
 </p>
         <div class="format-div">
@@ -294,6 +294,8 @@ Select Book Format
           book.quantity = 1;
           handleCartAnimation(count);
           renderBookCollection(book);
+
+window.location.replace('/html/main/cart.html');
         }
       }
     });
