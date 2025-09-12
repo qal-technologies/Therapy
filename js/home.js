@@ -1,43 +1,45 @@
+import handleAlert from "/js/general.js";
+
 const reviews = [
-	first=[
-	{
-		name: "Vale´rie",
-		from: "France",
-		message:
-			"I booked the session thinking maybe she'd just say something comforting. I didn't expect to cry. I didn't expect to feel seen. and I never imagined that a woman I admired from afar could hold space for me like that. Charlotte didn't just listen, she reached inside the silence I had lived with for years.",
-	},
-	{
-		name: "Ana",
-		from: "Spain",
-		message:
-			"After my breakup, I felt like a shadow. One conversation with Charlotte helped me find my voice again. I left the session calmer, wiser, and ready to start living for real. This wasn't therapy. It was transformation.",
-	},
-	{
-		name: "Michael",
-		from: "UK",
-		message:
-			"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
+	 [
+		{
+			name: "Vale´rie",
+			from: "France",
+			message:
+				"I booked the session thinking maybe she'd just say something comforting. I didn't expect to cry. I didn't expect to feel seen. and I never imagined that a woman I admired from afar could hold space for me like that. Charlotte didn't just listen, she reached inside the silence I had lived with for years.",
+		},
+		{
+			name: "Ana",
+			from: "Spain",
+			message:
+				"After my breakup, I felt like a shadow. One conversation with Charlotte helped me find my voice again. I left the session calmer, wiser, and ready to start living for real. This wasn't therapy. It was transformation.",
+		},
+		{
+			name: "Michael",
+			from: "UK",
+			message:
+				"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
 		},
 	],
 
-	second=[
-	{
-		name: "Nadia",
-		from: "Germany",
-		message:
-			"At first, I wasn't sure it would be real. But everything felt so personal. The emails, the voice messages, even how the payment was confirmed - it was all so human. I booked one session and ended up booking three. I feel held, not judged.",
-	},
-	{
-		name: "Davide",
-		from: "Italy",
-		message:
-			"Being part of her Inner Circle was beyond anything I've ever experienced. She didn't speak like a celebrity. She spoke like someone who knows. Charlotte is pure energy. If you ever get the chance to book, take it. I'd pay double.",
-	},
-	{
-		name: "Tatiana",
-		from: "Portugal",
-		message:
-			"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
+	[
+		{
+			name: "Nadia",
+			from: "Germany",
+			message:
+				"At first, I wasn't sure it would be real. But everything felt so personal. The emails, the voice messages, even how the payment was confirmed - it was all so human. I booked one session and ended up booking three. I feel held, not judged.",
+		},
+		{
+			name: "Davide",
+			from: "Italy",
+			message:
+				"Being part of her Inner Circle was beyond anything I've ever experienced. She didn't speak like a celebrity. She spoke like someone who knows. Charlotte is pure energy. If you ever get the chance to book, take it. I'd pay double.",
+		},
+		{
+			name: "Tatiana",
+			from: "Portugal",
+			message:
+				"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
 		},
 	]
 ];
@@ -71,19 +73,19 @@ const sessionTypes = [
 		button: "BOOK NOW",
 		bonus: [
 			"Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
-			"Bonus healing kit provided at session","Follow-up reflection message","Access to session notes and personal progress tools"
+			"Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
 		]
 	},
 	{
 		type: "inner",
 		route: "inner",
 		name: "INNER CIRCLE EXPERIENCE",
-		extra:"This plan is sold out for now",
+		extra: "This plan is sold out for now",
 		price: "6,850",
 		description:
 			"For those who seek not just a session, but a sanctuary.",
 		button: "SOLD OUT",
-		bonus:["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
+		bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
 	},
 	{
 		type: "community",
@@ -95,13 +97,13 @@ const sessionTypes = [
 			"Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
 		button: "BOOK NOW",
 		bonus: [
-			"Same full session as others","Gentle sliding scale available on request", "Private and confidential","Follow-up resources sent digitally", "Option for one-time check-in after the session"
+			"Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
 		]
 	},
 ];
 
 const faq = [
-	{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation — raw, compassionate, and transformative — designed to help you reconnect with your inner truth." },
+	{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation, raw, compassionate, and transformative, designed to help you reconnect with your inner truth." },
 	{
 		question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
 	},
@@ -118,7 +120,7 @@ const faq = [
 		answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
 	},
 	{
-		question: "Why do you accept gift cards as a payment method?", answer: "Gift cards allow fans from all over the world — regardless of country or banking restrictions — to easily and securely support their healing journey. They also help us confirm your place faster and securely."
+		question: "What is a Paysafecard and how do I pay with it?", answer: "Gift cards allow fans from all over the world, regardless of country or banking restrictions, to easily and securely support their healing journey. They also help us confirm your place faster and securely."
 	}
 ]
 
@@ -144,35 +146,60 @@ const HOME_AUDIO_SRC = {
 	}
 };
 
-let timer;
-function handleAlert(message) {
-	const parent = document.querySelector(".alert-message");
-	const div = document.querySelector(".alert-div");
-	const text = document.querySelector(".alert-message .alert-text");
-	const close = document.querySelector(".alert-message .alert-button");
+// let timer;
+// function handleAlert(message, titled = false, titleText = "", closing = false, closingText = "") {
+// 	console.log("stage!");
 
-	if (parent.classList.contains("fadeOut")) {
-		parent.classList.remove("fadeOut");
-		div.classList.remove("zoom-out");
-	}
+// 	const parent = document.querySelector(".alert-message");
+// 	const div = document.querySelector(".alert-message .alert-div");
+// 	const title = document.querySelector(".alert-title");
+// 	const text = document.querySelector(".alert-message .alert-text");
+// 	const close = document.querySelector(".alert-message .alert-button");
+// 	// if (!parent) console.error("erroe");
 
-	parent.style.display = "flex";
-	text.innerHTML = message;
+// 	if (parent.classList.contains("fadeOut")) {
+// 		parent.classList.remove("fadeOut");
+// 		div.classList.remove("zoom-out");
+// 	}
 
-	close.addEventListener("click", () => {
-		clearTimeout(timer);
+// 	console.log("passed!");
 
-		const adding = div.classList.add("zoom-out");
+// 	parent.style.display = "flex";
+// 	if (!title && titled && titleText.length >= 1) {
+// 		const newTitle = document.createElement("p").classList.add("alert-title");
 
-		text.innerHTML = "";
-		parent.classList.add("fadeOut");
+// 		parent.insertAdjacentElement("beforebegin", newTitle);
 
-		timer = adding && setTimeout(() => {
-			parent.style.display = "none";
-		}, 1000);
-	})
 
-}
+// 		title.innerHTML = titleText;
+// 	}
+
+// 	if (text) {
+// 		text.innerHTML = message;
+// 	}
+
+// 	console.log("passed!!");
+
+// 	if (!close && closing && closingText.length >= 1) {
+// 		const newTitle = document.createElement("p").classList.add("alert-title");
+
+// 		parent.insertAdjacentElement("beforebegin", newTitle);
+
+// 		close.addEventListener("click", () => {
+// 			clearTimeout(timer);
+
+// 			const adding = div.classList.add("zoom-out");
+
+// 			text.innerHTML = "";
+// 			parent.classList.add("fadeOut");
+
+// 			timer = adding && setTimeout(() => {
+// 				parent.style.display = "none";
+// 			}, 1000);
+// 		})
+// 	}
+
+// }
 
 window.addEventListener("DOMContentLoaded", () => {
 	let user = true;
@@ -193,7 +220,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	const BTNText = bannerBTN.firstElementChild;
 
 	const lang = language.toLowerCase().substring(0, 2);
-	
+
 	audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
 	audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
@@ -256,7 +283,7 @@ window.addEventListener("DOMContentLoaded", () => {
                   />
                 </svg>`;
 	})
-	
+
 	testimonies.innerHTML = reviews[0].map((review) => {
 		return `
 		<div id="testimony">
@@ -471,12 +498,12 @@ window.addEventListener("DOMContentLoaded", () => {
 			<div id="message" class="${session.type}">
 ${bonuses.join('')}
 		  </div>
-${ session.type == "inner" ? 
-			`
+${session.type == "inner" ?
+				`
 		  <div id="waitlist" class="${session.type}">
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
 		  </div>` : ""
-}
+			}
         </div>`
 	}).join("");
 
@@ -622,7 +649,7 @@ We’ll personally notify you the moment a spot becomes available.
 Priority is given in the order sign-ups are received, so you’re in line.
 
 <br/><br/>
-Until then, breathe deeply and know,your sanctuary is waiting.`
+Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, `OK`
 			);
 
 			waitlistBTN.style.fontSize = "13.5px";

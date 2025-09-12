@@ -1,3 +1,5 @@
+import handleAlert from "/js/general.js";
+
 //Audio source:
 const BASE_PATHS = {
   images: "/src/images",
@@ -19,7 +21,7 @@ const audioSrc = {
 function handleAudio(lang) {
   const audioMessage = document.querySelector('.preview-banner audio#book-audio-message');
 
-if (!audioMessage) return;
+  if (!audioMessage) return;
 
   audioMessage.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
 
@@ -96,9 +98,9 @@ const BOOK_COLLECTION = [
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 
-if (modal) {
-  modal.classList.toggle("fadeOut");
-};
+  if (modal) {
+    modal.classList.toggle("fadeOut");
+  };
 }
 
 function showDetailsModal(e) {
@@ -143,31 +145,31 @@ function handleQuantityChange(e) {
   }
 }
 
-function handleAlert(message) {
-  const parent = document.querySelector("#details-div .alert-message");
-  const text = document.querySelector("#details-div .alert-message .alert-text");
+// function handleAlert(message) {
+//   const parent = document.querySelector("#details-div .alert-message");
+//   const text = document.querySelector("#details-div .alert-message .alert-text");
 
-if (!parent) return;
+//   // if (parent) {
+//     const contains = parent.classList.contains("fadeOut");
+//     contains && parent.classList.remove("fadeOut");
 
-  const contains = parent.classList.contains("fadeOut");
-  contains && parent.classList.remove("fadeOut");
+//     parent.style.display = "flex";
+//     text.textContent = message;
 
-  parent.style.display = "flex";
-  text.textContent = message;
+//     setTimeout(() => {
+//       parent.classList.add("fadeOut");
 
-  setTimeout(() => {
-    parent.classList.add("fadeOut");
-
-    text.textContent = "";
-    parent.style.display = "none";
-  }, 4000);
-}
+//       text.textContent = "";
+//       parent.style.display = "none";
+//     }, 4000);
+//   // }
+// }
 
 function handleCartUpdate(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartCount = document.querySelector(".details-top span.cart-count");
 
-if (!cartParent) return;
+  if (!cartParent) return;
 
   cartCount.textContent = count;
   cartParent.classList.add("bounce");
@@ -177,7 +179,7 @@ if (!cartParent) return;
   }, 1000);
 }
 
-function handleCartAnimation( count) {
+function handleCartAnimation(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartImage = document.querySelector(".book-item img");
 
@@ -259,7 +261,7 @@ Select Book Format
 
 
        <div class="quantity">
-        <p class="quantity-text">Select No. of Copies</p>
+        <p class="quantity-text">Select Number of Copies</p>
         <div class="qty-main-div" data-id="${book.id}">
           <span class="qty-arrow minus">-</span>
           <p class="qty-text">${book.quantity}</p>
@@ -278,7 +280,7 @@ Select Book Format
   });
 
   document.querySelector(".book-info .format-div.last").addEventListener("click", () => {
-    handleAlert("Temporarily Unavailable. Only eBook Available now.");
+    handleAlert("Temporarily Unavailable. Only eBook Available now.", "toast");
   })
 
   // Add event listeners for Add to Cart buttons
@@ -295,14 +297,16 @@ Select Book Format
           const count = existing.length;
 
 
-          handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`);
+          handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`, "toast");
 
           // Reset quantity after adding to cart
           book.quantity = 1;
           handleCartAnimation(count);
           renderBookCollection(book);
 
-window.location.replace('/html/main/cart.html');
+          setTimeout(() => {
+            window.location.replace('/html/main/cart.html');
+          }, 2000);
         }
       }
     });

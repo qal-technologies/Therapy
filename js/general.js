@@ -23,12 +23,12 @@ window.onload = () => {
         if (actionTab) {
 
             actionTab.forEach(tab => {
-                
-            const actionText = tab.firstElementChild;
-        tab.href = "/html/main/User.html";
-        actionText.innerHTML = "PROFILE";
+
+                const actionText = tab.firstElementChild;
+                tab.href = "/html/main/User.html";
+                actionText.innerHTML = "PROFILE";
             })
-    }
+        }
     }
 
     let show = false;
@@ -53,7 +53,6 @@ window.onload = () => {
         }
         show = !show;
     });
-
 
 
     function initTicker() {
@@ -115,9 +114,11 @@ window.onload = () => {
     }
 
     function goBackButton() {
-        window.history.back();
-    }
 
+        // window.history.back();
+
+        window.history.go(-1)
+    }
 
     backButton && backButton.addEventListener("click", goBackButton);
     refreshButton && refreshButton.addEventListener("click", () => {
@@ -130,11 +131,11 @@ window.onload = () => {
 }
 
 window.onresize = () => {
-        const navWidth = header.clientWidth;
+    const navWidth = header.clientWidth;
 
-        if (navWidth >= 800) {
-            header.classList.remove("heightShow");
-            menu.innerHTML = `<svg
+    if (navWidth >= 800) {
+        header.classList.remove("heightShow");
+        menu.innerHTML = `<svg
     xmlns="http://www.w3.org/2000/svg"
     height="30"
     viewBox="0 -960 960 960"
@@ -144,8 +145,83 @@ window.onresize = () => {
     d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
     </svg>`;
 
-            show = !show;
+        show = !show;
+    }
+    cancelAnimationFrame(animationFrame);
+    createTicker();
+};
+
+let timer;
+function handleAlert(message, type = "blur" | "toast", titled = false, titleText = "", closing = false, closingText = "") {
+    console.log("stage!");
+
+    const parent = document.querySelector(".alert-message");
+    const div = document.querySelector(".alert-message .alert-div");
+    const title = document.querySelector(".alert-title");
+    const text = document.querySelector(".alert-message .alert-text");
+    const close = document.querySelector(".alert-message .alert-button");
+    if (!parent) return;
+
+    if (parent.classList.contains("fadeOut")) {
+        parent.classList?.remove("fadeOut");
+        div.classList?.remove("zoom-out");
+    }
+
+    console.log("passed!");
+
+    parent.style.display = "flex";
+    if (type == "toast") {
+        parent.classList.add("shop");
+
+        setTimeout(() => {
+            parent.classList.add("fadeOut");
+
+            text.textContent = "";
+            parent.style.display = "none";
+        }, 4000);
+    }
+
+    if (titled && titleText.length >= 1) {
+        if (!title) {
+
+            const newTitle = document.createElement("p").classList.add("alert-title");
+
+            parent.insertAdjacentElement("beforebegin", newTitle);
+
         }
-        cancelAnimationFrame(animationFrame);
-        createTicker();
-    };
+
+        title.innerHTML = titleText;
+    }
+
+    if (text) {
+        text.innerHTML = message;
+    }
+
+    console.log("passed!!");
+
+    if (!close && closing) {
+
+            const newTitle = document.createElement("p").classList.add("alert-title");
+
+            parent.insertAdjacentElement("beforebegin", newTitle);
+    }
+    
+    if (closing && closingText.length >= 1 && close) {
+            close.addEventListener("click", () => {
+                clearTimeout(timer);
+
+                const adding = div.classList.add("zoom-out");
+
+                text.innerHTML = "";
+                parent.classList.add("fadeOut");
+
+                timer = adding && setTimeout(() => {
+                    parent.style.display = "none";
+                }, 1000);
+            })
+        
+    }
+
+}
+
+ export default handleAlert;

@@ -1,3 +1,5 @@
+import handleAlert from "./general";
+
 const sessionTypes = [
   {
     type: "virtual",
@@ -58,7 +60,7 @@ const sessionTypes = [
 
 const faq = [
   {
-    question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session — whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
+    question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session, whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
   },
   {
     question: "What is the difference between a virtual and in-person session?", answer: "Virtual sessions happen securely online (video call) and are just as personal and transformative. In-person sessions take place in a private, serene setting in Monaco or Paris, allowing for deeper connection, presence, and healing energy."
@@ -67,7 +69,7 @@ const faq = [
     question: "Are the sessions confidential?", answer: "Absolutely. Every conversation with Charlotte is completely private, sacred, and protected. Your story, emotions, and healing remain between you and her alone."
   },
   {
-    question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards,debit cards and gift cards, bank transfer, and PayPal to ensure flexibility and security."
+    question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards, debit cards and paysafecard 16 digit prepaid codes to ensure flexibility and security."
   },
   {
     question: "What happens after I make a payment?",
@@ -106,35 +108,35 @@ const audioSrc = {
   }
 };
 
-let timer;
-function handleAlert(message) {
-  const parent = document.querySelector(".alert-message");
-  const div = document.querySelector(".alert-div");
-  const text = document.querySelector(".alert-message .alert-text");
-  const close = document.querySelector(".alert-message .alert-button");
+// let timer;
+// function handleAlert(message) {
+//   const parent = document.querySelector(".alert-message");
+//   const div = document.querySelector(".alert-div");
+//   const text = document.querySelector(".alert-message .alert-text");
+//   const close = document.querySelector(".alert-message .alert-button");
 
-  if (parent.classList.contains("fadeOut")) {
-    parent.classList.remove("fadeOut");
-    div.classList.remove("zoom-out");
-  }
+//   if (parent.classList.contains("fadeOut")) {
+//     parent.classList.remove("fadeOut");
+//     div.classList.remove("zoom-out");
+//   }
 
-  parent.style.display = "flex";
-  text.innerHTML = message;
+//   parent.style.display = "flex";
+//   text.innerHTML = message;
 
-  close.addEventListener("click", () => {
-    clearTimeout(timer);
+//   close.addEventListener("click", () => {
+//     clearTimeout(timer);
 
-    const adding = div.classList.add("zoom-out");
+//     const adding = div.classList.add("zoom-out");
 
-    text.innerHTML = "";
-    parent.classList.add("fadeOut");
+//     text.innerHTML = "";
+//     parent.classList.add("fadeOut");
 
-    timer = adding && setTimeout(() => {
-      parent.style.display = "none";
-    }, 1000);
-  })
+//     timer = adding && setTimeout(() => {
+//       parent.style.display = "none";
+//     }, 1000);
+//   })
 
-}
+// }
 
 window.addEventListener("DOMContentLoaded", () => {
     const language = navigator.language;
@@ -334,31 +336,31 @@ ${bonuses.join('')}
 
   const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
-  waitlistBTN.addEventListener("click", (e) => {
+ waitlistBTN.addEventListener("click", (e) => {
     if (waitlistBTN.disabled == true) return;
-
+ 
     waitlistBTN.disabled = true;
     waitlistBTN.ariaDisabled = true;
     waitlistBTN.style.fontSize = "12px";
     waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
-
+ 
     setTimeout(() => {
       handleAlert(`
-Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
-
-<br/>
-📩 What’s next:
-<br/>
-You’ll receive a confirmation email shortly.
-<br/>
-We’ll personally notify you the moment a spot becomes available.
-<br/>
-Priority is given in the order sign-ups are received, so you’re in line.
-
-<br/><br/>
-Until then, breathe deeply and know,your sanctuary is waiting.`
+ Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+ 
+ <br/>
+ 📩 What’s next:
+ <br/>
+ You’ll receive a confirmation email shortly.
+ <br/>
+ We’ll personally notify you the moment a spot becomes available.
+ <br/>
+ Priority is given in the order sign-ups are received, so you’re in line.
+ 
+ <br/><br/>
+ Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, `OK`
       );
-
+ 
       waitlistBTN.style.fontSize = "13.5px";
       waitlistBTN.textContent = '✅ Added to waitlist!';
     }, 2500);
