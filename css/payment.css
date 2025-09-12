@@ -203,6 +203,10 @@ h2 {
     transition: all 0.2s;
 }
 
+.option-item.paysafe{
+overflow:hidden;
+}
+
 .option-item:hover {
     border-color: #4a90e2;
     border-color: var(--link);
