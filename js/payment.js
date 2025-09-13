@@ -241,7 +241,7 @@ function handleCreditCard(state, elements) {
                 state.creditCardError = false;
                 state.detectedBrand = null;
                 state.methodSelected = false;
-                state.selectedMethod = "";
+                state.selectedMethod = "paysafe";
 
 
                 elements.paymentDisplay.innerHTML = state.initialContent;
