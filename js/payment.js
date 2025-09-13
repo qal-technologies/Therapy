@@ -120,6 +120,12 @@ function handlePaymentMethodClick(option, state, elements) {
     checkPaymentMethodSelection(state, elements);
 }
 
+
+const formatter = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
+
 async function handleProceedClick(e, state) {
     e.preventDefault();
     const button = e.target;
@@ -519,7 +525,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
             </div>
             
            <div class="amount-display">
-                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${state.toPay.toLocaleString()}</strong></p>
+                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter(state.toPay)}</strong></p>
             </div>
         </div>
          ${state.creditCardTrials > 1 ? `
