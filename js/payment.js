@@ -176,9 +176,9 @@ function handleMakePaymentClick(e, state, elements) {
         } else if (method.includes("safe")) {
             state.paySafeSections = createPaySafeSections(state);
             handlePaySafe(state, elements);
-        } else {
-            document.getElementById("loading-section")?.classList.add("active");
-        }
+        } 
+
+button.disabled = true;
     }, 2000);
 }
 
