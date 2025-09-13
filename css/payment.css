@@ -1931,7 +1931,7 @@ ul.instructions.redeem li {
     align-items: flex-start;
 }
 
-.steps .step img, .steps .step svg {
+.steps .step img, .steps .step i {
     width: 80px;
     height: 80px;
     border-radius: 16px;
