@@ -620,7 +620,7 @@ ${session.type == "inner" ?
 					a.style.transform = 'rotate(0deg)';
 				});
 
-				lower.style.maxHeight = '300px';
+				lower.style.maxHeight = "1000px";
 				arrow.style.transform = 'rotate(90deg)';
 			}
 		});

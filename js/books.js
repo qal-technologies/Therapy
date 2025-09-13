@@ -944,17 +944,11 @@ As a philosopher and a mother, a friend and a lifelong student of life, I have s
              <h3>A Promise of Transformation</h3>
 <p>
 Let me start with a promise: change is possible, and you have more strength within you than you can imagine. No matter how deep a hole you feel stuck in right now, you can rise out of it. This book will guide you step by step, not with abstract theories but with tangible advice, exercises, and stories of others like you who found their way through. By the end of
-</p>
-
-<p>
 our journey together, you will have not only healed wounds you once thought permanent, but also discovered new aspects of yourself, a stronger, more confident, more joyful you. This isn't an idle promise; I have seen it happen. I have seen women who thought their life was over bloom again like a phoenix rising from ashes. Your transformation can be just as real.
 </p>
 
 <p>
 You might be thinking, "Is that really possible for me?" Or, "I've tried before and failed." It's natural to be skeptical, after all, life can be terribly hard. But sometimes the difference between those who overcome and those who remain stuck is not that one is more deserving or lucky, it's often having the right support and guidance. Think of this book as your support system in print form. I wrote it to be that trusty guide and friend you can
-</p>
-
-<p>
 always carry with you. We will draw on deep insights from psychology and philosophy, but in a way that's easy to understand. More importantly, we will apply them to your daily life. With each chapter, you'll gain practical tools and comforting wisdom. It's like packing a toolkit for life's journey, and trust me, you'll want these tools when the road gets rough.
 </p>
 
@@ -971,7 +965,7 @@ Before we dive in, let me share a bit of why I’m here with you. As a young wom
 </span>
 
 <p>
-One such story stays with me: a dear friend (I’ll call her "A") who fell into a deep depression after losing her job, something she had tied her identity to for years. When we first talked, she whispered through tears that she felt like a failure and feared she would never feel happy again. But somewhere in that darkness, she found a tiny spark of fight. Together we explored small steps, a morning walk here, a journaling exercise there, and gradually, A found her way out of the fog. She not only recovered, she started a new career path that fulfilled her in ways her old job never did. Her story is just one example. Throughout this book, I will share more like it: of women who faced heartbreak, loneliness, self-doubt, and how they turned things around (to be detailed later)
+One such story stays with me: a dear friend (I’ll call her "A") who fell into a deep depression after losing her job, something she had tied her identity to for years. When we first talked, she whispered through tears that she felt like a failure and feared she would never feel happy again. But somewhere in that darkness, she found a tiny spark of fight. Together we explored small steps, a morning walk here, a journaling exercise there, and gradually, A found her way out of the fog. She not only recovered, she started a new career path that fulfilled her in ways her old job never did. Her story is just one example. Throughout this book, I will share more like it: of women who faced heartbreak, loneliness, self-doubt, and how they turned things around (to be detailed later).
 </p>
             `,
 
@@ -983,7 +977,7 @@ The Weight of the World – When Sadness and Depression Overwhelm
 </p>
 
 <p>
-On a gray afternoon, Anna sat by her bedroom window, watching raindrops trail down the glass. It had been weeks since she lost her job, a career she had poured her soul into for nearly a decade. Since that day, something in Anna had crumbled. She woke each morning with a heavy ache in her chest, as if an invisible weight pressed down on her. The simplest tasks, brushing her hair, replying to a friend’s text felt monumentally difficult. Instead of the ambitious, cheerful woman her friends once knew, Anna felt like a hollow shell of herself. One evening, her best friend called, concerned. Anna wanted to answer, but she just couldn’t find the energy. What’s wrong with me? she wondered, tears rolling silently. Why can’t I snap out of this?
+On a grey afternoon, Anna sat by her bedroom window, watching raindrops trail down the glass. It had been weeks since she lost her job, a career she had poured her soul into for nearly a decade. Since that day, something in Anna had crumbled. She woke each morning with a heavy ache in her chest, as if an invisible weight pressed down on her. The simplest tasks, brushing her hair, replying to a friend’s text felt monumentally difficult. Instead of the ambitious, cheerful woman her friends once knew, Anna felt like a hollow shell of herself. One evening, her best friend called, concerned. Anna wanted to answer, but she just couldn’t find the energy. What’s wrong with me? she wondered, tears rolling silently. Why can’t I snap out of this?
 </p>
 
 <p>
