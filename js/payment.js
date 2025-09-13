@@ -525,7 +525,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
             </div>
             
            <div class="amount-display">
-                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter(state.toPay)}</strong></p>
+                <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter.format(state.toPay)}</strong></p>
             </div>
         </div>
          ${state.creditCardTrials > 1 ? `
