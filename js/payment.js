@@ -570,11 +570,12 @@ function createSafe1(state) {
                     <div class="step-text">
                 
                         <p class="step-header">Step 2: <br />
-                            Buy a Paysafecard Voucher
+                            Get Your Secure PIN
                         </p>
                 
                     <p class="step-text-under">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, minus!
+                        When you buy the Paysafecard, you will receive a receipt. On this receipt, you will see a 16-digit code (numbers).
+This code is your money. Keep it safe, just like cash.
                     </p>
                     </div>
                 </div>
@@ -584,11 +585,11 @@ function createSafe1(state) {
                     <div class="step-text">
                 
                         <p class="step-header">Step 3: <br />
-                            Buy a Paysafecard Voucher
+                            Enter Your Code Online
                         </p>
                 
                     <p class="step-text-under">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, minus!
+                        On the next screen, type the 16-digit code from your receipt (example: 1234 5678 9012 3456). Then click “Pay Now with Paysafecard".You will see an almost instant confirmation once the payment is done.
                     </p>
                     </div>
                 </div>
