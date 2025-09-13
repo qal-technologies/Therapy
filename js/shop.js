@@ -321,7 +321,7 @@ function addToCart(book) {
   // Get selected format
   const selectedFormat = document.querySelector(`.book-item[data-id="${book.id}"] input[type="radio"]:checked`);
   if (!selectedFormat && book.formats.length > 0) {
-    handleAlert('Please select a format before adding to cart');
+    handleAlert('Please select a format before adding to cart', "toast");
     return false;
   }
 
