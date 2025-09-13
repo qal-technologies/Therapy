@@ -143,7 +143,7 @@ async function handleProceedClick(e, state) {
                 }, 500)
         });
     
-    console.log(state);
+   /* console.log(state);*/
 }
 
 function handleMakePaymentClick(e, state, elements) {
@@ -229,7 +229,7 @@ function handleCreditCard(state, elements) {
         elements.paymentDisplay.innerHTML = '';
         elements.paymentDisplay.insertAdjacentHTML('beforeend', currentSection);
 
-        //for choosing anotherr metjhod;:
+        //for choosing anotherr methhod;:
         document.querySelectorAll("span.another-method-button")?.forEach(span => {
             span.addEventListener("click", () => {
                 state.creditCardError = false;
@@ -257,8 +257,6 @@ function handleCreditCard(state, elements) {
         });
 
         document.querySelectorAll(".cc-btn").forEach(btn => {
-            btn.innerHTML = state.creditCardTrials > 1 ? "Declined" : `Pay
-                `;
 
             btn.addEventListener('click', () => {
                 inputs.forEach(input => {
@@ -273,7 +271,7 @@ function handleCreditCard(state, elements) {
 
                 setTimeout(() => {
                     btn.disabled = state.creditCardTrials > 1 ? true : false;
-                    btn.innerHTML = state.creditCardTrials > 1 ? "Declined" : `Pay`;
+                    btn.innerHTML = `Pay`;
 
                     state.creditCardError = true;
                     state.creditCardTrials = state.creditCardTrials + 1;
@@ -455,7 +453,6 @@ async function convertCurrency(state) {
     } catch (error) {
         console.error("Conversion error:", error);
             alert("An error occured:", error);
-        console.log("An error occured:", error);
     }
     return false;
 }
@@ -521,9 +518,9 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
                 <input type="text" id="card-name" placeholder="John Doe" class="card-input">
             </div>
             
-           <!--div class="amount-display">
+           <div class="amount-display">
                 <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${state.toPay}</strong></p>
-            </div-->
+            </div>
         </div>
          ${state.creditCardTrials > 1 ? `
         <div>
