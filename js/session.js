@@ -1,4 +1,4 @@
-import handleAlert from "./general.js";
+import handleAlert from "/js/general.js";
 
 const sessionTypes = [
   {
