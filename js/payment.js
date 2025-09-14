@@ -502,8 +502,9 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
                 <label for="card-number">Card number</label>
                 <div class="input-with-icon">
                     <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
-                    ${state.detectedBrand ? `<div class="card-icon" style="background: ${cardState.cardBrands.find(b => b.name === state.detectedBrand).pattern}">
-                        <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}">
+
+                    ${state.detectedBrand ? `<div class="card-icon">
+                        <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}"/>
                     </div>` : ''}
                 </div>
             </div>
@@ -515,7 +516,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVC</label>
-                    <input type="text" id="cvv" placeholder="123" maxlength="4" class="card-input">
+                    <input type="text" id="cvv" placeholder="123" maxlength="3" class="card-input">
                 </div>
             </div>
             
