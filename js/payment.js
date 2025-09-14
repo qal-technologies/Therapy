@@ -645,7 +645,7 @@ This code is your money. Keep it safe, just like cash.
                 </div>
 
                 <div class="step">
-                   <i class="bi bi-phone-lock"></i>
+                   <i class="bi bi-file-lock2"></i>
                     <div class="step-text">
                 
                         <p class="step-header">Step 3: <br />
