@@ -1185,7 +1185,6 @@ span.another-method-button {
     display: flex;
 }
 
-
 .card-brands {
     display: flex;
     gap: 10px;
@@ -1208,7 +1207,8 @@ span.another-method-button {
 .card-brand.active {
     opacity: 1;
     transform: translateY(-3px);
-    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.12);
+    box-shadow: 1px 2px 10px var(--accentTrans);
+border:1px solid var(--accentTrans);
 }
 
 .card-brand img {
