@@ -211,7 +211,7 @@ function initializeCreditCardState() {
             },
             {
                 name: "American Express",
-                image: "https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo.svg",
+                image: "https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png",
                 colors: ["#016fd0", "#ffffff"],
                 pattern: "linear-gradient(135deg, #016fd0 0%, #016fd0 70%, #ffffff 70%, #ffffff 100%)"
             },
