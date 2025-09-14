@@ -43,7 +43,7 @@
   text-decoration: none;
   box-sizing: border-box;
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
-  transition: all 400ms ease-in-out;
+  transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
 }

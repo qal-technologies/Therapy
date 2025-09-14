@@ -977,7 +977,7 @@ The Weight of the World – When Sadness and Depression Overwhelm
 </p>
 
 <p>
-On a grey afternoon, Anna sat by her bedroom window, watching raindrops trail down the glass. It had been weeks since she lost her job, a career she had poured her soul into for nearly a decade. Since that day, something in Anna had crumbled. She woke each morning with a heavy ache in her chest, as if an invisible weight pressed down on her. The simplest tasks, brushing her hair, replying to a friend’s text felt monumentally difficult. Instead of the ambitious, cheerful woman her friends once knew, Anna felt like a hollow shell of herself. One evening, her best friend called, concerned. Anna wanted to answer, but she just couldn’t find the energy. What’s wrong with me? she wondered, tears rolling silently. Why can’t I snap out of this?
+On a grey afternoon, Anna sat by her bedroom window, watching raindrops trail down the glass. It had been weeks since she lost her job, a career she had poured her soul into for nearly a decade. Since that day, something in Anna had crumbled. She woke each morning with a heavy ache in her chest, as if an invisible weight pressed down on her. The simplest tasks, brushing her hair, replying to a friend’s text felt monumentally difficult. Instead of the ambitious, cheerful woman her friends once knew, Anna felt like a hollow shell of herself. One evening, her best friend called, concerned. Anna wanted to answer, but she just couldn’t find the energy. <i>What’s wrong with me?</i> she wondered, tears rolling silently. <i>Why can’t I snap out of this?</i>
 </p>
 
 <p>
@@ -990,7 +990,7 @@ Anna's story might resonate with you. Depression, often described as a "dark clo
             <div class="inner-content text-left align-flex-start">
 If you have felt this way, take heart: you are far from alone, and nothing is wrong with you as a person. You are struggling with a condition that many others have faced.
 
-            <p>In fact, women are about twice as likely as men to experience depression in their lifetime. This higher prevalence isn’t because women are “weaker” (a harmful myth), it’s due to a mix of biological factors (like hormonal fluctuations) and social pressures (like the roles and stresses many women juggle).
+            <p>In fact, women are about twice as likely as men to experience depression in their lifetime. This higher prevalence isn’t because women are “weaker” (a harmful myth); it’s due to a mix of biological factors (like hormonal fluctuations) and social pressures (like the roles and stresses many women juggle).
             </p>
 
 
@@ -1033,19 +1033,19 @@ Depression often comes hand-in-hand with anxiety, those constant worries and fea
  <h4>Why Depression Hits Women Hard</h4>
 
 <p>
-It’s worth briefly exploring why women might be twice as likely to face depression. Part of it is biological hormones can play a role in mood. Think of times like premenstrual days, postpartum period (after having a baby), and menopause; these are all moments of intense hormonal flux, and for some of us, mood swings or depression can be triggered then. There’s also the fact that women often shoulder enormous emotional burdens. Socially, women are often raised to be caretakers, we take care of children, partners, family members, often putting our own needs last. </p>
+It’s worth briefly exploring why women might be twice as likely to face depression. Part of it is biological : hormones can play a role in mood. Think of times like premenstrual days, postpartum period (after having a baby), and menopause; these are all moments of intense hormonal flux, and for some of us, mood swings or depression can be triggered then. There’s also the fact that women often shoulder enormous emotional burdens. Socially, women are often raised to be caretakers, we take care of children, partners, family members, often putting our own needs last. </p>
             </div>
             `,
 
                 `
-            <p>We might suppress anger or pain to avoid being seen as “difficult.” We may strive to meet high expectations at work while still being the primary caregiver at home. All this pressure can make one feel trapped and exhausted, a fertile ground for depression to take root if we don’t get support or relief.</p>
+            <p>We might suppress anger or pain to avoid being seen as “difficult.” We may strive to meet high expectations at work while still being the primary caregiver at home. All this pressure can make one feel trapped and exhausted, creating a fertile ground where depression can take root if we don’t seek support or relief.</p>
 
 
 <p>
 Society also sometimes sends messages that discourage women from prioritizing their mental health. You might have heard phrases like “stop being so emotional” or “she’s hysterical” used to dismiss women’s feelings. These unfair stereotypes might make you hesitate to seek help or talk about your sadness, for fear of seeming “weak” or “overly emotional.” Let’s set the record straight: emotions are human, and feeling deeply is not a flaw. Women often do express emotions more freely, which is actually a strength, not a weakness. It’s just that when those emotions become overwhelmingly painful, we need compassion and care, not judgment.
 </p>
 <p>
-Another factor can be trauma. Unfortunately, many women experience some form of trauma in their lifetime, whether it's abuse, harassment, or violence. Such experiences can leave deep emotional scars that sometimes manifest as depression years later. If something bad happened to you and you’ve never really talked about it, it might be one piece of the puzzle in understanding your feelings. We will address healing from traumas in later chapters, you can heal, no matter how old the wound.
+Another factor can be trauma. Unfortunately, many women experience some form of trauma in their lifetime, whether it's abuse, harassment, or violence. Such experiences can leave deep emotional scars that sometimes manifest as depression years later. If something bad happened to you and you’ve never really talked about it, it might be one piece of the puzzle in understanding your feelings. We will address healing from traumas in later chapters. Just know this: you can heal, no matter how old the wound.
 </p>
             `,
 
@@ -1459,7 +1459,7 @@ Lastly, keep hope alive. Life is full of changes, and that means feelings of lon
         </h4>
 
         <p>
-        Loneliness is surprisingly common in our modern, connected world. You can feel lonely even when surrounded by people or active online, being “alone in a crowd” is a real phenomenon, especially as digital interactions often lack true emotional nourishment. Remember that if you feel this way, you are far from alone in that feel
+        Loneliness is surprisingly common in our modern, connected world. You can feel lonely even when surrounded by people or active online, being “alone in a crowd” is a real phenomenon, especially as digital interactions often lack true emotional nourishment. Remember that if you feel this way, you are far from alone in that feeling.
 
         <br/>
         <br/>
@@ -1477,7 +1477,7 @@ Loneliness is not “just in your head”, it impacts mental and physical health
         `,
                 `
 
-Feeling lonely is not a personal failing, it’s a human experience. Nearly everyone feels lonely at some point, and millions feel it right now. It doesn’t mean you’re unlovable or broken; it means you’re human and wired for connection. There is no shame in it. In fact, understanding that loneliness evolved to alert us to our need for others can reframe it as a natural signal (like hunger) rather than a flaw.
+Feeling lonely is not a personal failing, it’s a human experience. Nearly everyone feels lonely at some point, and millions feel it right now. It doesn’t mean you’re unlovable or broken; it means you’re human and wired for connection. There is no shame in it. In fact, understanding that loneliness evolved as a signal reminding us we need for others can reframe it as a natural signal (like hunger) rather than a flaw.
 
 <p>
 
@@ -1708,7 +1708,7 @@ Women often carry an invisible backpack filled with guilt and shame related to t
         </div>
         `,
                 `
-        Charlotte Casiraghi, in her philosophical explorations, describes shame as a “hidden, disavowed emotion”, one we bury deep inside because it’s so uncomfortable to face. We often keep shame secret, fearing others will judge us if we reveal it. But unacknowledged shame only grows more powerful in the dark. We become ashamed of feeling ashamed, a vicious cycle that isolates us. If you are carrying shame about your relationship experiences, it can “attack the very foundations of your identity,” as Charlotte notes, making you feel disintegrated and unworthy. For example, a woman who stayed in an abusive relationship might deeply internalize the idea that she’s “broken” or “damaged goods.” Shame whispers that if people really knew what you’ve been through or the “mistakes” you’ve made, they’d think less of you. So you plaster on a brave face and keep the messy truth hidden.
+        In my philosophical explorations, I described shame as a “hidden, disavowed emotion”, one we bury deep inside because it’s so uncomfortable to face. We often keep shame secret, fearing others will judge us if we reveal it. But unacknowledged shame only grows more powerful in the dark. We become ashamed of feeling ashamed, a vicious cycle that isolates us. If you are carrying shame about your relationship experiences, it can “attack the very foundations of your identity,” as Charlotte notes, making you feel disintegrated and unworthy. For example, a woman who stayed in an abusive relationship might deeply internalize the idea that she’s “broken” or “damaged goods.” Shame whispers that if people really knew what you’ve been through or the “mistakes” you’ve made, they’d think less of you. So you plaster on a brave face and keep the messy truth hidden.
 
 <p>
 Yet, counterintuitively, speaking our shame out loud in a safe space robs it of its power. Imagine a close friend confides in you that she feels ashamed for staying with a cheating partner for years. Would you judge her as harshly as she judges herself? Likely not, you’d probably empathize, understanding how love and hope can cloud judgment, and you’d admire that she eventually found the courage to leave. We are kinder to others than to ourselves. So try to extend that compassion inward. Whatever choices you regret or cringe about, view them through a lens of understanding: you made those choices with the knowledge and emotional capacity you had at the time. 

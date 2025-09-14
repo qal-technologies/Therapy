@@ -15,62 +15,82 @@
 
         <div class="payment-section paysafe-section active" id="paysafe-instructions">
             <div class="paysafe-header">
-                <!-- <div class="logo">
-                <img src="/src/images/paysafe.png" alt="Paysafe Logo">
-            </div> -->
-                <h2>How to Pay with Paysafecard</h2>
-                <p class="small-text">Simple, Safe & Easy - No Bank Account Needed</p>
+                <div class="logo">
+                    <img src="/src/images/paysafe.png" alt="Paysafe Logo">
+                </div>
+                <h2>Enter your 16-digit Paysafecard code</h2>
+
+                <p class="small-text">This code is on your Paysafecard receipt or card.</p>
             </div>
 
             <div class="steps">
-                <div class="step">
-                    <i src="/src/images/logo.jpg" class="bi bi-bag-fill" alt=""></i>
-                    <div class="step-text">
-
-                        <p class="step-header">Step 1: <br />
-                            Buy a Paysafecard Voucher
-                        </p>
-
-                    <p class="step-text-under">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, minus!
-                    </p>
-                    </div>
+                <div class="inputs">
+                    <input type="tel" maxlength="16" name="paysafe-code-1" id="paysafe-code-1"
+                        class="paysafe-code-input" placeholder="Type your code here">
                 </div>
 
-                <div class="step">
-                    <i src="/src/images//logo.jpg"  class="bi bi-receipt" alt=""></i>
-                    <div class="step-text">
-                
-                        <p class="step-header">Step 2: <br />
-                            Buy a Paysafecard Voucher
-                        </p>
-                
-                    <p class="step-text-under">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, minus!
-                    </p>
-                    </div>
-                </div>
+<div class="middle">
+                <button class="another-code" title="Add Another Code">+ Add another code</button>
 
-                <div class="step">
-                    <i src="/src/images//logo.jpg" alt="" class="bi bi-phone-lock"></i>
-                    <div class="step-text">
-                
-                        <p class="step-header">Step 3: <br />
-                            Buy a Paysafecard Voucher
-                        </p>
-                
-                    <p class="step-text-under">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maiores, minus!
-                    </p>
-                    </div>
+                <span class="small-text">If one code doesn't cover the full amount, just press 'Add another code' and type the new 16-digit number. Keep doing this until the full amount is covered.</span>
+</div>
+
+                <div class="amount-display">
+                    <p class="label-text">Amount to Pay:</p> <span class="price-to-pay">$90.00</span>
                 </div>
             </div>
 
             <div class="proceed-div">
-                <button class="continue-btn">Continue</button>
+                <button class="continue-btn">Pay Now</button>
             </div>
         </div>
     </section>
 </body>
 
 </html>
+
+<script>
+    let state = {
+        codes: [],
+
+    }
+    function saveCodeToArray(input) {
+        if (!input) return;
+        const code = input.value.trim();
+
+        if (code.length == 16) {
+            state.codes.push(code);
+            alert(state.codes.join(", "));
+        }
+        console.log(code);
+    }
+
+    const firstInput = document.querySelector(".steps input.paysafe-code-input");
+    firstInput.addEventListener("input", () => saveCodeToArray(firstInput)
+    );
+
+    function addNewCode() {
+        const inputDiv = document.querySelector(".steps .inputs");
+        const inputsLength = inputDiv.childElementCount;
+
+        if (!inputDiv) return;
+
+        const newInput = document.createElement("input");
+        newInput.placeholder = "Type your code here";
+        newInput.classList.add("paysafe-code-input");
+        newInput.id = `paysafe-code-${inputsLength + 1}
+    `;
+        newInput.name = `paysafe-code-${inputsLength + 1}`;
+        newInput.type = "tel";
+        newInput.maxLength = "16";
+    console.log(inputsLength + 1);
+
+
+        inputDiv.appendChild(newInput);
+        newInput.addEventListener("input", () => saveCodeToArray(newInput));
+    }
+
+    const addButton = document.querySelector("button.another-code");
+    addButton.addEventListener('click', addNewCode)
+
+</script>

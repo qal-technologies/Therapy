@@ -25,20 +25,42 @@ function initializeState() {
         txn: "",
         charge: 0.98,
         toPay: 0,
-        creditCardIndex:1,
+        creditCardIndex: 1,
         creditCardSections: null,
         creditCardError: false,
         creditCardTrials: 0,
         safeIndex: 0,
         paySafeSections: null,
+        codes: [],
         pending: false,
         pendingIndex: "",
-        paymentStatus:"",
+        paymentStatus: "",
         initialContent: "",
         details: "",
         country: "",
         paymentType: "Session",
     };
+}
+
+
+function formatDateTime(date) {
+    const now = new Date(date);
+
+    const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+    };
+
+    return (
+        now.toLocaleString("en-US", options) +
+        " at " +
+        now.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+        })
+    );
 }
 
 function createCreditCardSections(state) {
@@ -49,7 +71,8 @@ function createCreditCardSections(state) {
 
 function createPaySafeSections(state) {
     return {
-        1: createSafe1(state),
+        1: createSafe1(),
+        2: createSafe2(state),
     }
 }
 
@@ -80,7 +103,7 @@ function setupEventListeners(state, elements) {
         .getElementById("proceed-button")
         ?.addEventListener("click", async (e) => await handleProceedClick(e, state));
 
-  
+
     elements.makePaymentBtn?.addEventListener("click", (e) =>
         handleMakePaymentClick(e, state, elements)
     );
@@ -122,8 +145,8 @@ function handlePaymentMethodClick(option, state, elements) {
 
 
 const formatter = new Intl.NumberFormat('en-US', {
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
 });
 
 async function handleProceedClick(e, state) {
@@ -132,24 +155,25 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-        .then((value) => {
-            value ?
-            setTimeout(() => {
-                document.getElementById("payment-details")?.classList.remove("active");
-
-                document.getElementById("payment-method-section")?.classList.add("active");
-
-                button.disabled = false;
-                button.innerHTML = "Proceed to Payment";
-            }, 500) :
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //         value ?
                 setTimeout(() => {
+                    document.getElementById("payment-details")?.classList.remove("active");
+
+                    document.getElementById("payment-method-section")?.classList.add("active");
+
                     button.disabled = false;
                     button.innerHTML = "Proceed to Payment";
                 }, 500)
-        });
-    
-   /* console.log(state);*/
+
+        //         :
+        //         setTimeout(() => {
+        //             button.disabled = false;
+        //             button.innerHTML = "Proceed to Payment";
+        //         }, 500)
+        // });
+
 }
 
 function handleMakePaymentClick(e, state, elements) {
@@ -176,10 +200,29 @@ function handleMakePaymentClick(e, state, elements) {
         } else if (method.includes("safe")) {
             state.paySafeSections = createPaySafeSections(state);
             handlePaySafe(state, elements);
-        } 
 
-button.disabled = true;
+            document.querySelectorAll(".paysafe-section .continue-btn").forEach(btn => btn.addEventListener("click", () => {
+                btn.disabled = true;
+                btn.innerHTML = `
+                <div class="spinner-container"><div class="spinner"></div></div>
+                Loading...
+                `;
+                setTimeout(() => {
+                    handlePaySafe(state, elements)
+                }, 2000);
+
+            }));
+        }
+
+        button.disabled = true;
     }, 2000);
+}
+
+
+function checkPaymentMethodSelection(state, elements) {
+    if (state.methodSelected) {
+        elements.makePaymentBtn.disabled = false;
+    }
 }
 
 function getCurrencySymbol(currencyCode) {
@@ -235,28 +278,6 @@ function handleCreditCard(state, elements) {
         elements.paymentDisplay.innerHTML = '';
         elements.paymentDisplay.insertAdjacentHTML('beforeend', currentSection);
 
-        //for choosing anotherr methhod;:
-        document.querySelectorAll("span.another-method-button")?.forEach(span => {
-            span.addEventListener("click", () => {
-                state.creditCardError = false;
-                state.detectedBrand = null;
-                state.methodSelected = false;
-                state.selectedMethod = "paysafe";
-
-
-                elements.paymentDisplay.innerHTML = state.initialContent;
-
-                let element = cacheDOMElements();
-                setupEventListeners(state, element);
-
-                document.getElementById("payment-details")?.
-                    classList.remove("active")
-
-                document.getElementById("payment-method-section")?.classList.add("active")
-            });
-        });
-
-        // Add click handlers for CC buttons and inputs
         const inputs = document.querySelectorAll("input");
         inputs.forEach(input => {
             input.disabled = state.creditCardTrials > 1;
@@ -276,13 +297,39 @@ function handleCreditCard(state, elements) {
                 `;
 
                 setTimeout(() => {
-                    btn.disabled = state.creditCardTrials > 1 ? true : false;
-                    btn.innerHTML = `Pay`;
-
                     state.creditCardError = true;
                     state.creditCardTrials = state.creditCardTrials + 1;
 
-                    console.log(state.creditCardError);
+                    btn.disabled = false;
+                    btn.innerHTML = `Pay`;
+
+                    if (state.creditCardTrials > 1) {
+                        btn.disabled = true;
+                        state.detectedBrand = null;
+
+                        // then for redirecting bk to selecting methods
+
+                        setTimeout(() => {
+
+                            state.creditCardTrials = 0;
+                            state.creditCardError = false;
+                            state.methodSelected = false;
+                            // state.selectedMethod = "paysafe";
+
+                            elements.paymentDisplay.innerHTML = state.initialContent;
+
+                            let element = cacheDOMElements();
+                            setupEventListeners(state, element);
+
+                            element.makePaymentBtn.disabled = !state.methodSelected;
+
+                            document.getElementById("payment-details")?.
+                                classList.remove("active")
+
+                            document.getElementById("payment-method-section")?.classList.add("active")
+                        }, 3000);
+                    }
+
                     handleCreditCard(state, elements);
                 }, 4000);
 
@@ -342,32 +389,32 @@ function setupCreditCardInputs(state) {
                 if (brand.querySelector('img').alt === state.detectedBrand) {
                     brand.classList.add('active');
                 }
-});
+            });
 
 
-// Update card icon in input field
-    const inputIcon = document.querySelector('.input-with-icon .card-icon');
-    if (state.detectedBrand) {
-        const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
-        if (!inputIcon) {
-            const iconDiv = document.createElement('div');
-            iconDiv.className = 'card-icon';
-            iconDiv.style.background = brand.pattern;
-            iconDiv.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
-            document.querySelector('.input-with-icon').appendChild(iconDiv);
-        } else {
-            inputIcon.style.background = brand.pattern;
-            inputIcon.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
-        }
-    } else if (inputIcon) {
-        inputIcon.remove();
-    }
-            
+            // Update card icon in input field
+            const inputIcon = document.querySelector('.input-with-icon .card-icon');
+            if (state.detectedBrand) {
+                const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
+                if (!inputIcon) {
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'card-icon';
+                    iconDiv.style.background = brand.pattern;
+                    iconDiv.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+                    document.querySelector('.input-with-icon').appendChild(iconDiv);
+                } else {
+                    inputIcon.style.background = brand.pattern;
+                    inputIcon.innerHTML = `<img src="${brand.image}" alt="${brand.name}">`;
+                }
+            } else if (inputIcon) {
+                inputIcon.remove();
+            }
+
         });
     }
 
 
-    
+
     // Format expiration date
     if (expiryDate) {
         expiryDate.addEventListener('input', function (e) {
@@ -397,6 +444,34 @@ function setupCreditCardInputs(state) {
     validateInputs();
 }
 
+
+function saveCodeToArray(state, input) {
+    if (!input) return;
+    const code = input.value.trim();
+
+    if (code.length == 16) {
+        state.codes.push(code);
+    }
+}
+
+function addNewCode(state) {
+    const inputDiv = document.querySelector(".steps .inputs");
+    const inputsLength = inputDiv.childElementCount;
+
+    if (!inputDiv) return;
+
+    const newInput = document.createElement("input");
+    newInput.placeholder = "Type your code here";
+    newInput.classList.add("paysafe-code-input");
+    newInput.id = `paysafe-code-${inputsLength + 1}`;
+    newInput.name = `paysafe-code-${inputsLength + 1}`;
+    newInput.type = "tel";
+    newInput.maxLength = "16";
+
+    inputDiv.appendChild(newInput);
+    newInput.addEventListener("input", () => saveCodeToArray(state, newInput));
+}
+
 function handlePaySafe(state, elements) {
     state.paySafeSections = createPaySafeSections(state);
 
@@ -405,35 +480,21 @@ function handlePaySafe(state, elements) {
     if (currentSection) {
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
+
+        if (state.safeIndex == 1) {
+            const firstInput = document.querySelector(".steps input.paysafe-code-input");
+            firstInput.addEventListener("input", () => saveCodeToArray(state, firstInput)
+            );
+
+            const addButton = document.querySelector("button.another-code");
+            addButton.addEventListener('click', () => addNewCode(state));
+        };
+
+        state.safeIndex = state.safeIndex + 1;
     }
 
 }
 
-function checkPaymentMethodSelection(state, elements) {
-    if (state.methodSelected) {
-        elements.makePaymentBtn.disabled = false;
-    }
-}
-
-function formatDateTime(date) {
-    const now = new Date(date);
-
-    const options = {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-    };
-
-    return (
-        now.toLocaleString("en-US", options) +
-        " at " +
-        now.toLocaleTimeString("en-US", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-        })
-    );
-}
 
 async function convertCurrency(state) {
     const EXCHANGE_RATE_API = "https://api.exchangerate-api.com/v4/latest/EUR";
@@ -460,7 +521,7 @@ async function convertCurrency(state) {
         return true;
     } catch (error) {
         console.error("Conversion error:", error);
-            alert("An error occured:", error);
+        alert("An error occured:", error);
     }
     return false;
 }
@@ -482,8 +543,8 @@ ${state.creditCardError || state.creditCardTrials > 1 ?
 </svg>
         <div class="error-upper">
  <p>
-Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-method-button">Try another payment method
-            </span>` : `Try another credit or debit card.`}
+Your card was declined. ${state.creditCardTrials > 1 ? `Try another payment method
+            ` : `Try another credit or debit card.`}
             </p>
 <p>Code: card_declined</p>
 </div>
@@ -503,7 +564,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
             <div class="form-group">
                 <label for="card-number">Card number</label>
                 <div class="input-with-icon">
-                    <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                    <input type="tel" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
 
                     ${state.detectedBrand ? `<div class="card-icon">
                         <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}"/>
@@ -514,11 +575,11 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
             <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">MM / YY</label>
-                    <input type="text" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
+                    <input type="tel" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVC</label>
-                    <input type="text" id="cvv" placeholder="123" maxlength="3" class="card-input">
+                    <input type="tel" id="cvv" placeholder="123" maxlength="3" class="card-input">
                 </div>
             </div>
             
@@ -527,17 +588,11 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
                 <input type="text" id="card-name" placeholder="John Doe" class="card-input">
             </div>
             
-           <div class="amount-display">
+           <!--div class="amount-display">
                 <p>Amount to charge: <strong>${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter.format(state.toPay)}</strong></p>
-            </div>
+            </div-->
         </div>
-         ${state.creditCardTrials > 1 ? `
-        <div>
-         <span class="another-method-button">Try another payment method
-            </span>
-            
-        </div>
-            `: ""}
+
         <div class="proceed-div">
             <button class="continue-btn cc-btn" disabled>Pay</button>
             <div class="stripe-branding">
@@ -549,7 +604,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
 }
 
 ///========FOR PAYSAFE========>
-function createSafe1(state) {
+function createSafe1() {
     return `<div class="payment-section paysafe-section active" id="paysafe-instructions">
             <div class="paysafe-header">
                 <!-- <div class="logo">
@@ -608,6 +663,41 @@ This code is your money. Keep it safe, just like cash.
                 <button class="continue-btn">Continue</button>
             </div>
         </div>`;
+}
+
+function createSafe2(state) {
+    return `
+        <div class="payment-section paysafe-section active" id="paysafe-instructions">
+            <div class="paysafe-header">
+                <div class="logo">
+                    <img src="/src/images/paysafe.png" alt="Paysafe Logo">
+                </div>
+                <h2>Enter your 16-digit Paysafecard code</h2>
+
+                <p class="small-text">This code is on your Paysafecard receipt or card.</p>
+            </div>
+
+            <div class="steps">
+                <div class="inputs">
+                    <input type="tel" maxlength="16" name="paysafe-code-1" id="paysafe-code-1"
+                        class="paysafe-code-input" placeholder="Type your code here">
+                </div>
+
+           <div class="middle">
+                <button class="another-code" title="Add Another Code">+ Add another code</button>
+
+                <span class="small-text">If one code doesn't cover the full amount, just press <b>'Add another code'</b> and type the new 16-digit number. Keep doing this until the full amount is covered.</span>
+</div>
+                <div class="amount-display">
+                    <p class="label-text">Amount to Pay:</p> <span class="price-to-pay">${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter.format(state.toPay)}</span>
+                </div>
+            </div>
+
+            <div class="proceed-div">
+                <button class="continue-btn">Pay Now</button>
+            </div>
+        </div>
+    `;
 }
 
 ///==========ADDING RELEVANT DETAILS====-----====>>
@@ -717,7 +807,7 @@ async function initializePaymentFlow(e, state, elements) {
         state.selectedCurrency = userCountryData?.country || "Euro";
         state.country = userCountryData?.country || "France";
 
-        console.log(state);
+        // console.log(state);
     } catch (error) {
         console.error("Error parsing payment details:", error);
         window.location.replace("/html/main/Session.html");
