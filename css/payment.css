@@ -409,8 +409,8 @@ button.continue-btn:disabled {
 
 
 .payment-icons img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 }
 
 .payment-icon.paysafe {
@@ -1207,7 +1207,7 @@ span.another-method-button {
 .card-brand.active {
     opacity: 1;
     transform: translateY(-3px);
-    box-shadow: 1px 2px 10px var(--accentTrans);
+    box-shadow: 1px 2px 10px var(--accent);
 border:1px solid var(--link);
 }
 
