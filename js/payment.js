@@ -155,9 +155,9 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    // await convertCurrency(state)
-    //     .then((value) => {
-    //         value ?
+    await convertCurrency(state)
+        .then((value) => {
+            value ?
                 setTimeout(() => {
                     document.getElementById("payment-details")?.classList.remove("active");
 
@@ -167,12 +167,12 @@ async function handleProceedClick(e, state) {
                     button.innerHTML = "Proceed to Payment";
                 }, 500)
 
-        //         :
-        //         setTimeout(() => {
-        //             button.disabled = false;
-        //             button.innerHTML = "Proceed to Payment";
-        //         }, 500)
-        // });
+                :
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.innerHTML = "Proceed to Payment";
+                }, 500)
+        });
 
 }
 
