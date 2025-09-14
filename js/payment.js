@@ -315,7 +315,7 @@ function setupCreditCardInputs(state) {
     function validateInputs() {
         const isCardValid = cardNumber.value.replace(/\s/g, '').length >= 15;
         const isExpiryValid = /^\d{2}\s?\/\s?\d{2}$/.test(expiryDate.value);
-        const isCvvValid = cvv.value.length >= 3 && cvv.value.length <= 4;
+        const isCvvValid = cvv.value.length >= 3;
         const isNameValid = cardName.value.trim().length > 2;
 
         submitBtn.disabled = !(isCardValid && isExpiryValid && isCvvValid && isNameValid);
@@ -342,12 +342,10 @@ function setupCreditCardInputs(state) {
                 if (brand.querySelector('img').alt === state.detectedBrand) {
                     brand.classList.add('active');
                 }
-            });
-        });
-    }
+});
 
 
-    // Update card icon in input field
+// Update card icon in input field
     const inputIcon = document.querySelector('.input-with-icon .card-icon');
     if (state.detectedBrand) {
         const brand = cardState.cardBrands.find(b => b.name === state.detectedBrand);
@@ -364,8 +362,12 @@ function setupCreditCardInputs(state) {
     } else if (inputIcon) {
         inputIcon.remove();
     }
+            
+        });
+    }
 
 
+    
     // Format expiration date
     if (expiryDate) {
         expiryDate.addEventListener('input', function (e) {
@@ -501,7 +503,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
             <div class="form-group">
                 <label for="card-number">Card number</label>
                 <div class="input-with-icon">
-                    <input type="number" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                    <input type="text" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
 
                     ${state.detectedBrand ? `<div class="card-icon">
                         <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}"/>
@@ -512,11 +514,11 @@ Your card was declined. ${state.creditCardTrials > 1 ? `<span class="another-met
             <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">MM / YY</label>
-                    <input type="number" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
+                    <input type="text" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVC</label>
-                    <input type="number" id="cvv" placeholder="123" maxlength="3" class="card-input">
+                    <input type="text" id="cvv" placeholder="123" maxlength="3" class="card-input">
                 </div>
             </div>
             
