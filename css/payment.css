@@ -1940,9 +1940,9 @@ ul.instructions.redeem li {
 }
 
 .steps .step img, .steps .step i {
-    width: 120px;
-    height: 120px;
-    font-size: 120px;
+    width: 80px;
+    height: 80px;
+    font-size: 80px;
 }
 
 .steps .step .step-text {
