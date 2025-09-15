@@ -1,3 +1,5 @@
+import handleAlert from '/js/general.js';
+
 document.addEventListener("DOMContentLoaded", async (e) => {
     // Initialize state and DOM elements
     const state = initializeState();
@@ -495,6 +497,9 @@ function handlePaySafe(state, elements) {
 
 }
 
+function handleSafeAlert(state) {
+    handleAlert(`this is the amount ${state.amount}`, "blur", true, "Testing", true, ["Close", "Opening"]);
+}
 
 async function convertCurrency(state) {
     const EXCHANGE_RATE_API = "https://api.exchangerate-api.com/v4/latest/EUR";
@@ -816,7 +821,7 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Initialize buttons
     elements.makePaymentBtn.disabled = true;
-
+    // handleSafeAlert(state);
     // Initialize checks
     checkPaymentMethodSelection(state, elements);
 }

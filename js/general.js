@@ -152,14 +152,13 @@ window.onresize = () => {
 };
 
 let timer;
-function handleAlert(message, type = "blur" | "toast", titled = false, titleText = "", closing = false, closingText = "") {
-    console.log("stage!");
-
+function handleAlert(message, type = "blur" | "toast", titled = false, titleText = "", closing = false, closingText = [], arrange = "row", closeFunction = () => { }) {
     const parent = document.querySelector(".alert-message");
     const div = document.querySelector(".alert-message .alert-div");
     const title = document.querySelector(".alert-title");
     const text = document.querySelector(".alert-message .alert-text");
     const close = document.querySelector(".alert-message .alert-button");
+
     if (!parent) return;
 
     if (parent.classList.contains("fadeOut")) {
@@ -167,61 +166,206 @@ function handleAlert(message, type = "blur" | "toast", titled = false, titleText
         div.classList?.remove("zoom-out");
     }
 
-    console.log("passed!");
-
     parent.style.display = "flex";
-    if (type == "toast") {
-        parent.classList.add("shop");
 
+    //for closing the alert
+    function closeAlert() {
+        clearTimeout(timer);
+
+        const adding = div.classList.add("zoom-out");
+
+        text.innerHTML = "";
+        parent.classList.add("fadeOut");
+
+        timer = adding && setTimeout(() => {
+            parent.style.display = "none";
+        }, 1000);
+    }
+
+    //for fading out alert:
+    function fadeAlert() {
         setTimeout(() => {
             parent.classList.add("fadeOut");
 
-            text.textContent = "";
+            text ? text.textContent = "" : "";
             parent.style.display = "none";
         }, 4000);
     }
 
-    if (titled && titleText.length >= 1) {
-        if (!title) {
+    // if this is toast:
+    if (type == "toast") {
+        parent.classList.add("shop");
 
-            const newTitle = document.createElement("p").classList.add("alert-title");
+        if (text) {
+            text.innerHTML = message;
+        }
+        if (!text && message) {
+            const newMessage = document.createElement("p");
+            newMessage.classList.add("alert-text", "moveUp");
+            newMessage.innerHTML = message;
 
-            parent.insertAdjacentElement("beforebegin", newTitle);
-
+            parent.append(newMessage)
         }
 
-        title.innerHTML = titleText;
+        fadeAlert();
+    } else {
+        // if not a toast and needs a blur background 
+        //creating new div if it doesn't exist:
+        if (!div) {
+            parent.innerHTML = ``;
+
+            const newDiv = document.createElement("div");
+            newDiv.classList.add("alert-div", "zoom-in");
+            console.log(newDiv);
+
+            //for title:
+            if (titled) {
+                const newTitle = document.createElement("p");
+                newTitle.classList.add("alert-title");
+                newTitle.innerText = titleText.length >= 1 ? titleText : "Title";
+
+                newDiv.insertAdjacentElement("beforebegin", newTitle);
+            }
+
+            //for message and text inputs:
+            if (message) {
+                const newMessage = document.createElement("p");
+                newMessage.classList.add("alert-text", "moveUp");
+                newMessage.innerHTML = message.length >= 1 ? message : "Message";
+
+                newDiv.insertAdjacentElement("afterbegin", newMessage);
+            }
+
+            //for fading out alert if the closing is not specified:
+            if (!closing) {
+                fadeAlert();
+            }
+
+            //for checking fir close button:
+            if (closing) {
+                if (closingText.length > 1) {
+                    const buttons = arrange == "row" ? closingText.slice(0, 1) : closingText;
+
+                    const buttonParent = document.createElement("div");
+                    buttonParent.classList.add("button-parents");
+                    buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
+
+                    buttonParent.innerHTML = buttons.map(text => {
+                        const newBtn = document.createElement("button")
+                        newBtn.classList.add("alert-button");
+
+                        newBtn.innerHTML = text;
+                        newBtn.addEventListener("click", closeAlert);
+                    });
+
+                    newDiv.insertAdjacentElement("afterend", buttonParent);
+                } else {
+
+                    const newBtn = document.createElement("button")
+                    newBtn.classList.add("alert-button");
+                    newBtn.innerHTML = closingText;
+                    newBtn.addEventListener("click", closeAlert);
+
+                    newDiv.insertAdjacentElement("afterend", newBtn);
+                }
+            }
+
+            parent.appendChild(newDiv);
+            console.log(newDiv);
+
+        } else {
+            // this is if the div already exists:
+            // -------
+            //for title:
+            if (!title) {
+                const newTitle = document.createElement("p")
+                newTitle.classList.add("alert-title");
+                newTitle.innerHTML = titleText.length >= 1 ? titleText : "Title";
+
+                parent.insertAdjacentElement("beforebegin", newTitle);
+            } else if (title) {
+                title.innerHTML = titleText.length >= 1 ? titleText : "Title";
+            }
+
+            //for message and text inputs:
+            if (!text && message) {
+                const newMessage = document.createElement("p");
+                newMessage.classList.add("alert-text", "moveUp");
+                newMessage.innerHTML = message.length >= 1 ? message : "Message";
+
+                parent.insertAdjacentElement("afterbegin", newMessage);
+            } else if (text) {
+                text.innerHTML = message.length >= 1 ? closingText.length : "Message";
+            }
+
+            //for fading out alert if the closing is not specified:
+            if (!closing) {
+                fadeAlert();
+            }
+
+            //for checking fir close button:
+            if (!close && closing) {
+                if (closingText.length > 1) {
+                    const buttons = arrange == "row" ? closingText.slice(0, 1) : closingText;
+
+                    const buttonParent = document.createElement("div");
+                    buttonParent.classList.add("button-parents");
+                    buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
+
+                    buttonParent.innerHTML = buttons.map(text => {
+                        const newBtn = document.createElement("button")
+                        newBtn.classList.add("alert-button");
+
+                        newBtn.innerHTML = text;
+                        newBtn.addEventListener("click", closeAlert);
+                    });
+
+
+                    parent.insertAdjacentElement("afterend", buttonParent);
+                } else {
+
+                    const newBtn = document.createElement("button")
+                    newBtn.classList.add("alert-button");
+                    newBtn.innerHTML = closingText;
+                    newBtn.addEventListener("click", closeAlert);
+
+                    parent.insertAdjacentElement("afterend", newBtn);
+                }
+            } else if (closing && closingText && close) {
+
+                if (closingText.length > 1) {
+                    const buttons = arrange == "row" ? closingText.slice(0, 1) : closingText;
+                    close.remove();
+
+                    const buttonParent = document.createElement("div");
+                    buttonParent.classList.add("button-parents");
+                    buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
+
+                    const allArray = buttons.map(text => {
+                        const newBtn = document.createElement("button")
+                        newBtn.classList.add("alert-button");
+
+                        newBtn.innerHTML = text;
+                        newBtn.addEventListener("click", closeAlert);
+
+                        buttonParent.appendChild(newBtn);
+                    });
+
+                    console.log(buttonParent);
+                    div.appendChild(buttonParent);
+                } else {
+
+
+                    close.innerHTML = closingText.length >= 1 ? closingText[0] : "Close";
+                    close.addEventListener("click", closeAlert)
+
+                }
+            }
+
+        }
     }
 
-    if (text) {
-        text.innerHTML = message;
-    }
-
-    console.log("passed!!");
-
-    if (!close && closing) {
-
-            const newTitle = document.createElement("p").classList.add("alert-title");
-
-            parent.insertAdjacentElement("beforebegin", newTitle);
-    }
-    
-    if (closing && closingText.length >= 1 && close) {
-            close.addEventListener("click", () => {
-                clearTimeout(timer);
-
-                const adding = div.classList.add("zoom-out");
-
-                text.innerHTML = "";
-                parent.classList.add("fadeOut");
-
-                timer = adding && setTimeout(() => {
-                    parent.style.display = "none";
-                }, 1000);
-            })
-        
-    }
 
 }
 
- export default handleAlert;
+export default handleAlert;

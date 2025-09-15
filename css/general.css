@@ -336,25 +336,26 @@ span.bold {
 }
 
 .spinner-container {
-  width: max-content;
-  height: max-content;
-  display: grid;
-  place-content: center;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
   background: var(--accentTrans);
   border-radius: 100%;
-  padding: 2px;
   align-self: flex-start;
+  margin-right: 4px;
 }
 
 .spinner {
-  width: 20px;
-  height: 20px;
-  border: 5px solid transparent;
-  border-left: 2px dotted var(--link);
-  border-top: 2px dotted var(--link);
+  width: 25px;
+  height: 25px;
+  align-self: center;
+  border: 4px solid transparent;
+  border-left: 4px dotted var(--link);
+  border-top: 4px dotted var(--link);
   border-radius: 50%;
   animation: spin 600ms linear 100ms infinite alternate forwards;
-  margin-right: 4px;
   animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -607,6 +608,15 @@ section#newsletter {
   min-height: 10px;
 }
 
+.alert-message .button-parents{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
 .alert-message .alert-button {
   width: 100%;
   background-color: var(--link);
@@ -639,7 +649,7 @@ section#newsletter {
   backdrop-filter: none;
 }
 
-.alert-message.shop .alert-div{
+.alert-message.shop .alert-div {
   background: transparent;
 }
 
@@ -650,6 +660,7 @@ section#newsletter {
   padding: 8px;
   padding-inline: 18px;
   background-color: rgba(0, 0, 0, 0.8);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   color: white;
   border-radius: 18px;

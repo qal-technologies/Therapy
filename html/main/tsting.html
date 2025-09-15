@@ -29,11 +29,12 @@
                         class="paysafe-code-input" placeholder="Type your code here">
                 </div>
 
-<div class="middle">
-                <button class="another-code" title="Add Another Code">+ Add another code</button>
+                <div class="middle">
+                    <button class="another-code" title="Add Another Code">+ Add another code</button>
 
-                <span class="small-text">If one code doesn't cover the full amount, just press 'Add another code' and type the new 16-digit number. Keep doing this until the full amount is covered.</span>
-</div>
+                    <span class="small-text">If one code doesn't cover the full amount, just press 'Add another code'
+                        and type the new 16-digit number. Keep doing this until the full amount is covered.</span>
+                </div>
 
                 <div class="amount-display">
                     <p class="label-text">Amount to Pay:</p> <span class="price-to-pay">$90.00</span>
@@ -83,7 +84,7 @@
         newInput.name = `paysafe-code-${inputsLength + 1}`;
         newInput.type = "tel";
         newInput.maxLength = "16";
-    console.log(inputsLength + 1);
+        console.log(inputsLength + 1);
 
 
         inputDiv.appendChild(newInput);
