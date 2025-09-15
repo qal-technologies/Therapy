@@ -103,45 +103,38 @@ function removeDetailsModal() {
   };
 }
 
+
 function showDetailsModal(e) {
-  const modal = document.querySelector("#details-div");
-  const cartCount = document.querySelector(".details-top span.cart-count");
+    const modal = document.querySelector("#details-div");
+    const cartCount = document.querySelector(".details-top span.cart-count");
 
-  const contains = modal.classList.contains("fadeOut");
-  contains && modal.classList.remove("fadeOut");
+    const contains = modal.classList.contains("fadeOut");
+    contains && modal.classList.remove("fadeOut");
 
-  const bookId = e.target.closest(".sub-preview").dataset.id;
-  const book = BOOK_COLLECTION.find(b => b.id == bookId);
+    const bookId = e.target.closest(".sub-preview").dataset.id;
+    const book = BOOK_COLLECTION.find(b => b.id == bookId);
 
-  modal.style.display = "block";
-  renderBookCollection(book);
+    modal.style.display = "block";
+    renderBookCollection(book);
 
-//for auto scroll cart:
-const addToCartElements = document.querySelectorAll('.add-to-cart');
-    
-    // Loop through each element found
-    addToCartElements.forEach(element => {
-        // Get the parent element
-        const parent = element.parentElement;
+    // Auto scroll to add-to-cart elements using scrollIntoView
+    setTimeout(() => {
+        const addToCartElements = document.querySelectorAll('.add-to-cart');
         
-        // Check if parent exists
-        if (parent) {
-            // Scroll the parent to make the element visible
-            parent.scrollTo({
-                top: element.offsetTop - parent.offsetTop,
-                left: element.offsetLeft - parent.offsetLeft,
-                behavior: 'smooth' // Optional: adds smooth scrolling
+        addToCartElements.forEach(element => {
+            element.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',    // Options: 'start', 'center', 'end', 'nearest'
+                inline: 'center'    // Options: 'start', 'center', 'end', 'nearest'
             });
-        }
-    });
+        });
+    }, 3000); // Short delay to ensure DOM rendering is complete
 
-  const existing = JSON.parse(localStorage.getItem("carts")) || [];
-  cartCount.textContent = existing.length;
+    const existing = JSON.parse(localStorage.getItem("carts")) || [];
+    cartCount.textContent = existing.length;
 
-  const close = document.querySelector("#details-div button.close-details");
-
-
-  close && close.addEventListener("click", removeDetailsModal);
+    const close = document.querySelector("#details-div button.close-details");
+    close && close.addEventListener("click", removeDetailsModal);
 }
 
 function handleQuantityChange(e) {
