@@ -116,6 +116,25 @@ function showDetailsModal(e) {
   modal.style.display = "block";
   renderBookCollection(book);
 
+//for auto scroll cart:
+const addToCartElements = document.querySelectorAll('.add-to-cart');
+    
+    // Loop through each element found
+    addToCartElements.forEach(element => {
+        // Get the parent element
+        const parent = element.parentElement;
+        
+        // Check if parent exists
+        if (parent) {
+            // Scroll the parent to make the element visible
+            parent.scrollTo({
+                top: element.offsetTop - parent.offsetTop,
+                left: element.offsetLeft - parent.offsetLeft,
+                behavior: 'smooth' // Optional: adds smooth scrolling
+            });
+        }
+    });
+
   const existing = JSON.parse(localStorage.getItem("carts")) || [];
   cartCount.textContent = existing.length;
 
