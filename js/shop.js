@@ -232,7 +232,7 @@ function renderBookCollection(book) {
 Select Book Format
 </p>
         <div class="format-div">
-        <input type="radio" name=${book.formats[0]} id=${book.formats[0]}>
+        <input type="radio" name=${book.formats[0]} id=${book.formats[0]} checked>
 
         <div class="side">
           <p class="format-name">${book.formats[0]}</p>
