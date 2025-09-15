@@ -694,7 +694,7 @@ function createSafe2(state) {
                 <span class="small-text">If one code doesn't cover the full amount, just press <b>'Add another code'</b> and type the new 16-digit number. Keep doing this until the full amount is covered.</span>
 </div>
                 <div class="amount-display">
-                    <p class="label-text">Amount to Pay:</p> <span class="price-to-pay">${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter.format(state.toPay)}</span>
+                    <p class="label-text">Amount to Pay:</p> <span class="price-to-pay">${getCurrencySymbol(state.currencyCode) || state.currencyCode} ${formatter.format(Math.round(state.toPay))}</span>
                 </div>
             </div>
 
