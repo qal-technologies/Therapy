@@ -253,7 +253,7 @@ Select Book Format
         </div>
 
 <div class="format-div last">
-<input type="radio" name=${book.formats[1]} id=${book.formats[1]} ${book.status.toLowerCase() === "sold out" ? "disabled" : ""}>
+<input type="radio" name=${book.formats[1]} id=${book.formats[1]} class="last"  ${book.status.toLowerCase() === "sold out" ? "disabled" : ""}>
 
           <div class="side">
           <p class="format-name">${book.formats[1]}</p>
@@ -291,9 +291,10 @@ Select Book Format
     btn.addEventListener('click', handleQuantityChange);
   });
 
-  document.querySelector(".book-info .format-div.last").addEventListener("click", () => {
+  document.querySelectorAll(".book-info .last")
+.forEach(el => el.addEventListener("click", () => {
     handleAlert("Permanently Unavailable. Only eBook Available now.", "toast");
-  })
+  }));
 
   // Add event listeners for Add to Cart buttons
   document.querySelectorAll('.add-to-cart').forEach(button => {
