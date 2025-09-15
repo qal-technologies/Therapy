@@ -78,7 +78,7 @@ const BOOK_COLLECTION = [
     formats: ["eBook", "Hardcopy"],
     price: "25.00",
     status: "Sold Out",
-    description: `Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click`,
+    description: `This ebook is limited to just 5,000 readers. It’s been created with care to feel like a real book you can hold close, even though it’s digital. Once all copies are claimed, it will no longer be available worldwide.  You can read it easily on your phone, tablet, or computer. Just one click to begin your journey.`,
     image: "/src/images/book1.jpg",
     quantity: 1,
   },
@@ -292,7 +292,7 @@ Select Book Format
   });
 
   document.querySelector(".book-info .format-div.last").addEventListener("click", () => {
-    handleAlert("Temporarily Unavailable. Only eBook Available now.", "toast");
+    handleAlert("Permanently Unavailable. Only eBook Available now.", "toast");
   })
 
   // Add event listeners for Add to Cart buttons
