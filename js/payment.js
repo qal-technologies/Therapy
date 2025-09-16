@@ -25,7 +25,7 @@ function initializeState() {
         converted: "",
         amount: 0,
         txn: "",
-        charge: 0.98,
+        charge: 0.00,
         toPay: 0,
         creditCardIndex: 1,
         creditCardSections: null,
