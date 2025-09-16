@@ -157,25 +157,6 @@ function handleQuantityChange(e) {
   }
 }
 
-// function handleAlert(message) {
-//   const parent = document.querySelector("#details-div .alert-message");
-//   const text = document.querySelector("#details-div .alert-message .alert-text");
-
-//   // if (parent) {
-//     const contains = parent.classList.contains("fadeOut");
-//     contains && parent.classList.remove("fadeOut");
-
-//     parent.style.display = "flex";
-//     text.textContent = message;
-
-//     setTimeout(() => {
-//       parent.classList.add("fadeOut");
-
-//       text.textContent = "";
-//       parent.style.display = "none";
-//     }, 4000);
-//   // }
-// }
 
 function handleCartUpdate(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
@@ -318,7 +299,7 @@ Select Book Format
           renderBookCollection(book);
 
           setTimeout(() => {
-            window.location.replace('/html/main/cart.html');
+            window.location.href = '/html/main/cart.html';
           }, 2000);
         }
       }
