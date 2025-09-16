@@ -24,65 +24,65 @@ function getCurrencySymbol(currencyCode) {
 }
 
 function getPayments() {
-  // const demoPayments = [
-  //   {
-  //     id: "TXN-1239796-GR",
-  //     paymentType: "session",
-  //     title: 'Inner Circle',
-  //     price: "200.00",
-  //     currency: "AUD",
-  //     converted: "189",
-  //     method: "creditCard",
-  //     status: true,
-  //     statusName: "Completed",
-  //     senderName: "Paschal Ngaoka",
-  //     date: new Date(2024, 5, 4),
-  //     description: "Premium healing experience",
-  //     index: 3,
-  //   }, {
-  //     id: "TXN-149656-GR",
-  //     paymentType: "book",
-  //     title: 'Best Therapy Book',
-  //     price: '550.00',
-  //     currency: "CHF",
-  //     converted: "790",
-  //     method: "bank",
-  //     status: false,
-  //     statusName: "Failed",
-  //     senderName: "John Doe",
-  //     date: new Date(2025, 4, 10),
-  //     description: "Best relief book you'll ever read",
-  //     index: 5,
-  //   }, {
-  //     id: "TXN-123456-EN",
-  //     paymentType: "session",
-  //     title: 'Virtual Session',
-  //     price: '800.00',
-  //     currency: "GBP",
-  //     converted: "1200.00",
-  //     method: "paypal",
-  //     status: null,
-  //     statusName: "Pending",
-  //     senderName: "Lucy Jay",
-  //     description: '1-hour virtual healing session',
-  //     date: new Date(2025, 2, 1),
-  //     index: 5
-  //   }, {
-  //     id: 'TXN-03964283-ES',
-  //     paymentType: 'session',
-  //     title: 'In-Person Session',
-  //     price: '1600.00',
-  //     currency: "CHF",
-  //     converted: "2400",
-  //     method: "paypal",
-  //     status: true,
-  //     statusName: 'Completed',
-  //     senderName: "Johnson Alfred",
-  //     description: '2-hour in-person session in Monaco',
-  //     date: new Date(2023, 6, 2),
-  //     index: 5
-  //   },
-  // ];
+  const demoPayments = [
+    {
+      id: "TXN-1239796-GR",
+      paymentType: "session",
+      title: 'Inner Circle',
+      price: "200.00",
+      currency: "AUD",
+      converted: "189",
+      method: "creditCard",
+      status: true,
+      statusName: "Completed",
+      senderName: "Paschal Ngaoka",
+      date: new Date(2024, 5, 4),
+      description: "Premium healing experience",
+      index: 1,
+    }, {
+      id: "TXN-149656-GR",
+      paymentType: "book",
+      title: 'Best Therapy Book',
+      price: '550.00',
+      currency: "CHF",
+      converted: "790",
+      method: "paysafe",
+      status: false,
+      statusName: "Failed",
+      senderName: "John Doe",
+      date: new Date(2025, 4, 10),
+      description: "Best relief book you'll ever read",
+      index: 2,
+    }, {
+      id: "TXN-123456-EN",
+      paymentType: "session",
+      title: 'Virtual Session',
+      price: '800.00',
+      currency: "EUR",
+      converted: "1200.00",
+      method: "creditCard",
+      status: null,
+      statusName: "Pending",
+      senderName: "Lucy Jay",
+      description: '1-hour virtual healing session',
+      date: new Date(2025, 2, 1),
+      index: 1
+    }, {
+      id: 'TXN-03964283-ES',
+      paymentType: 'session',
+      title: 'In-Person Session',
+      price: '1600.00',
+      currency: "CHF",
+      converted: "2400",
+      method: "paysafe",
+      status: true,
+      statusName: 'Completed',
+      senderName: "Johnson Alfred",
+      description: '2-hour in-person session in Monaco',
+      date: new Date(2023, 6, 2),
+      index: 2
+    },
+  ];
 
   try {
     const fetchedPayment = localStorage.getItem("payments");
@@ -94,8 +94,8 @@ function getPayments() {
     } else {
       output = demoPayments;
 
-      // const saved = JSON.stringify(demoPayments)
-      // localStorage.setItem("payments", saved);
+      const saved = JSON.stringify(demoPayments)
+      localStorage.setItem("payments", saved);
     }
     
     return output;
@@ -182,7 +182,15 @@ if (userObj && payments) {
       if (payment.status === true) {
         showPayslip(payment);
       } else {
-        const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
+        
+          if (payment.status == null) {
+           payment.index = payment.method == "paysafe" ? 3 : 1;
+          }
+          if (payment.status == false) {
+            payment.index = payment.method == "paysafe" ? 3 : 1
+          }
+
+        const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment)}).toString();
 
         setTimeout(() => {
           window.location.href = `/html/main/payment.html?${params}`;

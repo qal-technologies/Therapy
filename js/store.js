@@ -1,22 +1,21 @@
 let timer;
-
 function handleAlert(
     message,
-    type = "blur",                // "toast" or "blur"
-    titled = false,               // whether to show a title
-    titleText = "",               // title text
-    closing = false,              // whether to show close buttons
-    closingConfig = [],           // array of { text, onClick } objects
-    arrange = "row",              // button layout: row or column
-    defaultFunction = () => {}    // fallback function
+    type = "blur",                
+    titled = false,               
+    titleText = "",               
+    closing = false,              
+    closingConfig = [],           
+    arrange = "row",              
+    defaultFunction = () => {}    
 ) {
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
 
     // clear old state
-    let div = parent.querySelector(".alert-div");
-    let title = parent.querySelector(".alert-title");
-    let text = parent.querySelector(".alert-text");
+    let div = parent.querySelector(".alert-message .alert-div");
+    let title = parent.querySelector(".alert-message .alert-title");
+    let text = parent.querySelector(".alert-message .alert-text");
 
     if (parent.classList.contains("fadeOut")) {
         parent.classList.remove("fadeOut");
@@ -91,6 +90,16 @@ function handleAlert(
             buttonParent.classList.add("button-parents");
             buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
 
+            if (closingConfig.length >= 1) {
+                // default close button if config is empty
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = closingConfig.length === 0 ? "Close" : closingConfig.toString();
+                
+                newBtn.addEventListener("click", closeAlert);
+                buttonParent.appendChild(newBtn);
+            }
+
             closingConfig.forEach(cfg => {
                 const { text: btnText, onClick } = cfg;
                 const newBtn = document.createElement("button");
@@ -107,15 +116,6 @@ function handleAlert(
 
                 buttonParent.appendChild(newBtn);
             });
-
-            if (closingConfig.length === 0) {
-                // default close button if config is empty
-                const newBtn = document.createElement("button");
-                newBtn.classList.add("alert-button");
-                newBtn.textContent = "Close";
-                newBtn.addEventListener("click", closeAlert);
-                buttonParent.appendChild(newBtn);
-            }
 
             div.appendChild(buttonParent);
         } else {
@@ -152,6 +152,14 @@ function handleAlert(
             buttonParent.classList.add("button-parents");
             buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
 
+            if (closingConfig.length === 0) {
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = "Close";
+                newBtn.addEventListener("click", closeAlert);
+                buttonParent.appendChild(newBtn);
+            }
+            
             closingConfig.forEach(cfg => {
                 const { text: btnText, onClick } = cfg;
                 const newBtn = document.createElement("button");
@@ -168,14 +176,6 @@ function handleAlert(
 
                 buttonParent.appendChild(newBtn);
             });
-
-            if (closingConfig.length === 0) {
-                const newBtn = document.createElement("button");
-                newBtn.classList.add("alert-button");
-                newBtn.textContent = "Close";
-                newBtn.addEventListener("click", closeAlert);
-                buttonParent.appendChild(newBtn);
-            }
 
             div.appendChild(buttonParent);
         } else {

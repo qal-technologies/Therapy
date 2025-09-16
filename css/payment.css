@@ -131,11 +131,11 @@ h2 {
     padding: 10px;
     font-family: PoppinsLight, sans-serif;
     text-align: center;
-    max-height: 550px;
-    gap: 20%;
+    gap: 10%;
     place-self: center;
     height: 80vh;
-    min-height: auto;
+    min-height: max-content;
+    max-height: 600px;
     padding-top: 80px;
     width: 90%;
     border-radius: 5px;
@@ -1894,6 +1894,17 @@ ul.instructions.redeem li {
     margin-bottom: 17px;
 }
 
+#paysafe-thank-you{
+    background: white;
+    box-shadow: 0px 0px 15px rgb(230, 230, 230);
+    width: 80%;
+    border-radius: 15px;
+    height: max-content;
+    min-height: max-content;
+    /* max-height: 10px; */
+    flex: 0.45;
+} 
+
 .paysafe-header .logo {
     width: 100%;
     display: flex;
@@ -1963,6 +1974,15 @@ ul.instructions.redeem li {
     color: black;
 }
 
+
+.steps p.verification-text {
+    width: 90%;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: -30px;
+}
+
 .paysafe-section .continue-btn {
     background: var(--link);
     opacity: 0.8;
@@ -2019,10 +2039,10 @@ ul.instructions.redeem li {
     transition: all ease 400ms;
 }
 
-.steps .middle span{
+.steps .middle span {
     width: 100%;
     padding: 10px;
-    background:  var(--primary);
+    background: var(--primary);
     border-radius: 10px;
 }
 

@@ -649,7 +649,7 @@ We’ll personally notify you the moment a spot becomes available.
 Priority is given in the order sign-ups are received, so you’re in line.
 
 <br/><br/>
-Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, `OK`
+Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]
 			);
 
 			waitlistBTN.style.fontSize = "13.5px";

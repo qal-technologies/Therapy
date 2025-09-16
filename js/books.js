@@ -2873,7 +2873,7 @@ Key Takeaways
 <b>Your Beliefs Shape Your Reality:</b> The beliefs you hold about yourself and life have a profound impact on your emotions and behavior. Empowering beliefs (like “I can change”) lead to growth, while limiting beliefs (like “I’m stuck this way”) create stagnation. Remember the wisdom: “With our thoughts, we make the world.” Changing your thoughts can change how you experience life.</span>
 
 <span>
-<b>Meet he Inner Critic:</b> Your inner critic is that harsh internal voice often born from past criticisms or societal pressures. It might think it’s protecting you, but its harshness undermines your self-worth and happiness. Recognize that this voice is learned, and it can be unlearned or retrained.
+<b>Meet the Inner Critic:</b> Your inner critic is that harsh internal voice often born from past criticisms or societal pressures. It might think it’s protecting you, but its harshness undermines your self-worth and happiness. Recognize that this voice is learned, and it can be unlearned or retrained.
 </span>
 
 <span>

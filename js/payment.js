@@ -75,6 +75,7 @@ function createPaySafeSections(state) {
     return {
         1: createSafe1(),
         2: createSafe2(state),
+        3: createSafe3(state),
     }
 }
 
@@ -146,10 +147,7 @@ function handlePaymentMethodClick(option, state, elements) {
 }
 
 
-const formatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-});
+const formatter = new Intl.NumberFormat('en-US');
 
 async function handleProceedClick(e, state) {
     e.preventDefault();
@@ -157,24 +155,24 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-        .then((value) => {
-            value ?
-                setTimeout(() => {
-                    document.getElementById("payment-details")?.classList.remove("active");
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //         value ?
+    setTimeout(() => {
+        document.getElementById("payment-details")?.classList.remove("active");
 
-                    document.getElementById("payment-method-section")?.classList.add("active");
+        document.getElementById("payment-method-section")?.classList.add("active");
 
-                    button.disabled = false;
-                    button.innerHTML = "Proceed to Payment";
-                }, 500)
+        button.disabled = false;
+        button.innerHTML = "Proceed to Payment";
+    }, 500)
 
-                :
-                setTimeout(() => {
-                    button.disabled = false;
-                    button.innerHTML = "Proceed to Payment";
-                }, 500)
-        });
+    // :
+    //         setTimeout(() => {
+    //             button.disabled = false;
+    //             button.innerHTML = "Proceed to Payment";
+    //         }, 500)
+    // });
 
 }
 
@@ -202,18 +200,6 @@ function handleMakePaymentClick(e, state, elements) {
         } else if (method.includes("safe")) {
             state.paySafeSections = createPaySafeSections(state);
             handlePaySafe(state, elements);
-
-            document.querySelectorAll(".paysafe-section .continue-btn").forEach(btn => btn.addEventListener("click", () => {
-                btn.disabled = true;
-                btn.innerHTML = `
-                <div class="spinner-container"><div class="spinner"></div></div>
-                Loading...
-                `;
-                setTimeout(() => {
-                    handlePaySafe(state, elements)
-                }, 2000);
-
-            }));
         }
 
         button.disabled = true;
@@ -453,7 +439,10 @@ function saveCodeToArray(state, input) {
 
     if (code.length == 16) {
         state.codes.push(code);
+        return true;
     }
+
+    return false;
 }
 
 function addNewCode(state) {
@@ -469,9 +458,66 @@ function addNewCode(state) {
     newInput.name = `paysafe-code-${inputsLength + 1}`;
     newInput.type = "tel";
     newInput.maxLength = "16";
+    const btns = document.querySelector(".paysafe-section .continue-btn")
 
     inputDiv.appendChild(newInput);
-    newInput.addEventListener("input", () => saveCodeToArray(state, newInput));
+    newInput.addEventListener("input", () => {
+        const toggle = saveCodeToArray(state, newInput)
+
+        btns.disabled = !toggle;
+    });
+
+}
+
+function stepsAlerts() {
+    handleAlert(`* Step 1 
+    <br/>
+    Buy a paysafecard voucher at a shop near you.You'll receive a paper slip with a 16-digit code.`, "blur",
+        true,
+        "How Paysafecard Works",
+        true,
+        [{
+            text: "Next >",
+            onClick:
+                () =>
+                    handleAlert(`* Step 2 
+                    <br/>
+                    Come back here and type the 16-digit code into the payment box.`, "blur", true, "How Paysafecard Works", true, [
+                        {
+                            text: "Back", onClick: "closeAlert",
+                        }, {
+                            text: "Next", onClick: () => handleAlert("next", "toast")
+                        }
+                    ])
+        }])
+}
+
+function safeAlerts(state) {
+    handleAlert("Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?", "blur", true, "% <br/> Companion Support", true,
+        [{
+            text: "Yes, guide me",
+            onClick:
+                () => handleAlert("We're here to make this easy for you. <br/> Please choose what you need right now:", "blur",
+                    true,
+                    "% Companion Support", true,
+                    [{
+                        text: "Find a store near me",
+                        onClick: () => handleAlert("store near me has been clicked!", "toast"),
+                        type: "secondary"
+                    }, {
+                        text: "Show me how paysafecard works", onClick: () => safeAlerts(),
+                        type: "secondary"
+
+                    }, {
+                        text: "Talk to us directly",
+                        onClick: () => window.location.href = "mailto:healingwithcharlottecasiraghi@gmail.com",
+                        type: "secondary"
+
+                    }], "column")
+        }, {
+            text: "No, thank you", onClick: "closeAlert",
+            type: "secondary"
+        }], "row");
 }
 
 function handlePaySafe(state, elements) {
@@ -483,13 +529,40 @@ function handlePaySafe(state, elements) {
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
 
+        const btns = document.querySelectorAll(".paysafe-section .continue-btn")
+
+        btns.forEach(btn => btn.addEventListener("click", () => {
+
+            btn.disabled = true;
+            btn.innerHTML = `
+                <div class="spinner-container"><div class="spinner"></div></div>
+                ${state.safeIndex !== 2 ? "Loading..." : "Verifying..."}
+                `;
+            setTimeout(() => {
+                handlePaySafe(state, elements)
+            }, 2000);
+
+        }));
+
+
         if (state.safeIndex == 1) {
+            btns[0].disabled = true;
+
             const firstInput = document.querySelector(".steps input.paysafe-code-input");
-            firstInput.addEventListener("input", () => saveCodeToArray(state, firstInput)
+            firstInput.addEventListener("input", () => {
+                const toggle = saveCodeToArray(state, firstInput)
+
+                btns[0].disabled = !toggle;
+            }
             );
 
             const addButton = document.querySelector("button.another-code");
             addButton.addEventListener('click', () => addNewCode(state));
+
+
+            setTimeout(() => {
+                safeAlerts();
+            }, 3000);
         };
 
         state.safeIndex = state.safeIndex + 1;
@@ -497,9 +570,6 @@ function handlePaySafe(state, elements) {
 
 }
 
-function handleSafeAlert(state) {
-    handleAlert(`this is the amount ${state.amount}`, "blur", true, "Testing", true, ["Close", "Opening"]);
-}
 
 async function convertCurrency(state) {
     const EXCHANGE_RATE_API = "https://api.exchangerate-api.com/v4/latest/EUR";
@@ -672,7 +742,7 @@ This code is your money. Keep it safe, just like cash.
 
 function createSafe2(state) {
     return `
-        <div class="payment-section paysafe-section active" id="paysafe-instructions">
+        <div class="payment-section paysafe-section active" id="paysafe-code-page">
             <div class="paysafe-header">
                 <div class="logo">
                     <img src="/src/images/paysafe.png" alt="Paysafe Logo">
@@ -705,6 +775,28 @@ function createSafe2(state) {
     `;
 }
 
+function createSafe3(state) {
+    return `
+    <div class="payment-section paysafe-section active" id="paysafe-thank-you">
+            <div class="paysafe-header">
+                <div class="logo">
+                    <img src="/src/images/paysafe.png" alt="Paysafe Logo">
+                </div>
+                <h2>Thank you.</h2>
+            </div>
+
+            <div class="steps">
+                <p class="verification-text">Your Paysafecard payment is being processed. You will receive a
+                    confirmation email once the code is verified.</p>
+            </div>
+
+            <div class="proceed-div">
+                <button class="continue-btn">OK</button>
+            </div>
+        </div>
+    `
+}
+
 ///==========ADDING RELEVANT DETAILS====-----====>>
 function addDetails(details, elements) {
     const paymentDetailsDiv = elements.paymentDetailsDiv;
@@ -713,7 +805,7 @@ function addDetails(details, elements) {
     const description =
         details.type === "session"
             ? `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`
-            : details.description || "No description";
+            : details.description || "No Payment description";
 
     if (document.contains(paymentDetailsDiv)) {
         document.getElementById("transaction-id").textContent = details.transactionId || details.id;
@@ -765,38 +857,50 @@ async function initializePaymentFlow(e, state, elements) {
             amount = parseFloat(details.price).toFixed(2);
         }
 
+        console.log(details);
         if (paymentType === "pending") {
-            const paymentID = details.id;
+            try {
 
-            const pendingPayment = payments.find(payment => {
-                return payment.id === paymentID;
-            });
+                const paymentID = details.id;
 
-            if (!pendingPayment) {
-                alert('Payment not found, Please try again!');
-                console.log("Payment not found, Please try again!");
+                const pendingPayment = payments.find(payment => {
+                    return payment.id === paymentID;
+                });
 
-                window.location.replace('/html/main/User.html');
+                if (!pendingPayment) {
+                    alert('Payment not found, Please try again!');
+                    console.log("Payment not found, Please try again!");
+
+                    window.location.replace('/html/main/User.html');
+                }
+
+                if (pendingPayment.status == null) {
+                    handleAlert(`Your payment with ID: ${paymentID} is still processing...`, "toast");
+                } else if (pendingPayment.status == false) {
+                    handleAlert(`Your payment with ID: ${paymentID} has been declined!`, "toast");
+                }
+
+                state.txn = paymentID;
+                state.pending = true;
+                state.selectedMethod = pendingPayment?.method || "paysafe";
+                state.amount = pendingPayment?.price;
+                state.toPay = pendingPayment?.converted;
+                state.currencyCode = pendingPayment?.currency || "EUR";
+                state.paymentStatus = pendingPayment?.status;
+
+
+
+                const indexName = pendingPayment.method == "bank" ? "creditCard" : "safe";
+                state.pendingIndex = `${indexName}Index`;
+
+                state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : pendingPayment.index;
+
+                elements.paymentDetailsDiv.remove();
+
+                handleMakePaymentClick(e, state, elements);
+            } catch (er) {
+                console.log(er);
             }
-
-            state.txn = paymentID;
-            state.pending = true;
-            state.selectedMethod = pendingPayment?.method || "paysafe";
-            state.amount = pendingPayment?.price;
-            state.toPay = pendingPayment?.converted;
-            state.currencyCode = pendingPayment?.currency || "EUR";
-            state.paymentStatus = pendingPayment?.status;
-
-
-
-            const indexName = pendingPayment.method == "bank" ? "creditCard" : "safe";
-            state.pendingIndex = `${indexName}Index`;
-
-            state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : pendingPayment.index - 1;
-
-            elements.paymentDetailsDiv.remove();
-
-            handleMakePaymentClick(e, state, elements);
         }
 
         state.txn = details.transactionId;
@@ -821,7 +925,17 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Initialize buttons
     elements.makePaymentBtn.disabled = true;
-    // handleSafeAlert(state);
+
+    /////
+    // handleAlert("Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?", "blur", true, "% <br/> Companion Support", true,
+    //     [{
+    //         text: "Yes, guide me",
+    //         onClick: () => handleAlert("clicked guide", "toast")
+    //     }, {
+    //         text: "No, thank you", onClick: "closeAlert",
+    //         type: "secondary"
+    //     }], "row");
+
     // Initialize checks
     checkPaymentMethodSelection(state, elements);
 }
