@@ -470,7 +470,7 @@ function addNewCode(state) {
 }
 
 function stepsAlerts() {
-    handleAlert(`* Step 1 
+    handleAlert(`🔑 Step 1 
     <br/>
     Buy a paysafecard voucher at a shop near you.You'll receive a paper slip with a 16-digit code.`, "blur",
         true,
@@ -480,7 +480,7 @@ function stepsAlerts() {
             text: "Next >",
             onClick:
                 () =>
-                    handleAlert(`* Step 2 
+                    handleAlert(`🖊️ Step 2 
                     <br/>
                     Come back here and type the 16-digit code into the payment box.`, "blur", true, "How Paysafecard Works", true, [
                         {
@@ -493,13 +493,13 @@ function stepsAlerts() {
 }
 
 function safeAlerts(state) {
-    handleAlert("Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?", "blur", true, "% <br/> Companion Support", true,
+    handleAlert("Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?", "blur", true, "🌸 <br/> Companion Support", true,
         [{
             text: "Yes, guide me",
             onClick:
                 () => handleAlert("We're here to make this easy for you. <br/> Please choose what you need right now:", "blur",
                     true,
-                    "% Companion Support", true,
+                    "🌸 Companion Support", true,
                     [{
                         text: "Find a store near me",
                         onClick: () => handleAlert("store near me has been clicked!", "toast"),
