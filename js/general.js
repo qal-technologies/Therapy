@@ -113,12 +113,18 @@ window.onload = () => {
         });
     }
 
-    function goBackButton() {
+    let backClicked = false;
 
-        // window.history.back();
+function goBackButton() {
+    if (backClicked) return; 
+    backClicked = true;
 
-        window.history.go(-1)
-    }
+    window.history.back();
+
+    setTimeout(() => {
+        backClicked = false; 
+    }, 1000); // 1 second debounce
+}
 
     backButton && backButton.addEventListener("click", goBackButton);
     refreshButton && refreshButton.addEventListener("click", () => {
@@ -152,7 +158,16 @@ window.onresize = () => {
 };
 
 let timer;
-function handleAlert(message, type = "blur" | "toast", titled = false, titleText = "", closing = false, closingText = [], arrange = "row", closeFunction = () => { }) {
+function handleAlert(
+    message,
+    type = "blur", 
+    titled = false, 
+    titleText = "", 
+    closing = false, 
+    closingText = [], 
+    arrange = "row", 
+    closeFunction = () => {}
+) {
     const parent = document.querySelector(".alert-message");
     const div = document.querySelector(".alert-message .alert-div");
     const title = document.querySelector(".alert-title");
@@ -250,13 +265,13 @@ function handleAlert(message, type = "blur" | "toast", titled = false, titleText
                     buttonParent.classList.add("button-parents");
                     buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
 
-                    buttonParent.innerHTML = buttons.map(text => {
-                        const newBtn = document.createElement("button")
-                        newBtn.classList.add("alert-button");
-
-                        newBtn.innerHTML = text;
-                        newBtn.addEventListener("click", closeAlert);
-                    });
+                    buttons.forEach(btnText => {
+    const newBtn = document.createElement("button");
+    newBtn.classList.add("alert-button");
+    newBtn.innerHTML = btnText;
+    newBtn.addEventListener("click", closeAlert);
+    buttonParent.appendChild(newBtn);
+});
 
                     newDiv.insertAdjacentElement("afterend", buttonParent);
                 } else {
@@ -312,13 +327,13 @@ function handleAlert(message, type = "blur" | "toast", titled = false, titleText
                     buttonParent.classList.add("button-parents");
                     buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
 
-                    buttonParent.innerHTML = buttons.map(text => {
-                        const newBtn = document.createElement("button")
-                        newBtn.classList.add("alert-button");
-
-                        newBtn.innerHTML = text;
-                        newBtn.addEventListener("click", closeAlert);
-                    });
+                    buttons.forEach(btnText => {
+    const newBtn = document.createElement("button");
+    newBtn.classList.add("alert-button");
+    newBtn.innerHTML = btnText;
+    newBtn.addEventListener("click", closeAlert);
+    buttonParent.appendChild(newBtn);
+});
 
 
                     parent.insertAdjacentElement("afterend", buttonParent);
