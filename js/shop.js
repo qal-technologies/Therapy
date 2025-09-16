@@ -361,7 +361,7 @@ function addToCart(book) {
       image: book.image,
       quantity: book.quantity,
       transactionId: transactionId,
-      description: book.description,
+      description: `You are buying one or more copies of Compagnon Féminin, a special digital book available to only 5,000 readers worldwide. It has been carefully designed to feel like a real book, even though you read it on a phone, tablet, or computer.`,
       image: book.image,
       date: new Date(),
       format: selectedFormat?.name || book.formats[0]
