@@ -1,164 +1,185 @@
-const data ={
-    paysafe: `
-What is a Paysafecard and how do I pay with it??
-
-A Paysafecard is like cash in the form of a receipt.
-You don’t need a bank account, credit card, or computer knowledge to use it. This is how it works, step by step:
-
-Step 1: Buy a Paysafecard
-Go to a supermarket, petrol station, or kiosk near you. Look for the Paysafecard logo. At the counter, ask for a Paysafecard of the amount you need (for example: 50€, 100€, etc.).
-
-Step 2: Get Your Secure Code
-The cashier will give you a small receipt. On it, you will see a 16-digit number (this is your secret code).
-Keep it safe,it works just like cash.
-
-Step 3: Pay Online with Your Code
-When you come back to this website to pay, you will see a box that says:
-“Enter your Paysafecard code.”
-Type in the 16-digit number from your receipt.
-
-Step 4: Confirm Payment
-After typing the number, simply press “Pay Now with Paysafecard.”
-Your payment is confirmed instantly.
-No personal details, no bank needed.
-
-Important Tips:
-
-Think of the Paysafecard like using cash,safe, simple, and private.
-
- If the amount is bigger than one card, you 
-can add more than one code until the full payment is covered.
-
-Always keep your receipt safe until payment is completed.
-`,
-    policy:`
-Privacy Policy
-
-At Healing with Charlotte Casiraghi, your privacy is of the utmost importance. This Privacy Policy explains how we collect, use, store, and protect your personal information when you use our website and services. By accessing or using our services, you agree to the terms outlined in this policy.
-
-
-
-1. Information We Collect
-
-We may collect personal information that you provide directly when you:
-
-Register for a session
-
-Purchase a book
-
-Send a message, email, or support request
-
-Subscribe to our newsletter
-
-
-The information collected may include:
-
-Full name
-
-Email address
-
-Phone number
-
-Billing details
-
-Personal notes or reflections shared during your journey
-
-
-
-
-
-2. How We Use Your Information
-
-Your information is used to:
-
-Process bookings and purchases
-
-Send confirmations, updates, and personalized communications
-
-Deliver voice messages, emails, or session details
-
-Offer emotional support and follow-ups
-
-Improve our services and offerings
-
-
-We do not sell, rent, or share your data with third parties for marketing purposes.
-
-
-
-
-3. Payment Information
-
-All payments are securely processed through encrypted third-party payment systems powered by Stripe. We accept the following forms of payment:
-
-Paysafecard prepaid cards
-
-Credit or debit cards
-
-
-We do not store your complete payment details.
-
-
-
-
-4. Data Security
-
-We implement industry-standard SSL encryption to protect your data. Access to sensitive information is strictly limited and monitored to prevent unauthorized use.
-
-
-
-
-5. Confidentiality of Sessions
-
-All one-on-one and group sessions are confidential. Anything you share with Charlotte remains private and secure. Only you and Charlotte have access to your session content.
-
-
-
-
-6. Email & Messaging
-
-By subscribing or registering, you consent to receive occasional updates from Charlotte, which may include:
-
-Audio messages
-
-Reflections
-
-Special offers and announcements
-
-
-You may opt out of these communications at any time.
-
-
-
-
-7. Cookies
-
-Our website uses cookies to enhance your browsing experience and analyze website traffic. You can disable cookies in your browser settings if you prefer.
-
-
-
-
-8. Your Rights
-
-You have the right to:
-
-Request access to your personal data
-
-Correct inaccuracies in your information
-
-Request deletion of your personal data
-
-
-You may exercise these rights by contacting us directly.
-
-
-
-
-9. Contact
-
-For privacy-related inquiries, please contact us at:
-📧 healingwithcharlottecasiraghi@gmail.com
-
-We value your trust and treat your presence with respect and care. This is a sacred space, and your story is safe with us.
-`,
+let timer;
+
+function handleAlert(
+    message,
+    type = "blur",                // "toast" or "blur"
+    titled = false,               // whether to show a title
+    titleText = "",               // title text
+    closing = false,              // whether to show close buttons
+    closingConfig = [],           // array of { text, onClick } objects
+    arrange = "row",              // button layout: row or column
+    defaultFunction = () => {}    // fallback function
+) {
+    const parent = document.querySelector(".alert-message");
+    if (!parent) return;
+
+    // clear old state
+    let div = parent.querySelector(".alert-div");
+    let title = parent.querySelector(".alert-title");
+    let text = parent.querySelector(".alert-text");
+
+    if (parent.classList.contains("fadeOut")) {
+        parent.classList.remove("fadeOut");
+        div && div.classList.remove("zoom-out");
+    }
+
+    parent.style.display = "flex";
+
+    // internal close handler
+    function closeAlert() {
+        clearTimeout(timer);
+        div && div.classList.add("zoom-out");
+        if (text) text.textContent = "";
+        parent.classList.add("fadeOut");
+
+        timer = setTimeout(() => {
+            parent.style.display = "none";
+            defaultFunction(); // run fallback on close
+        }, 1000);
+    }
+
+    // automatic fade if no buttons
+    function fadeAlert() {
+        setTimeout(() => {
+            parent.classList.add("fadeOut");
+            if (text) text.textContent = "";
+            parent.style.display = "none";
+        }, 4000);
+    }
+
+    // handle toast (auto fade, no blur background)
+    if (type === "toast") {
+        parent.classList.add("shop");
+
+        if (text) {
+            text.textContent = message;
+        } else if (message) {
+            const newMessage = document.createElement("p");
+            newMessage.classList.add("alert-text", "moveUp");
+            newMessage.textContent = message;
+            parent.appendChild(newMessage);
+        }
+
+        fadeAlert();
+        return;
+    }
+
+    // handle blur alerts
+    if (!div) {
+        div = document.createElement("div");
+        div.classList.add("alert-div", "zoom-in");
+
+        // Title
+        if (titled) {
+            const newTitle = document.createElement("p");
+            newTitle.classList.add("alert-title");
+            newTitle.textContent = titleText || "Title";
+            div.appendChild(newTitle);
+        }
+
+        // Message
+        if (message) {
+            const newMessage = document.createElement("p");
+            newMessage.classList.add("alert-text", "moveUp");
+            newMessage.textContent = message;
+            div.appendChild(newMessage);
+        }
+
+        // Buttons
+        if (closing) {
+            const buttonParent = document.createElement("div");
+            buttonParent.classList.add("button-parents");
+            buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
+
+            closingConfig.forEach(cfg => {
+                const { text: btnText, onClick } = cfg;
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = btnText || "Close";
+
+                if (onClick === "closeAlert") {
+                    newBtn.addEventListener("click", closeAlert);
+                } else if (typeof onClick === "function") {
+                    newBtn.addEventListener("click", onClick);
+                } else {
+                    newBtn.addEventListener("click", defaultFunction);
+                }
+
+                buttonParent.appendChild(newBtn);
+            });
+
+            if (closingConfig.length === 0) {
+                // default close button if config is empty
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = "Close";
+                newBtn.addEventListener("click", closeAlert);
+                buttonParent.appendChild(newBtn);
+            }
+
+            div.appendChild(buttonParent);
+        } else {
+            fadeAlert();
+        }
+
+        parent.appendChild(div);
+    } else {
+        // update existing alert
+        if (titled) {
+            if (!title) {
+                title = document.createElement("p");
+                title.classList.add("alert-title");
+                div.insertBefore(title, div.firstChild);
+            }
+            title.textContent = titleText || "Title";
+        }
+
+        if (!text) {
+            text = document.createElement("p");
+            text.classList.add("alert-text", "moveUp");
+            text.textContent = message || "Message";
+            div.appendChild(text);
+        } else {
+            text.textContent = message || "Message";
+        }
+
+        if (closing) {
+            // remove old buttons if any
+            const oldButtons = div.querySelectorAll(".alert-button, .button-parents");
+            oldButtons.forEach(btn => btn.remove());
+
+            const buttonParent = document.createElement("div");
+            buttonParent.classList.add("button-parents");
+            buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
+
+            closingConfig.forEach(cfg => {
+                const { text: btnText, onClick } = cfg;
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = btnText || "Close";
+
+                if (onClick === "closeAlert") {
+                    newBtn.addEventListener("click", closeAlert);
+                } else if (typeof onClick === "function") {
+                    newBtn.addEventListener("click", onClick);
+                } else {
+                    newBtn.addEventListener("click", defaultFunction);
+                }
+
+                buttonParent.appendChild(newBtn);
+            });
+
+            if (closingConfig.length === 0) {
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = "Close";
+                newBtn.addEventListener("click", closeAlert);
+                buttonParent.appendChild(newBtn);
+            }
+
+            div.appendChild(buttonParent);
+        } else {
+            fadeAlert();
+        }
+    }
 }
