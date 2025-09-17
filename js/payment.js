@@ -117,7 +117,7 @@ async function getUserCountryInfo() {
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
 
         return {
             country: data.country_name,
@@ -259,7 +259,6 @@ function initializeCreditCardState() {
 }
 
 function backToMethod(state, elements) {
-    console.logg('hhhh');
     setTimeout(() => {
         state.creditCardTrials = 0;
         state.creditCardError = false;
@@ -597,7 +596,7 @@ function safeAlerts() {
     runFlow(safeFlow, "start");
 }
 
-function getResult(state, elements) {
+function getResult(state) {
     const status = state.paymentStatus;
     const message = state.statusMessage;
 
@@ -627,8 +626,8 @@ function getResult(state, elements) {
             </div>
 
             <div class="proceed-div">
-                <button class="continue-btn" ${status !== true ? `onclick="backToMethod(${state}, ${elements})"`:''}>${status == true ? "Continue" : "Try Again"}</button>
-                <p class="small-text">${status == true ? `A confirmation has been sent to your email.` : `Need help?  <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link);">Contact Support</a>`} </p>
+                <button class="continue-btn">${status == true ? "Continue" : "Try Again"}</button>
+                <p class="small-text">${status == true ? `A confirmation has been sent to your email.` : `Need help?  <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link); font-weight:bold;">Contact Support</a>`} </p>
             </div>
         </div>
     `
@@ -676,14 +675,16 @@ async function handleResults(state, elements) {
         timer = null;
     }
 
-    const result = getResult(state, elements);
+    const result = getResult(state);
 
     elements.paymentDisplay.innerHTML = "";
     elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
-    console.log("done");
 
-    // status !== null ?
-    //     handleAlert("not null...", "toast") : handleAlert("null", "toast");
+    const continueBTN = document.querySelector(".continue-btn");
+
+    if (continueBTN && status !== true) {
+        continueBTN.addEventListener("click", ()=> backToMethod(state, elements));
+    }
 }
 
 async function handlePaySafe(state, elements) {
@@ -693,8 +694,6 @@ async function handlePaySafe(state, elements) {
 
     if (state.safeIndex == 2) {
         await handleResults(state, elements);
-        console.log("added");
-
     }
 
     if (currentSection) {
@@ -1037,7 +1036,7 @@ async function initializePaymentFlow(e, state, elements) {
             amount = parseFloat(details.price).toFixed(2);
         }
 
-        console.log(details);
+        // console.log(details);
         if (paymentType === "pending") {
             try {
 
@@ -1079,7 +1078,7 @@ async function initializePaymentFlow(e, state, elements) {
 
                 handleMakePaymentClick(e, state, elements);
             } catch (er) {
-                console.log(er);
+                console.error(er);
             }
         }
 
