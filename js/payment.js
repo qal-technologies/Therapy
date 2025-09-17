@@ -627,7 +627,7 @@ function getResult(state, elements) {
             </div>
 
             <div class="proceed-div">
-                <button class="continue-btn" onclick="${status !== true ? backToMethod(state, elements):''}" >${status == true ? "Continue" : "Try Again"}</button>
+                <button class="continue-btn" ${status !== true ? `onclick="backToMethod(${state}, ${elements})"`:''}>${status == true ? "Continue" : "Try Again"}</button>
                 <p class="small-text">${status == true ? `A confirmation has been sent to your email.` : `Need help?  <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link);">Contact Support</a>`} </p>
             </div>
         </div>
