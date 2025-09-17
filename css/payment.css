@@ -1894,19 +1894,22 @@ ul.instructions.redeem li {
     margin-bottom: 17px;
 }
 
-#paysafe-thank-you{
+#paysafe-thank-you, #paysafe-outcome {
     background: white;
     box-shadow: 0px 0px 15px rgb(230, 230, 230);
-    width: 80%;
+    width: 90%;
     border-radius: 15px;
     height: max-content;
     min-height: max-content;
-    /* max-height: 10px; */
     flex: 0.45;
-} 
+}
+
+#paysafe-outcome {
+    height: max-content;
+    flex: 0;
+}
 
 .paysafe-header .logo {
-    width: 100%;
     display: flex;
     place-content: center;
     width: 100%;
@@ -1916,6 +1919,10 @@ ul.instructions.redeem li {
 .paysafe-header img {
     width: 70%;
     place-self: center;
+}
+
+#paysafe-outcome img {
+    width: 40%;
 }
 
 .paysafe-header h2 {
@@ -1931,6 +1938,28 @@ ul.instructions.redeem li {
     font-family: PoppinsLight;
     color: hsla(10, 0%, 20%);
     font-size: 14px;
+}
+
+.paysafe-section .outcome-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.paysafe-section .outcome-section i {
+    font-size: 70px;
+    width: 70px;
+    height: 70px;
+    border: 2px solid red;
+}
+
+.paysafe-section .outcome-section h1 {
+    font-family: PoppinsMed;
 }
 
 .paysafe-section .steps {
@@ -1951,9 +1980,9 @@ ul.instructions.redeem li {
 }
 
 .steps .step img, .steps .step i {
-    width: 80px;
-    height: 80px;
-    font-size: 80px;
+    width: 75px;
+    height: 75px;
+    font-size: 75px;
 }
 
 .steps .step .step-text {
@@ -1976,11 +2005,11 @@ ul.instructions.redeem li {
 
 
 .steps p.verification-text {
-    width: 90%;
+    width: 100%;
     text-align: center;
     font-size: 18px;
     margin-top: 8px;
-    margin-bottom: -30px;
+    margin-bottom: -15px;
 }
 
 .paysafe-section .continue-btn {
