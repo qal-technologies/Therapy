@@ -559,7 +559,7 @@ const safeFlow = {
                 action: () => handleAlert(`Need help? Write to us now and explain your problem. Our team will respond quickly and fix it for you.  <br/><br/>
                             <div style="display:flex; gap:6px;"> 
                             <i class="bi bi-envelope"></i> Email Us </div>
-                            `, "blur", true, "* Companion Support", true, [{
+                            `, "blur", true, "✉️ Companion Support", true, [{
                     text: "Message Now", onClick: () => {
                         window.location.href = "mailto:healingwithcharlottecasiraghi@gmail.com";
 
