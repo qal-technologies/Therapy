@@ -159,6 +159,7 @@ function initDropdown(formElement) {
   DOM.chevron = formElement.querySelector('.chevron');
   DOM.formGroup = formElement.querySelector(".form-container .lower");
 
+DOM.acceptRadio.checked = true;
 
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.addEventListener('click', toggleDropdown);
