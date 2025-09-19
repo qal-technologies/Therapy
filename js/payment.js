@@ -818,7 +818,7 @@ Your card was declined. ${state.creditCardTrials > 1 ? `Try another payment meth
             <div class="form-group">
                 <label for="card-number">Card number</label>
                 <div class="input-with-icon">
-                    <input type="tel" id="card-number" placeholder="4242 4242 4242 4242" maxlength="19" class="card-input">
+                    <input type="tel" id="card-number" placeholder="" maxlength="19" class="card-input">
 
                     ${state.detectedBrand ? `<div class="card-icon">
                         <img src="${cardState.cardBrands.find(b => b.name === state.detectedBrand).image}" alt="${state.detectedBrand}"/>
@@ -829,17 +829,17 @@ Your card was declined. ${state.creditCardTrials > 1 ? `Try another payment meth
             <div class="form-row">
                 <div class="form-group">
                     <label for="expiry-date">MM / YY</label>
-                    <input type="tel" id="expiry-date" placeholder="05 / 25" maxlength="5" class="card-input">
+                    <input type="tel" id="expiry-date" placeholder="" maxlength="5" class="card-input">
                 </div>
                 <div class="form-group">
                     <label for="cvv">CVC</label>
-                    <input type="tel" id="cvv" placeholder="123" maxlength="3" class="card-input">
+                    <input type="tel" id="cvv" placeholder="" maxlength="3" class="card-input">
                 </div>
             </div>
             
             <div class="form-group">
                 <label for="card-name">Name on card</label>
-                <input type="text" id="card-name" placeholder="John Doe" class="card-input">
+                <input type="text" id="card-name" placeholder="" class="card-input">
             </div>
             
            <!--div class="amount-display">
@@ -907,7 +907,7 @@ This code is your money. Keep it safe, just like cash.
                         </p>
                 
                     <p class="step-text-under">
-                        On the next screen, type the 16-digit code from your receipt (example: 1234 5678 9012 3456). Then click “Pay Now with Paysafecard".You will see an almost instant confirmation once the payment is done.
+                        On the next screen, type the 16-digit code from your receipt (example: 1234 5678 9012 3456). Then click “Pay Now".You will see an almost instant confirmation once the payment is done.
                     </p>
                     </div>
                 </div>
