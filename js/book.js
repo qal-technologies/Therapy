@@ -24,7 +24,7 @@ const TOPICS_DATA = {
       "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
       "BONUS! Exclusive discounts from event sponsors",
       "5+ hours of live online content",
-      "Event recordings and additional resources",
+      "Session recordings and additional resources",
       "Guided workshops, live polling, and more for interactive learning",
       "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
     ]
@@ -41,7 +41,7 @@ const TOPICS_DATA = {
         type: "input"
       },
       {
-        question: "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
+        question: "Would you prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
         type: "button",
         options: ["YES", "NO"]
       },
