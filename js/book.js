@@ -304,8 +304,8 @@ function showCompletion() {
 
   state.completed = true;
 
-  // Get the radio button and proceed button
-DOM.acceptRadio.disabled = false;
+  /* Get the radio button and proceed button
+DOM.acceptRadio.disabled = false;*/
   const proceedButton = DOM.proceed;
 
   // Initially disable the proceed button
