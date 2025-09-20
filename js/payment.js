@@ -657,20 +657,31 @@ async function savePaymentData(state) {
 
     };
 
-    // Find if this transaction already exists
-    // let found = false;
-    let exists = already.find(obj => {
-        return obj.id === state.txn;
-    });
-    if (exists) {
-        exists = { ...exists, ...newPayment };
-        console.log("found!");
+    const existingPaymentIndex = already.findIndex(p => p.id === newPayment.id);
 
-    } else if (!exists) {
+    if (existingPaymentIndex > -1) {
+        const existingPayment = already[existingPaymentIndex];
+        let updated = false;
+
+        // Iterate over the new payment's keys and update only if the value has changed
+        for (const key in newPayment) {
+            if (Object.hasOwnProperty.call(newPayment, key)) {
+                if (existingPayment[key] !== newPayment[key]) {
+                    existingPayment[key] = newPayment[key];
+                    updated = true;
+                }
+            }
+        }
+
+        if (updated) {
+            console.log("Payment updated:", newPayment.id);
+        } else {
+            console.log("No changes to update for payment:", newPayment.id);
+        }
+    } else {
+        // New payment, add it to the array
         already.push(newPayment);
-
-        console.log("Not found!");
-
+        console.log("New payment added:", newPayment.id);
     }
 
     localStorage.setItem("charlotte-payment-data", JSON.stringify(already));
@@ -1083,7 +1094,7 @@ async function initializePaymentFlow(e, state, elements) {
     let payments;
     //Get Payment data
     const gotten = localStorage.getItem("charlotte-payment-data");
-    payments = JSON.parse(gotten) || {};
+    payments = JSON.parse(gotten) || [];
 
 
 

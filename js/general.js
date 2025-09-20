@@ -396,192 +396,114 @@ function handleAlert(
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
 
-    // clear old state
-    let div = parent.querySelector(".alert-message .alert-div");
-    let title = parent.querySelector(".alert-message .alert-title");
-    let text = parent.querySelector(".alert-message .alert-text");
+    // Clear previous alert content and timers
+    parent.innerHTML = "";
+    clearTimeout(timer);
 
-    if (parent.classList.contains("fadeOut")) {
-        parent.classList.remove("fadeOut");
-        div && div.classList.remove("zoom-out");
-    }
-
+    // Reset parent classes and styles
+    parent.classList.remove("fadeOut", "shop");
     parent.style.display = "flex";
 
-    // internal close handler
+    let div;
+
+    // Internal close handler
     function closeAlert() {
-        clearTimeout(timer);
-        div && div.classList.add("zoom-out");
-        if (text) text.textContent = "";
+        if (div) div.classList.add("zoom-out");
         parent.classList.add("fadeOut");
 
         timer = setTimeout(() => {
             parent.style.display = "none";
-            defaultFunction(); // run fallback on close
+            parent.innerHTML = ""; // Clear content after fade out
+            defaultFunction(); // Run fallback on close
         }, 1000);
     }
 
-    // automatic fade if no buttons
+    // Automatic fade if no buttons
     function fadeAlert() {
-        setTimeout(() => {
-            parent.classList.add("fadeOut");
-            if (text) text.textContent = "";
-            parent.style.display = "none";
-        }, 4000);
+        timer = setTimeout(closeAlert, 4000);
     }
 
-    // handle toast (auto fade, no blur background)
+    // Handle toast (auto fade, no blur background)
     if (type === "toast") {
         parent.classList.add("shop");
 
-        if (text) {
-            text.textContent = message;
-        } else if (message) {
-            const newMessage = document.createElement("p");
-            newMessage.classList.add("alert-text", "moveUp");
-            newMessage.innerHTML = message;
-            parent.appendChild(newMessage);
-        }
+        const newMessage = document.createElement("p");
+        newMessage.classList.add("alert-text", "moveUp");
+        newMessage.innerHTML = message;
+        parent.appendChild(newMessage);
 
         fadeAlert();
         return;
     }
 
-    // handle blur alerts
-    if (!div) {
-        div = document.createElement("div");
-        div.classList.add("alert-div", "zoom-in");
+    // Handle blur alerts (always create new)
+    div = document.createElement("div");
+    div.classList.add("alert-div", "zoom-in");
 
-        // Title
-        if (titled) {
-            const newTitle = document.createElement("p");
-            newTitle.classList.add("alert-title");
-            newTitle.innerHTML = titleText || "Title";
-            div.appendChild(newTitle);
-        }
-
-        // Message
-        if (message) {
-            const newMessage = document.createElement("p");
-            newMessage.classList.add("alert-text", "moveUp");
-            newMessage.innerHTML = message;
-            div.appendChild(newMessage);
-        }
-
-        // Buttons
-        if (closing) {
-            const buttonParent = document.createElement("div");
-            buttonParent.classList.add("button-parents");
-            buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
-
-            if (closingConfig.length >= 3) {
-                buttonParent.style.flexWrap = "wrap";
-            }
-
-            if (closingConfig.length === 0) {
-                const newBtn = document.createElement("button");
-                newBtn.classList.add("alert-button");
-                newBtn.textContent = "Close";
-                newBtn.style.width = arrange === "column" ? "100%" : "160px";
-
-                newBtn.addEventListener("click", closeAlert);
-                buttonParent.appendChild(newBtn);
-            }
-
-            closingConfig.forEach(cfg => {
-                const { text: btnText, type, onClick } = cfg;
-                const className = type ? type : "primary";
-
-                const newBtn = document.createElement("button");
-                newBtn.classList.add("alert-button", className ? className : "");
-                newBtn.textContent = btnText || "Close";
-                newBtn.style.width = arrange === "column" ? "100%" : "160px";
-
-                if (onClick === "closeAlert") {
-                    newBtn.addEventListener("click", closeAlert);
-                } else if (typeof onClick === "function") {
-                    newBtn.addEventListener("click", onClick);
-                } else {
-                    newBtn.addEventListener("click", defaultFunction);
-                }
-
-                buttonParent.appendChild(newBtn);
-            });
-
-            div.appendChild(buttonParent);
-        } else {
-            fadeAlert();
-        }
-
-        parent.appendChild(div);
-    } else {
-        // update existing alert
-        if (titled) {
-            if (!title) {
-                title = document.createElement("p");
-                title.classList.add("alert-title");
-                div.insertBefore(title, div.firstChild);
-            }
-            title.innerHTML = titleText || "Title";
-        }
-
-        if (!text) {
-            text = document.createElement("p");
-            text.classList.add("alert-text", "moveUp");
-            text.innerHTML = message || "Message";
-            div.appendChild(text);
-        } else {
-            text.innerHTML = message || "Message";
-        }
-
-        if (closing) {
-            // remove old buttons if any
-            const oldButtons = div.querySelectorAll(".alert-button, .button-parents");
-            oldButtons.forEach(btn => btn.remove());
-
-            const buttonParent = document.createElement("div");
-            buttonParent.classList.add("button-parents");
-            buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
-
-            if (closingConfig.length >= 3) {
-                buttonParent.style.flexWrap = "wrap";
-            }
-
-            if (closingConfig.length === 0) {
-                const newBtn = document.createElement("button");
-                newBtn.classList.add("alert-button");
-                newBtn.textContent = "Close";
-                newBtn.style.width = arrange === "column" ? "100%" : "160px";
-
-                newBtn.addEventListener("click", closeAlert);
-                buttonParent.appendChild(newBtn);
-            }
-
-            closingConfig.forEach(cfg => {
-                const { text: btnText, type, onClick } = cfg;
-                const className = type ? type : "primary";
-
-                const newBtn = document.createElement("button");
-                newBtn.classList.add("alert-button", className ? className : "");
-                newBtn.textContent = btnText || "Close";
-                newBtn.style.width = arrange === "column" ? "100%" : "160px";
-
-                if (onClick === "closeAlert") {
-                    newBtn.addEventListener("click", closeAlert);
-                } else if (typeof onClick === "function") {
-                    newBtn.addEventListener("click", onClick);
-                } else {
-                    newBtn.addEventListener("click", defaultFunction);
-                }
-
-                buttonParent.appendChild(newBtn);
-            });
-
-            div.appendChild(buttonParent);
-        } else {
-            fadeAlert();
-        }
+    // Title
+    if (titled) {
+        const newTitle = document.createElement("p");
+        newTitle.classList.add("alert-title");
+        newTitle.innerHTML = titleText || "Title";
+        div.appendChild(newTitle);
     }
+
+    // Message
+    if (message) {
+        const newMessage = document.createElement("p");
+        newMessage.classList.add("alert-text", "moveUp");
+        newMessage.innerHTML = message;
+        div.appendChild(newMessage);
+    }
+
+    // Buttons
+    if (closing) {
+        const buttonParent = document.createElement("div");
+        buttonParent.classList.add("button-parents");
+        buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
+
+        if (closingConfig.length >= 3) {
+            buttonParent.style.flexWrap = "wrap";
+        }
+
+        if (closingConfig.length === 0) {
+            const newBtn = document.createElement("button");
+            newBtn.classList.add("alert-button");
+            newBtn.textContent = "Close";
+            newBtn.style.width = arrange === "column" ? "100%" : "160px";
+            newBtn.addEventListener("click", closeAlert);
+            buttonParent.appendChild(newBtn);
+        }
+
+        closingConfig.forEach(cfg => {
+            const { text: btnText, type: btnType, onClick } = cfg;
+            const className = btnType || "primary";
+
+            const newBtn = document.createElement("button");
+            newBtn.classList.add("alert-button", className);
+            newBtn.textContent = btnText || "Close";
+            newBtn.style.width = arrange === "column" ? "100%" : "160px";
+
+            if (onClick === "closeAlert") {
+                newBtn.addEventListener("click", closeAlert);
+            } else if (typeof onClick === "function") {
+                newBtn.addEventListener("click", () => {
+                    onClick();
+                    closeAlert(); // Optionally close alert after custom action
+                });
+            } else {
+                newBtn.addEventListener("click", defaultFunction);
+            }
+
+            buttonParent.appendChild(newBtn);
+        });
+
+        div.appendChild(buttonParent);
+    } else {
+        fadeAlert();
+    }
+
+    parent.appendChild(div);
 }
 
 

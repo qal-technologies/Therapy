@@ -143,65 +143,62 @@ if (userObj && payments) {
   // Render payment cards:
   const paymentsGrid = document.getElementById('paymentsGrid');
   
-  if (payments && payments.length >= 1) {
-
+  if (payments && payments.length > 0) {
     payments.forEach(payment => {
       const paymentCard = document.createElement('div');
       paymentCard.className = 'payment-card';
 
-    
       let statusClass = '';
       if (payment.status === true) statusClass = 'status-completed';
-      else if (payment.status === false) statusClass = 'status-pending';
-      else statusClass = 'status-failed';
+      else if (payment.status === false) statusClass = 'status-failed';
+      else statusClass = 'status-pending'; // Default to pending
 
       paymentCard.innerHTML = `
-                <div class="payment-header">
-                    <span class="payment-code">${payment.id}</span>
-                    <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
-                </div>
-                <div class="payment-type">${payment.title.toUpperCase()}</div>
-                <div class="payment-details">
-                    <div class="payment-detail">
-                        <span class="detail-label">Date:</span>
-                        <span class="detail-value">${new Date(payment.date).toLocaleDateString()}</span>
-                    </div>
-                    <div class="payment-detail">
-                        <span class="detail-label">Amount:</span>
-                        <span class="detail-value">
-                        &euro; ${parseFloat(payment.price).toFixed(2)}</span>
-                    </div>
-                </div>
-            `;
+        <div class="payment-header">
+            <span class="payment-code">${payment.id}</span>
+            <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
+        </div>
+        <div class="payment-type">${payment.title.toUpperCase()}</div>
+        <div class="payment-details">
+            <div class="payment-detail">
+                <span class="detail-label">Date:</span>
+                <span class="detail-value">${new Date(payment.date).toLocaleDateString()}</span>
+            </div>
+            <div class="payment-detail">
+                <span class="detail-label">Amount:</span>
+                <span class="detail-value">&euro;${parseFloat(payment.price).toFixed(2)}</span>
+            </div>
+        </div>
+      `;
 
       paymentCard.addEventListener('click', () => {
         if (payment.status === true) {
           showPayslip(payment);
         } else {
-        
-          if (payment.status == null) {
-            payment.index = payment.method == "paysafe" ? 3 : 1;
-          }
-          if (payment.status == false) {
-            payment.index = payment.method == "paysafe" ? 3 : 1
-          }
-
-          const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
-
-          setTimeout(() => {
-            window.location.href = `/html/main/payment.html?${params}`;
-          }, 1000)
+          // For pending or failed payments, redirect to payment page
+          const params = new URLSearchParams({
+            type: "pending",
+            details: JSON.stringify(payment)
+          }).toString();
+          window.location.href = `/html/main/Payment.html?${params}`;
         }
       });
 
-        paymentsGrid.appendChild(paymentCard)
-
+      paymentsGrid.appendChild(paymentCard);
     });
-  } else if (payments.length < 1) {
+  } else {
+    // Handle no payments
+    paymentsGrid.innerHTML = `
+      <div class="no-payments-message">
+        <p>No payment history yet.</p>
+        <span>When you make a payment, it will appear here.</span>
+      </div>
+    `;
     paymentsGrid.style.display = "flex";
-
-    paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
-  } 
+    paymentsGrid.style.justifyContent = "center";
+    paymentsGrid.style.alignItems = "center";
+    paymentsGrid.style.minHeight = "200px";
+  }
 
   const carts = getCarts();
   const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
