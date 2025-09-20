@@ -944,7 +944,7 @@ function createSafe1() {
                 <img src="/src/images/paysafe.png" alt="Paysafe Logo">
             </div> -->
                 <h2>How to Pay with Paysafecard</h2>
-                <p class="small-text">Simple, Safe & Easy - No Bank Account Needed</p>
+                <p class="small-text">Simple, Safe & Easy - No credit or debit card needed</p>
             </div>
 
             <div class="steps">
