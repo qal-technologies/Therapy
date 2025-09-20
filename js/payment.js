@@ -623,11 +623,10 @@ function fetchResultData(state) {
 
 function savePaymentData(state) {
     const already = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
-
     const title = state.paymentType.toLowerCase() == "session" ? "Booked a session" : "Bought a Book";
     const index = state.selectedMethod.toLowerCase().includes("safe") ? 2 : 1;
 
-    const paymentState = [...already, {
+    const newPayment = {
         id: state.txn,
         paymentType: state.paymentType,
         title: title,
@@ -635,15 +634,27 @@ function savePaymentData(state) {
         currency: state.currencyCode,
         converted: state.toPay,
         method: state.selectedMethod,
-        status: null,
-        statusName: "Pending",
+        status: state.paymentStatus,      
+        statusName: state.paymentStatus ? "Completed" : (state.paymentStatus === false ? "Failed" : "Pending"),
         description: state.details.description,
         date: new Date(),
         index: index,
-    }];
+    };
 
-    const data = JSON.stringify(paymentState);
-    localStorage.setItem("charlotte-payment-data", data);
+    // Find if this transaction already exists
+    let found = false;
+    for (let i = 0; i < already.length; i++) {
+        if (already[i].id === state.txn) {
+            already[i] = { ...already[i], ...newPayment }; // update in place
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        already.push(newPayment); 
+    }
+
+    localStorage.setItem("charlotte-payment-data", JSON.stringify(already));
 }
 
 function getResult(state) {
