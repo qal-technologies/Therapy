@@ -160,9 +160,9 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-        .then((value) => {
-           value ?
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //        value ?
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
@@ -172,12 +172,12 @@ async function handleProceedClick(e, state) {
         button.innerHTML = "Proceed to Payment";
     }, 500)
 
-              :
-              setTimeout(() => {
-                  button.disabled = false;
-                  button.innerHTML = "Proceed to Payment";
-             }, 500)
-      });
+    //           :
+    //           setTimeout(() => {
+    //               button.disabled = false;
+    //               button.innerHTML = "Proceed to Payment";
+    //          }, 500)
+    //   });
 
 }
 
@@ -634,7 +634,7 @@ function savePaymentData(state) {
         currency: state.currencyCode,
         converted: state.toPay,
         method: state.selectedMethod,
-        status: state.paymentStatus,      
+        status: state.paymentStatus,
         statusName: state.paymentStatus ? "Completed" : (state.paymentStatus === false ? "Failed" : "Pending"),
         description: state.details.description,
         date: new Date(),
@@ -651,7 +651,7 @@ function savePaymentData(state) {
         }
     }
     if (!found) {
-        already.push(newPayment); 
+        already.push(newPayment);
     }
 
     localStorage.setItem("charlotte-payment-data", JSON.stringify(already));
@@ -727,7 +727,7 @@ async function handleResults(state, elements) {
 
     elements.paymentDisplay.innerHTML = "";
     elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
-        savePaymentData(state);
+    savePaymentData(state);
 
     const continueBTN = document.querySelector(".continue-btn");
 
@@ -1098,7 +1098,7 @@ async function initializePaymentFlow(e, state, elements) {
 
                 if (payments) {
                     console.log(payments);
-                    
+
                     const pendingPayment = payments.find(payment => {
                         return payment.id === paymentID;
                     });
@@ -1139,14 +1139,14 @@ async function initializePaymentFlow(e, state, elements) {
                     //handleMakePaymentClick(e, state, elements);
 
 
-    elements.paymentDetailsDiv.remove();
+                    elements.paymentDetailsDiv.remove();
 
-    
-    if (pendingPayment.method && pendingPayment.method.toLowerCase().includes("credit")) {
-        handleMakePaymentClick(e, state, elements);
-    } else {
-        handleResults(state, elements);
-    }
+
+                    if (pendingPayment.method && pendingPayment.method.toLowerCase().includes("credit")) {
+                        handleMakePaymentClick(e, state, elements);
+                    } else {
+                        handlePaySafe(state, elements);
+                    }
 
                 }
             } catch (er) {
