@@ -1477,7 +1477,7 @@ Loneliness is not “just in your head”, it impacts mental and physical health
         `,
                 `
 
-Feeling lonely is not a personal failing, it’s a human experience. Nearly everyone feels lonely at some point, and millions feel it right now. It doesn’t mean you’re unlovable or broken; it means you’re human and wired for connection. There is no shame in it. In fact, understanding that loneliness evolved as a signal reminding us we need for others can reframe it as a natural signal (like hunger) rather than a flaw.
+Feeling lonely is not a personal failing, it’s a human experience. Nearly everyone feels lonely at some point, and millions feel it right now. It doesn’t mean you’re unlovable or broken; it means you’re human and wired for connection. There is no shame in it. In fact, understanding that loneliness evolved as a signal reminding us we need others can reframe it as a natural signal (like hunger) rather than a flaw.
 
 <p>
 

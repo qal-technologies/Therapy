@@ -54,10 +54,10 @@ const sessionTypes = [
 			"You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
 		button: "BOOK NOW",
 		bonus: [
-			"BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
-			"BONUS! Exclusive discounts from event sponsors",
+			"BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+			"BONUS! Exclusive discounts from session sponsors",
 			"5+ hours of live online content",
-			"Event recordings and additional resources",
+			"Session recordings and additional resources",
 			"Guided workshops, live polling, and more for interactive learning",
 			"Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
 		]

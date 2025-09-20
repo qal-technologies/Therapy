@@ -21,10 +21,10 @@ const TOPICS_DATA = {
         type: "input",
       }
     ], bonus: [
-      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
-      "BONUS! Exclusive discounts from event sponsors",
+      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+      "BONUS! Exclusive discounts from session sponsors",
       "5+ hours of live online content",
-      "Event recordings and additional resources",
+      "Session recordings and additional resources",
       "Guided workshops, live polling, and more for interactive learning",
       "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
     ]
@@ -41,7 +41,7 @@ const TOPICS_DATA = {
         type: "input"
       },
       {
-        question: "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
+        question: "Would you prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
         type: "button",
         options: ["YES", "NO"]
       },
@@ -159,6 +159,14 @@ function initDropdown(formElement) {
   DOM.chevron = formElement.querySelector('.chevron');
   DOM.formGroup = formElement.querySelector(".form-container .lower");
 
+if (DOM.acceptRadio) {
+  DOM.acceptRadio.checked = true;   
+  DOM.acceptRadio.disabled = true;  
+}
+
+if (DOM.proceed) {
+  DOM.proceed.disabled = true;     
+}
 
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.addEventListener('click', toggleDropdown);
@@ -280,7 +288,6 @@ function nextQuestion(index) {
 }
 
 function showCompletion() {
-
   const session = state.selectedTopic;
   const topic = TOPICS_DATA[session];
 
@@ -295,56 +302,50 @@ function showCompletion() {
     </div>
   `;
 
-  // Update session info
   updateSessionInfo(topic);
-
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
 
   state.completed = true;
 
-  // Get the radio button and proceed button
-DOM.acceptRadio.disabled = false;
-  const proceedButton = DOM.proceed;
+  // Unlock terms checkbox
+  DOM.acceptRadio.disabled = false;
 
-  // Initially disable the proceed button
-  proceedButton.disabled = true;
+  // Sync proceed button to checkbox state
+  DOM.proceed.disabled = !DOM.acceptRadio.checked;
 
-  // Only enable the radio button interaction after completion
-  if (state.completed) {
-    DOM.acceptRadio.addEventListener('change', () => {
-      proceedButton.disabled = !DOM.acceptRadio.checked;
-    });
+  // Make sure to add the listener only once
+  DOM.acceptRadio.addEventListener('change', () => {
+    DOM.proceed.disabled = !DOM.acceptRadio.checked;
+  });
 
-    // Handle proceed button click
-    proceedButton.addEventListener('click', () => {
-      if (!DOM.acceptRadio.checked) return;
+  // Proceed click
+  DOM.proceed.addEventListener('click', () => {
+    if (!DOM.acceptRadio.checked) return;
 
-      const language = navigator.language;
+    const language = navigator.language;
+    const transactionId = `TXN-${Math.random()
+      .toString(36)
+      .substring(2, 10)
+      .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 
-      const transactionId = `TXN-${Math.random()
-        .toString(36)
-        .substring(2, 10)
-        .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+    const session = TOPICS_DATA[state.selectedTopic];
+    const details = {
+      type: "session",
+      description: session.description,
+      title: session.name,
+      price: parseFloat(session.price.replace(',', '')),
+      date: new Date(),
+      transactionId: transactionId,
+    };
 
-      const session = TOPICS_DATA[state.selectedTopic];
-      const details = {
-        type: "session",
-        description: session.description,
-        title: session.name,
-        price: parseFloat(session.price.replace(',', '')),
-        date: new Date(),
-        transactionId: transactionId,
-      };
+    const params = new URLSearchParams({
+      type: "session",
+      details: JSON.stringify(details)
+    }).toString();
 
-      const params = new URLSearchParams({
-        type: "session",
-        details: JSON.stringify(details)
-      }).toString();
-
-      window.location.href = `/html/main/Payment.html?${params}`;
-    });
-  }
+    window.location.href = `/html/main/Payment.html?${params}`;
+  });
 }
 
 
@@ -444,11 +445,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const user = true;
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
-
-if(DOM.acceptRadio){
- DOM.acceptRadio.checked = false;
-DOM.acceptRadio.disabled = true
-}
 
   const urlParams = new URLSearchParams(window.location.search);
 
