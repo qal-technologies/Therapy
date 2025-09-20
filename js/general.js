@@ -456,7 +456,7 @@ function handleAlert(
         if (titled) {
             const newTitle = document.createElement("p");
             newTitle.classList.add("alert-title");
-            newTitle.textContent = titleText || "Title";
+            newTitle.innerHTML = titleText || "Title";
             div.appendChild(newTitle);
         }
 
@@ -474,16 +474,14 @@ function handleAlert(
             buttonParent.classList.add("button-parents");
             buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
 
-
             if (closingConfig.length >= 3) {
                 buttonParent.style.flexWrap = "wrap";
             }
 
-            if (closingConfig.length >= 1) {
-                // default close button if config is empty
+            if (closingConfig.length === 0) {
                 const newBtn = document.createElement("button");
                 newBtn.classList.add("alert-button");
-                newBtn.textContent = closingConfig.length === 0 ? "Close" : closingConfig.toString();
+                newBtn.textContent = "Close";
                 newBtn.style.width = arrange === "column" ? "100%" : "160px";
 
                 newBtn.addEventListener("click", closeAlert);
