@@ -602,24 +602,40 @@ function safeAlerts() {
 
 
 //for fetching data:
-function fetchResultData(state) {
-    const data = JSON.parse(localStorage.getItem("charlotte-page-payment-state"))
-        || {
+async function fetchResultData(state) {
+    const arrays = await JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
+
+    let data = arrays.find(obj => {
+        return obj.id == state.txn;
+    });
+
+    let obj = {
         status: state.paymentStatus,
         message: state.statusMessage,
-    };
-
-    if (data) {
-        localStorage.setItem("charlotte-page-payment-state", JSON.stringify(data));
-
-        state.paymentStatus = data.status;
-        state.statusMessage = data.message;
     }
 
-    return data;
+    if (data) {
+        obj.status = data.status,
+            obj.message = data.statusMessage || "",
+
+            state.paymentStatus = obj.status;
+        state.statusMessage = obj.message;
+
+        localStorage.setItem("charlotte-page-payment-state", JSON.stringify(obj));
+
+        return obj;
+    }
+    console.log(obj);
+    return obj;
 }
 
-function savePaymentData(state) {
+async function savePaymentData(state) {
+    await fetchResultData(state);
+    if (!state.txn) {
+        console.warn("No transaction id in state, skipping to save!");
+        return;
+    }
+
     const already = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
     const title = state.paymentType.toLowerCase() == "session" ? "Booked a session" : "Bought a Book";
     const index = state.selectedMethod.toLowerCase().includes("safe") ? 2 : 1;
@@ -634,11 +650,13 @@ function savePaymentData(state) {
         method: state.selectedMethod,
         status: state.paymentStatus,
         statusName: state.paymentStatus ? "Completed" : (state.paymentStatus === false ? "Failed" : "Pending"),
+        statusMessage: "",
         description: state.details.description,
         date: new Date(),
         index: index,
+
     };
-    
+
     // Find if this transaction already exists
     // let found = false;
     let exists = already.find(obj => {
@@ -660,9 +678,9 @@ function savePaymentData(state) {
     console.log(state.txn);
 }
 
-function getResult(state) {
-    fetchResultData(state);
-    savePaymentData(state);
+async function getResult(state) {
+    await fetchResultData(state);
+    await savePaymentData(state);
 
     const status = state.paymentStatus;
     const message = state.statusMessage;
@@ -679,7 +697,7 @@ function getResult(state) {
                 <i class="${status == true ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'}"></i>
 
                 <h1>${status == true ? 'Payment Successful'
-            : message.toString().includes("incorrect") ? 'Incorrect Code' : "Code Already Used"
+            : message.toString().includes("used") ? 'Code Already Used' : "Incorrect Code"
         } </h1>
             </div>
 
@@ -688,7 +706,7 @@ function getResult(state) {
                 ${status == true ? `Your payment with Paysafecard is complete.
                 </<br/>
                 </<br />
-                Thank you for your trust.`: message.toString().includes("incorrect") ? 'The Paysafecard code you entered is not correct. Please check the digits and try again.' : "The Paysafecode you entered has already been used. Please try a different code."}
+                Thank you for your trust.`: message.toString().includes("used") ? "The Paysafecode you entered has already been used. Please try a different code." : `The Paysafecard code you entered is not correct. Please check the digits and try again.`}
                 </p>
             </div>
 
@@ -704,32 +722,33 @@ function getResult(state) {
 }
 
 let timer = null;
-async function handleResults(state, elements) {
-    let data = fetchResultData(state);
+async function handleResults(state, elements, current) {
+    let data = await fetchResultData(state);
     const status = data.status;
+    let result;
 
-    if (status === null) {
-        if (!timer) {
-            timer = setInterval(() => {
-                data = fetchResultData(state);
-                if (data.status !== null) {
-                    clearInterval(timer);
-                    timer = null;
+    if (!timer) {
+        timer = setInterval(async () => {
+            data = await fetchResultData(state);
+            if (data.status !== null) {
+                clearInterval(timer);
+                timer = null;
 
-                    handleResults(state, elements);
-                }
-            }, 1000);
-        }
-        return;
+                handleResults(state, elements);
+            }
+        }, 1000);
     }
+
+    result = current;
 
     if (timer) {
         clearInterval(timer);
         timer = null;
     }
 
-    const result = getResult(state);
-    
+    if (status == null) {
+        result = await getResult(state);
+    }
     elements.paymentDisplay.innerHTML = "";
     elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
 
@@ -745,15 +764,16 @@ async function handlePaySafe(state, elements) {
 
     const currentSection = state.paySafeSections[state.safeIndex + 1];
 
-    if (state.safeIndex == 2) {
-        await handleResults(state, elements);
+    if (state.safeIndex == 2 && state.pending) {
+        await handleResults(state, elements, currentSection);
         console.log("now for index 2");
 
         console.log(state);
-        savePaymentData(state);
-    }
+        await savePaymentData(state);
+    } else if (currentSection) {
 
-    if (currentSection) {
+        if (state.safeIndex == 2) await savePaymentData(state);
+
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
 
@@ -762,12 +782,13 @@ async function handlePaySafe(state, elements) {
         btns.forEach(btn => btn.addEventListener("click", () => {
 
             btn.disabled = true;
+
             btn.innerHTML = `
                 <div class="spinner-container"><div class="spinner"></div></div>
-                ${state.safeIndex !== 2 ? "Loading..." : "Verifying..."}
+                ${state.safeIndex !== 1 ? "Loading..." : "Verifying..."}
                 `;
             const paymentData = {
-                status: state.paymentStatus || null,
+                status: state.paymentStatus,
                 message: state.statusMessage,
             }
 
@@ -1121,21 +1142,20 @@ async function initializePaymentFlow(e, state, elements) {
                         handleAlert(`Your payment with ID: ${paymentID} has been approved!`, "toast")
                     }
 
-                    
-                    state.txn = paymentID || state.details.id || state.details.transactionId;
+
+                    state.txn = paymentID || pendingPayment.id;
                     state.pending = true;
                     state.selectedMethod = pendingPayment?.method || "paysafe";
                     state.amount = pendingPayment?.price;
                     state.toPay = pendingPayment?.converted;
                     state.currencyCode = pendingPayment?.currency || "EUR";
                     state.paymentStatus = pendingPayment?.status;
-                    
+                    state.statusMessage = pendingPayment?.statusMessage || "";
+
                     const indexName = pendingPayment.method == "bank" ? "creditCard" : "safe";
                     state.pendingIndex = `${indexName}Index`;
 
                     state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : pendingPayment.index;
-
-                    console.log(state);
 
                     elements.paymentDetailsDiv.remove();
 
@@ -1151,7 +1171,7 @@ async function initializePaymentFlow(e, state, elements) {
             }
         }
 
-        state.txn = details.transactionId;
+        state.txn = details.transactionId || details.id;
         state.amount = amount;
 
         state.details.price = amount;
