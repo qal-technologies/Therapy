@@ -608,7 +608,6 @@ function fetchResultData(state) {
         status: state.paymentStatus,
         message: state.statusMessage,
     };
-    console.log("data fetched => ", data);
 
     if (data) {
         localStorage.setItem("charlotte-page-payment-state", JSON.stringify(data));
@@ -616,7 +615,6 @@ function fetchResultData(state) {
         state.paymentStatus = data.status;
         state.statusMessage = data.message;
     }
-    console.log("data changed => ", data);
 
     return data;
 }
@@ -627,7 +625,7 @@ function savePaymentData(state) {
     const index = state.selectedMethod.toLowerCase().includes("safe") ? 2 : 1;
 
     const newPayment = {
-        id: state.txn,
+        id: state.txn || state.details.id || state.details.transactionId,
         paymentType: state.paymentType,
         title: title,
         price: state.amount,
@@ -640,25 +638,32 @@ function savePaymentData(state) {
         date: new Date(),
         index: index,
     };
-
+    
     // Find if this transaction already exists
-    let found = false;
-    for (let i = 0; i < already.length; i++) {
-        if (already[i].id === state.txn) {
-            already[i] = { ...already[i], ...newPayment }; // update in place
-            found = true;
-            break;
-        }
-    }
-    if (!found) {
+    // let found = false;
+    let exists = already.find(obj => {
+        return obj.id === state.txn;
+    });
+    if (exists) {
+        exists = { ...exists, ...newPayment };
+        console.log("found!");
+
+    } else if (!exists) {
         already.push(newPayment);
+
+        console.log("Not found!");
+
     }
 
     localStorage.setItem("charlotte-payment-data", JSON.stringify(already));
+    console.log(already);
+    console.log(state.txn);
 }
 
 function getResult(state) {
     fetchResultData(state);
+    savePaymentData(state);
+
     const status = state.paymentStatus;
     const message = state.statusMessage;
 
@@ -724,10 +729,9 @@ async function handleResults(state, elements) {
     }
 
     const result = getResult(state);
-
+    
     elements.paymentDisplay.innerHTML = "";
     elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
-    savePaymentData(state);
 
     const continueBTN = document.querySelector(".continue-btn");
 
@@ -924,7 +928,7 @@ function createSafe1() {
 
             <div class="steps">
                 <div class="step">
-                    <img src="/src/svg/bag-smile-svgrepo-com.svg" class="bi bi-bag-fill" alt=""/>
+                    <img src="/src/images/card.jpg" class="bi bi-bag-fill" alt=""/>
                     <div class="step-text">
 
                         <p class="step-header">Step 1: <br />
@@ -938,7 +942,7 @@ function createSafe1() {
                 </div>
 
                 <div class="step">
-                    <img src="/src/svg/receipt-page-svgrepo-com.svg"  class="bi bi-receipt" alt=""/>
+                    <img src="/src/images/receipt.jpg"  class="bi bi-receipt" alt=""/>
                     <div class="step-text">
                 
                         <p class="step-header">Step 2: <br />
@@ -953,7 +957,7 @@ This code is your money. Keep it safe, just like cash.
                 </div>
 
                 <div class="step">
-                   <img src="/src/svg/mobile-phone-protection-svgrepo-com.svg" class="bi bi-file-lock2" alt="phone image"/>
+                   <img src="/src/images/phone.jpg" class="bi bi-file-lock2" alt="phone image"/>
                     <div class="step-text">
                 
                         <p class="step-header">Step 3: <br />
@@ -1093,7 +1097,6 @@ async function initializePaymentFlow(e, state, elements) {
         // console.log(details);
         if (paymentType === "pending") {
             try {
-
                 const paymentID = details.id;
 
                 if (payments) {
@@ -1118,15 +1121,15 @@ async function initializePaymentFlow(e, state, elements) {
                         handleAlert(`Your payment with ID: ${paymentID} has been approved!`, "toast")
                     }
 
-                    state.txn = paymentID;
+                    
+                    state.txn = paymentID || state.details.id || state.details.transactionId;
                     state.pending = true;
                     state.selectedMethod = pendingPayment?.method || "paysafe";
                     state.amount = pendingPayment?.price;
                     state.toPay = pendingPayment?.converted;
                     state.currencyCode = pendingPayment?.currency || "EUR";
                     state.paymentStatus = pendingPayment?.status;
-
-
+                    
                     const indexName = pendingPayment.method == "bank" ? "creditCard" : "safe";
                     state.pendingIndex = `${indexName}Index`;
 
@@ -1134,18 +1137,12 @@ async function initializePaymentFlow(e, state, elements) {
 
                     console.log(state);
 
-                    //elements.paymentDetailsDiv.remove();
-
-                    //handleMakePaymentClick(e, state, elements);
-
-
                     elements.paymentDetailsDiv.remove();
-
 
                     if (pendingPayment.method && pendingPayment.method.toLowerCase().includes("credit")) {
                         handleMakePaymentClick(e, state, elements);
                     } else {
-                        handlePaySafe(state, elements);
+                        await handlePaySafe(state, elements);
                     }
 
                 }
