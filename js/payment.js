@@ -1134,9 +1134,20 @@ async function initializePaymentFlow(e, state, elements) {
 
                     console.log(state);
 
-                    elements.paymentDetailsDiv.remove();
+                    //elements.paymentDetailsDiv.remove();
 
-                    handleMakePaymentClick(e, state, elements);
+                    //handleMakePaymentClick(e, state, elements);
+
+
+    elements.paymentDetailsDiv.remove();
+
+    
+    if (pendingPayment.method && pendingPayment.method.toLowerCase().includes("credit")) {
+        handleMakePaymentClick(e, state, elements);
+    } else {
+        handleResults(state, elements);
+    }
+
                 }
             } catch (er) {
                 console.error(er);
