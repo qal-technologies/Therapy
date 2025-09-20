@@ -24,78 +24,72 @@ function getCurrencySymbol(currencyCode) {
 }
 
 function getPayments() {
-  const demoPayments = [
-    {
-      id: "TXN-1239796-GR",
-      paymentType: "session",
-      title: 'Inner Circle',
-      price: "200.00",
-      currency: "AUD",
-      converted: "189",
-      method: "creditCard",
-      status: true,
-      statusName: "Completed",
-      senderName: "Paschal Ngaoka",
-      date: new Date(2024, 5, 4),
-      description: "Premium healing experience",
-      index: 1,
-    }, {
-      id: "TXN-149656-GR",
-      paymentType: "book",
-      title: 'Best Therapy Book',
-      price: '550.00',
-      currency: "CHF",
-      converted: "790",
-      method: "paysafe",
-      status: false,
-      statusName: "Failed",
-      senderName: "John Doe",
-      date: new Date(2025, 4, 10),
-      description: "Best relief book you'll ever read",
-      index: 2,
-    }, {
-      id: "TXN-123456-EN",
-      paymentType: "session",
-      title: 'Virtual Session',
-      price: '800.00',
-      currency: "EUR",
-      converted: "1200.00",
-      method: "creditCard",
-      status: null,
-      statusName: "Pending",
-      senderName: "Lucy Jay",
-      description: '1-hour virtual healing session',
-      date: new Date(2025, 2, 1),
-      index: 1
-    }, {
-      id: 'TXN-03964283-ES',
-      paymentType: 'session',
-      title: 'In-Person Session',
-      price: '1600.00',
-      currency: "CHF",
-      converted: "2400",
-      method: "paysafe",
-      status: true,
-      statusName: 'Completed',
-      senderName: "Johnson Alfred",
-      description: '2-hour in-person session in Monaco',
-      date: new Date(2023, 6, 2),
-      index: 2
-    },
-  ];
+  // const demoPayments = [
+  //   {
+  //     id: "TXN-1239796-GR",
+  //     paymentType: "session",
+  //     title: 'Inner Circle',
+  //     price: "200.00",
+  //     currency: "AUD",
+  //     converted: "189",
+  //     method: "creditCard",
+  //     status: true,
+  //     statusName: "Completed",
+  //     senderName: "Paschal Ngaoka",
+  //     date: new Date(2024, 5, 4),
+  //     description: "Premium healing experience",
+  //     index: 1,
+  //   }, {
+  //     id: "TXN-149656-GR",
+  //     paymentType: "book",
+  //     title: 'Best Therapy Book',
+  //     price: '550.00',
+  //     currency: "CHF",
+  //     converted: "790",
+  //     method: "paysafe",
+  //     status: false,
+  //     statusName: "Failed",
+  //     senderName: "John Doe",
+  //     date: new Date(2025, 4, 10),
+  //     description: "Best relief book you'll ever read",
+  //     index: 2,
+  //   }, {
+  //     id: "TXN-123456-EN",
+  //     paymentType: "session",
+  //     title: 'Virtual Session',
+  //     price: '800.00',
+  //     currency: "EUR",
+  //     converted: "1200.00",
+  //     method: "creditCard",
+  //     status: null,
+  //     statusName: "Pending",
+  //     senderName: "Lucy Jay",
+  //     description: '1-hour virtual healing session',
+  //     date: new Date(2025, 2, 1),
+  //     index: 1
+  //   }, {
+  //     id: 'TXN-03964283-ES',
+  //     paymentType: 'session',
+  //     title: 'In-Person Session',
+  //     price: '1600.00',
+  //     currency: "CHF",
+  //     converted: "2400",
+  //     method: "paysafe",
+  //     status: true,
+  //     statusName: 'Completed',
+  //     senderName: "Johnson Alfred",
+  //     description: '2-hour in-person session in Monaco',
+  //     date: new Date(2023, 6, 2),
+  //     index: 2
+  //   },
+  // ];
 
   try {
-    const fetchedPayment = localStorage.getItem("payments");
+    const fetchedPayment = localStorage.getItem("charlotte-payment-data");
 
     let output;
     if (fetchedPayment ) {
       output = JSON.parse(fetchedPayment);
-
-    } else {
-      output = demoPayments;
-
-      const saved = JSON.stringify(demoPayments)
-      localStorage.setItem("payments", saved);
     }
     
     return output;
@@ -149,17 +143,19 @@ if (userObj && payments) {
   // Render payment cards:
   const paymentsGrid = document.getElementById('paymentsGrid');
   
-  payments.forEach(payment => {
-    const paymentCard = document.createElement('div');
-    paymentCard.className = 'payment-card';
+  if (payments && payments.length >= 1) {
+
+    payments.forEach(payment => {
+      const paymentCard = document.createElement('div');
+      paymentCard.className = 'payment-card';
 
     
-    let statusClass = '';
-    if (payment.status === true) statusClass = 'status-completed';
-    else if (payment.status === false) statusClass = 'status-pending';
-    else statusClass = 'status-failed';
+      let statusClass = '';
+      if (payment.status === true) statusClass = 'status-completed';
+      else if (payment.status === false) statusClass = 'status-pending';
+      else statusClass = 'status-failed';
 
-    paymentCard.innerHTML = `
+      paymentCard.innerHTML = `
                 <div class="payment-header">
                     <span class="payment-code">${payment.id}</span>
                     <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
@@ -178,38 +174,38 @@ if (userObj && payments) {
                 </div>
             `;
 
-    paymentCard.addEventListener('click', () => {
-      if (payment.status === true) {
-        showPayslip(payment);
-      } else {
+      paymentCard.addEventListener('click', () => {
+        if (payment.status === true) {
+          showPayslip(payment);
+        } else {
         
           if (payment.status == null) {
-           payment.index = payment.method == "paysafe" ? 3 : 1;
+            payment.index = payment.method == "paysafe" ? 3 : 1;
           }
           if (payment.status == false) {
             payment.index = payment.method == "paysafe" ? 3 : 1
           }
 
-        const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment)}).toString();
+          const params = new URLSearchParams({ type: "pending", details: JSON.stringify(payment) }).toString();
 
-        setTimeout(() => {
-          window.location.href = `/html/main/payment.html?${params}`;
-        }, 1000)
-      }
+          setTimeout(() => {
+            window.location.href = `/html/main/payment.html?${params}`;
+          }, 1000)
+        }
+      });
+
+        paymentsGrid.appendChild(paymentCard)
+
     });
+  } else if (payments.length < 1) {
+    paymentsGrid.style.display = "flex";
 
-    if (payments.length < 1) {
-      paymentsGrid.style.display = "flex";
-
-      paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
-    } else {
-      paymentsGrid.appendChild(paymentCard)
-    }
-  });
+    paymentsGrid.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; font-family:PoppinsSemi; color:gray;">No Payment Yet</p>`
+  } 
 
   const carts = getCarts();
   const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
-    count.innerHTML = carts.length || 0;
+    count.innerHTML = carts?.length || 0;
   });
 
   const closeModal = document.getElementById('closeModal');

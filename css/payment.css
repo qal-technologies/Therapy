@@ -1955,7 +1955,6 @@ ul.instructions.redeem li {
     font-size: 70px;
     width: 70px;
     height: 70px;
-    border: 2px solid red;
 }
 
 .paysafe-section .outcome-section h1 {
@@ -1991,13 +1990,14 @@ ul.instructions.redeem li {
     gap: 6px;
     color: hsla(10, 0%, 20%);
     text-align: left;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 13px;
+    line-height: 15px;
     align-items: flex-start;
 }
 
 .steps .step .step-text .step-header {
     font-weight: bolder;
+    font-family: PoppinsSemi;
     font-size: 1.2rem;
     line-height: 1.3rem;
     color: black;
@@ -2016,6 +2016,14 @@ ul.instructions.redeem li {
     background: var(--link);
     opacity: 0.8;
     transition: all ease 400ms;
+}
+
+.paysafe-section .continue-btn.try-again {
+    background: red;
+}
+
+.paysafe-section .continue-btn.success{
+    background: rgb(0, 184, 0);
 }
 
 .paysafe-section .continue-btn:hover {

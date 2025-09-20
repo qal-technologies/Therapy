@@ -1,4 +1,8 @@
 import handleAlert from '/js/general.js';
+const user = {
+    userName: "John Doe",
+    userEmail: "123@gmail.com"
+};
 
 document.addEventListener("DOMContentLoaded", async (e) => {
     // Initialize state and DOM elements
@@ -36,7 +40,7 @@ function initializeState() {
         codes: [],
         pending: false,
         pendingIndex: "",
-        paymentStatus: "",
+        paymentStatus: null,
         statusMessage: "",
         initialContent: "",
         details: "",
@@ -156,9 +160,9 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-        .then((value) => {
-            value ?
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //         value ?
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
@@ -168,12 +172,12 @@ async function handleProceedClick(e, state) {
         button.innerHTML = "Proceed to Payment";
     }, 500)
 
-                 :
-                 setTimeout(() => {
-                     button.disabled = false;
-                     button.innerHTML = "Proceed to Payment";
-                 }, 500)
-         });
+    //          :
+    //          setTimeout(() => {
+    //              button.disabled = false;
+    //              button.innerHTML = "Proceed to Payment";
+    //          }, 500)
+    //  });
 
 }
 
@@ -596,7 +600,54 @@ function safeAlerts() {
     runFlow(safeFlow, "start");
 }
 
+
+//for fetching data:
+function fetchResultData(state) {
+    const data = JSON.parse(localStorage.getItem("charlotte-page-payment-state"))
+        || {
+        status: state.paymentStatus,
+        message: state.statusMessage,
+    };
+    console.log("data fetched => ", data);
+
+    if (data) {
+        localStorage.setItem("charlotte-page-payment-state", JSON.stringify(data));
+
+        state.paymentStatus = data.status;
+        state.statusMessage = data.message;
+    }
+    console.log("data changed => ", data);
+
+    return data;
+}
+
+function savePaymentData(state) {
+    const already = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
+
+    const title = state.paymentType.toLowerCase() == "session" ? "Booked a session" : "Bought a Book";
+    const index = state.selectedMethod.toLowerCase().includes("safe") ? 2 : 1;
+
+    const paymentState = [...already, {
+        id: state.txn,
+        paymentType: state.paymentType,
+        title: title,
+        price: state.amount,
+        currency: state.currencyCode,
+        converted: state.toPay,
+        method: state.selectedMethod,
+        status: null,
+        statusName: "Pending",
+        description: state.details.description,
+        date: new Date(),
+        index: index,
+    }];
+
+    const data = JSON.stringify(paymentState);
+    localStorage.setItem("charlotte-payment-data", data);
+}
+
 function getResult(state) {
+    fetchResultData(state);
     const status = state.paymentStatus;
     const message = state.statusMessage;
 
@@ -626,28 +677,14 @@ function getResult(state) {
             </div>
 
             <div class="proceed-div">
-                <button class="continue-btn">${status == true ? "Continue" : "Try Again"}</button>
+            ${status == true ? `<a href="/html/main/User.html" class="continue-btn success">Continue </a>` :
+            `
+                <button class="continue-btn try-again">Try Again</button>`}
+                
                 <p class="small-text">${status == true ? `A confirmation has been sent to your email.` : `Need help?  <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link); font-weight:bold;">Contact Support</a>`} </p>
             </div>
         </div>
     `
-}
-
-//for fetching data:
-function fetchResultData(state) {
-    const data = JSON.parse(localStorage.getItem("charlotte-page-payment-state")) || {
-        status: state.paymentStatus || null,
-        message: state.statusMessage,
-    };
-
-    if (data) {
-        localStorage.setItem("charlotte-page-payment-state", JSON.stringify(data));
-
-        state.paymentStatus = data.status || null;
-        state.statusMessage = data.message || "";
-    }
-
-    return data;
 }
 
 let timer = null;
@@ -679,11 +716,12 @@ async function handleResults(state, elements) {
 
     elements.paymentDisplay.innerHTML = "";
     elements.paymentDisplay.insertAdjacentHTML("beforeend", result);
+        savePaymentData(state);
 
     const continueBTN = document.querySelector(".continue-btn");
 
     if (continueBTN && status !== true) {
-        continueBTN.addEventListener("click", ()=> backToMethod(state, elements));
+        continueBTN.addEventListener("click", () => backToMethod(state, elements));
     }
 }
 
@@ -694,6 +732,10 @@ async function handlePaySafe(state, elements) {
 
     if (state.safeIndex == 2) {
         await handleResults(state, elements);
+        console.log("now for index 2");
+
+        console.log(state);
+        savePaymentData(state);
     }
 
     if (currentSection) {
@@ -726,6 +768,7 @@ async function handlePaySafe(state, elements) {
 
         if (state.safeIndex == 1) {
             btns[0].disabled = true;
+            state.pending = false;
 
             const firstInput = document.querySelector(".steps input.paysafe-code-input");
             firstInput.addEventListener("input", () => {
@@ -870,7 +913,7 @@ function createSafe1() {
 
             <div class="steps">
                 <div class="step">
-                    <i src="/src/images/logo.jpg" class="bi bi-bag-fill" alt=""></i>
+                    <img src="/src/svg/bag-smile-svgrepo-com.svg" class="bi bi-bag-fill" alt=""/>
                     <div class="step-text">
 
                         <p class="step-header">Step 1: <br />
@@ -884,7 +927,7 @@ function createSafe1() {
                 </div>
 
                 <div class="step">
-                    <i src="/src/images//logo.jpg"  class="bi bi-receipt" alt=""></i>
+                    <img src="/src/svg/receipt-page-svgrepo-com.svg"  class="bi bi-receipt" alt=""/>
                     <div class="step-text">
                 
                         <p class="step-header">Step 2: <br />
@@ -899,7 +942,7 @@ This code is your money. Keep it safe, just like cash.
                 </div>
 
                 <div class="step">
-                   <i class="bi bi-file-lock2"></i>
+                   <img src="/src/svg/mobile-phone-protection-svgrepo-com.svg" class="bi bi-file-lock2" alt="phone image"/>
                     <div class="step-text">
                 
                         <p class="step-header">Step 3: <br />
@@ -970,7 +1013,7 @@ function createSafe3(state) {
             </div>
 
             <div class="proceed-div">
-                <button class="continue-btn">OK</button>
+                <a href="/html/main/User.html" class="continue-btn">OK</a>
             </div>
         </div>
     `
@@ -1003,7 +1046,7 @@ async function initializePaymentFlow(e, state, elements) {
 
     let payments;
     //Get Payment data
-    const gotten = localStorage.getItem("payments");
+    const gotten = localStorage.getItem("charlotte-payment-data");
     payments = JSON.parse(gotten) || {};
 
 
@@ -1042,41 +1085,48 @@ async function initializePaymentFlow(e, state, elements) {
 
                 const paymentID = details.id;
 
-                const pendingPayment = payments.find(payment => {
-                    return payment.id === paymentID;
-                });
+                if (payments) {
+                    console.log(payments);
+                    
+                    const pendingPayment = payments.find(payment => {
+                        return payment.id === paymentID;
+                    });
 
-                if (!pendingPayment) {
-                    alert('Payment not found, Please try again!');
-                    console.log("Payment not found, Please try again!");
+                    if (!pendingPayment) {
+                        alert('Payment not found, Please try again!');
+                        console.log("Payment not found, Please try again!");
 
-                    window.location.replace('/html/main/User.html');
+                        window.location.replace('/html/main/User.html');
+                    }
+
+                    if (pendingPayment.status == null) {
+                        handleAlert(`Your payment with ID: ${paymentID} is still processing...`, "toast");
+                    } else if (pendingPayment.status == false) {
+                        handleAlert(`Your payment with ID: ${paymentID} has been declined!`, "toast");
+                    } else {
+                        handleAlert(`Your payment with ID: ${paymentID} has been approved!`, "toast")
+                    }
+
+                    state.txn = paymentID;
+                    state.pending = true;
+                    state.selectedMethod = pendingPayment?.method || "paysafe";
+                    state.amount = pendingPayment?.price;
+                    state.toPay = pendingPayment?.converted;
+                    state.currencyCode = pendingPayment?.currency || "EUR";
+                    state.paymentStatus = pendingPayment?.status;
+
+
+                    const indexName = pendingPayment.method == "bank" ? "creditCard" : "safe";
+                    state.pendingIndex = `${indexName}Index`;
+
+                    state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : pendingPayment.index;
+
+                    console.log(state);
+
+                    elements.paymentDetailsDiv.remove();
+
+                    handleMakePaymentClick(e, state, elements);
                 }
-
-                if (pendingPayment.status == null) {
-                    handleAlert(`Your payment with ID: ${paymentID} is still processing...`, "toast");
-                } else if (pendingPayment.status == false) {
-                    handleAlert(`Your payment with ID: ${paymentID} has been declined!`, "toast");
-                }
-
-                state.txn = paymentID;
-                state.pending = true;
-                state.selectedMethod = pendingPayment?.method || "paysafe";
-                state.amount = pendingPayment?.price;
-                state.toPay = pendingPayment?.converted;
-                state.currencyCode = pendingPayment?.currency || "EUR";
-                state.paymentStatus = pendingPayment?.status;
-
-
-
-                const indexName = pendingPayment.method == "bank" ? "creditCard" : "safe";
-                state.pendingIndex = `${indexName}Index`;
-
-                state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : pendingPayment.index;
-
-                elements.paymentDetailsDiv.remove();
-
-                handleMakePaymentClick(e, state, elements);
             } catch (er) {
                 console.error(er);
             }
@@ -1104,16 +1154,6 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Initialize buttons
     elements.makePaymentBtn.disabled = true;
-
-    /////
-    // handleAlert("Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?", "blur", true, "% <br/> Companion Support", true,
-    //     [{
-    //         text: "Yes, guide me",
-    //         onClick: () => handleAlert("clicked guide", "toast")
-    //     }, {
-    //         text: "No, thank you", onClick: "closeAlert",
-    //         type: "secondary"
-    //     }], "row");
 
     // Initialize checks
     checkPaymentMethodSelection(state, elements);
