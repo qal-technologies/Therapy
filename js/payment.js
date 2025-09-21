@@ -160,9 +160,9 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-        .then((value) => {
-           value ?
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //        value ?
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
@@ -172,12 +172,12 @@ async function handleProceedClick(e, state) {
         button.innerHTML = "Proceed to Payment";
     }, 500)
 
-              :
-              setTimeout(() => {
-                  button.disabled = false;
-                  button.innerHTML = "Proceed to Payment";
-             }, 500)
-      });
+    //           :
+    //           setTimeout(() => {
+    //               button.disabled = false;
+    //               button.innerHTML = "Proceed to Payment";
+    //          }, 500)
+    //   });
 
 }
 
@@ -615,10 +615,10 @@ async function fetchResultData(state) {
     }
 
     if (data) {
-        obj.status = data.status,
-            obj.message = data.statusMessage || "",
+        obj.status = data.status;
+        obj.message = data.statusMessage || "";
 
-            state.paymentStatus = obj.status;
+        state.paymentStatus = obj.status;
         state.statusMessage = obj.message;
 
         localStorage.setItem("charlotte-page-payment-state", JSON.stringify(obj));
@@ -661,9 +661,8 @@ async function savePaymentData(state) {
 
     if (existingPaymentIndex > -1) {
         const existingPayment = already[existingPaymentIndex];
-        let updated = false;
 
-        // Iterate over the new payment's keys and update only if the value has changed
+        let updated = false;
         for (const key in newPayment) {
             if (Object.hasOwnProperty.call(newPayment, key)) {
                 if (existingPayment[key] !== newPayment[key]) {
@@ -679,7 +678,6 @@ async function savePaymentData(state) {
             console.log("No changes to update for payment:", newPayment.id);
         }
     } else {
-        // New payment, add it to the array
         already.push(newPayment);
         console.log("New payment added:", newPayment.id);
     }
@@ -691,8 +689,8 @@ async function savePaymentData(state) {
 
 async function getResult(state) {
     await fetchResultData(state);
-    await savePaymentData(state);
-
+    await savePaymentData(state)
+    // .then(() => {
     const status = state.paymentStatus;
     const message = state.statusMessage;
 
@@ -730,6 +728,8 @@ async function getResult(state) {
             </div>
         </div>
     `
+    // });
+
 }
 
 let timer = null;
@@ -757,7 +757,7 @@ async function handleResults(state, elements, current) {
         timer = null;
     }
 
-    if (status == null) {
+    if (status !== null) {
         result = await getResult(state);
     }
     elements.paymentDisplay.innerHTML = "";

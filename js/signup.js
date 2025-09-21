@@ -82,7 +82,7 @@ const TEMPLATE = {
 
       <div class="bottom privacy">
         <div class="privacy-policy">
-        <input type="radio" name="accept" id="accept">
+        <input type="radio" name="accept" id="accept" checked>
           <p class="text">
             I agree to the <a href="/html/main/Privacy.html" class="view">Terms of Service</a> and <a href="/html/main/Privacy.html"
               class="view">Privacy Policy</a>

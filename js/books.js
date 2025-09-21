@@ -159,7 +159,7 @@ I owe thanks to many who made this book possible:
 `,
                 `
 <p>
-<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at <i>AnOther Magazine, Above,</i> and <i>The Independent</i>; Chanel’s communications team, for believing in my voice; the editors at Éditions du Seuil, who brought <i>Archipel des Passions</i> to life.
+<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at <i>Another Magazine, Above,</i> and <i>The Independent</i>; Chanel’s communications team, for believing in my voice; the editors at Éditions du Seuil, who brought <i>Archipel des Passions</i> to life.
 </p>
 
 <p>
@@ -6521,7 +6521,7 @@ Other Works by the Author
 
 <p>
 <b>Ever Bamboo</b> (2011, second issue of Ever Manifesto)
-(Note: Charlotte has written numerous articles for The Independent and AnOther Magazine and often pens prefaces for philosophical works.)
+(Note: Charlotte has written numerous articles for The Independent and Another Magazine and often pens prefaces for philosophical works.)
 </p>
             `,
                 `<div  class="cover-page"><p> This is the end page</p></div>`,
