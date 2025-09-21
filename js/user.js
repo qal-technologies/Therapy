@@ -24,74 +24,82 @@ function getCurrencySymbol(currencyCode) {
 }
 
 function getPayments() {
-  // const demoPayments = [
-  //   {
-  //     id: "TXN-1239796-GR",
-  //     paymentType: "session",
-  //     title: 'Inner Circle',
-  //     price: "200.00",
-  //     currency: "AUD",
-  //     converted: "189",
-  //     method: "creditCard",
-  //     status: true,
-  //     statusName: "Completed",
-  //     senderName: "Paschal Ngaoka",
-  //     date: new Date(2024, 5, 4),
-  //     description: "Premium healing experience",
-  //     index: 1,
-  //   }, {
-  //     id: "TXN-149656-GR",
-  //     paymentType: "book",
-  //     title: 'Best Therapy Book',
-  //     price: '550.00',
-  //     currency: "CHF",
-  //     converted: "790",
-  //     method: "paysafe",
-  //     status: false,
-  //     statusName: "Failed",
-  //     senderName: "John Doe",
-  //     date: new Date(2025, 4, 10),
-  //     description: "Best relief book you'll ever read",
-  //     index: 2,
-  //   }, {
-  //     id: "TXN-123456-EN",
-  //     paymentType: "session",
-  //     title: 'Virtual Session',
-  //     price: '800.00',
-  //     currency: "EUR",
-  //     converted: "1200.00",
-  //     method: "creditCard",
-  //     status: null,
-  //     statusName: "Pending",
-  //     senderName: "Lucy Jay",
-  //     description: '1-hour virtual healing session',
-  //     date: new Date(2025, 2, 1),
-  //     index: 1
-  //   }, {
-  //     id: 'TXN-03964283-ES',
-  //     paymentType: 'session',
-  //     title: 'In-Person Session',
-  //     price: '1600.00',
-  //     currency: "CHF",
-  //     converted: "2400",
-  //     method: "paysafe",
-  //     status: true,
-  //     statusName: 'Completed',
-  //     senderName: "Johnson Alfred",
-  //     description: '2-hour in-person session in Monaco',
-  //     date: new Date(2023, 6, 2),
-  //     index: 2
-  //   },
-  // ];
+  const demoPayments = [
+    {
+      id: "TXN-1239796-GR",
+      paymentType: "session",
+      title: 'Inner Circle',
+      price: "200.00",
+      currency: "AUD",
+      converted: "189",
+      method: "creditCard",
+      status: true,
+      statusName: "Completed",
+      senderName: "Paschal Ngaoka",
+      date: new Date(2024, 5, 4),
+      description: "Premium healing experience",
+      index: 1,
+      statusMessage: "",
+    }, {
+      id: "TXN-149656-GR",
+      paymentType: "book",
+      title: 'Best Therapy Book',
+      price: '550.00',
+      currency: "CHF",
+      converted: "790",
+      method: "paysafe",
+      status: false,
+      statusName: "Failed",
+      senderName: "John Doe",
+      date: new Date(2025, 4, 10),
+      description: "Best relief book you'll ever read",
+      index: 2,
+      statusMessage: "used",
+    }, {
+      id: "TXN-123456-EN",
+      paymentType: "session",
+      title: 'Virtual Session',
+      price: '800.00',
+      currency: "EUR",
+      converted: "1200.00",
+      method: "paysafe",
+      status: null,
+      statusName: "Pending",
+      senderName: "Lucy Jay",
+      description: '1-hour virtual healing session',
+      date: new Date(2025, 2, 1),
+      index: 1,
+      statusMessage: "",
+    }, {
+      id: 'TXN-03964283-ES',
+      paymentType: 'session',
+      title: 'In-Person Session',
+      price: '1600.00',
+      currency: "CHF",
+      converted: "2400",
+      method: "paysafe",
+      status: false,
+      statusName: 'FAILED',
+      senderName: "Johnson Alfred",
+      description: '2-hour in-person session in Monaco',
+      date: new Date(2023, 6, 2),
+      index: 2,
+      statusMessage: "incorrect",
+    },
+  ];
 
   try {
+    localStorage.clear();
+    localStorage.setItem("charlotte-payment-data", JSON.stringify(demoPayments));
+
+
     const fetchedPayment = localStorage.getItem("charlotte-payment-data");
 
     let output;
-    if (fetchedPayment ) {
+    if (fetchedPayment) {
       output = JSON.parse(fetchedPayment);
     }
-    
+
     return output;
   } catch (error) {
     console.error(`An Error occured while fetching your payment history - ${error}`);
@@ -142,21 +150,22 @@ if (userObj && payments) {
 
   // Render payment cards:
   const paymentsGrid = document.getElementById('paymentsGrid');
-  
+
   if (payments && payments.length > 0) {
     payments.forEach(payment => {
       const paymentCard = document.createElement('div');
       paymentCard.className = 'payment-card';
 
       let statusClass = '';
-      if (payment.status === true) statusClass = 'status-completed';
-      else if (payment.status === false) statusClass = 'status-failed';
-      else statusClass = 'status-pending'; // Default to pending
+      let statusName = '';
+      if (payment.status === true) (statusClass = 'status-completed', statusName = "Completed");
+      else if (payment.status === false) (statusClass = 'status-failed', statusName = "Failed");
+      else (statusClass = 'status-pending', statusName = "Pending");
 
       paymentCard.innerHTML = `
         <div class="payment-header">
             <span class="payment-code">${payment.id}</span>
-            <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
+            <span class="payment-status ${statusClass}">${statusName.toUpperCase()}</span>
         </div>
         <div class="payment-type">${payment.title.toUpperCase()}</div>
         <div class="payment-details">
@@ -173,7 +182,7 @@ if (userObj && payments) {
 
       paymentCard.addEventListener('click', () => {
         if (payment.status === true) {
-          showPayslip(payment);
+          showPayslip(payment, statusName);
         } else {
           // For pending or failed payments, redirect to payment page
           const params = new URLSearchParams({
@@ -207,14 +216,14 @@ if (userObj && payments) {
 
   const closeModal = document.getElementById('closeModal');
 
-  function showPayslip(payment) {
+  function showPayslip(payment, className) {
     const icon = document.getElementById('icon');
-    icon.classList.add(`${payment.statusName.toLowerCase()}`);
+    icon.classList.add(`${className.toLowerCase()}`);
     icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle-fill"
 								viewBox="0 0 16 16">
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-							</svg> ${payment.statusName.toUpperCase()}`;
+							</svg> ${className.toUpperCase()}`;
     const symbol = getCurrencySymbol(payment.currency)
 
     document.getElementById('receiptId').textContent = payment.id;
@@ -223,7 +232,7 @@ if (userObj && payments) {
     document.getElementById('receiptMethod').textContent = payment.method;
     document.getElementById('receiptCurrency').textContent = payment.currency;
     document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-    document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
+    document.getElementById('receiptStatus').textContent = className.charAt(0).toUpperCase() + className.slice(1);
     document.getElementById('receiptDescription').textContent = payment.description;
     document.getElementById('receiptDate').textContent = 'Date: ' + new Date(payment.date).toLocaleDateString();
 

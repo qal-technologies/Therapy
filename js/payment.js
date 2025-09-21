@@ -607,7 +607,7 @@ function getPaymentById(txnId) {
     return allPayments.find(p => p.id === txnId);
 }
 
- 
+
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function pollForPaymentStatus(txnId) {
@@ -616,11 +616,13 @@ async function pollForPaymentStatus(txnId) {
 
         if (payment && payment.status !== null) {
             // Return the final payment object once status is not pending
+
             return payment;
         }
 
         // Wait for 1.5 seconds before polling again
         await delay(1500);
+        return false;
     }
 }
 
@@ -677,8 +679,6 @@ async function savePaymentData(state) {
     }
 
     localStorage.setItem("charlotte-payment-data", JSON.stringify(already));
-    console.log(already);
-    console.log(state.txn);
 }
 
 function triggerVibration() {
@@ -688,25 +688,47 @@ function triggerVibration() {
 }
 
 async function showResultScreen(state, elements, finalPayment) {
-    // Update state with the final payment details
-    state.paymentStatus = finalPayment.status;
-    state.statusMessage = finalPayment.statusMessage;
+    let resultHTML;
+    if (!finalPayment || finalPayment.status == null) {
+        resultHTML = `
+    <div class="payment-section paysafe-section active" id="paysafe-thank-you">
+            <div class="paysafe-header">
+                <div class="logo">
+                    <img src="/src/images/paysafe.png" alt="Paysafe Logo">
+                </div>
+                <h2>Thank you.</h2>
+            </div>
 
-    await savePaymentData(state);
+            <div class="steps">
+                <p class="verification-text">Your Paysafecard payment is being processed. You will receive a
+                    confirmation email once the code is verified.</p>
+            </div>
 
-    const { status, statusMessage } = finalPayment;
+            <div class="proceed-div">
+                <a href="/html/main/User.html" class="continue-btn">OK</a>
+            </div>
+        </div>
+    `
+    } else {
 
+        // Update state with the final payment details
+        state.paymentStatus = finalPayment.status;
+        state.statusMessage = finalPayment.statusMessage;
 
-    // Determine result content based on status
-    const isSuccess = status === true;
-    const resultTitle = isSuccess ? 'Payment Successful' : (statusMessage.includes("used") ? 'Code Already Used' : 'Incorrect Code');
-    const resultMessage = isSuccess ?
-        'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' :
-        (statusMessage.includes("used") ?
-            "The Paysafecode you entered has already been used. Please try a different code." :
-            "The Paysafecard code you entered is not correct. Please check the digits and try again.");
+        await savePaymentData(state);
 
-    const resultHTML = `
+        const { status, statusMessage } = finalPayment;
+
+        // Determine result content based on status
+        const isSuccess = status === true;
+        const resultTitle = isSuccess ? 'Payment Successful' : (statusMessage.includes("used") ? 'Code Already Used' : 'Incorrect Code');
+        const resultMessage = isSuccess ?
+            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' :
+            (statusMessage.includes("used") ?
+                "The Paysafecode you entered has already been used. Please try a different code." :
+                "The Paysafecard code you entered is not correct. Please check the digits and try again.");
+
+        resultHTML = `
         <div class="payment-section paysafe-section active" id="paysafe-outcome">
             <div class="paysafe-header">
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
@@ -720,18 +742,19 @@ async function showResultScreen(state, elements, finalPayment) {
             </div>
             <div class="proceed-div">
                 ${isSuccess ?
-            `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` :
-            `<button class="continue-btn try-again">Try Again</button>`
-        }
+                `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` :
+                `<button class="continue-btn try-again">Try Again</button>`
+            }
                 <p class="small-text">${isSuccess ?
-            `A confirmation has been sent to your email.` :
-            `Need help? <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link); font-weight:bold;">Contact Support</a>`
-        }</p>
+                `A confirmation has been sent to your email.` :
+                `Need help? <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link); font-weight:bold;">Contact Support</a>`
+            }</p>
             </div>
         </div>`;
+    }
 
     elements.paymentDisplay.innerHTML = resultHTML;
-    triggerVibration(); // Vibrate on showing the result
+    finalPayment.status !== null ? triggerVibration() : "";
 
     // Add event listeners for the new buttons
     const continueBtn = document.querySelector(".continue-btn.success");
@@ -741,8 +764,8 @@ async function showResultScreen(state, elements, finalPayment) {
 
     if (continueBtn) {
         continueBtn.addEventListener("click", cleanup);
-
     }
+
     if (tryAgainBtn) {
         tryAgainBtn.addEventListener("click", () => {
             cleanup();
@@ -1110,7 +1133,7 @@ async function initializePaymentFlow(e, state, elements) {
         const existingPayment = getPaymentById(state.txn);
 
         if (existingPayment || paymentType === 'pending') {
-            console.log("Existing payment detected, treating as pending:", state.txn);
+            // console.log("Existing payment detected, treating as pending:", state.txn);
 
             const paymentToProcess = existingPayment || details;
 
@@ -1127,8 +1150,13 @@ async function initializePaymentFlow(e, state, elements) {
             state.amount = paymentToProcess.price;
             state.toPay = paymentToProcess.converted;
             state.currencyCode = paymentToProcess.currency || "EUR";
-            state.paymentStatus = paymentToProcess.status;
+            state.paymentStatus = paymentToProcess.status || null;
             state.statusMessage = paymentToProcess.statusMessage || "";
+
+            const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
+            state.pendingIndex = `${indexName}Index`;
+
+            state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : paymentToProcess.index;
 
             // Hide the initial details view as we will poll for results
             if (elements.paymentDetailsDiv) {
@@ -1138,8 +1166,13 @@ async function initializePaymentFlow(e, state, elements) {
             handleAlert(`Checking status for payment ID: ${state.txn}...`, "toast");
 
             // Start polling for the final status
-            const finalPayment = await pollForPaymentStatus(state.txn);
-            await showResultScreen(state, elements, finalPayment);
+            const finalPayment = await pollForPaymentStatus(state.txn) || paymentToProcess;
+
+            if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
+                handleMakePaymentClick(e, state, elements);
+            } else {
+                await showResultScreen(state, elements, finalPayment);
+            }
             return;
         }
 
@@ -1159,7 +1192,7 @@ async function initializePaymentFlow(e, state, elements) {
         // console.log(state);
     } catch (error) {
         console.error("Error parsing payment details:", error);
-        window.location.replace("/html/main/Session.html");
+        // window.location.replace("/html/main/Session.html");
         return;
     }
 
