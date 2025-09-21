@@ -160,9 +160,9 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-    await convertCurrency(state)
-        .then((value) => {
-           value ?
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //        value ?
     setTimeout(() => {
         document.getElementById("payment-details")?.classList.remove("active");
 
@@ -172,12 +172,12 @@ async function handleProceedClick(e, state) {
         button.innerHTML = "Proceed to Payment";
     }, 500)
 
-              :
-              setTimeout(() => {
-                  button.disabled = false;
-                  button.innerHTML = "Proceed to Payment";
-             }, 500)
-      });
+    //           :
+    //           setTimeout(() => {
+    //               button.disabled = false;
+    //               button.innerHTML = "Proceed to Payment";
+    //          }, 500)
+    //   });
 
 }
 
@@ -607,6 +607,7 @@ function getPaymentById(txnId) {
     return allPayments.find(p => p.id === txnId);
 }
 
+ 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function pollForPaymentStatus(txnId) {
@@ -654,9 +655,8 @@ async function savePaymentData(state) {
 
     if (existingPaymentIndex > -1) {
         const existingPayment = already[existingPaymentIndex];
-        let updated = false;
 
-        // Iterate over the new payment's keys and update only if the value has changed
+        let updated = false;
         for (const key in newPayment) {
             if (Object.hasOwnProperty.call(newPayment, key)) {
                 if (existingPayment[key] !== newPayment[key]) {
@@ -672,7 +672,6 @@ async function savePaymentData(state) {
             console.log("No changes to update for payment:", newPayment.id);
         }
     } else {
-        // New payment, add it to the array
         already.push(newPayment);
         console.log("New payment added:", newPayment.id);
     }
@@ -696,6 +695,7 @@ async function showResultScreen(state, elements, finalPayment) {
     await savePaymentData(state);
 
     const { status, statusMessage } = finalPayment;
+
 
     // Determine result content based on status
     const isSuccess = status === true;
@@ -728,8 +728,7 @@ async function showResultScreen(state, elements, finalPayment) {
             `Need help? <a href="mailto:healingwithcharlottecasiraghi@gmail.com" style="color:var(--link); font-weight:bold;">Contact Support</a>`
         }</p>
             </div>
-        </div>
-    `;
+        </div>`;
 
     elements.paymentDisplay.innerHTML = resultHTML;
     triggerVibration(); // Vibrate on showing the result
@@ -742,6 +741,7 @@ async function showResultScreen(state, elements, finalPayment) {
 
     if (continueBtn) {
         continueBtn.addEventListener("click", cleanup);
+
     }
     if (tryAgainBtn) {
         tryAgainBtn.addEventListener("click", () => {
