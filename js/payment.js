@@ -1163,7 +1163,7 @@ async function initializePaymentFlow(e, state, elements) {
                 elements.paymentDetailsDiv.style.display = 'none';
             }
 
-            handleAlert(`Checking status for payment ID: ${state.txn}...`, "toast");
+            //handleAlert(`Checking status for payment ID: ${state.txn}...`, "toast");
 
             // Start polling for the final status
             const finalPayment = await pollForPaymentStatus(state.txn) || paymentToProcess;
