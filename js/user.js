@@ -117,9 +117,8 @@ function getCarts() {
     let output;
     if (fetchedCarts) {
       output = JSON.parse(fetchedCarts);
-    } else {
-      output = demoCarts;
     }
+  
     return output;
   } catch (error) {
     console.error(`An Error occured while fetching your order cart history - ${error}`);
