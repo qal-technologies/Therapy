@@ -108,20 +108,6 @@ const getCartItems = async (userId) => {
 };
 
 
-export {
-  createUserProfile,
-  getUserData,
-  addUserPayment,
-  getUserPayments,
-  createGlobalTransaction,
-  addToCart,
-  getCartItems,
-  removeCartItem,
-  getPaymentById,
-  updateUserPayment,
-  updateGlobalTransaction,
-};
-
 /**
  * Removes an item from a user's cart sub-collection.
  * @param {string} userId - The user's ID.
@@ -169,4 +155,18 @@ const updateUserPayment = (userId, paymentId, paymentData) => {
 const updateGlobalTransaction = (transactionId, transactionData) => {
     const transactionDocRef = doc(db, "transactions", transactionId);
     return setDoc(transactionDocRef, transactionData, { merge: true });
+};
+
+export {
+  createUserProfile,
+  getUserData,
+  addUserPayment,
+  getUserPayments,
+  createGlobalTransaction,
+  addToCart,
+  getCartItems,
+  removeCartItem,
+  getPaymentById,
+  updateUserPayment,
+  updateGlobalTransaction,
 };

@@ -28,24 +28,7 @@ window.onload = () => {
     if (year) year.innerHTML = date;
 
 
-    const actionTab = document.querySelectorAll("a.login");
-
-
     const menu = document.querySelector("header#header div#menu");
-
-
-    if (user) {
-
-        if (actionTab) {
-
-            actionTab.forEach(tab => {
-
-                const actionText = tab.firstElementChild;
-                tab.href = "/html/main/User.html";
-                actionText.innerHTML = "PROFILE";
-            })
-        }
-    }
 
     let show = false;
     menu && menu.addEventListener("click", () => {
