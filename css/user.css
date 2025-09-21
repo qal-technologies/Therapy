@@ -412,3 +412,19 @@ p#receiptDate {
   background-color: var(--link);
   text-align: center;
 }
+
+#logout-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#logout-button svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--danger);
+}

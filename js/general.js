@@ -1,7 +1,23 @@
 const header = document.querySelector("header#header");
 
+import { handleAuthStateChange } from './auth.js';
+
 window.onload = () => {
-    let user = true;
+    handleAuthStateChange(user => {
+        const actionTab = document.querySelectorAll("a.login");
+        if (actionTab) {
+            actionTab.forEach(tab => {
+                const actionText = tab.firstElementChild;
+                if (user) {
+                    tab.href = "/html/main/User.html";
+                    actionText.innerHTML = "PROFILE";
+                } else {
+                    tab.href = "/html/regs/Signup.html";
+                    actionText.innerHTML = "REGISTER";
+                }
+            });
+        }
+    });
 
     const year = document.querySelector("footer span#year");
     const backButton = document.querySelector("div#back-button");

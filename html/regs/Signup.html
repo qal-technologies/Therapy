@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="/css/signup.css" />
     <link rel="stylesheet" href="/css/media.css" />
     <title>Register - A Space to Heal</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js" type="module"></script>
   </head>
 
   <body class="fadeIn">
@@ -80,7 +85,7 @@
                 
                   <div class="bottom privacy">
                     <div class="privacy-policy">
-                      <input type="checkbox" name="accept" id="accept" checked>
+                      <input type="checkbox" name="accept" id="accept">
                       <p class="text">
                         I agree to the <a href="/html/main/Privacy.html" class="view">Terms of Service</a> and <a
                           href="/html/main/Privacy.html" class="view">Privacy Policy</a>
