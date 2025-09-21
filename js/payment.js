@@ -199,7 +199,7 @@ function handleMakePaymentClick(e, state, elements) {
 
         const method = state.selectedMethod.toLowerCase();
 
-        if (method.includes("credit") && !method.includes("safe")) {
+        if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
             state.creditCardSections = createCreditCardSections(state);
             handleCreditCard(state, elements);
         } else if (method.includes("safe")) {
@@ -268,7 +268,7 @@ function backToMethod(state, elements) {
         state.creditCardError = false;
         state.methodSelected = false;
         state.selectedMethod = "";
-        state.creditCardIndex = 0;
+        state.creditCardIndex = 1;
         state.safeIndex = 0;
 
         elements.paymentDisplay.innerHTML = state.initialContent;
