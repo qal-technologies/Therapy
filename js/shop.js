@@ -346,12 +346,12 @@ document.addEventListener('DOMContentLoaded', () => {
   handleAuthStateChange(async (user) => {
     const cartCount = document.querySelector(".details-top span.cart-count");
     if (user && cartCount) {
-      const user = await getUserData(user.uid);
+      const thisUser = await getUserData(user.uid);
       const details = document.querySelector("#preview .details");
       const copyBTN = document.querySelector("#preview button.get-copy");
 
 
-      if (user.bookPaid === true) {
+      if (thisUser.bookPaid === true) {
         details.innerHTML = "";
         details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
 
