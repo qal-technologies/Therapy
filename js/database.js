@@ -8,7 +8,8 @@ import {
   getDocs,
   query,
   where,
-} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+  deleteDoc,
+} from "firebase/firestore";
 
 // --- USER DATA FUNCTIONS ---
 

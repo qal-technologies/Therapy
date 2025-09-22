@@ -1,12 +1,12 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import { firebaseConfig } from "./firebase-config.js";
 
 // Initialize Firebase
