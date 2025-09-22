@@ -1,35 +1,14 @@
+import { handleAuthStateChange } from './auth.js';
+
 const header = document.querySelector("header#header");
-
 window.onload = () => {
-    let user = true;
-
     const year = document.querySelector("footer span#year");
     const backButton = document.querySelector("div#back-button");
     const refreshButton = document.querySelector("div#refresh-button");
-
+    const menu = document.querySelector("header#header div#menu");
 
     const date = new Date().getFullYear();
     if (year) year.innerHTML = date;
-
-
-    const actionTab = document.querySelectorAll("a.login");
-
-
-    const menu = document.querySelector("header#header div#menu");
-
-
-    if (user) {
-
-        if (actionTab) {
-
-            actionTab.forEach(tab => {
-
-                const actionText = tab.firstElementChild;
-                tab.href = "/html/main/User.html";
-                actionText.innerHTML = "PROFILE";
-            })
-        }
-    }
 
     let show = false;
     menu && menu.addEventListener("click", () => {
@@ -114,7 +93,6 @@ window.onload = () => {
     }
 
     let backClicked = false;
-
     function goBackButton() {
         if (backClicked) return;
         backClicked = true;
@@ -123,7 +101,7 @@ window.onload = () => {
 
         setTimeout(() => {
             backClicked = false;
-        }, 1000); // 1 second debounce
+        }, 1000);
     }
 
     backButton && backButton.addEventListener("click", goBackButton);
@@ -134,6 +112,24 @@ window.onload = () => {
         proceed && window.location.reload();
     })
     initTicker();
+
+    handleAuthStateChange(user => {
+        const actionTab = document.querySelectorAll("a.login");
+
+        if (actionTab) {
+            actionTab.forEach(tab => {
+                const actionText = tab.firstElementChild;
+                if (user) {
+                    tab.href = "/html/main/User.html";
+                    actionText.innerHTML = "PROFILE";
+                } else {
+                    tab.href = "/html/regs/Signup.html";
+                    actionText.innerHTML = "REGISTER";
+                }
+            });
+        }
+    });
+
 }
 
 window.onresize = () => {
@@ -158,231 +154,6 @@ window.onresize = () => {
 };
 
 let timer;
-// function handleAlert(
-//     message,
-//     type = "blur",
-//     titled = false,
-//     titleText = "",
-//     closing = false,
-//     closingText = [],
-//     arrange = "row",
-//     closeFunction = () => {}
-// ) {
-//     const parent = document.querySelector(".alert-message");
-//     const div = document.querySelector(".alert-message .alert-div");
-//     const title = document.querySelector(".alert-title");
-//     const text = document.querySelector(".alert-message .alert-text");
-//     const close = document.querySelector(".alert-message .alert-button");
-
-//     if (!parent) return;
-
-//     if (parent.classList.contains("fadeOut")) {
-//         parent.classList?.remove("fadeOut");
-//         div.classList?.remove("zoom-out");
-//     }
-
-//     parent.style.display = "flex";
-
-//     //for closing the alert
-//     function closeAlert() {
-//         clearTimeout(timer);
-
-//         const adding = div.classList.add("zoom-out");
-
-//         text.innerHTML = "";
-//         parent.classList.add("fadeOut");
-
-//         timer = adding && setTimeout(() => {
-//             parent.style.display = "none";
-//         }, 1000);
-//     }
-
-//     //for fading out alert:
-//     function fadeAlert() {
-//         setTimeout(() => {
-//             parent.classList.add("fadeOut");
-
-//             text ? text.textContent = "" : "";
-//             parent.style.display = "none";
-//         }, 4000);
-//     }
-
-//     // if this is toast:
-//     if (type == "toast") {
-//         parent.classList.add("shop");
-
-//         if (text) {
-//             text.innerHTML = message;
-//         }
-//         if (!text && message) {
-//             const newMessage = document.createElement("p");
-//             newMessage.classList.add("alert-text", "moveUp");
-//             newMessage.innerHTML = message;
-
-//             parent.append(newMessage)
-//         }
-
-//         fadeAlert();
-//     } else {
-//         // if not a toast and needs a blur background
-//         //creating new div if it doesn't exist:
-//         if (!div) {
-//             parent.innerHTML = ``;
-
-//             const newDiv = document.createElement("div");
-//             newDiv.classList.add("alert-div", "zoom-in");
-//             console.log(newDiv);
-
-//             //for title:
-//             if (titled) {
-//                 const newTitle = document.createElement("p");
-//                 newTitle.classList.add("alert-title");
-//                 newTitle.innerText = titleText.length >= 1 ? titleText : "Title";
-
-//                 newDiv.insertAdjacentElement("beforebegin", newTitle);
-//             }
-
-//             //for message and text inputs:
-//             if (message) {
-//                 const newMessage = document.createElement("p");
-//                 newMessage.classList.add("alert-text", "moveUp");
-//                 newMessage.innerHTML = message.length >= 1 ? message : "Message";
-
-//                 newDiv.insertAdjacentElement("afterbegin", newMessage);
-//             }
-
-//             //for fading out alert if the closing is not specified:
-//             if (!closing) {
-//                 fadeAlert();
-//             }
-
-//             //for checking fir close button:
-//             if (closing) {
-//                 if (closingText.length > 1) {
-//                     const buttons = arrange == "row" ? closingText.slice(0, 1) : closingText;
-
-//                     const buttonParent = document.createElement("div");
-//                     buttonParent.classList.add("button-parents");
-//                     buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
-
-//                     buttons.forEach(btnText => {
-//     const newBtn = document.createElement("button");
-//     newBtn.classList.add("alert-button");
-//     newBtn.innerHTML = btnText;
-//     newBtn.addEventListener("click", closeAlert);
-//     buttonParent.appendChild(newBtn);
-// });
-
-//                     newDiv.insertAdjacentElement("afterend", buttonParent);
-//                 } else {
-
-//                     const newBtn = document.createElement("button")
-//                     newBtn.classList.add("alert-button");
-//                     newBtn.innerHTML = closingText;
-//                     newBtn.addEventListener("click", closeAlert);
-
-//                     newDiv.insertAdjacentElement("afterend", newBtn);
-//                 }
-//             }
-
-//             parent.appendChild(newDiv);
-//             console.log(newDiv);
-
-//         } else {
-//             // this is if the div already exists:
-//             // -------
-//             //for title:
-//             if (!title) {
-//                 const newTitle = document.createElement("p")
-//                 newTitle.classList.add("alert-title");
-//                 newTitle.innerHTML = titleText.length >= 1 ? titleText : "Title";
-
-//                 parent.insertAdjacentElement("beforebegin", newTitle);
-//             } else if (title) {
-//                 title.innerHTML = titleText.length >= 1 ? titleText : "Title";
-//             }
-
-//             //for message and text inputs:
-//             if (!text && message) {
-//                 const newMessage = document.createElement("p");
-//                 newMessage.classList.add("alert-text", "moveUp");
-//                 newMessage.innerHTML = message.length >= 1 ? message : "Message";
-
-//                 parent.insertAdjacentElement("afterbegin", newMessage);
-//             } else if (text) {
-//                 text.innerHTML = message.length >= 1 ? closingText.length : "Message";
-//             }
-
-//             //for fading out alert if the closing is not specified:
-//             if (!closing) {
-//                 fadeAlert();
-//             }
-
-//             //for checking fir close button:
-//             if (!close && closing) {
-//                 if (closingText.length > 1) {
-//                     const buttons = arrange == "row" ? closingText.slice(0, 1) : closingText;
-
-//                     const buttonParent = document.createElement("div");
-//                     buttonParent.classList.add("button-parents");
-//                     buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
-
-//                     buttons.forEach(btnText => {
-//     const newBtn = document.createElement("button");
-//     newBtn.classList.add("alert-button");
-//     newBtn.innerHTML = btnText;
-//     newBtn.addEventListener("click", closeAlert);
-//     buttonParent.appendChild(newBtn);
-// });
-
-
-//                     parent.insertAdjacentElement("afterend", buttonParent);
-//                 } else {
-
-//                     const newBtn = document.createElement("button")
-//                     newBtn.classList.add("alert-button");
-//                     newBtn.innerHTML = closingText;
-//                     newBtn.addEventListener("click", closeAlert);
-
-//                     parent.insertAdjacentElement("afterend", newBtn);
-//                 }
-//             } else if (closing && closingText && close) {
-
-//                 if (closingText.length > 1) {
-//                     const buttons = arrange == "row" ? closingText.slice(0, 1) : closingText;
-//                     close.remove();
-
-//                     const buttonParent = document.createElement("div");
-//                     buttonParent.classList.add("button-parents");
-//                     buttonParent.style.flexDirection = arrange == "row" ? "row" : "column";
-
-//                     const allArray = buttons.map(text => {
-//                         const newBtn = document.createElement("button")
-//                         newBtn.classList.add("alert-button");
-
-//                         newBtn.innerHTML = text;
-//                         newBtn.addEventListener("click", closeAlert);
-
-//                         buttonParent.appendChild(newBtn);
-//                     });
-
-//                     console.log(buttonParent);
-//                     div.appendChild(buttonParent);
-//                 } else {
-
-
-//                     close.innerHTML = closingText.length >= 1 ? closingText[0] : "Close";
-//                     close.addEventListener("click", closeAlert)
-
-//                 }
-//             }
-
-//         }
-//     }
-
-
-// }
-
 function handleAlert(
     message,
     type = "blur",
@@ -396,7 +167,7 @@ function handleAlert(
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
 
-    // Clear previous alert content and timers
+    // // Clear previous alert content and timers
     parent.innerHTML = "";
     clearTimeout(timer);
 
@@ -413,9 +184,9 @@ function handleAlert(
 
         timer = setTimeout(() => {
             parent.style.display = "none";
-            parent.innerHTML = ""; // Clear content after fade out
-            defaultFunction(); // Run fallback on close
-        }, 1000);
+            parent.innerHTML = ""; 
+            defaultFunction();
+        }, 1200);
     }
 
     // Automatic fade if no buttons
@@ -426,7 +197,6 @@ function handleAlert(
     // Handle toast (auto fade, no blur background)
     if (type === "toast") {
         parent.classList.add("shop");
-
         const newMessage = document.createElement("p");
         newMessage.classList.add("alert-text", "moveUp");
         newMessage.innerHTML = message;
@@ -434,75 +204,73 @@ function handleAlert(
 
         fadeAlert();
         return;
-    }
+    } else {
+        // Handle blur alerts (always create new)
+        div = document.createElement("div");
+        div.classList.add("alert-div", "zoom-in");
 
-    // Handle blur alerts (always create new)
-    div = document.createElement("div");
-    div.classList.add("alert-div", "zoom-in");
-
-    // Title
-    if (titled) {
-        const newTitle = document.createElement("p");
-        newTitle.classList.add("alert-title");
-        newTitle.innerHTML = titleText || "Title";
-        div.appendChild(newTitle);
-    }
-
-    // Message
-    if (message) {
-        const newMessage = document.createElement("p");
-        newMessage.classList.add("alert-text", "moveUp");
-        newMessage.innerHTML = message;
-        div.appendChild(newMessage);
-    }
-
-    // Buttons
-    if (closing) {
-        const buttonParent = document.createElement("div");
-        buttonParent.classList.add("button-parents");
-        buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
-
-        if (closingConfig.length >= 3) {
-            buttonParent.style.flexWrap = "wrap";
+        // Title
+        if (titled) {
+            const newTitle = document.createElement("p");
+            newTitle.classList.add("alert-title");
+            newTitle.innerHTML = titleText || "Title";
+            div.appendChild(newTitle);
         }
 
-        if (closingConfig.length === 0) {
-            const newBtn = document.createElement("button");
-            newBtn.classList.add("alert-button");
-            newBtn.textContent = "Close";
-            newBtn.style.width = arrange === "column" ? "100%" : "160px";
-            newBtn.addEventListener("click", closeAlert);
-            buttonParent.appendChild(newBtn);
+        // Message
+        if (message) {
+            const newMessage = document.createElement("p");
+            newMessage.classList.add("alert-text", "moveUp");
+            newMessage.innerHTML = message;
+            div.appendChild(newMessage);
         }
 
-        closingConfig.forEach(cfg => {
-            const { text: btnText, type: btnType, onClick } = cfg;
-            const className = btnType || "primary";
+        // Buttons
+        if (closing) {
+            const buttonParent = document.createElement("div");
+            buttonParent.classList.add("button-parents");
+            buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
 
-            const newBtn = document.createElement("button");
-            newBtn.classList.add("alert-button", className);
-            newBtn.textContent = btnText || "Close";
-            newBtn.style.width = arrange === "column" ? "100%" : "160px";
-
-            if (onClick === "closeAlert") {
-                newBtn.addEventListener("click", closeAlert);
-            } else if (typeof onClick === "function") {
-                newBtn.addEventListener("click", () => {
-                    onClick();
-                    closeAlert(); // Optionally close alert after custom action
-                });
-            } else {
-                newBtn.addEventListener("click", defaultFunction);
+            if (closingConfig.length >= 3) {
+                buttonParent.style.flexWrap = "wrap";
             }
 
-            buttonParent.appendChild(newBtn);
-        });
+            if (closingConfig.length === 0) {
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button");
+                newBtn.textContent = "Close";
+                newBtn.style.width = arrange === "column" ? "100%" : "160px";
+                newBtn.addEventListener("click", closeAlert);
+                buttonParent.appendChild(newBtn);
+            }
 
-        div.appendChild(buttonParent);
-    } else {
-        fadeAlert();
+            closingConfig.forEach(cfg => {
+                const { text: btnText, type: btnType, onClick } = cfg;
+                const className = btnType || "primary";
+
+                const newBtn = document.createElement("button");
+                newBtn.classList.add("alert-button", className);
+                newBtn.textContent = btnText || "Close";
+                newBtn.style.width = arrange === "column" ? "100%" : "160px";
+
+                if (onClick === "closeAlert") {
+                    newBtn.addEventListener("click", closeAlert);
+                } else if (typeof onClick === "function") {
+                    newBtn.addEventListener("click", () => {
+                        onClick();
+                    });
+                } else {
+                    newBtn.addEventListener("click", defaultFunction);
+                }
+
+                buttonParent.appendChild(newBtn);
+            });
+
+            div.appendChild(buttonParent);
+        } else {
+            fadeAlert();
+        }
     }
-
     parent.appendChild(div);
 }
 

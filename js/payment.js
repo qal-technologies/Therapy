@@ -1,27 +1,17 @@
-import handleAlert from '/js/general.js';
-const user = {
-    userName: "John Doe",
-    userEmail: "123@gmail.com"
-};
-
-document.addEventListener("DOMContentLoaded", async (e) => {
-    // Initialize state and DOM elements
-    const state = initializeState();
-    const elements = cacheDOMElements();
-
-    // Setup event listeners
-    setupEventListeners(state, elements);
-
-    //saving initial content:
-    state.initialContent = elements.paymentDisplay.innerHTML;
-
-    // Initialize payment flow
-    await initializePaymentFlow(e, state, elements);
-});
+import handleAlert from './general.js';
+import { handleAuthStateChange} from './auth.js';
+import {
+    getPaymentById,
+    addUserPayment,
+    createGlobalTransaction,
+    updateUserPayment,
+    updateGlobalTransaction
+} from './database.js';
 
 // ==================== STATE MANAGEMENT ====================
 function initializeState() {
     return {
+        userId: null,
         methodSelected: false,
         selectedCurrency: "",
         currencyCode: "EUR",
@@ -50,6 +40,7 @@ function initializeState() {
 }
 
 
+const formatter = new Intl.NumberFormat('en-US');
 function formatDateTime(date) {
     const now = new Date(date);
 
@@ -99,14 +90,12 @@ function cacheDOMElements() {
 
 // ==================== EVENT LISTENERS ====================
 function setupEventListeners(state, elements) {
-    // Payment method selection
     elements.paymentMethodOptions.forEach((option) => {
         option.addEventListener("click", () =>
             handlePaymentMethodClick(option, state, elements)
         );
     });
 
-    // Button actions
     document
         .getElementById("proceed-button")
         ?.addEventListener("click", async (e) => await handleProceedClick(e, state));
@@ -121,7 +110,6 @@ async function getUserCountryInfo() {
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        // console.log(data);
 
         return {
             country: data.country_name,
@@ -152,7 +140,6 @@ function handlePaymentMethodClick(option, state, elements) {
 }
 
 
-const formatter = new Intl.NumberFormat('en-US');
 
 async function handleProceedClick(e, state) {
     e.preventDefault();
@@ -160,26 +147,26 @@ async function handleProceedClick(e, state) {
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
-     await convertCurrency(state)
-         .then((value) => {
+    await convertCurrency(state)
+        .then((value) => {
             value ?
-    setTimeout(() => {
-        document.getElementById("payment-details")?.classList.remove("active");
+                setTimeout(() => {
+                    document.getElementById("payment-details")?.classList.remove("active");
 
-        document.getElementById("payment-method-section")?.classList.add("active");
+                    document.getElementById("payment-method-section")?.classList.add("active");
 
-        button.disabled = false;
-        button.innerHTML = "Proceed to Payment";
-    }, 500)
+                    button.disabled = false;
+                    button.innerHTML = "Proceed to Payment";
+                }, 500)
 
-               :
-               setTimeout(() => {
-                   button.disabled = false;
-                   button.innerHTML = "Proceed to Payment";
-              }, 500)
-       });
-
+                :
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.innerHTML = "Proceed to Payment";
+                }, 500)
+        });
 }
+
 
 function handleMakePaymentClick(e, state, elements) {
     e.preventDefault();
@@ -200,15 +187,13 @@ function handleMakePaymentClick(e, state, elements) {
         const method = state.selectedMethod.toLowerCase();
 
         if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
-            state.creditCardSections = createCreditCardSections(state);
             handleCreditCard(state, elements);
         } else if (method.includes("safe")) {
-            state.paySafeSections = createPaySafeSections(state);
             await handlePaySafe(state, elements);
         }
 
         button.disabled = true;
-    }, 2000);
+    }, 1500);
 }
 
 
@@ -602,83 +587,65 @@ function safeAlerts() {
 
 
 // ==================== PAYMENT POLLING & RESULTS ====================
-function getPaymentById(txnId) {
-    const allPayments = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
-    return allPayments.find(p => p.id === txnId);
-}
-
+// function getPaymentById(txnId) {
+//     const allPayments = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
+//     return allPayments.find(p => p.id === txnId);
+// }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function pollForPaymentStatus(txnId) {
-    while (true) {
-        const payment = getPaymentById(txnId);
-
-        if (payment && payment.status !== null) {
-            // Return the final payment object once status is not pending
-
-            return payment;
-        }
-
-        // Wait for 1.5 seconds before polling again
-        await delay(1500);
-        return false;
+    let payment = await getPaymentById(txnId);
+    while (!payment || payment.status === null) {
+        await delay(2500);
+        payment = await getPaymentById(txnId);
     }
+    return payment;
 }
 
 async function savePaymentData(state) {
-    if (!state.txn) {
-        console.warn("No transaction id in state, skipping to save!");
+    const { userId, txn } = state;
+
+    if (!txn || !userId) {
+        handleAlert("Missing transaction ID or User ID. Skipping save.", "toast");
+
+        console.warn("Missing transaction ID or User ID. Skipping save.");
         return;
     }
 
-    const already = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
     const title = state.paymentType.toLowerCase() == "session" ? "Booked a session" : "Bought a Book";
     const index = state.selectedMethod.toLowerCase().includes("safe") ? 2 : 1;
 
-    const newPayment = {
-        id: state.txn || state.details.id || state.details.transactionId,
+    const paymentData = {
+        id: txn,
         paymentType: state.paymentType,
-        title: title,
+        title: title || "N/A",
         price: state.amount,
         currency: state.currencyCode,
         converted: state.toPay,
         method: state.selectedMethod,
         status: state.paymentStatus,
-        statusName: state.paymentStatus ? "Completed" : (state.paymentStatus === false ? "Failed" : "Pending"),
-        statusMessage: "",
+        statusName: state.paymentStatus === true ? "Completed" : (state.paymentStatus === false ? "Failed" : "Pending"),
+        statusMessage: state.statusMessage || "",
         description: state.details.description,
         date: new Date(),
         index: index,
-
+        userId: userId,
     };
 
-    const existingPaymentIndex = already.findIndex(p => p.id === newPayment.id);
-
-    if (existingPaymentIndex > -1) {
-        const existingPayment = already[existingPaymentIndex];
-
-        let updated = false;
-        for (const key in newPayment) {
-            if (Object.hasOwnProperty.call(newPayment, key)) {
-                if (existingPayment[key] !== newPayment[key]) {
-                    existingPayment[key] = newPayment[key];
-                    updated = true;
-                }
-            }
-        }
-
-        if (updated) {
-            console.log("Payment updated:", newPayment.id);
+    try {
+        const existingPayment = await getPaymentById(txn);
+        if (existingPayment) {
+            await updateGlobalTransaction(existingPayment.docId, paymentData);
+            await updateUserPayment(userId, existingPayment.docId, paymentData);
         } else {
-            console.log("No changes to update for payment:", newPayment.id);
+            const globalDocRef = await createGlobalTransaction(paymentData);
+            await addUserPayment(userId, globalDocRef.id, paymentData);
         }
-    } else {
-        already.push(newPayment);
-        console.log("New payment added:", newPayment.id);
+    } catch (error) {
+        console.error("Error saving payment data:", error);
+        handleAlert(`Could not save payment data, because: ${error}`, "toast");
     }
-
-    localStorage.setItem("charlotte-payment-data", JSON.stringify(already));
 }
 
 function triggerVibration() {
@@ -714,10 +681,10 @@ async function showResultScreen(state, elements, finalPayment) {
         // Update state with the final payment details
         state.paymentStatus = finalPayment.status;
         state.statusMessage = finalPayment.statusMessage;
-
         await savePaymentData(state);
 
         const { status, statusMessage } = finalPayment;
+        triggerVibration();
 
         // Determine result content based on status
         const isSuccess = status === true;
@@ -754,21 +721,11 @@ async function showResultScreen(state, elements, finalPayment) {
     }
 
     elements.paymentDisplay.innerHTML = resultHTML;
-    finalPayment.status !== null ? triggerVibration() : "";
 
-    // Add event listeners for the new buttons
-    const continueBtn = document.querySelector(".continue-btn.success");
     const tryAgainBtn = document.querySelector(".continue-btn.try-again");
-
-    const cleanup = () => localStorage.removeItem("charlotte-page-payment-state");
-
-    if (continueBtn) {
-        continueBtn.addEventListener("click", cleanup);
-    }
 
     if (tryAgainBtn) {
         tryAgainBtn.addEventListener("click", () => {
-            cleanup();
             backToMethod(state, elements);
         });
     }
@@ -780,7 +737,6 @@ async function handlePaySafe(state, elements) {
     const currentSection = state.paySafeSections[state.safeIndex + 1];
 
     if (state.safeIndex === 2 && state.pending) {
-        // This is a pending payment, start polling for the final result
         const finalPayment = await pollForPaymentStatus(state.txn);
         await showResultScreen(state, elements, finalPayment);
     } else if (currentSection) {
@@ -1093,21 +1049,15 @@ function addDetails(details, elements) {
 async function initializePaymentFlow(e, state, elements) {
     document.getElementById("payment-details").classList.add("active");
 
-    let payments;
-    //Get Payment data
-    const gotten = localStorage.getItem("charlotte-payment-data");
-    payments = JSON.parse(gotten) || [];
-
-
-
     const urlParams = new URLSearchParams(window.location.search);
     const paymentType = urlParams.get("type");
     const paymentDetails = urlParams.get("details");
 
     // Redirect if no params
     if (!paymentType || !paymentDetails) {
-        alert("No Payment Details Gotten, Please Book a Session!");
-        window.location.replace("/html/main/Session.html");
+        handleAlert("No Payment Details Gotten, Please Book a Session!", "toast");
+
+        setTimeout(() => window.location.replace("/html/main/Session.html"), 1600);
         return;
     }
 
@@ -1116,6 +1066,7 @@ async function initializePaymentFlow(e, state, elements) {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
         state.details = details;
+        state.txn = details.transactionId || `TXN-${Date.now()}`;
         state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
 
         let amount;
@@ -1130,16 +1081,14 @@ async function initializePaymentFlow(e, state, elements) {
 
         state.txn = details.transactionId || details.id;
 
-        const existingPayment = getPaymentById(state.txn);
+        const existingPayment = await getPaymentById(state.txn);
 
         if (existingPayment || paymentType === 'pending') {
-            // console.log("Existing payment detected, treating as pending:", state.txn);
-
             const paymentToProcess = existingPayment || details;
 
             if (!paymentToProcess) {
-                alert('Payment not found, please try again!');
-                window.location.replace('/html/main/User.html');
+                handleAlert('Payment not found, please try again!');
+                setTimeout(() => window.location.replace('/html/main/User.html'), 1600);
                 return;
             }
 
@@ -1163,10 +1112,8 @@ async function initializePaymentFlow(e, state, elements) {
                 elements.paymentDetailsDiv.style.display = 'none';
             }
 
-            //handleAlert(`Checking status for payment ID: ${state.txn}...`, "toast");
-
             // Start polling for the final status
-            const finalPayment = await pollForPaymentStatus(state.txn) || paymentToProcess;
+            const finalPayment = await pollForPaymentStatus(state.txn);
 
             if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
                 handleMakePaymentClick(e, state, elements);
@@ -1183,13 +1130,13 @@ async function initializePaymentFlow(e, state, elements) {
 
         addDetails(state.details, elements);
 
-        const userCountryData = await getUserCountryInfo();
 
+        const userCountryData = await getUserCountryInfo();
+        /////------>>>>>>
         state.currencyCode = userCountryData?.currencyCode || userCountryData?.currency || "EUR";
         state.selectedCurrency = userCountryData?.country || "Euro";
         state.country = userCountryData?.country || "France";
 
-        // console.log(state);
     } catch (error) {
         console.error("Error parsing payment details:", error);
         // window.location.replace("/html/main/Session.html");
@@ -1202,3 +1149,20 @@ async function initializePaymentFlow(e, state, elements) {
     // Initialize checks
     checkPaymentMethodSelection(state, elements);
 }
+
+
+document.addEventListener("DOMContentLoaded", (e) => {
+    handleAuthStateChange(async (user) => {
+        if (user) {
+            const state = initializeState();
+            const elements = cacheDOMElements();
+            
+            state.userId = user.uid;
+            state.initialContent = elements.paymentDisplay.innerHTML;
+            await initializePaymentFlow(e, state, elements);
+        } else {
+            handleAlert("You must be logged in to make a payment.", "toast");
+            setTimeout(() => window.location.replace("/html/regs/Signup.html"), 1500);
+        }
+    });
+});

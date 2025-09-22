@@ -1,4 +1,6 @@
 import handleAlert from "/js/general.js";
+import { getUserData, updateUserData } from "./database.js";
+import { handleAuthStateChange } from "./auth.js";
 
 const reviews = [
 	 [
@@ -145,61 +147,6 @@ const HOME_AUDIO_SRC = {
 		"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
 	}
 };
-
-// let timer;
-// function handleAlert(message, titled = false, titleText = "", closing = false, closingText = "") {
-// 	console.log("stage!");
-
-// 	const parent = document.querySelector(".alert-message");
-// 	const div = document.querySelector(".alert-message .alert-div");
-// 	const title = document.querySelector(".alert-title");
-// 	const text = document.querySelector(".alert-message .alert-text");
-// 	const close = document.querySelector(".alert-message .alert-button");
-// 	// if (!parent) console.error("erroe");
-
-// 	if (parent.classList.contains("fadeOut")) {
-// 		parent.classList.remove("fadeOut");
-// 		div.classList.remove("zoom-out");
-// 	}
-
-// 	console.log("passed!");
-
-// 	parent.style.display = "flex";
-// 	if (!title && titled && titleText.length >= 1) {
-// 		const newTitle = document.createElement("p").classList.add("alert-title");
-
-// 		parent.insertAdjacentElement("beforebegin", newTitle);
-
-
-// 		title.innerHTML = titleText;
-// 	}
-
-// 	if (text) {
-// 		text.innerHTML = message;
-// 	}
-
-// 	console.log("passed!!");
-
-// 	if (!close && closing && closingText.length >= 1) {
-// 		const newTitle = document.createElement("p").classList.add("alert-title");
-
-// 		parent.insertAdjacentElement("beforebegin", newTitle);
-
-// 		close.addEventListener("click", () => {
-// 			clearTimeout(timer);
-
-// 			const adding = div.classList.add("zoom-out");
-
-// 			text.innerHTML = "";
-// 			parent.classList.add("fadeOut");
-
-// 			timer = adding && setTimeout(() => {
-// 				parent.style.display = "none";
-// 			}, 1000);
-// 		})
-// 	}
-
-// }
 
 window.addEventListener("DOMContentLoaded", () => {
 	let user = true;
@@ -625,35 +572,60 @@ ${session.type == "inner" ?
 			}
 		});
 	});
-	const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
-	waitlistBTN.addEventListener("click", (e) => {
-		if (waitlistBTN.disabled == true) return;
 
-		waitlistBTN.disabled = true;
-		waitlistBTN.ariaDisabled = true;
-		waitlistBTN.style.fontSize = "12px";
-		waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
+	handleAuthStateChange(async (user) => {
+		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
+		const userdata = (await getUserData(user.uid)) || { waitlist: false };
+		waitlistBTN.disabled = userdata.waitlist;
 
-		setTimeout(() => {
-			handleAlert(`
-Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+		if (!userdata.waitlist) {
+			waitlistBTN.addEventListener("click", async () => {
+				if (user) {
+					if (waitlistBTN.disabled == true) return;
 
-<br/>
-📩 What’s next:
-<br/>
-You’ll receive a confirmation email shortly.
-<br/>
-We’ll personally notify you the moment a spot becomes available.
-<br/>
-Priority is given in the order sign-ups are received, so you’re in line.
+					waitlistBTN.disabled = true;
+					waitlistBTN.ariaDisabled = true;
+					waitlistBTN.style.fontSize = "12px";
+					waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-<br/><br/>
-Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]
-			);
+					await updateUserData(user.uid, { waitlist: true });
 
+					setTimeout(() => {
+						handleAlert(`
+ Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+ 
+ <br/>
+ 📩 What’s next:
+ <br/>
+ You’ll receive a confirmation email shortly.
+ <br/>
+ We’ll personally notify you the moment a spot becomes available.
+ <br/>
+ Priority is given in the order sign-ups are received, so you’re in line.
+ 
+ <br/><br/>
+ Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]);
+
+						waitlistBTN.style.fontSize = "13.5px";
+						waitlistBTN.textContent = '✅ Added to waitlist!';
+					}, 1000);
+				}
+				else {
+					handleAlert("You must be logged in to join waitlist!",
+						"blur",
+						false, "",
+						true,
+						[{
+							text: "LOGIN", onClick: () => window.location.replace("/html/regs/Signup.html"), type: "primary"
+						}, {
+							text: "Close", onClick: "closeAlert", type: "secondary"
+						}]);
+				}
+			});
+		} else {
 			waitlistBTN.style.fontSize = "13.5px";
 			waitlistBTN.textContent = '✅ Added to waitlist!';
-		}, 2500);
+		}
 	});
 });

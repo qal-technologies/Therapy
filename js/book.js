@@ -1,5 +1,7 @@
-const waitlist = false;
+import handleAlert from './general.js';
+import { handleAuthStateChange } from './auth.js';
 
+const waitlist = false;
 const TOPICS_DATA = {
   virtual: {
     name: "VIRTUAL SESSION",
@@ -116,7 +118,6 @@ const DOM = {
 acceptRadio:document.getElementById('accept'),
   proceed: document.querySelector('div#checkout button'),
 };
-
 
 const state = {
   selectedTopic: null,
@@ -450,63 +451,70 @@ window.addEventListener('DOMContentLoaded', () => {
 
   init();
 
-  if (user) {
-    if (urlParams.get('type')) {
-      try {
-        const type = urlParams.get('type');
-        const details = JSON.parse(urlParams.get('details'));
-
-        const topic = details.type;
-
-        if (type == "session") {
-          selectTopic(topic);
-        }
-      } catch (error) {
-        console.error('Error parsing booking details:', error);
-      }
-    }
-
-    const audioMessage2 = document.getElementById('audio-message2');
-    if (audioMessage2) {
-      audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
-
-      const listenBTN = document.getElementById('play2');
-      if (listenBTN) {
-        listenBTN.addEventListener('click', (e) => {
-          e.preventDefault();
+  window.addEventListener('DOMContentLoaded', () => {
+    handleAuthStateChange((user) => {
+      if (user) {
+        if (urlParams.get('type')) {
           try {
-            if (audioMessage2.paused) {
-              audioMessage2.play()
-                .then(() => {
-                  listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+            const type = urlParams.get('type');
+            const details = JSON.parse(urlParams.get('details'));
+
+            const topic = details.type;
+
+            if (type == "session") {
+              selectTopic(topic);
+            }
+
+            const audioMessage2 = document.getElementById('audio-message2');
+            if (audioMessage2) {
+              audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+
+              const listenBTN = document.getElementById('play2');
+              if (listenBTN) {
+                listenBTN.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  try {
+                    if (audioMessage2.paused) {
+                      audioMessage2.play()
+                        .then(() => {
+                          listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
                     <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
                   </svg>`;
-                })
-                .catch(error => {
-                  console.error('Audio playback failed:', error);
-                  alert('Audio playback failed. Please try again.');
-                });
-            } else {
-              audioMessage2.pause();
-              listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                        })
+                        .catch(error => {
+                          console.error('Audio playback failed:', error);
+                          alert('Audio playback failed. Please try again.');
+                        });
+                    } else {
+                      audioMessage2.pause();
+                      listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
                 <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
               </svg>`;
-            }
-          } catch (error) {
-            console.error('Audio error:', error);
-          }
-        });
+                    }
+                  } catch (error) {
+                    console.error('Audio error:', error);
+                  }
+                });
 
-        audioMessage2.addEventListener("ended", () => {
-          listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                audioMessage2.addEventListener("ended", () => {
+                  listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
             <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
           </svg>`;
-        });
+                });
+              }
+            }
+          } catch (error) {
+            console.error('Error parsing booking details:', error);
+          }
+        }
+
+      } else {
+        handleAlert("Please log in to book a session.", "toast");
+        setTimeout(() => {
+          window.location.replace("/html/regs/Signup.html");
+        }, 1500);
       }
-    }
-  } else {
-    alert('You are not logged in, Please Sign Up!');
-    window.location.href = '/html/regs/Signup.html';
-  }
+    });
+  });
 });
 

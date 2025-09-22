@@ -1,4 +1,7 @@
 import handleAlert from "/js/general.js";
+import { getUserData, updateUserData } from "./database.js";
+import { handleAuthStateChange } from "./auth.js";
+
 
 const sessionTypes = [
   {
@@ -108,47 +111,17 @@ const audioSrc = {
   }
 };
 
-// let timer;
-// function handleAlert(message) {
-//   const parent = document.querySelector(".alert-message");
-//   const div = document.querySelector(".alert-div");
-//   const text = document.querySelector(".alert-message .alert-text");
-//   const close = document.querySelector(".alert-message .alert-button");
-
-//   if (parent.classList.contains("fadeOut")) {
-//     parent.classList.remove("fadeOut");
-//     div.classList.remove("zoom-out");
-//   }
-
-//   parent.style.display = "flex";
-//   text.innerHTML = message;
-
-//   close.addEventListener("click", () => {
-//     clearTimeout(timer);
-
-//     const adding = div.classList.add("zoom-out");
-
-//     text.innerHTML = "";
-//     parent.classList.add("fadeOut");
-
-//     timer = adding && setTimeout(() => {
-//       parent.style.display = "none";
-//     }, 1000);
-//   })
-
-// }
-
 window.addEventListener("DOMContentLoaded", () => {
-    const language = navigator.language;
-    const lang = language.toLowerCase().substring(0, 2);
+  const language = navigator.language;
+  const lang = language.toLowerCase().substring(0, 2);
 
-    const sessions = document.querySelector("section#sessions");
-    const FAQ = document.querySelector('section#faq div.answers');
+  const sessions = document.querySelector("section#sessions");
+  const FAQ = document.querySelector('section#faq div.answers');
 
 
-    const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
+  const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
 
-    audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+  audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
   sessions.innerHTML += sessionTypes.map((session) => {
     const details = {
@@ -225,43 +198,20 @@ window.addEventListener("DOMContentLoaded", () => {
 ${bonuses.join('')}
 		  </div>
 
-		 ${ session.type == "inner" ?
+		 ${session.type == "inner" ?
         `
 		  <div id="waitlist" class="${session.type}">
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
 		  </div>` : ``
-}
+      }
         </div>`
   }).join("");
 
-    const listenBTN = document.querySelector("#sessions button#play2");
+  const listenBTN = document.querySelector("#sessions button#play2");
 
-    if (listenBTN && audioMessage2) {
-        listenBTN.addEventListener('click', () => {
-            if (!audioMessage2.paused) {
-                listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-                audioMessage2.pause();
-            } else {
-                listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-                audioMessage2.play();
-            }
-        });
-    }
-
-    audioMessage2.addEventListener("ended", () => {
+  if (listenBTN && audioMessage2) {
+    listenBTN.addEventListener('click', () => {
+      if (!audioMessage2.paused) {
         listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -274,21 +224,44 @@ ${bonuses.join('')}
                     d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
                   />
                 </svg>`;
+        audioMessage2.pause();
+      } else {
+        listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+        audioMessage2.play();
+      }
     });
+  }
 
-    FAQ.innerHTML = faq.map((faq) => {
-        const checks = () => {
-            if (faq.extra) {
-                return `
+  audioMessage2.addEventListener("ended", () => {
+    listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+  });
+
+  FAQ.innerHTML = faq.map((faq) => {
+    const checks = () => {
+      if (faq.extra) {
+        return `
 				<a class="extra" target="_blank" href="${faq.extra.link}">
 				${faq.extra.text.toLowerCase()}
 				</a>
 				`
-            } else {
-                return ""
-            }
-        }
-        return `
+      } else {
+        return ""
+      }
+    }
+    return `
 		     <div class="answer">
             <div class="upper">
               <p class="question">${faq.question}?</p>
@@ -301,9 +274,9 @@ ${bonuses.join('')}
             </div>
           </div>
 		`
-    }).join("");
+  }).join("");
 
-    const questions = document.querySelectorAll(" section#faq .answers div.answer");
+  const questions = document.querySelectorAll(" section#faq .answers div.answer");
 
   questions.forEach((question) => {
 
@@ -334,18 +307,26 @@ ${bonuses.join('')}
     });
   });
 
-  const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
- waitlistBTN.addEventListener("click", (e) => {
-    if (waitlistBTN.disabled == true) return;
- 
-    waitlistBTN.disabled = true;
-    waitlistBTN.ariaDisabled = true;
-    waitlistBTN.style.fontSize = "12px";
-    waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
- 
-    setTimeout(() => {
-      handleAlert(`
+  handleAuthStateChange(async (user) => {
+    const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
+    const userdata = (await getUserData(user.uid)) || { waitlist: false };
+    waitlistBTN.disabled = userdata.waitlist;
+
+    if (!userdata.waitlist) {
+      waitlistBTN.addEventListener("click", async () => {
+        if (user) {
+          if (waitlistBTN.disabled == true) return;
+
+            waitlistBTN.disabled = true;
+            waitlistBTN.ariaDisabled = true;
+            waitlistBTN.style.fontSize = "12px";
+            waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
+
+          await updateUserData(user.uid, { waitlist: true });
+
+            setTimeout(() => {
+              handleAlert(`
  Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
  
  <br/>
@@ -358,10 +339,27 @@ ${bonuses.join('')}
  Priority is given in the order sign-ups are received, so you’re in line.
  
  <br/><br/>
- Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }] );
- 
+ Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]);
+
+              waitlistBTN.style.fontSize = "13.5px";
+              waitlistBTN.textContent = '✅ Added to waitlist!';
+            }, 1000);
+        }
+        else {
+          handleAlert("You must be logged in to join waitlist!",
+            "blur",
+            false, "",
+            true,
+            [{
+              text: "LOGIN", onClick: () => window.location.replace("/html/regs/Signup.html"), type: "primary"
+            }, {
+              text: "Close", onClick: "closeAlert", type: "secondary"
+            }]);
+        }
+      });
+    } else {
       waitlistBTN.style.fontSize = "13.5px";
       waitlistBTN.textContent = '✅ Added to waitlist!';
-    }, 2500);
+    }
   });
 });
