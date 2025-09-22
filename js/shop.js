@@ -1,8 +1,6 @@
 import handleAlert from "/js/general.js";
-import { getUserData, updateUserData } from "./database.js";
-import { handleAuthStateChange } from "./auth.js";
 import { handleAuthStateChange, getCurrentUser } from './auth.js';
-import { addToCart as addToCartInDb, getCartItems } from './database.js';
+import { addToCart as addToCartInDb, getCartItems, getUserData } from './database.js';
 
 
 //Audio source:
@@ -283,7 +281,7 @@ async function handleAddToCartClick(e) {
   const book = BOOK_COLLECTION.find(b => b.id === bookId);
   if (!book) return;
 
-  const selectedFormat = document.querySelector('input[name="format"]:checked');
+  const selectedFormat = document.querySelector('input[type="radio"]:checked');
   if (!selectedFormat) {
     handleAlert('Please select a format.', "toast");
     return;
@@ -306,7 +304,7 @@ async function handleAddToCartClick(e) {
 
   const button = e.currentTarget;
   button.disabled = true;
-  button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+  button.innerHTML = `<div class="spinner-container" style="align-self:center;"><div class="spinner"></div></div>`;
 
   try {
     await addToCartInDb(user.uid, itemData);
@@ -348,6 +346,19 @@ document.addEventListener('DOMContentLoaded', () => {
   handleAuthStateChange(async (user) => {
     const cartCount = document.querySelector(".details-top span.cart-count");
     if (user && cartCount) {
+      const user = await getUserData(user.uid);
+      const details = document.querySelector("#preview .details");
+      const copyBTN = document.querySelector("#preview button.get-copy");
+
+
+      if (user.bookPaid === true) {
+        details.innerHTML = "";
+        details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
+
+        copyBTN.textContent = "START READING NOW";
+        copyBTN.addEventListener("click", () => window.location.href("/html/main/ViewBook.html"));
+      }
+
       const items = await getCartItems(user.uid);
       cartCount.textContent = items.length;
     } else if (cartCount) {

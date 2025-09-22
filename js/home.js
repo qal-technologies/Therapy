@@ -576,7 +576,7 @@ ${session.type == "inner" ?
 
 	handleAuthStateChange(async (user) => {
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
-		const userdata = (await getUserData(user.uid)) || { waitlist: false };
+		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		waitlistBTN.disabled = userdata.waitlist;
 
 		if (!userdata.waitlist) {

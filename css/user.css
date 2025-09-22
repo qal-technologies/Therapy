@@ -94,14 +94,14 @@
   flex-direction: row;
   gap: 10px;
   width: max-content;
-  height: 35px;
-  max-width: 120px;
+  /* height: 35px; */
+  /* max-width: 120px; */
   border: 1px solid var(--accent);
   padding: 6px;
-  padding-inline: 12px;
+  padding-inline: 20px;
   border-radius: 20px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .profile-section .others a {
@@ -411,4 +411,22 @@ p#receiptDate {
   user-select: none;
   background-color: var(--link);
   text-align: center;
+}
+
+
+#logout-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  justify-content: center;
+}
+
+#logout-button svg {
+  width: 30px;
+  height: 30px;
+  fill: var(--danger);
 }

@@ -1967,6 +1967,10 @@ ul.instructions.redeem li {
     color: red;
 }
 
+.paysafe-section .outcome-section .bi-dash-circle-fill {
+    color: rgb(255, 180, 40);
+}
+
 .paysafe-section .outcome-section h1 {
     font-family: PoppinsMed;
 }
@@ -2034,7 +2038,7 @@ ul.instructions.redeem li {
     background: red;
 }
 
-.paysafe-section .continue-btn.success{
+.paysafe-section .continue-btn.success {
     background: rgb(0, 184, 0);
 }
 
@@ -2119,10 +2123,12 @@ ul.instructions.redeem li {
         transform: scale(0.1);
         opacity: 0;
     }
+
     60% {
         transform: scale(1.2);
         opacity: 1;
     }
+
     100% {
         transform: scale(1);
     }

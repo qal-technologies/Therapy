@@ -4,7 +4,7 @@ import handleAlert from './general.js';
 
 const TEMPLATE = {
   login: `
-   <div class="form-container" id="login-form">
+   <div class="form-container active" id="login-form">
         <div class="header">
           <h1>Login</h1>
           <p>You've already taken the first step. Log in to continue healing...</p>
@@ -22,7 +22,7 @@ const TEMPLATE = {
             <p class="forgot-password">Forgot Password?</p>
           </div>
           <div id="checkout">
-            <button id="login-button">
+            <button id="login-button" disabled>
               <p class="text">LOGIN</p>
             </button>
           </div>
@@ -84,7 +84,7 @@ const TEMPLATE = {
                   </p>
                 </div>
                 <div id="checkout">
-                  <button title="Register Account" disabled>
+                  <button title="Register Account" id="register-button" disabled>
                     <p class="text">REGISTER</p>
                   </button>
                 </div>
@@ -98,17 +98,30 @@ const TEMPLATE = {
 const DOM = {
   tabs: document.querySelectorAll('.tab'),
   formSection: document.querySelector('.form-section'),
-  registerForm: document.getElementById('register-form')
+  registerForm: document.getElementById('register-form'),
 };
 
 const state = {
   currentForm: 'register',
 };
 
+function handleInputs() {
+  const inputs = document.querySelectorAll(".form-group input");
+  const proceedButton = document.querySelector("div#checkout button");
+
+  const check = Array.from(inputs).every(input => input.value.trim() !== "");
+  proceedButton.disabled = !check;
+
+  inputs.forEach(input => {
+    input.addEventListener("input", handleInputs)
+  })
+}
+
 function setupEventListeners() {
   DOM.tabs.forEach(tab => {
     tab.addEventListener('click', handleTabClick);
   });
+  handleInputs();
 }
 
 function handleTabClick(e) {
@@ -120,7 +133,9 @@ function handleTabClick(e) {
   document.querySelector('.tab.active').classList.remove('active');
   tab.classList.add('active');
   state.currentForm = formToShow;
+
   updateFormUI();
+  handleInputs();
 }
 
 function updateFormUI() {
@@ -143,9 +158,9 @@ function attachFormListeners() {
   }
 }
 
-
 async function handleRegistration(e) {
   e.preventDefault();
+
   const firstName = document.getElementById('reg-firstname').value;
   const lastName = document.getElementById('reg-lastname').value;
   const email = document.getElementById('reg-email').value;
@@ -215,6 +230,7 @@ async function handleLogin(e) {
 function init() {
   setupEventListeners();
   updateFormUI();
+  handleInputs();
 }
 
 window.addEventListener('DOMContentLoaded', init);

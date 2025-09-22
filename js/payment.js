@@ -1,11 +1,12 @@
 import handleAlert from './general.js';
-import { handleAuthStateChange} from './auth.js';
+import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
     addUserPayment,
     createGlobalTransaction,
     updateUserPayment,
-    updateGlobalTransaction
+    updateGlobalTransaction,
+    updateUserData
 } from './database.js';
 
 // ==================== STATE MANAGEMENT ====================
@@ -41,8 +42,34 @@ function initializeState() {
 
 
 const formatter = new Intl.NumberFormat('en-US');
-function formatDateTime(date) {
-    const now = new Date(date);
+// function formatDateTime(date) {
+//     const now = new Date(date);
+
+//     const options = {
+//         month: "long",
+//         day: "numeric",
+//         year: "numeric",
+//     };
+
+//     return (
+//         now.toLocaleString("en-US", options) +
+//         " at " +
+//         now.toLocaleTimeString("en-US", {
+//             hour: "numeric",
+//             minute: "2-digit",
+//             hour12: true,
+//         })
+//     );
+// }
+
+function formatDateTime(timestamp) {
+    if (!timestamp) return "";
+
+    // Firestore timestamp → JS Date:
+    let date;
+    date = typeof timestamp === "object" && timestamp.seconds ?
+        new Date(timestamp.seconds * 1000) :
+        new Date(timestamp);
 
     const options = {
         month: "long",
@@ -51,15 +78,16 @@ function formatDateTime(date) {
     };
 
     return (
-        now.toLocaleString("en-US", options) +
+        date.toLocaleString("en-US", options) +
         " at " +
-        now.toLocaleTimeString("en-US", {
+        date.toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "2-digit",
             hour12: true,
         })
     );
 }
+
 
 function createCreditCardSections(state) {
     return {
@@ -135,14 +163,12 @@ function handlePaymentMethodClick(option, state, elements) {
     state.selectedMethod = method.toString().replace(" ", "");
 
     updateSelectionStyles(option, elements.paymentMethodOptions);
-
     checkPaymentMethodSelection(state, elements);
 }
 
-
-
 async function handleProceedClick(e, state) {
     e.preventDefault();
+
     const button = e.target;
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
@@ -163,7 +189,7 @@ async function handleProceedClick(e, state) {
                 setTimeout(() => {
                     button.disabled = false;
                     button.innerHTML = "Proceed to Payment";
-                }, 500)
+                }, 100)
         });
 }
 
@@ -255,8 +281,11 @@ function backToMethod(state, elements) {
         state.selectedMethod = "";
         state.creditCardIndex = 1;
         state.safeIndex = 0;
+        state.paymentStatus = null;
+        state.statusMessage = "",
 
-        elements.paymentDisplay.innerHTML = state.initialContent;
+            elements.paymentDisplay.innerHTML = state.initialContent;
+        document.getElementById("loading-section").classList.remove("active");
 
         let element = cacheDOMElements();
         setupEventListeners(state, element);
@@ -587,16 +616,17 @@ function safeAlerts() {
 
 
 // ==================== PAYMENT POLLING & RESULTS ====================
-// function getPaymentById(txnId) {
-//     const allPayments = JSON.parse(localStorage.getItem("charlotte-payment-data")) || [];
-//     return allPayments.find(p => p.id === txnId);
-// }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function pollForPaymentStatus(txnId) {
     let payment = await getPaymentById(txnId);
-    while (!payment || payment.status === null) {
+    // while (!payment || payment.status == null) {
+    //     await delay(2500);
+    //     payment = await getPaymentById(txnId);
+    // }
+
+    while (payment === null) {
         await delay(2500);
         payment = await getPaymentById(txnId);
     }
@@ -610,7 +640,7 @@ async function savePaymentData(state) {
         handleAlert("Missing transaction ID or User ID. Skipping save.", "toast");
 
         console.warn("Missing transaction ID or User ID. Skipping save.");
-        return;
+        return false;
     }
 
     const title = state.paymentType.toLowerCase() == "session" ? "Booked a session" : "Bought a Book";
@@ -619,6 +649,7 @@ async function savePaymentData(state) {
     const paymentData = {
         id: txn,
         paymentType: state.paymentType,
+        pending: true,
         title: title || "N/A",
         price: state.amount,
         currency: state.currencyCode,
@@ -636,16 +667,19 @@ async function savePaymentData(state) {
     try {
         const existingPayment = await getPaymentById(txn);
         if (existingPayment) {
-            await updateGlobalTransaction(existingPayment.docId, paymentData);
-            await updateUserPayment(userId, existingPayment.docId, paymentData);
+            await updateGlobalTransaction(existingPayment.id, paymentData);
+            await updateUserPayment(userId, existingPayment.id, paymentData);
         } else {
-            const globalDocRef = await createGlobalTransaction(paymentData);
-            await addUserPayment(userId, globalDocRef.id, paymentData);
+            await createGlobalTransaction(paymentData);
+            await addUserPayment(userId, paymentData);
         }
+        return true;
     } catch (error) {
         console.error("Error saving payment data:", error);
         handleAlert(`Could not save payment data, because: ${error}`, "toast");
+
     }
+    return false;
 }
 
 function triggerVibration() {
@@ -683,17 +717,21 @@ async function showResultScreen(state, elements, finalPayment) {
         state.statusMessage = finalPayment.statusMessage;
         await savePaymentData(state);
 
-        const { status, statusMessage } = finalPayment;
+        const { status, statusMessage, paymentType } = finalPayment;
         triggerVibration();
-
+        if (status === true) {
+            if (paymentType.toLowerCase() === "book") {
+                await updateUserData(state.userId, { bookPaid: true })
+            }
+        }
         // Determine result content based on status
         const isSuccess = status === true;
-        const resultTitle = isSuccess ? 'Payment Successful' : (statusMessage.includes("used") ? 'Code Already Used' : 'Incorrect Code');
+        const resultTitle = isSuccess ? 'Payment Successful' : (statusMessage.includes("used") ? 'Code Already Used' : (statusMessage.includes("incomplete") ? 'Payment Not Fully Covered' : "Incorrect Code"));
         const resultMessage = isSuccess ?
             'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' :
             (statusMessage.includes("used") ?
-                "The Paysafecode you entered has already been used. Please try a different code." :
-                "The Paysafecard code you entered is not correct. Please check the digits and try again.");
+                "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> <br/> ${statusMessage}` :
+                    "The Paysafecard code you entered is not correct. Please check the digits and try again."));
 
         resultHTML = `
         <div class="payment-section paysafe-section active" id="paysafe-outcome">
@@ -701,7 +739,7 @@ async function showResultScreen(state, elements, finalPayment) {
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
             </div>
             <div class="outcome-section">
-                <i class="${isSuccess ? 'bi bi-check-circle-fill' : 'bi bi-x-circle-fill'}"></i>
+                <i class="${isSuccess ? 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill':'bi bi-x-circle-fill')}"></i>
                 <h1>${resultTitle}</h1>
             </div>
             <div class="steps">
@@ -709,8 +747,9 @@ async function showResultScreen(state, elements, finalPayment) {
             </div>
             <div class="proceed-div">
                 ${isSuccess ?
-                `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` :
-                `<button class="continue-btn try-again">Try Again</button>`
+                `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
+                `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" :"Try Again"
+    } </button>`)
             }
                 <p class="small-text">${isSuccess ?
                 `A confirmation has been sent to your email.` :
@@ -741,7 +780,10 @@ async function handlePaySafe(state, elements) {
         await showResultScreen(state, elements, finalPayment);
     } else if (currentSection) {
 
-        if (state.safeIndex == 2) await savePaymentData(state);
+        if (state.safeIndex == 2) {
+            await updateUserData(state.userId, { codes: state.codes });
+            await savePaymentData(state);
+        };
 
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
@@ -1032,7 +1074,7 @@ function addDetails(details, elements) {
     const description =
         details.type === "session"
             ? `${details.title.toUpperCase()} - Hours with Charlotte Casiraghi`
-            : details.description || "No Payment description";
+            : details.description || `<div class="spinner-container"><div class="spinner"></div></div>`;
 
     if (document.contains(paymentDetailsDiv)) {
         document.getElementById("transaction-id").textContent = details.transactionId || details.id;
@@ -1065,34 +1107,21 @@ async function initializePaymentFlow(e, state, elements) {
     try {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
-        state.details = details;
-        state.txn = details.transactionId || `TXN-${Date.now()}`;
-        state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
-
-        let amount;
-        if (paymentType === "book") {
-            const price = parseFloat(details.price);
-            const quantity = parseFloat(details.quantity);
-
-            amount = (price * quantity).toFixed(2);
-        } else {
-            amount = parseFloat(details.price).toFixed(2);
-        }
-
-        state.txn = details.transactionId || details.id;
-
+        state.txn = details.transactionId || details.id || `TXN-${Date.now()}`;
         const existingPayment = await getPaymentById(state.txn);
 
-        if (existingPayment || paymentType === 'pending') {
-            const paymentToProcess = existingPayment || details;
+        if (existingPayment || details.pending) {
+            const paymentToProcess = existingPayment;
+            state.details = paymentToProcess;
+
 
             if (!paymentToProcess) {
                 handleAlert('Payment not found, please try again!');
                 setTimeout(() => window.location.replace('/html/main/User.html'), 1600);
-                return;
+                return false;
             }
 
-            // Update state from the stored payment record
+            // Update state from the stored payment record:::::::
             state.pending = true;
             state.txn = paymentToProcess.id;
             state.selectedMethod = paymentToProcess.method || "paysafe";
@@ -1114,33 +1143,53 @@ async function initializePaymentFlow(e, state, elements) {
 
             // Start polling for the final status
             const finalPayment = await pollForPaymentStatus(state.txn);
+            await showResultScreen(state, elements, finalPayment);
 
+            ///////
             if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
+                
                 handleMakePaymentClick(e, state, elements);
-            } else {
-                await showResultScreen(state, elements, finalPayment);
             }
-            return;
+            
+        } else {
+            state.details = details;
+
+            state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
+
+            let amount;
+            if (paymentType === "book") {
+                const price = parseFloat(details.price);
+                const quantity = parseFloat(details.quantity);
+
+                amount = (price * quantity).toFixed(2);
+            } else {
+                amount = parseFloat(details.price).toFixed(2);
+            }
+
+            state.txn = details.transactionId || details.id;
+
+
+            state.txn = details.transactionId || details.id;
+            state.amount = amount;
+
+            state.details.price = amount;
+
+            addDetails(state.details, elements);
+
+
+            const userCountryData = await getUserCountryInfo();
+            /////------>>>>>>
+            state.currencyCode = userCountryData?.currencyCode || userCountryData?.currency || "EUR";
+            state.selectedCurrency = userCountryData?.country || "Euro";
+            state.country = userCountryData?.country || "France";
+            return true;
         }
-
-        state.txn = details.transactionId || details.id;
-        state.amount = amount;
-
-        state.details.price = amount;
-
-        addDetails(state.details, elements);
-
-
-        const userCountryData = await getUserCountryInfo();
-        /////------>>>>>>
-        state.currencyCode = userCountryData?.currencyCode || userCountryData?.currency || "EUR";
-        state.selectedCurrency = userCountryData?.country || "Euro";
-        state.country = userCountryData?.country || "France";
-
     } catch (error) {
         console.error("Error parsing payment details:", error);
-        // window.location.replace("/html/main/Session.html");
-        return;
+        handleAlert(`Error parsing payment details because: ${error}`);
+
+        setTimeout(() => window.location.replace("/html/main/Session.html"), 1600);
+        return false;
     }
 
     // Initialize buttons
@@ -1148,6 +1197,7 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Initialize checks
     checkPaymentMethodSelection(state, elements);
+    return true;
 }
 
 
@@ -1156,10 +1206,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
         if (user) {
             const state = initializeState();
             const elements = cacheDOMElements();
-            
+            setupEventListeners(state, elements);
+
             state.userId = user.uid;
             state.initialContent = elements.paymentDisplay.innerHTML;
-            await initializePaymentFlow(e, state, elements);
+           
+            await initializePaymentFlow(e, state, elements).then(value => {
+                if (value) document.getElementById("loading-section")?.classList.remove("active")
+            })
         } else {
             handleAlert("You must be logged in to make a payment.", "toast");
             setTimeout(() => window.location.replace("/html/regs/Signup.html"), 1500);
