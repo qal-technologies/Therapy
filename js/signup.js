@@ -190,11 +190,8 @@ async function handleRegistration(e) {
       waitlist
     });
 
-    handleAlert("Registration successful! Redirecting...", "toast");
-    setTimeout(() => {
-      window.location.href = "/html/main/User.html";
-    }, 1500);
-
+    handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => window.history.back() }])
+    
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
     handleAlert(`Registration failed: ${errorMessage}`, "toast");
