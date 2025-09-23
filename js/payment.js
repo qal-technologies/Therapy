@@ -637,7 +637,7 @@ async function savePaymentData(state) {
     const { userId, txn } = state;
 
     if (!txn || !userId) {
-        handleAlert("Missing transaction ID or User ID. Skipping save.", "toast");
+        handleAlert("Missing transaction ID or User ID. Skipping save.", "blur", false, "", true, [{ text: "OK", onClick: "closeAlert" }]);
 
         console.warn("Missing transaction ID or User ID. Skipping save.");
         return false;
@@ -676,7 +676,7 @@ async function savePaymentData(state) {
         return true;
     } catch (error) {
         console.error("Error saving payment data:", error);
-        handleAlert(`Could not save payment data, because: ${error}`, "toast");
+        handleAlert(`Could not save payment data, because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: "closeAlert" }]);
 
     }
     return false;
@@ -739,7 +739,7 @@ async function showResultScreen(state, elements, finalPayment) {
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
             </div>
             <div class="outcome-section">
-                <i class="${isSuccess ? 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill':'bi bi-x-circle-fill')}"></i>
+                <i class="${isSuccess ? 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill' : 'bi bi-x-circle-fill')}"></i>
                 <h1>${resultTitle}</h1>
             </div>
             <div class="steps">
@@ -748,8 +748,8 @@ async function showResultScreen(state, elements, finalPayment) {
             <div class="proceed-div">
                 ${isSuccess ?
                 `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
-                `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" :"Try Again"
-    } </button>`)
+                    `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
+                    } </button>`)
             }
                 <p class="small-text">${isSuccess ?
                 `A confirmation has been sent to your email.` :
@@ -1097,9 +1097,8 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Redirect if no params
     if (!paymentType || !paymentDetails) {
-        handleAlert("No Payment Details Gotten, Please Book a Session!", "toast");
+        handleAlert("No Payment Details Gotten, Please Book a Session!", "blur", false, "", true, [{ text: "OK", onClick: () => window.location.replace("/html/main/Session.html") }]);
 
-        setTimeout(() => window.location.replace("/html/main/Session.html"), 1600);
         return;
     }
 
@@ -1116,8 +1115,7 @@ async function initializePaymentFlow(e, state, elements) {
 
 
             if (!paymentToProcess) {
-                handleAlert('Payment not found, please try again!');
-                setTimeout(() => window.location.replace('/html/main/User.html'), 1600);
+                handleAlert('Payment not found, please try again!', "blur", true, "Not Found", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/User.html') }]);
                 return false;
             }
 
@@ -1147,10 +1145,10 @@ async function initializePaymentFlow(e, state, elements) {
 
             ///////
             if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
-                
+
                 handleMakePaymentClick(e, state, elements);
             }
-            
+
         } else {
             state.details = details;
 
@@ -1186,9 +1184,8 @@ async function initializePaymentFlow(e, state, elements) {
         }
     } catch (error) {
         console.error("Error parsing payment details:", error);
-        handleAlert(`Error parsing payment details because: ${error}`);
+        handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: () => window.location.replace("/html/main/Session.html") }]);
 
-        setTimeout(() => window.location.replace("/html/main/Session.html"), 1600);
         return false;
     }
 
@@ -1210,13 +1207,12 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
             state.userId = user.uid;
             state.initialContent = elements.paymentDisplay.innerHTML;
-           
+
             await initializePaymentFlow(e, state, elements).then(value => {
                 if (value) document.getElementById("loading-section")?.classList.remove("active")
             })
         } else {
-            handleAlert("You must be logged in to make a payment.", "toast");
-            setTimeout(() => window.location.replace("/html/regs/Signup.html"), 1500);
+            handleAlert("You must be logged in to make a payment.", "blur", false, "", true, [{ text: "OK", onClick: () => window.location.href = "/html/regs/Signup.html" }]);
         }
     });
 });

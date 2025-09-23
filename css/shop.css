@@ -499,12 +499,20 @@
   border-radius: 20px;
   color: white;
   justify-self: center;
+  display: flex;
   text-align: center;
+  place-content: center;
   border: none;
   padding: 12px;
   cursor: pointer;
   font-family: PoppinsMed;
   gap: 10px;
+}
+
+.book-item .add-to-cart:disabled{
+  background: rgb(214, 214, 214);
+  color: rgb(121, 121, 121);
+  cursor: not-allowed;
 }
 
 .fly-to-cart {

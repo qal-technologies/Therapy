@@ -94,8 +94,6 @@
   flex-direction: row;
   gap: 10px;
   width: max-content;
-  /* height: 35px; */
-  /* max-width: 120px; */
   border: 1px solid var(--accent);
   padding: 6px;
   padding-inline: 20px;
@@ -176,9 +174,8 @@
   width: 100%;
   max-width: 580px;
   height: max-content;
-  border: 1px solid var(--accent);
-  border-radius: 20px;
-  background: var(--primaryTrans);
+  border-radius: 22px;
+  background: white;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -194,12 +191,33 @@
 .payment-header {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--accentTrans);
+}
+
+.payment-header .header-upper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-header .header-upper .indicator-circle {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 10px solid;
+  opacity:0.8;
+  border-radius: 50%;
 }
 
 .payment-code {
-  color: var(--dark);
+  color: var(--mainText);
   font-family: PoppinsMed;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: -0.5px;
 }
 
@@ -217,25 +235,28 @@
   background-color: rgba(209, 250, 229, 0.8);
   color: #038553;
   backdrop-filter: blur(10px);
+  border-color: #038553;
 }
 
 .status-pending {
   background-color: rgba(254, 243, 199, 0.8);
   color: #a04004;
   backdrop-filter: blur(10px);
+  border-color: #a04004;
 }
 
 .status-failed {
   background-color: rgba(254, 226, 226, 0.8);
   color: #ad0505;
   backdrop-filter: blur(10px);
-
+  border-color: #ad0505;
 }
 
 .payment-type {
-  font-family: PoppinsSemi;
+  font-family: PoppinsMed;
+  font-weight: bolder;
   color: black;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .payment-details {

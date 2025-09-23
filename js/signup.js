@@ -19,7 +19,7 @@ const TEMPLATE = {
             <input type="password" id="login-password" required />
           </div>
           <div class="form-group forgot">
-            <p class="forgot-password">Forgot Password?</p>
+            <a class="forgot-password" href="/html/regs/Forget.html">Forgot Password?</a>
           </div>
           <div id="checkout">
             <button id="login-button" disabled>
@@ -215,19 +215,28 @@ async function handleLogin(e) {
 
   try {
     await login(email, password);
-    handleAlert("Login successful! Redirecting...", "toast");
-    setTimeout(() => {
-      window.location.href = "/html/main/User.html";
-    }, 1500);
+    handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => window.history.back() }]);
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-    handleAlert(`Login failed: ${errorMessage}`, "toast");
+    handleAlert(`Login failed because: ${errorMessage}. Please try again.`, "blur", true, "<i class='bi bi-check-circle-fill'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => window.location.href = "/html/regs/Forget.html" }, { text: "Try Again", onClick: "closeAlert" }]);
     button.disabled = false;
     button.innerHTML = `<p class="text">LOGIN</p>`;
   }
 }
 
 function init() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const formType = urlParams.get("type");
+  if (formType) {
+    state.currentForm = formType.toLowerCase();
+    const tabs = document.querySelectorAll(".tabs .tab");
+    tabs.forEach(tab => {
+      tab.classList.remove("active");
+      if (tab.dataset.form == formType) {
+        tab.classList.add("active")
+      };
+    });
+  }
   setupEventListeners();
   updateFormUI();
   handleInputs();

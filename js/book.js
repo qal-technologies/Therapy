@@ -453,7 +453,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search);
       const userdata = await getUserData(user.uid);
       waitlist = userdata.waitlist;
-      
+
       init();
       if (urlParams.get('type')) {
         try {
@@ -509,10 +509,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
       }
     } else {
-      handleAlert("Please log in to book a session.", "toast");
-      setTimeout(() => {
-        window.location.replace("/html/regs/Signup.html");
-      }, 1500);
+      handleAlert("To book a session, you'll need to log in first. If you dont't have an account yet, you can create one in a few steps. <br/> <br/> This helps us know it's really you and keeps your booking safe.", "blur", true, "* <br/> Please Log In or Register", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
     }
   });
 });

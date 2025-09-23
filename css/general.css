@@ -189,10 +189,11 @@ div#nav a.nav-main {
   display: flex;
   position: relative;
   cursor: pointer;
+  margin-bottom: 0px;
 }
 
 div#nav a.nav-main:hover {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 div#bottom div#contacts {
@@ -241,7 +242,7 @@ a.nav-main p#nav-text.active {
   font-family: PoppinsSemi;
 }
 
-div#nav a.login {
+div#nav a.login, div#nav button.logout {
   background-color: transparent;
   border: 2px solid var(--link);
   padding-inline: 15px;
@@ -260,6 +261,29 @@ div#nav a.login:hover {
   box-shadow: 0px 1px 8px var(--accent);
 }
 
+div#nav button.logout {
+  background: transparent;
+  border: 3px solid red;
+  color: red;
+  padding: 2px;
+  padding-inline: 15px;
+  outline: none;
+  display: flex;
+  width: 120px;
+  letter-spacing: 1px;
+  font-weight: bolder;
+  place-self: center;
+  align-self: center;
+  border-radius: 20px;
+  font-family: PoppinsSemi;
+  margin: 0;
+}
+
+div#nav button.logout:hover{
+  background: red;
+  color:white;
+  transform: scale(105%);
+} 
 
 div#back-button {
   position: absolute;
@@ -559,7 +583,7 @@ section#newsletter {
   display: none;
   flex: 1;
   background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(4px) brightness(80%);
+  backdrop-filter: blur(5px) brightness(80%);
   justify-content: center;
   align-items: center;
 }
@@ -640,10 +664,10 @@ section#newsletter {
   opacity: 1;
 }
 
-.alert-message .alert-button.secondary:hover{
+.alert-message .alert-button.secondary:hover {
   background: var(--link);
   color: white;
-} 
+}
 
 
 .alert-message.shop .alert-button, .alert-message.shop .alert-title {
@@ -672,14 +696,15 @@ section#newsletter {
 }
 
 .alert-message.shop .alert-text {
-  width: 90%;
+  width: max-content;
   max-width: 400px;
   text-align: center;
   padding: 8px;
   padding-inline: 18px;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.8);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  color: white;
+  border: 0.5px solid rgba(172, 172, 172, 0.2);
+  color: rgb(0, 0, 0);
   border-radius: 18px;
 }

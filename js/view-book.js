@@ -1,14 +1,18 @@
 import { handleAuthStateChange } from "./auth.js";
+import { getUserData } from "./database.js";
 import handleAlert from './general.js';
 
 window.addEventListener('DOMContentLoaded', () => {
     handleAuthStateChange(async (user) => {
         if (!user) {
-            handleAlert("You are not logged in. Redirecting...", "toast");
-            setTimeout(() => {
-                window.location.replace("/html/regs/Signup.html");
-            }, 1500);
+            handleAlert("Please login or create account to purchase and view book", "blur", true, "*", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
         }
+        if (user) {
+            const userdata = await getUserData(user.uid);
+            const paid = userdata.bookPaid;
+
+            if (paid == true) {
+                
         // DOM Elements:::::
         const bookEl = document.getElementById('book');
         const leftEl = document.getElementById('leftPage').querySelector('.content');
@@ -502,5 +506,9 @@ window.addEventListener('DOMContentLoaded', () => {
             applyLayout();
         })();
 
+            } else {
+                handleAlert("Please go to the Book Page and purchase the book to start reading...", "blur", true, "%", true, [{ text: "GET COPY", onClick: () => window.location.replace("/html/main/Shop.html") }, { text: "Close", onClick: () => window.location.replace("/html/main/Home.html") }]);
+            }
+        }
     });
 });

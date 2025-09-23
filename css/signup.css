@@ -213,7 +213,7 @@ header.header h3 {
   margin-bottom: 1rem;
 }
 
-.form-group.forgot p{
+.form-group.forgot a{
   font-weight: bold;
   font-size: 14px;
   color: var(--link);

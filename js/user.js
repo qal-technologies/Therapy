@@ -50,17 +50,28 @@ function renderUserProfile(user, payments, cartNumber) {
       if (payment.status === true) statusClass = 'status-completed';
       else if (payment.status === false) statusClass = 'status-failed';
       else statusClass = 'status-pending';
+      const options = {
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      };
 
       const paymentDate = payment.date && payment.date.seconds ?
-        new Date(payment.date.seconds * 1000).toLocaleDateString() :
-        'N/A';
+        new Date(payment.date.seconds * 1000).toLocaleString("en-US", options) :
+        payment.date.toLocaleString();
 
       paymentCard.innerHTML = `
               <div class="payment-header">
-                  <span class="payment-code">${payment.id}</span>
+                <div class="header-upper">
+                  <div class="indicator-circle ${statusClass}"></div>
                   <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
+                </div>
+                <div class="header-lower">
+                  <div class="payment-type">${payment.title.toUpperCase()}</div>
+                  <span class="payment-code">Transaction ID: ${payment.id}</span>
+                </div>
               </div>
-              <div class="payment-type">${payment.title.toUpperCase()}</div>
+
               <div class="payment-details">
                   <div class="payment-detail">
                       <span class="detail-label">Date:</span>
@@ -104,10 +115,15 @@ function renderUserProfile(user, payments, cartNumber) {
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
 							</svg> ${payment.statusName.toUpperCase()}`;
-    const symbol = getCurrencySymbol(payment.currency)
+    const symbol = getCurrencySymbol(payment.currency);
+    const options = {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
     const paymentDate = payment.date && payment.date.seconds ?
-      new Date(payment.date.seconds * 1000).toLocaleDateString() :
-      'N/A';
+      new Date(payment.date.seconds * 1000).toLocaleString("en-US", options) :
+      payment.date.toLocaleString();
     
     document.getElementById('receiptId').textContent = payment.id;
     document.getElementById('receiptType').textContent = payment.title;
@@ -124,20 +140,20 @@ function renderUserProfile(user, payments, cartNumber) {
 
 
 function setupEventListeners() {
-  const logoutButton = document.getElementById('logout-button');
-  if (logoutButton) {
-    logoutButton.addEventListener('click', async () => {
-      try {
-        await logout();
-        handleAlert("You have been logged out.", "toast");
-        setTimeout(() => {
-          window.location.href = '/html/main/Home.html';
-        }, 1500);
-      } catch (error) {
-        handleAlert("Failed to log out.", "toast");
-      }
-    });
-  }
+  // const logoutButton = document.getElementById('logout-button');
+  // if (logoutButton) {
+  //   logoutButton.addEventListener('click', async () => {
+  //     try {
+  //       await logout();
+  //       handleAlert("You have been logged out.", "toast");
+  //       setTimeout(() => {
+  //         window.location.href = '/html/main/Home.html';
+  //       }, 1500);
+  //     } catch (error) {
+  //       handleAlert("Failed to log out.", "toast");
+  //     }
+  //   });
+  // }
 
 
   const closeModal = document.getElementById('closeModal');

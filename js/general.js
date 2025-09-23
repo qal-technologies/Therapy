@@ -1,4 +1,4 @@
-import { handleAuthStateChange } from './auth.js';
+import { handleAuthStateChange, logout } from './auth.js';
 
 const header = document.querySelector("header#header");
 window.onload = () => {
@@ -115,6 +115,28 @@ window.onload = () => {
 
     handleAuthStateChange(user => {
         const actionTab = document.querySelectorAll("a.login");
+        const navDiv = document.querySelector("header#header div#nav");
+
+
+        if (navDiv && user) {
+            const logoutBTN = document.createElement("button");
+            logoutBTN.classList.add("nav-main", "logout");
+            logoutBTN.title = "Log out";
+            logoutBTN.id = "logout-button";
+            logoutBTN.innerText = "LOG OUT";
+
+            logoutBTN.addEventListener("click", async (e) => {
+                e.preventDefault();
+                try {
+                    await logout();
+                    handleAlert("You have been logged out.", "blur", false, "", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
+                } catch (error) {
+                    handleAlert(`Failed to log out, because: ${error}.`, "toast");
+                }
+            });
+
+            navDiv.appendChild(logoutBTN);
+        }
 
         if (actionTab) {
             actionTab.forEach(tab => {
@@ -184,7 +206,7 @@ function handleAlert(
 
         timer = setTimeout(() => {
             parent.style.display = "none";
-            parent.innerHTML = ""; 
+            parent.innerHTML = "";
             defaultFunction();
         }, 1200);
     }

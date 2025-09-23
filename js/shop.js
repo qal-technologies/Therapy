@@ -168,7 +168,7 @@ function handleCartAnimation(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartImage = document.querySelector(".book-item img");
   if (!cartParent || !cartImage) return;
-  
+
   const flyingImage = cartImage.cloneNode();
   flyingImage.classList.add("fly-to-cart");
 
@@ -259,20 +259,20 @@ Select Book Format
   document.querySelectorAll('.qty-arrow').forEach(btn => {
     btn.addEventListener('click', handleQuantityChange);
   });
+  const bookName = "COMPAGNON FÉMININ".toLowerCase();
 
   document.querySelectorAll(".book-info .last")
     .forEach(el => el.addEventListener("click", () => {
-      handleAlert("Permanently Unavailable. Only eBook Available now.", "toast");
+      handleAlert(`The printed edition of <i>${bookName}</i> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.`, "blur", true, "* <br/> Hardcopy Permanently Sold Out", true, [{text:"Get the eBook", onClick:"closeAlert"}]);
     }));
-  
+
   document.querySelectorAll('.add-to-cart').forEach(button => button.addEventListener('click', handleAddToCartClick));
 }
 
 async function handleAddToCartClick(e) {
   const user = getCurrentUser();
   if (!user) {
-    handleAlert("Please login or register to add items to your cart.", "toast");
-    setTimeout(() => window.location.href = "/html/regs/Signup.html", 2000);
+    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "* <br/> Login or Register", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
     return;
   }
 
@@ -313,7 +313,7 @@ async function handleAddToCartClick(e) {
 
     const cartItems = await getCartItems(user.uid);
     handleCartAnimation(cartItems.length);
-    
+
     book.quantity = 1;
     button.disabled = false;
     button.innerHTML = 'Add to Cart';
