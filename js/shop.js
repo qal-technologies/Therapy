@@ -1,6 +1,6 @@
 import handleAlert from "/js/general.js";
 import { handleAuthStateChange, getCurrentUser } from './auth.js';
-import { addToCart as addToCartInDb, getCartItems, getUserData } from './database.js';
+import { addToCart as addToCartInDb, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
 
 
 //Audio source:
@@ -263,7 +263,7 @@ Select Book Format
 
   document.querySelectorAll(".book-info .last")
     .forEach(el => el.addEventListener("click", () => {
-      handleAlert(`The printed edition of <i>${bookName}</i> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{text:"Get the eBook", onClick:"closeAlert"}]);
+      handleAlert(`The printed edition of <i>${bookName}</i> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{ text: "Get the eBook", onClick: "closeAlert" }]);
     }));
 
   document.querySelectorAll('.add-to-cart').forEach(button => button.addEventListener('click', handleAddToCartClick));
@@ -291,6 +291,7 @@ async function handleAddToCartClick(e) {
 
   const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
   const itemData = {
+    id: book.id,
     bookId: book.id,
     title: book.title,
     price: book.price,
@@ -307,7 +308,12 @@ async function handleAddToCartClick(e) {
   button.innerHTML = `<div class="spinner-container" style="align-self:center;"><div class="spinner"></div></div>`;
 
   try {
-    await addToCartInDb(user.uid, itemData);
+    const already = await getCartById(user.uid, book.id);
+    if (already) {
+      await updateCartItems(user.uid, book.id, itemData);
+    } else {
+      await addToCartInDb(user.uid, itemData);
+    }
     handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`, "toast");
 
 

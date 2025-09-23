@@ -108,7 +108,8 @@ const state = {
 function handleInputs() {
   const inputs = document.querySelectorAll(".form-group input");
   const proceedButton = document.querySelector("div#checkout button");
-
+  if (!inputs || !proceedButton) return;
+  
   const check = Array.from(inputs).every(input => input.value.trim() !== "");
   proceedButton.disabled = !check;
 
@@ -212,10 +213,10 @@ async function handleLogin(e) {
 
   try {
     await login(email, password);
-    handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => window.history.back() }]);
+    handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill text-success'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => window.history.back() }]);
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-    handleAlert(`Login failed because: ${errorMessage}. Please try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-warning'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => window.location.href = "/html/regs/Forget.html" }, { text: "Try Again", onClick: "closeAlert" }]);
+    handleAlert(`Login failed because: ${errorMessage}. Please try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => window.location.href = "/html/regs/Forget.html" }, { text: "Try Again", onClick: "closeAlert" }]);
     button.disabled = false;
     button.innerHTML = `<p class="text">LOGIN</p>`;
   }

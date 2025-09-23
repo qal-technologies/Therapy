@@ -279,11 +279,11 @@ div#nav button.logout {
   margin: 0;
 }
 
-div#nav button.logout:hover{
+div#nav button.logout:hover {
   background: red;
-  color:white;
+  color: white;
   transform: scale(105%);
-} 
+}
 
 div#back-button {
   position: absolute;
@@ -651,6 +651,10 @@ section#newsletter {
   outline: none;
   cursor: pointer;
   opacity: .76;
+}
+
+.alert-message i:first-child{
+  font-size: 1.2rem;
 }
 
 .alert-message .alert-button.secondary {

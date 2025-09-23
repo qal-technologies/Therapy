@@ -129,7 +129,7 @@ window.onload = () => {
                 e.preventDefault();
                 try {
                     await logout();
-                    handleAlert("You have been logged out.", "blur", false, "", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
+                    handleAlert("Please log in again if you'd like to continue.", "blur", true, "<i class='bi bi-exclamation-triangle text-danger'></i> <br/> You have been logged out.", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
                 } catch (error) {
                     handleAlert(`Failed to log out, because: ${error}.`, "toast");
                 }

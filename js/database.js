@@ -103,8 +103,8 @@ const createGlobalTransaction = (transactionData) => {
  * @returns {Promise<DocumentReference>}
  */
 const addToCart = (userId, itemData) => {
-    const cartColRef = collection(db, "users", userId, "cart");
-    return addDoc(cartColRef, itemData);
+  const cartColRef = collection(db, "users", userId, "cart");
+  return addDoc(cartColRef, itemData);
 };
 
 /**
@@ -113,15 +113,47 @@ const addToCart = (userId, itemData) => {
  * @returns {Promise<Array>} An array of cart item objects.
  */
 const getCartItems = async (userId) => {
-    const cartColRef = collection(db, "users", userId, "cart");
-    const querySnapshot = await getDocs(cartColRef);
-    const items = [];
-    querySnapshot.forEach((doc) => {
-        items.push({ id: doc.id, ...doc.data() });
-    });
-    return items;
+  const cartColRef = collection(db, "users", userId, "cart");
+  const querySnapshot = await getDocs(cartColRef);
+  const items = [];
+  querySnapshot.forEach((doc) => {
+    items.push({ id: doc.id, ...doc.data() });
+  });
+  return items;
 };
 
+/**
+*Updates the user's cart.
+*@param {string} userId - The user's ID.
+*@param {string} cartId - The cart ID.
+* @param {object} newCartData - The new data to save.
+* @returns {Promise<Array>} An array of saved cart item objects.
+ */
+// const updateCartItems = async (userId, newCartData) => {
+//   const cartColRef = collection(db, "users", userId, "cart");
+//   return setDoc(cartColRef, newCartData, { merge: true });
+// }
+const updateCartItems = (userId, cartId, newCartData) => {
+  const cartDocRef = collection(db, "users", userId, "cart", cartId);
+  return setDoc(cartDocRef, newCartData, { merge: true });
+};
+
+
+/**
+ * Retrieves a single cart/purchase by its ID from the user collection.
+ * @param {string} userId - The user's ID.
+ * @param {string} cartId - The transaction ID.
+ * @returns {Promise<object|null>}
+ */
+const getCartById = async (userId, cartId) => {
+  const q = query(collection(db, "users", userId, "cart"), where("bookId", "==", cartId));
+  const querySnapshot = await getDocs(q);
+  if (!querySnapshot.empty) {
+    const doc = querySnapshot.docs[0];
+    return { id: doc.id, ...doc.data() };
+  }
+  return null;
+};
 
 /**
  * Removes an item from a user's cart sub-collection.
@@ -130,8 +162,8 @@ const getCartItems = async (userId) => {
  * @returns {Promise<void>}
  */
 const removeCartItem = (userId, itemId) => {
-    const itemDocRef = doc(db, "users", userId, "cart", itemId);
-    return deleteDoc(itemDocRef);
+  const itemDocRef = doc(db, "users", userId, "cart", itemId);
+  return deleteDoc(itemDocRef);
 };
 
 /**
@@ -140,13 +172,13 @@ const removeCartItem = (userId, itemId) => {
  * @returns {Promise<object|null>}
  */
 const getPaymentById = async (txnId) => {
-    const q = query(collection(db, "transactions"), where("id", "==", txnId));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-        const doc = querySnapshot.docs[0];
-        return { id: doc.id, ...doc.data() };
-    }
-    return null;
+  const q = query(collection(db, "transactions"), where("id", "==", txnId));
+  const querySnapshot = await getDocs(q);
+  if (!querySnapshot.empty) {
+    const doc = querySnapshot.docs[0];
+    return { id: doc.id, ...doc.data() };
+  }
+  return null;
 };
 
 /**
@@ -157,8 +189,8 @@ const getPaymentById = async (txnId) => {
  * @returns {Promise<void>}
  */
 const updateUserPayment = (userId, paymentId, paymentData) => {
-    const paymentDocRef = doc(db, "users", userId, "payments", paymentId);
-    return setDoc(paymentDocRef, paymentData, { merge: true });
+  const paymentDocRef = doc(db, "users", userId, "payments", paymentId);
+  return setDoc(paymentDocRef, paymentData, { merge: true });
 };
 
 /**
@@ -168,8 +200,8 @@ const updateUserPayment = (userId, paymentId, paymentData) => {
  * @returns {Promise<void>}
  */
 const updateGlobalTransaction = (transactionId, transactionData) => {
-    const transactionDocRef = doc(db, "transactions", transactionId);
-    return setDoc(transactionDocRef, transactionData, { merge: true });
+  const transactionDocRef = doc(db, "transactions", transactionId);
+  return setDoc(transactionDocRef, transactionData, { merge: true });
 };
 
 export {
@@ -183,6 +215,8 @@ export {
   removeCartItem,
   getPaymentById,
   updateUserPayment,
+  updateCartItems,
+  getCartById,
   updateUserData,
   updateGlobalTransaction,
 };
