@@ -1,4 +1,4 @@
-import { signup, login } from './auth.js';
+import { signup, login, handleAuthStateChange } from './auth.js';
 import { createUserProfile } from './database.js';
 import handleAlert from './general.js';
 
@@ -191,7 +191,7 @@ async function handleRegistration(e) {
     });
 
     handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => window.history.back() }])
-    
+
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
     handleAlert(`Registration failed: ${errorMessage}`, "toast");
@@ -221,7 +221,17 @@ async function handleLogin(e) {
   }
 }
 
-function init() {
+async function handleCheck() {
+  handleAuthStateChange((user) => {
+    if (user) {
+      handleAlert("You are already logged in!", "blur", false, "", true, [{ text: "OK", onClick: () => window.history.back() }]);
+    }
+  })
+}
+
+async function init() {
+  await handleCheck();
+
   const urlParams = new URLSearchParams(window.location.search);
   const formType = urlParams.get("type");
   if (formType) {
@@ -234,6 +244,7 @@ function init() {
       };
     });
   }
+
   setupEventListeners();
   updateFormUI();
   handleInputs();

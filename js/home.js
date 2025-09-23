@@ -617,7 +617,7 @@ ${session.type == "inner" ?
 						false, "",
 						true,
 						[{
-							text: "LOGIN", onClick: () => window.location.href = "/html/regs/Signup.html", type: "primary"
+							text: "LOGIN", onClick: () => { window.location.href = "/html/regs/Signup.html"; window.location.reload()}, type: "primary"
 						}, {
 							text: "Close", onClick: "closeAlert", type: "secondary"
 						}]);

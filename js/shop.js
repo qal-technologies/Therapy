@@ -272,7 +272,7 @@ Select Book Format
 async function handleAddToCartClick(e) {
   const user = getCurrentUser();
   if (!user) {
-    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
+    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; window.location.reload() } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; window.location.reload() } }]);
     return;
   }
 
@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
 
         copyBTN.textContent = "START READING NOW";
-        copyBTN.addEventListener("click", () => window.location.href("/html/main/ViewBook.html"));
+        copyBTN.addEventListener("click", () => { window.location.href("/html/main/ViewBook.html"); window.location.reload() });
       }
 
       const items = await getCartItems(user.uid);
