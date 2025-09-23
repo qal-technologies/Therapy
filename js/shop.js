@@ -263,7 +263,7 @@ Select Book Format
 
   document.querySelectorAll(".book-info .last")
     .forEach(el => el.addEventListener("click", () => {
-      handleAlert(`The printed edition of <i>${bookName}</i> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.`, "blur", true, "* <br/> Hardcopy Permanently Sold Out", true, [{text:"Get the eBook", onClick:"closeAlert"}]);
+      handleAlert(`The printed edition of <i>${bookName}</i> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{text:"Get the eBook", onClick:"closeAlert"}]);
     }));
 
   document.querySelectorAll('.add-to-cart').forEach(button => button.addEventListener('click', handleAddToCartClick));
@@ -272,7 +272,7 @@ Select Book Format
 async function handleAddToCartClick(e) {
   const user = getCurrentUser();
   if (!user) {
-    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "* <br/> Login or Register", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
+    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
     return;
   }
 
