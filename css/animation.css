@@ -1,6 +1,6 @@
 /* A dropdown animation that falls slowly from the top of the window.  */
 .dropdown {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: intro;
   animation-timing-function: linear;
   animation-delay: 10ms;
@@ -173,7 +173,7 @@
 
 /* fade out effect for menu  */
 .menu-fadeOut {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: menu-fadeout;
   animation-timing-function: ease-out;
   animation-delay: 10ms;
@@ -194,7 +194,7 @@
 
 /* For a spread animation that also adds a fade in transition to it. */
 .spread {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: spread;
   animation-timing-function: ease-in;
   animation-delay: 100ms;
@@ -216,7 +216,7 @@
 
 /* The object comes from the left slowly */
 .leftIntro {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: left;
   animation-timing-function: linear;
   animation-delay: 10ms;
@@ -238,7 +238,7 @@
 
 /* The object goes out from the left  */
 .leftOut {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: leftOut;
   animation-timing-function: linear;
   animation-delay: 10ms;
@@ -260,7 +260,7 @@
 
 /* The object comes from the right  */
 .rightIntro {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: right;
   animation-timing-function: linear;
   animation-delay: 10ms;
@@ -281,7 +281,7 @@
 }
 
 .menu-rightIntro {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: menu-right;
   animation-timing-function: ease-in;
   animation-delay: 10ms;
@@ -303,7 +303,7 @@
 
 /* The object goes out from the right  */
 .rightOut {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: rightOut;
   animation-timing-function: linear;
   animation-delay: 10ms;
@@ -324,7 +324,7 @@
 }
 
 .menu-rightOut {
-  animation-duration: 1s;
+  animation-duration: 600ms;
   animation-name: menu-rightOut;
   animation-timing-function: ease-out;
   animation-delay: 10ms;

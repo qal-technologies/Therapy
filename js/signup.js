@@ -4,7 +4,7 @@ import handleAlert from './general.js';
 
 const TEMPLATE = {
   login: `
-   <div class="form-container active" id="login-form">
+   <div class="form-container rightIntro active" id="login-form">
         <div class="header">
           <h1>Login</h1>
           <p>You've already taken the first step. Log in to continue healing...</p>
@@ -30,7 +30,7 @@ const TEMPLATE = {
       </div>
   `,
   register: `
-  <div class="form-container active" id="register-form">
+  <div class="form-container leftIntro active" id="register-form">
           <div class="register-upper upper">
             <div class="header register-header">
               <h1>Register</h1>
