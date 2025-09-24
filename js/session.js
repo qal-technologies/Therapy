@@ -1,6 +1,7 @@
 import handleAlert from "/js/general.js";
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
+import { handleRedirect } from "./general.js";
 
 
 const sessionTypes = [
@@ -318,15 +319,15 @@ ${bonuses.join('')}
         if (user) {
           if (waitlistBTN.disabled == true) return;
 
-            waitlistBTN.disabled = true;
-            waitlistBTN.ariaDisabled = true;
-            waitlistBTN.style.fontSize = "12px";
-            waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
+          waitlistBTN.disabled = true;
+          waitlistBTN.ariaDisabled = true;
+          waitlistBTN.style.fontSize = "12px";
+          waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
           await updateUserData(user.uid, { waitlist: true });
 
-            setTimeout(() => {
-              handleAlert(`
+          setTimeout(() => {
+            handleAlert(`
  Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
  
  <br/>
@@ -341,17 +342,17 @@ ${bonuses.join('')}
  <br/><br/>
  Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]);
 
-              waitlistBTN.style.fontSize = "13.5px";
-              waitlistBTN.textContent = '✅ Added to waitlist!';
-            }, 1000);
+            waitlistBTN.style.fontSize = "13.5px";
+            waitlistBTN.textContent = '✅ Added to waitlist!';
+          }, 1000);
         }
         else {
-          handleAlert("You must be logged in to join waitlist!",
+          handleAlert("Joining the waitlist requires you to be logged in. Please log in to continue",
             "blur",
-            false, "",
+            true, "🌸 <br/> Members Only",
             true,
             [{
-              text: "LOGIN", onClick: () => window.location.href ="/html/regs/Signup.html?type=login", type: "primary"
+              text: "LOGIN", onClick: () => handleRedirect("/html/regs/Signup.html?type=login"), type: "primary"
             }, {
               text: "Close", onClick: "closeAlert", type: "secondary"
             }]);

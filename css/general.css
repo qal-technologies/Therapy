@@ -46,10 +46,33 @@
   transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  user-drag: none;
+  border: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-scrollbar-width: thin;
+  scrollbar-width: thin;
+  -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
+  scrollbar-color: var(--accent) var(--primaryTrans);
 }
 
 *:focus, *:active {
   outline: none !important;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primaryTrans);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 20px;
+  border: 2px solid var(--primaryTrans);
 }
 
 html,
@@ -129,6 +152,7 @@ div.logoSection {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-items: flex-start;
   width: 80%;
   min-width: 250px;
   max-width: 400px;
@@ -156,7 +180,11 @@ img#nav-logo {
 
 p#web-name {
   width: auto;
+  display: flex;
+  align-self: center;
+  justify-self: center;
   font-family: PoppinsSemi;
+  font-weight: bolder;
   font-size: 1.2rem;
   line-height: 20px;
   color: var(--link);
@@ -183,6 +211,12 @@ div#nav {
   justify-content: space-evenly;
 }
 
+div#nav * {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
 div#nav a.nav-main {
   width: auto;
   place-items: center;
@@ -190,6 +224,7 @@ div#nav a.nav-main {
   position: relative;
   cursor: pointer;
   margin-bottom: 0px;
+  text-decoration: none;
 }
 
 div#nav a.nav-main:hover {
@@ -222,12 +257,12 @@ a.icons svg {
 a.nav-main div.underline {
   width: 50%;
   height: 100%;
-  padding: 10px;
+  padding: 13px;
   position: absolute;
   top: 0;
   align-self: center;
   right: 20%;
-  border-bottom: 2px solid var(--link);
+  border-bottom: 3px solid var(--link);
 }
 
 a.nav-main p#nav-text {
@@ -243,6 +278,7 @@ a.nav-main p#nav-text.active {
 }
 
 div#nav a.login, div#nav button.logout {
+  text-align: center;
   background-color: transparent;
   border: 2px solid var(--link);
   padding-inline: 15px;
@@ -263,7 +299,7 @@ div#nav a.login:hover {
 
 div#nav button.logout {
   background: transparent;
-  border: 3px solid red;
+  border: 3px solid red !important;
   color: red;
   padding: 2px;
   padding-inline: 15px;
@@ -274,9 +310,11 @@ div#nav button.logout {
   font-weight: bolder;
   place-self: center;
   align-self: center;
-  border-radius: 20px;
+  border-radius: 20px !important;
   font-family: PoppinsSemi;
   margin: 0;
+  text-align: center;
+  place-content: center;
 }
 
 div#nav button.logout:hover {
@@ -582,7 +620,7 @@ section#newsletter {
   z-index: 9999999;
   display: none;
   flex: 1;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(5px) brightness(80%);
   justify-content: center;
   align-items: center;
@@ -598,6 +636,7 @@ section#newsletter {
   padding: 20px;
   padding-top: 30px;
   background: rgba(255, 255, 255, 0.99);
+  backdrop-filter: blur(5px);
   border-radius: 20px;
   gap: 10px;
 }
@@ -653,8 +692,30 @@ section#newsletter {
   opacity: .76;
 }
 
-.alert-message i:first-child{
-  font-size: 1.2rem;
+.alert-message i:first-child {
+  font-size: 2.5rem;
+  color: black;
+} 
+
+.alert-message i:first-child.text-warning {
+  color: orange;
+}
+
+.alert-message i:first-child.text-success {
+  color: green;
+}
+
+.alert-message i:first-child.text-danger {
+  color: red;
+}
+
+.alert-message .alert-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.alert-message i:first-child.fs-2 {
+  font-size: 3rem;
 }
 
 .alert-message .alert-button.secondary {
@@ -709,6 +770,6 @@ section#newsletter {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: 0.5px solid rgba(176, 172, 172, 0.3);
-  color: rgb(0, 0, 0);
+  color: white;
   border-radius: 18px;
 }

@@ -1,4 +1,4 @@
-import handleAlert from './general.js';
+import handleAlert, { handleRedirect } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import { getUserData } from './database.js';
 
@@ -509,7 +509,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
       }
     } else {
-      handleAlert("To book a session, you'll need to log in first. If you dont't have an account yet, you can create one in a few steps. <br/> <br/> This helps us know it's really you and keeps your booking safe.", "blur", true, "🔐 <br/> Please Log In or Register", true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
+      handleAlert("To book a session, you'll need to log in first. If you dont't have an account yet, you can create one in a few steps. <br/> <br/> This helps us know it's really you and keeps your booking safe.", "blur", true, "🔐 <br/> Please Log In or Register", true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register") }]);
     }
   });
 });

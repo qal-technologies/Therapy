@@ -129,7 +129,7 @@ window.onload = () => {
                 e.preventDefault();
                 try {
                     await logout();
-                    handleAlert("Please log in again if you'd like to continue.", "blur", true, "<i class='bi bi-exclamation-triangle text-danger'></i> <br/> You have been logged out.", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
+                    handleAlert("Please log in again if you'd like to continue.", "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> You have been logged out.", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
                 } catch (error) {
                     handleAlert(`Failed to log out, because: ${error}.`, "toast");
                 }
@@ -174,6 +174,38 @@ window.onresize = () => {
     cancelAnimationFrame(animationFrame);
     createTicker();
 };
+
+export function handleRedirect(href = "", type = "default") {
+    const current = window.location.href;
+
+    // Save current navigation state
+    const data = {
+        new: href,
+        previous: current,
+    };
+
+    const stored = sessionStorage.getItem("url-navigation");
+    const lastNav = stored ? JSON.parse(stored) : null;
+
+    if (type.toLowerCase() === "backwards") {
+        const previous =lastNav?.previous?.toLowerCase();
+        if (!lastNav || !lastNav.previous || !previous || previous.includes("login") || previous.includes("signup")) {
+            sessionStorage.setItem("url-navigation", JSON.stringify(data));
+            window.location.href = "/html/main/Home.html";
+        } else {
+            sessionStorage.setItem("url-navigation", JSON.stringify(data));
+            window.location.href = lastNav.previous;
+        }
+    }
+    else if (type.toLowerCase() === "replace") {
+        sessionStorage.setItem("url-navigation", JSON.stringify(data));
+        window.location.replace(href);
+    }
+    else { // default
+        sessionStorage.setItem("url-navigation", JSON.stringify(data));
+        window.location.href = href;
+    }
+}
 
 let timer;
 function handleAlert(

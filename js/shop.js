@@ -1,6 +1,7 @@
 import handleAlert from "/js/general.js";
 import { handleAuthStateChange, getCurrentUser } from './auth.js';
-import { addToCart as addToCartInDb, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
+import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
+import { handleRedirect } from "./general.js";
 
 
 //Audio source:
@@ -70,7 +71,6 @@ function handleAudio(lang) {
                 </svg>`;
   });
 }
-
 
 // Book Data:
 const BOOK_COLLECTION = [
@@ -196,8 +196,36 @@ function handleCartAnimation(count) {
   })
 }
 
+async function hardCopy(book, user) {
+
+  const language = navigator.language;
+  const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+  const itemData = {
+    id: book.id,
+    bookId: book.id,
+    title: book.title,
+    price: book.price,
+    image: book.image,
+    quantity: 1,
+    transactionId: transactionId,
+    description: `You are buying one or more copies of Compagnon Féminin, a special digital book available to only 5,000 readers worldwide. It has been carefully designed to feel like a real book, even though you read it on a phone, tablet, or computer.`,
+    date: new Date(),
+    format: "eBook"
+  };
+  try {
+    await createNewCartItem(user.uid, itemData);
+    setTimeout(() => {
+      window.location.href = '/html/main/cart.html';
+    }, 200);
+  } catch (error) {
+    console.log(`Cart add copy because: ${error}`);
+    handleAlert(`Cart add copy because: ${error}`, "toast");
+  }
+
+}
+
 // Render Book Collection:
-function renderBookCollection(book) {
+function renderBookCollection(book, user = null) {
   const collectionContainer = document.getElementById('bookCollection');
   if (!collectionContainer) return;
 
@@ -261,18 +289,32 @@ Select Book Format
   });
   const bookName = "COMPAGNON FÉMININ".toLowerCase();
 
-  document.querySelectorAll(".book-info .last")
+  document.querySelectorAll('input[type="radio"]')
     .forEach(el => el.addEventListener("click", () => {
-      handleAlert(`The printed edition of <i>${bookName}</i> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{ text: "Get the eBook", onClick: "closeAlert" }]);
+      if (!user) {
+        handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; } }]);
+        return;
+      }
+    }));
+
+  document.querySelectorAll(".book-info .last")
+    .forEach(el => el.addEventListener("click", async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        handleAlert(`<p>The printed edition of <b>${bookName}</b> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.</p>`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{ text: "Get the eBook", onClick: async () => await hardCopy(book, user) }]);
+      } else {
+        handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; } }]);
+        return;
+      }
     }));
 
   document.querySelectorAll('.add-to-cart').forEach(button => button.addEventListener('click', handleAddToCartClick));
 }
 
 async function handleAddToCartClick(e) {
-  const user = getCurrentUser();
+  const user = await getCurrentUser();
   if (!user) {
-    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; window.location.reload() } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; window.location.reload() } }]);
+    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; } }]);
     return;
   }
 
@@ -324,7 +366,7 @@ async function handleAddToCartClick(e) {
     button.disabled = false;
     button.innerHTML = 'Add to Cart';
 
-    renderBookCollection(book);
+    renderBookCollection(book, user);
     setTimeout(() => {
       window.location.href = '/html/main/cart.html';
     }, 2000);
@@ -362,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
 
         copyBTN.textContent = "START READING NOW";
-        copyBTN.addEventListener("click", () => { window.location.href("/html/main/ViewBook.html"); window.location.reload() });
+        copyBTN.addEventListener("click", () => handleRedirect("/html/main/ViewBook.html"));
       }
 
       const items = await getCartItems(user.uid);

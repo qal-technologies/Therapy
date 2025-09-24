@@ -63,8 +63,8 @@ const updateUserData = (userId, changingData) => {
  * @returns {Promise<DocumentReference>}
  */
 const addUserPayment = (userId, paymentData) => {
-  const paymentsColRef = collection(db, "users", userId, "payments");
-  return addDoc(paymentsColRef, paymentData);
+  const paymentDocRef = doc(db, "users", userId, "payments", paymentData.id); 
+  return setDoc(paymentDocRef, paymentData);
 };
 
 /**
@@ -90,9 +90,10 @@ const getUserPayments = async (userId) => {
  * @returns {Promise<DocumentReference>}
  */
 const createGlobalTransaction = (transactionData) => {
-  const transactionsColRef = collection(db, "transactions");
-  return addDoc(transactionsColRef, transactionData);
+  const transactionDocRef = doc(db, "transactions", transactionData.id); 
+  return setDoc(transactionDocRef, transactionData);
 };
+
 
 // --- CART FUNCTIONS ---
 
@@ -103,6 +104,17 @@ const createGlobalTransaction = (transactionData) => {
  * @returns {Promise<DocumentReference>}
  */
 const addToCart = (userId, itemData) => {
+  const cartDocRef = doc(db, "users", userId, "cart", itemData.bookId);
+  return setDoc(cartDocRef, itemData, { merge: true });
+};
+
+/**
+ * Creates a brand-new cart item (always new, no merging/replacing).
+ * @param {string} userId - The user's ID.
+ * @param {object} itemData - The item data object (e.g., { bookId, quantity, price }).
+ * @returns {Promise<DocumentReference>} Reference to the new cart document.
+ */
+const createNewCartItem = (userId, itemData) => {
   const cartColRef = collection(db, "users", userId, "cart");
   return addDoc(cartColRef, itemData);
 };
@@ -129,12 +141,8 @@ const getCartItems = async (userId) => {
 * @param {object} newCartData - The new data to save.
 * @returns {Promise<Array>} An array of saved cart item objects.
  */
-// const updateCartItems = async (userId, newCartData) => {
-//   const cartColRef = collection(db, "users", userId, "cart");
-//   return setDoc(cartColRef, newCartData, { merge: true });
-// }
-const updateCartItems = (userId, cartId, newCartData) => {
-  const cartDocRef = collection(db, "users", userId, "cart", cartId);
+const updateCartItems = (userId, bookId, newCartData) => {
+  const cartDocRef = doc(db, "users", userId, "cart", bookId);
   return setDoc(cartDocRef, newCartData, { merge: true });
 };
 
@@ -145,15 +153,15 @@ const updateCartItems = (userId, cartId, newCartData) => {
  * @param {string} cartId - The transaction ID.
  * @returns {Promise<object|null>}
  */
-const getCartById = async (userId, cartId) => {
-  const q = query(collection(db, "users", userId, "cart"), where("bookId", "==", cartId));
-  const querySnapshot = await getDocs(q);
-  if (!querySnapshot.empty) {
-    const doc = querySnapshot.docs[0];
-    return { id: doc.id, ...doc.data() };
+const getCartById = async (userId, bookId) => {
+  const cartDocRef = doc(db, "users", userId, "cart", bookId);
+  const docSnap = await getDoc(cartDocRef);
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
   }
   return null;
 };
+
 
 /**
  * Removes an item from a user's cart sub-collection.
@@ -172,13 +180,14 @@ const removeCartItem = (userId, itemId) => {
  * @returns {Promise<object|null>}
  */
 const getPaymentById = async (txnId) => {
-  const q = query(collection(db, "transactions"), where("id", "==", txnId));
-  const querySnapshot = await getDocs(q);
-  if (!querySnapshot.empty) {
-    const doc = querySnapshot.docs[0];
-    return { id: doc.id, ...doc.data() };
+  const docRef = doc(db, "transactions", txnId);
+  const snapshot = await getDoc(docRef);
+
+  if (snapshot.exists()) {
+    return { id: snapshot.id, ...snapshot.data() };
+  } else {
+    return null; 
   }
-  return null;
 };
 
 /**
@@ -192,6 +201,7 @@ const updateUserPayment = (userId, paymentId, paymentData) => {
   const paymentDocRef = doc(db, "users", userId, "payments", paymentId);
   return setDoc(paymentDocRef, paymentData, { merge: true });
 };
+
 
 /**
  * Updates a transaction record in the global transactions collection.
@@ -210,6 +220,7 @@ export {
   addUserPayment,
   getUserPayments,
   createGlobalTransaction,
+  createNewCartItem,
   addToCart,
   getCartItems,
   removeCartItem,

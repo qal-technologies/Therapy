@@ -2028,6 +2028,10 @@ ul.instructions.redeem li {
     margin-bottom: -15px;
 }
 
+.steps p.verification-text.session{
+    text-align: left;
+} 
+
 .paysafe-section .continue-btn {
     background: var(--link);
     opacity: 0.8;
@@ -2040,6 +2044,11 @@ ul.instructions.redeem li {
 
 .paysafe-section .continue-btn.success {
     background: rgb(0, 184, 0);
+}
+
+.paysafe-section .continue-btn.facebook {
+    gap: 5px;
+    background: rgb(0, 49, 184);
 }
 
 .paysafe-section .continue-btn:hover {
@@ -2116,6 +2125,10 @@ ul.instructions.redeem li {
 .steps .amount-display span {
     font-weight: bold;
     font-size: 18px;
+}
+
+.outcome-section i.session {
+    display: none;
 }
 
 @keyframes bounce-in {

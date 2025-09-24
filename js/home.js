@@ -1,6 +1,7 @@
 import handleAlert from "/js/general.js";
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
+import { handleRedirect } from "./general.js";
 
 const reviews = [
 	 [
@@ -612,12 +613,13 @@ ${session.type == "inner" ?
 					}, 1000);
 				}
 				else {
-					handleAlert("You must be logged in to join waitlist!",
-						"blur",
-						false, "",
+					handleAlert(
+						"Joining the waitlist requires you to be logged in. Please log in to continue",
+								"blur",
+								true, "🌸 <br/> Members Only",
 						true,
 						[{
-							text: "LOGIN", onClick: () => { window.location.href = "/html/regs/Signup.html"; window.location.reload()}, type: "primary"
+							text: "LOGIN", onClick: () => { handleRedirect("/html/regs/Signup.html") }, type: "primary"
 						}, {
 							text: "Close", onClick: "closeAlert", type: "secondary"
 						}]);

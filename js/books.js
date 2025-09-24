@@ -6527,3 +6527,5 @@ Other Works by the Author
                 `<div  class="cover-page"><p> This is the end page</p></div>`,
         ]
 };
+
+export default BOOK;

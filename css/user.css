@@ -7,6 +7,10 @@
   --gray: #6c757d;
 }
 
+body{
+  display: none;
+}
+
 #container {
   width: 100%;
   display: flex;

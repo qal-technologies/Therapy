@@ -1,4 +1,4 @@
-import handleAlert from './general.js';
+import handleAlert, { handleRedirect } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
@@ -579,7 +579,7 @@ const safeFlow = {
                             <i class="bi bi-envelope"></i> Email Us </div>
                             `, "blur", true, "✉️ Companion Support", true, [{
                     text: "Message Now", onClick: () => {
-                        window.location.href = "mailto:healingwithcharlottecasiraghi@gmail.com";
+                        handleRedirect("mailto:healingwithcharlottecasiraghi@gmail.com");
 
                         return "closeAlert"
                     }
@@ -665,19 +665,12 @@ async function savePaymentData(state) {
     };
 
     try {
-        const existingPayment = await getPaymentById(txn);
-        if (existingPayment) {
-            await updateGlobalTransaction(existingPayment.id, paymentData);
-            await updateUserPayment(userId, existingPayment.id, paymentData);
-        } else {
-            await createGlobalTransaction(paymentData);
-            await addUserPayment(userId, paymentData);
-        }
+        await updateGlobalTransaction(txn, paymentData);
+        await updateUserPayment(userId, txn, paymentData);
         return true;
     } catch (error) {
         console.error("Error saving payment data:", error);
         handleAlert(`Could not save payment data, because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: "closeAlert" }]);
-
     }
     return false;
 }
@@ -726,11 +719,11 @@ async function showResultScreen(state, elements, finalPayment) {
         }
         // Determine result content based on status
         const isSuccess = status === true;
-        const resultTitle = isSuccess ? 'Payment Successful' : (statusMessage.includes("used") ? 'Code Already Used' : (statusMessage.includes("incomplete") ? 'Payment Not Fully Covered' : "Incorrect Code"));
-        const resultMessage = isSuccess ?
-            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' :
+        const resultTitle = isSuccess && paymentType.toLowerCase() !== "session" ? 'Payment Successful' : isSuccess && paymentType.toLowerCase() === "session" ? "✨ Your Session is Confirmed" : (statusMessage.includes("used") ? 'Code Already Used' : (statusMessage.includes("incomplete") ? 'Payment Not Fully Covered' : "Incorrect Code"));
+        const resultMessage = isSuccess && paymentType.toLowerCase() !== "session" ?
+            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' : isSuccess && paymentType.toLowerCase() === "session" ? "Thank you for booking your session. <br/> To keep this experience truly personal, I handle confirmations directly myself. <br/>Please send me a short nessage on Facebook so I can: <br/> • Personally confirm your time with you. <br/> • Share important preparations notes before we meet. <br/> • Be sure you feel seen and supported from the very start." :
             (statusMessage.includes("used") ?
-                "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> <br/> ${statusMessage}` :
+                "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> ${statusMessage}` :
                     "The Paysafecard code you entered is not correct. Please check the digits and try again."));
 
         resultHTML = `
@@ -739,15 +732,15 @@ async function showResultScreen(state, elements, finalPayment) {
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
             </div>
             <div class="outcome-section">
-                <i class="${isSuccess ? 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill' : 'bi bi-x-circle-fill')}"></i>
+                <i class="${isSuccess ? paymentType.toLowerCase() === "session" ? 'session' : 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill' : 'bi bi-x-circle-fill')}"></i>
                 <h1>${resultTitle}</h1>
             </div>
             <div class="steps">
-                <p class="verification-text">${resultMessage}</p>
+                <p class="verification-text ${isSuccess && paymentType.toLowerCase() === 'session' ? 'session' : '' }">${resultMessage}</p>
             </div>
             <div class="proceed-div">
-                ${isSuccess ?
-                `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
+                ${isSuccess ? paymentType.toLowerCase() === "session" ?
+            `<a href="https://www.facebook.com/charlotte.casiraghi.992551" target="_blank" class="continue-btn facebook "> <i class="bi bi-facebook"></i> Message Me on Facebook</a>` : `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
                     `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
                     } </button>`)
             }
@@ -1097,7 +1090,7 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Redirect if no params
     if (!paymentType || !paymentDetails) {
-        handleAlert("No Payment Details Gotten, Please Book a Session!", "blur", false, "", true, [{ text: "OK", onClick: () => window.location.replace("/html/main/Session.html") }]);
+        handleAlert("No Payment Details Gotten, Please Book a Session!", "blur", false, "", true, [{ text: "OK", onClick: ()=> handleRedirect("/html/main/Session.html", "replace") }]);
 
         return;
     }
@@ -1115,7 +1108,7 @@ async function initializePaymentFlow(e, state, elements) {
 
 
             if (!paymentToProcess) {
-                handleAlert('Payment not found, please try again!', "blur", true, "Not Found", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/User.html') }]);
+                handleAlert('Payment not found, please try again!', "blur", true, "Not Found", true, [{ text: "OK", onClick: () => handleRedirect('/html/main/User.html', "replace") }]);
                 return false;
             }
 
@@ -1184,7 +1177,7 @@ async function initializePaymentFlow(e, state, elements) {
         }
     } catch (error) {
         console.error("Error parsing payment details:", error);
-        handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: () => window.location.replace("/html/main/Session.html") }]);
+        handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: ()=> handleRedirect("/html/main/Session.html", "replace") }]);
 
         return false;
     }
@@ -1212,7 +1205,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 if (value) document.getElementById("loading-section")?.classList.remove("active")
             })
         } else {
-            handleAlert("You must be logged in to make a payment.", "blur", false, "", true, [{ text: "OK", onClick: () => window.location.href = "/html/regs/Signup.html" }]);
+            handleAlert("You must be logged in to make a payment.", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/regs/Signup.html") }]);
         }
     });
 });

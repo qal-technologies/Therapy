@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange } from './auth.js';
 import { createUserProfile } from './database.js';
-import handleAlert from './general.js';
+import handleAlert, { handleRedirect } from './general.js';
 
 const TEMPLATE = {
   login: `
@@ -191,7 +191,7 @@ async function handleRegistration(e) {
       waitlist
     });
 
-    handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => window.history.back() }])
+    handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
@@ -213,10 +213,10 @@ async function handleLogin(e) {
 
   try {
     await login(email, password);
-    handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill text-success'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => window.history.back() }]);
+    handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-    handleAlert(`Login failed because: ${errorMessage}. Please try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => window.location.href = "/html/regs/Forget.html" }, { text: "Try Again", onClick: "closeAlert" }]);
+    handleAlert(`Login failed because: ${errorMessage}. Please try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert" }]);
     button.disabled = false;
     button.innerHTML = `<p class="text">LOGIN</p>`;
   }
@@ -225,7 +225,7 @@ async function handleLogin(e) {
 async function handleCheck() {
   handleAuthStateChange((user) => {
     if (user) {
-      handleAlert("You are already logged in!", "blur", false, "", true, [{ text: "OK", onClick: () => window.history.back() }]);
+      handleAlert("You are already logged in!", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("", "backwards") }]);
     }
   })
 }
