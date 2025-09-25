@@ -141,8 +141,7 @@ window.onload = () => {
             emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
 
             setTimeout(() => {
-                handleAlert("Your subscription has been confirmed.
-From now on, you’ll receive thoughtful updates, healing insights, and special messages directly in your inbox. <br/> We’ll be here to gently stay connected with you each day.", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
+                handleAlert("Your subscription has been confirmed. From now on, you’ll receive thoughtful updates, healing insights, and special messages directly in your inbox. <br/> We’ll be here to gently stay connected with you each day.", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
 
                 emailBTN.innerHTML = `<p class="text">Subscribe</p>
             <p class="svg">>></p>`;
