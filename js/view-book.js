@@ -13,7 +13,6 @@ window.addEventListener('DOMContentLoaded', () => {
             const paid = userdata.bookPaid;
 
             if (paid == true) {
-
                 // DOM Elements:::::
                 const bookEl = document.getElementById('book');
                 const leftEl = document.getElementById('leftPage').querySelector('.content');

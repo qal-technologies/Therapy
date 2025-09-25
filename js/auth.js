@@ -44,6 +44,25 @@ const logout = () => {
   return signOut(auth);
 };
 
+
+
+/**
+ * Sends a password reset email to the user
+ * @param {string} email - The email of the user to reset password for
+ * @returns {Promise<boolean>} - true if sent successfully, false if failed
+ */
+export async function resetPassword(email) {
+  if (!email) throw new Error("Email is required for password reset.");
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    return true;
+  } catch (error) {
+    console.error("Password reset error:", error);
+    throw error;
+  }
+}
+
 /**
  * Listens for changes in the user's authentication state.
  * @param {function} callback - The function to call when the auth state changes.
@@ -69,4 +88,5 @@ export {
   logout,
   handleAuthStateChange,
   getCurrentUser,
+  resetPassword as changePassword,
 };

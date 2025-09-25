@@ -295,9 +295,10 @@ async function handleLogin(e) {
     handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-    handleAlert(`Login failed because: ${errorMessage}. Please try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert" }]);
+    handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert" }]);
     button.disabled = false;
     button.innerHTML = `<p class="text">LOGIN</p>`;
+    console.error("The error is: ", errorMessage);
   }
 }
 

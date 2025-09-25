@@ -104,8 +104,6 @@ function removeDetailsModal() {
   if (modal) modal.classList.toggle("fadeOut");
 };
 
-
-
 function showDetailsModal(e) {
   const modal = document.querySelector("#details-div");
   const cartCount = document.querySelector(".details-top span.cart-count");
@@ -197,7 +195,6 @@ function handleCartAnimation(count) {
 }
 
 async function hardCopy(book, user) {
-
   const language = navigator.language;
   const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
   const itemData = {
@@ -385,30 +382,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
   handleAudio(lang);
 
-  const bookButtons = document.querySelectorAll("#preview button.get-copy");
-  bookButtons?.forEach(btn => btn.addEventListener("click", showDetailsModal));
 
   const closeButton = document.querySelector("#details-div button.close-details");
   closeButton?.addEventListener("click", removeDetailsModal);
 
   handleAuthStateChange(async (user) => {
     const cartCount = document.querySelector(".details-top span.cart-count");
-    if (user && cartCount) {
+    const bookButtons = document.querySelectorAll("#preview button.get-copy");
+    bookButtons?.forEach(btn => btn.addEventListener("click", showDetailsModal));
+    
+    if (user) {
       const thisUser = await getUserData(user.uid);
       const details = document.querySelector("#preview .details");
       const copyBTN = document.querySelector("#preview button.get-copy");
 
-
       if (thisUser.bookPaid === true) {
-        details.innerHTML = "";
         details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
 
         copyBTN.textContent = "START READING NOW";
+        copyBTN.removeEventListener();
         copyBTN.addEventListener("click", () => handleRedirect("/html/main/ViewBook.html"));
       }
 
       const items = await getCartItems(user.uid);
-      cartCount.textContent = items.length;
+      if (cartCount) cartCount.textContent = items.length;
     } else if (cartCount) {
       cartCount.textContent = 0;
     }

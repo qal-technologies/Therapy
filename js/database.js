@@ -25,6 +25,7 @@ const createUserProfile = (userId, userDetails) => {
   return setDoc(userDocRef, { details: userDetails });
 };
 
+
 /**
  * Retrieves a user's full data from Firestore.
  * @param {string} userId - The user's ID.
@@ -40,7 +41,6 @@ const getUserData = async (userId) => {
     return null;
   }
 };
-
 
 /**
 * Updates user's information depending on the user id:

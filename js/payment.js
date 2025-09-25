@@ -1082,8 +1082,6 @@ function addDetails(details, elements) {
 
 // ==================== INITIALIZATION ====================
 async function initializePaymentFlow(e, state, elements) {
-    document.getElementById("payment-details").classList.add("active");
-
     const urlParams = new URLSearchParams(window.location.search);
     const paymentType = urlParams.get("type");
     const paymentDetails = urlParams.get("details");
@@ -1144,7 +1142,6 @@ async function initializePaymentFlow(e, state, elements) {
 
         } else {
             state.details = details;
-
             state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
 
             let amount;
@@ -1156,23 +1153,19 @@ async function initializePaymentFlow(e, state, elements) {
             } else {
                 amount = parseFloat(details.price).toFixed(2);
             }
-
-            state.txn = details.transactionId || details.id;
-
+            const userCountryData = await getUserCountryInfo();
+            /////------>>>>>>
 
             state.txn = details.transactionId || details.id;
             state.amount = amount;
-
             state.details.price = amount;
-
-            addDetails(state.details, elements);
-
-
-            const userCountryData = await getUserCountryInfo();
-            /////------>>>>>>
             state.currencyCode = userCountryData?.currencyCode || userCountryData?.currency || "EUR";
             state.selectedCurrency = userCountryData?.country || "Euro";
             state.country = userCountryData?.country || "France";
+
+            document.getElementById("payment-details").classList.add("active");
+            addDetails(state.details, elements);
+
             return true;
         }
     } catch (error) {
@@ -1201,9 +1194,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
             state.userId = user.uid;
             state.initialContent = elements.paymentDisplay.innerHTML;
 
-            await initializePaymentFlow(e, state, elements).then(value => {
-                if (value) document.getElementById("loading-section")?.classList.remove("active")
-            })
+            await initializePaymentFlow(e, state, elements);
         } else {
             handleAlert("You must be logged in to make a payment.", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/regs/Signup.html") }]);
         }

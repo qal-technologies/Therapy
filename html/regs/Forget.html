@@ -1,17 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
 
+    <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/general.css" />
+    <link rel="stylesheet" href="/css/animation.css" />
+    <link rel="stylesheet" href="/css/signup.css" />
+    <link rel="stylesheet" href="/css/media.css" />
 
     <title>Forgot Password</title>
 </head>
-<body>
-    <p>Nothing yet...</p>
-    <p>Refresh Page</p>
+
+<body class="fadeIn">
+    <header class="header forgot fadeIn">
+        <h1>Reset Password</h1>
+        <p>Enter your email to reset your password. We'll send you a link.</p>
+    </header>
+
+    <div class="container moveUpNfadeIn">
+        <div class="form-container active" id="forgot-form">
+            <form class="bottom">
+                <div class="form-group">
+                    <label for="forgot-email">Email *</label>
+                    <input type="email" id="forgot-email" required />
+                </div>
+
+                <div id="checkout">
+                    <button id="forgot-button" type="button" title="Reset Password" disabled>
+                        <p class="text">RESET PASSWORD</p>
+                    </button>
+                </div>
+            </form>
+
+            <div class="form-group forgot center">
+                <a class="back-to-login" href="/html/regs/Signup.html?type=login">
+                    <i class="bi bi-arrow-left"></i> Back to Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/js/general.js"></script>
+    <script type="module" src="/js/forget.js"></script>
 </body>
+
 </html>

@@ -567,12 +567,19 @@ div.privacy-policy {
   display: flex;
   place-self: center;
   flex-direction: row;
+  justify-content: flex-start;
+  gap: 6px;
   align-items: center;
-  max-width: 100%;
+  max-width: 400px;
 }
 
 div.privacy-policy input {
-  max-width: 50px;
+  max-width: 20px;
+}
+
+
+div.privacy-policy input {
+  max-width: 20px;
 }
 
 div.privacy-policy p {
@@ -590,6 +597,8 @@ div.privacy-policy a {
   text-decoration-color: var(--link);
   font-family: PoppinsMed;
 }
+
+
 
 /* Animations */
 @keyframes fadeOut {

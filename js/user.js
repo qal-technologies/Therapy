@@ -22,16 +22,14 @@ function renderUserProfile(user, payments, cartNumber) {
   if (!user) return;
 
   // Set user profile details
-  document.getElementById('userEmail').textContent = user.details.email || "user123@gmail.com";
+  document.getElementById('userEmail').textContent = user.details.email || "";
   document.getElementById('full-name').textContent = `${user.details.firstName} ${user.details.lastName}`;
 
   const firstLetter = (user.details.firstName || 'U').charAt(0).toUpperCase();
-  const colors = ['var(--link)', 'var(--highlight)', '#7209b7', 'var(--mainText)', 'var(--accent)', '#4895ef'];
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
   const profileAvatar = document.getElementById('profileAvatar');
   profileAvatar.textContent = firstLetter;
-  profileAvatar.style.backgroundColor = randomColor;
+  profileAvatar.style.backgroundColor = 'var(--link)';
 
   //for count:
   const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
@@ -41,7 +39,7 @@ function renderUserProfile(user, payments, cartNumber) {
   // Render payment cards
   const paymentsGrid = document.getElementById('paymentsGrid');
   if (payments && payments.length > 0) {
-    paymentsGrid.innerHTML = ''; // Clear existing content
+    paymentsGrid.innerHTML = '';
     payments.forEach(payment => {
       const paymentCard = document.createElement('div');
       paymentCard.className = 'payment-card';
@@ -75,6 +73,10 @@ function renderUserProfile(user, payments, cartNumber) {
               <div class="payment-details">
                   <div class="payment-detail">
                       <span class="detail-label">Date:</span>
+                      <span class="detail-value">${paymentDate}</span>
+                  </div>
+                  <div class="payment-detail">
+                      <span class="detail-label">Time:</span>
                       <span class="detail-value">${paymentDate}</span>
                   </div>
                   <div class="payment-detail">
@@ -140,22 +142,6 @@ function renderUserProfile(user, payments, cartNumber) {
 
 
 function setupEventListeners() {
-  // const logoutButton = document.getElementById('logout-button');
-  // if (logoutButton) {
-  //   logoutButton.addEventListener('click', async () => {
-  //     try {
-  //       await logout();
-  //       handleAlert("You have been logged out.", "toast");
-  //       setTimeout(() => {
-  //         window.location.href = '/html/main/Home.html';
-  //       }, 1500);
-  //     } catch (error) {
-  //       handleAlert("Failed to log out.", "toast");
-  //     }
-  //   });
-  // }
-
-
   const closeModal = document.getElementById('closeModal');
   if (closeModal) {
     closeModal.addEventListener('click', () => {

@@ -310,12 +310,14 @@ div.privacy-policy {
   display: flex;
   place-self: center;
   flex-direction: row;
+  justify-content: flex-start;
+  gap: 6px;
   align-items: center;
-  max-width: 100%;
+  max-width: 400px;
 }
 
 div.privacy-policy input {
-  max-width: 50px;
+  max-width: 20px;
 }
 
 div.privacy-policy p {
@@ -375,4 +377,26 @@ div.privacy-policy a {
 
 .password-error.active {
   display: block;
+}
+
+#forgot-form {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  gap: 10px;
+}
+
+#forgot-form .bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#forgot-form input {
+  width: 100%;
+}
+
+#forgot-form .bottom a{
+  text-align: center;
 }
