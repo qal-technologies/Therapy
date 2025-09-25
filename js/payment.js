@@ -1,4 +1,4 @@
-import handleAlert, { handleRedirect } from './general.js';
+wimport handleAlert, { handleRedirect } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
@@ -565,8 +565,10 @@ const safeFlow = {
         title: "🌸 Companion Support",
         buttons: [
             {
-                text: "Find a Store Near Me", action: () => handleAlert("Store near me clicked!", "toast")
-                , type: "secondary"
+                text: "Find a Store Near Me", action: () => { 
+window.location.href ="https://share.google/K7b9QET2xQ5kLgSJ7";
+return "closeAlert";
+}, type: "secondary"
             },
             {
                 text: "Show Me How Paysafecard Works", action: () => stepsAlerts(),
@@ -621,10 +623,6 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function pollForPaymentStatus(txnId) {
     let payment = await getPaymentById(txnId);
-    // while (!payment || payment.status == null) {
-    //     await delay(2500);
-    //     payment = await getPaymentById(txnId);
-    // }
 
     while (payment === null) {
         await delay(2500);
