@@ -299,8 +299,8 @@ div#nav a.login:hover {
 
 div#nav button.logout {
   background: transparent;
-  border: 3px solid red !important;
-  color: red;
+  border: 3px hidden red !important;
+  color: var(--link);
   padding: 2px;
   padding-inline: 15px;
   outline: none;
