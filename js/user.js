@@ -62,7 +62,7 @@ const optionsDate = {
 const optionsTime = {
   hour: "numeric",
   minute: "numeric",
-  hour12: true, 
+  hour12: false, 
 };
 
 let jsDate;
