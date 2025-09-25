@@ -1,4 +1,4 @@
-wimport handleAlert, { handleRedirect } from './general.js';
+import handleAlert, { handleRedirect } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
