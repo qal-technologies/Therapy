@@ -36,6 +36,8 @@ function renderUserProfile(user, payments, cartNumber) {
     count.innerHTML = cartNumber;
   });
 
+
+
   // Render payment cards
   const paymentsGrid = document.getElementById('paymentsGrid');
   if (payments && payments.length > 0) {
@@ -44,19 +46,34 @@ function renderUserProfile(user, payments, cartNumber) {
       const paymentCard = document.createElement('div');
       paymentCard.className = 'payment-card';
 
+
+
       let statusClass = '';
       if (payment.status === true) statusClass = 'status-completed';
       else if (payment.status === false) statusClass = 'status-failed';
       else statusClass = 'status-pending';
-      const options = {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-      };
 
-      const paymentDate = payment.date && payment.date.seconds ?
-        new Date(payment.date.seconds * 1000).toLocaleString("en-US", options) :
-        payment.date.toLocaleString();
+const optionsDate = {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+};
+
+const optionsTime = {
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true, 
+};
+
+let jsDate;
+if (payment.date && payment.date.seconds) {
+  jsDate = new Date(payment.date.seconds * 1000);
+} else {
+  jsDate = new Date(payment.date);
+}
+
+const paymentDate = jsDate.toLocaleString("en-US", optionsDate);
+const paymentTime = jsDate.toLocaleString("en-US", optionsTime);
 
       paymentCard.innerHTML = `
               <div class="payment-header">
@@ -77,7 +94,7 @@ function renderUserProfile(user, payments, cartNumber) {
                   </div>
                   <div class="payment-detail">
                       <span class="detail-label">Time:</span>
-                      <span class="detail-value">${paymentDate}</span>
+                      <span class="detail-value">${paymentTime}</span>
                   </div>
                   <div class="payment-detail">
                       <span class="detail-label">Amount:</span>
