@@ -50,8 +50,8 @@
   user-drag: none;
   border: none;
   -webkit-font-smoothing: antialiased;
-  -webkit-scrollbar-width: thin; 
-   scrollbar-width: thin;
+  -webkit-scrollbar-width: thin;
+  scrollbar-width: thin;
   -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
   scrollbar-color: var(--accent) var(--primaryTrans);
 }
@@ -277,7 +277,7 @@ a.nav-main p#nav-text.active {
   font-family: PoppinsSemi;
 }
 
-div#nav a.login, div#nav button.logout {
+div#nav a.login {
   text-align: center;
   background-color: transparent;
   border: 2px solid var(--link);
@@ -298,8 +298,7 @@ div#nav a.login:hover {
 }
 
 div#nav button.logout {
-  background: transparent;
-  border: 3px hidden red !important;
+  border: none;
   color: var(--link);
   padding: 2px;
   padding-inline: 15px;
@@ -310,11 +309,11 @@ div#nav button.logout {
   font-weight: bolder;
   place-self: center;
   align-self: center;
-  border-radius: 20px !important;
   font-family: PoppinsSemi;
   margin: 0;
   text-align: center;
   place-content: center;
+  background: transparent;
 }
 
 div#nav button.logout:hover {
@@ -609,7 +608,7 @@ section#newsletter {
   background: var(--highlight);
 }
 
-.newsletter-form button:disabled{
+.newsletter-form button:disabled {
   background: rgb(231, 231, 231);
   color: grey;
   cursor: not-allowed;
