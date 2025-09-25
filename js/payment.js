@@ -565,11 +565,11 @@ const safeFlow = {
         title: "🌸 Companion Support",
         buttons: [
             {
-                text: "Find a store", action: () => handleAlert("Store near me clicked!", "toast")
+                text: "Find a Store Near Me", action: () => handleAlert("Store near me clicked!", "toast")
                 , type: "secondary"
             },
             {
-                text: "Show how paysafecard works", action: () => stepsAlerts(),
+                text: "Show Me How Paysafecard Works", action: () => stepsAlerts(),
                 type: "secondary"
             },
             {
