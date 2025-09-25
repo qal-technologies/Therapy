@@ -1,16 +1,19 @@
 import { handleAuthStateChange, logout } from './auth.js';
 
+let show = false;
 const header = document.querySelector("header#header");
+const menu = document.querySelector("header#header div#menu");
+
 window.onload = () => {
     const year = document.querySelector("footer span#year");
     const backButton = document.querySelector("div#back-button");
     const refreshButton = document.querySelector("div#refresh-button");
-    const menu = document.querySelector("header#header div#menu");
+    const emailInput = document.querySelector("#subscribe-email");
+    const emailBTN = document.querySelector(".newsletter-form button");
 
     const date = new Date().getFullYear();
     if (year) year.innerHTML = date;
 
-    let show = false;
     menu && menu.addEventListener("click", () => {
         if (!show) {
             header.classList.add("heightShow");
@@ -50,8 +53,11 @@ window.onload = () => {
         ];
 
         const ticker = document.getElementById('ticker');
+        if (!ticker) return;
+
         let tickerWidth = 0;
         let animationFrame;
+
         function createTicker() {
             ticker.innerHTML = '';
             tickerWidth = 0;
@@ -86,6 +92,10 @@ window.onload = () => {
         }
 
         ticker && createTicker();
+        window.addEventListener("resize", () => {
+            cancelAnimationFrame(animationFrame);
+            createTicker();
+        });
 
         window.addEventListener('unload', () => {
             cancelAnimationFrame(animationFrame);
@@ -112,6 +122,36 @@ window.onload = () => {
         proceed && window.location.reload();
     })
     initTicker();
+
+    if (emailBTN && emailInput) {
+        emailBTN.disabled = true;
+
+        emailInput.addEventListener("input", () => {
+            const BTN = document.querySelector(".newsletter-form button");
+            if (!BTN) return;
+            const value = emailInput.value.trim();
+            const check = value === ""  ? true : false;
+            BTN.disabled = check;
+        });
+
+        emailBTN.addEventListener("click", () => {
+            if (emailBTN.disabled || emailInput.value.trim() == "" ) return;
+
+            emailBTN.disabled = true;
+            emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+
+            setTimeout(() => {
+                handleAlert("You have successfully subscribed to our newletter services, you'll recieve an email. We'll always keep in touch with you daily.", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
+
+                emailBTN.innerHTML = `<p class="text">Subscribe</p>
+            <p class="svg">>></p>`;
+
+                emailInput.value = "";
+                emailBTN.disabled = true;
+            }, 1800);
+        })
+
+    }
 
     handleAuthStateChange(user => {
         const actionTab = document.querySelectorAll("a.login");
@@ -154,6 +194,7 @@ window.onload = () => {
 
 }
 
+
 window.onresize = () => {
     const navWidth = header.clientWidth;
 
@@ -171,14 +212,11 @@ window.onresize = () => {
 
         show = !show;
     }
-    cancelAnimationFrame(animationFrame);
-    createTicker();
 };
 
 export function handleRedirect(href = "", type = "default") {
     const current = window.location.href;
 
-    // Save current navigation state
     const data = {
         new: href,
         previous: current,
@@ -188,7 +226,7 @@ export function handleRedirect(href = "", type = "default") {
     const lastNav = stored ? JSON.parse(stored) : null;
 
     if (type.toLowerCase() === "backwards") {
-        const previous =lastNav?.previous?.toLowerCase();
+        const previous = lastNav?.previous?.toLowerCase();
         if (!lastNav || !lastNav.previous || !previous || previous.includes("login") || previous.includes("signup")) {
             sessionStorage.setItem("url-navigation", JSON.stringify(data));
             window.location.href = "/html/main/Home.html";
@@ -201,7 +239,7 @@ export function handleRedirect(href = "", type = "default") {
         sessionStorage.setItem("url-navigation", JSON.stringify(data));
         window.location.replace(href);
     }
-    else { // default
+    else {
         sessionStorage.setItem("url-navigation", JSON.stringify(data));
         window.location.href = href;
     }

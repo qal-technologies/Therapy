@@ -50,8 +50,8 @@
   user-drag: none;
   border: none;
   -webkit-font-smoothing: antialiased;
-  -webkit-scrollbar-width: thin;
-  scrollbar-width: thin;
+  -webkit-scrollbar-width: thin; 
+   scrollbar-width: thin;
   -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
   scrollbar-color: var(--accent) var(--primaryTrans);
 }
@@ -609,6 +609,12 @@ section#newsletter {
   background: var(--highlight);
 }
 
+.newsletter-form button:disabled{
+  background: rgb(231, 231, 231);
+  color: grey;
+  cursor: not-allowed;
+}
+
 .alert-message {
   width: 100%;
   height: 100%;
@@ -695,7 +701,7 @@ section#newsletter {
 .alert-message i:first-child {
   font-size: 2.5rem;
   color: black;
-} 
+}
 
 .alert-message i:first-child.text-warning {
   color: orange;

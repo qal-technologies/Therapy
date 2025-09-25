@@ -74,7 +74,7 @@ header.header h3 {
 
 .container {
   z-index: 99;
-  width: 92vw;
+  width: 95vw;
   margin: 0 auto;
   background: white;
   padding: 1.5rem;
@@ -214,7 +214,7 @@ header.header h3 {
   margin-bottom: 1rem;
 }
 
-.form-group.forgot a{
+.form-group.forgot a {
   font-weight: bold;
   font-size: 14px;
   color: var(--link);
@@ -334,41 +334,45 @@ div.privacy-policy a {
   font-family: PoppinsMed;
 }
 
-
-div.bottom.FAQ {
+.password-wrapper {
+  position: relative;
   display: flex;
-  flex-direction: row;
-  width: auto;
-  padding: 10px;
   align-items: center;
-  gap: 10px;
-  place-self: center;
-  justify-content: space-evenly;
 }
 
-div.faq {
-  width: auto;
-  padding: 0.5rem;
-  color: var(--mainText);
-  border-radius: 15px;
-  line-height: 20px;
-  font-size: 14px;
-  display: flex;
-  place-self: center;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  font-family: PoppinsMed;
-  gap: 10px;
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px;
 }
 
-div.faq a {
-  width: max-content;
-  padding-inline: 15px;
-  padding-block: 5px;
-  text-decoration: underline;
-  text-decoration-color: var(--link);
-  border-radius: 8px;
+.password-wrapper .toggle-password {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
   color: var(--link);
-  font-family: PoppinsMed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-wrapper .toggle-password:focus {
+  outline: none;
+}
+
+.password-wrapper .toggle-password:hover {
+  color: var(--accent);
+}
+
+.password-error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  display: none;
+}
+
+.password-error.active {
+  display: block;
 }

@@ -9,14 +9,20 @@ const TEMPLATE = {
           <h1>Login</h1>
           <p>You've already taken the first step. Log in to continue healing...</p>
         </div>
-        <form class="bottom">
+
+        <form class="bottom" id="login-form-element">
           <div class="form-group">
             <label for="login-email">Email *</label>
             <input type="email" id="login-email" required />
           </div>
           <div class="form-group">
             <label for="login-password">Password *</label>
-            <input type="password" id="login-password" required />
+            <div class="password-wrapper">
+              <input type="password" id="login-password" required />
+              <button type="button" class="toggle-password" data-target="login-password">
+                <i class="bi bi-eye"></i>
+              </button>
+            </div>
           </div>
           <div class="form-group forgot">
             <a class="forgot-password" href="/html/regs/Forget.html">Forgot Password?</a>
@@ -43,56 +49,65 @@ const TEMPLATE = {
 
             </div>
 
-            <form class="bottom">
-              <div class="form-group">
-                <label for="reg-email">Email *</label>
-                <input type="email" id="reg-email" required />
-              </div>
+            <form class="bottom" id="register-form-element">
+        <div class="form-group">
+          <label for="reg-email">Email *</label>
+          <input type="email" id="reg-email" required />
+        </div>
 
-              <div class="form-group">
-                <label for="reg-firstname">First Name *</label>
-                <input type="text" id="reg-firstname" required />
-              </div>
+        <div class="form-group">
+          <label for="reg-firstname">First Name *</label>
+          <input type="text" id="reg-firstname" required />
+        </div>
 
-              <div class="form-group">
-                <label for="reg-lastname">Last Name *</label>
-                <input type="text" id="reg-lastname" required />
-              </div>
+        <div class="form-group">
+          <label for="reg-lastname">Last Name *</label>
+          <input type="text" id="reg-lastname" required />
+        </div>
 
-              <div class="form-group">
-                <label for="reg-country">Country*</label>
-                <input type="text" id="reg-country" required />
-              </div>
+        <div class="form-group">
+          <label for="reg-country">Country*</label>
+          <input type="text" id="reg-country" required />
+        </div>
 
-              <div class="form-group">
-                <label for="reg-password">Password *</label>
-                <input type="password" id="reg-password" required />
-              </div>
-
-              <div class="form-group">
-                <label for="confirm-reg-password">Confirm Password *</label>
-                <input type="password" id="confirm-reg-password" required />
-              </div>
-
-
-              <div class="bottom privacy">
-                <div class="privacy-policy">
-                  <input type="checkbox" name="accept" id="accept" checked>
-                  <p class="text">
-                    I agree to the <a href="/html/main/Privacy.html" class="view">Terms of Service</a> and <a
-                      href="/html/main/Privacy.html" class="view">Privacy Policy</a>
-                  </p>
-                </div>
-                <div id="checkout">
-                  <button title="Register Account" id="register-button" disabled>
-                    <p class="text">REGISTER</p>
-                  </button>
-                </div>
-              </div>
-
-            </form>
+        <div class="form-group">
+          <label for="reg-password">Password *</label>
+          <div class="password-wrapper">
+            <input type="password" id="reg-password" required />
+            <button type="button" class="toggle-password" data-target="reg-password">
+              <i class="bi bi-eye"></i>
+            </button>
           </div>
-        </div>`
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-reg-password">Confirm Password *</label>
+          <div class="password-wrapper">
+            <input type="password" id="confirm-reg-password" required />
+            <button type="button" class="toggle-password" data-target="confirm-reg-password">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+          <p class="password-error" id="password-error"></p>
+        </div>
+
+        <div class="bottom privacy">
+          <div class="privacy-policy">
+            <input type="checkbox" name="accept" id="accept" checked>
+            <p class="text">
+              I agree to the <a href="/html/main/Privacy.html" class="view">Terms of Service</a> and
+              <a href="/html/main/Privacy.html" class="view">Privacy Policy</a>
+            </p>
+          </div>
+          <div id="checkout">
+            <button title="Register Account" id="register-button" disabled>
+              <p class="text">REGISTER</p>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>`
 };
 
 const DOM = {
@@ -105,17 +120,80 @@ const state = {
   currentForm: 'register',
 };
 
+function handlePasswordAndViews() {
+  const regPassword = document.getElementById("reg-password");
+  const confirmPassword = document.getElementById("confirm-reg-password");
+  const errorMsg = document.getElementById("password-error");
+  const registerButton = document.getElementById("register-button");
+
+  if (document.querySelectorAll(".toggle-password")) {
+    const btns = document.querySelectorAll(".toggle-password");
+    btns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const inputId = btn.getAttribute("data-target");
+        const input = document.getElementById(inputId);
+        const icon = btn.querySelector("i");
+
+        if (input.type === "password") {
+          input.type = "text";
+          icon.classList.remove("bi-eye");
+          icon.classList.add("bi-eye-slash");
+        } else {
+          input.type = "password";
+          icon.classList.remove("bi-eye-slash");
+          icon.classList.add("bi-eye");
+        }
+      });
+    });
+  }
+
+  if (regPassword && confirmPassword) {
+    confirmPassword.addEventListener("input", () => {
+      const pwd = regPassword.value.trim();
+      const confirm = confirmPassword.value.trim();
+      if (confirm.length >= 3) {
+        if (pwd !== confirm) {
+          errorMsg.textContent = "Passwords do not match";
+          confirmPassword.style.borderColor = "red";
+          errorMsg.classList.add("active");
+          registerButton.disabled = true;
+        } else {
+          errorMsg.textContent = "";
+          confirmPassword.style.borderColor = "var(--accent)";
+          errorMsg.classList.remove("active");
+          registerButton.disabled = false;
+        }
+      } else {
+        errorMsg.textContent = "";
+        confirmPassword.style.borderColor = "var(--accent)";
+        errorMsg.classList.remove("active");
+        registerButton.disabled = true;
+      }
+    });
+
+    regPassword.addEventListener("input", () => {
+      if (confirmPassword.value.length >= 3) {
+        confirmPassword.dispatchEvent(new Event("input"));
+      }
+    });
+  }
+}
+
 function handleInputs() {
   const inputs = document.querySelectorAll(".form-group input");
   const proceedButton = document.querySelector("div#checkout button");
+  const regPassword = document.getElementById("reg-password");
+  const confirmPassword = document.getElementById("confirm-reg-password");
+
   if (!inputs || !proceedButton) return;
-  
+
   const check = Array.from(inputs).every(input => input.value.trim() !== "");
-  proceedButton.disabled = !check;
+  const match = regPassword && confirmPassword ? regPassword.value.trim() == confirmPassword.value.trim() : check;
+  proceedButton.disabled = !check || !match;
 
   inputs.forEach(input => {
     input.addEventListener("input", handleInputs)
-  })
+  });
 }
 
 function setupEventListeners() {
@@ -142,6 +220,7 @@ function handleTabClick(e) {
 function updateFormUI() {
   DOM.formSection.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
   attachFormListeners();
+  handlePasswordAndViews();
 }
 
 
