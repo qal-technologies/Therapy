@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (!user) {
             handleAlert("Please login or create account to purchase and view book", "blur", true,'<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
         }
+        
         if (user) {
             const userdata = await getUserData(user.uid);
             const paid = userdata.bookPaid;

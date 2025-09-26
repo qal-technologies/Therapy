@@ -290,13 +290,22 @@ h2 {
 .loading-section {
     text-align: center;
     padding: 40px 30px;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    place-content: center;
 }
 
 .loading-spinner, .mini-spinner {
-    border: 3px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
-    border-top: 3px solid #3498db;
-    border-top: 3px solid var(--link);
+    border-top: 10px dotted var(--highlight);
+    border-bottom: 10px dotted var(--link);
+    border-right: 10px dotted var(--mainText);
+    border-left: 10px dotted var(--blue);
     width: 70px;
     height: 70px;
     animation: spin 1s linear infinite;
@@ -316,11 +325,11 @@ h2 {
 
 @keyframes spin {
     0% {
-        transform: rotate(0deg);
+        transform: rotate(0deg) scale(30%);
     }
 
     100% {
-        transform: rotate(360deg);
+        transform: rotate(360deg) scale(100%);
     }
 }
 
@@ -2028,9 +2037,9 @@ ul.instructions.redeem li {
     margin-bottom: -15px;
 }
 
-.steps p.verification-text.session{
+.steps p.verification-text.session {
     text-align: left;
-} 
+}
 
 .paysafe-section .continue-btn {
     background: var(--link);

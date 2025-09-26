@@ -130,18 +130,18 @@ window.onload = () => {
             const BTN = document.querySelector(".newsletter-form button");
             if (!BTN) return;
             const value = emailInput.value.trim();
-            const check = value === ""  ? true : false;
+            const check = value === "" ? true : false;
             BTN.disabled = check;
         });
 
         emailBTN.addEventListener("click", () => {
-            if (emailBTN.disabled || emailInput.value.trim() == "" ) return;
+            if (emailBTN.disabled || emailInput.value.trim() == "") return;
 
             emailBTN.disabled = true;
             emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
 
             setTimeout(() => {
-                handleAlert("Your subscription has been confirmed. From now pn, you", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
+                handleAlert("Your subscription has been confirmed. From now on, you’ll receive thoughtful updates, healing insights, and special messages directly in your inbox. <br/> We’ll be here to gently stay connected with you each day.", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
 
                 emailBTN.innerHTML = `<p class="text">Subscribe</p>
             <p class="svg">>></p>`;
@@ -192,6 +192,83 @@ window.onload = () => {
         }
     });
 
+}
+
+// SVGs as strings for reuse
+const playIcon = `
+<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+  <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
+</svg>`;
+
+const pauseIcon = `
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+
+
+function initGlobalAudioPlayers(options = {}) {
+    const {
+        playClass = "icon-play",
+        pauseClass = "icon-pause"
+    } = options;
+
+    const svgTemp = {
+        playBTN: `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                <path
+                  d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
+              </svg>`,
+        pauseBTN: ``,
+    }
+    let currentAudio = null;
+
+    // Get all audio elements
+    const audios = document.querySelectorAll("audio");
+
+    audios.forEach(audio => {
+        const btn = audio.closest("button")?.querySelector(".audio-toggle");
+
+        // Reset icons on page load
+        if (btn) {
+            btn.classList.remove(pauseClass);
+            btn.classList.add(playClass);
+        }
+
+        // If button exists, hook up toggle click
+        if (btn) {
+            btn.addEventListener("click", () => {
+                if (audio.paused) {
+                    // Pause currently playing audio if it's not this one
+                    if (currentAudio && currentAudio !== audio) {
+                        currentAudio.pause();
+                        const prevBtn = currentAudio.closest(".audio-wrapper")?.querySelector(".audio-toggle");
+                        if (prevBtn) {
+                            prevBtn.classList.remove(pauseClass);
+                            prevBtn.classList.add(playClass);
+                        }
+                    }
+
+                    audio.play();
+                    currentAudio = audio;
+                    btn.classList.remove(playClass);
+                    btn.classList.add(pauseClass);
+                } else {
+                    audio.pause();
+                    btn.classList.remove(pauseClass);
+                    btn.classList.add(playClass);
+                }
+            });
+        }
+
+        // When audio ends → reset icon
+        audio.addEventListener("ended", () => {
+            if (btn) {
+                btn.classList.remove(pauseClass);
+                btn.classList.add(playClass);
+            }
+            if (currentAudio === audio) currentAudio = null;
+        });
+    });
 }
 
 
@@ -349,7 +426,10 @@ function handleAlert(
                     newBtn.addEventListener("click", closeAlert);
                 } else if (typeof onClick === "function") {
                     newBtn.addEventListener("click", () => {
-                        onClick();
+                        const result = onClick();
+                        if (result === "closeAlert") {
+                            closeAlert();
+                        }
                     });
                 } else {
                     newBtn.addEventListener("click", defaultFunction);

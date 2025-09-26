@@ -97,9 +97,8 @@ function createCreditCardSections(state) {
 
 function createPaySafeSections(state) {
     return {
-        1: createSafe1(),
-        2: createSafe2(state),
-        3: createSafe3(state),
+        1: createSafe2(state),
+        2: createSafe3(state),
     }
 }
 
@@ -565,11 +564,13 @@ const safeFlow = {
         title: "🌸 Companion Support",
         buttons: [
             {
-                text: "Find a store", action: () => handleAlert("Store near me clicked!", "toast")
-                , type: "secondary"
+                text: "Find a Store Near Me", action: () => { 
+window.open("https://share.google/K7b9QET2xQ5kLgSJ7");
+return "closeAlert";
+}, type: "secondary"
             },
             {
-                text: "Show how paysafecard works", action: () => stepsAlerts(),
+                text: "Show Me How Paysafecard Works", action: () => stepsAlerts(),
                 type: "secondary"
             },
             {
@@ -621,10 +622,6 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function pollForPaymentStatus(txnId) {
     let payment = await getPaymentById(txnId);
-    // while (!payment || payment.status == null) {
-    //     await delay(2500);
-    //     payment = await getPaymentById(txnId);
-    // }
 
     while (payment === null) {
         await delay(2500);
@@ -768,12 +765,12 @@ async function handlePaySafe(state, elements) {
 
     const currentSection = state.paySafeSections[state.safeIndex + 1];
 
-    if (state.safeIndex === 2 && state.pending) {
+    if (state.safeIndex === 1 && state.pending) {
         const finalPayment = await pollForPaymentStatus(state.txn);
         await showResultScreen(state, elements, finalPayment);
     } else if (currentSection) {
 
-        if (state.safeIndex == 2) {
+        if (state.safeIndex == 1) {
             await updateUserData(state.userId, { codes: state.codes });
             await savePaymentData(state);
         };
@@ -806,7 +803,7 @@ async function handlePaySafe(state, elements) {
         }));
 
 
-        if (state.safeIndex == 1) {
+        if (state.safeIndex == 0) {
             btns[0].disabled = true;
             state.pending = false;
 
@@ -827,7 +824,7 @@ async function handlePaySafe(state, elements) {
             }, 3000);
         };
 
-        state.safeIndex = state.safeIndex <= 1 ? state.safeIndex + 1 : 2;
+        state.safeIndex = state.safeIndex <= 0 ? state.safeIndex + 1 : 1;
     }
 
 }
@@ -1173,6 +1170,8 @@ async function initializePaymentFlow(e, state, elements) {
         handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: ()=> handleRedirect("/html/main/Session.html", "replace") }]);
 
         return false;
+    } finally {
+        document.getElementById("loading-section").classList.remove("active");
     }
 
     // Initialize buttons

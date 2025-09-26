@@ -20,7 +20,7 @@ async function renderCart(userId) {
             carts.forEach(cart => {
                 const cartDiv = document.createElement("div");
                 cartDiv.classList.add("cart-div");
-                cartDiv.dataset.id = cart.id; // The document ID from Firestore
+                cartDiv.dataset.id = cart.id; 
 
                 cartDiv.innerHTML = `
                   <div class="upper">

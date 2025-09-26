@@ -379,24 +379,33 @@ div.privacy-policy a {
   display: block;
 }
 
+.container.forget {
+  max-width: 800px;
+  place-content: center;
+  text-align: center;
+}
+
 #forgot-form {
   width: 100%;
   flex: 1;
   display: flex;
   gap: 10px;
+  place-content: center;
 }
 
 #forgot-form .bottom {
   width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 13px;
+  text-align: left;
 }
 
 #forgot-form input {
   width: 100%;
 }
 
-#forgot-form .bottom a{
+#forgot-form .bottom a {
   text-align: center;
 }

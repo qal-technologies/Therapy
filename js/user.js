@@ -36,10 +36,20 @@ function renderUserProfile(user, payments, cartNumber) {
     count.innerHTML = cartNumber;
   });
 
+
+
   // Render payment cards
   const paymentsGrid = document.getElementById('paymentsGrid');
   if (payments && payments.length > 0) {
     paymentsGrid.innerHTML = '';
+
+    payments.sort((a, b) => {
+      const dateA = a.date?.seconds ? a.date.seconds * 1000 : new Date(a.date).getTime();
+      const dateB = b.date?.seconds ? b.date.seconds * 1000 : new Date(b.date).getTime();
+      return dateB - dateA;
+    });
+
+
     payments.forEach(payment => {
       const paymentCard = document.createElement('div');
       paymentCard.className = 'payment-card';
@@ -48,15 +58,28 @@ function renderUserProfile(user, payments, cartNumber) {
       if (payment.status === true) statusClass = 'status-completed';
       else if (payment.status === false) statusClass = 'status-failed';
       else statusClass = 'status-pending';
-      const options = {
+
+      const optionsDate = {
         month: "long",
         day: "numeric",
         year: "numeric",
       };
 
-      const paymentDate = payment.date && payment.date.seconds ?
-        new Date(payment.date.seconds * 1000).toLocaleString("en-US", options) :
-        payment.date.toLocaleString();
+      const optionsTime = {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: false,
+      };
+
+      let jsDate;
+      if (payment.date && payment.date.seconds) {
+        jsDate = new Date(payment.date.seconds * 1000);
+      } else {
+        jsDate = new Date(payment.date);
+      }
+
+      const paymentDate = jsDate.toLocaleString("en-US", optionsDate);
+      const paymentTime = jsDate.toLocaleString("en-US", optionsTime);
 
       paymentCard.innerHTML = `
               <div class="payment-header">
@@ -77,7 +100,7 @@ function renderUserProfile(user, payments, cartNumber) {
                   </div>
                   <div class="payment-detail">
                       <span class="detail-label">Time:</span>
-                      <span class="detail-value">${paymentDate}</span>
+                      <span class="detail-value">${paymentTime}</span>
                   </div>
                   <div class="payment-detail">
                       <span class="detail-label">Amount:</span>
@@ -109,36 +132,36 @@ function renderUserProfile(user, payments, cartNumber) {
   }
 }
 
-  function showPayslip(payment) {
-    const icon = document.getElementById('icon');
-    icon.classList.add(`${payment.statusName.toLowerCase()}`);
-    icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle-fill"
+function showPayslip(payment) {
+  const icon = document.getElementById('icon');
+  icon.classList.add(`${payment.statusName.toLowerCase()}`);
+  icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle-fill"
 								viewBox="0 0 16 16">
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
 							</svg> ${payment.statusName.toUpperCase()}`;
-    const symbol = getCurrencySymbol(payment.currency);
-    const options = {
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    };
-    const paymentDate = payment.date && payment.date.seconds ?
-      new Date(payment.date.seconds * 1000).toLocaleString("en-US", options) :
-      payment.date.toLocaleString();
-    
-    document.getElementById('receiptId').textContent = payment.id;
-    document.getElementById('receiptType').textContent = payment.title;
-    document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
-    document.getElementById('receiptMethod').textContent = payment.method;
-    document.getElementById('receiptCurrency').textContent = payment.currency;
-    document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-    document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
-    document.getElementById('receiptDescription').textContent = payment.description;
-    document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
+  const symbol = getCurrencySymbol(payment.currency);
+  const options = {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+  const paymentDate = payment.date && payment.date.seconds ?
+    new Date(payment.date.seconds * 1000).toLocaleString("en-US", options) :
+    payment.date.toLocaleString();
 
-    modal.style.display = 'flex';
-  }
+  document.getElementById('receiptId').textContent = payment.id;
+  document.getElementById('receiptType').textContent = payment.title;
+  document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
+  document.getElementById('receiptMethod').textContent = payment.method;
+  document.getElementById('receiptCurrency').textContent = payment.currency;
+  document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
+  document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
+  document.getElementById('receiptDescription').textContent = payment.description;
+  document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
+
+  modal.style.display = 'flex';
+}
 
 
 function setupEventListeners() {
@@ -178,7 +201,7 @@ window.addEventListener('DOMContentLoaded', () => {
     } else {
       handleAlert("You are not logged in. Redirecting...", "toast");
       setTimeout(() => {
-        window.location.replace("/html/regs/Signup.html"); 
+        window.location.replace("/html/regs/Signup.html");
       }, 1500);
     }
   });

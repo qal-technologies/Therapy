@@ -1,13 +1,15 @@
-import { changePassword } from "./auth.js";
 import handleAlert from './general.js';
+import { changePassword } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("forgot-email");
     const resetButton = document.getElementById("forgot-button");
+    console.log("hhhh");
 
     // Enable button only if email is typed
     emailInput.addEventListener("input", () => {
         resetButton.disabled = emailInput.value.trim() === "";
+        console.log('hh')
     });
 
     resetButton.addEventListener("click", async (e) => {
@@ -21,18 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         resetButton.disabled = true;
         resetButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div> Sending...`;
+        if (email.length < 5 || !email.includes("@") || !email.includes(".")) {
+            handleAlert("Please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
+            throw new Error("Please enter a valid email address.");
+        }
 
         try {
-            await changePassword(email);
-
-            handleAlert(
-                `A reset link has been sent to <b>${email}</b>. Please check your inbox.`,
-                "blur",
-                true,
-                "<i class='bi bi-envelope-check text-success'></i><br/> Email Sent",
-                true,
-                [{ text: "Back to Login", onClick: () => window.location.replace("/html/regs/Signup.html?type=login") }]
-            );
+                await changePassword(email);
+                handleAlert(
+                    `A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.`,
+                    "blur",
+                    true,
+                    "<i class='bi bi-envelope-check text-success'></i><br/> Email Sent",
+                    true,
+                    [{ text: "Back to Login", onClick: () => window.location.replace("/html/regs/Signup.html?type=login") }]
+                );
         } catch (error) {
             console.error("Password reset error:", error);
             const msg = error.message.replace("Firebase:", "").trim();
