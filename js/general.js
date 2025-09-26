@@ -141,7 +141,7 @@ window.onload = () => {
             emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
 
             setTimeout(() => {
-                handleAlert("You have successfully subscribed to our newletter services, you'll recieve an email. We'll always keep in touch with you daily.", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
+                handleAlert("Your subscription has been confirmed. From now pn, you", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
 
                 emailBTN.innerHTML = `<p class="text">Subscribe</p>
             <p class="svg">>></p>`;
