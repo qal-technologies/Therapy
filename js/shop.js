@@ -1,3 +1,9 @@
+import handleAlert from "/js/general.js";
+import { handleAuthStateChange, getCurrentUser } from './auth.js';
+import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
+import { handleRedirect } from "./general.js";
+
+
 //Audio source:
 const BASE_PATHS = {
   images: "/src/images",
@@ -17,15 +23,19 @@ const audioSrc = {
 };
 
 function handleAudio(lang) {
-  const audioMessage = document.querySelector('#banner audio#book-audio-message');
+  const audioMessage = document.querySelector('.preview-banner audio#book-audio-message');
+  const allAudio = document.querySelectorAll("audio");
 
+  if (!audioMessage) return;
 
   audioMessage.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
 
-  const listenBTN = document.querySelector("#banner button#play");
+  const listenBTN = document.querySelector(".preview-banner button#preview-play");
 
   if (listenBTN && audioMessage) {
     listenBTN.addEventListener('click', () => {
+      audioMessage.currentTime = 0;
+
       if (!audioMessage.paused) {
         listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +54,21 @@ function handleAudio(lang) {
         listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
+        allAudio.forEach(audio => {
+          audio.pause();
+          audio.innerHTML = `<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+        })
         audioMessage.play();
       }
     });
@@ -65,7 +90,6 @@ function handleAudio(lang) {
   });
 }
 
-
 // Book Data:
 const BOOK_COLLECTION = [
   {
@@ -75,7 +99,7 @@ const BOOK_COLLECTION = [
     formats: ["eBook", "Hardcopy"],
     price: "25.00",
     status: "Sold Out",
-    description: `Get instant access to the story that's changing lives. Read on any device, anytime, begin your journey in just one click`,
+    description: `This ebook is limited to just 5,000 readers. It’s been created with care to feel like a real book you can hold close, even though it’s digital. Once all copies are claimed, it will no longer be available worldwide.  You can read it easily on your phone, tablet, or computer. Just one click to begin your journey.`,
     image: "/src/images/book1.jpg",
     quantity: 1,
   },
@@ -95,12 +119,13 @@ const BOOK_COLLECTION = [
 function removeDetailsModal() {
   const modal = document.querySelector("#details-div");
 
-  modal.classList.toggle("fadeOut");
-}
+  if (modal) modal.classList.toggle("fadeOut");
+};
 
 function showDetailsModal(e) {
   const modal = document.querySelector("#details-div");
   const cartCount = document.querySelector(".details-top span.cart-count");
+  if (!modal) return;
 
   const contains = modal.classList.contains("fadeOut");
   contains && modal.classList.remove("fadeOut");
@@ -111,13 +136,17 @@ function showDetailsModal(e) {
   modal.style.display = "block";
   renderBookCollection(book);
 
-  const existing = JSON.parse(localStorage.getItem("carts")) || [];
-  cartCount.textContent = existing.length;
+  setTimeout(() => {
+    const addToCartElements = document.querySelectorAll('.add-to-cart');
 
-  const close = document.querySelector("#details-div button.close-details");
-
-
-  close && close.addEventListener("click", removeDetailsModal);
+    addToCartElements.forEach(element => {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'center'
+      });
+    });
+  }, 3000);
 }
 
 function handleQuantityChange(e) {
@@ -129,38 +158,19 @@ function handleQuantityChange(e) {
   if (e.target.classList.contains('add')) {
     book.quantity++;
   } else if (e.target.classList.contains('minus')) {
-    // Prevent quantity from going below 1
     book.quantity = Math.max(1, book.quantity - 1);
   }
 
-  // Update the displayed quantity
   const qtyText = e.target.closest('.qty-main-div').querySelector('.qty-text');
-  if (qtyText) {
-    qtyText.textContent = book.quantity;
-  }
+  if (qtyText) qtyText.textContent = book.quantity;
 }
 
-function handleAlert(message) {
-  const parent = document.querySelector("#details-div .alert-message");
-  const text = document.querySelector("#details-div .alert-message .alert-text");
-
-  const contains = parent.classList.contains("fadeOut");
-  contains && parent.classList.remove("fadeOut");
-
-  parent.style.display = "flex";
-  text.textContent = message;
-
-  setTimeout(() => {
-    parent.classList.add("fadeOut");
-
-    text.textContent = "";
-    parent.style.display = "none";
-  }, 4000);
-}
 
 function handleCartUpdate(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartCount = document.querySelector(".details-top span.cart-count");
+
+  if (!cartParent) return;
 
   cartCount.textContent = count;
   cartParent.classList.add("bounce");
@@ -170,9 +180,10 @@ function handleCartUpdate(count) {
   }, 1000);
 }
 
-function handleCartAnimation( count) {
+function handleCartAnimation(count) {
   const cartParent = document.querySelector(".details-top a.open-cart");
   const cartImage = document.querySelector(".book-item img");
+  if (!cartParent || !cartImage) return;
 
   const flyingImage = cartImage.cloneNode();
   flyingImage.classList.add("fly-to-cart");
@@ -201,8 +212,35 @@ function handleCartAnimation( count) {
   })
 }
 
+async function hardCopy(book, user) {
+  const language = navigator.language;
+  const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+  const itemData = {
+    id: book.id,
+    bookId: book.id,
+    title: book.title,
+    price: book.price,
+    image: book.image,
+    quantity: 1,
+    transactionId: transactionId,
+    description: `You are buying one or more copies of Compagnon Féminin, a special digital book available to only 5,000 readers worldwide. It has been carefully designed to feel like a real book, even though you read it on a phone, tablet, or computer.`,
+    date: new Date(),
+    format: "eBook"
+  };
+  try {
+    await createNewCartItem(user.uid, itemData);
+    setTimeout(() => {
+      window.location.href = '/html/main/cart.html';
+    }, 200);
+  } catch (error) {
+    console.log(`Cart add copy because: ${error}`);
+    handleAlert(`Cart add copy because: ${error}`, "toast");
+  }
+
+}
+
 // Render Book Collection:
-function renderBookCollection(book) {
+function renderBookCollection(book, user = null) {
   const collectionContainer = document.getElementById('bookCollection');
   if (!collectionContainer) return;
 
@@ -213,13 +251,13 @@ function renderBookCollection(book) {
       <h3 class="book-title">${book.title.toUpperCase()}</h3>
       <p class="book-author">Charlotte Casiraghi</p>
 
-      <div class="book-downloads">
-      <div class="download-stars">★★★★★</div>
-      <p class="download-text">${book.downloads}</p>
-      </div>
       <div class="book-format">
+<p style="font-weight:bolder; min-width:100%; text-align:left; margin-top:10px; font-size:18px;" >
+Select Book Format
+</p>
         <div class="format-div">
-        <input type="radio" name=${book.formats[0]} id=${book.formats[0]}>
+        <input type="radio" name=${book.formats[0]} id=${book.formats[0]} checked>
+
         <div class="side">
           <p class="format-name">${book.formats[0]}</p>
           <p class="format-price">&euro; ${book.price}</p>
@@ -227,7 +265,8 @@ function renderBookCollection(book) {
         </div>
 
 <div class="format-div last">
-<input type="radio" name=${book.formats[1]} id=${book.formats[1]} ${book.status.toLowerCase() === "sold out" ? "disabled" : ""}>
+<input type="radio" name=${book.formats[1]} id=${book.formats[1]} class="last"  ${book.status.toLowerCase() === "sold out" ? "disabled" : ""}>
+
           <div class="side">
           <p class="format-name">${book.formats[1]}</p>
           <p class="format-status ${book.status.toLowerCase()}">${book.status}</p>
@@ -246,7 +285,7 @@ function renderBookCollection(book) {
 
 
        <div class="quantity">
-        <p class="quantity-text">Qty</p>
+        <p class="quantity-text">Select Number of Copies</p>
         <div class="qty-main-div" data-id="${book.id}">
           <span class="qty-arrow minus">-</span>
           <p class="qty-text">${book.quantity}</p>
@@ -263,81 +302,95 @@ function renderBookCollection(book) {
   document.querySelectorAll('.qty-arrow').forEach(btn => {
     btn.addEventListener('click', handleQuantityChange);
   });
+  const bookName = "COMPAGNON FÉMININ".toLowerCase();
 
-  document.querySelector(".book-info .format-div.last").addEventListener("click", () => {
-    handleAlert("Temporarily Unavailable. Only eBook Available now.");
-  })
-
-  // Add event listeners for Add to Cart buttons
-  document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', (e) => {
-      const bookItem = e.target.closest('.book-item');
-      const bookId = bookItem.dataset.id;
-      const book = BOOK_COLLECTION.find(b => b.id === bookId);
-
-      if (book) {
-        if (addToCart(book)) {
-          const cartCount = document.querySelector(".details-top span.cart-count");
-          const existing = JSON.parse(localStorage.getItem("carts")) || [];
-          const count = existing.length;
-
-
-          handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`);
-
-          // Reset quantity after adding to cart
-          book.quantity = 1;
-          handleCartAnimation(count);
-          renderBookCollection(book);
-        }
+  document.querySelectorAll('input[type="radio"]')
+    .forEach(el => el.addEventListener("click", () => {
+      if (!user) {
+        handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; } }]);
+        return;
       }
-    });
-  });
+    }));
+
+  document.querySelectorAll(".book-info .last")
+    .forEach(el => el.addEventListener("click", async () => {
+      const user = await getCurrentUser();
+      if (user) {
+        handleAlert(`<p>The printed edition of <b>${bookName}</b> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.</p>`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{ text: "Get the eBook", onClick: async () => await hardCopy(book, user) }]);
+      } else {
+        handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; } }]);
+        return;
+      }
+    }));
+
+  document.querySelectorAll('.add-to-cart').forEach(button => button.addEventListener('click', handleAddToCartClick));
 }
 
-
-// Improved Add to Cart Function
-function addToCart(book) {
-  let cart = JSON.parse(localStorage.getItem('carts')) || [];
-
-  // Get selected format
-  const selectedFormat = document.querySelector(`.book-item[data-id="${book.id}"] input[type="radio"]:checked`);
-  if (!selectedFormat && book.formats.length > 0) {
-    handleAlert('Please select a format before adding to cart');
-    return false;
+async function handleAddToCartClick(e) {
+  const user = await getCurrentUser();
+  if (!user) {
+    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => {handleRedirect("/html/regs/Signup.html?type=login"); } }, { text: "Register", onClick: () => {handleRedirect("/html/regs/Signup.html?type=register"); } }]);
+    return;
   }
 
-  // Check if book already in cart with same format
-  const existingItemIndex = cart.findIndex(item =>
-    item.id === book.id && item.format === selectedFormat?.name
-  );
+  const bookItem = e.target.closest('.book-item');
+  const bookId = bookItem.dataset.id;
+  const book = BOOK_COLLECTION.find(b => b.id === bookId);
+  if (!book) return;
 
-  if (existingItemIndex !== -1) {
-    // Update quantity of existing item
-    cart[existingItemIndex].quantity += book.quantity;
-  } else {
-
-    const language = navigator.language;
-
-    const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
-
-    // Adding new item to cart:
-    cart.push({
-      id: book.id,
-      title: book.title,
-      author: "Charlotte Casiraghi",
-      price: book.price,
-      image: book.image,
-      quantity: book.quantity,
-      transactionId: transactionId,
-      description: book.description,
-      image: book.image,
-      date: new Date(),
-      format: selectedFormat?.name || book.formats[0]
-    });
+  const selectedFormat = document.querySelector('input[type="radio"]:checked');
+  if (!selectedFormat) {
+    handleAlert('Please select a format.', "toast");
+    return;
   }
 
-  localStorage.setItem('carts', JSON.stringify(cart));
-  return true;
+  const language = navigator.language;
+
+  const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+  const itemData = {
+    id: book.id,
+    bookId: book.id,
+    title: book.title,
+    price: book.price,
+    image: book.image,
+    quantity: book.quantity,
+    transactionId: transactionId,
+    description: `You are buying one or more copies of Compagnon Féminin, a special digital book available to only 5,000 readers worldwide. It has been carefully designed to feel like a real book, even though you read it on a phone, tablet, or computer.`,
+    date: new Date(),
+    format: selectedFormat?.name || book.formats[0]
+  };
+
+  const button = e.currentTarget;
+  button.disabled = true;
+  button.innerHTML = `<div class="spinner-container" style="align-self:center;"><div class="spinner"></div></div>`;
+
+  try {
+    const already = await getCartById(user.uid, book.id);
+    if (already) {
+      await updateCartItems(user.uid, book.id, itemData);
+    } else {
+      await addToCartInDb(user.uid, itemData);
+    }
+    handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`, "toast");
+
+
+    const cartItems = await getCartItems(user.uid);
+    handleCartAnimation(cartItems.length);
+
+    book.quantity = 1;
+    button.disabled = false;
+    button.innerHTML = 'Add to Cart';
+
+    renderBookCollection(book, user);
+    setTimeout(() => {
+      window.location.href = '/html/main/cart.html';
+    }, 2000);
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+    handleAlert(`Failed to add item, because: ${error}. Please try again.", "toast`);
+    button.disabled = false;
+    button.innerHTML = 'Add to Cart';
+  }
 }
 
 // Initialize both sections
@@ -347,11 +400,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   handleAudio(lang);
 
-  const book = document.querySelectorAll("#preview button.get-copy");
-  const close = document.querySelector("#details-div button.close-details");
 
-  book && book.forEach(btn => btn.addEventListener("click", showDetailsModal));
-  close && close.addEventListener("click", removeDetailsModal);
+  const closeButton = document.querySelector("#details-div button.close-details");
+  closeButton?.addEventListener("click", removeDetailsModal);
+
+  handleAuthStateChange(async (user) => {
+    const cartCount = document.querySelector(".details-top span.cart-count");
+    if (!user) {
+      const bookButtons = document.querySelectorAll("#preview button.get-copy");
+      bookButtons?.forEach(button, button.addEventListener("click", showDetailsModal));
+      cartCount.textContent = 0;
+    }
+    
+    if (user) {
+      const thisUser = await getUserData(user.uid);
+      const details = document.querySelector("#preview .details");
+      const copyBTN = document.querySelector("#preview button.get-copy");
+
+      if (thisUser.bookPaid === true) {
+        details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
+
+        copyBTN.textContent = "START READING NOW";
+        copyBTN.addEventListener("click", () => handleRedirect("/html/main/ViewBook.html"));
+      } else if (!thisUser || thisUser.bookPaid === false) {
+        copyBTN.addEventListener("click", showDetailsModal);
+      }
+
+      const items = await getCartItems(user.uid);
+      if (cartCount) cartCount.textContent = items.length;
+    }
+  });
 });
+
 
 

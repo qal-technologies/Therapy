@@ -43,13 +43,36 @@
   text-decoration: none;
   box-sizing: border-box;
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
-  transition: all 400ms ease-in-out;
+  transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  user-drag: none;
+  border: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-scrollbar-width: thin;
+  scrollbar-width: thin;
+  -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
+  scrollbar-color: var(--accent) var(--primaryTrans);
 }
 
 *:focus, *:active {
   outline: none !important;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primaryTrans);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 20px;
+  border: 2px solid var(--primaryTrans);
 }
 
 html,
@@ -129,6 +152,7 @@ div.logoSection {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-items: flex-start;
   width: 80%;
   min-width: 250px;
   max-width: 400px;
@@ -156,7 +180,11 @@ img#nav-logo {
 
 p#web-name {
   width: auto;
+  display: flex;
+  align-self: center;
+  justify-self: center;
   font-family: PoppinsSemi;
+  font-weight: bolder;
   font-size: 1.2rem;
   line-height: 20px;
   color: var(--link);
@@ -183,16 +211,24 @@ div#nav {
   justify-content: space-evenly;
 }
 
+div#nav * {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
 div#nav a.nav-main {
   width: auto;
   place-items: center;
   display: flex;
   position: relative;
   cursor: pointer;
+  margin-bottom: 0px;
+  text-decoration: none;
 }
 
 div#nav a.nav-main:hover {
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 div#bottom div#contacts {
@@ -221,12 +257,12 @@ a.icons svg {
 a.nav-main div.underline {
   width: 50%;
   height: 100%;
-  padding: 10px;
+  padding: 13px;
   position: absolute;
   top: 0;
   align-self: center;
   right: 20%;
-  border-bottom: 2px solid var(--link);
+  border-bottom: 3px solid var(--link);
 }
 
 a.nav-main p#nav-text {
@@ -242,6 +278,7 @@ a.nav-main p#nav-text.active {
 }
 
 div#nav a.login {
+  text-align: center;
   background-color: transparent;
   border: 2px solid var(--link);
   padding-inline: 15px;
@@ -260,6 +297,31 @@ div#nav a.login:hover {
   box-shadow: 0px 1px 8px var(--accent);
 }
 
+div#nav button.logout {
+  border: none;
+  color: var(--link);
+  padding: 2px;
+  padding-inline: 15px;
+  outline: none;
+  display: flex;
+  width: 120px;
+  letter-spacing: 1px;
+  font-weight: bolder;
+  place-self: center;
+  align-self: center;
+  font-family: PoppinsSemi;
+  margin: 0;
+  text-align: center;
+  place-content: center;
+  background: transparent;
+}
+
+div#nav button.logout:hover {
+  background: red;
+  color: white;
+  border-radius: 20px;
+  transform: scale(105%);
+}
 
 div#back-button {
   position: absolute;
@@ -335,6 +397,29 @@ span.bold {
   font-family: PoppinsSemi;
 }
 
+.spinner-container {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  background: var(--accentTrans);
+  border-radius: 100%;
+  align-self: flex-start;
+  margin-right: 4px;
+}
+
+.spinner {
+  width: 25px;
+  height: 25px;
+  align-self: center;
+  border: 4px solid transparent;
+  border-left: 4px dotted var(--link);
+  border-top: 4px dotted var(--link);
+  border-radius: 50%;
+  animation: spin 600ms linear 100ms infinite alternate forwards;
+  animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
 footer {
   width: 100%;
@@ -522,4 +607,175 @@ section#newsletter {
 
 .newsletter-form button:hover {
   background: var(--highlight);
+}
+
+.newsletter-form button:disabled {
+  background: rgb(231, 231, 231);
+  color: grey;
+  cursor: not-allowed;
+}
+
+.alert-message {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  display: none;
+  flex: 1;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px) brightness(80%);
+  justify-content: center;
+  align-items: center;
+}
+
+.alert-message .alert-div {
+  width: 92%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  padding-top: 30px;
+  background: rgba(255, 255, 255, 0.99);
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
+  gap: 10px;
+}
+
+.alert-message .alert-icon svg {
+  fill: rgb(255, 100, 0);
+  width: 50px;
+  height: 50px;
+  fill-opacity: 0.6;
+}
+
+.alert-title {
+  font-weight: bolder;
+  font-family: PoppinsMed;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.alert-message .alert-text {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: left;
+  color: black;
+  font-family: PoppinsLight;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.alert-message .alert-text span {
+  min-width: 100%;
+  min-height: 10px;
+}
+
+.alert-message .button-parents {
+  width: 100%;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.alert-message .alert-button {
+  width: min(100%, 160px);
+  background-color: var(--link);
+  padding: 10px;
+  border-radius: 20px;
+  color: white;
+  border: none;
+  font-weight: bolder;
+  outline: none;
+  cursor: pointer;
+  opacity: .76;
+}
+
+.alert-message i:first-child {
+  font-size: 2.5rem;
+  color: black;
+}
+
+.alert-message i:first-child.text-warning {
+  color: orange;
+}
+
+.alert-message i:first-child.text-success {
+  color: green;
+}
+
+.alert-message i:first-child.text-danger {
+  color: red;
+}
+
+.alert-message .alert-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.alert-message i:first-child.fs-2 {
+  font-size: 3rem;
+}
+
+.alert-message .alert-button.secondary {
+  background: transparent;
+  border: 2px solid var(--link);
+  color: var(--link);
+}
+
+
+.alert-button:hover, .alert-button:active {
+  opacity: 1;
+}
+
+.alert-message .alert-button.secondary:hover {
+  background: var(--link);
+  color: white;
+}
+
+
+.alert-message.shop .alert-button, .alert-message.shop .alert-title {
+  display: none;
+}
+
+.alert-message.shop {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  display: none;
+  flex: 1;
+  background: none;
+  justify-content: center;
+  padding-bottom: 30vh;
+  align-items: flex-end;
+  backdrop-filter: none;
+}
+
+.alert-message.shop .alert-div {
+  background: transparent;
+}
+
+.alert-message.shop .alert-text {
+  width: max-content;
+  max-width: 400px;
+  text-align: center;
+  padding: 8px;
+  padding-inline: 18px;
+  background-color: rgba(25, 25, 25, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 0.5px solid rgba(176, 172, 172, 0.3);
+  color: white;
+  border-radius: 18px;
 }

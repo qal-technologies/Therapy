@@ -1,7 +1,7 @@
 const faq = {
 
     answer1: [
-        { question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation — raw, compassionate, and transformative — designed to help you reconnect with your inner truth." },
+        { question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation, raw, compassionate, and transformative, designed to help you reconnect with your inner truth." },
         {
             question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
         },
@@ -18,12 +18,12 @@ const faq = {
             answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
         },
         {
-            question: "Why do you accept gift cards as a payment method?", answer: "Gift cards allow fans from all over the world — regardless of country or banking restrictions — to easily and securely support their healing journey. They also help us confirm your place faster and securely."
+            question: "What is a Paysafecard and how do I pay with it?", answer: "A Paysafecard is like cash in the form of a receipt.<br/>You don’t need a bank account, credit card, or computer knowledge to use it. This is how it works, step by step:<p><b>Step 1: Buy a Paysafecard</b><br/>Go to a supermarket, petrol station, or kiosk near you. Look for the Paysafecard logo. At the counter, ask for a Paysafecard of the amount you need (for example: 50€, 100€, etc.).</p><p><b>Step 2: Get Your Secure Code</b><br/>The cashier will give you a small receipt. On it, you will see a 16-digit number (this is your secret code).<br/>Keep it safe,it works just like cash.</p><p><b>Step 3: Pay Online with Your Code</b><br/>When you come back to this website to pay, you will see a box that says:<br/>“Enter your Paysafecard code.”<br/>Type in the 16-digit number from your receipt.</p><p><b>Step 4: Confirm Payment</b><br/>After typing the number, simply press “Pay Now with Paysafecard.”<br/>Your payment is confirmed instantly.<br/>No personal details, no bank needed.</p><p><b>Important Tips:</b><br/>Think of the Paysafecard like using cash,safe, simple, and private.<br/> If the amount is bigger than one card, you can add more than one code until the full payment is covered.<br/>Always keep your receipt safe until payment is completed.</p>"
         }
     ],
     answer2: [
         {
-            question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session — whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
+            question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session, whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
         },
         {
             question: "What is the difference between a virtual and in-person session?", answer: "Virtual sessions happen securely online (video call) and are just as personal and transformative. In-person sessions take place in a private, serene setting in Monaco or Paris, allowing for deeper connection, presence, and healing energy."
@@ -32,7 +32,7 @@ const faq = {
             question: "Are the sessions confidential?", answer: "Absolutely. Every conversation with Charlotte is completely private, sacred, and protected. Your story, emotions, and healing remain between you and her alone."
         },
         {
-            question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards,debit cards and gift cards, bank transfer, and PayPal to ensure flexibility and security."
+            question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards, debit cards and paysafecard 16 digit prepaid codes to ensure flexibility and security."
         },
         {
             question: "What happens after I make a payment?",
@@ -151,7 +151,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     a.style.transform = "rotate(0deg)";
                 });
 
-                lower.style.maxHeight = "300px";
+                lower.style.maxHeight = "1000px";
                 arrow.style.transform = "rotate(90deg)";
             }
         });

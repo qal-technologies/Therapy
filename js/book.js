@@ -1,5 +1,8 @@
-const waitlist = false;
+import handleAlert, { handleRedirect } from './general.js';
+import { handleAuthStateChange } from './auth.js';
+import { getUserData } from './database.js';
 
+let waitlist = false;
 const TOPICS_DATA = {
   virtual: {
     name: "VIRTUAL SESSION",
@@ -21,10 +24,10 @@ const TOPICS_DATA = {
         type: "input",
       }
     ], bonus: [
-      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
-      "BONUS! Exclusive discounts from event sponsors",
+      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+      "BONUS! Exclusive discounts from session sponsors",
       "5+ hours of live online content",
-      "Event recordings and additional resources",
+      "Session recordings and additional resources",
       "Guided workshops, live polling, and more for interactive learning",
       "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
     ]
@@ -41,7 +44,7 @@ const TOPICS_DATA = {
         type: "input"
       },
       {
-        question: "Would prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
+        question: "Would you prefer Charlotte to gently guide the session, or would you like space to speak freely from the start?",
         type: "button",
         options: ["YES", "NO"]
       },
@@ -113,10 +116,9 @@ const DOM = {
   bonus: document.querySelector("div#message.bonus"),
   formGroup: document.querySelector(".form-container div.lower"),
   registerForm: document.querySelector(".form-container#register-form"),
-acceptRadio:document.getElementById('accept'),
+  acceptRadio: document.getElementById('accept'),
   proceed: document.querySelector('div#checkout button'),
 };
-
 
 const state = {
   selectedTopic: null,
@@ -159,6 +161,14 @@ function initDropdown(formElement) {
   DOM.chevron = formElement.querySelector('.chevron');
   DOM.formGroup = formElement.querySelector(".form-container .lower");
 
+  if (DOM.acceptRadio) {
+    DOM.acceptRadio.checked = true;
+    DOM.acceptRadio.disabled = true;
+  }
+
+  if (DOM.proceed) {
+    DOM.proceed.disabled = true;
+  }
 
   if (DOM.dropdownHeader) {
     DOM.dropdownHeader.addEventListener('click', toggleDropdown);
@@ -280,7 +290,6 @@ function nextQuestion(index) {
 }
 
 function showCompletion() {
-
   const session = state.selectedTopic;
   const topic = TOPICS_DATA[session];
 
@@ -295,56 +304,50 @@ function showCompletion() {
     </div>
   `;
 
-  // Update session info
   updateSessionInfo(topic);
-
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
 
   state.completed = true;
 
-  // Get the radio button and proceed button
-DOM.acceptRadio.disabled = false;
-  const proceedButton = DOM.proceed;
+  // Unlock terms checkbox
+  DOM.acceptRadio.disabled = false;
 
-  // Initially disable the proceed button
-  proceedButton.disabled = true;
+  // Sync proceed button to checkbox state
+  DOM.proceed.disabled = !DOM.acceptRadio.checked;
 
-  // Only enable the radio button interaction after completion
-  if (state.completed) {
-    DOM.acceptRadio.addEventListener('change', () => {
-      proceedButton.disabled = !DOM.acceptRadio.checked;
-    });
+  // Make sure to add the listener only once
+  DOM.acceptRadio.addEventListener('change', () => {
+    DOM.proceed.disabled = !DOM.acceptRadio.checked;
+  });
 
-    // Handle proceed button click
-    proceedButton.addEventListener('click', () => {
-      if (!DOM.acceptRadio.checked) return;
+  // Proceed click
+  DOM.proceed.addEventListener('click', () => {
+    if (!DOM.acceptRadio.checked) return;
 
-      const language = navigator.language;
+    const language = navigator.language;
+    const transactionId = `TXN-${Math.random()
+      .toString(36)
+      .substring(2, 10)
+      .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
 
-      const transactionId = `TXN-${Math.random()
-        .toString(36)
-        .substring(2, 10)
-        .toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+    const session = TOPICS_DATA[state.selectedTopic];
+    const details = {
+      type: "session",
+      description: session.description,
+      title: session.name,
+      price: parseFloat(session.price.replace(',', '')),
+      date: new Date(),
+      transactionId: transactionId,
+    };
 
-      const session = TOPICS_DATA[state.selectedTopic];
-      const details = {
-        type: "session",
-        description: session.description,
-        title: session.name,
-        price: parseFloat(session.price.replace(',', '')),
-        date: new Date(),
-        transactionId: transactionId,
-      };
+    const params = new URLSearchParams({
+      type: "session",
+      details: JSON.stringify(details)
+    }).toString();
 
-      const params = new URLSearchParams({
-        type: "session",
-        details: JSON.stringify(details)
-      }).toString();
-
-      window.location.href = `/html/main/Payment.html?${params}`;
-    });
-  }
+    window.location.href = `/html/main/Payment.html?${params}`;
+  });
 }
 
 
@@ -440,77 +443,74 @@ function init() {
   initDropdown(DOM.registerForm);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const user = true;
+window.addEventListener('DOMContentLoaded', async () => {
+
+  await handleAuthStateChange(async (user) => {
+    if (user) {
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
 
-if(DOM.acceptRadio){
- DOM.acceptRadio.checked = false;
-DOM.acceptRadio.disabled = true
-}
-
   const urlParams = new URLSearchParams(window.location.search);
+      const userdata = await getUserData(user.uid);
+      waitlist = userdata.waitlist;
 
-  init();
+      init();
+      if (urlParams.get('type')) {
+        try {
+          const type = urlParams.get('type');
+          const details = JSON.parse(urlParams.get('details'));
 
-  if (user) {
-    if (urlParams.get('type')) {
-      try {
-        const type = urlParams.get('type');
-        const details = JSON.parse(urlParams.get('details'));
+          const topic = details.type;
 
-        const topic = details.type;
+          if (type == "session") {
+            selectTopic(topic);
+          }
 
-        if (type == "session") {
-          selectTopic(topic);
-        }
-      } catch (error) {
-        console.error('Error parsing booking details:', error);
-      }
-    }
+          const audioMessage2 = document.getElementById('audio-message2');
+          if (audioMessage2) {
+            audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
-    const audioMessage2 = document.getElementById('audio-message2');
-    if (audioMessage2) {
-      audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
-
-      const listenBTN = document.getElementById('play2');
-      if (listenBTN) {
-        listenBTN.addEventListener('click', (e) => {
-          e.preventDefault();
-          try {
-            if (audioMessage2.paused) {
-              audioMessage2.play()
-                .then(() => {
-                  listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+            const listenBTN = document.getElementById('play2');
+            if (listenBTN) {
+              listenBTN.addEventListener('click', (e) => {
+                e.preventDefault();
+                try {
+                  if (audioMessage2.paused) {
+                    audioMessage2.play()
+                      .then(() => {
+                        listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
                     <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
                   </svg>`;
-                })
-                .catch(error => {
-                  console.error('Audio playback failed:', error);
-                  alert('Audio playback failed. Please try again.');
-                });
-            } else {
-              audioMessage2.pause();
-              listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                      })
+                      .catch(error => {
+                        console.error('Audio playback failed:', error);
+                        alert('Audio playback failed. Please try again.');
+                      });
+                  } else {
+                    audioMessage2.pause();
+                    listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
                 <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
               </svg>`;
-            }
-          } catch (error) {
-            console.error('Audio error:', error);
-          }
-        });
+                  }
+                } catch (error) {
+                  console.error('Audio error:', error);
+                }
+              });
 
-        audioMessage2.addEventListener("ended", () => {
-          listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+              audioMessage2.addEventListener("ended", () => {
+                listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
             <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/>
           </svg>`;
-        });
+              });
+            }
+          }
+        } catch (error) {
+          console.error('Error parsing booking details:', error);
+        }
       }
+    } else {
+      handleAlert("To book a session, you'll need to log in first. If you dont't have an account yet, you can create one in a few steps. <br/> <br/> This helps us know it's really you and keeps your booking safe.", "blur", true, "🔐 <br/> Please Log In or Register", true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register") }]);
     }
-  } else {
-    alert('You are not logged in, Please Sign Up!');
-    window.location.href = '/html/regs/Signup.html';
-  }
+  });
 });
 
