@@ -329,7 +329,7 @@ Select Book Format
 async function handleAddToCartClick(e) {
   const user = await getCurrentUser();
   if (!user) {
-    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; } }]);
+    handleAlert("To add this book to your cart, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => {handleRedirect("/html/regs/Signup.html?type=login"); } }, { text: "Register", onClick: () => {handleRedirect("/html/regs/Signup.html?type=register"); } }]);
     return;
   }
 

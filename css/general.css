@@ -319,6 +319,7 @@ div#nav button.logout {
 div#nav button.logout:hover {
   background: red;
   color: white;
+  border-radius: 20px;
   transform: scale(105%);
 }
 

@@ -246,7 +246,8 @@ h2 {
     display: block;
     font-size: 13px;
     font-family: PoppinsLight;
-    color: #666;
+    font-weight: bolder;
+    color: #616161;
 }
 
 .cant-find {

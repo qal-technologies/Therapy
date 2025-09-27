@@ -32,7 +32,7 @@ function renderUserProfile(user, payments, cartNumber) {
   profileAvatar.style.backgroundColor = 'var(--link)';
 
   //for count:
-  const cartCount = document.querySelectorAll("span.cart-count").forEach(count => {
+  const cartCount = document.querySelectorAll("span.cart-count")?.forEach(count => {
     count.innerHTML = cartNumber;
   });
 
