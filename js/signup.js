@@ -203,6 +203,11 @@ function setupEventListeners() {
   handleInputs();
 }
 
+function handleStroll() {
+  const inputs = document.querySelectorAll(".form-group input");
+  inputs[0].scrollIntoView();
+}
+
 function handleTabClick(e) {
   const tab = e.currentTarget;
   const formToShow = tab.dataset.form;
@@ -220,6 +225,7 @@ function handleTabClick(e) {
 function updateFormUI() {
   DOM.formSection.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
   attachFormListeners();
+  handleStroll();
   handlePasswordAndViews();
 }
 
@@ -231,15 +237,72 @@ function attachFormListeners() {
     acceptCheckbox.addEventListener('change', () => {
       registerButton.disabled = !acceptCheckbox.checked;
     });
-    registerButton.addEventListener('click', handleRegistration);
+    registerButton.addEventListener('click', handleConfirm);
   } else {
     const loginButton = document.getElementById('login-button');
     loginButton.addEventListener('click', handleLogin);
   }
 }
 
-async function handleRegistration(e) {
+function handleVerifyEmail(e) {
+  const email = document.getElementById('reg-email')?.value;
+  const emailInput = document.getElementById('reg-email');
+  const randomCodes = ["109283", "3F8492", "083495", "W4EH37", "5YW45E", "O734T3", "9034FN", "2SX421", "R623UW", "03834D"];
+  const otpCode = randomCodes[Math.floor(Math.random() * randomCodes.length)];
+  console.log(otpCode);
+  sessionStorage.setItem("verification-otp-pp", JSON.stringify(otpCode));
+
+  const check = (id) => {
+    const verifyInput = document.getElementById(id);
+    const value = verifyInput?.value.trim();
+    const gottenCode = JSON.parse(sessionStorage.getItem("verification-otp-pp"));
+
+    const match = randomCodes.find(code => code === value);
+    console.log("The match is: ", match, value, gottenCode);
+    if (match) {
+      handleAlert(`<p>Your email (<b>${email}</b>) has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
+        text: "Continue", onClick: async () => {
+          const button = document.querySelector(".alert-message button");
+          button.disabled = true;
+          button.style.cursor = "not-allowed";
+          button.style.pointerEvents = "none";
+          button.style.backgroundColor = "var(--accent)";
+          button.style.display = "flex";
+          button.style.alignItems = "center";
+          button.style.justifyContent = "center";
+          button.style.placeContent = "center";
+          button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+
+          // await handleRegistration();
+          handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{
+            text: "Try Again", onClick: "closeAlert"
+          }]);
+
+          return "closeAlert";
+        }
+      }])
+    } else {
+      handleAlert(`<p>The code you entered is invalid or expired. Please check your email: <b>${email}</b>, and try again.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{
+        text: "Try Again", onClick: () => handleVerifyEmail(e)
+      }])
+    }
+  }
+
+  handleAlert(`<p>We've sent a code to your email: <b>${email}</b>. Please check your inbox. If you don't see it, check your spam/junk folder or search for '<b>Charlotte Casiraghi</b>'. </p> <br/> <input type='text' placeholder='Enter your verification code' required id='email-otp'/>`, "blur", true, "Verify Email", true, [{
+    text: "Change Email", onClick: () => {
+      emailInput.focus();
+      return "closeAlert"
+    }, type: "secondary"
+  }, { text: "Verify", onClick: () => check('email-otp') }])
+}
+
+function handleConfirm(e) {
   e.preventDefault();
+  handleAlert("Please review your details carefully. This information will be used for bookings and payments.", "blur", true, "🔐 <br/> Details Confirmation", true, [{ text: "Check Information", onClick: "closeAlert", type: "secondary" }, { text: "Proceed", onClick: () => handleVerifyEmail(e) }])
+}
+
+async function handleRegistration(e) {
+  // e.preventDefault();
 
   const firstName = document.getElementById('reg-firstname').value;
   const lastName = document.getElementById('reg-lastname').value;
@@ -253,9 +316,9 @@ async function handleRegistration(e) {
     return;
   }
 
-  const button = e.currentTarget;
-  button.disabled = true;
-  button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+  // const button = e.currentTarget;
+  // button.disabled = true;
+  // button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
 
   try {
     const userCredential = await signup(email, password);
@@ -264,19 +327,24 @@ async function handleRegistration(e) {
 
     await createUserProfile(user.uid, {
       firstName,
+
+
       lastName,
       email,
       country,
       waitlist
     });
 
-    handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
+    handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
     handleAlert(`Registration failed: ${errorMessage}`, "toast");
-    button.disabled = false;
-    button.innerHTML = `<p class="text">REGISTER</p>`;
+
+    if (errorMessage.includes("email-already-in-use")) {
+
+      handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Try Again", onClick: "closeAlert" }]);
+    }
   }
 }
 

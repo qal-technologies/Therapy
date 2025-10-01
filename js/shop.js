@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartCount = document.querySelector(".details-top span.cart-count");
     if (!user) {
       const bookButtons = document.querySelectorAll("#preview button.get-copy");
-      bookButtons?.forEach(button, button.addEventListener("click", showDetailsModal));
+      bookButtons?.forEach(button => button.addEventListener("click", showDetailsModal));
       cartCount.textContent = 0;
     }
     

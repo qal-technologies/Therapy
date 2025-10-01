@@ -91,6 +91,7 @@ div#body {
   overflow: hidden;
   overflow-y: auto;
   height: 100%;
+  top:0 !important;
   position: relative;
   z-index: -99999999;
   user-select: none;
@@ -704,15 +705,15 @@ section#newsletter {
 }
 
 .alert-message i:first-child.text-warning {
-  color: orange;
+  color: rgb(255, 171, 14);
 }
 
 .alert-message i:first-child.text-success {
-  color: green;
+  color: rgb(0, 182, 0);
 }
 
 .alert-message i:first-child.text-danger {
-  color: red;
+  color: rgb(255, 11, 11);
 }
 
 .alert-message .alert-button:disabled {
@@ -778,4 +779,40 @@ section#newsletter {
   border: 0.5px solid rgba(176, 172, 172, 0.3);
   color: white;
   border-radius: 18px;
+}
+
+.goog-logo-link {
+  display: none !important;
+}
+
+.goog-te-gadget {
+  font-size: 10px !important;
+}
+
+.goog-te-gadget span {
+  display: none !important;
+}
+
+#google_translate_element select {
+  width: 90%;
+  max-width: 400px;
+  background: var(--link);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Dropdown options */
+#google_translate_element select option {
+  background: red;
+  color: black;
+}
+
+div.skiptranslate {
+  background: transparent;
+  display: none !important;
 }

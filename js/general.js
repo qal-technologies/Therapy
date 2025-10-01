@@ -124,10 +124,55 @@ window.onload = async () => {
     })
     initTicker();
 
+    function handleTranslate() {
+        // load Google Translate script
+        function loadGoogleTranslate() {
+            var gtScript = document.createElement('script');
+            gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
+            document.head.appendChild(gtScript);
+            if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+                const meta = document.createElement("meta");
+                meta.name = "google";
+                meta.content = "notranslate";
+                document.head.appendChild(meta);
+            }
+        }
+
+        // Google calls this when script loads
+        window.initTranslate = function () {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+
+            autoTranslate();
+        };
+
+        function autoTranslate() {
+            let userLang = navigator.language || navigator.userLanguage;
+            userLang = userLang.split("-")[0]; 
+            console.log(userLang)
+
+            if (userLang === "en") return;
+
+            const interval = setInterval(() => {
+                let select = document.querySelector(".goog-te-combo");
+                if (select) {
+                    select.value = userLang;
+                    select.dispatchEvent(new Event("change"));
+                    clearInterval(interval);
+                }
+            }, 500);
+        }
+
+        loadGoogleTranslate();
+    }
+
+
     await handleAuthStateChange(async user => {
         const actionTab = document.querySelectorAll("a.login");
         const navDiv = document.querySelector("header#header div#nav");
-
+        handleTranslate();
 
         if (navDiv && user) {
             const logoutBTN = document.createElement("button");
