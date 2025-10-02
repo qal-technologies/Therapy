@@ -28,7 +28,7 @@ const TEMPLATE = {
             <a class="forgot-password" href="/html/regs/Forget.html">Forgot Password?</a>
           </div>
           <div id="checkout">
-            <button id="login-button" disabled>
+            <button id="login-button" type="submit" disabled>
               <p class="text">LOGIN</p>
             </button>
           </div>
@@ -37,22 +37,22 @@ const TEMPLATE = {
   `,
   register: `
   <div class="form-container leftIntro active" id="register-form">
-          <div class="register-upper upper">
-            <div class="header register-header">
-              <h1>Register</h1>
-              <p>
-                Welcome! complete the form below to begin
-              </p>
-              <p>
-                Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself
-              </p>
+    <div class="register-upper upper">
+      <div class="header register-header">
+        <h1>Register</h1>
+        <p>
+          Welcome! complete the form below to begin
+        </p>
+        <p>
+          Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself
+        </p>
+      </div>
 
-            </div>
-
-            <form class="bottom" id="register-form-element">
+      <form class="bottom" id="register-form-element">
         <div class="form-group">
           <label for="reg-email">Email *</label>
           <input type="email" id="reg-email" required />
+          <p class="email-error password-error" id="email-error" style="display:none; margin-top:6px;"></p>
         </div>
 
         <div class="form-group">
@@ -100,7 +100,7 @@ const TEMPLATE = {
             </p>
           </div>
           <div id="checkout">
-            <button title="Register Account" id="register-button" disabled>
+            <button title="Register Account" id="register-button" type="submit" disabled>
               <p class="text">REGISTER</p>
             </button>
           </div>
@@ -111,198 +111,361 @@ const TEMPLATE = {
 };
 
 const DOM = {
-  tabs: document.querySelectorAll('.tab'),
-  formSection: document.querySelector('.form-section'),
-  registerForm: document.getElementById('register-form'),
+  tabs: () => document.querySelectorAll('.tab'),
+  formSection: () => document.querySelector('.form-section'),
 };
 
 const state = {
   currentForm: 'register',
 };
 
+function validateEmailValue(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email.trim());
+}
+
 function handlePasswordAndViews() {
+  const btns = document.querySelectorAll(".toggle-password");
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const inputId = btn.getAttribute("data-target");
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector("i");
+      if (!input) return;
+      if (input.type === "password") {
+        input.type = "text";
+        icon?.classList.remove("bi-eye");
+        icon?.classList.add("bi-eye-slash");
+      } else {
+        input.type = "password";
+        icon?.classList.remove("bi-eye-slash");
+        icon?.classList.add("bi-eye");
+      }
+    });
+  });
+
   const regPassword = document.getElementById("reg-password");
   const confirmPassword = document.getElementById("confirm-reg-password");
   const errorMsg = document.getElementById("password-error");
-  const registerButton = document.getElementById("register-button");
-
-  if (document.querySelectorAll(".toggle-password")) {
-    const btns = document.querySelectorAll(".toggle-password");
-    btns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const inputId = btn.getAttribute("data-target");
-        const input = document.getElementById(inputId);
-        const icon = btn.querySelector("i");
-
-        if (input.type === "password") {
-          input.type = "text";
-          icon.classList.remove("bi-eye");
-          icon.classList.add("bi-eye-slash");
-        } else {
-          input.type = "password";
-          icon.classList.remove("bi-eye-slash");
-          icon.classList.add("bi-eye");
-        }
-      });
-    });
-  }
 
   if (regPassword && confirmPassword) {
-    confirmPassword.addEventListener("input", () => {
+    const validatePasswords = () => {
       const pwd = regPassword.value.trim();
       const confirm = confirmPassword.value.trim();
+
       if (confirm.length >= 3) {
         if (pwd !== confirm) {
           errorMsg.textContent = "Passwords do not match";
           confirmPassword.style.borderColor = "red";
           errorMsg.classList.add("active");
-          registerButton.disabled = true;
         } else {
           errorMsg.textContent = "";
           confirmPassword.style.borderColor = "var(--accent)";
           errorMsg.classList.remove("active");
-          registerButton.disabled = false;
         }
       } else {
         errorMsg.textContent = "";
         confirmPassword.style.borderColor = "var(--accent)";
         errorMsg.classList.remove("active");
-        registerButton.disabled = true;
       }
-    });
+      updateFormState(); 
+    };
 
-    regPassword.addEventListener("input", () => {
-      if (confirmPassword.value.length >= 3) {
-        confirmPassword.dispatchEvent(new Event("input"));
-      }
-    });
+    confirmPassword.addEventListener("input", validatePasswords);
+    regPassword.addEventListener("input", validatePasswords);
   }
 }
 
-function handleInputs() {
-  const inputs = document.querySelectorAll(".form-group input");
-  const proceedButton = document.querySelector("div#checkout button");
-  const regPassword = document.getElementById("reg-password");
-  const confirmPassword = document.getElementById("confirm-reg-password");
-
-  if (!inputs || !proceedButton) return;
-
-  const check = Array.from(inputs).every(input => input.value.trim() !== "");
-  const match = regPassword && confirmPassword ? regPassword.value.trim() == confirmPassword.value.trim() : check;
-  proceedButton.disabled = !check || !match;
-
-  inputs.forEach(input => {
-    input.addEventListener("input", handleInputs)
-  });
-}
-
 function setupEventListeners() {
-  DOM.tabs.forEach(tab => {
-    tab.addEventListener('click', handleTabClick);
-  });
-  handleInputs();
+  const tabs = DOM.tabs();
+  if (tabs) {
+    tabs.forEach(tab => {
+      tab.addEventListener('click', handleTabClick);
+    });
+  }
 }
 
 function handleStroll() {
   const inputs = document.querySelectorAll(".form-group input");
-  inputs[0].scrollIntoView();
-}
-
-function handleTabClick(e) {
-  const tab = e.currentTarget;
-  const formToShow = tab.dataset.form;
-
-  if (tab.classList.contains('active') || formToShow === state.currentForm) return;
-
-  document.querySelector('.tab.active').classList.remove('active');
-  tab.classList.add('active');
-  state.currentForm = formToShow;
-
-  updateFormUI();
-  handleInputs();
+  if (inputs && inputs[0]) inputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function updateFormUI() {
-  DOM.formSection.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
+  const container = DOM.formSection();
+  if (!container) return;
+
+  container.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
   attachFormListeners();
   handleStroll();
   handlePasswordAndViews();
+  updateFormState();
 }
 
+function updateFormState() {
+  if (state.currentForm === 'register') {
+    const requiredIds = ['reg-email', 'reg-firstname', 'reg-lastname', 'reg-country', 'reg-password', 'confirm-reg-password'];
+    const allFilled = requiredIds.every(id => {
+      const el = document.getElementById(id);
+      return el && el.value.trim() !== '';
+    });
+
+    const regEmail = document.getElementById('reg-email');
+    const emailValid = regEmail ? validateEmailValue(regEmail.value) : false;
+
+    const regPassword = document.getElementById('reg-password');
+    const confirmPassword = document.getElementById('confirm-reg-password');
+
+    const passwordsMatch = regPassword && confirmPassword ? (regPassword.value.trim() === confirmPassword.value.trim() && regPassword.value.trim().length >= 3) : false;
+
+    const accept = document.getElementById('accept');
+    const accepted = accept ? accept.checked : false;
+
+    const registerButton = document.getElementById('register-button');
+    if (registerButton) registerButton.disabled = !(allFilled && passwordsMatch && emailValid && accepted);
+  } else {
+    const loginEmail = document.getElementById('login-email');
+    const loginPassword = document.getElementById('login-password');
+    const loginButton = document.getElementById('login-button');
+
+    const ok = loginEmail && loginPassword && loginEmail.value.trim() !== "" && loginPassword.value.trim() !== "";
+    if (loginButton) loginButton.disabled = !ok;
+  }
+}
 
 function attachFormListeners() {
   if (state.currentForm === 'register') {
+    const registerForm = document.getElementById('register-form-element');
     const registerButton = document.getElementById('register-button');
     const acceptCheckbox = document.getElementById('accept');
-    acceptCheckbox.addEventListener('change', () => {
-      registerButton.disabled = !acceptCheckbox.checked;
+
+    if (registerForm) {
+      registerForm.addEventListener('submit', handleConfirm);
+    }
+
+    if (acceptCheckbox) {
+      acceptCheckbox.addEventListener('change', updateFormState);
+    }
+
+    const inputs = registerForm ? registerForm.querySelectorAll('input') : [];
+    inputs.forEach(inp => {
+      inp.addEventListener('input', updateFormState);
     });
-    registerButton.addEventListener('click', handleConfirm);
+
+    const regEmail = document.getElementById('reg-email');
+    const emailError = document.getElementById('email-error');
+    if (regEmail) {
+      regEmail.addEventListener('blur', () => {
+        const val = regEmail.value.trim();
+        if (val === "") {
+          emailError.textContent = "Email is required";
+          emailError.style.display = 'block';
+        } else if (!validateEmailValue(val)) {
+          emailError.textContent = "Please enter a valid email address";
+          emailError.style.display = 'block';
+        } else {
+          emailError.textContent = "";
+          emailError.style.display = 'none';
+        }
+        updateFormState();
+      });
+
+      regEmail.addEventListener('input', () => {
+        if (emailError && emailError.style.display === 'block') {
+          const val = regEmail.value.trim();
+          if (validateEmailValue(val)) {
+            emailError.textContent = "";
+            emailError.style.display = 'none';
+          }
+        }
+        updateFormState();
+      });
+    }
+
+    if (registerButton) {
+      registerButton.addEventListener('click', (ev) => {
+        if (registerButton.disabled) {
+          ev.preventDefault();
+          showRegisterInlineErrors();
+        }
+      });
+    }
+
   } else {
-    const loginButton = document.getElementById('login-button');
-    loginButton.addEventListener('click', handleLogin);
+    const loginForm = document.getElementById('login-form-element');
+    if (loginForm) {
+      loginForm.addEventListener('submit', handleLogin);
+      const inputs = loginForm.querySelectorAll('input');
+      inputs.forEach(inp => inp.addEventListener('input', updateFormState));
+    }
   }
 }
+
+function showRegisterInlineErrors() {
+  const missing = [];
+  const requiredIds = [
+    { id: 'reg-email', label: 'Email' },
+    { id: 'reg-firstname', label: 'First Name' },
+    { id: 'reg-lastname', label: 'Last Name' },
+    { id: 'reg-country', label: 'Country' },
+    { id: 'reg-password', label: 'Password' },
+    { id: 'confirm-reg-password', label: 'Confirm Password' }
+  ];
+
+  requiredIds.forEach(r => {
+    const el = document.getElementById(r.id);
+    if (!el || el.value.trim() === '') missing.push(r.label);
+  });
+
+  const regEmail = document.getElementById('reg-email');
+  const emailError = document.getElementById('email-error');
+  if (regEmail && !validateEmailValue(regEmail.value)) {
+    emailError.textContent = "Please enter a valid email address";
+    emailError.style.display = 'block';
+    if (!missing.includes('Email')) missing.push('Email');
+  }
+
+  const regPassword = document.getElementById('reg-password');
+  const confirmPassword = document.getElementById('confirm-reg-password');
+  const passwordError = document.getElementById('password-error');
+  if (regPassword && confirmPassword && regPassword.value.trim() !== confirmPassword.value.trim()) {
+    passwordError.textContent = "Passwords do not match";
+    passwordError.classList.add('active');
+    if (!missing.includes('Password')) missing.push('Password');
+  }
+
+  const accept = document.getElementById('accept');
+  if (accept && !accept.checked) {
+    missing.push('Accept Terms');
+  }
+
+  if (missing.length) {
+    handleAlert(`<p>Please fix the following before proceeding: <br/><b>${missing.join(', ')}</b></p>`, 'blur', true, '<i class="bi bi-exclamation-circle-fill text-danger fs-2"></i> <br/> Invalid Details', true, [
+      { text: "Ok", onClick: "closeAlert" }
+    ]);
+  }
+}
+
 
 function handleVerifyEmail(e) {
   const email = document.getElementById('reg-email')?.value;
   const emailInput = document.getElementById('reg-email');
+
   const randomCodes = ["109283", "3F8492", "083495", "W4EH37", "5YW45E", "O734T3", "9034FN", "2SX421", "R623UW", "03834D"];
   const otpCode = randomCodes[Math.floor(Math.random() * randomCodes.length)];
-  console.log(otpCode);
   sessionStorage.setItem("verification-otp-pp", JSON.stringify(otpCode));
+  console.log(otpCode);
 
-  const check = (id) => {
-    const verifyInput = document.getElementById(id);
+
+  const check = () => {
+    const verifyInput = document.getElementById('email-otp');
+    const errorDiv = document.querySelector(".alert-message .alert-error");
     const value = verifyInput?.value.trim();
     const gottenCode = JSON.parse(sessionStorage.getItem("verification-otp-pp"));
 
+    if (!value || value === "") {
+      if (errorDiv) {
+        errorDiv.innerHTML = "Input can't be empty!";
+        errorDiv.style.display = "flex";
+      }
+      verifyInput?.focus();
+      return false;
+    }
+
     const match = randomCodes.find(code => code === value);
-    console.log("The match is: ", match, value, gottenCode);
-    if (match) {
+
+    if (value === gottenCode || match) {
       handleAlert(`<p>Your email (<b>${email}</b>) has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
         text: "Continue", onClick: async () => {
-          const button = document.querySelector(".alert-message button");
-          button.disabled = true;
-          button.style.cursor = "not-allowed";
-          button.style.pointerEvents = "none";
-          button.style.backgroundColor = "var(--accent)";
-          button.style.display = "flex";
-          button.style.alignItems = "center";
-          button.style.justifyContent = "center";
-          button.style.placeContent = "center";
-          button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
 
-          // await handleRegistration();
-          handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{
-            text: "Try Again", onClick: "closeAlert"
-          }]);
-
-          return "closeAlert";
-        }
-      }])
+          handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+          // return "closeAlert";
+        }, loading: true,
+      }]);
+      return true;
     } else {
-      handleAlert(`<p>The code you entered is invalid or expired. Please check your email: <b>${email}</b>, and try again.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{
-        text: "Try Again", onClick: () => handleVerifyEmail(e)
-      }])
+      if (errorDiv) {
+        errorDiv.innerHTML = "The code you entered is invalid or expired. Please check your email and try again.";
+        errorDiv.style.display = "flex";
+      }
+      return false;
     }
   }
 
-  handleAlert(`<p>We've sent a code to your email: <b>${email}</b>. Please check your inbox. If you don't see it, check your spam/junk folder or search for '<b>Charlotte Casiraghi</b>'. </p> <br/> <input type='text' placeholder='Enter your verification code' required id='email-otp'/>`, "blur", true, "Verify Email", true, [{
-    text: "Change Email", onClick: () => {
-      emailInput.focus();
-      return "closeAlert"
-    }, type: "secondary"
-  }, { text: "Verify", onClick: () => check('email-otp') }])
+  const onResend = async () => {
+    const newOtp = randomCodes[Math.floor(Math.random() * randomCodes.length)];
+    sessionStorage.setItem("verification-otp-pp", JSON.stringify(newOtp));
+    console.log(newOtp);
+    handleVerifyEmail(e)
+    // await sendOTPToEmail(email, newOtp);
+    return true;
+  };
+
+  handleAlert(
+    `<p>We've sent a code to your email: <b>${email}</b>. Please check your inbox. If you don't see it, check your spam/junk folder or search for '<b>Charlotte Casiraghi</b>'.</p>`,
+    "blur",
+    true,
+    "Verify Email",
+    true,
+    [
+      {
+        text: "Change Email",
+        onClick: () => {
+          emailInput.focus();
+          return "closeAlert";
+        },
+        type: "secondary"
+      },
+      {
+        text: "Verify",
+        onClick: () => check(),
+        loading: true
+      }
+    ],
+    {
+      timer: {
+        duration: 60,
+        onResend
+      },
+      input: {
+        id: "email-otp",
+        type: "text",
+        placeholder: "Enter your verification code",
+        required: true
+      }
+    },
+    "row",
+    () => { },
+  );
+
+  setTimeout(() => {
+    const verifyInput = document.getElementById('email-otp');
+    const errorDiv = document.querySelector(".alert-message .alert-error");
+    verifyInput?.addEventListener("input", (ev) => {
+      if (errorDiv && ev.target.value.trim() !== "") {
+        errorDiv.innerHTML = "";
+        errorDiv.style.display = "none";
+      }
+    });
+  }, 50);
 }
 
 function handleConfirm(e) {
   e.preventDefault();
-  handleAlert("Please review your details carefully. This information will be used for bookings and payments.", "blur", true, "🔐 <br/> Details Confirmation", true, [{ text: "Check Information", onClick: "closeAlert", type: "secondary" }, { text: "Proceed", onClick: () => handleVerifyEmail(e) }])
+  updateFormState();
+
+  const registerButton = document.getElementById('register-button');
+  if (state.currentForm === 'register' && registerButton && registerButton.disabled) {
+    showRegisterInlineErrors();
+    return;
+  }
+
+  handleAlert("Please review your details carefully. This information will be used for bookings and payments.", "blur", true, "🔐 <br/> Details Confirmation", true, [
+    { text: "Check Information", onClick: "closeAlert", type: "secondary" },
+    { text: "Proceed", onClick: () => handleVerifyEmail(e), loading: true }
+  ]);
 }
 
-async function handleRegistration(e) {
-  // e.preventDefault();
+async function handleRegistration() {
 
   const firstName = document.getElementById('reg-firstname').value;
   const lastName = document.getElementById('reg-lastname').value;
@@ -316,10 +479,6 @@ async function handleRegistration(e) {
     return;
   }
 
-  // const button = e.currentTarget;
-  // button.disabled = true;
-  // button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
-
   try {
     const userCredential = await signup(email, password);
     const user = userCredential.user;
@@ -327,8 +486,6 @@ async function handleRegistration(e) {
 
     await createUserProfile(user.uid, {
       firstName,
-
-
       lastName,
       email,
       country,
@@ -354,18 +511,31 @@ async function handleLogin(e) {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
 
-  const button = e.currentTarget;
-  button.disabled = true;
-  button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+  const button = e.currentTarget?.querySelector ? e.currentTarget.querySelector('button[type="submit"]') : document.getElementById('login-button');
+  const btn = button || document.getElementById('login-button');
+
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+  }
 
   try {
     await login(email, password);
+
     handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
   } catch (error) {
     const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-    handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert" }]);
-    button.disabled = false;
-    button.innerHTML = `<p class="text">LOGIN</p>`;
+    if (errorMessage.includes("network-request-failed")) {
+      handleAlert("Network error. Please check your internet connection and try again.", "blur", true, "<i class='bi bi-wifi-off text-danger fs-2'></i> <br/> Network Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+    } else {
+      handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert" }]);
+    }
+    
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<p class="text">LOGIN</p>`;
+    }
+
     console.error("The error is: ", errorMessage);
   }
 }
@@ -385,18 +555,31 @@ async function init() {
   const formType = urlParams.get("type");
   if (formType) {
     state.currentForm = formType.toLowerCase();
-    const tabs = document.querySelectorAll(".tabs .tab");
+    const tabs = DOM.tabs();
     tabs.forEach(tab => {
-      tab.classList.remove("active");
+      tab.classList.remove('active');
       if (tab.dataset.form == formType) {
-        tab.classList.add("active")
+        tab.classList.add('active')
       };
     });
   }
 
   setupEventListeners();
   updateFormUI();
-  handleInputs();
+  updateFormState();
+}
+
+function handleTabClick(e) {
+  const tab = e.currentTarget;
+  const formToShow = tab.dataset.form;
+  if (!formToShow || tab.classList.contains('active') || formToShow === state.currentForm) return;
+
+  const activeTab = document.querySelector('.tab.active');
+  if (activeTab) activeTab.classList.remove('active');
+  tab.classList.add('active');
+  state.currentForm = formToShow;
+
+  updateFormUI();
 }
 
 window.addEventListener('DOMContentLoaded', init);

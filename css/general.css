@@ -43,6 +43,11 @@
   text-decoration: none;
   box-sizing: border-box;
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
+  font-display: swap;
+  /* font-size: clamp(12px, 2vw, 16px); */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
   transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
@@ -91,7 +96,7 @@ div#body {
   overflow: hidden;
   overflow-y: auto;
   height: 100%;
-  top:0 !important;
+  top: 0 !important;
   position: relative;
   z-index: -99999999;
   user-select: none;
@@ -695,8 +700,35 @@ section#newsletter {
   border: none;
   font-weight: bolder;
   outline: none;
+  display: flex;
+  text-align: center;
+  place-content: center;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   opacity: .76;
+}
+
+.alert-message .alert-error {
+  color: rgb(255, 0, 0);
+  font-size: 13px;
+  display: none;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  letter-spacing: 0.4px;
+  margin-top: 10px;
+  background: rgba(255, 230, 230, 0.8);
+  border: 1px solid rgba(255, 0, 0, 0.1);
+  font-family: PoppinsMed;
+  border-radius: 12px;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
+  height: max-content;
+  max-height: 200px;
 }
 
 .alert-message i:first-child {
@@ -741,6 +773,12 @@ section#newsletter {
   color: white;
 }
 
+.alert-message .alert-button:disabled {
+  background: rgb(230, 230, 230);
+  color: grey;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 
 .alert-message.shop .alert-button, .alert-message.shop .alert-title {
   display: none;
@@ -781,7 +819,7 @@ section#newsletter {
   border-radius: 18px;
 }
 
-.goog-logo-link {
+.alert-message .goog-logo-link {
   display: none !important;
 }
 
@@ -815,4 +853,9 @@ section#newsletter {
 div.skiptranslate {
   background: transparent;
   display: none !important;
+}
+
+* button {
+  -webkit-appearance: none;
+  appearance: none;
 }

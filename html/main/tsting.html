@@ -7,63 +7,20 @@
 
     <link rel="stylesheet" href="/css/general.css">
     <link rel="stylesheet" href="/css/payment.css">
+    <link rel="stylesheet" href="/css/animation.css">
+    <link rel="stylesheet" href="/css/signup.css">
     <title>Document</title>
 </head>
 
 <body>
+<div class="alert-message"></div>
     <section id="display" class="parent">
-
-        <div class="payment-section paysafe-section active" id="paysafe-outcome">
-        <iframe src="https://www.paysafecard.com/en-us/find-sales-outlet/" width="100%" height="600px"></iframe>
-
-        </div>
+        <button>Click Me!</button>
     </section>
 </body>
 
 </html>
 
-<script>
-    let state = {
-        codes: [],
-
-    }
-    function saveCodeToArray(input) {
-        if (!input) return;
-        const code = input.value.trim();
-
-        if (code.length == 16) {
-            state.codes.push(code);
-            alert(state.codes.join(", "));
-        }
-        console.log(code);
-    }
-
-    const firstInput = document.querySelector(".steps input.paysafe-code-input");
-    firstInput.addEventListener("input", () => saveCodeToArray(firstInput)
-    );
-
-    function addNewCode() {
-        const inputDiv = document.querySelector(".steps .inputs");
-        const inputsLength = inputDiv.childElementCount;
-
-        if (!inputDiv) return;
-
-        const newInput = document.createElement("input");
-        newInput.placeholder = "Type your code here";
-        newInput.classList.add("paysafe-code-input");
-        newInput.id = `paysafe-code-${inputsLength + 1}
-    `;
-        newInput.name = `paysafe-code-${inputsLength + 1}`;
-        newInput.type = "tel";
-        newInput.maxLength = "16";
-        console.log(inputsLength + 1);
-
-
-        inputDiv.appendChild(newInput);
-        newInput.addEventListener("input", () => saveCodeToArray(newInput));
-    }
-
-    const addButton = document.querySelector("button.another-code");
-    addButton.addEventListener('click', addNewCode)
-
+<script type="module" src="/js/general.js"></script>
+<script type="module" src="/js/testing.js">
 </script>
