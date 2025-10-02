@@ -460,7 +460,7 @@ function handleConfirm(e) {
   }
 
   handleAlert("Please review your details carefully. This information will be used for bookings and payments.", "blur", true, "🔐 <br/> Details Confirmation", true, [
-    { text: "Check Information", onClick: "closeAlert", type: "secondary" },
+    { text: "Check Details", onClick: "closeAlert", type: "secondary" },
     { text: "Proceed", onClick: () => handleVerifyEmail(e), loading: true }
   ]);
 }
@@ -530,7 +530,7 @@ async function handleLogin(e) {
     } else {
       handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert" }]);
     }
-    
+
     if (btn) {
       btn.disabled = false;
       btn.innerHTML = `<p class="text">LOGIN</p>`;

@@ -502,6 +502,8 @@ function handleAlert(
     arrange = "row",
     defaultFunction = () => { },
 ) {
+    
+
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
 
@@ -543,6 +545,10 @@ function handleAlert(
         fadeAlert();
         return;
     } else {
+        if (document.activeElement && document.activeElement.tagName === "INPUT") {
+            document.activeElement.blur();
+        }
+        
         div = document.createElement("div");
         div.classList.add("alert-div", "zoom-in");
 
