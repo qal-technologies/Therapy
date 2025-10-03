@@ -600,7 +600,7 @@ div#details-div .details-top {
   box-shadow: 1px 1px 10px rgb(125, 125, 125, 0.08);
 }
 
-#details-div button[title="Close Details"] {
+#details-div button:first-child {
   width: 40px;
   height: 40px;
   border-radius: 50%;

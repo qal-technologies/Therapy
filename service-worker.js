@@ -1,4 +1,4 @@
-const CACHE_NAME = "charlotte-cache-v2";
+const CACHE_NAME = "charlotte-cache-v98099";
 
 // Split caches for better control
 const STATIC_ASSETS = [
@@ -8,7 +8,6 @@ const STATIC_ASSETS = [
     "/html/main/Shop.html",
     "/html/main/cart.html",
     "/html/main/ViewBook.html",
-    "/html/regs/Login.html",
     "/html/regs/Signup.html",
 
     // CSS
@@ -19,6 +18,7 @@ const STATIC_ASSETS = [
     "/css/view-book.css",
     "/css/signup.css",
     "/css/animation.css",
+    "/css/media.css",
     "/css/pages.css",
 
     // JS
@@ -37,13 +37,13 @@ const STATIC_ASSETS = [
     // Images
     "/src/images/logo.jpg",
     "/src/images/person.png",
+    "/src/images/person1.png",
     "/src/images/book-person.png",
 ];
 
 // External assets (Google Translate)
 const EXTERNAL_ASSETS = [
-    "https://translate.google.com/translate_a/element.js?cb=initTranslate"
-];
+    "https://translate.google.com/translate_a/element.js?cb=initTranslate"];
 
 // Install
 self.addEventListener("install", event => {
@@ -52,6 +52,8 @@ self.addEventListener("install", event => {
             return cache.addAll([...STATIC_ASSETS, ...EXTERNAL_ASSETS]);
         }).catch(err => console.error("Caching failed:", err))
     );
+
+    self.skipWaiting();
 });
 
 // Fetch
@@ -67,6 +69,20 @@ self.addEventListener("fetch", event => {
     ) {
         return; // skip caching, fetch live
     }
+
+    // Network-first for HTML, CSS, JS
+    if (url.pathname.endsWith(".js") || url.pathname.endsWith(".css") || url.pathname.endsWith(".html")) {
+        event.respondWith(
+            fetch(event.request).then(fetchResp => {
+                return caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, fetchResp.clone());
+                    return fetchResp;
+                });
+            }).catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
 
     // Cache-first strategy for static + translate
     if ([...STATIC_ASSETS, ...EXTERNAL_ASSETS].some(asset => url.href.includes(asset))) {

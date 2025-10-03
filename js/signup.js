@@ -120,7 +120,7 @@ const state = {
 };
 
 function validateEmailValue(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return re.test(email.trim());
 }
 
@@ -193,7 +193,8 @@ function handleStroll() {
 function updateFormUI() {
   const container = DOM.formSection();
   if (!container) return;
-
+  document.activeElement.blur();
+  
   container.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
   attachFormListeners();
   handleStroll();
@@ -350,7 +351,9 @@ function handleVerifyEmail(e) {
   const email = document.getElementById('reg-email')?.value;
   const emailInput = document.getElementById('reg-email');
 
-  const randomCodes = ["109283", "3F8492", "083495", "W4EH37", "5YW45E", "O734T3", "9034FN", "2SX421", "R623UW", "03834D"];
+  const verifyInput = document.getElementById('email-otp');
+
+  const randomCodes = ["109283", "308492", "083472", "942937", "542456", "783483", "903459", "213421", "462325", "038349"];
   const otpCode = randomCodes[Math.floor(Math.random() * randomCodes.length)];
   sessionStorage.setItem("verification-otp-pp", JSON.stringify(otpCode));
   console.log(otpCode);
@@ -386,6 +389,8 @@ function handleVerifyEmail(e) {
       if (errorDiv) {
         errorDiv.innerHTML = "The code you entered is invalid or expired. Please check your email and try again.";
         errorDiv.style.display = "flex";
+        verifyInput ? verifyInput.value = "" : "";
+        verifyInput?.focus();
       }
       return false;
     }
@@ -395,7 +400,9 @@ function handleVerifyEmail(e) {
     const newOtp = randomCodes[Math.floor(Math.random() * randomCodes.length)];
     sessionStorage.setItem("verification-otp-pp", JSON.stringify(newOtp));
     console.log(newOtp);
-    handleVerifyEmail(e)
+    // handleVerifyEmail(e);
+    verifyInput ? verifyInput.value = "" : "";
+    verifyInput?.focus();
     // await sendOTPToEmail(email, newOtp);
     return true;
   };
@@ -410,7 +417,7 @@ function handleVerifyEmail(e) {
       {
         text: "Change Email",
         onClick: () => {
-          emailInput.focus();
+          emailInput?.focus();
           return "closeAlert";
         },
         type: "secondary"
@@ -428,7 +435,7 @@ function handleVerifyEmail(e) {
       },
       input: {
         id: "email-otp",
-        type: "text",
+        type: "tel",
         placeholder: "Enter your verification code",
         required: true
       }
@@ -499,7 +506,6 @@ async function handleRegistration() {
     handleAlert(`Registration failed: ${errorMessage}`, "toast");
 
     if (errorMessage.includes("email-already-in-use")) {
-
       handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Try Again", onClick: "closeAlert" }]);
     }
   }

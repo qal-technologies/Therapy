@@ -154,7 +154,7 @@ div#banner-upper .message button, #sessions div.upper-title .player button {
 }
 
 #banner-upper .message button svg, #sessions div.upper-title .player svg {
-  fill: var(--primary);
+  fill: var(--primary) !important;
 }
 
 div#banner-upper div.button-div a:hover {
@@ -768,7 +768,7 @@ section#faq {
 }
 
 #faq .answers .answer .upper {
- 
+
   cursor: pointer;
   padding-inline-end: 5px;
   padding-block: 5px;
@@ -872,4 +872,11 @@ section#discover {
   text-align: center;
   display: flex;
   place-content: center;
+}
+
+section .player button svg {
+  font-size: 28px;
+  width:28px;
+  height:28px;
+  fill: white !important;
 }

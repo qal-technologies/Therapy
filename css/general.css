@@ -45,9 +45,9 @@
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
   font-display: swap;
   /* font-size: clamp(12px, 2vw, 16px); */
-  word-wrap: break-word;
+  /* word-wrap: break-word;
   overflow-wrap: break-word;
-  word-break: break-word;
+  word-break: break-word; */
   transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
@@ -59,6 +59,7 @@
   scrollbar-width: thin;
   -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
   scrollbar-color: var(--accent) var(--primaryTrans);
+
 }
 
 *:focus, *:active {
@@ -91,7 +92,6 @@ div#body {
   background-size: cover;
   background-attachment: local;
   background-repeat: no-repeat;
-  display: block;
   width: 100%;
   overflow: hidden;
   overflow-y: auto;
@@ -100,6 +100,18 @@ div#body {
   position: relative;
   z-index: -99999999;
   user-select: none;
+  display: block;
+
+  overflow-x: hidden;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  visibility: hidden;
 }
 
 a#scrollUp {
@@ -858,4 +870,69 @@ div.skiptranslate {
 * button {
   -webkit-appearance: none;
   appearance: none;
+}
+
+
+.loading-section, .wait-loading-section {
+  text-align: center;
+  padding: 40px 30px;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  position: absolute;
+  flex: 1;
+  display: flex;
+  visibility: visible;
+  flex-direction: column;
+  align-items: center;
+  place-content: center;
+  z-index: 9999999999;
+}
+
+.loading-spinner, .mini-spinner {
+  border-top: 10px dotted var(--highlight);
+  border-bottom: 10px dotted var(--link);
+  border-right: 10px dotted var(--mainText);
+  border-left: 10px dotted var(--blue);
+  width: 70px;
+  height: 70px;
+  animation: loading-spin 800ms cubic-bezier(0.445, 0.05, 0.55, 0.95) alternate-reverse infinite;
+  display: inline-block;
+  margin: 0 auto;
+  border-radius: 50%;
+  transform: none;
+}
+
+
+.mini-spinner {
+  width: 15px;
+  height: 15px;
+  border-width: 2px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  border-radius: 20px;
+}
+
+
+@keyframes loading-spin {
+  0% {
+    transform: rotate(0deg) scale(30%);
+
+    border-top: 10px dotted var(--blue);
+    border-bottom: 10px dotted var(--highlight);
+    border-right: 10px dotted var(--link);
+    border-left: 10px dotted var(--blueTrans);
+    border-radius: 40%;
+  }
+
+  100% {
+    transform: rotate(360deg) scale(100%);
+
+    border-top: 10px dotted var(--highlight);
+    border-bottom: 10px dotted var(--link);
+    border-right: 10px dotted var(--mainText);
+    border-left: 10px dotted var(--blue);
+    border-radius: 50%;
+  }
 }

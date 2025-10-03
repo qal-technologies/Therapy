@@ -34,7 +34,7 @@ function initializeState() {
         paymentStatus: null,
         statusMessage: "",
         initialContent: "",
-        details: "",
+        details: {},
         country: "",
         paymentType: "Session",
     };
@@ -42,30 +42,10 @@ function initializeState() {
 
 
 const formatter = new Intl.NumberFormat('en-US');
-// function formatDateTime(date) {
-//     const now = new Date(date);
-
-//     const options = {
-//         month: "long",
-//         day: "numeric",
-//         year: "numeric",
-//     };
-
-//     return (
-//         now.toLocaleString("en-US", options) +
-//         " at " +
-//         now.toLocaleTimeString("en-US", {
-//             hour: "numeric",
-//             minute: "2-digit",
-//             hour12: true,
-//         })
-//     );
-// }
 
 function formatDateTime(timestamp) {
     if (!timestamp) return "";
 
-    // Firestore timestamp → JS Date:
     let date;
     date = typeof timestamp === "object" && timestamp.seconds ?
         new Date(timestamp.seconds * 1000) :
@@ -157,9 +137,11 @@ function updateSelectionStyles(selectedOption, allOptions) {
 }
 
 function handlePaymentMethodClick(option, state, elements) {
-    const method = option.querySelector(".option-label").textContent;
+    const method = option.className.includes("card") ? "Credit Card" : option.className.includes("paysafe") ? "Paysafe Card" : option.textContent.trim();
     state.methodSelected = true;
     state.selectedMethod = method.toString().replace(" ", "");
+
+    console.log(method, state.selectedMethod, option.className);
 
     updateSelectionStyles(option, elements.paymentMethodOptions);
     checkPaymentMethodSelection(state, elements);
@@ -203,11 +185,6 @@ function handleMakePaymentClick(e, state, elements) {
         document
             .getElementById("payment-method-section")
             ?.classList.remove("active");
-        if (state.currencyCode === "EUR") {
-            state.toPay = (
-                parseFloat(state.amount) + parseFloat(state.charge)
-            ).toFixed(2);
-        }
 
         const method = state.selectedMethod.toLowerCase();
 
@@ -564,10 +541,10 @@ const safeFlow = {
         title: "🌸 Companion Support",
         buttons: [
             {
-                text: "Find a Store Near Me", action: () => { 
-window.open("https://share.google/K7b9QET2xQ5kLgSJ7");
-return "closeAlert";
-}, type: "secondary"
+                text: "Find a Store Near Me", action: () => {
+                    window.open("https://share.google/K7b9QET2xQ5kLgSJ7");
+                    return "closeAlert";
+                }, type: "secondary"
             },
             {
                 text: "Show Me How Paysafecard Works", action: () => stepsAlerts(),
@@ -607,6 +584,7 @@ function runFlow(flow, state = "start") {
                 : btn.action,
             type: btn.type,
         })),
+        {},
         step.arrange
     );
 }
@@ -616,15 +594,18 @@ function safeAlerts() {
 }
 
 
-// ==================== PAYMENT POLLING & RESULTS ====================
+//==================== PAYMENT POLLING & RESULTS ====================>>>>
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
+let attempts = 0;
 async function pollForPaymentStatus(txnId) {
     let payment = await getPaymentById(txnId);
 
-    while (payment === null) {
+    while (payment === null && attempts < 40) {
         await delay(2500);
+        attempts++;
+
         payment = await getPaymentById(txnId);
     }
     return payment;
@@ -719,9 +700,9 @@ async function showResultScreen(state, elements, finalPayment) {
         const resultTitle = isSuccess && paymentType.toLowerCase() !== "session" ? 'Payment Successful' : isSuccess && paymentType.toLowerCase() === "session" ? "✨ Your Session is Confirmed" : (statusMessage.includes("used") ? 'Code Already Used' : (statusMessage.includes("incomplete") ? 'Payment Not Fully Covered' : "Incorrect Code"));
         const resultMessage = isSuccess && paymentType.toLowerCase() !== "session" ?
             'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' : isSuccess && paymentType.toLowerCase() === "session" ? "Thank you for booking your session. <br/> To keep this experience truly personal, I handle confirmations directly myself. <br/>Please send me a short nessage on Facebook so I can: <br/> • Personally confirm your time with you. <br/> • Share important preparations notes before we meet. <br/> • Be sure you feel seen and supported from the very start." :
-            (statusMessage.includes("used") ?
-                "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> ${statusMessage}` :
-                    "The Paysafecard code you entered is not correct. Please check the digits and try again."));
+                (statusMessage.includes("used") ?
+                    "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> ${statusMessage}` :
+                        "The Paysafecard code you entered is not correct. Please check the digits and try again."));
 
         resultHTML = `
         <div class="payment-section paysafe-section active" id="paysafe-outcome">
@@ -733,13 +714,13 @@ async function showResultScreen(state, elements, finalPayment) {
                 <h1>${resultTitle}</h1>
             </div>
             <div class="steps">
-                <p class="verification-text ${isSuccess && paymentType.toLowerCase() === 'session' ? 'session' : '' }">${resultMessage}</p>
+                <p class="verification-text ${isSuccess && paymentType.toLowerCase() === 'session' ? 'session' : ''}">${resultMessage}</p>
             </div>
             <div class="proceed-div">
                 ${isSuccess ? paymentType.toLowerCase() === "session" ?
-            `<a href="https://www.facebook.com/charlotte.casiraghi.992551" target="_blank" class="continue-btn facebook "> <i class="bi bi-facebook"></i> Message Me on Facebook</a>` : `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
-                    `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
-                    } </button>`)
+                `<a href="https://www.facebook.com/charlotte.casiraghi.992551" target="_blank" class="continue-btn facebook "> <i class="bi bi-facebook"></i> Message Me on Facebook</a>` : `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
+                `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
+                } </button>`)
             }
                 <p class="small-text">${isSuccess ?
                 `A confirmation has been sent to your email.` :
@@ -788,14 +769,7 @@ async function handlePaySafe(state, elements) {
                 <div class="spinner-container"><div class="spinner"></div></div>
                 ${state.safeIndex !== 1 ? "Loading..." : "Verifying..."}
                 `;
-            const paymentData = {
-                status: state.paymentStatus,
-                message: state.statusMessage,
-            }
-
-            state.safeIndex == 2 ?
-                localStorage.setItem("charlotte-page-payment-state", JSON.stringify(paymentData)) : "";
-
+          
             setTimeout(async () => {
                 await handlePaySafe(state, elements)
             }, 2000);
@@ -842,7 +816,7 @@ async function convertCurrency(state) {
             if (state.currencyCode && state.currencyCode in rates) {
                 const rate = rates[state.currencyCode];
                 state.converted = (state.amount * rate).toFixed(2);
-                state.charge = (0.98 * rate).toFixed(2);
+                // state.charge = (0.98 * rate).toFixed(2);
 
                 state.toPay = (parseFloat(state.converted) + parseFloat(state.charge)).toFixed(2);
             } else {
@@ -855,7 +829,11 @@ async function convertCurrency(state) {
         return true;
     } catch (error) {
         console.error("Conversion error:", error);
-        alert("An error occured:", error);
+        handleAlert(`An error occured because of: ${error} `);
+
+        state.converted = (state.amount).toFixed(2);
+        state.toPay = (parseFloat(state.converted) + parseFloat(state.charge)).toFixed(2);
+
     }
     return false;
 }
@@ -1085,7 +1063,7 @@ async function initializePaymentFlow(e, state, elements) {
 
     // Redirect if no params
     if (!paymentType || !paymentDetails) {
-        handleAlert("No Payment Details Gotten, Please Book a Session!", "blur", false, "", true, [{ text: "OK", onClick: ()=> handleRedirect("/html/main/Session.html", "replace") }]);
+        handleAlert("No Payment Details Gotten, Please Book a Session!", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/main/Session.html", "replace") }]);
 
         return;
     }
@@ -1167,7 +1145,7 @@ async function initializePaymentFlow(e, state, elements) {
         }
     } catch (error) {
         console.error("Error parsing payment details:", error);
-        handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: ()=> handleRedirect("/html/main/Session.html", "replace") }]);
+        handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/main/Session.html", "replace") }]);
 
         return false;
     } finally {

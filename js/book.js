@@ -308,6 +308,12 @@ function showCompletion() {
   DOM.questionsContainer.innerHTML = '';
   DOM.questionsContainer.appendChild(completionDiv);
 
+  setTimeout(() => {
+    if (DOM.price && DOM.formGroup) {
+      DOM.price.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 1700);
+
   state.completed = true;
 
   // Unlock terms checkbox

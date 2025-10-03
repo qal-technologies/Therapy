@@ -6,9 +6,9 @@ import BOOK from './books.js';
 window.addEventListener('DOMContentLoaded', () => {
     handleAuthStateChange(async (user) => {
         if (!user) {
-            handleAlert("Please login or create account to purchase and view book", "blur", true,'<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
+            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
         }
-        
+
         if (user) {
             const userdata = await getUserData(user.uid);
             const paid = userdata.bookPaid;
@@ -32,6 +32,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 const THUD_SOUND_SRC = '/src/audio/page-thud.mp3';
                 const pageTurnSound = new Audio(PAGE_TURN_SOUND_SRC);
                 const thudSound = new Audio(THUD_SOUND_SRC);
+                pageTurnSound.preload = "auto";
+                // pageTurnSound.volume = 1.0;
 
 
                 const LAST = BOOK.pages.length - 1;
@@ -185,7 +187,9 @@ window.addEventListener('DOMContentLoaded', () => {
                             return;
                         } else if (!isClosing) {
                             pageTurnSound.currentTime = 0;
-                            pageTurnSound.play();
+                            pageTurnSound.play().catch(err => {
+                                console.warn("Autoplay blocked, will play on next interaction:", err);
+                            });;
                         }
                     } catch { }
                 }
@@ -399,9 +403,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 // Toggle bookmark
                 function toggleBookmark() {
-                    let btn = document.getElementById('bookmarkBtn');
+                    // let btn = document.getElementById('bookmarkBtn');
                     let isBookmarked = state.bookmarks.includes(state.page);
-
+                    
                     const icon = isBookmarked ?
                         '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
 
@@ -423,7 +427,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
 
                 function loadBookmark() {
-                    const saved = localStorage.getItem('bookmarkPage');
+                    const saved = localStorage.getItem('bookmarkPages');
                     if (!saved) return;
 
                     const p = parseInt(saved);
@@ -461,7 +465,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     const value = searchBar.value.trim();
                     searchBar.value = '';
                     if (!value) return;
-                    if (value.toLowerCase().includes("e")) {
+                    if (value.toLowerCase().includes("cover") || value.toLowerCase().includes('end')) {
                         let direction = true;
                         value.toLowerCase().includes("cover") ? [state.page = 0, direction = false]
                             : value.toLowerCase().includes("end") ? [state.page = LAST, direction = true]

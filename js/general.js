@@ -5,7 +5,159 @@ let show = false;
 const header = document.querySelector("header#header");
 const menu = document.querySelector("header#header div#menu");
 
+async function handleTranslateFirstLoad() {
+    return new Promise((resolve) => {
+        const loadingHTML = `
+          <div class="wait-loading-section" id="wait-loading-section">
+            <div class="loading-spinner"></div>
+          </div>`;
+        document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+
+        function loadGoogleTranslate() {
+            const gtScript = document.createElement("script");
+            gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
+            document.head.appendChild(gtScript);
+
+            gtScript.onload = () => {
+                console.log("Google Translate script loaded");
+            };
+            
+            gtScript.onerror = () => {
+                console.warn("Failed to load Google Translate script");
+                cleanup();
+                resolve(false);
+            };
+
+            if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+                const meta = document.createElement("meta");
+                meta.name = "google";
+                meta.content = "notranslate";
+                document.head.appendChild(meta);
+            }
+        }
+
+        let done = false;
+        const fallbackTimeout = setTimeout(() => {
+            if (!done) {
+                console.warn("⚠️ Translation timeout, falling back to English.");
+                cleanup();
+                resolve(false);
+            }
+        }, 8000);
+
+        window.initTranslate = function () {
+            try {
+                new google.translate.TranslateElement({
+                    pageLanguage: "en",
+                    includedLanguages: "fr,es,de,it",
+                    autoDisplay: false
+                }, "google_translate_element");
+
+
+                autoTranslate().then(() => {
+                    done = true;
+
+                    cleanup();
+                    resolve(true);
+                }).catch(() => {
+                    cleanup();
+                    resolve(false);
+                });
+            } catch (err) {
+                console.error("Google Translate init failed:", err);
+                cleanup();
+                resolve(false);
+            }
+        };
+
+
+        function autoTranslate() {
+            return new Promise((res, rej) => {
+                let userLang = navigator.language || navigator.userLanguage;
+                userLang = userLang.split("-")[0];
+                if (userLang === "en") return res();
+
+                const selectCheck = setInterval(() => {
+                    let select = document.querySelector(".goog-te-combo");
+                    if (select) {
+                        select.value = userLang;
+                        select.dispatchEvent(new Event("change"));
+                        clearInterval(selectCheck);
+
+                        waitForTranslation().then(res).catch(rej);
+                    }
+                }, 500);
+
+                setTimeout(() => {
+                    clearInterval(selectCheck);
+                    rej("Translator dropdown not found.");
+                }, 5000);
+            });
+        }
+
+        function waitForTranslation() {
+            return new Promise((resolve, reject) => {
+                const htmlEl = document.documentElement;
+                const timeout = setTimeout(() => reject("Translation took too long"), 8000);
+
+                const observer = new MutationObserver(() => {
+                    if (htmlEl.classList.contains("translated-ltr") || htmlEl.classList.contains("translated-rtl") || htmlEl.classList.contains("translated")) {
+                        clearTimeout(timeout);
+                        observer.disconnect();
+
+                        console.log('html done....')
+                        setTimeout(() => resolve(), 2600);
+                    }
+                });
+
+                observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
+            });
+        }
+
+        function cleanup() {
+            clearTimeout(fallbackTimeout);
+            const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+            if (loader) loader.remove();
+            console.log("removing loading....")
+            document.body.style.visibility = "visible";
+            console.log("cleaned....")
+        }
+
+        loadGoogleTranslate();
+    });
+}
+
+function handleInputFocusFix() {
+    const inputs = document.querySelectorAll("input, textarea, select");
+
+    inputs.forEach(input => {
+        input.addEventListener("focus", () => {
+            setTimeout(() => {
+                input.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                });
+                window.scrollBy(0, -60);
+            }, 300);
+        });
+    });
+}
+
 window.onload = async () => {
+    await handleTranslateFirstLoad();
+
+    if (!document.querySelector("link[rel='preload'][as='font']")) {
+        const link = document.createElement("link");
+        link.rel = "preload";
+        link.as = "font";
+        link.href = "/src/fonts/Poppins-Medium.ttf";
+        link.type = "font/ttf";
+        link.crossOrigin = "anonymous";
+        document.head.appendChild(link);
+    }
+
     const year = document.querySelector("footer span#year");
     const backButton = document.querySelector("div#back-button");
     const refreshButton = document.querySelector("div#refresh-button");
@@ -124,71 +276,17 @@ window.onload = async () => {
     })
     initTicker();
 
-    function handleTranslate() {
-        // load Google Translate script
-        function loadGoogleTranslate() {
-            var gtScript = document.createElement('script');
-            gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
-            document.head.appendChild(gtScript);
-            if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
-                const meta = document.createElement("meta");
-                meta.name = "google";
-                meta.content = "notranslate";
-                document.head.appendChild(meta);
-            }
-        }
-
-        // Google calls this when script loads
-        window.initTranslate = function () {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'fr,es,de,it',
-                autoDisplay: false
-            }, 'google_translate_element');
-
-            autoTranslate();
-        };
-
-        function autoTranslate() {
-            let userLang = navigator.language || navigator.userLanguage;
-            userLang = userLang.split("-")[0];
-            console.log(userLang)
-
-            if (userLang === "en") return;
-
-            const interval = setInterval(() => {
-                let select = document.querySelector(".goog-te-combo");
-                if (select) {
-                    select.value = userLang;
-                    select.dispatchEvent(new Event("change"));
-                    clearInterval(interval);
-                }
-            }, 500);
-        }
-
-        loadGoogleTranslate();
-    }
-
-    if (!document.querySelector("link[rel='preload'][as='font']")) {
-        const link = document.createElement("link");
-        link.rel = "preload";   
-        link.as = "font";
-        link.href = "/src/fonts/Poppins-Medium.ttf";
-        link.type = "font/ttf";
-        link.crossOrigin = "anonymous";
-        document.head.appendChild(link);
-    }
-
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
             console.error("Service Worker registration failed:", error);
         });
     }
 
+    handleInputFocusFix();
+
     await handleAuthStateChange(async user => {
         const actionTab = document.querySelectorAll("a.login");
         const navDiv = document.querySelector("header#header div#nav");
-        handleTranslate();
 
         if (navDiv && user) {
             const logoutBTN = document.createElement("button");
@@ -261,7 +359,7 @@ window.onload = async () => {
                 }
             } else if (!user) {
                 emailBTN.addEventListener("click", () => {
-                    handleAlert("To subscribe to our newsletter, please log in or create an account.", "blur", true, "✉️ <br/> Login or Register", true, [{ text: "Log in", onClick: () => { handleRedirect("/html/regs/Signup.html?type=login"); } }, { text: "Register", onClick: () => { handleRedirect("/html/regs/Signup.html?type=register"); } }]);
+                    handleAlert("To subscribe to our newsletter, please log in or create an account.", "blur", true, "✉️ <br/> Login or Register", true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register"), type: "secondary" }]);
                     return;
                 });
             }
@@ -285,7 +383,7 @@ window.onresize = () => {
     d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
     </svg>`;
 
-        show = !show;
+        show = false;
     }
 };
 
@@ -320,170 +418,8 @@ export function handleRedirect(href = "", type = "default") {
     }
 }
 
-// let timer;
-// function handleAlert(
-//     message,
-//     type = "blur",
-//     titled = false,
-//     titleText = "",
-//     closing = false,
-//     closingConfig = [],
-//     arrange = "row",
-//     options = {},
-//     defaultFunction = () => { },
-// ) {
-//     const parent = document.querySelector(".alert-message");
-//     if (!parent) return;
 
-//     parent.innerHTML = "";
-//     clearTimeout(timer);
-
-//     if (parent.dataset.countdownId) {
-//         try { clearInterval(Number(parent.dataset.countdownId)); }
-//         catch (e) { console.error("The error is: ", e) };
-
-//         delete parent.dataset.countdownId;
-//     }
-
-//     parent.classList.remove("fadeOut", "shop");
-//     parent.style.display = "flex";
-
-//     let div, errorDiv;
-
-//     function closeAlert() {
-//         if (div) div.classList.add("zoom-out");
-//         parent.classList.add("fadeOut");
-
-//         timer = setTimeout(() => {
-//             parent.style.display = "none";
-//             parent.innerHTML = "";
-//             defaultFunction();
-//         }, 1200);
-//     }
-
-//     function fadeAlert() {
-//         timer = setTimeout(closeAlert, 4000);
-//     }
-
-//     if (type === "toast") {
-//         parent.classList.add("shop");
-//         const newMessage = document.createElement("p");
-//         newMessage.classList.add("alert-text", "moveUp");
-//         newMessage.innerHTML = message;
-//         parent.appendChild(newMessage);
-
-//         fadeAlert();
-//         return;
-//     } else {
-//         div = document.createElement("div");
-//         div.classList.add("alert-div", "zoom-in");
-
-//         if (titled) {
-//             const newTitle = document.createElement("p");
-//             newTitle.classList.add("alert-title");
-//             newTitle.innerHTML = titleText || "Title";
-//             div.appendChild(newTitle);
-//         }
-
-//         if (message) {
-//             const newMessage = document.createElement("p");
-//             newMessage.classList.add("alert-text", "moveUp");
-//             newMessage.innerHTML = message;
-//             div.appendChild(newMessage);
-//         }
-
-//         let timerIntervalId = null;
-//         let timeLeft = 0;
-//         let timerP = null;
-//         let resendEl = null;
-
-//         errorDiv = document.createElement("div");
-//         errorDiv.classList.add("alert-error");
-//         div.appendChild(errorDiv);
-
-
-//         // Buttons
-//         if (closing) {
-//             const buttonParent = document.createElement("div");
-//             buttonParent.classList.add("button-parents");
-//             buttonParent.style.flexDirection = arrange === "row" ? "row" : "column";
-
-//             if (closingConfig.length >= 3) {
-//                 buttonParent.style.flexWrap = "wrap";
-//             }
-
-//             if (closingConfig.length === 0) {
-//                 const newBtn = document.createElement("button");
-//                 newBtn.classList.add("alert-button");
-//                 newBtn.textContent = "Close";
-//                 newBtn.style.width = arrange === "column" ? "100%" : "160px";
-//                 newBtn.addEventListener("click", closeAlert);
-//                 buttonParent.appendChild(newBtn);
-//             }
-
-//             closingConfig.forEach(cfg => {
-//                 const { text: btnText, type: btnType, onClick, loading } = cfg;
-//                 const className = btnType || "primary";
-
-//                 const newBtn = document.createElement("button");
-//                 newBtn.classList.add("alert-button", className);
-//                 newBtn.textContent = btnText || "Close";
-//                 newBtn.style.width = arrange === "column" ? "100%" : "160px";
-
-//                 const spinnerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
-
-//                 async function handleClick() {
-//                     // reset error
-//                     errorDiv.style.display = "none";
-//                     errorDiv.innerHTML = "";
-
-//                     if (loading) {
-//                         newBtn.disabled = true;
-//                         newBtn.innerHTML = spinnerHTML;
-
-//                         const delay = Math.floor(Math.random() * 1000) + 1000;
-//                         await new Promise(res => setTimeout(res, delay));
-//                     }
-
-//                     try {
-//                         if (onClick === "closeAlert") {
-//                             if (!loading) return closeAlert();
-
-//                             closeAlert();
-//                         } else if (typeof onClick === "function") {
-//                             const result = await onClick();
-
-//                             if (result === "closeAlert") {
-//                                 closeAlert();
-//                             } else {
-//                                 if (loading) newBtn.textContent = btnText || "Close";
-//                             }
-//                         } else {
-//                             defaultFunction();
-//                         }
-//                         newBtn.disabled = false;
-//                     } catch (err) {
-//                         if (loading) newBtn.textContent = btnText || "Close";
-
-//                         errorDiv.innerHTML = err?.message || "An error occurred";
-//                         errorDiv.style.display = "flex";
-//                         newBtn.disabled = false;
-//                     }
-//                 }
-
-//                 newBtn.addEventListener("click", handleClick);
-//                 buttonParent.appendChild(newBtn);
-//             });
-
-//             div.appendChild(buttonParent);
-//         } else {
-//             fadeAlert();
-//         }
-//     }
-//     parent.appendChild(div);
-// }
-
-let timer; 
+let timer;
 /**
  * handleAlert(message, type, titled, titleText, closing, closingConfig, arrange, defaultFunction, options)
  * - options: {
@@ -502,7 +438,6 @@ function handleAlert(
     arrange = "row",
     defaultFunction = () => { },
 ) {
-    
 
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
@@ -545,10 +480,14 @@ function handleAlert(
         fadeAlert();
         return;
     } else {
-        if (document.activeElement && document.activeElement.tagName === "INPUT") {
-            document.activeElement.blur();
+        function blurAllInputs() {
+            ["input", "textarea", "select"].forEach(sel => {
+                document.querySelectorAll(sel).forEach(el => el.blur());
+            });
         }
-        
+
+        parent.addEventListener("transitionstart", blurAllInputs);
+
         div = document.createElement("div");
         div.classList.add("alert-div", "zoom-in");
 
@@ -594,7 +533,7 @@ function handleAlert(
             div.appendChild(resendEl);
 
             const startCountdown = (restartDuration) => {
-                
+
                 if (timerIntervalId) clearInterval(timerIntervalId);
                 const duration = typeof restartDuration === 'number' ? restartDuration : Math.floor(options.timer.duration);
                 timeLeft = duration;
@@ -613,7 +552,7 @@ function handleAlert(
                         timerP.style.display = "none";
                         resendEl.style.display = "block";
                         if (typeof options.timer.onExpire === "function") {
-                            try { options.timer.onExpire(); } catch (err) { console.error(err)}
+                            try { options.timer.onExpire(); } catch (err) { console.error(err) }
                         }
                     }
                 }, 1000);
@@ -638,7 +577,7 @@ function handleAlert(
 
                         startCountdown(Math.floor(options.timer.duration));
                     } catch (err) {
-                        
+
                         if (!div._pendingResendError) div._pendingResendError = err;
                     } finally {
                         resendEl.dataset.sending = "0";

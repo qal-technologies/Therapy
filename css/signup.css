@@ -121,6 +121,12 @@ header.header h3 {
   flex-direction: column;
   align-items: center;
   height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-perspective: 1000;
+  perspective: 1000;
 }
 
 .form-container {
@@ -135,6 +141,12 @@ header.header h3 {
   max-height: auto;
   transition: display 0.3s ease, opacity 0.3s ease;
   opacity: 1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-perspective: 1000;
+  perspective: 1000;
 }
 
 .form-container#register-form {
@@ -317,12 +329,12 @@ div.privacy-policy {
 }
 
 div.privacy-policy input[type="checkbox"] {
-  -webkit-appearance: none;
-  appearance: none;
+  /* -webkit-appearance: none;
+  appearance: none; */
   width: 18px !important;
   height: 20px !important;
   border: 2px solid var(--link);
-  border-radius: 4px;
+  /* border-radius: 4px; */
   background: none;
   display: inline-block;
   vertical-align: middle;
