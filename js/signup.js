@@ -78,6 +78,7 @@ import handleAlert, { handleRedirect } from './general.js';
               <i class="bi bi-eye"></i>
             </button>
           </div>
+           <p class="password-error" id="password-error1"></p>
         </div>
 
         <div class="form-group">
@@ -88,7 +89,7 @@ import handleAlert, { handleRedirect } from './general.js';
               <i class="bi bi-eye"></i>
             </button>
           </div>
-          <p class="password-error" id="password-error"></p>
+          <p class="password-error" id="password-error2"></p>
         </div>
 
         <div class="bottom privacy">
@@ -147,12 +148,35 @@ window.addEventListener('load', async () => {
 
     const regPassword = document.getElementById("reg-password");
     const confirmPassword = document.getElementById("confirm-reg-password");
-    const errorMsg = document.getElementById("password-error");
+    const errorMsg = document.getElementById("password-error2");
+          const errorMsg2 = document.getElementById("password-error1");
 
     if (regPassword && confirmPassword) {
       const validatePasswords = () => {
         const pwd = regPassword.value.trim();
         const confirm = confirmPassword.value.trim();
+
+        regPassword.addEventListener("blur", () => {
+          const pwd = regPassword.value.trim();
+
+          if (pwd.length > 0 && pwd.length <= 2) {
+            errorMsg2.textContent = "Password must be more than 2 characters long";
+            regPassword.style.borderColor = "red";
+            errorMsg2.classList.add("active");
+          } else {
+            if (errorMsg2) {
+              errorMsg2.textContent = "";
+              regPassword.style.borderColor = "var(--accent)";
+              errorMsg2.classList.remove("active");
+            }
+          }
+        });
+
+        if (errorMsg2.classList.contains("active") && pwd.length >=3 ) {
+              errorMsg2.textContent = "";
+              regPassword.style.borderColor = "var(--accent)";
+              errorMsg2.classList.remove("active");
+            }
 
         if (confirm.length >= 3) {
           if (pwd !== confirm) {
@@ -328,7 +352,7 @@ window.addEventListener('load', async () => {
 
     const regPassword = document.getElementById('reg-password');
     const confirmPassword = document.getElementById('confirm-reg-password');
-    const passwordError = document.getElementById('password-error');
+    const passwordError = document.getElementById('password-error2');
     if (regPassword && confirmPassword && regPassword.value.trim() !== confirmPassword.value.trim()) {
       passwordError.textContent = "Passwords do not match";
       passwordError.classList.add('active');

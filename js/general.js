@@ -92,13 +92,11 @@ function restoreTranslatedBody(cachedHtml) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(cachedHtml, "text/html");
     document.body.innerHTML = "";
-    
+
     [...doc.body.children].forEach(node => {
-        if (node.tagName.toLowerCase() === "script")
-        {
+        if (node.tagName.toLowerCase() === "script") {
             const newScript = document.createElement("script");
-            if (node.src)
-            {
+            if (node.src) {
                 newScript.src = node.src;
                 newScript.async = true;
                 newScript.type = node.type || "module";
@@ -108,6 +106,7 @@ function restoreTranslatedBody(cachedHtml) {
         } else { document.body.appendChild(node.cloneNode(true)); }
     });
 }
+
 
 /** Trigger translate via the GT combobox (best-effort) */
 function forceReapplyTranslation(lang) {
@@ -237,202 +236,15 @@ function waitForFullTranslationFinish(timeout = 8000, idle = 800) {
 
 function setupContinuousTranslationAndIncrementalSave(userLang) {
     const pathKey = sessionKeyForPath();
-    let saveDebounceTimer = null;
-    let reapplyDebounceTimer = null;
-    let periodicAttempts = 0;
-    let periodicIntervalId = null;
 
-    // if (userLang == "en") return;
-    
-    function scheduleReapply() {
-        clearTimeout(reapplyDebounceTimer);
-        reapplyDebounceTimer = setTimeout(() => {
-            try { forceReapplyTranslation(userLang); } catch (e) { }
-        }, 120);
-    }
+    window.addEventListener("beforeunload", () => {
+        if (userLang === "en") return;
 
-    // on mutations -> schedule reapply and incremental save
-    const mutationObserver = new MutationObserver(() => {
-        scheduleReapply();
-
-        // debounce saving: wait a little while then check for stability and save
-        clearTimeout(saveDebounceTimer);
-        saveDebounceTimer = setTimeout(async () => {
-            // wait briefly for translation mutations to settle (idle detection)
-            const stable = await waitForFullTranslationFinish(6000, 700);
-            try {
-                // save the current translated DOM (documentElement outerHTML so we can parse later)
-                const full = '<!doctype html>\n' + document.documentElement.outerHTML;
-                sessionStorage.setItem(pathKey, full);
-                console.log("incremental translation save -> sessionStorage");
-            } catch (e) {
-                console.warn("Failed incremental save:", e);
-            }
-        }, 900);
-    });
-
-    // start observing body
-    try {
-        mutationObserver.observe(document.body, { childList: true, subtree: true, characterData: true });
-    } catch (e) {
-        console.warn("Could not observe body for translations:", e);
-    }
-
-    // scroll -> reapply translation for newly revealed text
-    const onScroll = () => scheduleReapply();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    // fallback periodic reapply attempts for a short while (for pages where scroll doesn't expose all)
-    periodicIntervalId = setInterval(() => {
-        periodicAttempts++;
-        scheduleReapply();
-        if (periodicAttempts > 30) { // stop after ~30s attempts
-            clearInterval(periodicIntervalId);
-            periodicIntervalId = null;
-        }
-    }, 1000);
-
-    return function stop() {
-        try { mutationObserver.disconnect(); } catch (e) { }
-        try { window.removeEventListener('scroll', onScroll); } catch (e) { }
-        if (periodicIntervalId) { clearInterval(periodicIntervalId); periodicIntervalId = null; }
-        clearTimeout(saveDebounceTimer);
-        clearTimeout(reapplyDebounceTimer);
-        console.log("Continuous translation observers stopped.");
-    };
+        const full = '<!doctype html>\n' + document.documentElement.outerHTML;
+        sessionStorage.setItem(pathKey, full);
+    })
 }
 
-// async function handleTranslateFirstLoad() {
-//     const cached = sessionStorage.getItem(pathKey);
-
-//     // 🔹 1. If cached already, restore instantly
-//     if (cached) {
-//         console.log("Loaded from sessionStorage:", pathKey);
-//         restoreTranslatedBody(cached);
-//         document.body.style.visibility = "visible";
-
-//         // 🔹 Let Google keep translating (don’t stop at cached version)
-//         const userLang = (navigator.language || "en").split("-")[0];
-//         if (userLang !== "en") {
-//             forceReapplyTranslation(userLang);
-//         }
-
-//         // 🔹 Keep saving updates (incremental caching)
-//         let saveTimer;
-//         const observer = new MutationObserver(() => {
-//             clearTimeout(saveTimer);
-//             saveTimer = setTimeout(() => {
-//                 try {
-//                     saveTranslated()
-//                     console.log("✅ Updated cached translation incrementally");
-//                 } catch (e) {
-//                     console.warn("⚠️ Couldn’t update translation cache:", e);
-//                 }
-//             }, 700);
-//         });
-//         observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-
-//         return true;
-//     }
-
-//     // 🔹 2. Detect browser language
-//     const userLang = (navigator.language || "en").split("-")[0];
-//     console.log(userLang);
-//     if (userLang === "en") {
-//         console.log("English browser detected, skipping translation.");
-//         document.body.style.visibility = "visible";
-//         return true;
-//     }
-
-//     // 🔹 3. Show loader
-//     const loadingHTML = `
-//           <div class="wait-loading-section" id="wait-loading-section">
-//             <div class="loading-spinner"></div>
-//           </div>`;
-//     document.body.insertAdjacentHTML("beforebegin", loadingHTML);
-
-//     // 🔹 4. Load Google Translate script
-//     function loadGoogleTranslate() {
-//         return new Promise((resolve, reject) => {
-//             if (window.google && window.google.translate) return resolve();
-//             const gtScript = document.createElement("script");
-//             gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-//             gtScript.async = true;
-//             gtScript.onerror = reject;
-//             document.head.appendChild(gtScript);
-//             window.googleTranslateElementInit = () => {
-//                 new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
-//                 resolve();
-//             };
-//         });
-//     }
-
-//     // 🔹 5. Wait until translation stabilizes (no DOM changes for 800ms)
-//     function waitForFullTranslation(timeout = 10000, idle = 800) {
-//         return new Promise((resolve) => {
-//             let lastChange = Date.now();
-//             let resolved = false;
-
-//             const observer = new MutationObserver(() => {
-//                 lastChange = Date.now();
-//             });
-
-//             observer.observe(document.body, { childList: true, subtree: true, characterData: true });
-
-//             const interval = setInterval(() => {
-//                 if (resolved) return;
-//                 const now = Date.now();
-
-//                 if (now - lastChange >= idle) {
-//                     cleanup(true);
-//                 }
-//                 if (now - lastChange >= timeout) {
-//                     cleanup(false);
-//                 }
-//             }, 250);
-
-//             function cleanup(success) {
-//                 if (resolved) return;
-//                 resolved = true;
-//                 observer.disconnect();
-//                 clearInterval(interval);
-//                 resolve(success);
-//             }
-//         });
-//     }
-
-//     // 🔹 6. Save translated body only
-//     function saveTranslated() {
-//         try {
-//             sessionStorage.setItem(pathKey, document.body.innerHTML);
-//             console.log("✅ Saved translated body to sessionStorage");
-//         } catch (err) {
-//             console.warn("⚠️ Failed to save translated page:", err);
-//         }
-//     }
-
-//     try {
-//         await loadGoogleTranslate();
-//         const translated = await waitForFullTranslation(10000, 800);
-//         if (translated) {
-//             saveTranslated();
-//         } else {
-//             console.warn("⚠️ Translation not fully detected before timeout");
-//         }
-//         forceReapplyTranslation(userLang);
-//         console.log("Translation applied for language:", userLang);
-//     } catch (err) {
-//         console.error("❌ Translation error:", err);
-//     } finally {
-//         // 🔹 7. Clean up loader + show page
-//         const loaderEl = document.getElementById("wait-loading-section");
-//         if (loaderEl) loaderEl.remove();
-//         document.body.style.visibility = "visible";
-//     }
-
-
-//     return true;
-// }
 
 async function handleTranslateFirstLoad() {
     const pathKey = sessionKeyForPath();
@@ -468,12 +280,12 @@ async function handleTranslateFirstLoad() {
 
     // Load GT and attempt initial translation
     try {
-    const loadingHTML = `
+        const loadingHTML = `
           <div class="wait-loading-section" id="wait-loading-section">
             <div class="loading-spinner"></div>
           </div>`;
         document.body.insertAdjacentHTML("beforebegin", loadingHTML);
-        
+
         await loadGoogleTranslateAndApply(userLang);
 
         // Wait for initial translation stabilization
@@ -523,6 +335,10 @@ function handleInputFocusFix() {
 
 window.onload = async () => {
     await handleTranslateFirstLoad();
+
+    const alertMessage = document.querySelector(".alert-message");
+    alertMessage.innerHTML = "";
+    alertMessage.style.display = "none";
 
     if (!document.querySelector("link[rel='preload'][as='font']")) {
         const link = document.createElement("link");
@@ -871,14 +687,6 @@ function handleAlert(
         fadeAlert();
         return;
     } else {
-        function blurAllInputs() {
-            ["input", "textarea", "select"].forEach(sel => {
-                document.querySelectorAll(sel).forEach(el => el.blur());
-            });
-        }
-
-        parent.addEventListener("transitionstart", blurAllInputs);
-
         div = document.createElement("div");
         div.classList.add("alert-div", "zoom-in");
 

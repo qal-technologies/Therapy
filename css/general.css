@@ -954,3 +954,11 @@ section .player button svg {
   fill: white !important;
   color: white !important;
 }
+
+.skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame {
+  display: none !important;
+}
+
+body {
+  top: 0px !important;
+}
