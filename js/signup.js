@@ -156,6 +156,12 @@ window.addEventListener('load', async () => {
         const pwd = regPassword.value.trim();
         const confirm = confirmPassword.value.trim();
 
+        if (errorMsg2.classList.contains("active") && pwd.length >=3 ) {
+              errorMsg2.textContent = "";
+              regPassword.style.borderColor = "var(--accent)";
+              errorMsg2.classList.remove("active");
+        }
+        
         regPassword.addEventListener("blur", () => {
           const pwd = regPassword.value.trim();
 
@@ -172,13 +178,7 @@ window.addEventListener('load', async () => {
           }
         });
 
-        if (errorMsg2.classList.contains("active") && pwd.length >=3 ) {
-              errorMsg2.textContent = "";
-              regPassword.style.borderColor = "var(--accent)";
-              errorMsg2.classList.remove("active");
-            }
-
-        if (confirm.length >= 3) {
+        if (confirm.length > 3) {
           if (pwd !== confirm) {
             errorMsg.textContent = "Passwords do not match";
             confirmPassword.style.borderColor = "red";
