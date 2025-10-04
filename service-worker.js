@@ -1,4 +1,6 @@
-const CACHE_NAME = "charlotte-cache-v98099";
+// service-worker.js
+const CACHE_NAME = "charlotte-cache-v1900";
+const TRANSLATED_CACHE_NAME = "charlotte-translated-v1900"; 
 
 // Split caches for better control
 const STATIC_ASSETS = [
@@ -43,7 +45,8 @@ const STATIC_ASSETS = [
 
 // External assets (Google Translate)
 const EXTERNAL_ASSETS = [
-    "https://translate.google.com/translate_a/element.js?cb=initTranslate"];
+    "https://translate.google.com/translate_a/element.js?cb=initTranslate"
+];
 
 // Install
 self.addEventListener("install", event => {
@@ -52,7 +55,6 @@ self.addEventListener("install", event => {
             return cache.addAll([...STATIC_ASSETS, ...EXTERNAL_ASSETS]);
         }).catch(err => console.error("Caching failed:", err))
     );
-
     self.skipWaiting();
 });
 
@@ -70,8 +72,38 @@ self.addEventListener("fetch", event => {
         return; // skip caching, fetch live
     }
 
-    // Network-first for HTML, CSS, JS
-    if (url.pathname.endsWith(".js") || url.pathname.endsWith(".css") || url.pathname.endsWith(".html")) {
+    // If HTML request -> try translated cache first (exact URL)
+    if (event.request.destination === 'document' || url.pathname.endsWith(".html")) {
+        event.respondWith((async () => {
+            const tCache = await caches.open(TRANSLATED_CACHE_NAME);
+            const matched = await tCache.match(event.request);
+            if (matched) {
+                // Serve the full translated HTML from translated cache
+                return matched;
+            }
+
+            // Fallback: network-first then populate translated cache (so future visits can use translated copy)
+            try {
+                const networkResp = await fetch(event.request);
+                // store the network response into the normal static cache for offline fallback
+                const c = await caches.open(CACHE_NAME);
+                c.put(event.request, networkResp.clone());
+                return networkResp;
+            } catch (err) {
+                // If network fails, try normal cache
+                const fallback = await caches.match(event.request);
+                if (fallback) return fallback;
+                // Last resort: return a basic response
+                return new Response('<!doctype html><html><head><meta charset="utf-8"><title>Offline</title></head><body><h1>Offline</h1></body></html>', {
+                    headers: { "Content-Type": "text/html" }
+                });
+            }
+        })());
+        return;
+    }
+
+    // Network-first for JS/CSS (get latest; update cache)
+    if (url.pathname.endsWith(".js") || url.pathname.endsWith(".css")) {
         event.respondWith(
             fetch(event.request).then(fetchResp => {
                 return caches.open(CACHE_NAME).then(cache => {
@@ -83,8 +115,7 @@ self.addEventListener("fetch", event => {
         return;
     }
 
-
-    // Cache-first strategy for static + translate
+    // Cache-first strategy for static + external assets
     if ([...STATIC_ASSETS, ...EXTERNAL_ASSETS].some(asset => url.href.includes(asset))) {
         event.respondWith(
             caches.match(event.request).then(resp => {
@@ -99,23 +130,24 @@ self.addEventListener("fetch", event => {
         return;
     }
 
-    // Default: network first, fallback to cache
+    // Default: network-first, fallback to cache
     event.respondWith(
         fetch(event.request).catch(() => caches.match(event.request))
     );
 });
 
-// Activate
+// Activate - cleanup old caches except our current ones
 self.addEventListener("activate", event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME) {
+                    if (cacheName !== CACHE_NAME && cacheName !== TRANSLATED_CACHE_NAME) {
                         return caches.delete(cacheName);
                     }
                 })
             );
         })
     );
+    self.clients.claim();
 });

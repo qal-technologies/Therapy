@@ -101,6 +101,7 @@ div#body {
   z-index: -99999999;
   user-select: none;
   display: block;
+  flex: 1;
 
   overflow-x: hidden;
   overflow-scrolling: touch;
@@ -111,7 +112,12 @@ div#body {
 }
 
 body {
+  overflow: hidden !important;
   visibility: hidden;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+
 }
 
 a#scrollUp {
@@ -935,4 +941,16 @@ div.skiptranslate {
     border-left: 10px dotted var(--blue);
     border-radius: 50%;
   }
+}
+
+#banner-upper .message button svg, #sessions div.upper-title .player svg {
+  fill: var(--primary) !important;
+}
+
+section .player button svg {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  fill: white !important;
+  color: white !important;
 }

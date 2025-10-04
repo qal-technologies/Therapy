@@ -3,10 +3,10 @@ import { getUserData } from "./database.js";
 import handleAlert from './general.js';
 import BOOK from './books.js';
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     handleAuthStateChange(async (user) => {
         if (!user) {
-            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register" }]);
+            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register", type:"secondary" }]);
         }
 
         if (user) {

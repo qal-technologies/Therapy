@@ -1161,7 +1161,7 @@ async function initializePaymentFlow(e, state, elements) {
 }
 
 
-document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("load", (e) => {
     handleAuthStateChange(async (user) => {
         if (user) {
             const state = initializeState();

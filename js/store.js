@@ -34,3 +34,200 @@ Just parts and sections of it.
 13. Payment summary descriptions
 14. Credit card wording, especially when declined or when asked to choose another payment method. 
 */
+
+
+
+const TRANSLATED_CACHE_NAME = "charlotte-translated-v1900";
+
+function sessionKeyForPath() {
+    return `translated:${window.location.pathname}`;
+}
+
+async function saveTranslatedToSessionAndSW() {
+    try {
+        const key = sessionKeyForPath();
+        sessionStorage.setItem(key, document.body.innerHTML);
+
+        if ('caches' in window) {
+            try {
+                const fullHtml = '<!doctype html>\n' + document.documentElement.outerHTML;
+                const cache = await caches.open(TRANSLATED_CACHE_NAME);
+                await cache.put(window.location.href, new Response(fullHtml, {
+                    headers: { "Content-Type": "text/html" }
+                }));
+                console.log("Saved translated page to SW cache");
+            } catch (swErr) {
+                console.warn("Failed saving translated page to SW cache:", swErr);
+            }
+        }
+    } catch (err) {
+        console.warn("Failed to save translated page:", err);
+    }
+}
+
+function pageIsTranslated() {
+    const htmlEl = document.documentElement;
+    return htmlEl.classList.contains("translated") ||
+        htmlEl.classList.contains("translated-ltr") ||
+        htmlEl.classList.contains("translated-rtl");
+}
+
+async function handleTranslateFirstLoad() {
+    const key = sessionKeyForPath();
+    const cached = sessionStorage.getItem(key);
+
+    if (cached) {
+        document.body.innerHTML = cached;
+        const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+        if (loader) loader.remove();
+
+        document.body.style.visibility = "visible";
+
+        console.log("Loaded translated content from sessionStorage");
+        return true;
+    }
+
+
+    return new Promise((resolve) => {
+        const loadingHTML = `
+          <div class="wait-loading-section" id="wait-loading-section">
+            <div class="loading-spinner"></div>
+          </div>`;
+        document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+        // if (pageIsTranslated()) {
+        //     saveTranslatedToSessionAndSW().finally(() => {
+        //         cleanup();
+        //         resolve(true);
+        //     });
+        //     return;
+        // }
+
+        if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+            const meta = document.createElement("meta");
+            meta.name = "google";
+            meta.content = "notranslate";
+            document.head.appendChild(meta);
+        }
+
+        function loadGoogleTranslate() {
+            if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
+
+            const gtScript = document.createElement("script");
+            gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
+            gtScript.async = true;
+            document.head.appendChild(gtScript);
+
+            gtScript.onload = () => {
+                console.log("startedd....")
+            }
+            gtScript.onerror = () => {
+                console.warn("Failed to load Google Translate script");
+                cleanup();
+                resolve(false);
+            };
+        }
+
+        let done = false;
+        const TRANSLATION_MAX_WAIT_MS = 80000;
+
+        const fallbackTimeout = setTimeout(() => {
+            if (!done) {
+                console.warn("Translation timeout, proceeding without translation.");
+                cleanup();
+                resolve(false);
+            }
+        }, TRANSLATION_MAX_WAIT_MS);
+
+
+        window.initTranslate = function () {
+            try {
+                new google.translate.TranslateElement({
+                    pageLanguage: "en",
+                    includedLanguages: "fr,es,de,it",
+                    autoDisplay: false
+                }, "google_translate_element");
+
+            } catch (err) {
+                console.error("Google Translate init failed:", err);
+                cleanup();
+                resolve(false);
+            }
+
+            const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+            console.log(userLang);
+            if (userLang === "en") {
+                clearTimeout(fallbackTimeout);
+                cleanup();
+                resolve(false);
+                return;
+            }
+
+            const selectTryInterval = setInterval(() => {
+                const select = document.querySelector(".goog-te-combo");
+                if (select) {
+                    clearInterval(selectTryInterval);
+                    select.value = userLang;
+                    select.dispatchEvent(new Event("change"));
+
+                    waitForTranslation().then(async () => {
+                        done = true;
+                        clearTimeout(fallbackTimeout);
+                        if (pageIsTranslated()) {
+                            await saveTranslatedToSessionAndSW();
+                            cleanup();
+                            resolve(true);
+                        } else {
+                            cleanup();
+                            resolve(false);
+                        }
+                    }).catch((err) => {
+                        console.warn("waitForTranslationFinish failed:", err);
+                        cleanup();
+                        resolve(false);
+                    });
+                }
+            }, 150);
+
+            setTimeout(() => {
+                clearInterval(selectTryInterval);
+            }, 9000);
+        };
+
+        function waitForTranslation() {
+            return new Promise((res, rej) => {
+                const htmlEl = document.documentElement;
+                const timeout = setTimeout(() => {
+                    observer.disconnect();
+                    rej("translation detection timeout");
+                }, 8000);
+
+                const observer = new MutationObserver(() => {
+                    if (htmlEl.classList.contains("translated") ||
+                        htmlEl.classList.contains("translated-ltr") ||
+                        htmlEl.classList.contains("translated-rtl")) {
+                        clearTimeout(timeout);
+                        observer.disconnect();
+
+                        setTimeout(() => res(), 1000);
+                    }
+                });
+
+                observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
+            });
+        }
+
+        function cleanup() {
+            clearTimeout(fallbackTimeout);
+            const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+            if (loader) loader.remove();
+            console.log("removing loading....")
+            document.body.style.visibility = "visible";
+            console.log("cleaned....")
+        }
+
+        loadGoogleTranslate();
+    });
+}

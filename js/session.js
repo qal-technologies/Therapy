@@ -4,6 +4,8 @@ import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
 
 
+window.addEventListener("load", () => {
+
 const sessionTypes = [
   {
     type: "virtual",
@@ -111,8 +113,6 @@ const audioSrc = {
     "it": `${BASE_PATHS.audio}/session-italian.mp3`
   }
 };
-
-window.addEventListener("DOMContentLoaded", () => {
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
 

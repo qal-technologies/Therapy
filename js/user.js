@@ -2,6 +2,9 @@ import { handleAuthStateChange, logout } from './auth.js';
 import { getUserData, getUserPayments, getCartItems } from './database.js';
 import handleAlert from './general.js';
 
+
+// --- INITIALIZATION ---
+window.addEventListener('load', () => {
 // Payslip modal functionality
 const modal = document.getElementById('payslipModal');
 
@@ -168,7 +171,7 @@ function setupEventListeners() {
   const closeModal = document.getElementById('closeModal');
   if (closeModal) {
     closeModal.addEventListener('click', () => {
-      modal.style.display = 'none';
+      modal?.style.display = 'none';
     });
   }
 
@@ -180,8 +183,6 @@ function setupEventListeners() {
   });
 }
 
-// --- INITIALIZATION ---
-window.addEventListener('DOMContentLoaded', () => {
   handleAuthStateChange(async (user) => {
     const body = document.querySelector('body');
     body.style.display = 'block';

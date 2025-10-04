@@ -576,7 +576,7 @@ div#details-div {
   padding-top: 10vh;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: rgba(255, 255, 255, 0.99);
   z-index: 99999;
   justify-content: center;
@@ -603,7 +603,7 @@ div#details-div .details-top {
 #details-div button:first-child {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   background-color: var(--accentTrans);
   backdrop-filter: blur(10px);
   color: var(--link);

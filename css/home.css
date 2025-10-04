@@ -876,7 +876,8 @@ section#discover {
 
 section .player button svg {
   font-size: 28px;
-  width:28px;
-  height:28px;
+  width: 28px;
+  height: 28px;
   fill: white !important;
+  color: white !important;
 }

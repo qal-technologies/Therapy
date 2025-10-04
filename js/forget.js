@@ -1,7 +1,7 @@
 import handleAlert from './general.js';
 import { changePassword } from "./auth.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("load", () => {
     const emailInput = document.getElementById("forgot-email");
     const resetButton = document.getElementById("forgot-button");
 

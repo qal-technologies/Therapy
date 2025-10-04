@@ -93,7 +93,7 @@ function setupEventListeners(userId) {
     });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     handleAuthStateChange((user) => {
         if (user) {
             renderCart(user.uid);

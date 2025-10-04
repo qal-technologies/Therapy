@@ -3,8 +3,9 @@ import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
 
+window.addEventListener('load', async () => {
 const reviews = [
-	 [
+	[
 		{
 			name: "Vale´rie",
 			from: "France",
@@ -148,9 +149,8 @@ const HOME_AUDIO_SRC = {
 		"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
 	}
 };
-
-window.addEventListener("DOMContentLoaded", () => {
-	let user = true;
+	
+	let offlineUser = false;
 
 	const language = navigator.language;
 	const testimonies = document.querySelector("section#testimonies");
@@ -164,7 +164,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	const audioMessage = document.querySelector('#banner audio#audio-message');
 	const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
 	const allAudio = document.querySelectorAll("audio");
-	
+
 	const bannerBTN = document.querySelector("a.register");
 	const BTNText = bannerBTN.firstElementChild;
 
@@ -173,12 +173,13 @@ window.addEventListener("DOMContentLoaded", () => {
 	audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
 	audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
-	if (user) {
+	if (offlineUser) {
 		bannerBTN.href = "/html/main/Book.html";
 		BTNText.innerHTML = "BOOK NOW";
 	};
 
 	playBTN.addEventListener('click', () => {
+		console.log("Play button clicked");
 		if (!audioMessage2.paused) {
 			listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -247,6 +248,9 @@ window.addEventListener("DOMContentLoaded", () => {
                   />
                 </svg>`;
 	})
+
+	testimonies.innerHTML = "";
+	testimonies2.innerHTML = "";
 
 	testimonies.innerHTML = reviews[0].map((review) => {
 		return `
@@ -388,6 +392,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	`;
 	}).join("");
 
+	sessions.innerHTML = "";
 	sessions.innerHTML += sessionTypes.map((session) => {
 		const details = {
 			name: session.name,
@@ -607,9 +612,10 @@ ${session.type == "inner" ?
 
 
 	handleAuthStateChange(async (user) => {
+		offlineUser = user;
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
-		waitlistBTN.disabled = userdata.waitlist;
+		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
 
 		if (!userdata.waitlist) {
 			waitlistBTN.addEventListener("click", async () => {
@@ -646,8 +652,8 @@ ${session.type == "inner" ?
 				else {
 					handleAlert(
 						"Joining the waitlist requires you to be logged in. Please log in to continue",
-								"blur",
-								true, "🌸 <br/> Members Only",
+						"blur",
+						true, "🌸 <br/> Members Only",
 						true,
 						[{
 							text: "LOGIN", onClick: () => { handleRedirect("/html/regs/Signup.html") }, type: "primary"
@@ -657,8 +663,11 @@ ${session.type == "inner" ?
 				}
 			});
 		} else {
-			waitlistBTN.style.fontSize = "13.5px";
-			waitlistBTN.textContent = '✅ Added to waitlist!';
+			if (waitlistBTN) {
+
+				waitlistBTN.style.fontSize = "13.5px";
+				waitlistBTN.textContent = '✅ Added to waitlist!';
+			}
 		}
 	});
 });
