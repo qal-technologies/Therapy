@@ -1,3 +1,11 @@
+import handleAlert from "/js/general.js";
+import { getUserData, updateUserData } from "./database.js";
+import { handleAuthStateChange } from "./auth.js";
+import { handleRedirect } from "./general.js";
+
+
+window.addEventListener("load", () => {
+
 const sessionTypes = [
   {
     type: "virtual",
@@ -8,10 +16,10 @@ const sessionTypes = [
       "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
     button: "BOOK NOW",
     bonus: [
-      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
-      "BONUS! Exclusive discounts from event sponsors",
+      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+      "BONUS! Exclusive discounts from session sponsors",
       "5+ hours of live online content",
-      "Event recordings and additional resources",
+      "Session recordings and additional resources",
       "Guided workshops, live polling, and more for interactive learning",
       "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
     ]
@@ -58,7 +66,7 @@ const sessionTypes = [
 
 const faq = [
   {
-    question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session — whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
+    question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session, whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
   },
   {
     question: "What is the difference between a virtual and in-person session?", answer: "Virtual sessions happen securely online (video call) and are just as personal and transformative. In-person sessions take place in a private, serene setting in Monaco or Paris, allowing for deeper connection, presence, and healing energy."
@@ -67,7 +75,7 @@ const faq = [
     question: "Are the sessions confidential?", answer: "Absolutely. Every conversation with Charlotte is completely private, sacred, and protected. Your story, emotions, and healing remain between you and her alone."
   },
   {
-    question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards,debit cards and gift cards, bank transfer, and PayPal to ensure flexibility and security."
+    question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards, debit cards and paysafecard 16 digit prepaid codes to ensure flexibility and security."
   },
   {
     question: "What happens after I make a payment?",
@@ -105,48 +113,16 @@ const audioSrc = {
     "it": `${BASE_PATHS.audio}/session-italian.mp3`
   }
 };
+  const language = navigator.language;
+  const lang = language.toLowerCase().substring(0, 2);
 
-let timer;
-function handleAlert(message) {
-  const parent = document.querySelector(".alert-message");
-  const div = document.querySelector(".alert-div");
-  const text = document.querySelector(".alert-message .alert-text");
-  const close = document.querySelector(".alert-message .alert-button");
-
-  if (parent.classList.contains("fadeOut")) {
-    parent.classList.remove("fadeOut");
-    div.classList.remove("zoom-out");
-  }
-
-  parent.style.display = "flex";
-  text.innerHTML = message;
-
-  close.addEventListener("click", () => {
-    clearTimeout(timer);
-
-    const adding = div.classList.add("zoom-out");
-
-    text.innerHTML = "";
-    parent.classList.add("fadeOut");
-
-    timer = adding && setTimeout(() => {
-      parent.style.display = "none";
-    }, 1000);
-  })
-
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-    const language = navigator.language;
-    const lang = language.toLowerCase().substring(0, 2);
-
-    const sessions = document.querySelector("section#sessions");
-    const FAQ = document.querySelector('section#faq div.answers');
+  const sessions = document.querySelector("section#sessions");
+  const FAQ = document.querySelector('section#faq div.answers');
 
 
-    const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
+  const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
 
-    audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+  audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
   sessions.innerHTML += sessionTypes.map((session) => {
     const details = {
@@ -223,40 +199,20 @@ window.addEventListener("DOMContentLoaded", () => {
 ${bonuses.join('')}
 		  </div>
 
+		 ${session.type == "inner" ?
+        `
 		  <div id="waitlist" class="${session.type}">
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
-		  </div>
+		  </div>` : ``
+      }
         </div>`
   }).join("");
 
-    const listenBTN = document.querySelector("#sessions button#play2");
+  const listenBTN = document.querySelector("#sessions button#play2");
 
-    if (listenBTN && audioMessage2) {
-        listenBTN.addEventListener('click', () => {
-            if (!audioMessage2.paused) {
-                listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-                audioMessage2.pause();
-            } else {
-                listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-                audioMessage2.play();
-            }
-        });
-    }
-
-    audioMessage2.addEventListener("ended", () => {
+  if (listenBTN && audioMessage2) {
+    listenBTN.addEventListener('click', () => {
+      if (!audioMessage2.paused) {
         listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -269,21 +225,46 @@ ${bonuses.join('')}
                     d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
                   />
                 </svg>`;
-    });
+        audioMessage2.pause();
+        audioMessage2.currentTime = 0;
 
-    FAQ.innerHTML = faq.map((faq) => {
-        const checks = () => {
-            if (faq.extra) {
-                return `
+      } else {
+        listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+        audioMessage2.play();
+      }
+    });
+  }
+
+  audioMessage2.addEventListener("ended", () => {
+    listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+  });
+
+  FAQ.innerHTML = faq.map((faq) => {
+    const checks = () => {
+      if (faq.extra) {
+        return `
 				<a class="extra" target="_blank" href="${faq.extra.link}">
 				${faq.extra.text.toLowerCase()}
 				</a>
 				`
-            } else {
-                return ""
-            }
-        }
-        return `
+      } else {
+        return ""
+      }
+    }
+    return `
 		     <div class="answer">
             <div class="upper">
               <p class="question">${faq.question}?</p>
@@ -296,9 +277,9 @@ ${bonuses.join('')}
             </div>
           </div>
 		`
-    }).join("");
+  }).join("");
 
-    const questions = document.querySelectorAll(" section#faq .answers div.answer");
+  const questions = document.querySelectorAll(" section#faq .answers div.answer");
 
   questions.forEach((question) => {
 
@@ -329,33 +310,59 @@ ${bonuses.join('')}
     });
   });
 
-  const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
-	waitlistBTN.addEventListener("click", (e) => {
-		if (waitlistBTN.disabled == true) return;
+  handleAuthStateChange(async (user) => {
+    const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
+    const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
+    waitlistBTN.disabled = userdata.waitlist;
 
-		waitlistBTN.disabled = true;
-		waitlistBTN.ariaDisabled = true;
-		waitlistBTN.textContent = 'Adding you to the queue...';
+    if (!userdata.waitlist) {
+      waitlistBTN.addEventListener("click", async () => {
+        if (user) {
+          if (waitlistBTN.disabled == true) return;
 
-		setTimeout(() => {
-			handleAlert(`
-Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+          waitlistBTN.disabled = true;
+          waitlistBTN.ariaDisabled = true;
+          waitlistBTN.style.fontSize = "12px";
+          waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-<br/>
-📩 What’s next:
-<br/>
-You’ll receive a confirmation email shortly.
-<br/>
-We’ll personally notify you the moment a spot becomes available.
-<br/>
-Priority is given in the order sign-ups are received, so you’re in line.
+          await updateUserData(user.uid, { waitlist: true });
 
-<br/><br/>
-Until then, breathe deeply and know,your sanctuary is waiting.`
-			);
+          setTimeout(() => {
+            handleAlert(`
+ Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+ 
+ <br/>
+ 📩 What’s next:
+ <br/>
+ You’ll receive a confirmation email shortly.
+ <br/>
+ We’ll personally notify you the moment a spot becomes available.
+ <br/>
+ Priority is given in the order sign-ups are received, so you’re in line.
+ 
+ <br/><br/>
+ Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]);
 
-			waitlistBTN.textContent = '✅ Added to waitlist!';
-		}, 2000);
-	});
+            waitlistBTN.style.fontSize = "13.5px";
+            waitlistBTN.textContent = '✅ Added to waitlist!';
+          }, 1000);
+        }
+        else {
+          handleAlert("Joining the waitlist requires you to be logged in. Please log in to continue",
+            "blur",
+            true, "🌸 <br/> Members Only",
+            true,
+            [{
+              text: "LOGIN", onClick: () => handleRedirect("/html/regs/Signup.html?type=login"), type: "primary"
+            }, {
+              text: "Close", onClick: "closeAlert", type: "secondary"
+            }]);
+        }
+      });
+    } else {
+      waitlistBTN.style.fontSize = "13.5px";
+      waitlistBTN.textContent = '✅ Added to waitlist!';
+    }
+  });
 });

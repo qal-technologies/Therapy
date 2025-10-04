@@ -5,21 +5,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+  <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/general.css">
   <link rel="stylesheet" href="/css/view-book.css">
   <link rel="stylesheet" href="/css/pages.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 
   <title>Compagnon Féminin - Book Viewer</title>
 </head>
 
 <body>
+  <div class="alert-message">
+  </div>
+
   <!-- ===== Top Bar ===== -->
   <header class="top-toolbar">
     <div class="brand" title="Book tools">
       <span class="title" id="bookTitle">Compagnon Féminin</span>
     </div>
     <div class="search-wrap">
-    <input type="search" id="search" class="search" placeholder="Search by chapter or page..." />
+      <input type="search" id="search" class="search" placeholder="Search by chapter or page..." />
     </div>
 
     <!-- Inline tools for wide screens -->
@@ -46,7 +54,8 @@
 
       <div class="tool-row">
         <label>Sound</label>
-        <button title="Sound Button" class="icon-btn soundToggle"  data-hook="sound"><i class="fas fa-volume-up"></i></button>
+        <button title="Sound Button" class="icon-btn soundToggle" data-hook="sound"><i
+            class="fas fa-volume-up"></i></button>
       </div>
 
       <div class="tool-row">
@@ -102,12 +111,13 @@
   </div>
 
   <!-- Sound -->
-  <audio id="flipAudio">
+  <audio id="flipAudio" class="page-audio">
     <source src="/src/audio/page-flip.mp3" type="audio/mpeg">
   </audio>
 </body>
 
 </html>
 
-<script src="/js/books.js"></script>
-<script src="/js/view-book.js"></script>
+<script src="/js/books.js" type="module"></script>
+<script src="/js/view-book.js" type="module"></script>
+<script src="/js/general.js" type="module"></script>

@@ -12,6 +12,11 @@
       content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session"
     />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    
+
+
     <!-- FOR STYLING -->
     <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
@@ -25,6 +30,7 @@
     <title>Books - A Space to Heal</title>
   </head>
   <body class="fadeIn">
+  <div class="alert-message"></div>
     <div id="body">
       <header id="header">
         <div class="logoSection">
@@ -56,7 +62,7 @@
           <!--a class="nav-main" href="/html/main/Donation.html">
             <p id="nav-text">DONATION</p>
           </a-->
-          <a class="nav-main" href="/html/main/ViewBook.html">
+          <a class="nav-main active" href="/html/main/ViewBook.html">
             <div class="underline"></div>
             <p id="nav-text" class="active">BOOKS</p>
           </a>
@@ -68,7 +74,7 @@
         </div>
       </header>
 
-<section id="banner">
+<section id="banner" class="preview-banner" >
   <div class="rightIntro circle"></div>
   <div class="top">
   <p class="top-text dropdown">I didn't write this books to be sold. I wrote it to survive.</p>
@@ -78,14 +84,14 @@
   </div>
   </div>
 
-<audio src="/src/audio/book-audio.mp3" id="book-audio-message" hidden></audio>
+<audio src="/src/audio/book-english.mp3" class="page-audio" id="book-audio-message" hidden></audio>
 
 
   <div class="under-text-div">
 <div class="player moveUpNfadeIn">
   <p class="indication">Listen >></p>
 
-  <button id="play" type="button" title="Play Audio Message">
+  <button id="preview-play" type="button" title="Play Audio Message">
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
       <path
         d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393" />
@@ -106,154 +112,160 @@
 </section>
 
 <section id="preview">
-<div class="preview-details-div sub-preview">
-<h2>COMPAGNON FÉMININ</h2>
+  <div class="preview-details-div sub-preview">
+    <h2>COMPAGNON FÉMININ</h2>
 
-<div class="details">
-<p>
-<b>A book that speaks to every woman you have been, and every woman you are becoming.</b>
-<br />
-You see her on the cover. 
-Half of her is young, glowing, full of dreams.
-The other half carries years, stories, and scars.
+    <div class="details">
+      <p>
+        <b>A book that speaks to every woman you have been and every woman you are becoming.</b>
+        <br />
+        You see her on the cover.
+        Half of her is young, glowing, full of dreams.
+        The other half carries years, stories, and scars.
 
-<br />
-She is you.
-All of you
-the girl you once were,
-the woman you are now,
-and the one you are still becoming.
-<br />
-<br />
+        <br />
+        She is you.
+        All of you:
+        the girl you once were,
+        the woman you are now,
+        and the one you are still becoming.
+        <br />
+        <br />
 
-<b>The Moment This Book Was Born</b>
-<br />
-I began writing this book on a night when I sat alone on my kitchen floor, holding a cup of cold tea I’d forgotten to
-drink. I had been strong for everyone else,again,and no one noticed I was crumbling inside.
-<br />
-That night, I promised myself: If I ever find the way back to myself, I will leave a map for other women.
-<br />
-This book is that map.
-<br />
-This Is Not Just a Book
-<br />
+        <b>The Moment This Book Was Born</b>
+        <br />
+        I began writing this book on a night when I sat alone on my kitchen floor, holding a cup of cold tea I’d
+        forgotten to
+        drink. I had been strong for everyone else again, and no one noticed I was crumbling inside.
+        <br />
+        That night, I promised myself: If I ever find the way back to myself, I will leave a map for other women.
+        <br />
+        This book is that map.
+        <br />
+        This Is Not Just a Book
+        <br />
 
-It is a companion for your soul,through heartbreak, through silence, through the nights you’ve forgotten how to breathe.
-<br />
-<br />
+        It is a companion for your soul, through heartbreak, through silence, through the nights you’ve forgotten how to
+        breathe.
+        <br />
+        <br />
 
-<b>It was written for:</b>
-<br />
-The woman who holds everyone else together, but has no one to hold her.
-Therapists in Paris, Milan, and Rome call this emotional overfunctioning,giving without replenishment. You fear that if
-you let go, everything will collapse. And yet you quietly wonder: If I disappeared, would anyone notice?
-<br />
-<br />
+        <b>It was written for:</b>
+        <br />
+        The woman who holds everyone else together, but has no one to hold her.
+        Therapists in Paris, Milan, and Rome call this emotional overfunctioning, giving without replenishment. You fear
+        that if
+        you let go, everything will collapse. And yet you quietly wonder: If I disappeared, would anyone notice?
+        <br />
+        <br />
 
-The woman who has loved until she is empty and been left with nothing.
-This is affective exhaustion,pouring out love until there is nothing left for you. You’ve mistaken self-erasure for
-devotion, and when they left, all that remained was the echo of your own absence.
+        The woman who has loved until she is empty and been left with nothing.
+        This is affective exhaustion: pouring out love until there is nothing left for you. You’ve mistaken self-erasure
+        for
+        devotion, and when they left, all that remained was the echo of your own absence.
 
-<br />
-<br />
+        <br />
+        <br />
 
-The woman who hides her pain behind a perfect smile.
-In France, it’s la façade impeccable. In Italy, il sorriso di resistenza. You’ve mastered the art of looking fine while
-storms rage inside. But the armor is heavy, and you long for someone who loves the woman without the smile.
-<br />
+        The woman who hides her pain behind a perfect smile.
+        In France, it’s la façade impeccable. In Italy, il sorriso di resistenza. You’ve mastered the art of looking
+        fine while
+        storms rage inside. But the armor is heavy, and you long for someone who loves the woman without the smile.
+        <br />
 
-The woman who feels time slipping through her fingers.
-Therapists call it temporal anxiety,the fear that the “right time” for love, children, career, or adventure has already
-passed. The years slip like sand through your hands, and you whisper in the dark: Did I live, or did I just wait?
+        The woman who feels time slipping through her fingers.
+        Therapists call it temporal anxiety, the fear that the “right time” for love, children, career, or adventure has
+        already
+        passed. The years slip like sand through your hands, and you whisper in the dark, 'Did I live, or did I just
+        wait?'
 
-<br />
-<br />
-<b>Inside These 412 Pages, You Will:</b>
-<br />
+        <br />
+        <br />
+        <b>Inside These 363 Pages, You Will:</b>
+        <br />
 
-> Meet yourself again, before the disappointments, before the doubt.
-<br />
+        > Meet yourself again, before the disappointments, before the doubt.
+        <br />
 
-> Heal wounds you didn’t even know you still carried.
-<br />
+        > Heal wounds you didn’t even know you still carried.
+        <br />
 
-> Release the guilt, the shame, and the voices that told you you weren’t enough.
-<br />
+        > Release the guilt, the shame, and the voices that told you you weren’t enough.
+        <br />
 
-> Reclaim your softness without losing your strength.
-<br />
+        > Reclaim your softness without losing your strength.
+        <br />
 
-> Finally understand why you have felt lost,and exactly how to come home to yourself.
+        > Finally understand why you have felt lost, and exactly how to come home to yourself.
 
-<br />
-<br />
+        <br />
+        <br />
 
-Every word is written like a hand reaching for yours in the dark.
-Every chapter is a mirror, showing you your fragility and your power.
-Every page is proof that someone finally, truly sees you.
+        Every word is written like a hand reaching for yours in the dark.
+        Every chapter is a mirror, showing you your fragility and your power.
+        Every page is proof that someone finally, truly sees you.
 
-<br />
-<br />
-<b>💬 Women are saying:</b>
-<br />
+        <br />
+        <br />
+        <b>💬 Women are saying:</b>
+        <br />
 
-> “The book I didn’t know I was waiting for my whole life.”
-<br />
+        > “The book I didn’t know I was waiting for my whole life.”
+        <br />
 
-> “It saved me without trying to fix me.”
-<br />
+        > “It saved me without trying to fix me.”
+        <br />
 
-> “I bought one for myself,then six more for every woman I love.”
+        > “I bought one for myself, then six more for every woman I love.”
 
-<br />
-<br />
+        <br />
+        <br />
 
-Why You Can’t Walk Away Without It
-<br />
+        Why You Can’t Walk Away Without It
+        <br />
 
-If you leave this page without this book, life will go on, but you will keep carrying the weight you were never meant to
-bear alone.
-<br />
+        If you leave this page without this book, life will go on, but you will keep carrying the weight you were never
+        meant to
+        bear alone.
+        <br />
 
-This is your mirror.
-Your healing.
-Your reminder that you were never broken,only buried under the years.
-<br />
+        This is your mirror.
+        Your healing.
+        Your reminder that you were never broken, only buried under the years.
+        <br />
 
-Compagnon Féminin will not just sit on your shelf.
-It will live on your nightstand, travel in your bag, and rest in your hands on the days you feel like disappearing.
-<br />
+        Compagnon Féminin will not just sit on your shelf.
+        It will live on your nightstand, travel in your bag, and rest in your hands on the days you feel like
+        disappearing.
+        <br />
 
-It is more than a book.
-<br />
+        It is more than a book.
+        <br />
 
-It is the voice you needed when you thought you had no one.
-<br />
-<br />
-<br />
+        It is the voice you needed when you thought you had no one.
+        <br />
+        <br />
+        <br />
 
-🌹 Click <b>“GET YOUR COPY”</b>
-<br />
+        🌹 Click <b>“GET YOUR COPY”.</b>
+        <br />
 
-She has been waiting for you.</p>
-</div>
-</div>
+        She has been waiting for you.
+      </p>
+    </div>
+  </div>
 
-<div class="preview-image-div sub-preview" data-id="book-1" >
-<img src="/src/images/book1.jpg" alt="BOOK 1" class="preview-image">
+  <div class="preview-image-div sub-preview" data-id="book-1">
+    <img src="/src/images/book1.jpg" alt="BOOK 1" class="preview-image">
 
-<button type="button" title="GET YOUR COPY" class="get-copy">GET YOUR COPY</button>
-</div>
-
-
+    <button type="button" title="GET YOUR COPY" class="get-copy">GET YOUR COPY</button>
+  </div>
 </section>
 
 <!-- Details Modal -->
 <div id="details-div" class="modal moveUp">
-<div class="alert-message"><p class="alert-text menu-fadeIn">My message</p></div>
-
 <div class="details-top">
-<button type="button" title="Close Details" class="close-details"><</button>
+<button type="button" title="Close Details" class="close-details">&lt;</button>
 
 <a href="/html/main/cart.html" title="View Cart" class="open-cart">
   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart4"
@@ -270,8 +282,11 @@ She has been waiting for you.</p>
   </div>
 </div>
 	  </div>
+
+    <div id="google_translate_element" style="display:none;"></div>
+
 	</body>
 </html>
 
-<script src="/js/general.js"></script>
-<script src="/js/shop.js"></script>
+<script src="/js/shop.js" type="module"></script>
+<script src="/js/general.js" type="module"></script>

@@ -1,43 +1,49 @@
+import handleAlert from "/js/general.js";
+import { getUserData, updateUserData } from "./database.js";
+import { handleAuthStateChange } from "./auth.js";
+import { handleRedirect } from "./general.js";
+
+window.addEventListener('load', async () => {
 const reviews = [
-	first=[
-	{
-		name: "Vale´rie",
-		from: "France",
-		message:
-			"I booked the session thinking maybe she'd just say something comforting. I didn't expect to cry. I didn't expect to feel seen. and I never imagined that a woman I admired from afar could hold space for me like that. Charlotte didn't just listen, she reached inside the silence I had lived with for years.",
-	},
-	{
-		name: "Ana",
-		from: "Spain",
-		message:
-			"After my breakup, I felt like a shadow. One conversation with Charlotte helped me find my voice again. I left the session calmer, wiser, and ready to start living for real. This wasn't therapy. It was transformation.",
-	},
-	{
-		name: "Michael",
-		from: "UK",
-		message:
-			"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
+	[
+		{
+			name: "Vale´rie",
+			from: "France",
+			message:
+				"I booked the session thinking maybe she'd just say something comforting. I didn't expect to cry. I didn't expect to feel seen. and I never imagined that a woman I admired from afar could hold space for me like that. Charlotte didn't just listen, she reached inside the silence I had lived with for years.",
+		},
+		{
+			name: "Ana",
+			from: "Spain",
+			message:
+				"After my breakup, I felt like a shadow. One conversation with Charlotte helped me find my voice again. I left the session calmer, wiser, and ready to start living for real. This wasn't therapy. It was transformation.",
+		},
+		{
+			name: "Michael",
+			from: "UK",
+			message:
+				"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
 		},
 	],
 
-	second=[
-	{
-		name: "Nadia",
-		from: "Germany",
-		message:
-			"At first, I wasn't sure it would be real. But everything felt so personal. The emails, the voice messages, even how the payment was confirmed - it was all so human. I booked one session and ended up booking three. I feel held, not judged.",
-	},
-	{
-		name: "Davide",
-		from: "Italy",
-		message:
-			"Being part of her Inner Circle was beyond anything I've ever experienced. She didn't speak like a celebrity. She spoke like someone who knows. Charlotte is pure energy. If you ever get the chance to book, take it. I'd pay double.",
-	},
-	{
-		name: "Tatiana",
-		from: "Portugal",
-		message:
-			"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
+	[
+		{
+			name: "Nadia",
+			from: "Germany",
+			message:
+				"At first, I wasn't sure it would be real. But everything felt so personal. The emails, the voice messages, even how the payment was confirmed - it was all so human. I booked one session and ended up booking three. I feel held, not judged.",
+		},
+		{
+			name: "Davide",
+			from: "Italy",
+			message:
+				"Being part of her Inner Circle was beyond anything I've ever experienced. She didn't speak like a celebrity. She spoke like someone who knows. Charlotte is pure energy. If you ever get the chance to book, take it. I'd pay double.",
+		},
+		{
+			name: "Tatiana",
+			from: "Portugal",
+			message:
+				"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
 		},
 	]
 ];
@@ -52,10 +58,10 @@ const sessionTypes = [
 			"You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
 		button: "BOOK NOW",
 		bonus: [
-			"BONUS! Exclusive live webinar with Charlotte Casiraghi before the event",
-			"BONUS! Exclusive discounts from event sponsors",
+			"BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+			"BONUS! Exclusive discounts from session sponsors",
 			"5+ hours of live online content",
-			"Event recordings and additional resources",
+			"Session recordings and additional resources",
 			"Guided workshops, live polling, and more for interactive learning",
 			"Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
 		]
@@ -71,19 +77,19 @@ const sessionTypes = [
 		button: "BOOK NOW",
 		bonus: [
 			"Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
-			"Bonus healing kit provided at session","Follow-up reflection message","Access to session notes and personal progress tools"
+			"Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
 		]
 	},
 	{
 		type: "inner",
 		route: "inner",
 		name: "INNER CIRCLE EXPERIENCE",
-		extra:"This plan is sold out for now",
+		extra: "This plan is sold out for now",
 		price: "6,850",
 		description:
 			"For those who seek not just a session, but a sanctuary.",
 		button: "SOLD OUT",
-		bonus:["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
+		bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
 	},
 	{
 		type: "community",
@@ -95,13 +101,13 @@ const sessionTypes = [
 			"Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
 		button: "BOOK NOW",
 		bonus: [
-			"Same full session as others","Gentle sliding scale available on request", "Private and confidential","Follow-up resources sent digitally", "Option for one-time check-in after the session"
+			"Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
 		]
 	},
 ];
 
 const faq = [
-	{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation — raw, compassionate, and transformative — designed to help you reconnect with your inner truth." },
+	{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation, raw, compassionate, and transformative, designed to help you reconnect with your inner truth." },
 	{
 		question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
 	},
@@ -118,64 +124,33 @@ const faq = [
 		answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
 	},
 	{
-		question: "Why do you accept gift cards as a payment method?", answer: "Gift cards allow fans from all over the world — regardless of country or banking restrictions — to easily and securely support their healing journey. They also help us confirm your place faster and securely."
+		question: "What is a Paysafecard and how do I pay with it?", answer: "A Paysafecard is like cash in the form of a receipt.<br/>You don’t need a bank account, credit card, or computer knowledge to use it. This is how it works, step by step:<p><b>Step 1: Buy a Paysafecard</b><br/>Go to a supermarket, petrol station, or kiosk near you. Look for the Paysafecard logo. At the counter, ask for a Paysafecard of the amount you need (for example: 50€, 100€, etc.).</p><p><b>Step 2: Get Your Secure Code</b><br/>The cashier will give you a small receipt. On it, you will see a 16-digit number (this is your secret code).<br/>Keep it safe,it works just like cash.</p><p><b>Step 3: Pay Online with Your Code</b><br/>When you come back to this website to pay, you will see a box that says:<br/>“Enter your Paysafecard code.”<br/>Type in the 16-digit number from your receipt.</p><p><b>Step 4: Confirm Payment</b><br/>After typing the number, simply press “Pay Now with Paysafecard.”<br/>Your payment is confirmed instantly.<br/>No personal details, no bank needed.</p><p><b>Important Tips:</b><br/>Think of the Paysafecard like using cash,safe, simple, and private.<br/> If the amount is bigger than one card, you can add more than one code until the full payment is covered.<br/>Always keep your receipt safe until payment is completed.</p>"
 	}
 ]
 
-const BASE_PATHS = {
+const HOME_BASE_PATH = {
 	audio: "/src/audio"
 };
 
 //Audio source:
-const audioSrc = {
+const HOME_AUDIO_SRC = {
 	banner: {
-		"en": `${BASE_PATHS.audio}/home-english.mp3`,
-		"fr": `${BASE_PATHS.audio}/home-french.mp3`,
-		"es": `${BASE_PATHS.audio}/home-spanish.mp3`,
-		"de": `${BASE_PATHS.audio}/home-german.mp3`,
-		"it": `${BASE_PATHS.audio}/home-italian.mp3`
+		"en": `${HOME_BASE_PATH.audio}/home-english.mp3`,
+		"fr": `${HOME_BASE_PATH.audio}/home-french.mp3`,
+		"es": `${HOME_BASE_PATH.audio}/home-spanish.mp3`,
+		"de": `${HOME_BASE_PATH.audio}/home-german.mp3`,
+		"it": `${HOME_BASE_PATH.audio}/home-italian.mp3`
 	},
 	session: {
-		"en": `${BASE_PATHS.audio}/session-english.mp3`,
-		"fr": `${BASE_PATHS.audio}/session-french.mp3`,
-		"es": `${BASE_PATHS.audio}/session-spanish.mp3`,
-		"de": `${BASE_PATHS.audio}/session-german.mp3`,
-		"it": `${BASE_PATHS.audio}/session-italian.mp3`
+		"en": `${HOME_BASE_PATH.audio}/session-english.mp3`,
+		"fr": `${HOME_BASE_PATH.audio}/session-french.mp3`,
+		"es": `${HOME_BASE_PATH.audio}/session-spanish.mp3`,
+		"de": `${HOME_BASE_PATH.audio}/session-german.mp3`,
+		"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
 	}
 };
-
-let timer;
-function handleAlert(message) {
-	const parent = document.querySelector(".alert-message");
-	const div = document.querySelector(".alert-div");
-	const text = document.querySelector(".alert-message .alert-text");
-	const close = document.querySelector(".alert-message .alert-button");
-
-	if (parent.classList.contains("fadeOut")) {
-		parent.classList.remove("fadeOut");
-		div.classList.remove("zoom-out");
-	}
-
-	parent.style.display = "flex";
-	text.innerHTML = message;
-
-	close.addEventListener("click", () => {
-		clearTimeout(timer);
-
-		const adding = div.classList.add("zoom-out");
-
-		text.innerHTML = "";
-		parent.classList.add("fadeOut");
-
-		timer = adding && setTimeout(() => {
-			parent.style.display = "none";
-		}, 1000);
-	})
-
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-	let user = true;
+	
+	let offlineUser = false;
 
 	const language = navigator.language;
 	const testimonies = document.querySelector("section#testimonies");
@@ -188,21 +163,23 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	const audioMessage = document.querySelector('#banner audio#audio-message');
 	const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
+	const allAudio = document.querySelectorAll("audio");
 
 	const bannerBTN = document.querySelector("a.register");
 	const BTNText = bannerBTN.firstElementChild;
 
 	const lang = language.toLowerCase().substring(0, 2);
-	
-	audioMessage.src = audioSrc.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
-	audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
-	if (user) {
+	audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
+	audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+
+	if (offlineUser) {
 		bannerBTN.href = "/html/main/Book.html";
 		BTNText.innerHTML = "BOOK NOW";
 	};
 
 	playBTN.addEventListener('click', () => {
+		console.log("Play button clicked");
 		if (!audioMessage2.paused) {
 			listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -237,8 +214,23 @@ window.addEventListener("DOMContentLoaded", () => {
 			playBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
+			allAudio.forEach(audio => {
+				audio.pause();
+				audio.currentTime = 0;
+				audio.innerHTML = `<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+			});
 			audioMessage.play();
-			audioMessage2.pause()
 		}
 	});
 
@@ -256,7 +248,10 @@ window.addEventListener("DOMContentLoaded", () => {
                   />
                 </svg>`;
 	})
-	
+
+	testimonies.innerHTML = "";
+	testimonies2.innerHTML = "";
+
 	testimonies.innerHTML = reviews[0].map((review) => {
 		return `
 		<div id="testimony">
@@ -397,6 +392,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	`;
 	}).join("");
 
+	sessions.innerHTML = "";
 	sessions.innerHTML += sessionTypes.map((session) => {
 		const details = {
 			name: session.name,
@@ -471,10 +467,12 @@ window.addEventListener("DOMContentLoaded", () => {
 			<div id="message" class="${session.type}">
 ${bonuses.join('')}
 		  </div>
-
+${session.type == "inner" ?
+				`
 		  <div id="waitlist" class="${session.type}">
 		  <a id="waitBTN">JOIN WAITLIST  >></a>
-		  </div>
+		  </div>` : ""
+			}
         </div>`
 	}).join("");
 
@@ -517,8 +515,23 @@ ${bonuses.join('')}
 				listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
+				allAudio.forEach(audio => {
+					audio.innerHTML = `<svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audio.pause();
+					audio.currentTime = 0;
+				});
 				audioMessage2.play();
-				audioMessage.pause();
 			}
 		});
 	}
@@ -591,38 +604,70 @@ ${bonuses.join('')}
 					a.style.transform = 'rotate(0deg)';
 				});
 
-				lower.style.maxHeight = '300px';
+				lower.style.maxHeight = "1000px";
 				arrow.style.transform = 'rotate(90deg)';
 			}
 		});
 	});
-	const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 
-	waitlistBTN.addEventListener("click", (e) => {
-		if (waitlistBTN.disabled == true) return;
 
-		waitlistBTN.disabled = true;
-		waitlistBTN.ariaDisabled = true;
-		waitlistBTN.textContent = 'Adding you to the queue...';
+	handleAuthStateChange(async (user) => {
+		offlineUser = user;
+		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
+		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
+		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
 
-		setTimeout(() => {
-			handleAlert(`
-Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+		if (!userdata.waitlist) {
+			waitlistBTN.addEventListener("click", async () => {
+				if (user) {
+					if (waitlistBTN.disabled == true) return;
 
-<br/>
-📩 What’s next:
-<br/>
-You’ll receive a confirmation email shortly.
-<br/>
-We’ll personally notify you the moment a spot becomes available.
-<br/>
-Priority is given in the order sign-ups are received, so you’re in line.
+					waitlistBTN.disabled = true;
+					waitlistBTN.ariaDisabled = true;
+					waitlistBTN.style.fontSize = "12px";
+					waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-<br/><br/>
-Until then, breathe deeply and know,your sanctuary is waiting.`
-			);
+					await updateUserData(user.uid, { waitlist: true });
 
-			waitlistBTN.textContent = '✅ Added to waitlist!';
-		}, 2000);
+					setTimeout(() => {
+						handleAlert(`
+ Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
+ 
+ <br/>
+ 📩 What’s next:
+ <br/>
+ You’ll receive a confirmation email shortly.
+ <br/>
+ We’ll personally notify you the moment a spot becomes available.
+ <br/>
+ Priority is given in the order sign-ups are received, so you’re in line.
+ 
+ <br/><br/>
+ Until then, breathe deeply and know,your sanctuary is waiting.`, "blur", true, `✨ You're on the List!`, true, [{ text: "OK", onClick: "closeAlert" }]);
+
+						waitlistBTN.style.fontSize = "13.5px";
+						waitlistBTN.textContent = '✅ Added to waitlist!';
+					}, 1000);
+				}
+				else {
+					handleAlert(
+						"Joining the waitlist requires you to be logged in. Please log in to continue",
+						"blur",
+						true, "🌸 <br/> Members Only",
+						true,
+						[{
+							text: "LOGIN", onClick: () => { handleRedirect("/html/regs/Signup.html") }, type: "primary"
+						}, {
+							text: "Close", onClick: "closeAlert", type: "secondary"
+						}]);
+				}
+			});
+		} else {
+			if (waitlistBTN) {
+
+				waitlistBTN.style.fontSize = "13.5px";
+				waitlistBTN.textContent = '✅ Added to waitlist!';
+			}
+		}
 	});
 });

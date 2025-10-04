@@ -1,36 +1,40 @@
-
-
-              
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=7" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="color-scheme" content="light">
-    <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
 
-    <!-- FOR STYLING -->
-    <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=7" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="color-scheme" content="light">
+  <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- FOR STYLING -->
+  <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
-    <link rel="stylesheet" href="/css/general.css" />
-    <link rel="stylesheet" href="/css/animation.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+  
 
-    <link rel="stylesheet" href="/css/payment.css" />
 
-    <link rel="stylesheet" href="/css/media.css" />
+  <link rel="stylesheet" href="/css/general.css" />
+  <link rel="stylesheet" href="/css/animation.css" />
 
-    <title>Payment - A Space to Heal</title>
-    </head>
+  <link rel="stylesheet" href="/css/payment.css" />
 
-  <body class="fadeIn">
-   
-    <section id="display" class="parent">
-      <!-- Payment Details  -->
-      <div class="payment-summary-container payment-section" id="payment-details">
+  <link rel="stylesheet" href="/css/media.css" />
+
+  <title>Payment - A Space to Heal</title>
+</head>
+
+<body class="fadeIn">
+<div class="alert-message">
+  
+</div>
+
+  <section id="display" class="parent">
+    <!-- Payment Details  -->
+    <div class="payment-summary-container payment-section" id="payment-details">
       <h2>Payment Summary</h2>
 
       <div id="payment-amount" class="amount">$0.00</div>
@@ -50,13 +54,13 @@
 
       <div class="proceed-div">
         <button id="proceed-button" class="continue-btn">
-          <p>Proceed to Payment</p>
+          Proceed to Payment
         </button>
       </div>
     </div>
 
-      <!-- Currency selection section  -->
-      <div class="payment-section" id="currency-section">
+    <!-- Currency selection section  -->
+    <div class="payment-section" id="currency-section">
       <h2 class="section-title">Select Currency</h2>
       <p class="section-description">Choose the currency you're paying with.</p>
 
@@ -117,8 +121,8 @@
       </div>
     </div>
 
-      <!-- Conversion section  -->
-      <div class="payment-section" id="conversion-section">
+    <!-- Conversion section  -->
+    <div class="payment-section" id="conversion-section">
       <h2 class="section-title">Currency Conversion</h2>
 
       <div class="option-list">
@@ -135,31 +139,40 @@
       </div>
     </div>
 
-      <!-- Payment methodd section  -->
-      <div class="payment-section" id="payment-method-section">
+    <!-- Payment methodd section  -->
+    <div class="payment-section" id="payment-method-section">
       <h2 class="section-title">Select Payment Method</h2>
       <p class="section-description">Choose your method of payment.</p>
 
       <div class="option-list">
-        <label class="option-item">
-          <div class="payment-icon">
-            <img src="/src/images/credit-card.png" alt="cc-logo" srcset="" width="50" height="50">
-          </div>
+        <label class="option-item card">
           <span class="option-label">Credit or Debit Card</span>
+          <div class="payment-icons">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa Card logo"
+              srcset="" width="50" height="50">
+
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Master Card logo"
+              srcset="" width="50" height="50">
+
+
+            <img src="https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png"
+              alt="American Express Logo" srcset="" width="40" height="40">
+          </div>
         </label>
 
-        <label class="option-item">
-          <div class="payment-icon paysafe">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Paysafecard_logo.svg/1200px-Paysafecard_logo.svg.png" alt="paysafe-logo">
+        <label class="option-item paysafe">
+          <div class="label-details paysafe">
+            <img src="/src/images/paysafe.png" alt="paysafe-logo">
+            <span class="option-subtext">Pay without a credit or debit card</span>
           </div>
-          <div class="label-details">
+
+          <div class="label-details" style="display: none;">
             <span class="option-label">paysafecard</span>
-            <span class="option-subtext">Pay with a prepaid code</span>
           </div>
         </label>
         <!-- <label class="option-item">
           <div class="payment-icon">
-            <img src="/src/images/paypal.png" alt="paypal-logo" srcset="" width="60" height="50" style="border-radius: 50%;">
+            <img src="/src/images/paypal.png" alt="paypal-logo" srcset="" width="60" height="50">
           </div>
           <span class="option-label">PayPal</span>
         </label>
@@ -178,20 +191,18 @@
       </div>
 
       <div class="proceed-div">
-        <button class="continue-btn" id="make-payment-btn">Continue</button>
+        <button class="continue-btn" id="make-payment-btn" disabled>Continue</button>
       </div>
     </div>
 
-      <!-- Loading Section -->
-      <div class="payment-section loading-section" id="loading-section">
+    <!-- Loading Section -->
+    <div class="payment-section loading-section active" id="loading-section">
       <div class="loading-spinner"></div>
-      <h3 class="loading-title">Processing Your Payment</h3>
-      <p class="loading-text">Please wait while we process your payment. This may take a few moments.</p>
     </div>
-<!--Testing-->
   </section>
 </body>
+
 </html>
 
-<script src="/js/general.js"></script>
-<script src="/js/payment.js"></script>
+<script src="/js/general.js" type="module"></script>
+<script src="/js/payment.js" type="module"></script>

@@ -159,7 +159,7 @@ I owe thanks to many who made this book possible:
 `,
                 `
 <p>
-<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at <i>AnOther Magazine, Above,</i> and <i>The Independent</i>; Chanel’s communications team, for believing in my voice; the editors at Éditions du Seuil, who brought <i>Archipel des Passions</i> to life.
+<b>Academic and Creative Collaborators:</b> Professors at the Sorbonne and Catholic Institute of Paris; the teams at <i>Another Magazine, Above,</i> and <i>The Independent</i>; Chanel’s communications team, for believing in my voice; the editors at Éditions du Seuil, who brought <i>Archipel des Passions</i> to life.
 </p>
 
 <p>
@@ -944,17 +944,11 @@ As a philosopher and a mother, a friend and a lifelong student of life, I have s
              <h3>A Promise of Transformation</h3>
 <p>
 Let me start with a promise: change is possible, and you have more strength within you than you can imagine. No matter how deep a hole you feel stuck in right now, you can rise out of it. This book will guide you step by step, not with abstract theories but with tangible advice, exercises, and stories of others like you who found their way through. By the end of
-</p>
-
-<p>
 our journey together, you will have not only healed wounds you once thought permanent, but also discovered new aspects of yourself, a stronger, more confident, more joyful you. This isn't an idle promise; I have seen it happen. I have seen women who thought their life was over bloom again like a phoenix rising from ashes. Your transformation can be just as real.
 </p>
 
 <p>
 You might be thinking, "Is that really possible for me?" Or, "I've tried before and failed." It's natural to be skeptical, after all, life can be terribly hard. But sometimes the difference between those who overcome and those who remain stuck is not that one is more deserving or lucky, it's often having the right support and guidance. Think of this book as your support system in print form. I wrote it to be that trusty guide and friend you can
-</p>
-
-<p>
 always carry with you. We will draw on deep insights from psychology and philosophy, but in a way that's easy to understand. More importantly, we will apply them to your daily life. With each chapter, you'll gain practical tools and comforting wisdom. It's like packing a toolkit for life's journey, and trust me, you'll want these tools when the road gets rough.
 </p>
 
@@ -971,7 +965,7 @@ Before we dive in, let me share a bit of why I’m here with you. As a young wom
 </span>
 
 <p>
-One such story stays with me: a dear friend (I’ll call her "A") who fell into a deep depression after losing her job, something she had tied her identity to for years. When we first talked, she whispered through tears that she felt like a failure and feared she would never feel happy again. But somewhere in that darkness, she found a tiny spark of fight. Together we explored small steps, a morning walk here, a journaling exercise there, and gradually, A found her way out of the fog. She not only recovered, she started a new career path that fulfilled her in ways her old job never did. Her story is just one example. Throughout this book, I will share more like it: of women who faced heartbreak, loneliness, self-doubt, and how they turned things around (to be detailed later)
+One such story stays with me: a dear friend (I’ll call her "A") who fell into a deep depression after losing her job, something she had tied her identity to for years. When we first talked, she whispered through tears that she felt like a failure and feared she would never feel happy again. But somewhere in that darkness, she found a tiny spark of fight. Together we explored small steps, a morning walk here, a journaling exercise there, and gradually, A found her way out of the fog. She not only recovered, she started a new career path that fulfilled her in ways her old job never did. Her story is just one example. Throughout this book, I will share more like it: of women who faced heartbreak, loneliness, self-doubt, and how they turned things around (to be detailed later).
 </p>
             `,
 
@@ -983,7 +977,7 @@ The Weight of the World – When Sadness and Depression Overwhelm
 </p>
 
 <p>
-On a gray afternoon, Anna sat by her bedroom window, watching raindrops trail down the glass. It had been weeks since she lost her job, a career she had poured her soul into for nearly a decade. Since that day, something in Anna had crumbled. She woke each morning with a heavy ache in her chest, as if an invisible weight pressed down on her. The simplest tasks, brushing her hair, replying to a friend’s text felt monumentally difficult. Instead of the ambitious, cheerful woman her friends once knew, Anna felt like a hollow shell of herself. One evening, her best friend called, concerned. Anna wanted to answer, but she just couldn’t find the energy. What’s wrong with me? she wondered, tears rolling silently. Why can’t I snap out of this?
+On a grey afternoon, Anna sat by her bedroom window, watching raindrops trail down the glass. It had been weeks since she lost her job, a career she had poured her soul into for nearly a decade. Since that day, something in Anna had crumbled. She woke each morning with a heavy ache in her chest, as if an invisible weight pressed down on her. The simplest tasks, brushing her hair, replying to a friend’s text felt monumentally difficult. Instead of the ambitious, cheerful woman her friends once knew, Anna felt like a hollow shell of herself. One evening, her best friend called, concerned. Anna wanted to answer, but she just couldn’t find the energy. <i>What’s wrong with me?</i> she wondered, tears rolling silently. <i>Why can’t I snap out of this?</i>
 </p>
 
 <p>
@@ -996,7 +990,7 @@ Anna's story might resonate with you. Depression, often described as a "dark clo
             <div class="inner-content text-left align-flex-start">
 If you have felt this way, take heart: you are far from alone, and nothing is wrong with you as a person. You are struggling with a condition that many others have faced.
 
-            <p>In fact, women are about twice as likely as men to experience depression in their lifetime. This higher prevalence isn’t because women are “weaker” (a harmful myth), it’s due to a mix of biological factors (like hormonal fluctuations) and social pressures (like the roles and stresses many women juggle).
+            <p>In fact, women are about twice as likely as men to experience depression in their lifetime. This higher prevalence isn’t because women are “weaker” (a harmful myth); it’s due to a mix of biological factors (like hormonal fluctuations) and social pressures (like the roles and stresses many women juggle).
             </p>
 
 
@@ -1039,19 +1033,19 @@ Depression often comes hand-in-hand with anxiety, those constant worries and fea
  <h4>Why Depression Hits Women Hard</h4>
 
 <p>
-It’s worth briefly exploring why women might be twice as likely to face depression. Part of it is biological hormones can play a role in mood. Think of times like premenstrual days, postpartum period (after having a baby), and menopause; these are all moments of intense hormonal flux, and for some of us, mood swings or depression can be triggered then. There’s also the fact that women often shoulder enormous emotional burdens. Socially, women are often raised to be caretakers, we take care of children, partners, family members, often putting our own needs last. </p>
+It’s worth briefly exploring why women might be twice as likely to face depression. Part of it is biological : hormones can play a role in mood. Think of times like premenstrual days, postpartum period (after having a baby), and menopause; these are all moments of intense hormonal flux, and for some of us, mood swings or depression can be triggered then. There’s also the fact that women often shoulder enormous emotional burdens. Socially, women are often raised to be caretakers, we take care of children, partners, family members, often putting our own needs last. </p>
             </div>
             `,
 
                 `
-            <p>We might suppress anger or pain to avoid being seen as “difficult.” We may strive to meet high expectations at work while still being the primary caregiver at home. All this pressure can make one feel trapped and exhausted, a fertile ground for depression to take root if we don’t get support or relief.</p>
+            <p>We might suppress anger or pain to avoid being seen as “difficult.” We may strive to meet high expectations at work while still being the primary caregiver at home. All this pressure can make one feel trapped and exhausted, creating a fertile ground where depression can take root if we don’t seek support or relief.</p>
 
 
 <p>
 Society also sometimes sends messages that discourage women from prioritizing their mental health. You might have heard phrases like “stop being so emotional” or “she’s hysterical” used to dismiss women’s feelings. These unfair stereotypes might make you hesitate to seek help or talk about your sadness, for fear of seeming “weak” or “overly emotional.” Let’s set the record straight: emotions are human, and feeling deeply is not a flaw. Women often do express emotions more freely, which is actually a strength, not a weakness. It’s just that when those emotions become overwhelmingly painful, we need compassion and care, not judgment.
 </p>
 <p>
-Another factor can be trauma. Unfortunately, many women experience some form of trauma in their lifetime, whether it's abuse, harassment, or violence. Such experiences can leave deep emotional scars that sometimes manifest as depression years later. If something bad happened to you and you’ve never really talked about it, it might be one piece of the puzzle in understanding your feelings. We will address healing from traumas in later chapters, you can heal, no matter how old the wound.
+Another factor can be trauma. Unfortunately, many women experience some form of trauma in their lifetime, whether it's abuse, harassment, or violence. Such experiences can leave deep emotional scars that sometimes manifest as depression years later. If something bad happened to you and you’ve never really talked about it, it might be one piece of the puzzle in understanding your feelings. We will address healing from traumas in later chapters. Just know this: you can heal, no matter how old the wound.
 </p>
             `,
 
@@ -1465,7 +1459,7 @@ Lastly, keep hope alive. Life is full of changes, and that means feelings of lon
         </h4>
 
         <p>
-        Loneliness is surprisingly common in our modern, connected world. You can feel lonely even when surrounded by people or active online, being “alone in a crowd” is a real phenomenon, especially as digital interactions often lack true emotional nourishment. Remember that if you feel this way, you are far from alone in that feel
+        Loneliness is surprisingly common in our modern, connected world. You can feel lonely even when surrounded by people or active online, being “alone in a crowd” is a real phenomenon, especially as digital interactions often lack true emotional nourishment. Remember that if you feel this way, you are far from alone in that feeling.
 
         <br/>
         <br/>
@@ -1483,7 +1477,7 @@ Loneliness is not “just in your head”, it impacts mental and physical health
         `,
                 `
 
-Feeling lonely is not a personal failing, it’s a human experience. Nearly everyone feels lonely at some point, and millions feel it right now. It doesn’t mean you’re unlovable or broken; it means you’re human and wired for connection. There is no shame in it. In fact, understanding that loneliness evolved to alert us to our need for others can reframe it as a natural signal (like hunger) rather than a flaw.
+Feeling lonely is not a personal failing, it’s a human experience. Nearly everyone feels lonely at some point, and millions feel it right now. It doesn’t mean you’re unlovable or broken; it means you’re human and wired for connection. There is no shame in it. In fact, understanding that loneliness evolved as a signal reminding us we need others can reframe it as a natural signal (like hunger) rather than a flaw.
 
 <p>
 
@@ -1714,7 +1708,7 @@ Women often carry an invisible backpack filled with guilt and shame related to t
         </div>
         `,
                 `
-        Charlotte Casiraghi, in her philosophical explorations, describes shame as a “hidden, disavowed emotion”, one we bury deep inside because it’s so uncomfortable to face. We often keep shame secret, fearing others will judge us if we reveal it. But unacknowledged shame only grows more powerful in the dark. We become ashamed of feeling ashamed, a vicious cycle that isolates us. If you are carrying shame about your relationship experiences, it can “attack the very foundations of your identity,” as Charlotte notes, making you feel disintegrated and unworthy. For example, a woman who stayed in an abusive relationship might deeply internalize the idea that she’s “broken” or “damaged goods.” Shame whispers that if people really knew what you’ve been through or the “mistakes” you’ve made, they’d think less of you. So you plaster on a brave face and keep the messy truth hidden.
+        In my philosophical explorations, I described shame as a “hidden, disavowed emotion”, one we bury deep inside because it’s so uncomfortable to face. We often keep shame secret, fearing others will judge us if we reveal it. But unacknowledged shame only grows more powerful in the dark. We become ashamed of feeling ashamed, a vicious cycle that isolates us. If you are carrying shame about your relationship experiences, it can “attack the very foundations of your identity,” as Charlotte notes, making you feel disintegrated and unworthy. For example, a woman who stayed in an abusive relationship might deeply internalize the idea that she’s “broken” or “damaged goods.” Shame whispers that if people really knew what you’ve been through or the “mistakes” you’ve made, they’d think less of you. So you plaster on a brave face and keep the messy truth hidden.
 
 <p>
 Yet, counterintuitively, speaking our shame out loud in a safe space robs it of its power. Imagine a close friend confides in you that she feels ashamed for staying with a cheating partner for years. Would you judge her as harshly as she judges herself? Likely not, you’d probably empathize, understanding how love and hope can cloud judgment, and you’d admire that she eventually found the courage to leave. We are kinder to others than to ourselves. So try to extend that compassion inward. Whatever choices you regret or cringe about, view them through a lens of understanding: you made those choices with the knowledge and emotional capacity you had at the time. 
@@ -2019,7 +2013,7 @@ At the core of healing from relationship pain is the beautiful task of reclaimin
         It starts with the radical understanding that you are inherently worthy of love, respect, and happiness, simply because you are you.
 
         <p>
-        Self-worth means valuing yourself not based on external things (like having a partner, or your looks, or others’ approval), but because you recognize your own inherent goodness and significance. It’s about knowing, deep in your soul, that you matter. If your ex made you feel unlovable or “not enough,” it’s time to firmly reject that lie. Often, people who belittle others are projecting their own feelings of inadequacy. Their inability to love you was their failure, not yours. No one’s poor treatment can diminish your true worth, it can only cloud your perception of it. Think of the classic analogy: a $100 bill crumpled and dirtied is still worth $100. You might have been crumpled and dirtied by experience, but your value remains undiminished.
+        Self-worth means valuing yourself not based on external things (like having a partner, or your looks, or others’ approval), but because you recognize your own inherent goodness and significance. It’s about knowing, deep in your soul, that you matter. If your ex made you feel unlovable or “not enough,” it’s time to firmly reject that lie. Often, people who belittle others are projecting their own feelings of inadequacy. Their inability to love you was their failure, not yours. No one’s poor treatment can diminish your true worth, it can only cloud your perception of it. Think of the classic analogy: a €100 bill crumpled and dirtied is still worth €100. You might have been crumpled and dirtied by experience, but your value remains undiminished.
         </p>
 
         To reclaim self-worth, start with self-compassion. Treat yourself as you would a dear friend who’s been through what you have. Would you call her stupid for trusting someone? Would you consider her worthless because someone hurt her? Of course not. You’d likely admire her for her strength and reassure her of all her wonderful qualities. Do this for yourself: list your positive traits, even if it feels hard.
@@ -2058,7 +2052,7 @@ In reclaiming self-worth, one might also find meaning in the pain endured. This 
 Finally, celebrate yourself. Don’t wait for someone else to give you permission to feel good about who you are. Do it yourself. Celebrate not just birthdays or big accomplishments, but the little ones too. Finished that online course? Treat yourself to something nice. Did you resist the temptation to text your toxic ex? Give yourself a mental high-five and maybe journal about how you overcame that. These celebrations solidify the message that you are proud of you.
 `,
                 `
-        As Charlotte Casiraghi and her co-author discussed in Archipelago of the Passions, writing their book meant “accepting ourselves at our most fragile, most human”. Embrace that sentiment for yourself: you can accept the parts of you that feel fragile or flawed, and still know you are worthy and whole. Self-worth doesn’t mean thinking you’re perfect, it means loving yourself even in your imperfection.
+        When I wrote Archipelago of the Passions with my co-author, we spoke often about what it truly meant to write with sincerity. We both came to the same place: that, as its deepest, is about accepting ourselves at our most fragile, our most human. Embrace that sentiment for yourself: you can accept the parts of you that feel fragile or flawed, and still know you are worthy and whole. Self-worth doesn’t mean thinking you’re perfect, it means loving yourself even in your imperfection.
 
         <p>
         Reclaiming your self-worth and inner stability is like stepping into your own power. It might have been lying dormant, but now it’s awakening. You become the author of your story, the captain of your ship. You know that whatever life throws at you, even if another heartbreak occurs down the line, you have the inner resources to navigate it. And that knowledge is priceless. It allows you to approach love and life not from a place of fear, but with openness and confidence.
@@ -2353,7 +2347,7 @@ not, is an act of self-compassion and breaks the old habit of self-critique.
            Finally, remember that self-compassion also allows you to reach out for support. Sometimes the most compassionate thing you can do for yourself is to ask for help, from a friend, a support group, or a therapist. You don’t have to fix your self-esteem all by yourself. In fact, healing often accelerates when we connect with others who understand. There is great comfort in hearing “Me too” from someone who has had similar struggles. It normalizes your experience and reduces the shame. Whether it’s a community of women sharing their journeys or just one person you confide in, give yourself permission to be supported. You are worthy of help and understanding.
 
             <p class="wdth-90p text-center flex column">
-            <i>“When we can let go of what other people think and own our story, we gain access to our worthiness — the feeling that we are enough just as we are and that we are worthy of love and belonging.”</i>
+            <i>“When we can let go of what other people think and own our story, we gain access to our worthiness ,  the feeling that we are enough just as we are and that we are worthy of love and belonging.”</i>
          <b>– Brené Brown.</b>
 </p>
 
@@ -2879,7 +2873,7 @@ Key Takeaways
 <b>Your Beliefs Shape Your Reality:</b> The beliefs you hold about yourself and life have a profound impact on your emotions and behavior. Empowering beliefs (like “I can change”) lead to growth, while limiting beliefs (like “I’m stuck this way”) create stagnation. Remember the wisdom: “With our thoughts, we make the world.” Changing your thoughts can change how you experience life.</span>
 
 <span>
-<b>Meet he Inner Critic:</b> Your inner critic is that harsh internal voice often born from past criticisms or societal pressures. It might think it’s protecting you, but its harshness undermines your self-worth and happiness. Recognize that this voice is learned, and it can be unlearned or retrained.
+<b>Meet the Inner Critic:</b> Your inner critic is that harsh internal voice often born from past criticisms or societal pressures. It might think it’s protecting you, but its harshness undermines your self-worth and happiness. Recognize that this voice is learned, and it can be unlearned or retrained.
 </span>
 
 <span>
@@ -4077,7 +4071,7 @@ Understanding the Fog – What Depression and Anxiety Really Are
 <p>
 <i>Depression and anxiety often feel like a sudden, unwelcome storm:</i> clouding our thoughts and coloring the world in gray. It can really feel this way, as if a fog has settled in your mind. When you’re inside that fog, everything feels heavy and unclear. Margaret Wehrenberg, a psychologist, describes being “in the depression fog” as not being able to “see where we're going”. In this fog, worries whirl like wind, and self-doubt reflects in a funhouse mirror: small problems loom large, and tiny mistakes seem
 
-monumental. Emotions may swing wildly, or feel numb and flat. Physically, it can feel like dragging a heavy weight. Even routine tasks—getting out of bed, making a meal—require enormous effort.
+monumental. Emotions may swing wildly, or feel numb and flat. Physically, it can feel like dragging a heavy weight. Even routine tasks, getting out of bed, making a meal, require enormous effort.
 </p>
 
 
@@ -4290,7 +4284,7 @@ Tiny movement. Even if you don’t “feel like it,” try gentle stretching or 
 </span>
 
 <span>
-Gentle distraction. Play a favorite song (maybe a comforting slow piece), or watch a short clip of a funny animal or a nature scene. Distraction isn’t avoidace, it’s a way to prevent overwhelm.
+Gentle distraction. Play a favorite song (maybe a comforting slow piece), or watch a short clip of a funny animal or a nature scene. Distraction isn’t avoidance, it’s a way to prevent overwhelm.
 </span>
 
 <span>
@@ -4518,7 +4512,7 @@ good and naturally form friendships with fellow volunteers.  (Studies even find 
 Invite someone into your world.  Take a chance: invite a coworker or acquaintance for a quick coffee or walk.  People often appreciate being asked, even if they seem busy.  You could frame it easily: “I’ve enjoyed chatting about books with you, want to continue over a coffee sometime?” Vulnerability like this can be scary, but it’s how deep bonds begin.
 </p>
 
-         e social media with purpose.  Instead of endlessly scrolling, use it to nurture connections.  Reach out with a DM (“How have you been?”), share a funny or inspiring post with a friend, or join a Facebook group or online forum around your hobbies.  Then make a point to meet
+         Use social media with purpose.  Instead of endlessly scrolling, use it to nurture connections.  Reach out with a DM (“How have you been?”), share a funny or inspiring post with a friend, or join a Facebook group or online forum around your hobbies.  Then make a point to meet
 
 up with people you bond with online in real life.  (Remember the internet can help build bridges, if you use it wisely.)
             `,
@@ -4607,7 +4601,7 @@ I remember a woman named Sophie who thought she had found the love of her life. 
 
 <p>
 
-Have you ever felt that way? Not seen by the one you love, or unsure where you stand with them? You’re not alone. Many of us have walked through that fog of emotions—loving someone with all our heart and still feeling lost. In those
+Have you ever felt that way? Not seen by the one you love, or unsure where you stand with them? You’re not alone. Many of us have walked through that fog of emotions, loving someone with all our heart and still feeling lost. In those
 
 moments, it can seem like our own needs and true selves are disappearing. But even in the darkness, a gentle light of self-awareness and hope can guide us forward.
 </p>
@@ -4645,13 +4639,13 @@ communication breaks down or becomes painful. Maybe one of you shuts down or bec
 <span>
 <b>Equality and Balance:</b> A healthy
 
-relationship feels like an equal partnership. You and your partner share responsibilities and make decisions together. There is no strict scorecard of chores or favors—just a sense that each person cares and does their part. In an unbalanced relationship, you may feel like you are giving far more than you receive. Maybe you handle all the household duties, emotional labor, and planning, while your partner seldom does their share. Over time, this imbalance can lead to resentment and exhaustion.
+relationship feels like an equal partnership. You and your partner share responsibilities and make decisions together. There is no strict scorecard of chores or favors, just a sense that each person cares and does their part. In an unbalanced relationship, you may feel like you are giving far more than you receive. Maybe you handle all the household duties, emotional labor, and planning, while your partner seldom does their share. Over time, this imbalance can lead to resentment and exhaustion.
 </span>
 
 <span>
 <b>Freedom and Autonomy:</b> When someone truly loves you, they trust you enough to let you be yourself. You can spend time with your friends, pursue hobbies, and make plans independently. A healthy partner encourages your independence. In an unhealthy situation, there might be possessiveness or control. They may isolate you from loved ones or insist that
 
-you spend all your time on them. If someone makes you feel guilty for spending time on your needs or interests—for example, if they are upset when you want to see your friends or work on your hobbies—that’s a sign of trouble.
+you spend all your time on them. If someone makes you feel guilty for spending time on your needs or interests, for example, if they are upset when you want to see your friends or work on your hobbies, that’s a sign of trouble.
 </span>
 
 <span>
@@ -4668,20 +4662,20 @@ Protecting Your Self-Worth and Identity
 
 Love can be a beautiful thing, but it’s also a place where we can lose ourselves if we’re not careful. When Sophie felt invisible, a part of her identity started to shrink. Perhaps you’ve felt the same: you start hiding your sparkle because your voice didn’t feel welcome, or you stop wearing the dresses that make you feel alive because “they’re not his style.” You might
 
-find yourself making choices just to please him—ignoring your cravings to eat out because he prefers home, or declining invitations to meet your friends because he doesn’t share those interests. Over time, little compromises like these can make you feel like you’re no longer sure who you are without his gaze.
+find yourself making choices just to please him, ignoring your cravings to eat out because he prefers home, or declining invitations to meet your friends because he doesn’t share those interests. Over time, little compromises like these can make you feel like you’re no longer sure who you are without his gaze.
 
 
 <p>
-<i>It’s important to remember:</i> You are whole and valuable on your own. No romantic relationship can add value to who you are except by truly seeing your worth. Your needs, dreams, and passions deserve attention too. If you find yourself changing just to keep someone else happy—losing parts of yourself or making yourself smaller—that is a sign to pause and take a breath. You owe it to yourself to stay true to who you are.
+<i>It’s important to remember:</i> You are whole and valuable on your own. No romantic relationship can add value to who you are except by truly seeing your worth. Your needs, dreams, and passions deserve attention too. If you find yourself changing just to keep someone else happy, losing parts of yourself or making yourself smaller, that is a sign to pause and take a breath. You owe it to yourself to stay true to who you are.
 
 
 </p>
             `,
                 `
 
-Your identity—the things that make you
+Your identity, the things that make you
 
-uniquely you—deserves nurturing within any relationship. Cherish your interests, your way of thinking, your sense of style. These are the colors of your soul, and you must keep them vibrant. Take time for self-reflection: write down what you love about yourself, the goals you still want to chase, and the strengths that have carried you through life. Sharing life with someone else should expand your world, not shrink it. When you maintain your own goals, friendships, and self-care, you bring strength back into the relationship too.
+uniquely you, deserves nurturing within any relationship. Cherish your interests, your way of thinking, your sense of style. These are the colors of your soul, and you must keep them vibrant. Take time for self-reflection: write down what you love about yourself, the goals you still want to chase, and the strengths that have carried you through life. Sharing life with someone else should expand your world, not shrink it. When you maintain your own goals, friendships, and self-care, you bring strength back into the relationship too.
 <br/>
 <span>
 Remember, a loving partner will admire your individuality, not fear it. They will stand beside you with pride when you achieve something, and they will encourage you to keep growing. If you feel that loving someone else means giving up who you truly are, that’s a signal to reassess. You matter just as you are, and your self-worth is not an add-on; it is a constant flame that you carry within you.
@@ -4701,7 +4695,7 @@ Many of us unconsciously fall into patterns that can make us vulnerable in love.
 are going unmet. This pattern often stems from a deep fear of conflict and a desire for approval. Holding back your truth ultimately leaves you feeling unseen and empty.
 
 <p>
-<b>Fear of Abandonment:</b> You might find yourself clinging tighter when things get uncertain. Maybe if he doesn’t text back quickly, your heart starts racing with anxiety. You fear that if you assert yourself, he will leave, so you tolerate behaviors you normally wouldn’t. This fear can cause you to hold onto someone who isn’t really present, because the pain of loneliness feels worse than any discomfort in your relationship. If you recognize this pattern, know that you’re not alone—many women share this fear. Gently remind yourself that your worth is not defined by another’s presence.
+<b>Fear of Abandonment:</b> You might find yourself clinging tighter when things get uncertain. Maybe if he doesn’t text back quickly, your heart starts racing with anxiety. You fear that if you assert yourself, he will leave, so you tolerate behaviors you normally wouldn’t. This fear can cause you to hold onto someone who isn’t really present, because the pain of loneliness feels worse than any discomfort in your relationship. If you recognize this pattern, know that you’re not alone. Many women share this fear. Gently remind yourself that your worth is not defined by another’s presence.
 </p>
 
 <p>
@@ -4729,7 +4723,7 @@ healthier dynamic is possible. Each small step you take will bring you closer to
 Communicating Needs and Setting Boundaries
 </h4>
 
-One of the most courageous acts in love is being honest about what you need and drawing clear boundaries. It might feel daunting at first—what if telling him what you need causes tension, or he reacts badly? These fears are natural, but protecting your heart means being brave about your truth.
+One of the most courageous acts in love is being honest about what you need and drawing clear boundaries. It might feel daunting at first. What if telling him what you need causes tension, or he reacts badly? These fears are natural, but protecting your heart means being brave about your truth.
             `,
 
                 `
@@ -4780,9 +4774,9 @@ Leaving an unhealthy relationship or experiencing a breakup often feels like ste
                 `
 
 <span>
-<b>Take Care of Your Body:</b> Emotions affect the body, so nurture it. Eat nourishing meals, get fresh air, and rest when you need to. You don’t have to run a marathon—
+<b>Take Care of Your Body:</b> Emotions affect the body, so nurture it. Eat nourishing meals, get fresh air, and rest when you need to. You don’t have to run a marathon.
 
-sometimes a gentle walk in the park or a warm bath with calming music can do wonders for your spirit.
+Sometimes a gentle walk in the park or a warm bath with calming music can do wonders for your spirit.
 </span>
 
 <span>
@@ -4814,7 +4808,7 @@ Reclaiming Your Heart and Opening to Love Again
 
 As the fog of grief begins to lift, there comes a time when you start to feel your heart expand again. Sophie gradually found that caring for herself, spending time with friends, and focusing on her
 
-passions helped her glow from the inside out. When she finally looked in the mirror one morning, she saw not just someone who had been hurt, but a woman with scars of wisdom and strength. This is the moment you can start to open to love again—but this time, with greater self-trust and wisdom.
+passions helped her glow from the inside out. When she finally looked in the mirror one morning, she saw not just someone who had been hurt, but a woman with scars of wisdom and strength. This is the moment you can start to open to love again, but this time, with greater self-trust and wisdom.
 
 
 <p>
@@ -4823,7 +4817,7 @@ First, keep reminding yourself of your worth each day. Start your morning by say
 <br/>
 When you feel ready, let new people into your life at a pace that feels comfortable. You are wiser now; you know better what
 
-you will and won’t accept. Trust your intuition—it’s a valuable guide. If something feels off in a new connection, it’s okay to slow down or step back. If it feels right, let it blossom. You will be able to recognize if your boundaries are being respected and if you feel genuinely seen.
+you will and won’t accept. Trust your intuition, it’s a valuable guide. If something feels off in a new connection, it’s okay to slow down or step back. If it feels right, let it blossom. You will be able to recognize if your boundaries are being respected and if you feel genuinely seen.
 </p>
 
 
@@ -4833,16 +4827,16 @@ Understand that heartbreak taught you valuable things: the strength you have to 
 
                 `
 
-Remember, opening up again doesn’t mean forgetting the past. It means carrying the lessons forward with gratitude. Keep faith that love—patient,
+Remember, opening up again doesn’t mean forgetting the past. It means carrying the lessons forward with gratitude. Keep faith that love, patient,
 
-kind, respectful love—can and will find its way to you. And when it does, you’ll meet it not as the person who needs saving, but as the woman who already saved herself.
+kind, respectful love, can and will find its way to you. And when it does, you’ll meet it not as the person who needs saving, but as the woman who already saved herself.
 
 <h4>
 Reflection Prompts
 </h4>
 
 
-Take a quiet moment for yourself and reflect. Consider these gentle questions about your heart and your relationships. There are no right or wrong answers—just be honest with yourself. You might write down your thoughts or simply meditate on them:
+Take a quiet moment for yourself and reflect. Consider these gentle questions about your heart and your relationships. There are no right or wrong answers, just be honest with yourself. You might write down your thoughts or simply meditate on them:
 
 <span class="text-italics">
 What do I truly need and deserve in a loving relationship to feel secure and valued?
@@ -4880,7 +4874,7 @@ What brings me joy on my own, and how can I bring more of that into my daily lif
                 `
 
 <p>
-These reflections can illuminate what is most important to you. Keep your answers somewhere safe—perhaps in a journal—and revisit them whenever you need guidance or clarity.
+These reflections can illuminate what is most important to you. Keep your answers somewhere safe, perhaps in a journal, and revisit them whenever you need guidance or clarity.
 </p>
 
 <h4>
@@ -5004,7 +4998,7 @@ When doubts or insecurities creep in, gentle reminders can help ground you. Belo
 </span>
 
 <p>
-Repeat these to yourself as needed—during quiet mornings with coffee or before going to sleep. Let them soak into your heart. You are reminding yourself of a beautiful truth: You are worthy of the best.
+Repeat these to yourself as needed, during quiet mornings with coffee or before going to sleep. Let them soak into your heart. You are reminding yourself of a beautiful truth: You are worthy of the best.
 </p>
             `,
 
@@ -5017,7 +5011,7 @@ Cherished
 </h4>
 
 
-No matter where you stand now—whether you are in a loving partnership, healing from a breakup, or taking time to discover yourself—the truth is this: You deserve a love that celebrates all of who you are.
+No matter where you stand now, whether you are in a loving partnership, healing from a breakup, or taking time to discover yourself, the truth is this: You deserve a love that celebrates all of who you are.
 
 
 <p>
@@ -5028,12 +5022,12 @@ Being single is perfectly okay; it’s a time to reconnect with your own heart. 
 <span>
 Empowerment comes from knowing your worth. Keep faith in yourself. Keep an open, hopeful heart ready to give and receive healthy love. And if you ever doubt
 
-your path, come back to these words. I believe in your strength, in your light, and in the beautiful love story that is being written for you—one where you are respected, seen, and cherished, just as you deserve.
+your path, come back to these words. I believe in your strength, in your light, and in the beautiful love story that is being written for you, one where you are respected, seen, and cherished, just as you deserve.
 
 </span>
 
 <br/>
-Your journey continues, my dear friend. No matter what happens, you are not alone on this path. You carry wisdom within you, and love—gentle and true—will find its way to you in time. Keep that shining flame in your heart alive, and trust that it will guide you to the love that lifts you up.
+Your journey continues, my dear friend. No matter what happens, you are not alone on this path. You carry wisdom within you, and love, gentle and true, will find its way to you in time. Keep that shining flame in your heart alive, and trust that it will guide you to the love that lifts you up.
 
 
             `,
@@ -5433,7 +5427,7 @@ at her heart: Is this all there is? The years have passed in routines of caregiv
 
 <p>
 
-She reflects on her days, worn like well-loved jeans—comfortable but fading. Perhaps she once dreamed of painting, writing, or traveling. Now those dreams seem boxed away with forgotten New Year’s resolutions. In the hush of morning, a gentle yearning stirs: a longing for meaning and joy that is uniquely hers.
+She reflects on her days, worn like well-loved jeans, comfortable but fading. Perhaps she once dreamed of painting, writing, or traveling. Now those dreams seem boxed away with forgotten New Year’s resolutions. In the hush of morning, a gentle yearning stirs: a longing for meaning and joy that is uniquely hers.
 </p>
 
 This is a moment many women know: feeling quietly lost in life’s comfort and chaos, sensing that the soul craves more. But this craving for purpose is as real and fundamental as hunger or thirst.
@@ -5441,7 +5435,7 @@ This is a moment many women know: feeling quietly lost in life’s comfort and c
 
             `,
             `
-Psychologists tell us that seeking purpose is not frivolous daydreaming—it’s the engine that fuels our spirit. Viktor Frankl, a renowned psychiatrist, found that as humans “our primary motive is to search for meaning or purpose in our lives”. In other words, even in our darkest or most mundane hours, our hearts are wired to seek purpose. It is purpose that helps us endure long nights and busy seasons; it gives us a reason to get up with hope in the morning.
+Psychologists tell us that seeking purpose is not frivolous daydreaming, it’s the engine that fuels our spirit. Viktor Frankl, a renowned psychiatrist, found that as humans “our primary motive is to search for meaning or purpose in our lives”. In other words, even in our darkest or most mundane hours, our hearts are wired to seek purpose. It is purpose that helps us endure long nights and busy seasons; it gives us a reason to get up with hope in the morning.
 
 <p>
 
@@ -5450,9 +5444,9 @@ Psychologists tell us that seeking purpose is not frivolous daydreaming—it’s
 storms better: those with greater purpose have been shown to experience less stress even after difficult events. In short, purpose isn’t just a lofty ideal; it tangibly brightens our days and strengthens our resilience.
 </p>
 
-Of course, feeling unmoored is painful. You may wonder if you’ve somehow failed at keeping your life on track. But know this: yearning for meaning is not a sign of emptiness. It is a gentle nudge from within, reminding you that your own life—and your own voice—matters. Countless women in midlife discover that after years of giving everything to others, they have neglected their own spark. Therapists note that many women become the “sandwich generation,” juggling careers, parenthood, and elderly parents all at once. In the rush, self-care takes a back seat. As one psychologist observed, “Most women tend to put themselves at the bottom of the
+Of course, feeling unmoored is painful. You may wonder if you’ve somehow failed at keeping your life on track. But know this: yearning for meaning is not a sign of emptiness. It is a gentle nudge from within, reminding you that your own life, and your own voice, matters. Countless women in midlife discover that after years of giving everything to others, they have neglected their own spark. Therapists note that many women become the “sandwich generation,” juggling careers, parenthood, and elderly parents all at once. In the rush, self-care takes a back seat. As one psychologist observed, “Most women tend to put themselves at the bottom of the
 
-list”. Not scheduling that doctor’s appointment, cancelling a hobby class, endlessly delaying personal projects—these choices reflect a familiar pattern: you put everyone else’s needs first.
+list”. Not scheduling that doctor’s appointment, cancelling a hobby class, endlessly delaying personal projects, these choices reflect a familiar pattern: you put everyone else’s needs first.
             `,
 
             `
@@ -5461,7 +5455,7 @@ list”. Not scheduling that doctor’s appointment, cancelling a hobby class, e
             <p>
 It’s also common to believe a lie about purpose: that it must be some grand, world-
 
-changing mission. You may think, “If I don’t end poverty or cure disease, is my purpose even valid?” This myth—that purpose must be big and grand and epic—creates unnecessary pressure. In reality, many wise voices remind us that small acts done with love matter tremendously. One purpose coach discovered that the most paralyzing myth for people was exactly this: the idea that purpose has to be epic. She writes that “the little things matter even more so than the big things”. Quiet purposes—tending a garden, making someone smile, creating beauty through art or friendship—are no less meaningful.
+changing mission. You may think, “If I don’t end poverty or cure disease, is my purpose even valid?” This myth, that purpose must be big and grand and epic, creates unnecessary pressure. In reality, many wise voices remind us that small acts done with love matter tremendously. One purpose coach discovered that the most paralyzing myth for people was exactly this: the idea that purpose has to be epic. She writes that “the little things matter even more so than the big things”. Quiet purposes, tending a garden, making someone smile, creating beauty through art or friendship, are no less meaningful.
             </p>
 
             Think of purpose as the thread of gold woven through the fabric of your life. It may not always look like the spotlight or a thunderous mission. Often it shows up in simple, daily choices: the extra moment you spend listening to someone, the
@@ -5470,13 +5464,13 @@ kindness you share, the act of creation for its own sake. Each of these is a str
             `,
 
             `
-            If you feel passion is lost, take heart. Purpose can be rediscovered and redefined at any age. Many women have walked this path and emerged radiant. Consider creativity: studies find that embracing creative activities can deepen meaning. One research project showed that older women who engaged in art and crafts not only boosted their well-being but also “helped them find meaning in life”. Painting, writing, gardening, or making music—any creative outlet can reignite that spark inside. The act of creating connects you to yourself and to others in a profound way.
+            If you feel passion is lost, take heart. Purpose can be rediscovered and redefined at any age. Many women have walked this path and emerged radiant. Consider creativity: studies find that embracing creative activities can deepen meaning. One research project showed that older women who engaged in art and crafts not only boosted their well-being but also “helped them find meaning in life”. Painting, writing, gardening, or making music, any creative outlet can reignite that spark inside. The act of creating connects you to yourself and to others in a profound way.
 
             <p>
 
 Service and learning can be equally powerful. Look at volunteering: it often
 
-gives a profound sense of engagement. A woman in her retirement described how she plans each day “making time to live my life with purpose” so that her days are filled with meaning and connection. She chooses to volunteer regularly at a shelter and community projects, feeling that giving to others enriches her own life as well. Researchers observe that helping others can fuel our own sense of purpose, too. It’s not just altruism—when you contribute to a cause you care about, it aligns with your values and lights you up inside.
+gives a profound sense of engagement. A woman in her retirement described how she plans each day “making time to live my life with purpose” so that her days are filled with meaning and connection. She chooses to volunteer regularly at a shelter and community projects, feeling that giving to others enriches her own life as well. Researchers observe that helping others can fuel our own sense of purpose, too. It’s not just altruism, when you contribute to a cause you care about, it aligns with your values and lights you up inside.
 
             </p>
 
@@ -5487,7 +5481,7 @@ Remember, purpose can come from personal passions as well as public causes. Perh
 
             `
 
-And it’s never too late to find or redefine it. The clock has no power to prevent your next chapter. History and even everyday life are full of women who started anew later on. Author Laura Ingalls Wilder was in her sixties when she began writing the beloved Little House on the Prairie books. Artist Anna Mary Robertson “Grandma” Moses didn’t pick up a paintbrush until age 78—and went on to become a world-famous folk artist. More recently, Leyla Alyanak left a prestigious career to create a travel blog at 53 and, two decades later, still thrives and grows in her passion. Their stories echo one truth: your best days can be ahead, not behind.
+And it’s never too late to find or redefine it. The clock has no power to prevent your next chapter. History and even everyday life are full of women who started anew later on. Author Laura Ingalls Wilder was in her sixties when she began writing the beloved Little House on the Prairie books. Artist Anna Mary Robertson “Grandma” Moses didn’t pick up a paintbrush until age 78, and went on to become a world-famous folk artist. More recently, Leyla Alyanak left a prestigious career to create a travel blog at 53 and, two decades later, still thrives and grows in her passion. Their stories echo one truth: your best days can be ahead, not behind.
 
 <p>
 
@@ -5557,14 +5551,14 @@ Indeed, your journey of meaning continues. Be brave. Each step you take is a bru
 <h1>Chapter 13</h1> Reclaiming Confidence and Self-Worth
             </p>
 
-          She used to light up every room she entered. But now, like a breeze that has lost its warmth, she steps into a room quietly, shoulders hunched, head bowed—afraid that even a glance might shatter the fragile self she has built. Each morning she
+          She used to light up every room she entered. But now, like a breeze that has lost its warmth, she steps into a room quietly, shoulders hunched, head bowed, afraid that even a glance might shatter the fragile self she has built. Each morning she
 
 stands before her full-length mirror, brushing a strand of hair behind her ear as she avoids looking at her own reflection. Her eyes dart over every detail: the tired smile lines, the new silver at her temple, the dress hanging just a bit too loosely. Once, when she sang, her laughter filled the air like bells. Now her voice catches at the first note of a congratulatory greeting or a compliment. She barely hears the praise before murmuring, “Oh, it was nothing,” and turning away. Inside, her heart wavers: does she really deserve those kind words?
 
 <p>
 At night, she pours out her thoughts in a journal under the dim glow of a bedside lamp. She writes of the glory days of her youth: dancing under twinkling lights, spontaneous laughter at backyard parties, fearless dreams scribbled in the margins of old school notebooks. Those vivid
 
-memories seem like someone else’s life. Somewhere along the way, the confident woman she was began to recede. Life’s sharp edges—a harsh word here, a failure there, comparisons in passing—have slowly chipped away at her sparkle. The proud glint in her eyes has dimmed. She wonders why the woman in the mirror—whose eyes once shone bright with possibility—feels so unfamiliar now.
+memories seem like someone else’s life. Somewhere along the way, the confident woman she was began to recede. Life’s sharp edges, a harsh word here, a failure there, comparisons in passing, have slowly chipped away at her sparkle. The proud glint in her eyes has dimmed. She wonders why the woman in the mirror, whose eyes once shone bright with possibility, feels so unfamiliar now.
 </p>
             `,
 
@@ -5587,12 +5581,12 @@ By adolescence and early adulthood, we have absorbed the world’s expectations.
             </p>
             `,
             `
-            Even casual conversations—“Who had the perfect weekend?” or “She’s always on top of everything!”—can sting. We begin measuring ourselves with someone else’s ruler. Without meaning to, we learn to shrink our own ambitions if they feel smaller than that standard. We did not choose these messages, but our hearts absorb them. For many of us, even our own bodies become part of the
+            Even casual conversations, “Who had the perfect weekend?” or “She’s always on top of everything!”, can sting. We begin measuring ourselves with someone else’s ruler. Without meaning to, we learn to shrink our own ambitions if they feel smaller than that standard. We did not choose these messages, but our hearts absorb them. For many of us, even our own bodies become part of the
 
-comparison. One day we are praised for looking “fit” or “attractive,” and the next slight change—a stray hair, a pound more—can feel like a failure. We might begin to avoid the mirror, thinking we no longer “measure up.” This is how societal standards about appearance quietly seep into our self-esteem.
+comparison. One day we are praised for looking “fit” or “attractive,” and the next slight change, a stray hair, a pound more, can feel like a failure. We might begin to avoid the mirror, thinking we no longer “measure up.” This is how societal standards about appearance quietly seep into our self-esteem.
 
 <p>
-Trauma has a particular power to undermine self-belief. A broken heart, the loss of a loved one, or any moment of intense pain sends ripples through our sense of safety. If someone we trusted said we weren’t good enough, or if life events forced us to the bottom, it’s natural to start believing that voice. When the wounds of the past go unhealed, they whisper lies: “You aren’t strong enough,” or “You don’t deserve joy.” These shadows do not define us—but they can obscure the light we were always meant to shine. Healing those wounds is how we let that
+Trauma has a particular power to undermine self-belief. A broken heart, the loss of a loved one, or any moment of intense pain sends ripples through our sense of safety. If someone we trusted said we weren’t good enough, or if life events forced us to the bottom, it’s natural to start believing that voice. When the wounds of the past go unhealed, they whisper lies: “You aren’t strong enough,” or “You don’t deserve joy.” These shadows do not define us, but they can obscure the light we were always meant to shine. Healing those wounds is how we let that
 
 light show through again.
 </p>
@@ -5609,13 +5603,13 @@ Many women unknowingly learn to become invisible from a young age. We are told t
 
 Perfectionism often walks beside invisibility. We believe that if we are
 
-flawless, we will finally feel worthy and be liked. So we strive to get the project exactly right, to smile flawlessly at gatherings, to never make a mistake. But perfection is an impossible standard. When we inevitably fall short—as we all must—the critic inside scolds us harshly: “You failed again.” That voice grows louder with each stumble. Rather than saying, “I am doing my best,” we whisper, “I am not good enough.” This endless pursuit of perfection only deepens the very doubt we sought to avoid.
+flawless, we will finally feel worthy and be liked. So we strive to get the project exactly right, to smile flawlessly at gatherings, to never make a mistake. But perfection is an impossible standard. When we inevitably fall short, as we all must, the critic inside scolds us harshly: “You failed again.” That voice grows louder with each stumble. Rather than saying, “I am doing my best,” we whisper, “I am not good enough.” This endless pursuit of perfection only deepens the very doubt we sought to avoid.
             </p>
 
 
 Self-doubt becomes a constant companion under these burdens. It whispers, “Maybe they only hired you because there was no one else,” or “They must regret praising you.” It turns a casual comment like “I like your dress,” into “They’re just being polite.” We second-guess every choice: Was that the right
 
-career move? Did I say the wrong thing? Could I have done better? This doubt keeps us from speaking up or trying new things. Slowly, it becomes so familiar that we barely notice how much smaller it is making us feel—until one day we wake up and hardly recognize ourselves.
+career move? Did I say the wrong thing? Could I have done better? This doubt keeps us from speaking up or trying new things. Slowly, it becomes so familiar that we barely notice how much smaller it is making us feel, until one day we wake up and hardly recognize ourselves.
             `,
             `
             <h4>
@@ -5625,7 +5619,7 @@ Recognizing the Signs
 
 <p>You might see these burdens reflected in everyday habits:</p>
 <span>
-<b>Over-apologizing:</b> You say “sorry” for everything—stepping on someone’s foot, asking a question, even voicing a simple opinion. You apologize even when you’ve done nothing wrong, because you fear being seen as a “bother.”
+<b>Over-apologizing:</b> You say “sorry” for everything, stepping on someone’s foot, asking a question, even voicing a simple opinion. You apologize even when you’ve done nothing wrong, because you fear being seen as a “bother.”
 </span>
 
 <span>
@@ -5666,7 +5660,7 @@ These are the silent signals of eroded confidence. They may seem small on their 
 Inner Light vs. Outer Applause</h4>
 
 
-It is natural to crave recognition—humans are social beings. A genuine compliment or a proud pat on the back can spark joy and momentarily silence doubt. But if our sense of worth depends entirely on others’ approval, that joy becomes fleeting. Imagine confidence as a candle. External validation lights it briefly—an encouraging word, a win—then the flame flickers and nearly goes out. If we rely only on these external sparks, we spend most of our life in the dark.
+It is natural to crave recognition, humans are social beings. A genuine compliment or a proud pat on the back can spark joy and momentarily silence doubt. But if our sense of worth depends entirely on others’ approval, that joy becomes fleeting. Imagine confidence as a candle. External validation lights it briefly, an encouraging word, a win, then the flame flickers and nearly goes out. If we rely only on these external sparks, we spend most of our life in the dark.
 
 <p>
 
@@ -5676,7 +5670,7 @@ you. You feel okay even if no one pats you on the back. You handle criticism by 
 </p>
 
 <span>
-<b>Inner Confidence:</b> It feels steady and calm. It allows mistakes to be just that—mistakes—rather than catastrophes. It lets you hold your head high even when a room falls silent after your words; you trust that the next moment will come. Inner confidence means listening to your own heartbeat as affirmation. You remind yourself of your strengths because you’ve taken the time to know them.
+<b>Inner Confidence:</b> It feels steady and calm. It allows mistakes to be just that, mistakes, rather than catastrophes. It lets you hold your head high even when a room falls silent after your words; you trust that the next moment will come. Inner confidence means listening to your own heartbeat as affirmation. You remind yourself of your strengths because you’ve taken the time to know them.
 </span>
             `,
             `
@@ -5696,7 +5690,7 @@ The Healing Power of Self-Compassion</h4>
 
 If you have been your own worst critic for years, it might feel strange, even uncomfortable, to try being kind to yourself. Yet self-compassion is not self-
 
-indulgence—it is self-preservation. Think of how you treat a dear friend or your child when they make a mistake. You probably wouldn’t call them names or tell them they’ve ruined everything. You might say, “It’s okay, you can try again,” or “You did your best under the circumstances.” Why, then, do we so often say cruel things to ourselves?
+indulgence, it is self-preservation. Think of how you treat a dear friend or your child when they make a mistake. You probably wouldn’t call them names or tell them they’ve ruined everything. You might say, “It’s okay, you can try again,” or “You did your best under the circumstances.” Why, then, do we so often say cruel things to ourselves?
 
 <span>
 
@@ -5719,7 +5713,7 @@ Some ways to cultivate self-compassion include:
 <span>
 <b>Forgive the past:</b> Write a letter to your younger self. In it, mention all the times you felt small or hurt. Then, from your current perspective, offer words of forgiveness and strength to that younger you. Keep this letter as a reminder that you
 
-did the best you could back then—and that the future still has room for joy.
+did the best you could back then, and that the future still has room for joy.
 </span>
 
 <span>
@@ -5750,9 +5744,9 @@ Practical Exercises for Rebuilding Confidence
 </h4>
             
 
-Understanding your doubts is important, but now we take action to heal them. The exercises below are steps taken by women just like you to nurture the fledgling confidence inside. Be patient—growth often comes slowly and steadily.
+Understanding your doubts is important, but now we take action to heal them. The exercises below are steps taken by women just like you to nurture the fledgling confidence inside. Be patient, growth often comes slowly and steadily.
 <p>
-<b>Mirror Challenge (30 days):</b> Each morning, stand before a mirror and look into your own eyes. Choose one affirmation that feels powerful. It could be as simple as “I am enough,” “I deserve love,” or “I trust myself.” Say it out loud, even if it feels odd at first. Really feel each word. If possible, smile as you say it. In the beginning, it might bring tears or a tightness in your throat—that’s okay. It means you’re touching a tender part of yourself. As the
+<b>Mirror Challenge (30 days):</b> Each morning, stand before a mirror and look into your own eyes. Choose one affirmation that feels powerful. It could be as simple as “I am enough,” “I deserve love,” or “I trust myself.” Say it out loud, even if it feels odd at first. Really feel each word. If possible, smile as you say it. In the beginning, it might bring tears or a tightness in your throat, that’s okay. It means you’re touching a tender part of yourself. As the
 
 days pass, you may start to notice a shift: the person in the mirror begins to feel more familiar and compassionate towards herself. Each morning you water this seed of self-love, and over time, it sprouts into confidence.
 </p>
@@ -5763,7 +5757,7 @@ days pass, you may start to notice a shift: the person in the mirror begins to f
 </span>
 
 <span>
-<b>Strengths Journal:</b> Dedicate a notebook to your strengths and victories. Each evening, write down at least three things from the day that went well or made you feel proud—no matter how small. Perhaps you caught up on a project, helped a friend, made a healthy choice, or simply got out of bed despite feeling low. Also note any compliments or positive feedback you received that day, even casual ones. Maybe someone said you have a kind smile, or that you handled a situation calmly. Over weeks, this notebook will become a treasure chest of evidence of your worth. Whenever doubts creep in, open it and read: there you will find undeniable proof of your capability, compassion, and worth.
+<b>Strengths Journal:</b> Dedicate a notebook to your strengths and victories. Each evening, write down at least three things from the day that went well or made you feel proud, no matter how small. Perhaps you caught up on a project, helped a friend, made a healthy choice, or simply got out of bed despite feeling low. Also note any compliments or positive feedback you received that day, even casual ones. Maybe someone said you have a kind smile, or that you handled a situation calmly. Over weeks, this notebook will become a treasure chest of evidence of your worth. Whenever doubts creep in, open it and read: there you will find undeniable proof of your capability, compassion, and worth.
 </span>
 
 <span>
@@ -5799,7 +5793,7 @@ Or think of Aisha, a mother who felt guilty for wanting a career of her own afte
             `
             It
 
-reminded Aisha that her experiences and opinions mattered. Eventually she found the courage to enroll in night classes to study interior design—a dream she had set aside. Each day of class bolstered her confidence a little more.
+reminded Aisha that her experiences and opinions mattered. Eventually she found the courage to enroll in night classes to study interior design, a dream she had set aside. Each day of class bolstered her confidence a little more.
 
 <br/>
 <p>
@@ -5845,7 +5839,7 @@ Affirmations Across Your Journey
 </h4>
 
 
-Words have power—choose ones that lift you. Here are affirmations for different areas of life. Feel free to personalize these or write your own. Speak them aloud, write them on sticky notes, or carry them in your heart:
+Words have power, choose ones that lift you. Here are affirmations for different areas of life. Feel free to personalize these or write your own. Speak them aloud, write them on sticky notes, or carry them in your heart:
 <br/>
 <p class="bold">
 Career:
@@ -5935,7 +5929,7 @@ Say these words often, especially when doubt clouds your mind. Let them anchor y
 
 <h4>Rising Unapologetically</h4>
 
-Now is the moment to stand. You have carefully reunited the scattered pieces of confidence within you. The girl who once danced freely and dreamed wildly still lives here—perhaps quieter, a little wiser, but no less capable. It is time to lift your chin and take up space again.
+Now is the moment to stand. You have carefully reunited the scattered pieces of confidence within you. The girl who once danced freely and dreamed wildly still lives here, perhaps quieter, a little wiser, but no less capable. It is time to lift your chin and take up space again.
 
 <p>
 
@@ -5952,19 +5946,19 @@ warmth in the room. Your personal victories become torches that light the path f
 
 <p>
 
-Above all, keep this in your heart: Confidence is not arrogance, it is sacred self-recognition. It is the humble, joyful acknowledgment that you are worthy just as you are, that the soul inside you is a treasure. Then watch as the world begins to notice a different you—one who is not waiting in the shadows but living fully in the light. Opportunities may start to arrive as if the universe recognizes the force you have become. It takes time, but gradually your confidence will reshape your reality. The shift is subtle: people will listen more closely, doors will open that once felt closed, and you will begin to realize how worthy you truly are. The journey is worth it, the woman you become is beyond measure. One day you will look back and
+Above all, keep this in your heart: Confidence is not arrogance, it is sacred self-recognition. It is the humble, joyful acknowledgment that you are worthy just as you are, that the soul inside you is a treasure. Then watch as the world begins to notice a different you, one who is not waiting in the shadows but living fully in the light. Opportunities may start to arrive as if the universe recognizes the force you have become. It takes time, but gradually your confidence will reshape your reality. The shift is subtle: people will listen more closely, doors will open that once felt closed, and you will begin to realize how worthy you truly are. The journey is worth it, the woman you become is beyond measure. One day you will look back and
 
 realize this journey, every tear, every doubt, every single step, was worth it.</p>
 
 
-Rise now, dear friend. Stand tall in your own life—bright, proud, and free.
+Rise now, dear friend. Stand tall in your own life, bright, proud, and free.
             `,
 
             `
             <p>
             <h1>Chapter 14</h1> Sustaining Growth Through Emotional Resilience</p>
 
-            She stood in the early morning light by the tall windows of her living room, coffee in hand, feeling both proud and uneasy. Over the past months she had made great strides in her healing journey—confronting old wounds, setting healthy boundaries, and finding kindness for herself in moments of pain. But today a familiar wave of anxiety crept in. A small setback—an argument at work, a careless remark from a friend—made her question everything. She worried, "How do I hold on to this progress? How do I stay strong without slipping back into old patterns?"
+            She stood in the early morning light by the tall windows of her living room, coffee in hand, feeling both proud and uneasy. Over the past months she had made great strides in her healing journey, confronting old wounds, setting healthy boundaries, and finding kindness for herself in moments of pain. But today a familiar wave of anxiety crept in. A small setback, an argument at work, a careless remark from a friend, made her question everything. She worried, "How do I hold on to this progress? How do I stay strong without slipping back into old patterns?"
 
 
 <p>
@@ -5989,13 +5983,13 @@ Resilience often evokes the image of unbreakable armor or an iron will that neve
 
 Emotional resilience means meeting
 
-difficulties without losing sight of who you are. It means feeling your emotions fully—even the painful ones—and then finding a way to carry on without being derailed. In fact, setbacks and negative emotions are inevitable in life. They are not signs of failure or evidence that you never really healed. They are opportunities for learning and deepening your strength. Each time you say “This is hard, but I will handle it,” you are watering your roots a little more.
+difficulties without losing sight of who you are. It means feeling your emotions fully, even the painful ones, and then finding a way to carry on without being derailed. In fact, setbacks and negative emotions are inevitable in life. They are not signs of failure or evidence that you never really healed. They are opportunities for learning and deepening your strength. Each time you say “This is hard, but I will handle it,” you are watering your roots a little more.
 </p>
 
 
 Think back to when you first began this journey. You likely believed that someday you would wake up, and all your struggles would vanish, that healing would mean never being upset again. But real growth is messy, uneven, and beautifully human. Imagine a spiral staircase winding upward: sometimes you circle back near a familiar point and see the world anew from a slightly higher angle. This is how growth
 
-often feels—circular and revisiting old spots with new perspective.
+often feels, circular and revisiting old spots with new perspective.
 
 <p>
 At times like these, it’s easy to feel discouraged. You might catch yourself thinking, “Maybe I’m not as healed as I hoped. Maybe all this effort was wasted.” 
@@ -6010,16 +6004,16 @@ At times like these, it’s easy to feel discouraged. You might catch yourself t
             <h4>
 Navigating Setbacks and Triggers
             </h4>
-So what can you do when an old wound throbs or a new challenge shakes you? First, pause. When something triggers a surge of anxiety, sadness, or anger, try to notice it without judgment. There is a saying, “Feelings are like waves: we can’t stop them from coming, but we can choose which ones to surf.” You might feel fear or doubt crashing in, and that is okay. Allow yourself to name the feeling quietly in your mind: “This is fear,” or “This is frustration.” That simple act—sometimes called the “pause-and-name” method—gives you a moment to respond with intention instead of reacting from habit.
+So what can you do when an old wound throbs or a new challenge shakes you? First, pause. When something triggers a surge of anxiety, sadness, or anger, try to notice it without judgment. There is a saying, “Feelings are like waves: we can’t stop them from coming, but we can choose which ones to surf.” You might feel fear or doubt crashing in, and that is okay. Allow yourself to name the feeling quietly in your mind: “This is fear,” or “This is frustration.” That simple act, sometimes called the “pause-and-name” method, gives you a moment to respond with intention instead of reacting from habit.
 
 <p>
 She remembered the afternoon a few weeks ago when a comment from a colleague triggered a deep insecurity. Instead of snapping back, she took a breath and quietly labeled what she felt: “This is anxiety, not truth.” That small
 
-pause and gentle naming of the feeling gave her a moment to gather herself and respond with kindness instead of react with fear. Each time you do this, your heart grows a little braver and your inner anchor becomes stronger. It’s okay to admit when things are hard. Simply acknowledging, “This is difficult, but I will handle it,” is not weakness—it’s wisdom. Every time you recognize the challenge before you, it's an act of courage.
+pause and gentle naming of the feeling gave her a moment to gather herself and respond with kindness instead of react with fear. Each time you do this, your heart grows a little braver and your inner anchor becomes stronger. It’s okay to admit when things are hard. Simply acknowledging, “This is difficult, but I will handle it,” is not weakness, it’s wisdom. Every time you recognize the challenge before you, it's an act of courage.
 </p>
             `,
             `
-            When you identify a trigger—be it a look, a word, or a particular scenario—you are lighting a lantern in the dark of old patterns. The trigger isn’t a message that you have failed; it’s simply a signpost showing you where to direct compassion. Each time you notice a trigger and consciously respond rather than automatically react, you are strengthening your resilience. You are telling yourself: “I know I have come far, and I will continue to
+            When you identify a trigger, be it a look, a word, or a particular scenario, you are lighting a lantern in the dark of old patterns. The trigger isn’t a message that you have failed; it’s simply a signpost showing you where to direct compassion. Each time you notice a trigger and consciously respond rather than automatically react, you are strengthening your resilience. You are telling yourself: “I know I have come far, and I will continue to
 
 walk forward even now.”
 <br/>
@@ -6027,7 +6021,7 @@ walk forward even now.”
 <h4>
 Responding versus Reacting
 </h4>
-Reactive responses often harken back to old habits: snapping at someone, spiraling into self-doubt, or retreating into avoidance. But responding—that gentle, mindful pause—can change everything. The “Stop, Breathe, Observe, Proceed” practice from mindfulness is a helpful tool to remember. When you feel something intense building, take a moment to Stop. Breathe deeply, even if it’s just for a few seconds. Observe what you are feeling inside without harsh judgment. Then Proceed with intention, choosing your next action consciously and kindly.
+Reactive responses often harken back to old habits: snapping at someone, spiraling into self-doubt, or retreating into avoidance. But responding, that gentle, mindful pause, can change everything. The “Stop, Breathe, Observe, Proceed” practice from mindfulness is a helpful tool to remember. When you feel something intense building, take a moment to Stop. Breathe deeply, even if it’s just for a few seconds. Observe what you are feeling inside without harsh judgment. Then Proceed with intention, choosing your next action consciously and kindly.
 
 <p>
 For example, imagine you are hosting a dinner party and the conversation turns to something that reminds you of a painful
@@ -6055,9 +6049,9 @@ your breath when you wake up, feeling the warmth of the coffee cup in your hands
             Over time, you'll find that small moments of mindfulness throughout the day strengthen your foundation. Try also savoring simple pleasures with full awareness: feel the warmth of a mug in your hands or the scent of rain in the air. These moments of gentle attention can remind you that there is still beauty in each day.
 
             <p>
-<b>Rest and Self-Care:</b> Rest might sound boring compared to productivity, but it’s a form of strength. Adequate sleep, taking breaks during the day, and engaging in activities that rejuvenate you are not indulgences—they are survival skills. Think of rest as how you replenish your inner well. When you are well-rested and relaxed, you handle stress more gracefully. In practical terms, this could mean designating a strict bedtime, taking a short walk after lunch to clear your mind, or simply allowing yourself to say “no” to an extra task when you’re already at your limit, or to take an afternoon nap when needed. Notice how these small moments of rest help your mind reset. She used to wear exhaustion like a badge of honor, thinking that pushing herself relentlessly meant progress. But as soon as she began prioritizing rest—taking short walks outside or reading a chapter each evening—she noticed something magical: her
+<b>Rest and Self-Care:</b> Rest might sound boring compared to productivity, but it’s a form of strength. Adequate sleep, taking breaks during the day, and engaging in activities that rejuvenate you are not indulgences, they are survival skills. Think of rest as how you replenish your inner well. When you are well-rested and relaxed, you handle stress more gracefully. In practical terms, this could mean designating a strict bedtime, taking a short walk after lunch to clear your mind, or simply allowing yourself to say “no” to an extra task when you’re already at your limit, or to take an afternoon nap when needed. Notice how these small moments of rest help your mind reset. She used to wear exhaustion like a badge of honor, thinking that pushing herself relentlessly meant progress. But as soon as she began prioritizing rest, taking short walks outside or reading a chapter each evening, she noticed something magical: her
 
-mind became clearer and her heart lighter. Sleep is not a luxury—it’s a necessity for resilience. Sometimes the most courageous act is going to bed early or taking one more deep breath instead of fighting the day. Each restful night builds up your strength.
+mind became clearer and her heart lighter. Sleep is not a luxury, it’s a necessity for resilience. Sometimes the most courageous act is going to bed early or taking one more deep breath instead of fighting the day. Each restful night builds up your strength.
             </p>
 
             <p>
@@ -6066,7 +6060,7 @@ mind became clearer and her heart lighter. Sleep is not a luxury—it’s a nece
             `,
 
             `
-            Keep their contacts handy; when you feel shaky, a simple text or call for reassurance—or even planning a coffee date—can make a world of difference. Sharing your feelings with a trusted friend can dissolve the weight of the burdens you carry, reminding you that you are not alone. For example,
+            Keep their contacts handy; when you feel shaky, a simple text or call for reassurance, or even planning a coffee date, can make a world of difference. Sharing your feelings with a trusted friend can dissolve the weight of the burdens you carry, reminding you that you are not alone. For example,
 
 one evening she woke up from a nightmare, heart racing, and immediately texted her closest friend, “I feel scared.” Her friend called back right away, listening patiently and quietly encouraging her. After that conversation she felt a warmth and calmness in the pit of her stomach, amazed that someone cared so deeply. These connections are powerful reminders that you never face challenges alone. It might feel hard to reach out when you're hurting, but remember: asking for help is a courageous act of self-love, not a weakness.
 
@@ -6083,12 +6077,12 @@ Another simple habit is a daily gratitude pause: each evening, note one thing yo
 <br/>
 <h4>Embracing Progress Over Perfection</h4>
 
-One of the cruel myths we often internalize is that healing means perfection—never feeling negative again. This is simply not true. A more nurturing truth is that healing means learning to be gentle with yourself when those negative emotions surface. Embrace “progress, not perfection” as a personal mantra.
+One of the cruel myths we often internalize is that healing means perfection, never feeling negative again. This is simply not true. A more nurturing truth is that healing means learning to be gentle with yourself when those negative emotions surface. Embrace “progress, not perfection” as a personal mantra.
 
 <p>
-When those old wounds resurface—a comment that stings, a memory that
+When those old wounds resurface, a comment that stings, a memory that
 
-aches, an argument that reopens a scar—respond with curiosity instead of criticism. Ask yourself: “What is this about? What can I learn from it, even now?” And then give yourself a dose of self-compassion. Perhaps you write in your journal, “Today I felt vulnerable, but I handled it with grace,” even if you feel you didn’t handle it perfectly. Celebrate each small victory: you stayed mindful for a minute longer, you told someone you needed help, or you took a deep breath instead of immediately reacting. These moments are wins too.
+aches, an argument that reopens a scar, respond with curiosity instead of criticism. Ask yourself: “What is this about? What can I learn from it, even now?” And then give yourself a dose of self-compassion. Perhaps you write in your journal, “Today I felt vulnerable, but I handled it with grace,” even if you feel you didn’t handle it perfectly. Celebrate each small victory: you stayed mindful for a minute longer, you told someone you needed help, or you took a deep breath instead of immediately reacting. These moments are wins too.
 </p>
 
 In her journal one evening she wrote, “I woke up anxious again, but instead of panicking, I took a deep breath and stepped outside for a short walk. That counts as courage.” Noting these real moments of bravery, even when they seem small, helped her see progress she would otherwise overlook. You might find it
@@ -6100,12 +6094,12 @@ helpful to imagine you are speaking to a dear friend.
             If she were facing this setback, what words of encouragement would you offer her? Now turn those words toward yourself. Speak with the same kindness and understanding. For example, try envisioning the little girl you once were. What would you say to her if she felt scared or hurt? Offer yourself that same gentleness and reassurance. Treat yourself like someone you deeply care about.
 
             <p>
-Your imperfections are part of your journey, not marks of failure. Embrace them as threads that make the tapestry of your growth rich and unique. And if a critical thought creeps in—“I should have known better” or “I’m still weak”—challenge it. Think of each stumble as feedback, not a final verdict. For example, when she caught herself saying “I failed again” she countered with “I have made
+Your imperfections are part of your journey, not marks of failure. Embrace them as threads that make the tapestry of your growth rich and unique. And if a critical thought creeps in, “I should have known better” or “I’m still weak”, challenge it. Think of each stumble as feedback, not a final verdict. For example, when she caught herself saying “I failed again” she countered with “I have made
 
 many improvements; I can keep learning from this.” This gentle reframe is part of progress.
             </p>
 
-            It can also help to remember the words of a teacher of mine: “There is no such thing as a final exam in life.” Every time you feel you stumble, it’s simply another step in learning. Gently remind yourself that you are allowed to be a work in progress. Every day you rise and keep moving is proof of your resilience. Every moment you choose compassion over self-criticism, you strengthen your sense of self-worth. Whenever you feel guilt or frustration creeping in, remember to forgive yourself—for even those feelings are part of learning and growth.
+            It can also help to remember the words of a teacher of mine: “There is no such thing as a final exam in life.” Every time you feel you stumble, it’s simply another step in learning. Gently remind yourself that you are allowed to be a work in progress. Every day you rise and keep moving is proof of your resilience. Every moment you choose compassion over self-criticism, you strengthen your sense of self-worth. Whenever you feel guilt or frustration creeping in, remember to forgive yourself, for even those feelings are part of learning and growth.
             `,
             `
             <h4>
@@ -6141,7 +6135,7 @@ miss. Over time you’ll see pages filled with challenges met and feelings overc
 </p>
 
 
-Grounding Ritual or Mantra. When emotions begin to overwhelm you, having a simple ritual or phrase to anchor yourself can be a lifeline. You might create a quick grounding routine: pause to touch something nearby—a stone on your desk, the ground under your feet—and feel its solidity. Or try a sensory check-in like the “5-4-3-2-1” method: name five things you see, four things you feel, three things you hear, two things you can smell, and one
+Grounding Ritual or Mantra. When emotions begin to overwhelm you, having a simple ritual or phrase to anchor yourself can be a lifeline. You might create a quick grounding routine: pause to touch something nearby, a stone on your desk, the ground under your feet, and feel its solidity. Or try a sensory check-in like the “5-4-3-2-1” method: name five things you see, four things you feel, three things you hear, two things you can smell, and one
 
 thing you can taste.
             `,
@@ -6175,7 +6169,7 @@ Observe your thoughts, feelings, and surroundings without judging them.
 Proceed with your next action, staying mindful of your intention.
 
 <span>
-Even something as simple as counting backward from ten, or holding an ice cube in your hand, can give your mind a brief pause. Focus on the cool sensation or the rhythm of counting—this sensory input grounds you in the present and creates space between the impulse and your response.</span>
+Even something as simple as counting backward from ten, or holding an ice cube in your hand, can give your mind a brief pause. Focus on the cool sensation or the rhythm of counting, this sensory input grounds you in the present and creates space between the impulse and your response.</span>
 
 <br/>
 
@@ -6185,7 +6179,7 @@ Another approach is cognitive reframing: when a negative thought arises, questio
 <br/>
 Building Your Resilience Toolkit. Imagine a mental toolbox stocked with items that remind you of your strength and comfort. You might make a list or even put together a physical box containing:
 <span>
-People: Names of two or three people you can call or text when you feel low—friends, family, a mentor, or a therapist who remind you that you are seen and loved. Keep their contacts handy.
+People: Names of two or three people you can call or text when you feel low, friends, family, a mentor, or a therapist who remind you that you are seen and loved. Keep their contacts handy.
 </span>
 
 <span>
@@ -6202,7 +6196,7 @@ Affirmations: A few phrases that feel true and encouraging, such as “I have su
 </span>
 
 <span>
-Comfort Items: Tangible things that bring you calm—maybe a soft blanket, a warm mug of herbal tea, a favorite scented lotion, or a photograph of a place that brings you peace. Wrap yourself in these items when you need extra solace.</span>
+Comfort Items: Tangible things that bring you calm, maybe a soft blanket, a warm mug of herbal tea, a favorite scented lotion, or a photograph of a place that brings you peace. Wrap yourself in these items when you need extra solace.</span>
 
 <span>
 Inspirations: Quotes, poems, prayers, or images that inspire you. Perhaps a line of poetry like “This too shall pass,” a favorite
@@ -6223,7 +6217,7 @@ Take a breath again now, and feel it. You have walked through so much to be here
             `,
 
             `
-In fact, becoming strong often means learning to be soft when you need to be. It means knowing when to charge forward and when to rest and nurture yourself. For example, when you allow yourself to cry or pause without guilt, you are showing strength under pressure. Crying or pausing is not giving up; it's fueling your growth. There is no shame in needing support or time to heal a reopened wound. Each time you practice resilience—by using a grounding ritual, reaching out to a friend, or simply breathing through the pain—you
+In fact, becoming strong often means learning to be soft when you need to be. It means knowing when to charge forward and when to rest and nurture yourself. For example, when you allow yourself to cry or pause without guilt, you are showing strength under pressure. Crying or pausing is not giving up; it's fueling your growth. There is no shame in needing support or time to heal a reopened wound. Each time you practice resilience, by using a grounding ritual, reaching out to a friend, or simply breathing through the pain, you
 
 weave another thread into the tapestry of your strength. Consider a forest in winter: it looks still and bare, but beneath the snow life is busy preparing for spring. Likewise, any quiet phase in you is part of the cycle, preparing for new growth.
 
@@ -6254,7 +6248,7 @@ Living the Change, Becoming the Woman You Were Meant to Be
 
 Morning light filters softly through the curtains as you awake. There’s a quiet joy in this new day, a gentle lightness to your step that wasn’t there before. You pause
 
-for a moment, listening to birdsong, feeling the deep breath of dawn—aware, as never before, of the transformation stirring within you. Today, you notice the smallest differences: how you stand a little taller, how your skin feels clearer, how your heart greets the morning with gratitude. This is the culmination of all you have learned and practiced: a life slowly reborn by your own steady hand. The journey of change has become lived reality.
+for a moment, listening to birdsong, feeling the deep breath of dawn, aware, as never before, of the transformation stirring within you. Today, you notice the smallest differences: how you stand a little taller, how your skin feels clearer, how your heart greets the morning with gratitude. This is the culmination of all you have learned and practiced: a life slowly reborn by your own steady hand. The journey of change has become lived reality.
 
 <p>
 
@@ -6414,7 +6408,7 @@ Use those boundaries wisely to guard your energy.
 
 
 <span>
-<b>People:</b> Surround yourself with those who uplift and encourage you. Engage with friends, family, and mentors who celebrate your growth and remind you of your worth. It’s perfectly okay—and necessary—to say no to relationships that drain you or pull you back into old patterns. Choose positivity: as one proverb reminds us, “Walk with the wise and become wise.”. Your inner circle should be your cheerleaders.
+<b>People:</b> Surround yourself with those who uplift and encourage you. Engage with friends, family, and mentors who celebrate your growth and remind you of your worth. It’s perfectly okay, and necessary, to say no to relationships that drain you or pull you back into old patterns. Choose positivity: as one proverb reminds us, “Walk with the wise and become wise.”. Your inner circle should be your cheerleaders.
 </span>
 
 <span>
@@ -6507,7 +6501,7 @@ With all my love and light,
                             `<h1>About the Author</h1>
             
             <p>
-            <b>Charlotte Casiraghi</b> (b. 1986) is a is a Monégasque public figure known for her diverse pursuits.  She serves on the boards of cultural and charitable organizations (including the Princess Grace Foundation and UNICEF Monaco) and is an advocate for youth education and women's empowerment.
+            <b>Charlotte Casiraghi</b> (b. 1986) is a Monégasque public figure known for her diverse pursuits.  She serves on the boards of cultural and charitable organizations (including the Princess Grace Foundation and UNICEF Monaco) and is an advocate for youth education and women's empowerment.
             <br/>
             A former competitive show jumper, Charlotte also has a career in journalism and fashion media.  In 2015 she was appointed as an Ambassador for UNESCO's philosophy program.  She lives in Monaco and Paris with her two sons.
             </p>
@@ -6527,9 +6521,11 @@ Other Works by the Author
 
 <p>
 <b>Ever Bamboo</b> (2011, second issue of Ever Manifesto)
-(Note: Charlotte has written numerous articles for The Independent and AnOther Magazine and often pens prefaces for philosophical works.)
+(Note: Charlotte has written numerous articles for The Independent and Another Magazine and often pens prefaces for philosophical works.)
 </p>
             `,
                 `<div  class="cover-page"><p> This is the end page</p></div>`,
         ]
 };
+
+export default BOOK;

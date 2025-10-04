@@ -10,6 +10,12 @@
 
     <meta name="keywords" content="charlotte casiraghi, a space to heal, a, space, to, heal, therapy, books, session" />
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+
+
+
     <!-- FOR STYLING -->
     <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
@@ -25,7 +31,7 @@
 
 <body class="fadeIn">
 
-    <!-- <section class="donation-viewer moveUpNfadeIn">
+    <section class="donation-viewer moveUpNfadeIn">
 
     <div class="container">
     <span class="cancel">X</span>
@@ -155,7 +161,7 @@
         </div>
 </div>
 
-</section> -->
+</section>
 
     <div class="alert-message">
         <div class="zoom-in alert-div">
@@ -214,14 +220,14 @@
                         alt="Charlotte Casiragi - Donation Page" class="donation-image"></div>
 
                 <div class="message">
-                    <audio src="" id="audio-message" hidden></audio>
+                    <audio src="" id="audio-message" class="page-audio" hidden></audio>
                     <p class="text">
                         A voice message from
                         <span class="highlight">Charlotte Casiraghi</span>
                     </p>
                     <div class="player moveUpNfadeIn">
                         <p class="indication">Play >></p>
-                        <button id="play" title="Play Audio">
+                        <button id="play" type="button" title="Play Audio">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-play-fill"
                                 viewBox="0 0 16 16">
                                 <path
@@ -288,5 +294,6 @@
 
 </html>
 
-<script src="/js/general.js"></script>
-<script src="/js/donation.js"></script>
+<script src="/js/donation.js" type="module"></script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="/js/general.js" type="module"></script>
