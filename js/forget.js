@@ -10,21 +10,26 @@ document.addEventListener("load", () => {
         resetButton.disabled = emailInput.value.trim() === "";
     });
 
+    function validateEmailValue(email) {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(email.trim());
+    }
+    
     resetButton.addEventListener("click", async (e) => {
         e.preventDefault();
         const email = emailInput.value.trim();
-
+        const valid = validateEmailValue(email);
+        
         if (!email) {
             handleAlert("Please enter a valid email.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i><br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
             return;
         }
 
 
-        if (email.length < 5 || !email.includes("@") || !email.includes(".")) {
-            handleAlert("Please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
+        if (!valid) {
+            handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
             throw new Error("Please enter a valid email address.");
         } else {
-
             resetButton.disabled = true;
             resetButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
             try {

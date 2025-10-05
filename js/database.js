@@ -6,8 +6,6 @@ import {
   collection,
   addDoc,
   getDocs,
-  query,
-  where,
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 

@@ -1,5 +1,5 @@
 // service-worker.js
-const CACHE_NAME = "charlotte-cache-v1900";
+const CACHE_NAME = "charlotte-cache-v1901";
 const TRANSLATED_CACHE_NAME = "charlotte-translated-v1900"; 
 
 // Split caches for better control
@@ -44,8 +44,7 @@ const STATIC_ASSETS = [
 ];
 
 // External assets (Google Translate)
-const EXTERNAL_ASSETS = [
-    "https://translate.google.com/translate_a/element.js?cb=initTranslate"
+const EXTERNAL_ASSETS = ["https://translate.argosopentech.com/translate"
 ];
 
 // Install

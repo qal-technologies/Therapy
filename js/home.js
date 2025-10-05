@@ -3,153 +3,153 @@ import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
 
-window.addEventListener('load', async () => {
-const reviews = [
-	[
-		{
-			name: "Vale´rie",
-			from: "France",
-			message:
-				"I booked the session thinking maybe she'd just say something comforting. I didn't expect to cry. I didn't expect to feel seen. and I never imagined that a woman I admired from afar could hold space for me like that. Charlotte didn't just listen, she reached inside the silence I had lived with for years.",
-		},
-		{
-			name: "Ana",
-			from: "Spain",
-			message:
-				"After my breakup, I felt like a shadow. One conversation with Charlotte helped me find my voice again. I left the session calmer, wiser, and ready to start living for real. This wasn't therapy. It was transformation.",
-		},
-		{
-			name: "Michael",
-			from: "UK",
-			message:
-				"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
-		},
-	],
+window.addEventListener('load', () => {
+	const reviews = [
+		[
+			{
+				name: "Vale´rie",
+				from: "France",
+				message:
+					"I booked the session thinking maybe she'd just say something comforting. I didn't expect to cry. I didn't expect to feel seen. and I never imagined that a woman I admired from afar could hold space for me like that. Charlotte didn't just listen, she reached inside the silence I had lived with for years.",
+			},
+			{
+				name: "Ana",
+				from: "Spain",
+				message:
+					"After my breakup, I felt like a shadow. One conversation with Charlotte helped me find my voice again. I left the session calmer, wiser, and ready to start living for real. This wasn't therapy. It was transformation.",
+			},
+			{
+				name: "Michael",
+				from: "UK",
+				message:
+					"I lost my daughter two years ago. I never told anyone what it did to me. In our session, Charlotte didn't rush me. She just stayed present. I don't think I've ever felt that kind of softness from anyone before. She gave me something I didn't know I needed: a place to breathe.",
+			},
+		],
 
-	[
+		[
+			{
+				name: "Nadia",
+				from: "Germany",
+				message:
+					"At first, I wasn't sure it would be real. But everything felt so personal. The emails, the voice messages, even how the payment was confirmed - it was all so human. I booked one session and ended up booking three. I feel held, not judged.",
+			},
+			{
+				name: "Davide",
+				from: "Italy",
+				message:
+					"Being part of her Inner Circle was beyond anything I've ever experienced. She didn't speak like a celebrity. She spoke like someone who knows. Charlotte is pure energy. If you ever get the chance to book, take it. I'd pay double.",
+			},
+			{
+				name: "Tatiana",
+				from: "Portugal",
+				message:
+					"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
+			},
+		]
+	];
+
+	const sessionTypes = [
 		{
-			name: "Nadia",
-			from: "Germany",
-			message:
-				"At first, I wasn't sure it would be real. But everything felt so personal. The emails, the voice messages, even how the payment was confirmed - it was all so human. I booked one session and ended up booking three. I feel held, not judged.",
+			type: "virtual",
+			route: "virtual",
+			name: "VIRTUAL SESSION",
+			price: "800",
+			description:
+				"You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
+			button: "BOOK NOW",
+			bonus: [
+				"BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+				"BONUS! Exclusive discounts from session sponsors",
+				"5+ hours of live online content",
+				"Session recordings and additional resources",
+				"Guided workshops, live polling, and more for interactive learning",
+				"Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
+			]
 		},
 		{
-			name: "Davide",
-			from: "Italy",
-			message:
-				"Being part of her Inner Circle was beyond anything I've ever experienced. She didn't speak like a celebrity. She spoke like someone who knows. Charlotte is pure energy. If you ever get the chance to book, take it. I'd pay double.",
+			type: "in-person",
+			route: "inPerson",
+			name: "IN-PERSON SESSION",
+			extra: "(in Europe/Monaco)",
+			price: "1600",
+			description:
+				"There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
+			button: "BOOK NOW",
+			bonus: [
+				"Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
+				"Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
+			]
 		},
 		{
-			name: "Tatiana",
-			from: "Portugal",
-			message:
-				"Charlotte didn't fix me. She reminded me that I could begin again. Her words stay with me like prayers I forgot I knew. Book your session. Don't wait until you break.",
+			type: "inner",
+			route: "inner",
+			name: "INNER CIRCLE EXPERIENCE",
+			extra: "This plan is sold out for now",
+			price: "6,850",
+			description:
+				"For those who seek not just a session, but a sanctuary.",
+			button: "SOLD OUT",
+			bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
 		},
+		{
+			type: "community",
+			route: "community",
+			name: "COMMUNITY SESSION",
+			extra: "Accessible Plan",
+			price: "550",
+			description:
+				"Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
+			button: "BOOK NOW",
+			bonus: [
+				"Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
+			]
+		},
+	];
+
+	const faq = [
+		{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation, raw, compassionate, and transformative, designed to help you reconnect with your inner truth." },
+		{
+			question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
+		},
+		{
+			question: "Can I book if I live outside Europe?", answer: "Yes! You can book a virtual session from anywhere in the world. If you wish to attend in person, you’re warmly welcome to travel to Europe (Monaco) for your session."
+		}, {
+			question: "What happens after I make a payment?",
+			answer: "Once your payment is verified, you’ll receive a confirmation message, and your booking will be officially secured. From there, you’ll receive full session details and preparation instructions."
+		}, {
+			question: "Can I sponsor someone else’s healing?",
+			answer: "Yes. If you’d like to gift a session to someone in need, you can select the Sponsor a Session option at checkout. Your generosity could change a life."
+		}, {
+			question: "Are the books available worldwide?",
+			answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
+		},
+		{
+			question: "What is a Paysafecard and how do I pay with it?", answer: "A Paysafecard is like cash in the form of a receipt.<br/>You don’t need a bank account, credit card, or computer knowledge to use it. This is how it works, step by step:<p><b>Step 1: Buy a Paysafecard</b><br/>Go to a supermarket, petrol station, or kiosk near you. Look for the Paysafecard logo. At the counter, ask for a Paysafecard of the amount you need (for example: 50€, 100€, etc.).</p><p><b>Step 2: Get Your Secure Code</b><br/>The cashier will give you a small receipt. On it, you will see a 16-digit number (this is your secret code).<br/>Keep it safe,it works just like cash.</p><p><b>Step 3: Pay Online with Your Code</b><br/>When you come back to this website to pay, you will see a box that says:<br/>“Enter your Paysafecard code.”<br/>Type in the 16-digit number from your receipt.</p><p><b>Step 4: Confirm Payment</b><br/>After typing the number, simply press “Pay Now with Paysafecard.”<br/>Your payment is confirmed instantly.<br/>No personal details, no bank needed.</p><p><b>Important Tips:</b><br/>Think of the Paysafecard like using cash,safe, simple, and private.<br/> If the amount is bigger than one card, you can add more than one code until the full payment is covered.<br/>Always keep your receipt safe until payment is completed.</p>"
+		}
 	]
-];
 
-const sessionTypes = [
-	{
-		type: "virtual",
-		route: "virtual",
-		name: "VIRTUAL SESSION",
-		price: "800",
-		description:
-			"You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
-		button: "BOOK NOW",
-		bonus: [
-			"BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
-			"BONUS! Exclusive discounts from session sponsors",
-			"5+ hours of live online content",
-			"Session recordings and additional resources",
-			"Guided workshops, live polling, and more for interactive learning",
-			"Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
-		]
-	},
-	{
-		type: "in-person",
-		route: "inPerson",
-		name: "IN-PERSON SESSION",
-		extra: "(in Europe/Monaco)",
-		price: "1600",
-		description:
-			"There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
-		button: "BOOK NOW",
-		bonus: [
-			"Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
-			"Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
-		]
-	},
-	{
-		type: "inner",
-		route: "inner",
-		name: "INNER CIRCLE EXPERIENCE",
-		extra: "This plan is sold out for now",
-		price: "6,850",
-		description:
-			"For those who seek not just a session, but a sanctuary.",
-		button: "SOLD OUT",
-		bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
-	},
-	{
-		type: "community",
-		route: "community",
-		name: "COMMUNITY SESSION",
-		extra: "Accessible Plan",
-		price: "550",
-		description:
-			"Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
-		button: "BOOK NOW",
-		bonus: [
-			"Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
-		]
-	},
-];
+	const HOME_BASE_PATH = {
+		audio: "/src/audio"
+	};
 
-const faq = [
-	{ question: "What exactly happens in a session with Charlotte?", answer: "In each session, Charlotte offers a safe space of presence, deep listening, and emotional healing. It’s a real conversation, raw, compassionate, and transformative, designed to help you reconnect with your inner truth." },
-	{
-		question: "How do I know if a session is right for me?", answer: "If you’ve ever felt unseen, unheard, or quietly broken inside, this space was created for you. One honest conversation can begin to change everything."
-	},
-	{
-		question: "Can I book if I live outside Europe?", answer: "Yes! You can book a virtual session from anywhere in the world. If you wish to attend in person, you’re warmly welcome to travel to Europe (Monaco) for your session."
-	}, {
-		question: "What happens after I make a payment?",
-		answer: "Once your payment is verified, you’ll receive a confirmation message, and your booking will be officially secured. From there, you’ll receive full session details and preparation instructions."
-	}, {
-		question: "Can I sponsor someone else’s healing?",
-		answer: "Yes. If you’d like to gift a session to someone in need, you can select the Sponsor a Session option at checkout. Your generosity could change a life."
-	}, {
-		question: "Are the books available worldwide?",
-		answer: "Yes. The books will be available for shipping worldwide, or you can choose a digital copy depending on availability. Each book carries a piece of Charlotte’s healing journey to you."
-	},
-	{
-		question: "What is a Paysafecard and how do I pay with it?", answer: "A Paysafecard is like cash in the form of a receipt.<br/>You don’t need a bank account, credit card, or computer knowledge to use it. This is how it works, step by step:<p><b>Step 1: Buy a Paysafecard</b><br/>Go to a supermarket, petrol station, or kiosk near you. Look for the Paysafecard logo. At the counter, ask for a Paysafecard of the amount you need (for example: 50€, 100€, etc.).</p><p><b>Step 2: Get Your Secure Code</b><br/>The cashier will give you a small receipt. On it, you will see a 16-digit number (this is your secret code).<br/>Keep it safe,it works just like cash.</p><p><b>Step 3: Pay Online with Your Code</b><br/>When you come back to this website to pay, you will see a box that says:<br/>“Enter your Paysafecard code.”<br/>Type in the 16-digit number from your receipt.</p><p><b>Step 4: Confirm Payment</b><br/>After typing the number, simply press “Pay Now with Paysafecard.”<br/>Your payment is confirmed instantly.<br/>No personal details, no bank needed.</p><p><b>Important Tips:</b><br/>Think of the Paysafecard like using cash,safe, simple, and private.<br/> If the amount is bigger than one card, you can add more than one code until the full payment is covered.<br/>Always keep your receipt safe until payment is completed.</p>"
-	}
-]
+	//Audio source:
+	const HOME_AUDIO_SRC = {
+		banner: {
+			"en": `${HOME_BASE_PATH.audio}/home-english.mp3`,
+			"fr": `${HOME_BASE_PATH.audio}/home-french.mp3`,
+			"es": `${HOME_BASE_PATH.audio}/home-spanish.mp3`,
+			"de": `${HOME_BASE_PATH.audio}/home-german.mp3`,
+			"it": `${HOME_BASE_PATH.audio}/home-italian.mp3`
+		},
+		session: {
+			"en": `${HOME_BASE_PATH.audio}/session-english.mp3`,
+			"fr": `${HOME_BASE_PATH.audio}/session-french.mp3`,
+			"es": `${HOME_BASE_PATH.audio}/session-spanish.mp3`,
+			"de": `${HOME_BASE_PATH.audio}/session-german.mp3`,
+			"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
+		}
+	};
 
-const HOME_BASE_PATH = {
-	audio: "/src/audio"
-};
-
-//Audio source:
-const HOME_AUDIO_SRC = {
-	banner: {
-		"en": `${HOME_BASE_PATH.audio}/home-english.mp3`,
-		"fr": `${HOME_BASE_PATH.audio}/home-french.mp3`,
-		"es": `${HOME_BASE_PATH.audio}/home-spanish.mp3`,
-		"de": `${HOME_BASE_PATH.audio}/home-german.mp3`,
-		"it": `${HOME_BASE_PATH.audio}/home-italian.mp3`
-	},
-	session: {
-		"en": `${HOME_BASE_PATH.audio}/session-english.mp3`,
-		"fr": `${HOME_BASE_PATH.audio}/session-french.mp3`,
-		"es": `${HOME_BASE_PATH.audio}/session-spanish.mp3`,
-		"de": `${HOME_BASE_PATH.audio}/session-german.mp3`,
-		"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
-	}
-};
-	
 	let offlineUser = false;
 
 	const language = navigator.language;
@@ -169,9 +169,10 @@ const HOME_AUDIO_SRC = {
 	const BTNText = bannerBTN.firstElementChild;
 
 	const lang = language.toLowerCase().substring(0, 2);
-
-	audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
-	audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+	if (audioMessage && audioMessage2) {
+		audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
+		audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+	}
 
 	if (offlineUser) {
 		bannerBTN.href = "/html/main/Book.html";
@@ -612,7 +613,7 @@ ${session.type == "inner" ?
 
 
 	handleAuthStateChange(async (user) => {
-		offlineUser = user;
+		offlineUser = user ? true :false;
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;

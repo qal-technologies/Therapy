@@ -171,7 +171,7 @@ function setupEventListeners() {
   const closeModal = document.getElementById('closeModal');
   if (closeModal) {
     closeModal.addEventListener('click', () => {
-      modal?.style.display = 'none';
+      modal.style.display = 'none';
     });
   }
 

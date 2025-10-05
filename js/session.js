@@ -124,6 +124,7 @@ const audioSrc = {
 
   audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
 
+  sessions.innerHTML = "";
   sessions.innerHTML += sessionTypes.map((session) => {
     const details = {
       name: session.name,

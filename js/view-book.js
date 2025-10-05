@@ -6,7 +6,7 @@ import BOOK from './books.js';
 window.addEventListener('load', () => {
     handleAuthStateChange(async (user) => {
         if (!user) {
-            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register", type:"secondary" }]);
+            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register", type: "secondary" }]);
         }
 
         if (user) {
@@ -33,7 +33,7 @@ window.addEventListener('load', () => {
                 const pageTurnSound = new Audio(PAGE_TURN_SOUND_SRC);
                 const thudSound = new Audio(THUD_SOUND_SRC);
                 pageTurnSound.preload = "auto";
-                // pageTurnSound.volume = 1.0;
+                pageTurnSound.volume = 1.0;
 
 
                 const LAST = BOOK.pages.length - 1;
@@ -386,14 +386,40 @@ window.addEventListener('load', () => {
 
                 // Swipe (mobile)
                 let touchStartX = 0;
+                let touchStartY = 0;
                 const SWIPE_MIN = 40;
+
                 bookEl.addEventListener('touchstart', (e) => {
                     touchStartX = e.changedTouches[0].screenX;
+                    touchStartY = e.changedTouches[0].screenY;
                 }, { passive: true });
+
+                bookEl.addEventListener('touchmove', (e) => {
+                    if (touchStartX === 0) {
+                        return;
+                    }
+                    const touchCurrentX = e.changedTouches[0].screenX;
+                    const touchCurrentY = e.changedTouches[0].screenY;
+                    const dx = touchCurrentX - touchStartX;
+                    const dy = touchCurrentY - touchStartY;
+
+                    // If the swipe is more horizontal than vertical, prevent default scrolling
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+
                 bookEl.addEventListener('touchend', (e) => {
+                    if (touchStartX === 0) {
+                        return;
+                    }
+
                     const dx = e.changedTouches[0].screenX - touchStartX;
                     if (dx <= -SWIPE_MIN) flipForward();
                     else if (dx >= SWIPE_MIN) flipBack();
+
+                    touchStartX = 0;
+                    touchStartY = 0;
                 }, { passive: true });
 
                 ///event listerners:
@@ -405,7 +431,7 @@ window.addEventListener('load', () => {
                 function toggleBookmark() {
                     // let btn = document.getElementById('bookmarkBtn');
                     let isBookmarked = state.bookmarks.includes(state.page);
-                    
+
                     const icon = isBookmarked ?
                         '<i class="fas fa-bookmark"></i>' : '<i class="far fa-bookmark"></i>';
 

@@ -2,8 +2,6 @@ import handleAlert, { handleRedirect } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
-    addUserPayment,
-    createGlobalTransaction,
     updateUserPayment,
     updateGlobalTransaction,
     updateUserData
@@ -1068,7 +1066,6 @@ async function initializePaymentFlow(e, state, elements) {
         return;
     }
 
-
     try {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
@@ -1149,7 +1146,9 @@ async function initializePaymentFlow(e, state, elements) {
 
         return false;
     } finally {
-        document.getElementById("loading-section").classList.remove("active");
+        const loader = document.getElementById("loading-section");
+        loader?.classList.remove("active");
+        loader?.remove();
     }
 
     // Initialize buttons
@@ -1161,7 +1160,7 @@ async function initializePaymentFlow(e, state, elements) {
 }
 
 
-document.addEventListener("load", (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {
     handleAuthStateChange(async (user) => {
         if (user) {
             const state = initializeState();
