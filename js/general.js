@@ -20,7 +20,6 @@ function pageIsTranslatedByClass() {
 
 
 //I changed something here pasqal, check it out!
-//I changed something here pasqal, check it out!
 async function translateText(text, targetLang, sourceLang = "auto") {
     try {
         const corsProxy = "https://cors-anywhere.herokuapp.com/";
@@ -254,6 +253,7 @@ async function handleRefresh() {
     ]);
 }
 
+//I changed something here pasqal, check it out!
 function initTicker() {
     const tickerItems = [
         { text: `A Transformative Journey with Charlotte Casiraghi` },
@@ -269,9 +269,6 @@ function initTicker() {
         return;
     }
 
-    // clear any previous animation
-    if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
-
     // build content
     ticker.innerHTML = '';
     tickerItems.forEach(item => {
@@ -284,69 +281,42 @@ function initTicker() {
     // duplicate content for smooth infinite scroll
     ticker.insertAdjacentHTML('beforeend', ticker.innerHTML);
 
-    // wait for layout to finish before measuring widths (two rAF ticks)
+    // wait for layout to finish before measuring widths
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            const items = ticker.querySelectorAll('.ticker-item');
-            if (!items.length) {
-                console.warn('initTicker: no .ticker-item found after render');
-                return;
-            }
+        const items = ticker.querySelectorAll('.ticker-item');
+        if (!items.length) {
+            console.warn('initTicker: no .ticker-item found after render');
+            return;
+        }
 
-            // compute width of a single set (first half)
-            const half = items.length / 2;
-            let singleWidth = 0;
-            for (let i = 0; i < half; i++) {
-                const w = items[i].offsetWidth;
-                const style = getComputedStyle(items[i]);
-                const marginRight = parseFloat(style.marginRight) || 0;
-                singleWidth += w + marginRight;
-            }
+        // compute width of a single set (first half)
+        const half = items.length / 2;
+        let singleWidth = 0;
+        for (let i = 0; i < half; i++) {
+            const w = items[i].offsetWidth;
+            const style = getComputedStyle(items[i]);
+            const marginRight = parseFloat(style.marginRight) || 0;
+            singleWidth += w + marginRight;
+        }
 
-            console.debug('ticker singleWidth:', singleWidth, 'items:', half);
+        if (singleWidth <= 0) {
+            console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
+            return;
+        }
 
-            if (singleWidth <= 0) {
-                console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
-                return;
-            }
-
-            // animation variables
-            let position = 0;               // px
-            const speedPxPerSecond = 60;   // px / second — tweak for speed
-            let lastTime = null;
-
-            function step(timestamp) {
-                if (!lastTime) lastTime = timestamp;
-                const delta = timestamp - lastTime;
-                lastTime = timestamp;
-
-                // move left: position decreases
-                position -= (speedPxPerSecond * delta) / 1000;
-
-                // reset when we scrolled one full set
-                if (Math.abs(position) >= singleWidth) {
-                    position += singleWidth;
-                }
-
-                ticker.style.transform = `translateX(${position}px)`;
-
-                window.__tickerAnimationFrame = requestAnimationFrame(step);
-            }
-
-            if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
-            window.__tickerAnimationFrame = requestAnimationFrame(step);
-
-            // attach a single resize listener
-            if (!window.__tickerResizeAttached) {
-                window.addEventListener('resize', () => {
-                    if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
-                    // small delay to allow layout to settle
-                    setTimeout(initTicker, 150);
-                });
-                window.__tickerResizeAttached = true;
-            }
-        });
+        // Set CSS variable for animation
+        ticker.style.setProperty('--ticker-width', `${singleWidth}px`);
+        container.classList.add('animate'); // Add class to start animation
     });
+
+    // attach a single resize listener
+    if (!window.__tickerResizeAttached) {
+        window.addEventListener('resize', () => {
+            // small delay to allow layout to settle
+            setTimeout(initTicker, 150);
+        });
+        window.__tickerResizeAttached = true;
+    }
 }
 
 // run this after initTicker() executed

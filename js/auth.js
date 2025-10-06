@@ -52,8 +52,7 @@ const logout = () => {
  * @param {string} email - The email of the user to reset password for
  * @returns {Promise<boolean>} - true if sent successfully, false if failed
  */
-//I changed something here pasqal, check it out!
-async function resetPassword(email) {
+export async function resetPassword(email) {
   if (!email) throw new Error("Email is required for password reset.");
 
   try {
