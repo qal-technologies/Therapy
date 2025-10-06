@@ -42,9 +42,13 @@ async function translateText(text, targetLang, sourceLang = "en") {
         // const json = await res.json();
         // return json.translatedText;
 
-        const res = await fetch(`/api/translate?text=${text}&target=${targetLang}&sourceLang=${sourceLang}`);
+        const res = await fetch(`/.netlify/functions/translate?text=${encodeURIComponent(text)}&target=${targetLang}`);
         const data = await res.json();
-        console.log(data.translated);
+        if (data.translated) {
+            return data.translated;
+        } else {
+            throw new Error("No translation returned");
+        }
     } catch (error) {
         console.error("Translation error:", error);
 
