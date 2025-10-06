@@ -1,5 +1,6 @@
 import handleAlert from './general.js';
-import { changePassword } from "./auth.js";
+//I changed something here pasqal, check it out!
+import { resetPassword } from "./auth.js";
 
 document.addEventListener("load", () => {
     const emailInput = document.getElementById("forgot-email");
@@ -38,7 +39,8 @@ document.addEventListener("load", () => {
                      handleAlert("Network error. Please check your internet connection and try again.", "blur", true, "<i class='bi bi-wifi-off text-danger fs-2'></i> <br/> Network Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
                     return;
                 }
-                await changePassword(email);
+                //I changed something here pasqal, check it out!
+                await resetPassword(email);
                 handleAlert(
                     `A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.`,
                     "blur",

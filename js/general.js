@@ -19,33 +19,32 @@ function pageIsTranslatedByClass() {
 }
 
 
-async function translateText(text, targetLang, sourceLang = "en") {
-    // const apiUrl = "https://libretranslate.de/translate";
+//I changed something here pasqal, check it out!
+//I changed something here pasqal, check it out!
+async function translateText(text, targetLang, sourceLang = "auto") {
     try {
-        // const res = await fetch(apiUrl, {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         q: text,
-        //         source: sourceLang,
-        //         target: targetLang,
-        //         format: "text",
-        //         alternatives: 3,
-        //     }),
-        //     headers: { "Content-Type": "application/json" },
-        // });
+        const corsProxy = "https://cors-anywhere.herokuapp.com/";
+        const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+        const url = corsProxy + apiUrl;
 
+        const res = await fetch(url, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        const data = await res.json();
 
-        // if (!res.ok) {
-        //     throw new Error(`Translation API request failed with status ${res.status}`);
-        // }
-
-        // const json = await res.json();
-        // return json.translatedText;
-
-
+        if (Array.isArray(data) && data[0] && Array.isArray(data[0])) {
+            return data[0].map(sentence => sentence[0]).join("");
+        } else {
+            console.error("Unexpected translation response format:", data);
+            return text;
+        }
     } catch (error) {
         console.error("Translation error:", error);
-
         return text;
     }
 }
@@ -450,11 +449,96 @@ async function setupNewsletter(user) {
     }
 }
 
+//I changed something here pasqal, check it out!
+function setupMutationObserver() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    if (userLang === "en") {
+        return;
+    }
+
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+                        translateNode(node);
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        const textNodes = [];
+                        const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+                        let n;
+                        while (n = walk.nextNode()) {
+                            if (n.nodeValue.trim().length > 0) {
+                                textNodes.push(n);
+                            }
+                        }
+                        if (textNodes.length > 0) {
+                            translateNode(textNodes);
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+}
+
+async function translateNode(nodeOrNodes) {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    const nodes = Array.isArray(nodeOrNodes) ? nodeOrNodes : [nodeOrNodes];
+
+    const parentElements = new Set();
+    nodes.forEach(node => {
+        if (node.parentElement) {
+            parentElements.add(node.parentElement);
+        }
+    });
+
+    parentElements.forEach(parent => {
+        const spinner = document.createElement('div');
+        spinner.className = 'spinner-container';
+        spinner.innerHTML = '<div class="spinner"></div>';
+        parent.style.position = 'relative';
+        parent.appendChild(spinner);
+    });
+
+
+    const originalTexts = nodes.map(node => node.nodeValue);
+    const separator = "|||";
+    const joinedText = originalTexts.join(separator);
+
+    const translationPromise = translateText(joinedText, userLang);
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(joinedText), 5000));
+
+    try {
+        const translationResult = await Promise.race([translationPromise, timeoutPromise]);
+        const translatedTexts = translationResult.split(separator).map(t => t.trim());
+        nodes.forEach((node, index) => {
+            if (translatedTexts[index]) {
+                node.nodeValue = translatedTexts[index];
+            }
+        });
+    } catch (e) {
+        console.warn("Dynamic translation failed:", e);
+    } finally {
+        parentElements.forEach(parent => {
+            const spinner = parent.querySelector('.spinner-container');
+            if (spinner) {
+                spinner.remove();
+            }
+        });
+    }
+}
+
 async function initializeApp() {
     await handleTranslateFirstLoad();
     setupCommonUI();
     setupEventListeners();
     initTicker();
+    setupMutationObserver();
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
@@ -692,7 +776,8 @@ function addAlertButtons(div, closing, closingConfig, closeAlert, defaultFunctio
  *     input: { id: 'email-otp', type: 'text', placeholder: 'Enter OTP', required: true }
  *   }
  */
-function handleAlert(
+//I changed something here pasqal, check it out!
+async function handleAlert(
     message,
     type = "blur",
     titled = false,
@@ -703,79 +788,98 @@ function handleAlert(
     arrange = "row",
     defaultFunction = () => { },
 ) {
-
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
 
-    // Detect user language
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
 
-    // Show quick spinner if not English
+    const renderAlert = (finalTitle, finalMessage, finalButtons) => {
+        const base = createAlertBase(type);
+        if (!base) return;
+
+        const closeAlert = () => {
+            if (base) base.classList.add("zoom-out");
+            parent.classList.add("fadeOut");
+            timer = setTimeout(() => {
+                parent.style.display = "none";
+                parent.innerHTML = "";
+                defaultFunction();
+            }, 1200);
+        };
+
+        if (type === "toast") {
+            const newMessage = document.createElement("p");
+            newMessage.className = "alert-text moveUp";
+            newMessage.innerHTML = finalMessage;
+            base.appendChild(newMessage);
+            setTimeout(closeAlert, 4000);
+            return;
+        }
+
+        document.activeElement?.blur();
+        addAlertContent(base, titled, finalTitle, finalMessage);
+        addAlertTimer(base, options, parent);
+        addAlertInput(base, options);
+
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "alert-error";
+        errorDiv.style.display = "none";
+        base.appendChild(errorDiv);
+
+        addAlertButtons(base, closing, finalButtons, closeAlert, defaultFunction, arrange, errorDiv);
+
+        if (!closing) {
+            setTimeout(closeAlert, 4000);
+        }
+    };
+
     if (userLang !== "en") {
-        parent.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+        parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
         parent.style.display = "flex";
-    }
 
-    // Try translating
-    if (userLang !== "en") {
+        const translationPromise = (async () => {
+            const separator = '|||';
+            const toTranslate = [
+                titleText,
+                message,
+                ...closingConfig.map(btn => btn.text)
+            ].join(separator);
+
+            const translated = await translateText(toTranslate, userLang);
+
+            if (translated && translated !== toTranslate) {
+                const parts = translated.split(separator).map(t => t.trim());
+                return {
+                    title: parts[0] || titleText,
+                    message: parts[1] || message,
+                    buttons: closingConfig.map((btn, i) => ({
+                        ...btn,
+                        text: parts[i + 2] || btn.text,
+                    })),
+                };
+            }
+            // Return null on failure to trigger fallback
+            return null;
+        })();
+
+        const timeoutPromise = new Promise(resolve =>
+            setTimeout(() => resolve(null), 5000)
+        );
+
         try {
-            const toTranslate = [titleText, message, ...closingConfig.map(btn => btn.text)];
-            const translated =async () => await translateText(toTranslate, userLang);
-
-            // Replace with translations
-            if (translated && translated.length >= 2) {
-                titleText = translated[0] || titleText;
-                message = translated[1] || message;
-                closingConfig = closingConfig.map((btn, i) => ({
-                    ...btn,
-                    text: translated[i + 2] || btn.text,
-                }));
+            const result = await Promise.race([translationPromise, timeoutPromise]);
+            if (result) {
+                renderAlert(result.title, result.message, result.buttons);
+            } else {
+                // Fallback to English
+                renderAlert(titleText, message, closingConfig);
             }
         } catch (e) {
             console.warn("Alert translation failed, falling back to English:", e);
+            renderAlert(titleText, message, closingConfig);
         }
-    }
-
-    const base = createAlertBase(type);
-    if (!base) return;
-
-    const closeAlert = () => {
-        if (base) base.classList.add("zoom-out");
-        parent.classList.add("fadeOut");
-        timer = setTimeout(() => {
-            parent.style.display = "none";
-            parent.innerHTML = "";
-            defaultFunction();
-        }, 1200);
-    };
-
-    function fadeAlert() {
-        timer = setTimeout(closeAlert, 4000);
-    }
-
-    if (type === "toast") {
-        const newMessage = document.createElement("p");
-        newMessage.className = "alert-text moveUp";
-        newMessage.innerHTML = message;
-        base.appendChild(newMessage);
-        fadeAlert();
-        return;
-    }
-
-    document.activeElement?.blur();
-    addAlertContent(base, titled, titleText, message);
-    addAlertTimer(base, options, parent);
-    addAlertInput(base, options);
-
-    const errorDiv = document.createElement("div");
-    errorDiv.className = "alert-error";
-    errorDiv.style.display = "none";
-    base.appendChild(errorDiv);
-
-    addAlertButtons(base, closing, closingConfig, closeAlert, defaultFunction, arrange, errorDiv);
-
-    if (!closing) {
-        timer = setTimeout(closeAlert, 4000);
+    } else {
+        renderAlert(titleText, message, closingConfig);
     }
 }
 

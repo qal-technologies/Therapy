@@ -52,7 +52,8 @@ const logout = () => {
  * @param {string} email - The email of the user to reset password for
  * @returns {Promise<boolean>} - true if sent successfully, false if failed
  */
-export async function resetPassword(email) {
+//I changed something here pasqal, check it out!
+async function resetPassword(email) {
   if (!email) throw new Error("Email is required for password reset.");
 
   try {
@@ -81,6 +82,7 @@ const getCurrentUser = () => {
   return auth.currentUser;
 };
 
+//I changed something here pasqal, check it out!
 export {
   auth,
   db,
@@ -89,5 +91,5 @@ export {
   logout,
   handleAuthStateChange,
   getCurrentUser,
-  resetPassword as changePassword,
+  resetPassword,
 };
