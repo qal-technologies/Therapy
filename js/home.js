@@ -393,7 +393,6 @@ window.addEventListener('load', () => {
 	`;
 	}).join("");
 
-	sessions.innerHTML = "";
 	sessions.innerHTML += sessionTypes.map((session) => {
 		const details = {
 			name: session.name,

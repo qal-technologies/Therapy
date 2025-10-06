@@ -20,27 +20,28 @@ function pageIsTranslatedByClass() {
 
 
 async function translateText(text, targetLang, sourceLang = "en") {
-    const apiUrl = "https://libretranslate.de/translate";
+    // const apiUrl = "https://libretranslate.de/translate";
     try {
-        const res = await fetch(apiUrl, {
-            method: "POST",
-            body: JSON.stringify({
-                q: text,
-                source: sourceLang,
-                target: targetLang,
-                format: "text",
-                alternatives: 3,
-            }),
-            headers: { "Content-Type": "application/json" },
-        });
+        // const res = await fetch(apiUrl, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         q: text,
+        //         source: sourceLang,
+        //         target: targetLang,
+        //         format: "text",
+        //         alternatives: 3,
+        //     }),
+        //     headers: { "Content-Type": "application/json" },
+        // });
 
 
-        if (!res.ok) {
-            throw new Error(`Translation API request failed with status ${res.status}`);
-        }
+        // if (!res.ok) {
+        //     throw new Error(`Translation API request failed with status ${res.status}`);
+        // }
 
-        const json = await res.json();
-        return json.translatedText;
+        // const json = await res.json();
+        // return json.translatedText;
+
 
     } catch (error) {
         console.error("Translation error:", error);
@@ -257,68 +258,91 @@ async function handleRefresh() {
 
 function initTicker() {
     const tickerItems = [
-        {
-            text: `A Transformative Journey with Charlotte Casiraghi`
-        },
-        {
-            text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself."
-        }, {
-            text: `A Transformative Journey with Charlotte Casiraghi`
-        },
-        {
-            text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself."
-        }
+        { text: `A Transformative Journey with Charlotte Casiraghi` },
+        { text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." },
+        { text: `A Transformative Journey with Charlotte Casiraghi` },
+        { text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." }
     ];
 
+    const container = document.getElementById('ticker-container');
     const ticker = document.getElementById('ticker');
-    if (!ticker) return;
+    if (!ticker || !container) return;
 
-    let tickerWidth = 0;
-    let animationFrame;
+    // clear any previous animation
+    if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
 
-    function createTicker() {
-        ticker.innerHTML = '';
-        tickerWidth = 0;
+    // build content
+    ticker.innerHTML = '';
+    tickerItems.forEach(item => {
+        const span = document.createElement('span');
+        span.className = `ticker-item${item.class ? ' ' + item.class : ''}`;
+        span.textContent = item.text;
+        ticker.appendChild(span);
+    });
 
-        tickerItems.forEach(item => {
-            const span = document.createElement('span');
-            span.className = `ticker-item${item.class ? ' ' + item.class : ''}`;
-            span.textContent = item.text;
-            ticker.appendChild(span);
-            tickerWidth += span.offsetWidth + 60;
-        });
+    // duplicate content for smooth infinite scroll
+    ticker.insertAdjacentHTML('beforeend', ticker.innerHTML);
 
-        startAnimation();
-    }
+    // wait for layout to finish before measuring widths (two rAF ticks)
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            const items = ticker.querySelectorAll('.ticker-item');
+            if (!items.length) return;
 
-    function startAnimation() {
-        let position = 0;
-        const speed = 1.2;
-
-        function animate() {
-            position -= speed;
-
-            if (position <= -tickerWidth) {
-                position = 0;
+            // compute width of a single set (first half)
+            const half = items.length / 2;
+            let singleWidth = 0;
+            for (let i = 0; i < half; i++) {
+                const w = items[i].offsetWidth;
+                const style = getComputedStyle(items[i]);
+                const marginRight = parseFloat(style.marginRight) || 0;
+                singleWidth += w + marginRight;
             }
 
-            ticker.style.transform = `translateX(${position}px)`;
-            animationFrame = requestAnimationFrame(animate);
-        }
+            // debug (remove if you want)
+            console.debug('ticker singleWidth:', singleWidth, 'items:', half);
 
-        animate();
-    }
+            // animation variables
+            let position = 0;               // px
+            const speedPxPerSecond = 60;   // change this to speed up/down
+            let lastTime = null;
 
-    ticker && createTicker();
-    window.addEventListener("resize", () => {
-        cancelAnimationFrame(animationFrame);
-        createTicker();
-    });
+            function step(timestamp) {
+                if (!lastTime) lastTime = timestamp;
+                const delta = timestamp - lastTime;
+                lastTime = timestamp;
 
-    window.addEventListener('unload', () => {
-        cancelAnimationFrame(animationFrame);
+                // move left: position decreases
+                position -= (speedPxPerSecond * delta) / 1000;
+
+                // reset when we scrolled one full set
+                if (Math.abs(position) >= singleWidth) {
+                    // keep within range to avoid big number drift
+                    position += singleWidth;
+                }
+
+                ticker.style.transform = `translateX(${position}px)`;
+
+                window.__tickerAnimationFrame = requestAnimationFrame(step);
+            }
+
+            // start
+            if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
+            window.__tickerAnimationFrame = requestAnimationFrame(step);
+
+            // attach one resize listener (guarded so we don't add it multiple times)
+            if (!window.__tickerResizeAttached) {
+                window.addEventListener('resize', () => {
+                    if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
+                    // small delay to allow layout to settle
+                    setTimeout(initTicker, 120);
+                });
+                window.__tickerResizeAttached = true;
+            }
+        });
     });
 }
+
 
 
 function setupAuthUI(user) {
