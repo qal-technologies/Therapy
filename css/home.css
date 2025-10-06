@@ -591,21 +591,13 @@ div#session.virtual .upper {
 .ticker-item {
   padding-inline: 50px;
   display: inline-block;
-  font-size: 1.1rem;
   display: inline-block;
   color: var(--primary);
   font-family: PoppinsMed;
   border-right: 1px solid var(--accentTrans);
   line-height: 1.5;
   white-space: nowrap;
-
-  display: inline-block;
-  margin-right: 60px;
-  /* spacing between items */
-  padding: 0 6px;
-  white-space: nowrap;
   font-size: 16px;
-  line-height: 1.3;
 }
 
 @media (max-width: 768px) {

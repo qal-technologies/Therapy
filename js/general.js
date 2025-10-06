@@ -255,7 +255,6 @@ async function handleRefresh() {
     ]);
 }
 
-
 function initTicker() {
     const tickerItems = [
         { text: `A Transformative Journey with Charlotte Casiraghi` },
@@ -264,9 +263,12 @@ function initTicker() {
         { text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." }
     ];
 
-    const container = document.getElementById('ticker-container');
+    const container = document.querySelector('section.ticker-container');
     const ticker = document.getElementById('ticker');
-    if (!ticker || !container) return;
+    if (!ticker || !container) {
+        console.warn('initTicker aborted: missing #ticker or #ticker-container');
+        return;
+    }
 
     // clear any previous animation
     if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
@@ -287,7 +289,10 @@ function initTicker() {
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             const items = ticker.querySelectorAll('.ticker-item');
-            if (!items.length) return;
+            if (!items.length) {
+                console.warn('initTicker: no .ticker-item found after render');
+                return;
+            }
 
             // compute width of a single set (first half)
             const half = items.length / 2;
@@ -299,12 +304,16 @@ function initTicker() {
                 singleWidth += w + marginRight;
             }
 
-            // debug (remove if you want)
             console.debug('ticker singleWidth:', singleWidth, 'items:', half);
+
+            if (singleWidth <= 0) {
+                console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
+                return;
+            }
 
             // animation variables
             let position = 0;               // px
-            const speedPxPerSecond = 60;   // change this to speed up/down
+            const speedPxPerSecond = 60;   // px / second — tweak for speed
             let lastTime = null;
 
             function step(timestamp) {
@@ -317,7 +326,6 @@ function initTicker() {
 
                 // reset when we scrolled one full set
                 if (Math.abs(position) >= singleWidth) {
-                    // keep within range to avoid big number drift
                     position += singleWidth;
                 }
 
@@ -326,16 +334,15 @@ function initTicker() {
                 window.__tickerAnimationFrame = requestAnimationFrame(step);
             }
 
-            // start
             if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
             window.__tickerAnimationFrame = requestAnimationFrame(step);
 
-            // attach one resize listener (guarded so we don't add it multiple times)
+            // attach a single resize listener
             if (!window.__tickerResizeAttached) {
                 window.addEventListener('resize', () => {
                     if (window.__tickerAnimationFrame) cancelAnimationFrame(window.__tickerAnimationFrame);
                     // small delay to allow layout to settle
-                    setTimeout(initTicker, 120);
+                    setTimeout(initTicker, 150);
                 });
                 window.__tickerResizeAttached = true;
             }
@@ -343,6 +350,18 @@ function initTicker() {
     });
 }
 
+// run this after initTicker() executed
+const t = document.getElementById('ticker');
+let prev = getComputedStyle(t).transform;
+setInterval(() => {
+    const cur = getComputedStyle(t).transform;
+    if (cur !== prev) {
+        console.log('ticker moving, transform changed:', cur);
+        prev = cur;
+    } else {
+        // console.log('no change'); // too noisy
+    }
+}, 500);
 
 
 function setupAuthUI(user) {
