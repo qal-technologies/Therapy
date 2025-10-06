@@ -20,26 +20,31 @@ function pageIsTranslatedByClass() {
 
 
 async function translateText(text, targetLang, sourceLang = "en") {
-    const apiUrl = "https://libretranslate.de/translate";
+    // const apiUrl = "https://libretranslate.de/translate";
     try {
-        const res = await fetch(apiUrl, {
-            method: "POST",
-            body: JSON.stringify({
-                q: text,
-                source: sourceLang,
-                target: targetLang,
-                format: "text",
-                alternatives: 3,
-            }),
-            headers: { "Content-Type": "application/json" },
-        });
+        // const res = await fetch(apiUrl, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         q: text,
+        //         source: sourceLang,
+        //         target: targetLang,
+        //         format: "text",
+        //         alternatives: 3,
+        //     }),
+        //     headers: { "Content-Type": "application/json" },
+        // });
 
-        if (!res.ok) {
-            throw new Error(`Translation API request failed with status ${res.status}`);
-        }
 
-        const json = await res.json();
-        return json.translatedText;
+        // if (!res.ok) {
+        //     throw new Error(`Translation API request failed with status ${res.status}`);
+        // }
+
+        // const json = await res.json();
+        // return json.translatedText;
+
+        const res = await fetch(`/api/translate?text=${text}&target=${targetLang}&sourceLang=${sourceLang}`);
+        const data = await res.json();
+        console.log(data.translated);
     } catch (error) {
         console.error("Translation error:", error);
 
