@@ -113,6 +113,7 @@ async function handleTranslateFirstLoad() {
     document.body.insertAdjacentHTML("beforebegin", loadingHTML);
 
     try {
+    initGoogleTranslateWidget();
         const translatedTexts = await translatePage(userLang);
         // Cache the new translations as a JSON string
         sessionStorage.setItem(pathKey, JSON.stringify(translatedTexts));
@@ -127,6 +128,60 @@ async function handleTranslateFirstLoad() {
     }
 
     return true;
+}
+
+function initGoogleTranslateWidget() {
+    // 1. Ensure translate container exists
+    let translateContainer = document.getElementById("google_translate_element");
+    if (!translateContainer) {
+        translateContainer = document.createElement("div");
+        translateContainer.id = "google_translate_element";
+        // Optional: append where you want the dropdown to appear
+        // Example: top-right corner of body
+        Object.assign(translateContainer.style, {
+            position: "fixed",
+            top: "10px",
+            right: "10px",
+            zIndex: "9999"
+        });
+        document.body.appendChild(translateContainer);
+    }
+
+    // 2. Avoid loading the script multiple times
+    if (document.getElementById("google-translate-script")) {
+        console.warn("Google Translate script already loaded.");
+        return;
+    }
+
+    // 3. Create and load the script
+    const gtScript = document.createElement("script");
+    gtScript.id = "google-translate-script";
+    gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    gtScript.defer = true;
+
+    gtScript.onload = () => {
+        console.log("Google Translate script loaded successfully.");
+    };
+
+    gtScript.onerror = () => {
+        console.error("Failed to load Google Translate script.");
+    };
+
+    document.head.appendChild(gtScript);
+
+    // 4. Define callback before script executes
+    window.googleTranslateElementInit = function () {
+        try {
+            new google.translate.TranslateElement({
+                pageLanguage: "en",
+                includedLanguages: "fr,es,de,it",
+                autoDisplay: false
+            }, "google_translate_element");
+            console.log("Google Translate widget initialized.");
+        } catch (e) {
+            console.error("Google Translate initialization error:", e);
+        }
+    };
 }
 
 function handleInputFocusFix() {
@@ -436,7 +491,8 @@ function setupMutationObserver() {
             if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
                 mutation.addedNodes.forEach(node => {
                     if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
-                        translateNode(node);
+                        // translateNode(node);
+                        initGoogleTranslateWidget();
                     } else if (node.nodeType === Node.ELEMENT_NODE) {
                         const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
                         const textNodes = [];
@@ -447,7 +503,8 @@ function setupMutationObserver() {
                             }
                         }
                         if (textNodes.length > 0) {
-                            translateNode(textNodes);
+                            // translateNode(textNodes);
+                            initGoogleTranslateWidget();
                         }
                     }
                 });
@@ -567,7 +624,7 @@ async function initializeApp() {
     setupEventListeners();
     initTicker();
     runTicker();
-    // setupMutationObserver();
+    setupMutationObserver();
     let loadUser;
 
     if ("serviceWorker" in navigator) {
@@ -871,55 +928,56 @@ async function handleAlert(
         }
     };
 
-    if (userLang !== "en" && online) {
-        parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
-        parent.style.display = "flex";
+    // if (userLang !== "en" && online) {
+    //     parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
+    //     parent.style.display = "flex";
 
-        const translationPromise = (async () => {
-            const separator = '|||';
-            const toTranslate = [
-                titleText,
-                message,
-                ...closingConfig.map(btn => btn.text)
-            ].join(separator);
+    //     const translationPromise = (async () => {
+    //         const separator = '|||';
+    //         const toTranslate = [
+    //             titleText,
+    //             message,
+    //             ...closingConfig.map(btn => btn.text)
+    //         ].join(separator);
 
-            const translated = await translateText(toTranslate, userLang);
+    //         const translated = await translateText(toTranslate, userLang);
 
-            if (translated && translated !== toTranslate) {
-                const parts = translated.split(separator).map(t => t.trim());
-                return {
-                    title: parts[0] || titleText,
-                    message: parts[1] || message,
-                    buttons: closingConfig.map((btn, i) => ({
-                        ...btn,
-                        text: parts[i + 2] || btn.text,
-                    })),
-                };
-            }
-            // Return null on failure to trigger fallback
-            return null;
-        })();
+    //         if (translated && translated !== toTranslate) {
+    //             const parts = translated.split(separator).map(t => t.trim());
+    //             return {
+    //                 title: parts[0] || titleText,
+    //                 message: parts[1] || message,
+    //                 buttons: closingConfig.map((btn, i) => ({
+    //                     ...btn,
+    //                     text: parts[i + 2] || btn.text,
+    //                 })),
+    //             };
+    //         }
+    //         // Return null on failure to trigger fallback
+    //         return null;
+    //     })();
 
-        const timeoutPromise = new Promise(resolve =>
-            setTimeout(() => resolve(null), 5000)
-        );
+    //     const timeoutPromise = new Promise(resolve =>
+    //         setTimeout(() => resolve(null), 5000)
+    //     );
 
-        try {
-            const result = await Promise.race([translationPromise, timeoutPromise]);
-            if (result) {
-                renderAlert(result.title, result.message, result.buttons);
-            } else {
-                // Fallback to English
-                renderAlert(titleText, message, closingConfig);
-            }
-        } catch (e) {
-            console.warn("Alert translation failed, falling back to English:", e);
-            renderAlert(titleText, message, closingConfig);
-        }
-    } else {
+    //     // try {
+    //     //     const result = await Promise.race([translationPromise, timeoutPromise]);
+    //     //     if (result) {
+    //     //         renderAlert(result.title, result.message, result.buttons);
+    //     //     } else {
+    //     //         // Fallback to English
+    //     //         }
+    //     //     } catch (e) {
+    //     //         console.warn("Alert translation failed, falling back to English:", e);
+    //     //         renderAlert(titleText, message, closingConfig);
+    //     //     }
+    //     // } else {
+    //     //     renderAlert(titleText, message, closingConfig);
+    //     // }
+    // }
+
         renderAlert(titleText, message, closingConfig);
-    }
 }
-
 
 export default handleAlert;

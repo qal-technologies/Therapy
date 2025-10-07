@@ -50,7 +50,7 @@ const EXTERNAL_ASSETS = ["https://translate.argosopentech.com/translate"
 self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll([...STATIC_ASSETS, ...EXTERNAL_ASSETS]);
+            return cache.addAll([...STATIC_ASSETS]);
         }).catch(err => console.error("Caching failed:", err))
     );
     self.skipWaiting();
@@ -114,7 +114,7 @@ self.addEventListener("fetch", event => {
     }
 
     // Cache-first strategy for static + external assets
-    if ([...STATIC_ASSETS, ...EXTERNAL_ASSETS].some(asset => url.href.includes(asset))) {
+    if ([...STATIC_ASSETS].some(asset => url.href.includes(asset))) {
         event.respondWith(
             caches.match(event.request).then(resp => {
                 return resp || fetch(event.request).then(fetchResp => {
@@ -140,7 +140,7 @@ self.addEventListener("activate", event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
-                    if (cacheName !== CACHE_NAME && cacheName !== TRANSLATED_CACHE_NAME) {
+                    if (cacheName !== CACHE_NAME) {
                         return caches.delete(cacheName);
                     }
                 })

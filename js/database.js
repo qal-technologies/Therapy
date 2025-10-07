@@ -6,7 +6,8 @@ import {
   collection,
   addDoc,
   getDocs,
-  deleteDoc
+  deleteDoc,
+  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // --- USER DATA FUNCTIONS ---
@@ -220,6 +221,42 @@ const updateGlobalTransaction = (transactionId, transactionData) => {
   const transactionDocRef = doc(db, "transactions", transactionId);
   return setDoc(transactionDocRef, transactionData, { merge: true });
 };
+
+
+
+//////////////////////////////////////
+/////////////////////////////
+//////////////////////
+/////////////////
+/////////////
+export async function getTranslationFromFirestore(pageKey) {
+  try {
+    const ref = doc(db, "translations", pageKey);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      const data = snap.data();
+      return data.data; // the array of translated strings
+    }
+    return null;
+  } catch (err) {
+    console.error("Error getting translation:", err);
+    return null;
+  }
+}
+
+export async function saveTranslationToFirestore(pageKey, translatedTexts) {
+  try {
+    const ref = doc(db, "translations", pageKey);
+    await setDoc(ref, {
+      data: translatedTexts,
+      timestamp: serverTimestamp()
+    });
+    console.log(`Saved translation for ${pageKey} to Firestore.`);
+  } catch (err) {
+    console.error("Error saving translation:", err);
+  }
+}
+
 
 export {
   createUserProfile,
