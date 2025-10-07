@@ -10,19 +10,6 @@ window.addEventListener('load', () => {
             return;
         }
 
-        const userdata = await getUserData(user?.uid);
-        if (userdata && userdata.bookPaid === true) {
-            const bookEl = document.getElementById('book');
-            const leftEl = document.getElementById('leftPage').querySelector('.content');
-            const rightEl = document.getElementById('rightPage').querySelector('.content');
-            const pageIndicator = document.getElementById('pageInfo');
-            const mq = window.matchMedia('(min-width: 980px)');
-            const qsa = (sel, root = document) => [...root.querySelectorAll(sel)];
-            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register", type: "secondary" }]);
-
-            return;
-        }
-
         if (user) {
             const userdata = await getUserData(user.uid);
             const paid = userdata.bookPaid;
@@ -36,10 +23,25 @@ window.addEventListener('load', () => {
                 // ===== Responsive: single vs spread =====
                 const mq = window.matchMedia('(min-width: 980px)');
 
-
                 // helper methods:
                 const qsa = (sel, root = document) => [...root.querySelectorAll(sel)];
 
+                // Show loader
+                const loader = `
+          <div class="wait-loading-section" id="wait-loading-section">
+            <div class="loading-spinner"></div>
+          </div>`;
+                bookEl.appendChild(loader);
+
+                // Hide book content initially
+                bookEl.style.visibility = 'hidden';
+
+                setTimeout(() => {
+                    loader.remove();
+                    bookEl.style.visibility = 'visible';
+                }, 2500);
+
+                
                 const PAGE_TURN_SOUND_SRC = '/src/audio/page-flip.mp3';
                 const THUD_SOUND_SRC = '/src/audio/page-thud.mp3';
                 const pageTurnSound = new Audio(PAGE_TURN_SOUND_SRC);

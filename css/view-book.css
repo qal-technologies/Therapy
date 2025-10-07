@@ -39,6 +39,7 @@
 html,
 body {
     height: 100%;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -57,6 +58,8 @@ body {
     top: 0px !important;
     position: absolute;
     flex: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
     font-family: PoppinsMed, PoppinsLight, Arial, sans-serif;
 }
 
@@ -71,42 +74,24 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-sizing: border-box;
     border-radius: 16px;
-    position: absolute;
-    z-index: 99999;
-}
-
-.top-toolbar,
-.bottom-toolbar {
-    width: 100%;
-    max-width: calc(var(--book-width) * 2 + 40px);
-    height: var(--toolbar-height);
-    background: #040404ae;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    backdrop-filter: blur(10px);
-    box-sizing: border-box;
-    border-radius: 16px;
-    position: absolute;
+    position: absolute !important;
     z-index: 99999;
     gap: 10px;
     padding: 8px var(--gutter);
 }
 
 .top-toolbar {
-    top: 0;
+    top: 0 !important;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
 }
 
 .bottom-toolbar {
-    bottom: 0;
+    bottom: 0 !important;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -179,6 +164,7 @@ body {
     color: #e8e6e3;
     color: var(--accent);
     cursor: pointer;
+    -webkit-user-select: none;
     user-select: none;
     font-size: 14px;
 }
@@ -235,7 +221,7 @@ body {
     place-items: flex-start;
     justify-content: center;
     flex: 1;
-    position: relative;
+    position: absolute;
     padding-top: calc(var(--zoom) * 4rem + 1vh);
 }
 
@@ -256,7 +242,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    position: absolute;
+    position: absolute !important;
     background: none;
     transform: scale(var(--zoom));
     transform-style: preserve-3d;

@@ -99,14 +99,13 @@ div#body {
   top: 0 !important;
   position: relative;
   z-index: -99999999;
+  -webkit-user-select: none;
   user-select: none;
   display: block;
   flex: 1;
-
   overflow-x: hidden;
-  overflow-scrolling: touch;
   -webkit-overflow-scrolling: touch;
-
+  overflow-scrolling: touch;
   height: 100%;
   min-height: 100%;
 }
@@ -123,6 +122,7 @@ body {
 a#scrollUp {
   position: absolute;
   background: var(--gradient-color);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   padding: 10px;
   cursor: pointer;
@@ -157,6 +157,7 @@ header#header {
   padding-block: 20px;
   background: transparent;
   background-color: var(--primaryTrans);
+  -webkit-backdrop-filter: blur(50px);
   backdrop-filter: blur(50px);
   background-clip: border-box;
   position: fixed;
@@ -358,7 +359,7 @@ div#back-button {
   height: 35px;
   border-radius: 50%;
   color: var(--link);
-  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
   text-shadow: 0px 1px 4px rgba(128, 128, 128, 0.13);
   display: flex;
   place-content: center;
@@ -384,6 +385,7 @@ div#refresh-button {
   color: var(--link);
   display: flex;
   align-items: center;
+  -webkit-backdrop-filter: var(--blur);
   backdrop-filter: var(--blur);
   font-size: 25px;
   font-weight: bolder;
@@ -651,6 +653,7 @@ section#newsletter {
   display: none;
   flex: 1;
   background: rgba(0, 0, 0, 0.3);
+  -webkit-backdrop-filter: blur(5px) brightness(80%);
   backdrop-filter: blur(5px) brightness(80%);
   justify-content: center;
   align-items: center;
@@ -666,6 +669,7 @@ section#newsletter {
   padding: 20px;
   padding-top: 30px;
   background: rgba(255, 255, 255, 0.99);
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   border-radius: 20px;
   gap: 10px;
@@ -816,6 +820,7 @@ section#newsletter {
   justify-content: center;
   padding-bottom: 30vh;
   align-items: flex-end;
+  -webkit-backdrop-filter: none;
   backdrop-filter: none;
 }
 
@@ -964,10 +969,15 @@ body {
 }
 
 span, i {
+  -webkit-user-select: text !important;
   user-select: text !important;
   padding-inline: 6px !important;
 }
 
 [data-translating] {
   visibility: hidden !important;
+}
+
+#goog-gt-tt {
+  display: none !important;
 }

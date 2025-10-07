@@ -1,16 +1,16 @@
-{
-  "extends": [
-    "development"
-  ],
-  "browserslist": [
-    "defaults",
-    "not ie 11",
-    "not ios_saf <= 18.2",
-    "not safari <= 18.2"
-  ],
-  "hints": {
-    "detect-css-reflows/composite": "off",
-    "disown-opener": "off",
-    "axe/forms": "off"
-  }
-}
+// {
+//   "extends": [
+//     "development"
+//   ],
+//   "browserslist": [
+//     "defaults",
+//     "not ie 11",
+//     "not ios_saf <= 18.2",
+//     "not safari <= 18.2"
+//   ],
+//   "hints": {
+//     "detect-css-reflows/composite": "off",
+//     "disown-opener": "off",
+//     "axe/forms": "off"
+//   }
+// }

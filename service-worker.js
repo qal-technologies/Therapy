@@ -1,5 +1,5 @@
 // service-worker.js
-const CACHE_NAME = "charlotte-cache-v191";
+const CACHE_NAME = "charlotte-cache-v192";
 
 // Split caches for better control
 const STATIC_ASSETS = [
@@ -42,10 +42,6 @@ const STATIC_ASSETS = [
     "/src/images/book-person.png",
 ];
 
-// External assets (Google Translate)
-const EXTERNAL_ASSETS = ["https://translate.argosopentech.com/translate"
-];
-
 // Install
 self.addEventListener("install", event => {
     event.waitUntil(
@@ -73,14 +69,6 @@ self.addEventListener("fetch", event => {
     // If HTML request -> try translated cache first (exact URL)
     if (event.request.destination === 'document' || url.pathname.endsWith(".html")) {
         event.respondWith((async () => {
-            // const tCache = await caches.open(TRANSLATED_CACHE_NAME);
-            // const matched = await tCache.match(event.request);
-            // if (matched) {
-            //     // Serve the full translated HTML from translated cache
-            //     return matched;
-            // }
-
-            // Fallback: network-first then populate translated cache (so future visits can use translated copy)
             try {
                 const networkResp = await fetch(event.request);
                 // store the network response into the normal static cache for offline fallback
