@@ -728,7 +728,7 @@ section#newsletter {
 }
 
 .alert-message .alert-error {
-  color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0) !important;
   font-size: 13px;
   display: none;
   flex-direction: row;

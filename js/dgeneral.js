@@ -7,6 +7,7 @@ let menu;
 
 const TRANSLATION_SESSION_KEY_PREFIX = "translated:";
 
+//I changed something here pasqal, check it out!
 async function translateText(text, targetLang, sourceLang = "auto") {
     try {
         const corsProxy = "https://cors-anywhere.herokuapp.com/";
@@ -295,7 +296,7 @@ function initTicker() {
 
         // Set CSS variable for animation
         ticker.style.setProperty('--ticker-width', `${singleWidth}px`);
-        container.classList.add('animate'); 
+        container.classList.add('animate');
     });
 
     // attach a single resize listener
@@ -317,7 +318,7 @@ function runTicker() {
             const cur = getComputedStyle(t).transform;
             if (cur !== prev) {
                 prev = cur;
-        initTicker();
+                initTicker();
             } else {
                 console.log('no change');
             }
@@ -525,7 +526,7 @@ async function translateNode(nodeOrNodes) {
             parent.appendChild(spinner);
         });
     });
-   
+
     // Step 2: race translation vs timeout fallback
     const translationPromise = translateText(joinedText, userLang);
     const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(joinedText), 4000));
@@ -544,10 +545,10 @@ async function translateNode(nodeOrNodes) {
         nodes.forEach((n, i) => (n.nodeValue = originalTexts[i]));
     } finally {
         parents.forEach(parent => {
-        delete parent.dataset.translating;
-        parent.style.color = parent.dataset.originalColor || "";
-        parent.style.backgroundColor = parent.dataset.originalBg || "";
-        
+            delete parent.dataset.translating;
+            parent.style.color = parent.dataset.originalColor || "";
+            parent.style.backgroundColor = parent.dataset.originalBg || "";
+
             parent.style.color = parent.dataset.originalColor || "";
             parent.style.backgroundColor = "";
         });
@@ -645,7 +646,7 @@ function createAlertBase(type) {
     const parent = document.querySelector(".alert-message");
     if (!parent) return null;
     parent.dataset.translateWrapper = true;
-    
+
     parent.innerHTML = "";
     clearTimeout(timer);
     if (parent.dataset.countdownId) {

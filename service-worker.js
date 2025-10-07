@@ -1,5 +1,5 @@
 // service-worker.js
-const CACHE_NAME = "charlotte-cache-v1901";
+const CACHE_NAME = "charlotte-cache-v191";
 
 // Split caches for better control
 const STATIC_ASSETS = [
