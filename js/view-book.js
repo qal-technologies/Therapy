@@ -28,20 +28,22 @@ window.addEventListener('load', () => {
 
                 // Show loader
                 const loader = `
-          <div class="wait-loading-section" id="wait-loading-section">
             <div class="loading-spinner"></div>
-          </div>`;
-                bookEl.appendChild(loader);
+          `;
+                const pages = [leftEl, rightEl];
+                pages.forEach(p => p.insertAdjacentHTML("beforebegin", loader)
+                );
 
                 // Hide book content initially
                 bookEl.style.visibility = 'hidden';
 
                 setTimeout(() => {
-                    loader.remove();
+                    const loader = document.querySelectorAll('.loading-spinner');
+                    loader?.forEach(l => l.remove());
                     bookEl.style.visibility = 'visible';
-                }, 2500);
+                }, 500);
 
-                
+
                 const PAGE_TURN_SOUND_SRC = '/src/audio/page-flip.mp3';
                 const THUD_SOUND_SRC = '/src/audio/page-thud.mp3';
                 const pageTurnSound = new Audio(PAGE_TURN_SOUND_SRC);
@@ -245,15 +247,7 @@ window.addEventListener('load', () => {
                     qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(b => (b.innerHTML = icon));
                     saveState();
                 }
-                // ===== Controls =====>>>>
-                /*Sound toggle*/
-                function toggleSound() {
-                    state.soundOn = !state.soundOn;
-                    const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
 
-                    qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(b => (b.innerHTML = icon));
-                    saveState();
-                }
                 qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
 
                 function zoom(delta) {
@@ -344,7 +338,7 @@ window.addEventListener('load', () => {
                 (function init() {
                     document.getElementById('bookTitle').textContent = BOOK.title;
                     document.getElementById('search').placeholder = `Search page – ${BOOK.title}`;
-                
+
                     if (!loadState()) {
                         const bookmarkedPage = state.bookmarks.length > 0 ? state.bookmarks[state.bookmarks.length - 1] : null;
                         if (bookmarkedPage) state.page = bookmarkedPage;
@@ -360,7 +354,7 @@ window.addEventListener('load', () => {
             } else {
                 handleAlert("Please go to the Book Page and purchase the book to start reading...", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "GET COPY", onClick: () => handleRedirect("/html/main/Shop.html", "replace") }, { text: "Close", onClick: () => handleRedirect("/html/main/Home.html"), type: "secondary" }]);
             }
-    
+
         }
-});
+    });
 });
