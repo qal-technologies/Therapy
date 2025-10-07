@@ -7,18 +7,6 @@ let menu;
 
 const TRANSLATION_SESSION_KEY_PREFIX = "translated:";
 
-function sessionKeyForPath() {
-    return TRANSLATION_SESSION_KEY_PREFIX + window.location.pathname;
-}
-
-function pageIsTranslatedByClass() {
-    const htmlEl = document.documentElement;
-    return htmlEl.classList.contains("translated") ||
-        htmlEl.classList.contains("translated-ltr") ||
-        htmlEl.classList.contains("translated-rtl");
-}
-
-
 //I changed something here pasqal, check it out!
 async function translateText(text, targetLang, sourceLang = "auto") {
     try {
@@ -144,18 +132,20 @@ async function handleTranslateFirstLoad() {
 
 function handleInputFocusFix() {
     const inputs = document.querySelectorAll("input, textarea, select");
+    if (inputs) {
 
-    inputs.forEach(input => {
-        input.addEventListener("focus", () => {
-            setTimeout(() => {
-                input.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest",
-                });
-                window.scrollBy(0, -60);
-            }, 300);
+        inputs.forEach(input => {
+            input.addEventListener("focus", () => {
+                setTimeout(() => {
+                    input.scrollIntoView({
+                        behavior: "smooth",
+                        block: "nearest",
+                    });
+                    window.scrollBy(0, -60);
+                }, 300);
+            });
         });
-    });
+    }
 }
 
 function setupCommonUI() {
@@ -273,7 +263,7 @@ function initTicker() {
     ticker.innerHTML = '';
     tickerItems.forEach(item => {
         const span = document.createElement('span');
-        span.className = `ticker-item${item.class ? ' ' + item.class : ''}`;
+        span.className = `ticker-item ${item.class ? ' ' + item.class : ''}`;
         span.textContent = item.text;
         ticker.appendChild(span);
     });
@@ -320,18 +310,23 @@ function initTicker() {
 }
 
 // run this after initTicker() executed
-const t = document.getElementById('ticker');
-let prev = getComputedStyle(t).transform;
-setInterval(() => {
-    const cur = getComputedStyle(t).transform;
-    if (cur !== prev) {
-        console.log('ticker moving, transform changed:', cur);
-        prev = cur;
-    } else {
-        // console.log('no change'); // too noisy
-    }
-}, 500);
+function runTicker() {
+    const t = document.getElementById('ticker');
+    if (t) {
+        let prev = getComputedStyle(t).transform;
+        setInterval(() => {
+            const cur = getComputedStyle(t).transform;
+            if (cur !== prev) {
+                console.log('ticker moving, transform changed:', cur);
+                prev = cur;
+        initTicker();
+            } else {
+                console.log('no change');
+            }
+        }, 500);
 
+    }
+}
 
 function setupAuthUI(user) {
     const actionTab = document.querySelectorAll("a.login");
@@ -359,10 +354,15 @@ function setupAuthUI(user) {
     if (actionTab) {
         actionTab.forEach(tab => {
             const actionText = tab.firstElementChild;
+            const userProfile = window.location.pathname.toLowerCase().includes("user");
             if (user) {
-                tab.href = "/html/main/User.html";
-                actionText.innerHTML = "PROFILE";
-                actionText.dataset.key = "profile";
+                if (userProfile) {
+                    tab.remove();
+                } else {
+                    tab.href = "/html/main/User.html";
+                    actionText.innerHTML = "PROFILE";
+                    actionText.dataset.key = "profile";
+                }
             } else {
                 tab.href = "/html/regs/Signup.html";
                 actionText.innerHTML = "REGISTER";
@@ -374,25 +374,31 @@ function setupAuthUI(user) {
 
 
 async function setupNewsletter(user) {
-    const emailInput = document.querySelector("#subscribe-email");
+    const emailInput = document.querySelector("input#subscribe-email");
     const emailBTN = document.querySelector(".newsletter-form button");
 
     if (!emailBTN || !emailInput) return;
 
     emailBTN.disabled = true;
+    const thisUser = await getUserData(user?.uid);
 
     emailInput.addEventListener("input", () => {
         const value = emailInput.value.trim();
-        emailBTN.disabled = value === "";
+        if (thisUser && thisUser.emailSub) {
+            emailBTN.disabled = true;
+        } else {
+            emailBTN.disabled = value === "";
+        }
     });
 
     if (user) {
-        const thisUser = await getUserData(user.uid);
         if (thisUser.emailSub) {
             emailInput.disabled = true;
             emailInput.placeholder = "You have already subscribed...";
+            emailInput.style.cursor = "not-allowed";
             emailBTN.disabled = true;
             emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
+            return;
         } else {
             emailBTN.addEventListener("click", async (e) => {
                 e.preventDefault();
@@ -422,21 +428,23 @@ async function setupNewsletter(user) {
 //I changed something here pasqal, check it out!
 function setupMutationObserver() {
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-    if (userLang === "en") {
+    const online = navigator.onLine;
+
+    if (userLang === "en" || !online) {
         return;
     }
 
     const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+        for (const mutation of mutations) {
+            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
                 mutation.addedNodes.forEach(node => {
                     if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
                         translateNode(node);
                     } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
                         const textNodes = [];
-                        const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
                         let n;
-                        while (n = walk.nextNode()) {
+                        while ((n = walker.nextNode())) {
                             if (n.nodeValue.trim().length > 0) {
                                 textNodes.push(n);
                             }
@@ -447,60 +455,114 @@ function setupMutationObserver() {
                     }
                 });
             }
-        });
+        }
     });
 
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
 }
 
 async function translateNode(nodeOrNodes) {
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
     const nodes = Array.isArray(nodeOrNodes) ? nodeOrNodes : [nodeOrNodes];
 
-    const parentElements = new Set();
-    nodes.forEach(node => {
-        if (node.parentElement) {
-            parentElements.add(node.parentElement);
-        }
-    });
-
-    parentElements.forEach(parent => {
-        const spinner = document.createElement('div');
-        spinner.className = 'spinner-container';
-        spinner.innerHTML = '<div class="spinner"></div>';
-        parent.style.position = 'relative';
-        parent.appendChild(spinner);
-    });
-
-
-    const originalTexts = nodes.map(node => node.nodeValue);
     const separator = "|||";
+    const originalTexts = nodes.map(n => n.nodeValue);
     const joinedText = originalTexts.join(separator);
 
+    const parents = new Set();
+
+    // nodes.map(n => n.parentElement).filter(Boolean);
+    nodes.forEach(node => {
+        let targetParent = node.parentElement;
+
+        // Walk upward until we find an ancestor with data-translate-wrapper
+        let ancestor = node.parentElement;
+        while (ancestor) {
+            if (ancestor.dataset.translateWrapper !== undefined) {
+                targetParent = ancestor;
+                break;
+            }
+            ancestor = ancestor.parentElement;
+        }
+
+        if (targetParent) parents.add(targetParent);
+    });
+
+    parents.forEach(parent => {
+        parent.dataset.translating = "true";
+    });
+
+    requestAnimationFrame(() => {
+        parents.forEach(parent => {
+            const computed = getComputedStyle(parent);
+            const originalColor = computed.color;
+            const originalBg = computed.backgroundColor;
+
+            parent.dataset.originalColor = originalColor;
+            parent.dataset.originalBg = originalBg;
+
+            parent.style.color = "transparent";
+            parent.style.backgroundColor = originalBg;
+
+            const spinner = document.createElement("div");
+            Object.assign(spinner.style, {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                placeSelf: "center",
+                alignSelf: "center",
+                backgroundColor: originalBg,
+                zIndex: 9999
+            });
+
+            spinner.classList.add("spinner-container", "waiting-spinner");
+            spinner.innerHTML = `<div class="spinner"></div>`;
+            // parent.style.position = "relative";
+
+            parent.appendChild(spinner);
+        });
+    });
+   
+    // Step 2: race translation vs timeout fallback
     const translationPromise = translateText(joinedText, userLang);
-    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(joinedText), 5000));
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(joinedText), 4000));
+
 
     try {
         const translationResult = await Promise.race([translationPromise, timeoutPromise]);
-        const translatedTexts = translationResult.split(separator).map(t => t.trim());
+        const translatedTexts = translationResult.split(separator).map(t => t);
         nodes.forEach((node, index) => {
-            if (translatedTexts[index]) {
-                node.nodeValue = translatedTexts[index];
+            if (translatedTexts[index] || originalTexts[index]) {
+                node.nodeValue = translatedTexts[index] || originalTexts[index];
             }
         });
     } catch (e) {
         console.warn("Dynamic translation failed:", e);
+        nodes.forEach((n, i) => (n.nodeValue = originalTexts[i]));
     } finally {
-        parentElements.forEach(parent => {
-            const spinner = parent.querySelector('.spinner-container');
-            if (spinner) {
-                spinner.remove();
-            }
+        parents.forEach(parent => {
+        delete parent.dataset.translating;
+        parent.style.color = parent.dataset.originalColor || "";
+        parent.style.backgroundColor = parent.dataset.originalBg || "";
+        
+            parent.style.color = parent.dataset.originalColor || "";
+            parent.style.backgroundColor = "";
         });
-    }
+        const spinner = document.querySelectorAll('div.spinner-container.waiting-spinner');
+        if (spinner) {
+            spinner.forEach(el => {
+                el.classList.remove("active");
+                el.style.display = "none";
+                el.remove();
+            });
+        }
+    };
 }
 
 async function initializeApp() {
@@ -508,7 +570,9 @@ async function initializeApp() {
     setupCommonUI();
     setupEventListeners();
     initTicker();
+    runTicker();
     setupMutationObserver();
+    let loadUser;
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
@@ -521,6 +585,7 @@ async function initializeApp() {
     await handleAuthStateChange(async user => {
         setupAuthUI(user);
         await setupNewsletter(user);
+        loadUser = user;
     });
 }
 
@@ -582,7 +647,8 @@ let timer;
 function createAlertBase(type) {
     const parent = document.querySelector(".alert-message");
     if (!parent) return null;
-
+    parent.dataset.translateWrapper = true;
+    
     parent.innerHTML = "";
     clearTimeout(timer);
     if (parent.dataset.countdownId) {
@@ -636,7 +702,7 @@ function addAlertTimer(div, options, parent) {
     const resendEl = document.createElement("p");
     resendEl.className = "alert-resend";
     resendEl.style.display = "none";
-    resendEl.innerHTML = `<strong>Request a new OTP</strong>`;
+    resendEl.innerHTML = `<strong style="cursor:pointer; color: var(--link, #007bff);">Request a new OTP</strong>`;
 
     div.appendChild(timerP);
     div.appendChild(resendEl);
@@ -677,7 +743,7 @@ function addAlertTimer(div, options, parent) {
             }
         } finally {
             resendEl.dataset.sending = "0";
-            resendEl.innerHTML = `<strong>Request a new OTP</strong>`;
+            resendEl.innerHTML = `<strong style="cursor:pointer; color: var(--link, #007bff);">Request a new OTP</strong>`;
         }
     });
 }
@@ -714,7 +780,10 @@ function addAlertButtons(div, closing, closingConfig, closeAlert, defaultFunctio
             if (loading) {
                 newBtn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
                 newBtn.disabled = true;
+                const delay = Math.floor(Math.random() * 1000) + 1000;
+                await new Promise(res => setTimeout(res, delay));
             }
+
             try {
                 if (onClick === "closeAlert") {
                     closeAlert();
@@ -763,6 +832,8 @@ async function handleAlert(
 
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
 
+    const online = navigator.onLine;
+
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
         if (!base) return;
@@ -803,7 +874,7 @@ async function handleAlert(
         }
     };
 
-    if (userLang !== "en") {
+    if (userLang !== "en" && online) {
         parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
         parent.style.display = "flex";
 

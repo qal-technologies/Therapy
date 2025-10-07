@@ -1,6 +1,5 @@
 // service-worker.js
 const CACHE_NAME = "charlotte-cache-v1901";
-const TRANSLATED_CACHE_NAME = "charlotte-translated-v1900"; 
 
 // Split caches for better control
 const STATIC_ASSETS = [
@@ -74,12 +73,12 @@ self.addEventListener("fetch", event => {
     // If HTML request -> try translated cache first (exact URL)
     if (event.request.destination === 'document' || url.pathname.endsWith(".html")) {
         event.respondWith((async () => {
-            const tCache = await caches.open(TRANSLATED_CACHE_NAME);
-            const matched = await tCache.match(event.request);
-            if (matched) {
-                // Serve the full translated HTML from translated cache
-                return matched;
-            }
+            // const tCache = await caches.open(TRANSLATED_CACHE_NAME);
+            // const matched = await tCache.match(event.request);
+            // if (matched) {
+            //     // Serve the full translated HTML from translated cache
+            //     return matched;
+            // }
 
             // Fallback: network-first then populate translated cache (so future visits can use translated copy)
             try {

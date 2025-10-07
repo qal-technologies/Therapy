@@ -1,4 +1,3 @@
-//I changed something here pasqal, check it out!
 import { handleAuthStateChange } from "./auth.js";
 import { getUserData } from "./database.js";
 import handleAlert, { handleRedirect } from './general.js';
@@ -11,7 +10,7 @@ window.addEventListener('load', () => {
             return;
         }
 
-        const userdata = await getUserData(user.uid);
+        const userdata = await getUserData(user?.uid);
         if (userdata && userdata.bookPaid === true) {
             const bookEl = document.getElementById('book');
             const leftEl = document.getElementById('leftPage').querySelector('.content');
@@ -217,8 +216,10 @@ window.addEventListener('load', () => {
 
             function toggleSound() {
                 state.soundOn = !state.soundOn;
+                qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(b => (b.innerHTML = ""));
+
                 const icon = state.soundOn ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
-                qsa('[data-hook="sound"]').forEach(b => (b.innerHTML = icon));
+                qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(b => (b.innerHTML = icon));
                 saveState();
             }
 
@@ -253,11 +254,11 @@ window.addEventListener('load', () => {
             }
 
             function setupEventListeners() {
-                qsa('[data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
-                qsa('[data-hook="fullscreen"]').forEach(btn => btn.addEventListener('click', toggleFullscreen));
-                qsa('[data-hook="zoom-in"]').forEach(btn => btn.addEventListener('click', () => zoom(0.1)));
-                qsa('[data-hook="zoom-out"]').forEach(btn => btn.addEventListener('click', () => zoom(-0.1)));
-                qsa('[data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', () => saveBookmark(state.page)));
+                qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
+                qsa('#fullscreenBtn, [data-hook="fullscreen"]').forEach(btn => btn.addEventListener('click', toggleFullscreen));
+                qsa('#zoomIn, #zoomInBottom, [data-hook="zoom-in"]').forEach(btn => btn.addEventListener('click', () => zoom(0.1)));
+                qsa('#zoomOut, #zoomOutBottom, [data-hook="zoom-out"]').forEach(btn => btn.addEventListener('click', () => zoom(-0.1)));
+                qsa('#bookmarkBtn, #bookmark, [data-hook="bookmark"]').forEach(btn => btn.addEventListener('click', () => saveBookmark(state.page)));
 
                 document.getElementById('prevBtn').addEventListener('click', flipBack);
                 document.getElementById('nextBtn').addEventListener('click', flipForward);
@@ -265,6 +266,8 @@ window.addEventListener('load', () => {
                 window.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowRight' || e.key === 'PageDown') flipForward();
                     if (e.key === 'ArrowLeft' || e.key === 'PageUp') flipBack();
+                    if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=')) zoom(0.1);
+                    if ((e.ctrlKey || e.metaKey) && (e.key === '-' || e.key === '_')) zoom(-0.1);
                 });
 
                 let touchStartX = 0;
@@ -308,12 +311,13 @@ window.addEventListener('load', () => {
             (function init() {
                 document.getElementById('bookTitle').textContent = BOOK.title;
                 document.getElementById('search').placeholder = `Search page – ${BOOK.title}`;
-
+                
                 if (!loadState()) {
                     const bookmarkedPage = state.bookmarks.length > 0 ? state.bookmarks[state.bookmarks.length - 1] : null;
                     if (bookmarkedPage) state.page = bookmarkedPage;
                 }
                 state.zoom = 1;
+                toggleSound();
 
                 setupEventListeners();
                 applyLayout();

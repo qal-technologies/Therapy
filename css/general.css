@@ -962,3 +962,12 @@ section .player button svg {
 body {
   top: 0px !important;
 }
+
+span, i {
+  user-select: text !important;
+  padding-inline: 6px !important;
+}
+
+[data-translating] {
+  visibility: hidden !important;
+}

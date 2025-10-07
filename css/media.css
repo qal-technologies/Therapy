@@ -2,7 +2,7 @@ section#timeout{
 	padding-top: 10pc;
 }
 
-@media screen and (max-width: 840px) {
+@media screen and (max-width: 950px) {
 	div#menu {
 		display: flex;
 	}
@@ -17,7 +17,7 @@ section#timeout{
 	}
 }
 
-@media screen and (min-width: 840px) {
+@media screen and (min-width: 950px) {
 	div#menu {
 		display: none;
 	}

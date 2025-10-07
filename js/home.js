@@ -147,6 +147,13 @@ window.addEventListener('load', () => {
 			"es": `${HOME_BASE_PATH.audio}/session-spanish.mp3`,
 			"de": `${HOME_BASE_PATH.audio}/session-german.mp3`,
 			"it": `${HOME_BASE_PATH.audio}/session-italian.mp3`
+		},
+		book: {
+			"en": `${HOME_BASE_PATH.audio}/book-english.mp3`,
+			"fr": `${HOME_BASE_PATH.audio}/book-french.mp3`,
+			"es": `${HOME_BASE_PATH.audio}/book-spanish.mp3`,
+			"de": `${HOME_BASE_PATH.audio}/book-german.mp3`,
+			"it": `${HOME_BASE_PATH.audio}/book-italian.mp3`
 		}
 	};
 
@@ -160,29 +167,34 @@ window.addEventListener('load', () => {
 	const FAQ = document.querySelector('section#faq div.answers');
 
 	const playBTN = document.querySelector(".message button#play");
+	const listenBTN = document.querySelector("#sessions .player button#play2");
+	const bookPlayBTN = document.querySelector(".preview-banner button#preview-play");
 
 	const audioMessage = document.querySelector('#banner audio#audio-message');
 	const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
-	const allAudio = document.querySelectorAll("audio");
+	const audioMessage3 = document.querySelector('.preview-banner audio#book-audio-message');
 
 	const bannerBTN = document.querySelector("a.register");
 	const BTNText = bannerBTN.firstElementChild;
 
 	const lang = language.toLowerCase().substring(0, 2);
-	if (audioMessage && audioMessage2) {
-		audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "/src/audio/AUD-20250421-WA0054.mp3";
-		audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
-	}
-
 	if (offlineUser) {
 		bannerBTN.href = "/html/main/Book.html";
 		BTNText.innerHTML = "BOOK NOW";
 	};
 
-	playBTN.addEventListener('click', () => {
-		console.log("Play button clicked");
-		if (!audioMessage2.paused) {
-			listenBTN.innerHTML = ` <svg
+	function handleAudio(lang) {
+		if (audioMessage && audioMessage2 && audioMessage3) {
+			audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "${HOME_BASE_PATH.audio}/home-english.mp3";
+			audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "${HOME_BASE_PATH.audio}/session-english.mp3";
+			audioMessage3.src = HOME_AUDIO_SRC.book[lang] || "${HOME_BASE_PATH.audio}/book-english.mp3";
+		}
+
+		if (playBTN && audioMessage) {
+			playBTN.addEventListener('click', () => {
+				audioMessage.currentTime = 0;
+				if (!audioMessage2.paused) {
+					listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
                   height="25"
@@ -194,10 +206,169 @@ window.addEventListener('load', () => {
                     d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
                   />
                 </svg>`;
-			audioMessage2.pause()
-		};
+					audioMessage2.pause()
+				};
 
-		if (!audioMessage.paused) {
+				if (!audioMessage3.paused) {
+					bookPlayBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage3.pause()
+				}
+
+				if (!audioMessage.paused) {
+					playBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage.pause();
+				} else {
+					playBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+					audioMessage.play();
+				}
+			});
+		}
+
+		const listenBTN = document.querySelector("#sessions .player button#play2");
+		if (listenBTN && audioMessage2) {
+			console.log("present");
+			listenBTN.addEventListener('click', () => {
+				audioMessage2.currentTime = 0;
+				if (!audioMessage.paused) {
+					playBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage.pause()
+				};
+
+				if (!audioMessage3.paused) {
+					bookPlayBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage3.pause()
+				}
+
+				if (!audioMessage2.paused) {
+					listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage2.pause();
+				} else {
+					listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+					audioMessage2.play();
+				}
+			});
+		}
+
+		if (bookPlayBTN && audioMessage3) {
+			bookPlayBTN.addEventListener('click', () => {
+				audioMessage3.currentTime = 0;
+
+				if (!audioMessage.paused) {
+					playBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage.pause();
+				};
+
+				if (!audioMessage2.paused) {
+					listenBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage2.pause();
+				}
+
+				if (!audioMessage3.paused) {
+					bookPlayBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+					audioMessage3.pause();
+				} else if (audioMessage3.paused) {
+					bookPlayBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
+</svg>`;
+					audioMessage3.play();
+				}
+			});
+
+		}
+
+		audioMessage?.addEventListener("ended", () => {
 			playBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -210,33 +381,10 @@ window.addEventListener('load', () => {
                     d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
                   />
                 </svg>`;
-			audioMessage.pause();
-		} else {
-			playBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-			allAudio.forEach(audio => {
-				audio.pause();
-				audio.currentTime = 0;
-				audio.innerHTML = `<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-			});
-			audioMessage.play();
-		}
-	});
+		});
 
-	audioMessage.addEventListener("ended", () => {
-		playBTN.innerHTML = ` <svg
+		audioMessage2?.addEventListener("ended", () => {
+			listenBTN.innerHTML = ` <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
                   height="25"
@@ -248,7 +396,23 @@ window.addEventListener('load', () => {
                     d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
                   />
                 </svg>`;
-	})
+		});
+
+		audioMessage3?.addEventListener("ended", () => {
+			bookPlayBTN.innerHTML = ` <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-play-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
+                  />
+                </svg>`;
+		});
+	}
 
 	testimonies.innerHTML = "";
 	testimonies2.innerHTML = "";
@@ -476,80 +640,7 @@ ${session.type == "inner" ?
         </div>`
 	}).join("");
 
-
-	const listenBTN = document.querySelector("#sessions button#play2");
-
-	if (listenBTN && audioMessage2) {
-		listenBTN.addEventListener('click', () => {
-			if (!audioMessage.paused) {
-				playBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-				audioMessage.pause()
-			};
-
-			if (!audioMessage2.paused) {
-				listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-				audioMessage2.pause();
-			} else {
-				listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-				allAudio.forEach(audio => {
-					audio.innerHTML = `<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audio.pause();
-					audio.currentTime = 0;
-				});
-				audioMessage2.play();
-			}
-		});
-	}
-
-	audioMessage2.addEventListener("ended", () => {
-		listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-	})
+	handleAudio(lang);
 
 	FAQ.innerHTML = faq.map((faq) => {
 		const checks = () => {
@@ -612,7 +703,7 @@ ${session.type == "inner" ?
 
 
 	handleAuthStateChange(async (user) => {
-		offlineUser = user ? true :false;
+		offlineUser = user ? true : false;
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
