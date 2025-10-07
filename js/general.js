@@ -378,7 +378,8 @@ async function setupNewsletter(user) {
     if (!emailBTN || !emailInput) return;
 
     emailBTN.disabled = true;
-    const thisUser = await getUserData(user?.uid);
+
+    const thisUser = user? await getUserData(user.uid) : false;
 
     emailInput.addEventListener("input", () => {
         const value = emailInput.value.trim();
@@ -404,7 +405,7 @@ async function setupNewsletter(user) {
                 if (emailBTN.disabled || emailInput.value.trim() === "") return;
                 emailBTN.disabled = true;
                 emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
-                await updateUserData(user.uid, { emailSub: true });
+                await updateUserData(user?.uid, { emailSub: true });
                 setTimeout(() => {
                     emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
                     emailInput.value = "";

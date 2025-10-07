@@ -30,6 +30,11 @@ const createUserProfile = (userId, userDetails) => {
  * @returns {Promise<object | null>} The user's data or null if not found.
  */
 const getUserData = async (userId) => {
+  if (!userId) {
+    console.warn("getUserData called without valid userId");
+    return null;
+  }
+
   const userDocRef = doc(db, "users", userId);
   const docSnap = await getDoc(userDocRef);
   if (docSnap.exists()) {
@@ -47,6 +52,10 @@ const getUserData = async (userId) => {
  * @returns {Promise<object | null>} The user's changed data or null if not found.
  */
 const updateUserData = (userId, changingData) => {
+  if (!userId) {
+    console.warn("updateUserData called without valid userId");
+    return null;
+  }
   const paymentDocRef = doc(db, "users", userId);
   return setDoc(paymentDocRef, changingData, { merge: true });
 };
