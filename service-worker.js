@@ -91,25 +91,23 @@ self.addEventListener("fetch", event => {
     // Network-first for JS/CSS (get latest; update cache)
     if (url.pathname.endsWith(".js") || url.pathname.endsWith(".css")) {
         event.respondWith(
-            fetch(event.request).then(fetchResp => {
-                return caches.open(CACHE_NAME).then(cache => {
-                    cache.put(event.request, fetchResp.clone());
-                    return fetchResp;
-                });
+            fetch(event.request).then(async fetchResp => {
+                const cache = await caches.open(CACHE_NAME);
+                cache.put(event.request, fetchResp.clone());
+                return fetchResp;
             }).catch(() => caches.match(event.request))
         );
         return;
     }
 
-    // Cache-first strategy for static + external assets
+    // Cache-first strategy for static
     if ([...STATIC_ASSETS].some(asset => url.href.includes(asset))) {
         event.respondWith(
             caches.match(event.request).then(resp => {
-                return resp || fetch(event.request).then(fetchResp => {
-                    return caches.open(CACHE_NAME).then(cache => {
-                        cache.put(event.request, fetchResp.clone());
-                        return fetchResp;
-                    });
+                return resp || fetch(event.request).then(async fetchResp => {
+                    const cache = await caches.open(CACHE_NAME);
+                    cache.put(event.request, fetchResp.clone());
+                    return fetchResp;
                 });
             })
         );
