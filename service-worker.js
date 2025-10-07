@@ -61,7 +61,7 @@ self.addEventListener("fetch", event => {
         url.origin.includes("firebaseio.com") ||
         url.origin.includes("googleapis.com") ||
         url.origin.includes("whatsapp") ||
-        url.origin.includes("smtp2go")
+        url.origin.includes("smtp2go") || url.origin.includes('translate.google.com') || url.origin.includes('translate.googleapis.com')
     ) {
         return; // skip caching, fetch live
     }
