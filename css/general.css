@@ -971,7 +971,3 @@ span, i {
 [data-translating] {
   visibility: hidden !important;
 }
-
-#goog-gt-tt {
-    display: none !important;
-}
