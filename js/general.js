@@ -444,11 +444,11 @@ async function initializeApp() {
     runTicker();
     let loadUser;
 
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/service-worker.js").catch(error => {
-            console.error("Service Worker registration failed:", error);
-        });
-    }
+    // if ("serviceWorker" in navigator) {
+    //     navigator.serviceWorker.register("/service-worker.js").catch(error => {
+    //         console.error("Service Worker registration failed:", error);
+    //     });
+    // }
 
     handleInputFocusFix();
 
