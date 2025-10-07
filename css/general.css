@@ -728,7 +728,7 @@ section#newsletter {
 }
 
 .alert-message .alert-error {
-  color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0) !important;
   font-size: 13px;
   display: none;
   flex-direction: row;
@@ -961,4 +961,13 @@ section .player button svg {
 
 body {
   top: 0px !important;
+}
+
+span, i {
+  user-select: text !important;
+  padding-inline: 6px !important;
+}
+
+[data-translating] {
+  visibility: hidden !important;
 }

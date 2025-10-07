@@ -18,6 +18,22 @@
 
 * {
     box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -webkit-scrollbar-width: thin;
+    scrollbar-width: thin !important;
+    -webkit-scrollbar-color: var(--accent) var(--paper-trans) !important;
+    scrollbar-color: var(--accent) var(--paper-trans) !important;
+}
+
+
+*::-webkit-scrollbar-track {
+    background: var(--paper-trans) !important;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--accent) !important;
+    border-radius: 25px !important;
+    border: 2px solid var(--paper-trans) !important;
 }
 
 html,
@@ -28,7 +44,6 @@ body {
 
 body {
     margin: 0;
-    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     color: #f6f4ef;
     background: var(--bg);
     display: flex;
@@ -39,7 +54,10 @@ body {
     background-color: #333;
     height: 100vh;
     overflow: hidden;
-    font-family: Arial, sans-serif;
+    top: 0px !important;
+    position: absolute;
+    flex: 1;
+    font-family: PoppinsMed, PoppinsLight, Arial, sans-serif;
 }
 
 /* Toolbars */
@@ -216,6 +234,7 @@ body {
     display: flex;
     place-items: flex-start;
     justify-content: center;
+    flex: 1;
     position: relative;
     padding-top: calc(var(--zoom) * 4rem + 1vh);
 }
@@ -243,10 +262,10 @@ body {
     transform-style: preserve-3d;
     transform-origin: center;
     overflow: visible;
-
     perspective: 2000px;
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
+    flex: 1;
 }
 
 .page {
