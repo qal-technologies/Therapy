@@ -231,3 +231,67 @@ async function handleTranslateFirstLoad() {
         loadGoogleTranslate();
     });
 }
+
+async function translateNode(nodeOrNodes) {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    const nodes = Array.isArray(nodeOrNodes) ? nodeOrNodes : [nodeOrNodes];
+
+    const separator = "|||";
+    const originalTexts = nodes.map(n => n.nodeValue);
+    const joinedText = originalTexts.join(separator);
+
+    // Step 1: Find target parents (prefer a tagged ancestor)
+    const parents = new Set();
+
+    nodes.forEach(node => {
+        let targetParent = node.parentElement;
+
+        // Walk upward until we find an ancestor with data-translate-wrapper
+        let ancestor = node.parentElement;
+        while (ancestor) {
+            if (ancestor.dataset.translateWrapper !== undefined) {
+                targetParent = ancestor;
+                break;
+            }
+            ancestor = ancestor.parentElement;
+        }
+
+        if (targetParent) parents.add(targetParent);
+    });
+
+    // Step 2: visually hide + add spinner to selected parents
+    parents.forEach(parent => {
+        parent.dataset.originalColor = parent.style.color;
+        parent.style.color = "transparent";
+        parent.style.backgroundColor = "transparent";
+
+        const spinner = document.createElement("div");
+        spinner.classList.add("spinner-container", "waiting-spinner");
+        spinner.innerHTML = `<div class="spinner"></div>`;
+        parent.style.position = "relative";
+        parent.appendChild(spinner);
+    });
+
+    // Step 3: race translation vs timeout fallback
+    const translationPromise = translateText(joinedText, userLang);
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(joinedText), 5000));
+
+    try {
+        const translationResult = await Promise.race([translationPromise, timeoutPromise]);
+        const translatedTexts = translationResult.split(separator).map(t => t);
+        nodes.forEach((node, index) => {
+            node.nodeValue = translatedTexts[index] || originalTexts[index];
+        });
+    } catch (e) {
+        console.warn("Dynamic translation failed:", e);
+        nodes.forEach((n, i) => (n.nodeValue = originalTexts[i]));
+    } finally {
+        parents.forEach(parent => {
+            parent.style.color = parent.dataset.originalColor || "";
+            parent.style.backgroundColor = "";
+            const spinner = parent.querySelector(".spinner-container.waiting-spinner");
+            if (spinner) spinner.remove();
+        });
+    }
+}
+

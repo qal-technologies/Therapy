@@ -7,6 +7,8 @@ window.addEventListener('load', () => {
     handleAuthStateChange(async (user) => {
         if (!user) {
             handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => window.location.href = "/html/regs/Signup.html?type=login" }, { text: "Register", onClick: () => window.location.href = "/html/regs/Signup.html?type=register", type: "secondary" }]);
+
+            return;
         }
 
         if (user) {
@@ -358,8 +360,6 @@ window.addEventListener('load', () => {
                     saveState();
                 }
                 qsa('#soundToggle,.soundToggle, [data-hook="sound"]').forEach(btn => btn.addEventListener('click', toggleSound));
-
-
 
                 // Zoom
                 function zoom(delta) {

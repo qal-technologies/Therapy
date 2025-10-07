@@ -352,17 +352,18 @@ function initTicker() {
 
 // run this after initTicker() executed
 const t = document.getElementById('ticker');
-let prev = getComputedStyle(t).transform;
-setInterval(() => {
-    const cur = getComputedStyle(t).transform;
-    if (cur !== prev) {
-        console.log('ticker moving, transform changed:', cur);
-        prev = cur;
-    } else {
-        // console.log('no change'); // too noisy
-    }
-}, 500);
-
+if (t) {
+    let prev = getComputedStyle(t)?.transform;
+    setInterval(() => {
+        const cur = getComputedStyle(t).transform;
+        if (cur !== prev) {
+            console.log('ticker moving, transform changed:', cur);
+            prev = cur;
+        } else {
+            console.log('no change'); // too noisy
+        }
+    }, 1000);
+}
 
 function setupAuthUI(user) {
     const actionTab = document.querySelectorAll("a.login");
