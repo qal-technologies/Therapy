@@ -73,11 +73,11 @@ async function translatePage(targetLang) {
     return originalTexts; // Return original if translation fails
 }
 
+//I changed something here pasqal, check it out!
 async function handleTranslateFirstLoad() {
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-    console.log(userLang);
 
     // Don't translate if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
@@ -88,20 +88,27 @@ async function handleTranslateFirstLoad() {
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
         console.log("Applying cached translation:", pathKey);
-        const cachedTranslations = JSON.parse(cachedJson);
+        try {
+            const cachedTranslations = JSON.parse(cachedJson);
 
-        const textNodes = [];
-        const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-        let node;
-        while (node = walk.nextNode()) {
-            const parent = node.parentNode;
-            if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0) {
-                textNodes.push(node);
+            const textNodes = [];
+            const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            let node;
+            while (node = walk.nextNode()) {
+                const parent = node.parentNode;
+                if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0) {
+                    textNodes.push(node);
+                }
             }
-        }
 
-        applyTranslationsToNodes(textNodes, cachedTranslations);
-        document.body.style.visibility = "visible";
+            applyTranslationsToNodes(textNodes, cachedTranslations);
+        } catch (e) {
+            console.error("Failed to apply cached translations:", e);
+            sessionStorage.removeItem(pathKey); // Clear corrupted cache
+        } finally {
+            document.body.style.visibility = "visible";
+            initGoogleTranslateWidget(); // Still init for continuous translation
+        }
         return true;
     }
 
@@ -112,14 +119,28 @@ async function handleTranslateFirstLoad() {
           </div>`;
     document.body.insertAdjacentHTML("beforebegin", loadingHTML);
 
+    let timeoutId;
+    const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => {
+            reject(new Error("Translation timeout"));
+        }, 5000);
+    });
+
     try {
-    initGoogleTranslateWidget();
-        const translatedTexts = await translatePage(userLang);
+        initGoogleTranslateWidget();
+        const translationPromise = translatePage(userLang);
+        const translatedTexts = await Promise.race([translationPromise, timeoutPromise]);
+
+        clearTimeout(timeoutId);
+
         // Cache the new translations as a JSON string
-        sessionStorage.setItem(pathKey, JSON.stringify(translatedTexts));
-        console.log("Saved translated texts to sessionStorage");
+        if(translatedTexts) {
+            sessionStorage.setItem(pathKey, JSON.stringify(translatedTexts));
+            console.log("Saved translated texts to sessionStorage");
+        }
     } catch (err) {
         console.warn("Translation flow error:", err);
+        clearTimeout(timeoutId);
     } finally {
         // Always remove the loader and show the body
         const loaderEl = document.getElementById("wait-loading-section");
@@ -128,6 +149,21 @@ async function handleTranslateFirstLoad() {
     }
 
     return true;
+}
+
+function saveTranslationsToSession() {
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const textNodes = [];
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while (node = walk.nextNode()) {
+        const parent = node.parentNode;
+        if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0) {
+            textNodes.push(node);
+        }
+    }
+    const currentTexts = textNodes.map(node => node.nodeValue);
+    sessionStorage.setItem(pathKey, JSON.stringify(currentTexts));
 }
 
 function initGoogleTranslateWidget() {
@@ -644,6 +680,8 @@ async function initializeApp() {
 
 window.onload = initializeApp;
 
+window.addEventListener('beforeunload', saveTranslationsToSession);
+
 window.onresize = () => {
     const navWidth = header.clientWidth;
 
@@ -928,56 +966,54 @@ async function handleAlert(
         }
     };
 
-    // if (userLang !== "en" && online) {
-    //     parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
-    //     parent.style.display = "flex";
+    if (userLang !== "en" && online) {
+        parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
+        parent.style.display = "flex";
 
-    //     const translationPromise = (async () => {
-    //         const separator = '|||';
-    //         const toTranslate = [
-    //             titleText,
-    //             message,
-    //             ...closingConfig.map(btn => btn.text)
-    //         ].join(separator);
+        const translationPromise = (async () => {
+            const separator = '|||';
+            const toTranslate = [
+                titleText,
+                message,
+                ...closingConfig.map(btn => btn.text)
+            ].join(separator);
 
-    //         const translated = await translateText(toTranslate, userLang);
+            const translated = await translateText(toTranslate, userLang);
 
-    //         if (translated && translated !== toTranslate) {
-    //             const parts = translated.split(separator).map(t => t.trim());
-    //             return {
-    //                 title: parts[0] || titleText,
-    //                 message: parts[1] || message,
-    //                 buttons: closingConfig.map((btn, i) => ({
-    //                     ...btn,
-    //                     text: parts[i + 2] || btn.text,
-    //                 })),
-    //             };
-    //         }
-    //         // Return null on failure to trigger fallback
-    //         return null;
-    //     })();
+            if (translated && translated !== toTranslate) {
+                const parts = translated.split(separator).map(t => t.trim());
+                return {
+                    title: parts[0] || titleText,
+                    message: parts[1] || message,
+                    buttons: closingConfig.map((btn, i) => ({
+                        ...btn,
+                        text: parts[i + 2] || btn.text,
+                    })),
+                };
+            }
+            // Return null on failure to trigger fallback
+            return null;
+        })();
 
-    //     const timeoutPromise = new Promise(resolve =>
-    //         setTimeout(() => resolve(null), 5000)
-    //     );
+        const timeoutPromise = new Promise(resolve =>
+            setTimeout(() => resolve(null), 5000)
+        );
 
-    //     // try {
-    //     //     const result = await Promise.race([translationPromise, timeoutPromise]);
-    //     //     if (result) {
-    //     //         renderAlert(result.title, result.message, result.buttons);
-    //     //     } else {
-    //     //         // Fallback to English
-    //     //         }
-    //     //     } catch (e) {
-    //     //         console.warn("Alert translation failed, falling back to English:", e);
-    //     //         renderAlert(titleText, message, closingConfig);
-    //     //     }
-    //     // } else {
-    //     //     renderAlert(titleText, message, closingConfig);
-    //     // }
-    // }
-
+        try {
+            const result = await Promise.race([translationPromise, timeoutPromise]);
+            if (result) {
+                renderAlert(result.title, result.message, result.buttons);
+            } else {
+                // Fallback to English
+                renderAlert(titleText, message, closingConfig);
+            }
+        } catch (e) {
+            console.warn("Alert translation failed, falling back to English:", e);
+            renderAlert(titleText, message, closingConfig);
+        }
+    } else {
         renderAlert(titleText, message, closingConfig);
+    }
 }
 
 export default handleAlert;
