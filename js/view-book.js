@@ -28,8 +28,21 @@ window.addEventListener('load', () => {
             const paid = userdata.bookPaid;
 
             if (paid == true) {
-                // DOM Elements:::::
                 const bookEl = document.getElementById('book');
+
+                // Show loader
+                const loader = document.createElement('div');
+                loader.className = 'loading-spinner';
+                bookEl.appendChild(loader);
+
+                // Hide book content initially
+                bookEl.style.visibility = 'hidden';
+
+                setTimeout(() => {
+                    loader.remove();
+                    bookEl.style.visibility = 'visible';
+                }, 2500);
+
                 const leftEl = document.getElementById('leftPage').querySelector('.content');
                 const rightEl = document.getElementById('rightPage').querySelector('.content');
                 const pageIndicator = document.getElementById('pageInfo');
