@@ -144,10 +144,10 @@ async function handleTranslateFirstLoad() {
 
 
 function initGoogleTranslate() {
-    let translateContainer = document.getElementById("google_translate_element");
+    let translateContainer = document.getElementById("gtranslate_wrapper");
     if (!translateContainer) {
         translateContainer = document.createElement("div");
-        translateContainer.id = "google_translate_element";
+        translateContainer.id = "gtranslate_wrapper";
         // Optional: append where you want the dropdown to appear
         // Example: top-right corner of body
         Object.assign(translateContainer.style, {
@@ -159,23 +159,23 @@ function initGoogleTranslate() {
         document.body.appendChild(translateContainer);
     }
 
-    const script = document.createElement('script');
-    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    document.body.appendChild(script);
+    // const script = document.createElement('script');
+    // script.src = "https://cdn.gtranslate.net/widgets/latest/translate.js";
+    // document.body.appendChild(script);
 
 
-    window.googleTranslateElementInit = function () {
-        try {
-            new google.translate.TranslateElement({
-                pageLanguage: "en",
-                includedLanguages: "fr,es,de,it",
-                autoDisplay: false
-            }, "google_translate_element");
-            console.log("Google Translate widget initialized.");
-        } catch (e) {
-            console.error("Google Translate initialization error:", e);
-        }
-    };
+    // window.googleTranslateElementInit = function () {
+    //     try {
+    //         new google.translate.TranslateElement({
+    //             pageLanguage: "en",
+    //             includedLanguages: "fr,es,de,it",
+    //             autoDisplay: false
+    //         }, "google_translate_element");
+    //         console.log("Google Translate widget initialized.");
+    //     } catch (e) {
+    //         console.error("Google Translate initialization error:", e);
+    //     }
+    // };
 }
 
 
