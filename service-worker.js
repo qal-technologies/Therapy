@@ -42,15 +42,11 @@ const STATIC_ASSETS = [
     "/src/images/book-person.png",
 ];
 
-const EXTERNAL_ASSETS = [
-    "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"];
-
-
 // Install
 self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll([...STATIC_ASSETS, ...EXTERNAL_ASSETS]);
+            return cache.addAll([...STATIC_ASSETS]);
         }).catch(err => console.error("Caching failed:", err))
     );
     self.skipWaiting();
@@ -67,7 +63,7 @@ self.addEventListener("fetch", event => {
         url.origin.includes("whatsapp") ||
         url.origin.includes("smtp2go") || url.origin.includes("translate.google.com")
     ) {
-        return; // skip caching, fetch live
+        return; 
     }
 
     // If HTML request -> try translated cache first (exact URL)
@@ -105,7 +101,7 @@ self.addEventListener("fetch", event => {
     }
 
     // Cache-first strategy for static
-    if ([...STATIC_ASSETS, ...EXTERNAL_ASSETS].some(asset => url.href.includes(asset))) {
+    if ([...STATIC_ASSETS].some(asset => url.href.includes(asset))) {
         event.respondWith(
             caches.match(event.request).then(resp => {
                 return resp || fetch(event.request).then(async fetchResp => {

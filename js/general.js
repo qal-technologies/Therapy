@@ -35,59 +35,6 @@ async function handleTranslateFirstLoad() {
         console.log("Applying cached translation:", pathKey);
         try {
             const cachedTranslations = JSON.parse(cachedJson);
-            // applyTranslationsFromCache(cachedTranslations);
-
-
-            const textNodes = [];
-            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            // let node;
-
-            // while (node = walk.nextNode()) {
-            //     const parent = node.parentNode;
-            //     // Ensure we only process valid text nodes and ignore the Google Translate widget
-            //     if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
-            //         textNodes.push(node);
-            //     }
-            // }
-
-            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            // let node;
-
-            // while (node = walk.nextNode()) {
-            //     const parent = node.parentNode;
-            //     if (
-            //         parent &&
-            //         parent.dataset.translationKey &&
-            //         cachedTranslations[parent.dataset.translationKey] &&
-            //         !parent.closest('.skiptranslate')
-            //     ) {
-            //         node.nodeValue = cachedTranslations[parent.dataset.translationKey];
-            //     }
-            // }
-
-            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-
-            // let node;
-            // let i = 0;
-
-            // while (node = walk.nextNode()) {
-            //     if (cachedTranslations[i]) {
-            //         node.nodeValue = cachedTranslations[i];
-            //     }
-            //     i++;
-            // }
-
-
-            // applyTranslationsToNodes(textNodes, cachedTranslations);
-            // for (const node of textNodes) {
-            //     const text = node.nodeValue.trim();
-            //     if (text && cachedTranslations[text]) {
-            //         node.nodeValue = cachedTranslations[text];
-            //     }
-            // }
-
-            // console.log("Applied cached translations");
-            // return true;
         } catch (e) {
             console.error("Failed to parse or apply cached translations:", e);
             sessionStorage.removeItem(pathKey);
@@ -117,32 +64,6 @@ async function handleTranslateFirstLoad() {
                     resolve(false);
                 }
             }, TRANSLATION_MAX_WAIT_MS);
-
-            // function loadGoogleTranslate() {
-            //     if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
-            //         const meta = document.createElement("meta");
-            //         meta.name = "google";
-            //         meta.content = "notranslate";
-            //         document.head.appendChild(meta);
-            //     }
-
-            //     if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
-
-            //     const gtScript = document.createElement("script");
-            //     gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
-            //     gtScript.async = true;
-            //     document.head.appendChild(gtScript);
-
-            //     gtScript.onload = () => {
-            //         console.log("startedd....")
-            //     }
-            //     gtScript.onerror = () => {
-            //         console.warn("Failed to load Google Translate script");
-            //         cleanup();
-            //         resolve(false);
-            //     };
-            // }
-            // loadGoogleTranslate();
 
             const loadingHTML = `
           <div class="wait-loading-section" id="wait-loading-section">
