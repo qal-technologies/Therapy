@@ -142,12 +142,12 @@ async function handleTranslateFirstLoad() {
 
 
             // applyTranslationsToNodes(textNodes, cachedTranslations);
-            for (const node of textNodes) {
-                const text = node.nodeValue.trim();
-                if (text && cachedTranslations[text]) {
-                    node.nodeValue = cachedTranslations[text];
-                }
-            }
+            // for (const node of textNodes) {
+            //     const text = node.nodeValue.trim();
+            //     if (text && cachedTranslations[text]) {
+            //         node.nodeValue = cachedTranslations[text];
+            //     }
+            // }
 
             console.log("Applied cached translations");
             return true;
@@ -174,7 +174,7 @@ async function handleTranslateFirstLoad() {
             }
 
             let done = false;
-            const TRANSLATION_MAX_WAIT_MS = 5000;
+            const TRANSLATION_MAX_WAIT_MS = 4000;
 
             const fallbackTimeout = setTimeout(() => {
                 if (!done) {
@@ -231,7 +231,7 @@ async function handleTranslateFirstLoad() {
                             clearTimeout(timeout);
                             observer.disconnect();
 
-                            setTimeout(() => res(), 600);
+                            setTimeout(() => res(), 200);
                         }
                     });
 
