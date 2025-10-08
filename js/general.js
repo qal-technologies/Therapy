@@ -159,23 +159,23 @@ function initGoogleTranslate() {
         document.body.appendChild(translateContainer);
     }
 
-    // const script = document.createElement('script');
-    // script.src = "https://cdn.gtranslate.net/widgets/latest/translate.js";
-    // document.body.appendChild(script);
+    const script = document.createElement('script');
+    script.src = "https://cdn.gtranslate.net/widgets/latest/translate.js";
+    document.body.appendChild(script);
 
 
-    // window.googleTranslateElementInit = function () {
-    //     try {
-    //         new google.translate.TranslateElement({
-    //             pageLanguage: "en",
-    //             includedLanguages: "fr,es,de,it",
-    //             autoDisplay: false
-    //         }, "google_translate_element");
-    //         console.log("Google Translate widget initialized.");
-    //     } catch (e) {
-    //         console.error("Google Translate initialization error:", e);
-    //     }
-    // };
+    window.googleTranslateElementInit = function () {
+        try {
+            new google.translate.TranslateElement({
+                pageLanguage: "en",
+                includedLanguages: "fr,es,de,it",
+                autoDisplay: false
+            }, "google_translate_element");
+            console.log("Google Translate widget initialized.");
+        } catch (e) {
+            console.error("Google Translate initialization error:", e);
+        }
+    };
 }
 
 
