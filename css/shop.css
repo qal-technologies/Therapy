@@ -590,8 +590,9 @@ div#details-div {
 
 div#details-div .details-top {
   min-width: 100%;
-  top: 0;
-  position: absolute;
+  height: max-content;
+  top: 0px !important;
+  position: fixed !important;
   z-index: 9999999999 !important;
   display: flex;
   flex-direction: row;
