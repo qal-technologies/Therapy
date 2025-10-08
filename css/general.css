@@ -841,7 +841,7 @@ section#newsletter {
   color: white;
   border-radius: 18px;
 }
-
+/* 
 .alert-message .goog-logo-link {
   display: none !important;
 }
@@ -868,7 +868,7 @@ section#newsletter {
 }
 
 /* Dropdown options */
-#google_translate_element select option {
+/* #google_translate_element select option {
   background: red;
   color: black;
 }
@@ -876,7 +876,7 @@ section#newsletter {
 div.skiptranslate {
   background: transparent;
   display: none !important;
-}
+}  */
 
 * button {
   -webkit-appearance: none;
@@ -960,9 +960,9 @@ section .player button svg {
   color: white !important;
 }
 
-.skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame {
+/* .skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame {
   display: none !important;
-}
+} */
 
 body {
   top: 0px !important;
@@ -978,6 +978,6 @@ span, i {
   visibility: hidden !important;
 }
 
-#goog-gt-tt {
+/* #goog-gt-tt {
   display: none !important;
-}
+} */

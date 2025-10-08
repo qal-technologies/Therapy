@@ -657,7 +657,7 @@ div#details-div .details-top {
   max-width: 800px;
   padding: 1rem;
   overflow: hidden;
-  top:10%;
+  top: 10%;
   left: 0%;
   right: 0%;
   overflow-y: auto;
@@ -670,4 +670,20 @@ div#details-div .details-top {
 .modal-content p {
   font-family: PoppinsSemi;
   font-size: 16px;
+}
+
+#custom_translate_widget {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  z-index: 9999;
+}
+
+#translateSelect {
+  font-size: 14px;
+  padding: 5px;
 }
