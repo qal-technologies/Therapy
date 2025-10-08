@@ -172,6 +172,7 @@ async function handleTranslateFirstLoad() {
                     observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
                 });
             }
+            const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
 
             if (userLang === "en") {
                 clearTimeout(fallbackTimeout);
@@ -180,8 +181,6 @@ async function handleTranslateFirstLoad() {
                 return;
             }
 
-            const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-            console.log(userLang);
 
             const selectTryInterval = setInterval(() => {
                 const select = document.querySelector(".goog-te-combo");
