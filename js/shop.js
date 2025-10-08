@@ -130,8 +130,6 @@ window.addEventListener('load', () => {
       addToCartElements.forEach(element => {
         element.scrollIntoView({
           behavior: 'smooth',
-          block: 'center',
-          inline: 'center'
         });
       });
     }, 3000);
