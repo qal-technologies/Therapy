@@ -180,52 +180,37 @@ async function handleTranslateFirstLoad() {
                 return;
             }
 
-            window.initTranslate = function () {
-                try {
-                    new google.translate.TranslateElement({
-                        pageLanguage: "en",
-                        includedLanguages: "fr,es,de,it",
-                        autoDisplay: false
-                    }, "google_translate_element");
+            const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+            console.log(userLang);
 
-                } catch (err) {
-                    console.error("Google Translate init failed:", err);
-                    cleanup();
-                    resolve(false);
-                }
+            const selectTryInterval = setInterval(() => {
+                const select = document.querySelector(".goog-te-combo");
+                if (select) {
+                    clearInterval(selectTryInterval);
+                    select.value = userLang;
+                    select.dispatchEvent(new Event("change"));
 
-                const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-                console.log(userLang);
-
-                const selectTryInterval = setInterval(() => {
-                    const select = document.querySelector(".goog-te-combo");
-                    if (select) {
-                        clearInterval(selectTryInterval);
-                        select.value = userLang;
-                        select.dispatchEvent(new Event("change"));
-
-                        waitForTranslation().then(async () => {
-                            done = true;
-                            clearTimeout(fallbackTimeout);
-                            if (pageIsTranslated()) {
-                                cleanup();
-                                resolve(true);
-                            } else {
-                                cleanup();
-                                resolve(false);
-                            }
-                        }).catch((err) => {
-                            console.warn("waitForTranslationFinish failed:", err);
+                    waitForTranslation().then(async () => {
+                        done = true;
+                        clearTimeout(fallbackTimeout);
+                        if (pageIsTranslated()) {
+                            cleanup();
+                            resolve(true);
+                        } else {
                             cleanup();
                             resolve(false);
-                        });
-                    }
-                }, 150);
+                        }
+                    }).catch((err) => {
+                        console.warn("waitForTranslationFinish failed:", err);
+                        cleanup();
+                        resolve(false);
+                    });
+                }
+            }, 150);
 
-                setTimeout(() => {
-                    clearInterval(selectTryInterval);
-                }, 9000);
-            };
+            setTimeout(() => {
+                clearInterval(selectTryInterval);
+            }, 9000);
 
 
         });
