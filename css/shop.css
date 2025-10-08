@@ -595,7 +595,7 @@ div#details-div .details-top {
   min-width: 100%;
   height: max-content;
   top: 0px !important;
-  position: sticky !important;
+  position: absolute !important;
   z-index: 9999999999 !important;
   display: flex;
   flex-direction: row;
@@ -656,12 +656,15 @@ div#details-div .details-top {
   width: 100%;
   max-width: 800px;
   padding: 1rem;
-  padding-top: 2.5vh;
   overflow: hidden;
+  top:10%;
+  left: 0%;
+  right: 0%;
   overflow-y: auto;
   height: auto;
-  position: relative;
-  max-height: 100%;
+  z-index: 999;
+  position: absolute;
+  max-height: 90%;
 }
 
 .modal-content p {
