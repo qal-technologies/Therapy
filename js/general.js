@@ -7,67 +7,104 @@ let menu;
 
 const TRANSLATION_SESSION_KEY_PREFIX = "translated:";
 
-function applyTranslationsToNodes(textNodes, translations) {
-    textNodes.forEach((node, index) => {
-        if (translations[index]) {
-            node.nodeValue = translations[index];
+function assignTranslationIds() {
+    let nextId = 0;
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false);
+    let element;
+    while (element = walk.nextNode()) {
+        if (element.nodeName !== 'SCRIPT' && element.nodeName !== 'STYLE' && !element.closest('.skiptranslate')) {
+            // Only assign IDs to elements that directly contain non-empty text nodes
+            const hasDirectText = Array.from(element.childNodes).some(node =>
+                node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+            );
+            if (hasDirectText) {
+                element.setAttribute('data-translation-id', nextId++);
+            }
+        }
+    }
+}
+
+function saveTranslationsToSession() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    if (userLang === "en") {
+        return; // Don't save for English users
+    }
+
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const translations = {};
+    const elements = document.querySelectorAll('[data-translation-id]');
+
+    elements.forEach(element => {
+        const id = element.getAttribute('data-translation-id');
+        const textNodes = Array.from(element.childNodes).filter(node =>
+            node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+        );
+
+        if (textNodes.length > 0) {
+            translations[id] = textNodes.map(node => node.nodeValue).join('|||');
         }
     });
+
+    sessionStorage.setItem(pathKey, JSON.stringify(translations));
+    console.log("Saved translations to session storage.");
 }
 
 async function handleTranslateFirstLoad() {
+    // First, assign the stable IDs to all elements. This happens on every page load.
+    assignTranslationIds();
+
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
 
-    // Always initialize the widget, so it can work on cached or non-cached pages.
+    // Always initialize the widget for continuous translation.
     initGoogleTranslateWidget();
 
-    // Don't translate or show loader if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
-        return false;
+        return;
     }
 
-    // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
-        console.log("Applying cached translation:", pathKey);
+        console.log("Applying cached translations.");
         try {
             const cachedTranslations = JSON.parse(cachedJson);
-            const textNodes = [];
-            const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            let node;
-            while (node = walk.nextNode()) {
-                const parent = node.parentNode;
-                // Ensure we only process valid text nodes and ignore the Google Translate widget
-                if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
-                    textNodes.push(node);
-                }
-            }
-            applyTranslationsToNodes(textNodes, cachedTranslations);
+            applyTranslationsFromCache(cachedTranslations);
         } catch (e) {
-            console.error("Failed to apply cached translations:", e);
+            console.error("Failed to parse or apply cached translations:", e);
             sessionStorage.removeItem(pathKey); // Clear corrupted cache
         } finally {
             document.body.style.visibility = "visible";
         }
-        return true;
+    } else {
+        // No cache, show loader for 5 seconds.
+        const loadingHTML = `<div class="wait-loading-section" id="wait-loading-section"><div class="loading-spinner"></div></div>`;
+        document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+        setTimeout(() => {
+            const loaderEl = document.getElementById("wait-loading-section");
+            if (loaderEl) loaderEl.remove();
+            document.body.style.visibility = "visible";
+        }, 5000);
     }
+}
 
-    // If no cache, show loader for 5 seconds, then let the widget take over.
-    const loadingHTML = `
-        <div class="wait-loading-section" id="wait-loading-section">
-            <div class="loading-spinner"></div>
-        </div>`;
-    document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+function applyTranslationsFromCache(cachedTranslations) {
+    Object.keys(cachedTranslations).forEach(id => {
+        const element = document.querySelector(`[data-translation-id="${id}"]`);
+        if (element) {
+            const translatedTexts = cachedTranslations[id].split('|||');
+            const textNodes = Array.from(element.childNodes).filter(node =>
+                node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+            );
 
-    setTimeout(() => {
-        const loaderEl = document.getElementById("wait-loading-section");
-        if (loaderEl) loaderEl.remove();
-        document.body.style.visibility = "visible";
-    }, 5000);
-
-    return true;
+            if (textNodes.length === translatedTexts.length) {
+                textNodes.forEach((node, index) => {
+                    node.nodeValue = translatedTexts[index];
+                });
+            }
+        }
+    });
 }
 
 function initGoogleTranslateWidget() {
@@ -209,11 +246,27 @@ function goBackButton() {
     }, 1000);
 }
 
-function handleRefresh() {
-    const title = "Reload Page?";
-    const message = "Are you sure you want to reload? All saved progress will be erased.";
-    const button_reload = "Reload";
-    const button_cancel = "Cancel";
+async function handleRefresh() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+
+    let title = "Reload Page?";
+    let message = "Are you sure you want to reload? All saved progress will be erased.";
+    let button_reload = "Reload";
+    let button_cancel = "Cancel";
+
+    if (userLang !== 'en') {
+        try {
+            const separator = '|||';
+            const translated = await translateText([title, message, button_reload, button_cancel].join(separator), userLang);
+            const parts = translated.split(separator).map(t => t.trim());
+            title = parts[0] || title;
+            message = parts[1] || message;
+            button_reload = parts[2] || button_reload;
+            button_cancel = parts[3] || button_cancel;
+        } catch (e) {
+            console.warn("Could not translate alert text", e);
+        }
+    }
 
     handleAlert(message, "blur", true, title, true, [
         { text: button_cancel, onClick: "closeAlert", type: "secondary" },
@@ -415,6 +468,7 @@ function setupMutationObserver() {
             if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
                 mutation.addedNodes.forEach(node => {
                     if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+                        // translateNode(node);
                         initGoogleTranslateWidget();
                     } else if (node.nodeType === Node.ELEMENT_NODE) {
                         const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
@@ -426,6 +480,7 @@ function setupMutationObserver() {
                             }
                         }
                         if (textNodes.length > 0) {
+                            // translateNode(textNodes);
                             initGoogleTranslateWidget();
                         }
                     }
@@ -438,19 +493,106 @@ function setupMutationObserver() {
 
 }
 
-function saveTranslationsToSession() {
-    const pathKey = `translated_texts:${window.location.pathname}`;
-    const textNodes = [];
-    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-    let node;
-    while (node = walk.nextNode()) {
-        const parent = node.parentNode;
-        if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
-            textNodes.push(node.nodeValue);
+async function translateNode(nodeOrNodes) {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    const nodes = Array.isArray(nodeOrNodes) ? nodeOrNodes : [nodeOrNodes];
+
+    const separator = "|||";
+    const originalTexts = nodes.map(n => n.nodeValue);
+    const joinedText = originalTexts.join(separator);
+
+    const parents = new Set();
+
+    // nodes.map(n => n.parentElement).filter(Boolean);
+    nodes.forEach(node => {
+        let targetParent = node.parentElement;
+
+        let ancestor = node.parentElement;
+        while (ancestor) {
+            if (ancestor.dataset.translateWrapper !== undefined) {
+                targetParent = ancestor;
+                break;
+            }
+            ancestor = ancestor.parentElement;
         }
-    }
-    sessionStorage.setItem(pathKey, JSON.stringify(textNodes));
-    console.log("Saved translated texts to sessionStorage on unload.");
+
+        if (targetParent) parents.add(targetParent);
+    });
+
+    parents.forEach(parent => {
+        parent.dataset.translating = "true";
+    });
+
+    requestAnimationFrame(() => {
+        parents.forEach(parent => {
+            const computed = getComputedStyle(parent);
+            const originalColor = computed.color;
+            const originalBg = computed.backgroundColor;
+
+            parent.dataset.originalColor = originalColor;
+            parent.dataset.originalBg = originalBg;
+
+            parent.style.color = "transparent";
+            parent.style.backgroundColor = originalBg;
+
+            const spinner = document.createElement("div");
+            Object.assign(spinner.style, {
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                placeSelf: "center",
+                alignSelf: "center",
+                backgroundColor: originalBg,
+                zIndex: 9999
+            });
+
+            spinner.classList.add("spinner-container", "waiting-spinner");
+            spinner.innerHTML = `<div class="spinner"></div>`;
+            // parent.style.position = "relative";
+
+            parent.appendChild(spinner);
+        });
+    });
+
+    // Step 2: race translation vs timeout fallback
+    const translationPromise = translateText(joinedText, userLang);
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve(joinedText), 4000));
+
+
+    try {
+        const translationResult = await Promise.race([translationPromise, timeoutPromise]);
+        const translatedTexts = translationResult.split(separator).map(t => t);
+        nodes.forEach((node, index) => {
+            if (translatedTexts[index] || originalTexts[index]) {
+                node.nodeValue = translatedTexts[index] || originalTexts[index];
+            }
+        });
+    } catch (e) {
+        console.warn("Dynamic translation failed:", e);
+        nodes.forEach((n, i) => (n.nodeValue = originalTexts[i]));
+    } finally {
+        parents.forEach(parent => {
+            delete parent.dataset.translating;
+            parent.style.color = parent.dataset.originalColor || "";
+            parent.style.backgroundColor = parent.dataset.originalBg || "";
+
+            parent.style.color = parent.dataset.originalColor || "";
+            parent.style.backgroundColor = "";
+        });
+        const spinner = document.querySelectorAll('div.spinner-container.waiting-spinner');
+        if (spinner) {
+            spinner.forEach(el => {
+                el.classList.remove("active");
+                el.style.display = "none";
+                el.remove();
+            });
+        }
+    };
 }
 
 async function initializeApp() {
@@ -707,7 +849,7 @@ function addAlertButtons(div, closing, closingConfig, closeAlert, defaultFunctio
  *   }
  */
 //I changed something here pasqal, check it out!
-function handleAlert(
+async function handleAlert(
     message,
     type = "blur",
     titled = false,
@@ -720,6 +862,10 @@ function handleAlert(
 ) {
     const parent = document.querySelector(".alert-message");
     if (!parent) return;
+
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+
+    const online = navigator.onLine;
 
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
@@ -761,7 +907,56 @@ function handleAlert(
         }
     };
 
-    renderAlert(titleText, message, closingConfig);
+    // if (userLang !== "en" && online) {
+    //     parent.innerHTML = `<div class="alert-div zoom-in"><div class="spinner-container"><div class="spinner"></div></div></div>`;
+    //     parent.style.display = "flex";
+
+    //     const translationPromise = (async () => {
+    //         const separator = '|||';
+    //         const toTranslate = [
+    //             titleText,
+    //             message,
+    //             ...closingConfig.map(btn => btn.text)
+    //         ].join(separator);
+
+    //         const translated = await translateText(toTranslate, userLang);
+
+    //         if (translated && translated !== toTranslate) {
+    //             const parts = translated.split(separator).map(t => t.trim());
+    //             return {
+    //                 title: parts[0] || titleText,
+    //                 message: parts[1] || message,
+    //                 buttons: closingConfig.map((btn, i) => ({
+    //                     ...btn,
+    //                     text: parts[i + 2] || btn.text,
+    //                 })),
+    //             };
+    //         }
+    //         // Return null on failure to trigger fallback
+    //         return null;
+    //     })();
+
+    //     const timeoutPromise = new Promise(resolve =>
+    //         setTimeout(() => resolve(null), 5000)
+    //     );
+
+    //     // try {
+    //     //     const result = await Promise.race([translationPromise, timeoutPromise]);
+    //     //     if (result) {
+    //     //         renderAlert(result.title, result.message, result.buttons);
+    //     //     } else {
+    //     //         // Fallback to English
+    //     //         }
+    //     //     } catch (e) {
+    //     //         console.warn("Alert translation failed, falling back to English:", e);
+    //     //         renderAlert(titleText, message, closingConfig);
+    //     //     }
+    //     // } else {
+    //     //     renderAlert(titleText, message, closingConfig);
+    //     // }
+    // }
+
+        renderAlert(titleText, message, closingConfig);
 }
 
 export default handleAlert;
