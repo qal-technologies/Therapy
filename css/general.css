@@ -960,9 +960,9 @@ section .player button svg {
   color: white !important;
 }
 
-/* .skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame {
+.skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame {
   display: none !important;
-} */
+}
 
 body {
   top: 0px !important;
@@ -978,6 +978,6 @@ span, i {
   visibility: hidden !important;
 }
 
-/* #goog-gt-tt {
+#goog-gt-tt {
   display: none !important;
-} */
+}

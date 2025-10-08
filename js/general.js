@@ -1,5 +1,5 @@
 import { handleAuthStateChange, logout } from './auth.js';
-import { getUserData, updateUserData } from './database.js';
+import { getUserData, saveTranslationToFirestore, updateUserData } from './database.js';
 
 let show = false;
 let header;
@@ -12,6 +12,30 @@ function pageIsTranslated() {
         htmlEl.classList.contains("translated-rtl");
 }
 
+function saveTranslationsToSession() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    if (userLang === "en") {
+        return; // Don't save for English users
+    }
+
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const translations = {};
+    const elements = document.querySelectorAll('[data-translation-id]');
+
+    elements.forEach(element => {
+        const id = element.getAttribute('data-translation-id');
+        const textNodes = Array.from(element.childNodes).filter(node =>
+            node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+        );
+
+        if (textNodes.length > 0) {
+            translations[id] = textNodes.map(node => node.nodeValue).join('|||');
+        }
+    });
+
+    sessionStorage.setItem(pathKey, JSON.stringify(translations));
+    console.log("Saved translations to session storage.");
+}
 
 async function handleTranslateFirstLoad() {
     // First, assign the stable IDs to all elements. This happens on every page load.
@@ -644,6 +668,7 @@ async function initializeApp() {
 }
 
 window.onload = initializeApp;
+window.addEventListener("beforeunload", saveTranslationsToSession);
 
 window.onresize = () => {
     const navWidth = header.clientWidth;
