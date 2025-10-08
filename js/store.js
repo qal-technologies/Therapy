@@ -295,3 +295,396 @@ async function translateNode(nodeOrNodes) {
     }
 }
 
+
+
+function saveTranslationsToSession() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    if (userLang === "en") {
+        return;
+    }
+
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const translations = {};
+    const elements = document.querySelectorAll('[data-translation-id]');
+
+    let counter = 0;
+    // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    // let node;
+
+    // while (node = walk.nextNode()) {
+    //     const parent = node.parentNode;
+    //     if (
+    //         parent &&
+    //         parent.nodeName !== 'SCRIPT' &&
+    //         parent.nodeName !== 'STYLE' &&
+    //         node.nodeValue.trim().length > 0 &&
+    //         !parent.closest('.skiptranslate')
+    //     ) {
+    //         // Assign unique key to parent for later lookup
+    //         const key = `tx-${counter++}`;
+    //         parent.dataset.translationKey = key;
+    //         textMap[key] = node.nodeValue.trim();
+    //     }
+    // }
+
+    elements.forEach(element => {
+        const id = element.getAttribute('data-translation-id');
+        const textNodes = Array.from(element.childNodes).filter(node =>
+            node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+        );
+
+        if (textNodes.length > 0) {
+            translations[id] = textNodes.map(node => node.nodeValue).join('|||');
+            // console.log(`Captured translation for ID ${id}:`, translations[id]);    
+        }
+    });
+
+    // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    // let node;
+
+    // while (node = walk.nextNode()) {
+    //     const parent = node.parentNode;
+    //     if (
+    //         parent &&
+    //         parent.nodeName !== 'SCRIPT' &&
+    //         parent.nodeName !== 'STYLE' &&
+    //         node.nodeValue.trim().length > 0 &&
+    //         !parent.closest('.skiptranslate')
+    //     ) {
+    //         translations.push(node.nodeValue.trim());
+    //     }
+    // }
+
+    sessionStorage.setItem(pathKey, JSON.stringify(translations));
+    console.log("Saved translations to session storage.");
+}
+
+function pageIsTranslated() {
+    const htmlEl = document.documentElement;
+    return htmlEl.classList.contains("translated") ||
+        htmlEl.classList.contains("translated-ltr") ||
+        htmlEl.classList.contains("translated-rtl");
+}
+
+
+async function handleTranslateFirstLoad() {
+    // First, assign the stable IDs to all elements. This happens on every page load.
+    assignTranslationIds();
+
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const cachedJson = sessionStorage.getItem(pathKey);
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    console.log(userLang);
+
+    //  Don't translate if the user's language is English
+    if (userLang === "en" || !navigator.onLine) {
+        document.body.style.visibility = "visible";
+        return;
+    }
+
+    initGoogleTranslateWidget();
+
+    // If we have cached translations, apply them directly to the DOM
+    if (cachedJson) {
+        console.log("Applying cached translation:", pathKey);
+        try {
+            const cachedTranslations = JSON.parse(cachedJson);
+            applyTranslationsFromCache(cachedTranslations);
+
+
+            const textNodes = [];
+            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            // let node;
+
+            // while (node = walk.nextNode()) {
+            //     const parent = node.parentNode;
+            //     // Ensure we only process valid text nodes and ignore the Google Translate widget
+            //     if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
+            //         textNodes.push(node);
+            //     }
+            // }
+
+            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            // let node;
+
+            // while (node = walk.nextNode()) {
+            //     const parent = node.parentNode;
+            //     if (
+            //         parent &&
+            //         parent.dataset.translationKey &&
+            //         cachedTranslations[parent.dataset.translationKey] &&
+            //         !parent.closest('.skiptranslate')
+            //     ) {
+            //         node.nodeValue = cachedTranslations[parent.dataset.translationKey];
+            //     }
+            // }
+
+            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+
+            // let node;
+            // let i = 0;
+
+            // while (node = walk.nextNode()) {
+            //     if (cachedTranslations[i]) {
+            //         node.nodeValue = cachedTranslations[i];
+            //     }
+            //     i++;
+            // }
+
+
+            // applyTranslationsToNodes(textNodes, cachedTranslations);
+            // for (const node of textNodes) {
+            //     const text = node.nodeValue.trim();
+            //     if (text && cachedTranslations[text]) {
+            //         node.nodeValue = cachedTranslations[text];
+            //     }
+            // }
+
+            // console.log("Applied cached translations");
+            // return true;
+        } catch (e) {
+            console.error("Failed to parse or apply cached translations:", e);
+            sessionStorage.removeItem(pathKey);
+            return;
+        } finally {
+            document.body.style.visibility = "visible";
+        }
+        // return true;
+    } else {
+        return new Promise((resolve) => {
+
+            function cleanup() {
+                clearTimeout(fallbackTimeout);
+                const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+                if (loader) loader.remove();
+                document.body.style.visibility = "visible";
+            }
+
+            let done = false;
+            const TRANSLATION_MAX_WAIT_MS = 4000;
+
+            const fallbackTimeout = setTimeout(() => {
+                if (!done) {
+                    console.warn("Translation timeout, proceeding without translation.");
+                    cleanup();
+                    resolve(false);
+                }
+            }, TRANSLATION_MAX_WAIT_MS);
+
+            // function loadGoogleTranslate() {
+            //     if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+            //         const meta = document.createElement("meta");
+            //         meta.name = "google";
+            //         meta.content = "notranslate";
+            //         document.head.appendChild(meta);
+            //     }
+
+            //     if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
+
+            //     const gtScript = document.createElement("script");
+            //     gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
+            //     gtScript.async = true;
+            //     document.head.appendChild(gtScript);
+
+            //     gtScript.onload = () => {
+            //         console.log("startedd....")
+            //     }
+            //     gtScript.onerror = () => {
+            //         console.warn("Failed to load Google Translate script");
+            //         cleanup();
+            //         resolve(false);
+            //     };
+            // }
+            // loadGoogleTranslate();
+
+            const loadingHTML = `
+          <div class="wait-loading-section" id="wait-loading-section">
+            <div class="loading-spinner"></div>
+          </div>`;
+            document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+            function waitForTranslation() {
+                return new Promise((res, rej) => {
+                    const htmlEl = document.documentElement;
+                    const timeout = setTimeout(() => {
+                        observer.disconnect();
+                        rej("translation detection timeout");
+                    }, 5000);
+
+                    const observer = new MutationObserver(() => {
+                        if (htmlEl.classList.contains("translated") ||
+                            htmlEl.classList.contains("translated-ltr") ||
+                            htmlEl.classList.contains("translated-rtl")) {
+                            clearTimeout(timeout);
+                            observer.disconnect();
+
+                            setTimeout(() => res(), 200);
+                        }
+                    });
+
+                    observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
+                });
+            }
+
+            if (userLang === "en") {
+                clearTimeout(fallbackTimeout);
+                cleanup();
+                resolve(false);
+                return;
+            }
+
+            window.initTranslate = function () {
+                try {
+                    new google.translate.TranslateElement({
+                        pageLanguage: "en",
+                        includedLanguages: "fr,es,de,it",
+                        autoDisplay: false
+                    }, "google_translate_element");
+
+                } catch (err) {
+                    console.error("Google Translate init failed:", err);
+                    cleanup();
+                    resolve(false);
+                }
+
+                const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+                console.log(userLang);
+
+                const selectTryInterval = setInterval(() => {
+                    const select = document.querySelector(".goog-te-combo");
+                    if (select) {
+                        clearInterval(selectTryInterval);
+                        select.value = userLang;
+                        select.dispatchEvent(new Event("change"));
+
+                        waitForTranslation().then(async () => {
+                            done = true;
+                            clearTimeout(fallbackTimeout);
+                            if (pageIsTranslated()) {
+                                cleanup();
+                                resolve(true);
+                            } else {
+                                cleanup();
+                                resolve(false);
+                            }
+                        }).catch((err) => {
+                            console.warn("waitForTranslationFinish failed:", err);
+                            cleanup();
+                            resolve(false);
+                        });
+                    }
+                }, 150);
+
+                setTimeout(() => {
+                    clearInterval(selectTryInterval);
+                }, 9000);
+            };
+
+
+        });
+    }
+}
+
+function assignTranslationIds() {
+    let nextId = 0;
+    const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_ELEMENT, null, false);
+    let element;
+    while (element = walk.nextNode()) {
+        if (element.nodeName !== 'SCRIPT' && element.nodeName !== 'STYLE' && !element.closest('.skiptranslate')) {
+            // Only assign IDs to elements that directly contain non-empty text nodes
+            const hasDirectText = Array.from(element.childNodes).some(node =>
+                node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+            );
+            if (hasDirectText) {
+                element.setAttribute('data-translation-id', nextId++);
+            }
+        }
+    }
+}
+
+function saveTranslationsToSession() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    if (userLang === "en") {
+        return; // Don't save for English users
+    }
+
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const translations = {};
+    const elements = document.querySelectorAll('[data-translation-id]');
+
+    elements.forEach(element => {
+        const id = element.getAttribute('data-translation-id');
+        const textNodes = Array.from(element.childNodes).filter(node =>
+            node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+        );
+
+        if (textNodes.length > 0) {
+            translations[id] = textNodes.map(node => node.nodeValue).join('|||');
+        }
+    });
+
+    sessionStorage.setItem(pathKey, JSON.stringify(translations));
+    console.log("Saved translations to session storage.");
+}
+
+async function handleTranslateFirstLoad() {
+    // First, assign the stable IDs to all elements. This happens on every page load.
+    assignTranslationIds();
+
+    const pathKey = `translated_texts:${window.location.pathname}`;
+    const cachedJson = sessionStorage.getItem(pathKey);
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+
+    // Always initialize the widget for continuous translation.
+    initGoogleTranslateWidget();
+
+    if (userLang === "en" || !navigator.onLine) {
+        document.body.style.visibility = "visible";
+        return;
+    }
+
+    if (cachedJson) {
+        console.log("Applying cached translations.");
+        try {
+            const cachedTranslations = JSON.parse(cachedJson);
+            // applyTranslationsFromCache(cachedTranslations);
+        } catch (e) {
+            console.error("Failed to parse or apply cached translations:", e);
+            sessionStorage.removeItem(pathKey);
+        } finally {
+            document.body.style.visibility = "visible";
+        }
+    } else {
+        // No cache, show loader for 5 seconds.
+        const loadingHTML = `<div class="wait-loading-section" id="wait-loading-section"><div class="loading-spinner"></div></div>`;
+        document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+        setTimeout(() => {
+            const loaderEl = document.getElementById("wait-loading-section");
+            if (loaderEl) loaderEl.remove();
+            document.body.style.visibility = "visible";
+        }, 5000);
+    }
+
+    // saveTranslationsToSession()
+}
+
+
+function applyTranslationsFromCache(cachedTranslations) {
+    Object.keys(cachedTranslations).forEach(id => {
+        const element = document.querySelector(`[data-translation-id="${id}"]`);
+        if (element) {
+            const translatedTexts = cachedTranslations[id].split('|||');
+            const textNodes = Array.from(element.childNodes).filter(node =>
+                node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0
+            );
+
+            if (textNodes.length === translatedTexts.length) {
+                textNodes.forEach((node, index) => {
+                    node.nodeValue = translatedTexts[index];
+                });
+            }
+        }
+    });
+}

@@ -11,7 +11,7 @@ const STATIC_ASSETS = [
     "/html/main/ViewBook.html",
     "/html/regs/Signup.html",
 
-    // CSS
+    // // CSS
     "/css/general.css",
     "/css/home.css",
     "/css/shop.css",
@@ -42,11 +42,15 @@ const STATIC_ASSETS = [
     "/src/images/book-person.png",
 ];
 
+const EXTERNAL_ASSETS = [
+    "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"];
+
+
 // Install
 self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll([...STATIC_ASSETS]);
+            return cache.addAll([...STATIC_ASSETS, ...EXTERNAL_ASSETS]);
         }).catch(err => console.error("Caching failed:", err))
     );
     self.skipWaiting();
@@ -56,12 +60,33 @@ self.addEventListener("install", event => {
 self.addEventListener("fetch", event => {
     const url = new URL(event.request.url);
 
+    // Stale-while-revalidate for Google Translate scripts
+    if (url.origin.includes("translate.google.com")) {
+        event.respondWith(
+            caches.open(CACHE_NAME).then(cache => {
+                return cache.match(event.request).then(cachedResponse => {
+                    const fetchedResponsePromise = fetch(event.request).then(
+                        networkResponse => {
+                            cache.put(event.request, networkResponse.clone());
+                            return networkResponse;
+                        }
+                    ).catch(err => {
+                        console.error("Google Translate fetch failed:", err);
+                        return cachedResponse;
+                    });
+                    return cachedResponse || fetchedResponsePromise;
+                });
+            })
+        );
+        return;
+    }
+
     // Never cache Firebase/WhatsApp/email API requests
     if (
         url.origin.includes("firebaseio.com") ||
         url.origin.includes("googleapis.com") ||
         url.origin.includes("whatsapp") ||
-        url.origin.includes("smtp2go") || url.origin.includes('translate.google.com') || url.origin.includes('translate.googleapis.com')
+        url.origin.includes("smtp2go")
     ) {
         return; // skip caching, fetch live
     }
@@ -101,7 +126,7 @@ self.addEventListener("fetch", event => {
     }
 
     // Cache-first strategy for static
-    if ([...STATIC_ASSETS].some(asset => url.href.includes(asset))) {
+    if ([...STATIC_ASSETS, ...EXTERNAL_ASSETS].some(asset => url.href.includes(asset))) {
         event.respondWith(
             caches.match(event.request).then(resp => {
                 return resp || fetch(event.request).then(async fetchResp => {
