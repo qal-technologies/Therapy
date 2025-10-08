@@ -200,10 +200,10 @@ function initGoogleTranslateWidget() {
     }
 
     // if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
-    //     const meta = document.createElement("meta");
-    //     meta.name = "google";
-    //     meta.content = "notranslate";
-    //     document.head.appendChild(meta);
+        const meta = document.createElement("meta");
+        meta.name = "google";
+        meta.content = "translate";
+        document.head.appendChild(meta);
     // }
 
     if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
