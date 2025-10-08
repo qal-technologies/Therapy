@@ -13,25 +13,96 @@ function applyTranslationsToNodes(textNodes, translations) {
     });
 }
 
+// async function handleTranslateFirstLoad() {
+//     const pathKey = `translated_texts:${window.location.pathname}`;
+//     const cachedJson = sessionStorage.getItem(pathKey);
+//     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+//     console.log(userLang);
+
+//     // Always initialize the widget, so it can work on cached or non-cached pages.
+//     initGoogleTranslateWidget();
+
+//     // Don't translate if the user's language is English
+//     if (userLang === "en" || !navigator.onLine) {
+//         document.body.style.visibility = "visible";
+//         return false;
+//     }
+
+//     // If we have cached translations, apply them directly to the DOM
+//     if (cachedJson) {
+//         console.log("Applying cached translation:", pathKey);
+
+//         try {
+//             const cachedTranslations = JSON.parse(cachedJson);
+
+//             const textNodes = [];
+//             const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+//             let node;
+
+//             while (node = walk.nextNode()) {
+//                 const parent = node.parentNode;
+//                 // Ensure we only process valid text nodes and ignore the Google Translate widget
+//                 if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
+//                     textNodes.push(node);
+//                 }
+//             }
+//             applyTranslationsToNodes(textNodes, cachedTranslations);
+//         } catch (e) {
+//             console.error("Failed to apply cached translations:", e);
+//             sessionStorage.removeItem(pathKey);
+//         } finally {
+//             document.body.style.visibility = "visible";
+//         }
+//         return true;
+//     }
+
+//     // If no cache, show loader and fetch new translations
+//     const loadingHTML = `
+//           <div class="wait-loading-section" id="wait-loading-section">
+//             <div class="loading-spinner"></div>
+//           </div>`;
+//     document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+//     setTimeout(() => {
+//         const loaderEl = document.getElementById("wait-loading-section");
+//         if (loaderEl) loaderEl.remove();
+//         document.body.style.visibility = "visible";
+//     }, 2000);
+
+//     return true;
+// }
+
+
+const TRANSLATED_CACHE_NAME = "charlotte-translated-v1900";
+
+function sessionKeyForPath() {
+    return `translated:${window.location.pathname}`;
+}
+
+function pageIsTranslated() {
+    const htmlEl = document.documentElement;
+    return htmlEl.classList.contains("translated") ||
+        htmlEl.classList.contains("translated-ltr") ||
+        htmlEl.classList.contains("translated-rtl");
+}
+
 async function handleTranslateFirstLoad() {
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
     console.log(userLang);
 
-    // Always initialize the widget, so it can work on cached or non-cached pages.
-    initGoogleTranslateWidget();
-
-    // Don't translate if the user's language is English
+    //  Don't translate if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
         return false;
     }
 
+    initGoogleTranslateWidget();
+
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
         console.log("Applying cached translation:", pathKey);
-
         try {
             const cachedTranslations = JSON.parse(cachedJson);
 
@@ -46,30 +117,162 @@ async function handleTranslateFirstLoad() {
                     textNodes.push(node);
                 }
             }
-            applyTranslationsToNodes(textNodes, cachedTranslations);
+
+            // applyTranslationsToNodes(textNodes, cachedTranslations);
+            for (const node of textNodes) {
+                const text = node.nodeValue.trim();
+                if (text && cachedTranslations[text]) {
+                    node.nodeValue = cachedTranslations[text];
+                }
+            }
+
+            console.log("Applied cached translations");
+            return true;
         } catch (e) {
             console.error("Failed to apply cached translations:", e);
             sessionStorage.removeItem(pathKey);
+            return;
         } finally {
+            const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+            if (loader) loader.remove();
             document.body.style.visibility = "visible";
         }
-        return true;
-    }
+        // return true;
+    } else {
+        return new Promise((resolve) => {
 
-    // If no cache, show loader and fetch new translations
-    const loadingHTML = `
+            function cleanup() {
+                clearTimeout(fallbackTimeout);
+                const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+                if (loader) loader.remove();
+                document.body.style.visibility = "visible";
+            }
+
+            let done = false;
+            const TRANSLATION_MAX_WAIT_MS = 5000;
+
+            const fallbackTimeout = setTimeout(() => {
+                if (!done) {
+                    console.warn("Translation timeout, proceeding without translation.");
+                    cleanup();
+                    resolve(false);
+                }
+            }, TRANSLATION_MAX_WAIT_MS);
+
+            function loadGoogleTranslate() {
+                if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+                    const meta = document.createElement("meta");
+                    meta.name = "google";
+                    meta.content = "notranslate";
+                    document.head.appendChild(meta);
+                }
+
+                if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
+
+                const gtScript = document.createElement("script");
+                gtScript.src = "https://translate.google.com/translate_a/element.js?cb=initTranslate";
+                gtScript.async = true;
+                document.head.appendChild(gtScript);
+
+                gtScript.onload = () => {
+                    console.log("startedd....")
+                }
+                gtScript.onerror = () => {
+                    console.warn("Failed to load Google Translate script");
+                    cleanup();
+                    resolve(false);
+                };
+            }
+            loadGoogleTranslate();
+
+            const loadingHTML = `
           <div class="wait-loading-section" id="wait-loading-section">
             <div class="loading-spinner"></div>
           </div>`;
-    document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+            document.body.insertAdjacentHTML("beforebegin", loadingHTML);
 
-    setTimeout(() => {
-        const loaderEl = document.getElementById("wait-loading-section");
-        if (loaderEl) loaderEl.remove();
-        document.body.style.visibility = "visible";
-    }, 2000);
+            function waitForTranslation() {
+                return new Promise((res, rej) => {
+                    const htmlEl = document.documentElement;
+                    const timeout = setTimeout(() => {
+                        observer.disconnect();
+                        rej("translation detection timeout");
+                    }, 5000);
 
-    return true;
+                    const observer = new MutationObserver(() => {
+                        if (htmlEl.classList.contains("translated") ||
+                            htmlEl.classList.contains("translated-ltr") ||
+                            htmlEl.classList.contains("translated-rtl")) {
+                            clearTimeout(timeout);
+                            observer.disconnect();
+
+                            setTimeout(() => res(), 600);
+                        }
+                    });
+
+                    observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
+                });
+            }
+
+
+            window.initTranslate = function () {
+                try {
+                    new google.translate.TranslateElement({
+                        pageLanguage: "en",
+                        includedLanguages: "fr,es,de,it",
+                        autoDisplay: false
+                    }, "google_translate_element");
+
+                } catch (err) {
+                    console.error("Google Translate init failed:", err);
+                    cleanup();
+                    resolve(false);
+                }
+
+                const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+                console.log(userLang);
+                if (userLang === "en") {
+                    clearTimeout(fallbackTimeout);
+                    cleanup();
+                    resolve(false);
+                    return;
+                }
+
+                const selectTryInterval = setInterval(() => {
+                    const select = document.querySelector(".goog-te-combo");
+                    if (select) {
+                        clearInterval(selectTryInterval);
+                        select.value = userLang;
+                        select.dispatchEvent(new Event("change"));
+
+                        waitForTranslation().then(async () => {
+                            done = true;
+                            clearTimeout(fallbackTimeout);
+                            if (pageIsTranslated()) {
+                                cleanup();
+                                resolve(true);
+                            } else {
+                                cleanup();
+                                resolve(false);
+                            }
+                        }).catch((err) => {
+                            console.warn("waitForTranslationFinish failed:", err);
+                            cleanup();
+                            resolve(false);
+                        });
+                    }
+                }, 150);
+
+                setTimeout(() => {
+                    clearInterval(selectTryInterval);
+                }, 9000);
+            };
+
+
+        });
+    }
 }
 
 function initGoogleTranslateWidget() {
@@ -88,6 +291,16 @@ function initGoogleTranslateWidget() {
         });
         document.body.appendChild(translateContainer);
     }
+
+    if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
+        const meta = document.createElement("meta");
+        meta.name = "google";
+        meta.content = "notranslate";
+        document.head.appendChild(meta);
+    }
+
+    if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
+
 
     // 2. Avoid loading the script multiple times
     if (document.getElementById("google-translate-script")) {
@@ -124,6 +337,7 @@ function initGoogleTranslateWidget() {
             console.error("Google Translate initialization error:", e);
         }
     };
+
 }
 
 function handleInputFocusFix() {
@@ -296,7 +510,7 @@ function runTicker() {
             const cur = getComputedStyle(t).transform;
             if (cur !== prev) {
                 prev = cur;
-                initTicker();
+                // initTicker();
             }
         }, 500);
 
@@ -424,7 +638,7 @@ function saveTranslationsToSession() {
         const parent = node.parentNode;
         if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' &&
             node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
-            
+
             const key = `tx-${counter++}`;
             parent.dataset.translationKey = key;
             textMap[key] = node.nodeValue.trim();
@@ -444,11 +658,11 @@ async function initializeApp() {
     runTicker();
     let loadUser;
 
-    // if ("serviceWorker" in navigator) {
-    //     navigator.serviceWorker.register("/service-worker.js").catch(error => {
-    //         console.error("Service Worker registration failed:", error);
-    //     });
-    // }
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service-worker.js").catch(error => {
+            console.error("Service Worker registration failed:", error);
+        });
+    }
 
     handleInputFocusFix();
 
@@ -570,7 +784,7 @@ function addAlertTimer(div, options, parent) {
     resendEl.innerHTML = `<strong style="cursor:pointer; color: var(--link, #007bff);">Request a new OTP</strong>`;
 
     const input = document.querySelector(".alert-message input");
-    
+
     div.appendChild(timerP);
     div.appendChild(resendEl);
 
