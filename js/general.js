@@ -160,7 +160,9 @@ function initGoogleTranslate() {
     }
 
     const script = document.createElement('script');
-    script.src = "https://cdn.gtranslate.net/widgets/latest/translate.js";
+    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    script.id = "google-translate-script";
+
     document.body.appendChild(script);
 
 
