@@ -296,6 +296,7 @@ div#checkout button:disabled {
   color: black !important;
   cursor: not-allowed;
   opacity: 0.3;
+  -webkit-user-select: none;
   user-select: none;
 }
 

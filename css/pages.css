@@ -8,6 +8,7 @@
     place-self: center;
     overflow: hidden;
     position: relative;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -81,10 +82,10 @@
     flex: 0.994;
     font-size: 0.85rem;
     line-height: 110%;
-
     overflow-y: auto;
     scroll-behavior: smooth;
     scroll-snap-type: proximity;
+    -webkit-user-select: text;
     user-select: text;
     font-family: PoppinsLight, PoppinsMed, sans-serif;
 }

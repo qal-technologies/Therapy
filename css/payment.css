@@ -26,8 +26,10 @@ section.parent {
 .detail-row .detail-value {
     font-size: 1rem;
     font-family: monospace, 'Roboto Mono', 'Courier New';
+    -webkit-user-select: text;
     user-select: text;
     width: auto;
+    -webkit-text-wrap: wrap;
     text-wrap: wrap;
     text-overflow: ellipsis;
     text-align: left;
@@ -115,6 +117,7 @@ h2 {
 .payment-section {
     background: white;
     padding: 1.2rem;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     place-self: center;
     display: none;
@@ -1447,6 +1450,7 @@ ul.instructions.redeem li {
     padding-inline: 6px;
     border: 2px solid rgba(27, 27, 27, 0.0);
     background-color: #eeeeeead;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-radius: 10px;
     text-align: center;
@@ -1665,6 +1669,7 @@ ul.instructions.redeem li {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     z-index: 99999999;
     justify-content: center;
@@ -1695,6 +1700,7 @@ ul.instructions.redeem li {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     font-size: 30px;
     position: absolute;
@@ -1736,6 +1742,7 @@ ul.instructions.redeem li {
     bottom: 15%;
     z-index: 9999;
     background-color: var(--accentTrans);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     color: whitesmoke;
     text-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);

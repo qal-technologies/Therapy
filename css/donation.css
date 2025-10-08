@@ -233,6 +233,7 @@ section.category {
     display: none;
     flex: 1;
     background: rgba(0, 0, 0, 0.2);
+    -webkit-backdrop-filter: blur(4px) brightness(80%);
     backdrop-filter: blur(4px) brightness(80%);
     justify-content: center;
     align-items: center;
@@ -475,6 +476,7 @@ section.donation-viewer {
     height: 100%;
     overflow: hidden;
     background: white;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
@@ -511,6 +513,7 @@ section.donation-viewer {
     text-align: center;
     justify-content: center;
     font-size: 1.8em;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     box-shadow: 0px 0px 12px var(--accentTrans), 0px 0px 20px var(--primaryTrans);
     fill: var(--link);
@@ -626,6 +629,7 @@ section.donation-viewer {
     fill: none;
     stroke: #d7ffd8ad;
     stroke-width: 10;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
 
@@ -897,6 +901,7 @@ section.donation-viewer {
     z-index: 9999999999999999999999;
     position: absolute;
     background: rgba(10, 10, 10, 0.2);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 }
 
@@ -909,6 +914,7 @@ section.donation-viewer {
     padding: 10px;
     background-color: var(--link);
     border: 1px solid var(--accent);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 0px 1px 12px var(--accent);
     width: 40px;
@@ -1128,7 +1134,7 @@ div.image-displayer img {
     justify-content: center;
 }
 
-.others .people-div .people-icon svg{
+.others .people-div .people-icon svg {
     stroke: black;
     width: 200%;
     height: 200%;

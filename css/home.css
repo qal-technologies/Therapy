@@ -197,6 +197,7 @@ div#banner-lower {
 }
 
 #banner-lower img {
+  -webkit-user-select: none;
   user-select: none;
   display: flex;
   width: 300px;
@@ -240,6 +241,7 @@ section.testimonies {
   flex-direction: row;
   padding-block: 5%;
   background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 }
 
@@ -318,6 +320,7 @@ section#sessions {
   gap: 20px;
   padding-block: 5%;
   background: var(--primary);
+  -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   padding-bottom: 150px;
 }
@@ -352,6 +355,7 @@ section#sessions {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -548,6 +552,7 @@ div#session.virtual .upper {
   padding: 8px;
   background: transparent;
   color: var(--link);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   font-family: PoppinsSemi;
 }

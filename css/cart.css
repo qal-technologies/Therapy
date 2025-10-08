@@ -74,6 +74,7 @@ div#back-button {
     background: white;
     flex-direction: column;
     padding: 1.2rem;
+    -webkit-user-select: none;
     user-select: none;
     display: flex;
     flex-direction: column;

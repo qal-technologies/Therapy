@@ -7,7 +7,7 @@
   --gray: #6c757d;
 }
 
-body{
+body {
   display: none;
 }
 
@@ -30,6 +30,7 @@ body{
 /* User Profile Section */
 .profile-section {
   background: linear-gradient(60deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6), var(--accentTrans));
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
@@ -44,6 +45,7 @@ body{
   overflow: hidden;
   width: 95%;
   max-width: 600px;
+  -webkit-user-select: text;
   user-select: text;
 }
 
@@ -69,6 +71,7 @@ body{
   font-family: PoppinsSemi;
   color: white;
   place-self: center;
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -156,6 +159,7 @@ body{
   z-index: 9999;
   padding-inline: 25px;
   place-self: center;
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   border-top-right-radius: 30px;
   border-top-left-radius: 30px;
@@ -214,7 +218,7 @@ body{
   height: 40px;
   background: transparent;
   border: 10px solid;
-  opacity:0.8;
+  opacity: 0.8;
   border-radius: 50%;
 }
 
@@ -238,6 +242,7 @@ body{
 .status-completed {
   background-color: rgba(209, 250, 229, 0.8);
   color: #038553;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-color: #038553;
 }
@@ -245,6 +250,7 @@ body{
 .status-pending {
   background-color: rgba(254, 243, 199, 0.8);
   color: #a04004;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-color: #a04004;
 }
@@ -252,6 +258,7 @@ body{
 .status-failed {
   background-color: rgba(254, 226, 226, 0.8);
   color: #ad0505;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-color: #ad0505;
 }
@@ -295,6 +302,7 @@ body{
   justify-content: center;
   align-items: center;
   overflow-y: auto;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(5px);
 }
 
@@ -407,6 +415,7 @@ p#receiptDate {
 }
 
 .payslip-row span:last-child {
+  -webkit-user-select: text;
   user-select: text;
   font-size: 16px;
 }
@@ -433,6 +442,7 @@ p#receiptDate {
   overflow: hidden;
   color: white;
   font-size: 14px;
+  -webkit-user-select: none;
   user-select: none;
   background-color: var(--link);
   text-align: center;
