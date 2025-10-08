@@ -592,12 +592,13 @@ div#details-div .details-top {
   min-width: 100%;
   top: 0;
   position: absolute;
-  z-index: 999;
+  z-index: 9999999999 !important;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
   align-items: center;
+  background: white;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   box-shadow: 1px 1px 10px rgb(125, 125, 125, 0.08);
@@ -618,7 +619,7 @@ div#details-div .details-top {
   border: 1px solid var(--accent);
 }
 
-#details-div a {
+#details-div .details-top a {
   display: flex;
   align-items: center;
   justify-content: center;
