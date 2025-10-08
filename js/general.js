@@ -73,18 +73,13 @@ function applyTranslationsToNodes(textNodes, translations) {
 // }
 
 
-const TRANSLATED_CACHE_NAME = "charlotte-translated-v1900";
-
-function sessionKeyForPath() {
-    return `translated:${window.location.pathname}`;
-}
-
 function pageIsTranslated() {
     const htmlEl = document.documentElement;
     return htmlEl.classList.contains("translated") ||
         htmlEl.classList.contains("translated-ltr") ||
         htmlEl.classList.contains("translated-rtl");
 }
+
 
 async function handleTranslateFirstLoad() {
     const pathKey = `translated_texts:${window.location.pathname}`;
@@ -107,16 +102,44 @@ async function handleTranslateFirstLoad() {
             const cachedTranslations = JSON.parse(cachedJson);
 
             const textNodes = [];
-            const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-            let node;
+            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            // let node;
 
-            while (node = walk.nextNode()) {
-                const parent = node.parentNode;
-                // Ensure we only process valid text nodes and ignore the Google Translate widget
-                if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
-                    textNodes.push(node);
-                }
-            }
+            // while (node = walk.nextNode()) {
+            //     const parent = node.parentNode;
+            //     // Ensure we only process valid text nodes and ignore the Google Translate widget
+            //     if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' && node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
+            //         textNodes.push(node);
+            //     }
+            // }
+
+            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+            // let node;
+
+            // while (node = walk.nextNode()) {
+            //     const parent = node.parentNode;
+            //     if (
+            //         parent &&
+            //         parent.dataset.translationKey &&
+            //         cachedTranslations[parent.dataset.translationKey] &&
+            //         !parent.closest('.skiptranslate')
+            //     ) {
+            //         node.nodeValue = cachedTranslations[parent.dataset.translationKey];
+            //     }
+            // }
+
+            // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+
+            // let node;
+            // let i = 0;
+
+            // while (node = walk.nextNode()) {
+            //     if (cachedTranslations[i]) {
+            //         node.nodeValue = cachedTranslations[i];
+            //     }
+            //     i++;
+            // }
+
 
             // applyTranslationsToNodes(textNodes, cachedTranslations);
             for (const node of textNodes) {
@@ -510,7 +533,7 @@ function runTicker() {
             const cur = getComputedStyle(t).transform;
             if (cur !== prev) {
                 prev = cur;
-                // initTicker();
+                initTicker();
             }
         }, 500);
 
@@ -632,23 +655,45 @@ function saveTranslationsToSession() {
     const textMap = {};
     let counter = 0;
 
+    // const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    // let node;
+
+    // while (node = walk.nextNode()) {
+    //     const parent = node.parentNode;
+    //     if (
+    //         parent &&
+    //         parent.nodeName !== 'SCRIPT' &&
+    //         parent.nodeName !== 'STYLE' &&
+    //         node.nodeValue.trim().length > 0 &&
+    //         !parent.closest('.skiptranslate')
+    //     ) {
+    //         // Assign unique key to parent for later lookup
+    //         const key = `tx-${counter++}`;
+    //         parent.dataset.translationKey = key;
+    //         textMap[key] = node.nodeValue.trim();
+    //     }
+    // }
+
     const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    const translations = [];
     let node;
+
     while (node = walk.nextNode()) {
         const parent = node.parentNode;
-        if (parent && parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE' &&
-            node.nodeValue.trim().length > 0 && !parent.closest('.skiptranslate')) {
-
-            const key = `tx-${counter++}`;
-            parent.dataset.translationKey = key;
-            textMap[key] = node.nodeValue.trim();
+        if (
+            parent &&
+            parent.nodeName !== 'SCRIPT' &&
+            parent.nodeName !== 'STYLE' &&
+            node.nodeValue.trim().length > 0 &&
+            !parent.closest('.skiptranslate')
+        ) {
+            translations.push(node.nodeValue.trim());
         }
     }
 
-    sessionStorage.setItem(pathKey, JSON.stringify(textMap));
+    sessionStorage.setItem(pathKey, JSON.stringify(translations));
     console.log(`✅ Saved ${counter} translations to session storage`);
 }
-
 
 async function initializeApp() {
     await handleTranslateFirstLoad();
