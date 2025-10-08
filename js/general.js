@@ -144,10 +144,10 @@ async function handleTranslateFirstLoad() {
 
 
 function initGoogleTranslate() {
-    let translateContainer = document.getElementById("gtranslate_wrapper");
+    let translateContainer = document.getElementById("google_translate_element");
     if (!translateContainer) {
         translateContainer = document.createElement("div");
-        translateContainer.id = "gtranslate_wrapper";
+        translateContainer.id = "google_translate_element";
         // Optional: append where you want the dropdown to appear
         // Example: top-right corner of body
         Object.assign(translateContainer.style, {
