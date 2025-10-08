@@ -28,7 +28,8 @@ async function handleTranslateFirstLoad() {
         return;
     }
 
-    initGoogleTranslateWidget();
+    // initGoogleTranslateWidget();
+    initGoogleTranslate();
 
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
@@ -136,6 +137,44 @@ async function handleTranslateFirstLoad() {
         });
     }
 }
+
+
+function initGoogleTranslate() {
+    let translateContainer = document.getElementById("google_translate_element");
+    if (!translateContainer) {
+        translateContainer = document.createElement("div");
+        translateContainer.id = "google_translate_element";
+        // Optional: append where you want the dropdown to appear
+        // Example: top-right corner of body
+        Object.assign(translateContainer.style, {
+            position: "fixed",
+            top: "10px",
+            right: "10px",
+            zIndex: "9999"
+        });
+        document.body.appendChild(translateContainer);
+    }
+    
+    const script = document.createElement('script');
+    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.body.appendChild(script);
+
+
+    window.googleTranslateElementInit = function () {
+        try {
+            new google.translate.TranslateElement({
+                pageLanguage: "en",
+                includedLanguages: "fr,es,de,it",
+                autoDisplay: false
+            }, "google_translate_element");
+            console.log("Google Translate widget initialized.");
+        } catch (e) {
+            console.error("Google Translate initialization error:", e);
+        }
+    };
+}
+
+
 
 function initGoogleTranslateWidget() {
     // 1. Ensure translate container exists
