@@ -29,7 +29,7 @@ async function handleTranslateFirstLoad() {
     }
 
     // initGoogleTranslateWidget();
-    initGoogleTranslate();
+    await loadGoogleTranslateAndApply(userLang);
 
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
@@ -180,7 +180,93 @@ function initGoogleTranslate() {
     };
 }
 
+/** Trigger translate via the GT combobox (best-effort) */
+function forceReapplyTranslation(lang) {
+    if (!lang || lang === "en") return;
+    const select = document.querySelector(".goog-te-combo");
+    if (select) {
+        try {
+            select.value = lang;
+            select.dispatchEvent(new Event("change"));
+            // also try to click "translate" button if UI present (best-effort)
+            const el = document.querySelector(".goog-te-menu-frame");
+            // no-op if not found
+        } catch (e) {
+            console.warn("forceReapplyTranslation error:", e);
+        }
+    }
+}
 
+/**
+ * Load Google Translate script and attempt to auto-select userLang.
+ * Returns once GT widget is in DOM (or after a short timeout).
+ */
+function loadGoogleTranslateAndApply(userLang) {
+    return new Promise((resolve) => {
+        // if already loaded
+        if (window.google && window.google.translate) {
+            // attempt to set combo quickly
+            setTimeout(() => {
+                try { forceReapplyTranslation(userLang); } catch (e) {/*noop*/ }
+                resolve();
+            }, 0);
+            return;
+        }
+
+        // initializer that the GT script will call (cb)
+        function initializer() {
+            try {
+                // initialize widget (invisible container expected in page)
+                // Note: we don't rely on element ID; GT creates iframe etc.
+                new google.translate.TranslateElement({
+                    pageLanguage: "en",
+                    autoDisplay: false
+                }, "google_translate_element");
+            } catch (err) {
+                // non-fatal
+            }
+            // try to set the combo as soon as it exists
+            const tryCombo = setInterval(() => {
+                const select = document.querySelector(".goog-te-combo");
+                if (select) {
+                    clearInterval(tryCombo);
+                    if (userLang && userLang !== "en") {
+                        try {
+                            select.value = userLang;
+                            select.dispatchEvent(new Event("change"));
+                        } catch (e) { /* ignore */ }
+                    }
+                    resolve();
+                }
+            }, 120);
+
+            // fallback resolve after a short delay (we'll still let GT run)
+            setTimeout(() => {
+                try { clearInterval(tryCombo); } catch (e) { }
+                resolve();
+            }, 1500);
+        }
+
+        // attach initializer as expected callback name
+        window.googleTranslateElementInit = initializer;
+        window.initTranslate = initializer; // support multiple cb names
+
+        // Append script if not already present
+        if (!document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) {
+            const gtScript = document.createElement("script");
+            gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+            gtScript.async = true;
+            gtScript.onerror = () => {
+                console.warn("Google Translate script failed to load.");
+                resolve();
+            };
+            document.head.appendChild(gtScript);
+        } else {
+            // already present -> call initializer if possible
+            setTimeout(() => { initializer(); }, 0);
+        }
+    });
+}
 
 function initGoogleTranslateWidget() {
     // 1. Ensure translate container exists
