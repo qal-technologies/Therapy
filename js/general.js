@@ -69,7 +69,7 @@ async function handleTranslateFirstLoad() {
         }
         return true;
     } else {
-        // return new Promise((resolve) => {
+        return new Promise((resolve) => {
 
             function cleanup() {
                 // clearTimeout(fallbackTimeout);
@@ -79,16 +79,16 @@ async function handleTranslateFirstLoad() {
                 document.body.style.visibility = "visible";
             }
 
-            // let done = false;
-            // const TRANSLATION_MAX_WAIT_MS = 4000;
+            let done = false;
+            const TRANSLATION_MAX_WAIT_MS = 4000;
 
-            // const fallbackTimeout = setTimeout(() => {
-            //     if (!done) {
-            //         console.warn("Translation timeout, proceeding without translation.");
-            //         cleanup();
-            //         resolve(false);
-            //     }
-            // }, TRANSLATION_MAX_WAIT_MS);
+            const fallbackTimeout = setTimeout(() => {
+                if (!done) {
+                    console.warn("Translation timeout, proceeding without translation.");
+                    cleanup();
+                    resolve(false);
+                }
+            }, TRANSLATION_MAX_WAIT_MS);
 
             const loadingHTML = `
           <div class="wait-loading-section" id="wait-loading-section">
@@ -96,35 +96,35 @@ async function handleTranslateFirstLoad() {
           </div>`;
             document.body.insertAdjacentHTML("beforebegin", loadingHTML);
 
-            // function waitForTranslation() {
-            //     return new Promise((res, rej) => {
-            //         const htmlEl = document.documentElement;
-            //         const timeout = setTimeout(() => {
-            //             observer.disconnect();
-            //             rej("translation detection timeout");
-            //         }, 5000);
+            function waitForTranslation() {
+                return new Promise((res, rej) => {
+                    const htmlEl = document.documentElement;
+                    const timeout = setTimeout(() => {
+                        observer.disconnect();
+                        rej("translation detection timeout");
+                    }, 5000);
 
-            //         const observer = new MutationObserver(() => {
-            //             if (htmlEl.classList.contains("translated") ||
-            //                 htmlEl.classList.contains("translated-ltr") ||
-            //                 htmlEl.classList.contains("translated-rtl")) {
-            //                 clearTimeout(timeout);
-            //                 observer.disconnect();
+                    const observer = new MutationObserver(() => {
+                        if (htmlEl.classList.contains("translated") ||
+                            htmlEl.classList.contains("translated-ltr") ||
+                            htmlEl.classList.contains("translated-rtl")) {
+                            clearTimeout(timeout);
+                            observer.disconnect();
 
-            //                 setTimeout(() => res(), 200);
-            //             }
-            //         });
+                            setTimeout(() => res(), 600);
+                        }
+                    });
 
-            //         observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
-            //     });
-            // }
+                    observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
+                });
+            }
 
             const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
 
             if (userLang === "en") {
-                // clearTimeout(fallbackTimeout);
+                clearTimeout(fallbackTimeout);
                 cleanup();
-                // resolve(false);
+                resolve(false);
                 return;
             }
 
@@ -134,35 +134,35 @@ async function handleTranslateFirstLoad() {
 
             
 
-            // const selectTryInterval = setInterval(() => {
-            //     const select = document.querySelector(".goog-te-combo");
-            //     if (select) {
-            //         clearInterval(selectTryInterval);
-            //         select.value = userLang;
-            //         select.dispatchEvent(new Event("change"));
+            const selectTryInterval = setInterval(() => {
+                const select = document.querySelector(".goog-te-combo");
+                if (select) {
+                    clearInterval(selectTryInterval);
+                    select.value = userLang;
+                    select.dispatchEvent(new Event("change"));
 
-            //         waitForTranslation().then(async () => {
-            //             done = true;
-            //             clearTimeout(fallbackTimeout);
-            //             if (pageIsTranslated()) {
-            //                 cleanup();
-            //                 resolve(true);
-            //             } else {
-            //                 cleanup();
-            //                 resolve(false);
-            //             }
-            //         }).catch((err) => {
-            //             console.warn("waitForTranslationFinish failed:", err);
-            //             cleanup();
-            //             resolve(false);
-            //         });
-            //     }
-            // }, 150);
+                    waitForTranslation().then(async () => {
+                        done = true;
+                        clearTimeout(fallbackTimeout);
+                        if (pageIsTranslated()) {
+                            cleanup();
+                            resolve(true);
+                        } else {
+                            cleanup();
+                            resolve(false);
+                        }
+                    }).catch((err) => {
+                        console.warn("waitForTranslationFinish failed:", err);
+                        cleanup();
+                        resolve(false);
+                    });
+                }
+            }, 150);
 
-            // setTimeout(() => {
-            //     clearInterval(selectTryInterval);
-            // }, 9000);
-        // });
+            setTimeout(() => {
+                clearInterval(selectTryInterval);
+            }, 9000);
+        });
     }
 }
 
@@ -226,6 +226,13 @@ function forceReapplyTranslation(lang) {
  * Returns once GT widget is in DOM (or after a short timeout).
  */
 function loadGoogleTranslateAndApply(userLang) {
+    function cleanup() {
+        const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+        if (loader) loader.remove();
+        document.body.style.visibility = "visible";
+    }
+
     return new Promise((resolve) => {
         // if already loaded
         if (window.google && window.google.translate) {
@@ -248,6 +255,7 @@ function loadGoogleTranslateAndApply(userLang) {
                 }, "google_translate_element");
             } catch (err) {
                 // non-fatal
+                cleanup();
             }
             // try to set the combo as soon as it exists
             const tryCombo = setInterval(() => {
@@ -258,7 +266,8 @@ function loadGoogleTranslateAndApply(userLang) {
                         try {
                             select.value = userLang;
                             select.dispatchEvent(new Event("change"));
-                        } catch (e) { /* ignore */ }
+                        } catch (e) { 
+                        }
                     }
                     resolve();
                 }
