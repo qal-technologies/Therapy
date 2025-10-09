@@ -345,6 +345,7 @@ window.addEventListener('load', () => {
                     }
                     state.zoom = 1;
                     toggleSound();
+                    toggleFullscreen();
 
                     setupEventListeners();
                     applyLayout();
