@@ -1,7 +1,7 @@
 import handleAlert from "/js/general.js";
 import { handleAuthStateChange, getCurrentUser } from './auth.js';
 import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
-import { handleRedirect } from "./general.js";
+import { handleRedirect, translateElementFragment } from "./general.js";
 
 
 // Initialize both sections
@@ -416,14 +416,16 @@ Select Book Format
 
     if (user) {
       const thisUser = await getUserData(user.uid);
-      const details = document.querySelector("#preview .details");
       const copyBTN = document.querySelector("#preview button.get-copy");
+      const details = document.querySelector("#preview .details");
+      const userLang = navigator.language || navigator.languages[0];
 
       if (thisUser.bookPaid === true) {
+        copyBTN.innerHTML = "START READING NOW";
         details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
 
-        copyBTN.textContent = "START READING NOW";
         copyBTN.addEventListener("click", () => handleRedirect("/html/main/ViewBook.html"));
+        translateElementFragment(copyBTN, userLang);
       } else if (!thisUser || thisUser.bookPaid === false) {
         copyBTN.addEventListener("click", showDetailsModal);
       }

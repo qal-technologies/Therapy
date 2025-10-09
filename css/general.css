@@ -115,6 +115,7 @@ body {
   align-items: center;
   justify-content: center;
   flex: 1 !important;
+  opacity: 1;
 
 }
 
@@ -927,9 +928,9 @@ section#newsletter {
   display: block !important;
 }
 
-/* .skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame, .goog-logo-link, .goog-te-gadget span, #google_translate_element select {
+.skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame, .goog-logo-link, .goog-te-gadget span, #google_translate_element select {
   display: none !important;
-} */
+}
 
 body {
   top: 0 !important;

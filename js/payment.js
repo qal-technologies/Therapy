@@ -1,4 +1,4 @@
-import handleAlert, { handleRedirect } from './general.js';
+import handleAlert, {  handleRedirect, translateElementFragment } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
@@ -148,7 +148,7 @@ function handlePaymentMethodClick(option, state, elements) {
 async function handleProceedClick(e, state) {
     e.preventDefault();
 
-    const button =document.getElementById("proceed-button");
+    const button = document.getElementById("proceed-button");
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
@@ -174,7 +174,7 @@ async function handleProceedClick(e, state) {
 
 function handleMakePaymentClick(e, state, elements) {
     e.preventDefault();
- 
+
     const button = elements.makePaymentBtn;
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
@@ -446,6 +446,8 @@ function saveCodeToArray(state, input) {
 function addNewCode(state) {
     const inputDiv = document.querySelector(".steps .inputs");
     const inputsLength = inputDiv.childElementCount;
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+
 
     if (!inputDiv) return;
 
@@ -458,7 +460,9 @@ function addNewCode(state) {
     newInput.maxLength = "16";
     const btns = document.querySelector(".paysafe-section .continue-btn")
 
-    inputDiv.appendChild(newInput);
+    inputDiv.insertAdjacentElement("beforeend", newInput);
+    translateElementFragment(newInput, userLang);
+    
     newInput.addEventListener("input", () => {
         const toggle = saveCodeToArray(state, newInput)
 
@@ -767,7 +771,7 @@ async function handlePaySafe(state, elements) {
                 <div class="spinner-container"><div class="spinner"></div></div>
                 ${state.safeIndex !== 1 ? "Loading..." : "Verifying..."}
                 `;
-          
+
             setTimeout(async () => {
                 await handlePaySafe(state, elements)
             }, 2000);

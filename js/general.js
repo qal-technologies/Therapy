@@ -43,11 +43,11 @@ async function handleTranslateFirstLoad() {
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
     console.log(userLang);
 
-    
+
     //  Don't translate if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
-        if (cookieStore){
+        if (cookieStore) {
             cookieStore.delete();
         }
         return;
@@ -206,27 +206,171 @@ function initGoogleTranslate() {
 }
 
 /** Trigger translate via the GT combobox (best-effort) */
-function forceReapplyTranslation(lang) {
-    if (!lang || lang === "en") return;
-    const select = document.querySelector(".goog-te-combo");
-    if (select) {
-        try {
-            select.value = lang;
-            select.dispatchEvent(new Event("change"));
-            // also try to click "translate" button if UI present (best-effort)
-            const el = document.querySelector(".goog-te-menu-frame");
-            // no-op if not found
-        } catch (e) {
-            console.warn("forceReapplyTranslation error:", e);
-        }
+// export function forceReapplyTranslation(lang) {
+//     if (!lang || lang === "en") return;
+//     const iframe = document.querySelector("iframe.goog-te-banner-frame");
+//     if (!iframe && typeof google !== "undefined" && google.translate) {
+//         new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+//     } else {
+//         const select = document.querySelector(".goog-te-combo");
+//         if (select) {
+//             try {
+//                 select.value = lang;
+//                 select.dispatchEvent(new Event("change"));
+//                 // also try to click "translate" button if UI present (best-effort)
+//                 const el = document.querySelector(".goog-te-menu-frame");
+//                 // no-op if not found
+//             } catch (e) {
+//                 console.warn("forceReapplyTranslation error:", e);
+//             }
+//         }
+//     }
+// }
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+function waitForCombo(timeout = 100) {
+    return new Promise(resolve => {
+        const existing = document.querySelector('.goog-te-combo');
+        if (existing) return resolve(existing);
+
+        const obs = new MutationObserver(() => {
+            const el = document.querySelector('.goog-te-combo');
+            if (el) {
+                obs.disconnect();
+                resolve(el);
+            }
+        });
+        obs.observe(document.body, { childList: true, subtree: true });
+
+        setTimeout(() => {
+            obs.disconnect();
+            resolve(document.querySelector('.goog-te-combo'));
+        }, timeout);
+    });
+}
+
+function dispatchAllEvents(el) {
+    // trigger multiple events (bubbles:true)
+    ['mousedown', 'mouseup', 'click', 'input', 'change'].forEach(name => {
+        try { el.dispatchEvent(new Event(name, { bubbles: true })); } catch (e) { }
+    });
+
+    // also dispatch an InputEvent for some browsers
+    try { el.dispatchEvent(new InputEvent('input', { bubbles: true })); } catch (e) { }
+}
+
+function setSelectToValue(select, val) {
+    // try matching by option.value (case-insensitive)
+    const opts = Array.from(select.options || []);
+    const idx = opts.findIndex(o => (o.value && o.value.toLowerCase() === String(val).toLowerCase()));
+    if (idx >= 0) {
+        select.selectedIndex = idx;
+        select.options[idx].selected = true;
+        return true;
+    }
+
+    // fallback: try to set .value directly
+    try { select.value = val; } catch (e) { }
+    return select.value === val;
+}
+
+function setGoogleTransCookie(source, target) {
+    try {
+        const cookieValue = `/${source}/${target}`;
+        // regular and domain-prefixed attempt (some domains need leading dot)
+        document.cookie = `googtrans=${encodeURIComponent(cookieValue)};path=/;`;
+        document.cookie = `googtrans=${encodeURIComponent(cookieValue)};path=/;domain=${location.hostname};`;
+        document.cookie = `googtrans=${encodeURIComponent(cookieValue)};path=/;domain=.${location.hostname};`;
+    } catch (e) {
+        console.warn("Failed to set googtrans cookie:", e);
     }
 }
+
+
+/**
+ * Robust force reapply translation
+ * Returns: { success: boolean, method: 'select'|'cookie'|'none' }
+ */
+async function forceReapplyTranslation(lang, { source = 'en', timeout = 300 } = {}) {
+    if (!lang || lang === source) return { success: false, method: 'none', reason: 'no-lang-or-english' };
+
+    // Wait for the combo (the widget must be initialized)
+    const select = await waitForCombo(timeout);
+    if (!select) {
+        console.warn("forceReapplyTranslation: .goog-te-combo not found within timeout");
+        // fallback to cookie + reload
+        setGoogleTransCookie(source, lang);
+        // reload to let widget pick up cookie
+        // location.reload();
+        return { success: true, method: 'cookie' };
+    }
+
+    try {
+        const current = (select.value || '').toLowerCase();
+        const target = String(lang).toLowerCase();
+
+        // If already target, attempt a reset cycle
+        if (current === target) {
+            // Prefer an empty/blank option as reset; else pick any other option
+            const blankOpt = Array.from(select.options).find(o => o.value === '' || o.text.toLowerCase().includes('select'));
+            if (blankOpt) {
+                select.selectedIndex = Array.from(select.options).indexOf(blankOpt);
+                blankOpt.selected = true;
+                dispatchAllEvents(select);
+                await delay(30);
+                setSelectToValue(select, target);
+                dispatchAllEvents(select);
+                await delay(20); // let GTranslate do its work
+                return { success: true, method: 'select' };
+            }
+
+            // fallback: pick another non-target option, then back
+            const otherOpt = Array.from(select.options).find(o => o.value && o.value.toLowerCase() !== target);
+            if (otherOpt) {
+                select.selectedIndex = Array.from(select.options).indexOf(otherOpt);
+                otherOpt.selected = true;
+                dispatchAllEvents(select);
+                await delay(100);
+                setSelectToValue(select, target);
+                dispatchAllEvents(select);
+                await delay(10);
+                return { success: true, method: 'select' };
+            }
+
+            // no other option to swap to: use cookie
+            setGoogleTransCookie(source, lang);
+            // location.reload();
+            return { success: true, method: 'cookie' };
+        }
+
+        // If different, set to target directly
+        const ok = setSelectToValue(select, target);
+        if (ok) {
+            dispatchAllEvents(select);
+            await delay(600);
+            return { success: true, method: 'select' };
+        }
+
+        // If direct assignment failed, cookie fallback
+        setGoogleTransCookie(source, lang);
+        // location.reload();
+        return { success: true, method: 'cookie' };
+    } catch (e) {
+        console.warn("forceReapplyTranslation error:", e);
+        // fallback
+        setGoogleTransCookie(source, lang);
+        // location.reload();
+        return { success: true, method: 'cookie' };
+    }
+}
+
 
 /**
  * Load Google Translate script and attempt to auto-select userLang.
  * Returns once GT widget is in DOM (or after a short timeout).
  */
-function loadGoogleTranslateAndApply(userLang) {
+export function loadGoogleTranslateAndApply(userLang) {
     function cleanup() {
         const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
 
@@ -235,17 +379,13 @@ function loadGoogleTranslateAndApply(userLang) {
     }
 
     if (userLang == "en") cleanup();
-
     if (userLang !== "en") {
         return new Promise((resolve) => {
-            // if already loaded
-            if (window.google && window.google.translate) {
-                // attempt to set combo quickly
-                setTimeout(() => {
-                    try { forceReapplyTranslation(userLang); } catch (e) {/*noop*/ }
-                    resolve();
-                }, 0);
-                return;
+            if (!document.getElementById("google_translate_element")) {
+                const div = document.createElement("div");
+                div.id = "google_translate_element";
+                div.style.display = "none";
+                document.body.appendChild(div);
             }
 
             // initializer that the GT script will call (cb)
@@ -293,6 +433,7 @@ function loadGoogleTranslateAndApply(userLang) {
                 const gtScript = document.createElement("script");
                 gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
                 gtScript.async = true;
+
                 gtScript.onerror = () => {
                     console.warn("Google Translate script failed to load.");
                     resolve();
@@ -303,6 +444,117 @@ function loadGoogleTranslateAndApply(userLang) {
                 setTimeout(() => { initializer(); }, 0);
             }
         });
+    }
+}
+
+export async function translateElementFragment(el, lang) {
+    if (!window.google || !window.google.translate) {
+        console.warn("Google Translate not ready");
+        return;
+    }
+    // document.body.style.display = "none";
+
+    // Create a hidden sandbox container for translation
+    const sandbox = document.createElement("div");
+    sandbox.id = "sandbox_translate";
+    sandbox.style.cssText = "position:absolute;left:-9999px;top:-9999px;visibility:hidden;";
+    document.body.appendChild(sandbox);
+
+    // Clone the target element into sandbox
+    const clone = el.cloneNode(true);
+    sandbox.appendChild(clone);
+
+    // Force translate that sandbox content
+    const select = document.querySelector(".goog-te-combo");
+    if (!select) {
+        console.warn("No translate combo found");
+        return;
+    }
+
+    // select.value = lang;
+    select.dispatchEvent(new Event("change"));
+
+    // Wait for the translation to finish (give it time)
+
+    // Copy the translated innerHTML back to the real element
+    el.innerHTML = clone.innerHTML;
+    // setTimeout(() => {
+    //     document.body.style.display = "block";
+    // }, 100);
+    // Clean up sandbox
+    sandbox.remove();
+}
+
+function setupMutationObserver() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    const online = navigator.onLine;
+
+    // Skip if English or offline
+    if (userLang === "en" || !online) return;
+
+    let translateTimeout = null;
+
+    const observer = new MutationObserver(mutations => {
+        let shouldTranslate = false;
+
+        for (const mutation of mutations) {
+            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+                for (const node of mutation.addedNodes) {
+                    // Check text nodes
+                    if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
+                        // shouldTranslate = true;
+                        translateElementFragment(node, userLang);
+                    }
+
+
+                    // Check elements with text inside
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+                        let n;
+                        while ((n = walker.nextNode())) {
+                            if (n.nodeValue.trim().length > 0) {
+                                translateElementFragment(n, userLang);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (shouldTranslate) break;
+                }
+            }
+
+            if (shouldTranslate) break;
+        }
+
+        // Batch re-translate requests (avoid calling multiple times rapidly)
+        if (shouldTranslate) {
+            clearTimeout(translateTimeout);
+            translateTimeout = setTimeout(() => {
+                // forceReapplyTranslation(userLang);
+                console.log("🈶 New text detected — reapplying Google Translate...");
+            }, 800);
+        }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+export function reapplyGoogleTranslate() {
+    try {
+        const iframe = document.querySelector("iframe.goog-te-banner-frame");
+        if (!iframe && typeof google !== "undefined" && google.translate) {
+            new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
+        } else {
+            // Simulate language change to trigger re-translation
+            const select = document.querySelector(".goog-te-combo");
+            if (select && select.value) {
+                const event = new Event("change");
+                select.dispatchEvent(event);
+            }
+        }
+        console.log("reapplied!")
+    } catch (err) {
+        console.warn("Google Translate reapply failed:", err);
     }
 }
 
@@ -603,6 +855,7 @@ async function initializeApp() {
     await handleTranslateFirstLoad();
     setupCommonUI();
     setupEventListeners();
+    // setupMutationObserver();
     initTicker();
     runTicker();
     let loadUser;
