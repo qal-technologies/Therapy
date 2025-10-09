@@ -43,6 +43,7 @@ async function handleTranslateFirstLoad() {
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
     console.log(userLang);
 
+    
     //  Don't translate if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
