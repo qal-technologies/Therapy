@@ -125,3 +125,4 @@ function safeAlerts() {
 }
 
 safeAlerts();
+console.log("Added in there...");

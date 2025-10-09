@@ -44,10 +44,9 @@
   box-sizing: border-box;
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
   font-display: swap;
-  /* font-size: clamp(12px, 2vw, 16px); */
-  /* word-wrap: break-word;
+  word-wrap: break-word;
   overflow-wrap: break-word;
-  word-break: break-word; */
+  word-break: break-word;
   transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
@@ -115,7 +114,7 @@ body {
   visibility: hidden;
   align-items: center;
   justify-content: center;
-  flex: 1;
+  flex: 1 !important;
 
 }
 
@@ -447,6 +446,11 @@ span.bold {
   animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+button .spinner {
+  width: 19px;
+  height: 19px;
+}
+
 footer {
   width: 100%;
   padding-inline: 10%;
@@ -649,7 +653,7 @@ section#newsletter {
   overflow-y: auto;
   top: 0;
   left: 0;
-  z-index:999999999999999999;
+  z-index: 999999999999999999;
   display: none;
   flex: 1;
   background: rgba(0, 0, 0, 0.3);
@@ -841,42 +845,6 @@ section#newsletter {
   color: white;
   border-radius: 18px;
 }
-/* 
-.alert-message .goog-logo-link {
-  display: none !important;
-}
-
-.goog-te-gadget {
-  font-size: 10px !important;
-}
-
-.goog-te-gadget span {
-  display: none !important;
-}
-
-#google_translate_element select {
-  width: 90%;
-  max-width: 400px;
-  background: var(--link);
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  outline: none;
-}
-
-/* Dropdown options */
-/* #google_translate_element select option {
-  background: red;
-  color: black;
-}
-
-div.skiptranslate {
-  background: transparent;
-  display: none !important;
-}  */
 
 * button {
   -webkit-appearance: none;
@@ -929,7 +897,6 @@ div.skiptranslate {
 @keyframes loading-spin {
   0% {
     transform: rotate(0deg) scale(30%);
-
     border-top: 10px dotted var(--blue);
     border-bottom: 10px dotted var(--highlight);
     border-right: 10px dotted var(--link);
@@ -939,7 +906,6 @@ div.skiptranslate {
 
   100% {
     transform: rotate(360deg) scale(100%);
-
     border-top: 10px dotted var(--highlight);
     border-bottom: 10px dotted var(--link);
     border-right: 10px dotted var(--mainText);
@@ -952,20 +918,21 @@ div.skiptranslate {
   fill: var(--primary) !important;
 }
 
-section .player button svg {
+.player button svg {
   font-size: 28px;
   width: 28px;
   height: 28px;
   fill: white !important;
   color: white !important;
+  display: block !important;
 }
 
-.skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame {
+/* .skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame, .goog-logo-link, .goog-te-gadget span, #google_translate_element select {
   display: none !important;
-}
+} */
 
 body {
-  top: 0px !important;
+  top: 0 !important;
 }
 
 span, i {
@@ -980,4 +947,18 @@ span, i {
 
 #goog-gt-tt {
   display: none !important;
+}
+
+.ticker-container.animate .ticker {
+  animation: slide 30s linear infinite;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-1 * var(--ticker-width)));
+  }
 }

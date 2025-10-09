@@ -11,10 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return re.test(email.trim());
     }
 
+    (function handleStroll() {
+        if (emailInput) {
+            emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            emailInput.focus();
+        }
+    });
+
     // Enable button only if email is typed
     emailInput.addEventListener("input", (e) => {
         const value = e.target.value.trim();
-            const valid = validateEmailValue(value);
+        const valid = validateEmailValue(value);
         if (errorMsg || valid) {
             errorMsg.style.display = "none";
             emailInput.style.borderColor = "var(--link)";
@@ -70,8 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 // );
 
                 handleAlert(`<p>On free trial, you can only reset your password from the Admin dashboard. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{
-                    text: "Close", onClick: "closeAlert", loading:true, }]);
-                    
+                    text: "Close", onClick: "closeAlert", loading: true,
+                }]);
+
             } catch (error) {
 
                 console.error("Password reset error:", error);

@@ -38,9 +38,6 @@ function saveTranslationsToSession() {
 }
 
 async function handleTranslateFirstLoad() {
-    // First, assign the stable IDs to all elements. This happens on every page load.
-    // assignTranslationIds();
-
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
@@ -49,6 +46,9 @@ async function handleTranslateFirstLoad() {
     //  Don't translate if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
+        if (cookieStore){
+            cookieStore.delete();
+        }
         return;
     }
 
@@ -128,11 +128,11 @@ async function handleTranslateFirstLoad() {
                 return;
             }
 
-        setTimeout(() => {
-            cleanup();
-        }, 2000);
+            setTimeout(() => {
+                cleanup();
+            }, 2000);
 
-            
+
 
             const selectTryInterval = setInterval(() => {
                 const select = document.querySelector(".goog-te-combo");
@@ -233,137 +233,76 @@ function loadGoogleTranslateAndApply(userLang) {
         document.body.style.visibility = "visible";
     }
 
-    return new Promise((resolve) => {
-        // if already loaded
-        if (window.google && window.google.translate) {
-            // attempt to set combo quickly
-            setTimeout(() => {
-                try { forceReapplyTranslation(userLang); } catch (e) {/*noop*/ }
-                resolve();
-            }, 0);
-            return;
-        }
+    if (userLang == "en") cleanup();
 
-        // initializer that the GT script will call (cb)
-        function initializer() {
-            try {
-                // initialize widget (invisible container expected in page)
-                // Note: we don't rely on element ID; GT creates iframe etc.
-                new google.translate.TranslateElement({
-                    pageLanguage: "en",
-                    autoDisplay: false
-                }, "google_translate_element");
-            } catch (err) {
-                // non-fatal
-                cleanup();
-            }
-            // try to set the combo as soon as it exists
-            const tryCombo = setInterval(() => {
-                const select = document.querySelector(".goog-te-combo");
-                if (select) {
-                    clearInterval(tryCombo);
-                    if (userLang && userLang !== "en") {
-                        try {
-                            select.value = userLang;
-                            select.dispatchEvent(new Event("change"));
-                        } catch (e) { 
-                        }
-                    }
+    if (userLang !== "en") {
+        return new Promise((resolve) => {
+            // if already loaded
+            if (window.google && window.google.translate) {
+                // attempt to set combo quickly
+                setTimeout(() => {
+                    try { forceReapplyTranslation(userLang); } catch (e) {/*noop*/ }
                     resolve();
+                }, 0);
+                return;
+            }
+
+            // initializer that the GT script will call (cb)
+            function initializer() {
+                try {
+                    // initialize widget (invisible container expected in page)
+                    // Note: we don't rely on element ID; GT creates iframe etc.
+                    new google.translate.TranslateElement({
+                        pageLanguage: "en",
+                        autoDisplay: false
+                    }, "google_translate_element");
+                } catch (err) {
+                    // non-fatal
+                    cleanup();
                 }
-            }, 120);
+                // try to set the combo as soon as it exists
+                const tryCombo = setInterval(() => {
+                    const select = document.querySelector(".goog-te-combo");
+                    if (select) {
+                        clearInterval(tryCombo);
+                        if (userLang && userLang !== "en") {
+                            try {
+                                select.value = userLang;
+                                select.dispatchEvent(new Event("change"));
+                            } catch (e) {
+                            }
+                        }
+                        resolve();
+                    }
+                }, 120);
 
-            // fallback resolve after a short delay (we'll still let GT run)
-            setTimeout(() => {
-                try { clearInterval(tryCombo); } catch (e) { }
-                resolve();
-            }, 1500);
-        }
+                // fallback resolve after a short delay (we'll still let GT run)
+                setTimeout(() => {
+                    try { clearInterval(tryCombo); } catch (e) { }
+                    resolve();
+                }, 1500);
+            }
 
-        // attach initializer as expected callback name
-        window.googleTranslateElementInit = initializer;
-        window.initTranslate = initializer; // support multiple cb names
+            // attach initializer as expected callback name
+            window.googleTranslateElementInit = initializer;
+            window.initTranslate = initializer; // support multiple cb names
 
-        // Append script if not already present
-        if (!document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) {
-            const gtScript = document.createElement("script");
-            gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-            gtScript.async = true;
-            gtScript.onerror = () => {
-                console.warn("Google Translate script failed to load.");
-                resolve();
-            };
-            document.head.appendChild(gtScript);
-        } else {
-            // already present -> call initializer if possible
-            setTimeout(() => { initializer(); }, 0);
-        }
-    });
-}
-
-function initGoogleTranslateWidget() {
-    // 1. Ensure translate container exists
-    let translateContainer = document.getElementById("google_translate_element");
-    if (!translateContainer) {
-        translateContainer = document.createElement("div");
-        translateContainer.id = "google_translate_element";
-        // Optional: append where you want the dropdown to appear
-        // Example: top-right corner of body
-        Object.assign(translateContainer.style, {
-            position: "fixed",
-            top: "10px",
-            right: "10px",
-            zIndex: "9999"
+            // Append script if not already present
+            if (!document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) {
+                const gtScript = document.createElement("script");
+                gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+                gtScript.async = true;
+                gtScript.onerror = () => {
+                    console.warn("Google Translate script failed to load.");
+                    resolve();
+                };
+                document.head.appendChild(gtScript);
+            } else {
+                // already present -> call initializer if possible
+                setTimeout(() => { initializer(); }, 0);
+            }
         });
-        document.body.appendChild(translateContainer);
     }
-
-    // if (!document.querySelector('meta[name="google"][content="notranslate"]')) {
-        const meta = document.createElement("meta");
-        meta.name = "google";
-        meta.content = "translate";
-        document.head.appendChild(meta);
-    // }
-
-    if (document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) return;
-
-
-    // 2. Avoid loading the script multiple times
-    if (document.getElementById("google-translate-script")) {
-        console.warn("Google Translate script already loaded.");
-        return;
-    }
-
-    // 3. Create and load the script
-    const gtScript = document.createElement("script");
-    gtScript.id = "google-translate-script";
-    gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    gtScript.defer = true;
-
-    gtScript.onload = () => {
-        console.log("Google Translate script loaded successfully.");
-    };
-
-    gtScript.onerror = () => {
-        console.error("Failed to load Google Translate script.");
-    };
-
-    document.head.appendChild(gtScript);
-
-    // 4. Define callback before script executes
-    window.googleTranslateElementInit = function () {
-        try {
-            new google.translate.TranslateElement({
-                pageLanguage: "en",
-                includedLanguages: "fr,es,de,it",
-                autoDisplay: false
-            }, "google_translate_element");
-            console.log("Google Translate widget initialized.");
-        } catch (e) {
-            console.error("Google Translate initialization error:", e);
-        }
-    };
-
 }
 
 function handleInputFocusFix() {
@@ -387,8 +326,10 @@ function handleInputFocusFix() {
 function setupCommonUI() {
     const alertMessage = document.querySelector(".alert-message");
     if (alertMessage) {
-        alertMessage.innerHTML = "";
-        alertMessage.style.display = "none";
+        // alertMessage.innerHTML = "";
+        // alertMessage.style.display = "none";
+
+        alertMessage.remove();
     }
 
     if (!document.querySelector("link[rel='preload'][as='font']")) {
@@ -491,32 +432,38 @@ function initTicker() {
     ticker.insertAdjacentHTML('beforeend', ticker.innerHTML);
 
     // wait for layout to finish before measuring widths
-    requestAnimationFrame(() => {
-        const items = ticker.querySelectorAll('.ticker-item');
-        if (!items.length) {
-            console.warn('initTicker: no .ticker-item found after render');
-            return;
-        }
+    const items = ticker.querySelectorAll('.ticker-item');
+    if (!items.length) {
+        console.warn('initTicker: no .ticker-item found after render');
+        return;
+    }
 
-        // compute width of a single set (first half)
-        const half = items.length / 2;
-        let singleWidth = 0;
-        for (let i = 0; i < half; i++) {
-            const w = items[i].offsetWidth;
-            const style = getComputedStyle(items[i]);
-            const marginRight = parseFloat(style.marginRight) || 0;
-            singleWidth += w + marginRight;
-        }
+    // compute width of a single set (first half)
+    const half = items.length / 2;
+    let singleWidth = 0;
+    for (let i = 0; i < half; i++) {
+        const w = items[i].offsetWidth;
+        const style = getComputedStyle(items[i]);
+        const marginRight = parseFloat(style.marginRight) || 0;
+        singleWidth += w + marginRight;
+    }
 
-        if (singleWidth <= 0) {
-            console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
-            return;
-        }
+    if (singleWidth <= 0) {
+        console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
+        return;
+    }
 
-        // Set CSS variable for animation
-        ticker.style.setProperty('--ticker-width', `${singleWidth}px`);
-        container.classList.add('animate');
-    });
+    // Set CSS variable for animation
+    ticker.style.setProperty('--ticker-width', `${singleWidth}px`);
+    container.classList.add('animate');
+
+    if (!window.__tickerLoadAttached) {
+        window.addEventListener('load', () => {
+            // small delay to allow layout to settle
+            setTimeout(initTicker, 800);
+        });
+        window.__tickerLoadAttached = true;
+    }
 
     // attach a single resize listener
     if (!window.__tickerResizeAttached) {
@@ -531,15 +478,14 @@ function initTicker() {
 function runTicker() {
     const t = document.getElementById('ticker');
     if (t) {
+        initTicker();
         let prev = getComputedStyle(t).transform;
         setInterval(() => {
             const cur = getComputedStyle(t).transform;
             if (cur !== prev) {
                 prev = cur;
-                initTicker();
             }
         }, 500);
-
     }
 }
 
@@ -661,11 +607,11 @@ async function initializeApp() {
     runTicker();
     let loadUser;
 
-    // if ("serviceWorker" in navigator) {
-    //     navigator.serviceWorker.register("/service-worker.js").catch(error => {
-    //         console.error("Service Worker registration failed:", error);
-    //     });
-    // }
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service-worker.js").catch(error => {
+            console.error("Service Worker registration failed:", error);
+        });
+    }
 
     handleInputFocusFix();
 
@@ -912,18 +858,22 @@ async function handleAlert(
     defaultFunction = () => { },
 ) {
     const parent = document.querySelector(".alert-message");
-    if (!parent) return;
+    if (!parent) {
+        let newParent = document.createElement("div");
+        newParent.classList.add("alert-message");
+        document.body.insertAdjacentElement("afterbegin", newParent);
+    };
 
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
         if (!base) return;
 
         const closeAlert = () => {
+            const parent = document.querySelector(".alert-message");
             if (base) base.classList.add("zoom-out");
-            parent.classList.add("fadeOut");
+            parent?.classList.add("fadeOut");
             timer = setTimeout(() => {
-                parent.style.display = "none";
-                parent.innerHTML = "";
+                parent?.remove();
                 defaultFunction();
             }, 1200);
         };

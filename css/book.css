@@ -100,7 +100,8 @@ header.header p.intro {
 }
 
 .player svg {
-  fill: var(--primary);
+  fill: white !important;
+  color: white !important;
 }
 
 
@@ -584,12 +585,9 @@ div.privacy-policy {
 }
 
 div.privacy-policy input[type="checkbox"] {
-  /* -webkit-appearance: none;
-  appearance: none; */
   width: 18px !important;
   height: 20px !important;
   border: 2px solid var(--link);
-  /* border-radius: 4px; */
   background: none;
   display: inline-block;
   vertical-align: middle;
@@ -667,4 +665,13 @@ div.privacy-policy a {
   50% {
     transform: translateY(-20px);
   }
+}
+
+.player button svg {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  fill: white !important;
+  color: white !important;
+  display: block !important;
 }

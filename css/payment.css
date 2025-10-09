@@ -273,16 +273,14 @@ h2 {
     border: none;
     border-radius: 16px;
     padding: 10px;
-    width: 90%;
-    max-width: 300px;
+    width: 92%;
+    max-width: 350px;
     align-self: center;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.7px;
     cursor: pointer;
     transition: background-color 0.2s;
-
-
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -346,7 +344,6 @@ h2 {
 }
 
 button.continue-btn:disabled {
-
     background-color: #cccccc;
     cursor: not-allowed;
 }

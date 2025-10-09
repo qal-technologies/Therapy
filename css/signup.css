@@ -275,11 +275,11 @@ div#checkout {
 div#checkout button {
   background-color: var(--link);
   padding: 10px;
-  width: 60%;
-  max-width: 200px;
+  width: 65%;
+  max-width: 300px;
   padding-inline: 15px;
   justify-content: space-between;
-  border-radius: 20px;
+  border-radius: 26px;
   color: white !important;
   gap: 10px;
   border: none;
@@ -424,6 +424,8 @@ div.privacy-policy a {
 .container.forget {
   max-width: 800px;
   place-content: center;
+  padding-bottom: 10px;
+  margin-bottom: 12vh;
   text-align: center;
 }
 

@@ -185,9 +185,9 @@ window.addEventListener('load', () => {
 
 	function handleAudio(lang) {
 		if (audioMessage && audioMessage2 && audioMessage3) {
-			audioMessage.src = HOME_AUDIO_SRC.banner[lang] || "${HOME_BASE_PATH.audio}/home-english.mp3";
-			audioMessage2.src = HOME_AUDIO_SRC.session[lang] || "${HOME_BASE_PATH.audio}/session-english.mp3";
-			audioMessage3.src = HOME_AUDIO_SRC.book[lang] || "${HOME_BASE_PATH.audio}/book-english.mp3";
+			audioMessage.src = HOME_AUDIO_SRC.banner[lang] || `${HOME_BASE_PATH.audio}/home-english.mp3`;
+			audioMessage2.src = HOME_AUDIO_SRC.session[lang] || `${HOME_BASE_PATH.audio}/session-english.mp3`;
+			audioMessage3.src = HOME_AUDIO_SRC.book[lang] || `${HOME_BASE_PATH.audio}/book-english.mp3`;
 		}
 
 		if (playBTN && audioMessage) {
@@ -250,7 +250,6 @@ window.addEventListener('load', () => {
 
 		const listenBTN = document.querySelector("#sessions .player button#play2");
 		if (listenBTN && audioMessage2) {
-			console.log("present");
 			listenBTN.addEventListener('click', () => {
 				audioMessage2.currentTime = 0;
 				if (!audioMessage.paused) {

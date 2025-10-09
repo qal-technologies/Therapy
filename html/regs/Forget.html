@@ -20,36 +20,37 @@
 <body class="fadeIn">
     <div class="alert-message">
     </div>
-    
-    <header class="header forgot fadeIn">
-        <h1>Reset Password</h1>
-        <p>Enter your email to reset your password. <br/> We'll send you a link to the email you'll provide.</p>
-    </header>
 
-    <div class="container forget moveUpNfadeIn">
-        <div class="form-container active" id="forgot-form">
-            <form class="bottom">
-                <div class="form-group">
-                    <label for="forgot-email">Email *</label>
-                    <input type="email" id="forgot-email" required />
-                    <p class="password-error email-error">...</p>
+    <div id="body">
+        <header class="header forgot fadeIn">
+            <h1>Reset Password</h1>
+            <p>Enter your email to reset your password. <br /> We'll send you a link to the email you'll provide.</p>
+        </header>
+
+        <div class="container forget moveUpNfadeIn">
+            <div class="form-container active" id="forgot-form">
+                <form class="bottom">
+                    <div class="form-group">
+                        <label for="forgot-email">Email *</label>
+                        <input type="email" id="forgot-email" required />
+                        <p class="password-error email-error">...</p>
+                    </div>
+
+                    <div id="checkout">
+                        <button id="forgot-button" type="button" title="Reset Password" disabled>
+                            <p class="reset-text">RESET PASSWORD</p>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="form-group forgot center">
+                    <a class="back-to-login" href="/html/regs/Signup.html?type=login">
+                        <i class="bi bi-arrow-left"></i> Back to Login
+                    </a>
                 </div>
-
-                <div id="checkout">
-                    <button id="forgot-button" type="button" title="Reset Password" disabled>
-                        <p class="reset-text">RESET PASSWORD</p>
-                    </button>
-                </div>
-            </form>
-
-            <div class="form-group forgot center">
-                <a class="back-to-login" href="/html/regs/Signup.html?type=login">
-                    <i class="bi bi-arrow-left"></i> Back to Login
-                </a>
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

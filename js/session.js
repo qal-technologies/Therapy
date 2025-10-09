@@ -122,7 +122,7 @@ const audioSrc = {
 
   const audioMessage2 = document.querySelector('#sessions audio#audio-message2');
 
-  audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+  audioMessage2.src = audioSrc.session[lang] || `${BASE_PATHS.audio}/session-english.mp3`;
 
   sessions.innerHTML += sessionTypes.map((session) => {
     const details = {

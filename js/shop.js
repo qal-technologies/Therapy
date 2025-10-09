@@ -30,7 +30,7 @@ window.addEventListener('load', () => {
 
     if (!shopAudio || homePage) return;
 
-    shopAudio.src = audioSrc.session[lang] || "/src/audio/book-audio.mp3";
+    shopAudio.src = audioSrc.session[lang] || `${BASE_PATHS.audio}/book-english.mp3`;
 
     const shopPlayBTN = document.querySelector(".preview-banner button#preview-play");
 
@@ -121,7 +121,7 @@ window.addEventListener('load', () => {
     const bookId = e.target.closest(".sub-preview").dataset.id;
     const book = BOOK_COLLECTION.find(b => b.id == bookId);
 
-    modal.style.display = "block";
+    modal.style.display = "grid";
     renderBookCollection(book);
 
     setTimeout(() => {

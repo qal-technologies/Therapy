@@ -372,7 +372,7 @@ If you’re unable to donate, please consider sharing this page and keeping Bris
 function handleAudio(lang) {
   const audioMessage = document.querySelector('.banner .message audio#audio-message');
 
-  audioMessage.src = audioSrc.session[lang] || "/src/audio/donation-audio.mp3";
+  audioMessage.src = audioSrc.session[lang] || `${BASE_PATHS.audio}/donation-english.mp3`;
 
   const listenBTN = document.querySelector(".banner .message button#play");
 

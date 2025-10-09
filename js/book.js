@@ -244,12 +244,12 @@ window.addEventListener('load', async () => {
         DOM.questionsContainer.appendChild(completionDiv);
         setTimeout(() => {
             if (DOM.price && DOM.formGroup) {
-                DOM.price.scrollIntoView({
+                DOM.proceed.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
                 });
             }
-        }, 1700);
+        }, 1400);
         state.completed = true;
         DOM.acceptRadio.disabled = false;
         DOM.proceed.disabled = !DOM.acceptRadio.checked;
@@ -381,7 +381,7 @@ window.addEventListener('load', async () => {
                     }
                     const audioMessage2 = document.getElementById('audio-message2');
                     if (audioMessage2) {
-                        audioMessage2.src = audioSrc.session[lang] || "/src/audio/AUD-20250424-WA0165.mp3";
+                        audioMessage2.src = audioSrc.session[lang] || `${ BASE_PATHS.audio }/session-english.mp3`;
                         const listenBTN = document.getElementById('play2');
                         if (listenBTN) {
                             listenBTN.addEventListener('click', (e) => {
