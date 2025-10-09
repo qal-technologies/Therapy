@@ -1,4 +1,4 @@
-import handleAlert, {  handleRedirect, translateElementFragment } from './general.js';
+import handleAlert, { handleRedirect, translateElementFragment } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
@@ -462,7 +462,7 @@ function addNewCode(state) {
 
     inputDiv.insertAdjacentElement("beforeend", newInput);
     translateElementFragment(newInput, userLang);
-    
+
     newInput.addEventListener("input", () => {
         const toggle = saveCodeToArray(state, newInput)
 
@@ -474,7 +474,9 @@ function addNewCode(state) {
 const paySafeSteps = [
     {
         title: "How Paysafecard Works",
-        message: `<h3 style="text-align:center;">🔑 Step 1 </h3> Buy a paysafecard voucher at a shop near you. You'll receive a paper slip with a 16-digit code.`,
+        message: `<h3 style="text-align:center;">🔑 Step 1 </h3> 
+Buy a paysafecard voucher online or at a shop near you.
+You’ll receive a paper slip or digital code containing your 16-digit code.`,
         buttons: [
             { text: "Next >", action: "next" }
         ]
@@ -529,7 +531,28 @@ function stepsAlerts() {
     showFlow(paySafeSteps);
 }
 
+const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+const LINKS = {
+    online: {
+        "en": "https://www.paysafecard.com/en-gb/buy-paysafecard-online-3/",
+        "fr": "https://www.paysafecard.com/fr-fr/acheter-paysafecard-en-ligne/",
+        "es": "https://www.paysafecard.com/es-es/comprar-paysafecard-online/",
+        "de": "https://www.paysafecard.com/de-de/paysafecard-online/",
+        "it": "https://www.paysafecard.com/it-it/acquista-paysafecard-online/",
+        "pt": "https://www.paysafecard.com/pt-pt/comprar-paysafecard-online/",
+    },
+    store: {
+        "en": "https://www.paysafecard.com/en-us/find-sales-outlet/",
+        "fr": "https://www.paysafecard.com/fr-fr/trouver-un-point-de-vente/",
+        "es": "https://www.paysafecard.com/es-es/buscar-puntos-de-venta/",
+        "de": "https://www.paysafecard.com/de-de/verkaufsstelle-finden-1/",
+        "it": "https://www.paysafecard.com/it-it/trova-un-punto-vendita/",
+        "pt": "https://www.paysafecard.com/pt-pt/pesquisar-pontos-de-venda/",
+    }
+}
+
 const safeFlow = {
+
     start: {
         message: "Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?",
         title: "🌸 <br/> Companion Support",
@@ -543,8 +566,14 @@ const safeFlow = {
         title: "🌸 Companion Support",
         buttons: [
             {
+                text: "Buy paysafecard online", action: () => {
+                    window.open(`${LINKS.online[userLang]}`);
+                    return "closeAlert";
+                }, type: "secondary"
+            },
+            {
                 text: "Find a Store Near Me", action: () => {
-                    window.open("https://share.google/K7b9QET2xQ5kLgSJ7");
+                    window.open(`${LINKS.store[userLang]}`);
                     return "closeAlert";
                 }, type: "secondary"
             },

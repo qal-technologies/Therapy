@@ -1,4 +1,4 @@
-import handleAlert, { handleRedirect } from './general.js';
+import handleAlert, { handleRedirect, translateElementFragment } from './general.js';
 import { resetPassword } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -102,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 emailInput.disabled = false;
                 resetButton.disabled = false;
                 resetButton.innerHTML = `<p class="reset-text">RESET PASSWORD</p>`;
+                    translateElementFragment(resetButton, "")
             }
         }
     });
