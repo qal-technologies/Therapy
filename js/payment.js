@@ -148,7 +148,7 @@ function handlePaymentMethodClick(option, state, elements) {
 async function handleProceedClick(e, state) {
     e.preventDefault();
 
-    const button = e.target;
+    const button =document.getElementById("proceed-button");
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
@@ -157,7 +157,6 @@ async function handleProceedClick(e, state) {
             value ?
                 setTimeout(() => {
                     document.getElementById("payment-details")?.classList.remove("active");
-
                     document.getElementById("payment-method-section")?.classList.add("active");
 
                     button.disabled = false;
@@ -175,9 +174,10 @@ async function handleProceedClick(e, state) {
 
 function handleMakePaymentClick(e, state, elements) {
     e.preventDefault();
-    const button = e.target;
+ 
+    const button = elements.makePaymentBtn;
     button.disabled = true;
-    button.innerHTML = ` <div class="spinner-container"><div class="spinner"></div></div> Processing...`;
+    button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
     setTimeout(async () => {
         document

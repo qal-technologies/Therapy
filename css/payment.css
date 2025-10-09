@@ -343,9 +343,11 @@ h2 {
     margin-bottom: 30px;
 }
 
-button.continue-btn:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
+.card-section .continue-btn:disabled, .util-btn:disabled, .continue-btn:disabled {
+    display: flex;
+    flex-direction: row !important;
+    background-color: #cccccc !important;
+    cursor: not-allowed !important;
 }
 
 .currency-icon, .payment-icon {
