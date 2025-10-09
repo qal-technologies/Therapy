@@ -324,13 +324,13 @@ function handleInputFocusFix() {
 }
 
 function setupCommonUI() {
-    const alertMessage = document.querySelector(".alert-message");
-    if (alertMessage) {
-        // alertMessage.innerHTML = "";
-        // alertMessage.style.display = "none";
+    // const alertMessage = document.querySelector(".alert-message");
+    // if (alertMessage && alertMessage.innerHTML !== "") {
+    //     // alertMessage.innerHTML = "";
+    //     // alertMessage.style.display = "none";
 
-        alertMessage.remove();
-    }
+    //     alertMessage.remove();
+    // }
 
     if (!document.querySelector("link[rel='preload'][as='font']")) {
         const link = document.createElement("link");
@@ -532,7 +532,6 @@ function setupAuthUI(user) {
         });
     }
 }
-
 
 async function setupNewsletter(user) {
     const emailInput = document.querySelector("input#subscribe-email");
