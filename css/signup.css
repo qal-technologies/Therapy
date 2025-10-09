@@ -453,3 +453,13 @@ div.privacy-policy a {
 #forgot-form .bottom a {
   text-align: center;
 }
+
+#forgot-form button.back-to-login{
+  background: none;
+  color: var(--link);
+  margin-top: 4px;
+  gap: 4px;
+  font-weight: bolder;
+  text-decoration: underline;
+  cursor: pointer;
+}

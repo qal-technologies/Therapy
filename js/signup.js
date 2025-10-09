@@ -212,13 +212,16 @@ window.addEventListener('load', async () => {
 
   function handleStroll() {
     const inputs = document.querySelectorAll(".form-group input");
-    if (inputs && inputs[0]) inputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (inputs && inputs[0]) {
+      inputs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      inputs[0].focus();
+    }
   }
 
   function updateFormUI() {
     const container = DOM.formSection();
     if (!container) return;
-    document.activeElement.blur();
+    document.activeElement?.blur();
   
     container.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
     attachFormListeners();

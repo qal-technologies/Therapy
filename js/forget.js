@@ -1,22 +1,25 @@
-import handleAlert from './general.js';
+import handleAlert, { handleRedirect } from './general.js';
 import { resetPassword } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("forgot-email");
     const resetButton = document.getElementById("forgot-button");
     const errorMsg = document.querySelector("p.email-error");
+    const backBTN = document.querySelector("button.back-to-login");
 
     function validateEmailValue(email) {
         const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return re.test(email.trim());
     }
 
-    (function handleStroll() {
+    function handleStroll() {
         if (emailInput) {
-            emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
             emailInput.focus();
+            emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-    });
+    }
+
+    handleStroll();
 
     // Enable button only if email is typed
     emailInput.addEventListener("input", (e) => {
@@ -40,6 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("user entering something....")
     });
 
+    backBTN.addEventListener("click", () => {
+        window.location.replace("/html/regs/Signup.html?type=login");
+    })
 
     resetButton.addEventListener("click", async (e) => {
         e.preventDefault();
@@ -99,4 +105,5 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+
 });

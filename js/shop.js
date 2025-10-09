@@ -24,6 +24,15 @@ window.addEventListener('load', () => {
     }
   };
 
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+
   function handleAudio(lang) {
     const shopAudio = document.querySelector('.preview-banner audio#book-audio-message');
     const homePage = window.location.pathname.toLowerCase().includes("home");
@@ -107,6 +116,7 @@ window.addEventListener('load', () => {
   function removeDetailsModal() {
     const modal = document.querySelector("#details-div");
 
+    toggleFullscreen();
     if (modal) modal.classList.toggle("fadeOut");
   };
 
@@ -117,6 +127,8 @@ window.addEventListener('load', () => {
 
     const contains = modal.classList.contains("fadeOut");
     contains && modal.classList.remove("fadeOut");
+
+    toggleFullscreen();
 
     const bookId = e.target.closest(".sub-preview").dataset.id;
     const book = BOOK_COLLECTION.find(b => b.id == bookId);
@@ -198,6 +210,7 @@ window.addEventListener('load', () => {
     })
   }
 
+
   async function hardCopy(book, user) {
     const language = navigator.language;
     const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
@@ -216,7 +229,7 @@ window.addEventListener('load', () => {
     try {
       await createNewCartItem(user.uid, itemData);
       setTimeout(() => {
-        window.location.href = '/html/main/cart.html';
+        handleRedirect('/html/main/cart.html');
       }, 200);
     } catch (error) {
       console.log(`Cart add copy because: ${error}`);
@@ -293,7 +306,7 @@ Select Book Format
     document.querySelectorAll('input[type="radio"]')
       .forEach(el => el.addEventListener("click", () => {
         if (!user) {
-          handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; }, type: "secondary" }]);
+          handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { handleRedirect("/html/regs/Signup.html?type=login"); } }, { text: "Register", onClick: () => { handleRedirect("/html/regs/Signup.html?type=register"); }, type: "secondary" }]);
           return;
         }
       }));
@@ -302,9 +315,14 @@ Select Book Format
       .forEach(el => el.addEventListener("click", async () => {
         const user = await getCurrentUser();
         if (user) {
-          handleAlert(`<p>The printed edition of <b>${bookName}</b> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.</p>`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{ text: "Get the eBook", onClick: async () => await hardCopy(book, user) }, { text: "Close", onClick: "closeAlert", type: "secondary" }]);
+          handleAlert(`<p>The printed edition of <b>${bookName}</b> has now found its place in the hands of our cherished first readers. Every copy is gone, making this edition a rare and treasured piece that will never return to print. <br/><br/> What remains is the exclusive digital edition, created with the same care and intention, designed to accompany you wherever you are, and to be yours instantly.</p>`, "blur", true, "📕 <br/> Hardcopy Permanently Sold Out", true, [{
+            text: "Get the eBook", onClick: async () => {
+              await hardCopy(book, user);
+              return "closeAlert";
+            }
+          }, { text: "Close", onClick: "closeAlert", type: "secondary" }]);
         } else {
-          handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { window.location.href = "/html/regs/Signup.html?type=login"; } }, { text: "Register", onClick: () => { window.location.href = "/html/regs/Signup.html?type=register"; }, type: "secondary" }]);
+          handleAlert("To select this book, please log in or create an account. This keep your purchase safe and lets you come back anytime to continue your journey.", "blur", true, "🛒 <br/> Login or Register", true, [{ text: "Log in", onClick: () => { handleRedirect("/html/regs/Signup.html?type=login"); } }, { text: "Register", onClick: () => { handleRedirect("/html/regs/Signup.html?type=register"); }, type: "secondary" }]);
           return;
         }
       }));
@@ -369,7 +387,7 @@ Select Book Format
 
       renderBookCollection(book, user);
       setTimeout(() => {
-        window.location.href = '/html/main/cart.html';
+        handleRedirect('/html/main/cart.html');
       }, 2000);
     } catch (error) {
       console.error("Error adding to cart:", error);
