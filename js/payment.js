@@ -567,13 +567,13 @@ const safeFlow = {
         buttons: [
             {
                 text: "Buy paysafecard online", action: () => {
-                    window.open(`${LINKS.online[userLang]}`);
+                    window.open(`${LINKS.online[userLang] || LINKS.online.en}`);
                     return "closeAlert";
                 }, type: "secondary"
             },
             {
                 text: "Find a Store Near Me", action: () => {
-                    window.open(`${LINKS.store[userLang]}`);
+                    window.open(`${LINKS.store[userLang] || LINKS.store.en}`);
                     return "closeAlert";
                 }, type: "secondary"
             },
