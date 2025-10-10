@@ -116,7 +116,7 @@ window.addEventListener('load', () => {
   function removeDetailsModal() {
     const modal = document.querySelector("#details-div");
 
-    toggleFullscreen();
+    // toggleFullscreen();
     if (modal) modal.classList.toggle("fadeOut");
   };
 
@@ -128,7 +128,7 @@ window.addEventListener('load', () => {
     const contains = modal.classList.contains("fadeOut");
     contains && modal.classList.remove("fadeOut");
 
-    toggleFullscreen();
+    // toggleFullscreen();
 
     const bookId = e.target.closest(".sub-preview").dataset.id;
     const book = BOOK_COLLECTION.find(b => b.id == bookId);

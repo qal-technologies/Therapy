@@ -5,6 +5,15 @@ let show = false;
 let header;
 let menu;
 
+const TRANSLATION_SESSION_KEY_PREFIX = "translated:";
+const TRANSLATE_REINIT_DELAY = 400;
+
+let lastTranslatedPath = null;
+
+function sessionKeyForPath() {
+    return TRANSLATION_SESSION_KEY_PREFIX + window.location.pathname;
+}
+
 function pageIsTranslated() {
     const htmlEl = document.documentElement;
     return htmlEl.classList.contains("translated") ||
@@ -37,6 +46,142 @@ function saveTranslationsToSession() {
     console.log("Saved translations to session storage.");
 }
 
+
+/**
+ * Load Google Translate script and attempt to auto-select userLang.
+ * Returns once GT widget is in DOM (or after a short timeout).
+ */
+export function loadGoogleTranslateAndApply(userLang) {
+    function cleanup() {
+        const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+
+        if (loader) loader.remove();
+        document.body.style.visibility = "visible";
+    }
+
+    if (userLang == "en") cleanup();
+    if (userLang !== "en") {
+        return new Promise((resolve) => {
+            if (!document.getElementById("google_translate_element")) {
+                const div = document.createElement("div");
+                div.id = "google_translate_element";
+                div.style.display = "none";
+                document.body.appendChild(div);
+            }
+
+            // initializer that the GT script will call (cb)
+            function initializer() {
+                try {
+                    // initialize widget (invisible container expected in page)
+                    // Note: we don't rely on element ID; GT creates iframe etc.
+                    new google.translate.TranslateElement({
+                        pageLanguage: "en",
+                        includedLanguages: "fr,es,de,it,pt",
+                        autoDisplay: false
+                    }, "google_translate_element");
+                    lastTranslatedPath = window.location.pathname;
+                    sessionStorage.setItem(sessionKeyForPath(), "translated");
+                } catch (err) {
+                    // non-fatal
+                    cleanup();
+                }
+                // try to set the combo as soon as it exists
+                const tryCombo = setInterval(() => {
+                    const select = document.querySelector(".goog-te-combo");
+                    if (select) {
+                        clearInterval(tryCombo);
+                        if (userLang && userLang !== "en") {
+                            try {
+                                select.value = userLang;
+                                select.dispatchEvent(new Event("change"));
+                            } catch (e) {
+                            }
+                        }
+                        resolve();
+                    }
+                }, 120);
+
+                // fallback resolve after a short delay (we'll still let GT run)
+                setTimeout(() => {
+                    try { clearInterval(tryCombo); } catch (e) { }
+                    resolve();
+                }, 1500);
+            }
+
+            // attach initializer as expected callback name
+            window.googleTranslateElementInit = initializer;
+            window.initTranslate = initializer; // support multiple cb names
+
+            if (window.google && google.translate && typeof google.translate.TranslateElement === "function") {
+                initializer();
+            }
+
+            // Append script if not already present
+            if (!document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) {
+                const gtScript = document.createElement("script");
+                gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+                gtScript.async = true;
+                gtScript.defer = true;
+
+                gtScript.onerror = () => {
+                    console.warn("Google Translate script failed to load.");
+                    resolve();
+                };
+                document.head.appendChild(gtScript);
+
+                window.googleTranslateElementInit = () => {
+                    new google.translate.TranslateElement({
+                        includedLanguages: "fr,es,de,it,pt",
+                    }, 'google_translate_element');
+                    lastTranslatedPath = window.location.pathname;
+                    sessionStorage.setItem(sessionKeyForPath(), "translated");
+                };
+            } else {
+                // already present -> call initializer if possible
+                setTimeout(() => { initializer(); }, 0);
+            }
+        });
+    }
+}
+
+/**
+ * Checks if the current page has been translated before
+ */
+function pageWasTranslatedBefore() {
+    return !!sessionStorage.getItem(sessionKeyForPath());
+}
+
+/**
+ * Reapply translation after navigation (forward/back)
+ */
+function reapplyTranslationIfNeeded() {
+    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    const currentPath = window.location.pathname;
+    if (currentPath !== lastTranslatedPath) {
+        setTimeout(() => {
+            loadGoogleTranslateAndApply(userLang);
+        }, TRANSLATE_REINIT_DELAY);
+    }
+}
+
+/**
+ * MutationObserver to reapply translation if DOM changes significantly
+ */
+function setupTranslationObserver() {
+    const observer = new MutationObserver(() => {
+        const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+        // Check if Google translate frames are lost after content updates
+        const bannerExists = document.querySelector('.goog-te-banner-frame');
+        const iframeExists = document.querySelector('.goog-te-menu-frame');
+        if (!bannerExists && !iframeExists) {
+            // Translation seems removed — reinit
+            loadGoogleTranslateAndApply(userLang);
+        }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
 async function handleTranslateFirstLoad() {
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
@@ -53,27 +198,18 @@ async function handleTranslateFirstLoad() {
         return;
     }
 
-    // initGoogleTranslateWidget();
-    await loadGoogleTranslateAndApply(userLang);
+    loadGoogleTranslateAndApply(userLang);
+    // setupTranslationObserver();
 
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
-        console.log("Applying cached translation:", pathKey);
-        try {
-            const cachedTranslations = JSON.parse(cachedJson);
-        } catch (e) {
-            console.error("Failed to parse or apply cached translations:", e);
-            sessionStorage.removeItem(pathKey);
-            return;
-        } finally {
-            document.body.style.visibility = "visible";
-        }
+        document.body.style.visibility = "visible";
         return true;
     } else {
         return new Promise((resolve) => {
 
             function cleanup() {
-                // clearTimeout(fallbackTimeout);
+                clearTimeout(fallbackTimeout);
                 const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
 
                 if (loader) loader.remove();
@@ -165,67 +301,9 @@ async function handleTranslateFirstLoad() {
             }, 9000);
         });
     }
+
 }
 
-
-function initGoogleTranslate() {
-    let translateContainer = document.getElementById("google_translate_element");
-    if (!translateContainer) {
-        translateContainer = document.createElement("div");
-        translateContainer.id = "google_translate_element";
-        // Optional: append where you want the dropdown to appear
-        // Example: top-right corner of body
-        Object.assign(translateContainer.style, {
-            position: "fixed",
-            top: "10px",
-            right: "10px",
-            zIndex: "9999"
-        });
-        document.body.appendChild(translateContainer);
-    }
-
-    const script = document.createElement('script');
-    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    script.id = "google-translate-script";
-
-    document.body.appendChild(script);
-
-
-    window.googleTranslateElementInit = function () {
-        try {
-            new google.translate.TranslateElement({
-                pageLanguage: "en",
-                includedLanguages: "fr,es,de,it",
-                autoDisplay: false
-            }, "google_translate_element");
-            console.log("Google Translate widget initialized.");
-        } catch (e) {
-            console.error("Google Translate initialization error:", e);
-        }
-    };
-}
-
-/** Trigger translate via the GT combobox (best-effort) */
-// export function forceReapplyTranslation(lang) {
-//     if (!lang || lang === "en") return;
-//     const iframe = document.querySelector("iframe.goog-te-banner-frame");
-//     if (!iframe && typeof google !== "undefined" && google.translate) {
-//         new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
-//     } else {
-//         const select = document.querySelector(".goog-te-combo");
-//         if (select) {
-//             try {
-//                 select.value = lang;
-//                 select.dispatchEvent(new Event("change"));
-//                 // also try to click "translate" button if UI present (best-effort)
-//                 const el = document.querySelector(".goog-te-menu-frame");
-//                 // no-op if not found
-//             } catch (e) {
-//                 console.warn("forceReapplyTranslation error:", e);
-//             }
-//         }
-//     }
-// }
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -365,88 +443,6 @@ async function forceReapplyTranslation(lang, { source = 'en', timeout = 300 } = 
     }
 }
 
-
-/**
- * Load Google Translate script and attempt to auto-select userLang.
- * Returns once GT widget is in DOM (or after a short timeout).
- */
-export function loadGoogleTranslateAndApply(userLang) {
-    function cleanup() {
-        const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
-
-        if (loader) loader.remove();
-        document.body.style.visibility = "visible";
-    }
-
-    if (userLang == "en") cleanup();
-    if (userLang !== "en") {
-        return new Promise((resolve) => {
-            if (!document.getElementById("google_translate_element")) {
-                const div = document.createElement("div");
-                div.id = "google_translate_element";
-                div.style.display = "none";
-                document.body.appendChild(div);
-            }
-
-            // initializer that the GT script will call (cb)
-            function initializer() {
-                try {
-                    // initialize widget (invisible container expected in page)
-                    // Note: we don't rely on element ID; GT creates iframe etc.
-                    new google.translate.TranslateElement({
-                        pageLanguage: "en",
-                        autoDisplay: false
-                    }, "google_translate_element");
-                } catch (err) {
-                    // non-fatal
-                    cleanup();
-                }
-                // try to set the combo as soon as it exists
-                const tryCombo = setInterval(() => {
-                    const select = document.querySelector(".goog-te-combo");
-                    if (select) {
-                        clearInterval(tryCombo);
-                        if (userLang && userLang !== "en") {
-                            try {
-                                select.value = userLang;
-                                select.dispatchEvent(new Event("change"));
-                            } catch (e) {
-                            }
-                        }
-                        resolve();
-                    }
-                }, 120);
-
-                // fallback resolve after a short delay (we'll still let GT run)
-                setTimeout(() => {
-                    try { clearInterval(tryCombo); } catch (e) { }
-                    resolve();
-                }, 1500);
-            }
-
-            // attach initializer as expected callback name
-            window.googleTranslateElementInit = initializer;
-            window.initTranslate = initializer; // support multiple cb names
-
-            // Append script if not already present
-            if (!document.querySelector('script[src*="translate.google.com/translate_a/element.js"]')) {
-                const gtScript = document.createElement("script");
-                gtScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-                gtScript.async = true;
-
-                gtScript.onerror = () => {
-                    console.warn("Google Translate script failed to load.");
-                    resolve();
-                };
-                document.head.appendChild(gtScript);
-            } else {
-                // already present -> call initializer if possible
-                setTimeout(() => { initializer(); }, 0);
-            }
-        });
-    }
-}
-
 export async function translateElementFragment(el, lang) {
     if (!window.google || !window.google.translate) {
         console.warn("Google Translate not ready");
@@ -474,8 +470,6 @@ export async function translateElementFragment(el, lang) {
     // select.value = lang;
     select.dispatchEvent(new Event("change"));
 
-    // Wait for the translation to finish (give it time)
-
     // Copy the translated innerHTML back to the real element
     el.innerHTML = clone.innerHTML;
     // setTimeout(() => {
@@ -492,20 +486,14 @@ function setupMutationObserver() {
     // Skip if English or offline
     if (userLang === "en" || !online) return;
 
-    let translateTimeout = null;
-
     const observer = new MutationObserver(mutations => {
-        let shouldTranslate = false;
-
         for (const mutation of mutations) {
             if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
                 for (const node of mutation.addedNodes) {
                     // Check text nodes
                     if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
-                        // shouldTranslate = true;
                         translateElementFragment(node, userLang);
                     }
-
 
                     // Check elements with text inside
                     if (node.nodeType === Node.ELEMENT_NODE) {
@@ -519,43 +507,14 @@ function setupMutationObserver() {
                         }
                     }
 
-                    if (shouldTranslate) break;
                 }
             }
 
             if (shouldTranslate) break;
         }
-
-        // Batch re-translate requests (avoid calling multiple times rapidly)
-        if (shouldTranslate) {
-            clearTimeout(translateTimeout);
-            translateTimeout = setTimeout(() => {
-                // forceReapplyTranslation(userLang);
-                console.log("🈶 New text detected — reapplying Google Translate...");
-            }, 800);
-        }
     });
 
     observer.observe(document.body, { childList: true, subtree: true });
-}
-
-export function reapplyGoogleTranslate() {
-    try {
-        const iframe = document.querySelector("iframe.goog-te-banner-frame");
-        if (!iframe && typeof google !== "undefined" && google.translate) {
-            new google.translate.TranslateElement({ pageLanguage: "en" }, "google_translate_element");
-        } else {
-            // Simulate language change to trigger re-translation
-            const select = document.querySelector(".goog-te-combo");
-            if (select && select.value) {
-                const event = new Event("change");
-                select.dispatchEvent(event);
-            }
-        }
-        console.log("reapplied!")
-    } catch (err) {
-        console.warn("Google Translate reapply failed:", err);
-    }
 }
 
 function handleInputFocusFix() {
@@ -877,6 +836,33 @@ async function initializeApp() {
 
 window.onload = initializeApp;
 window.addEventListener("beforeunload", saveTranslationsToSession);
+window.addEventListener("popstate", () => {
+    setTimeout(() => {
+        reapplyTranslationIfNeeded()
+    }, 10);
+});
+
+(function patchHistoryMethods() {
+    const pushState = history.pushState;
+    history.pushState = function (...args) {
+        pushState.apply(this, args);
+        window.dispatchEvent(new Event('pushstate'));
+        window.dispatchEvent(new Event('locationchange'));
+    };
+
+    const replaceState = history.replaceState;
+    history.replaceState = function (...args) {
+        replaceState.apply(this, args);
+        window.dispatchEvent(new Event('replacestate'));
+        window.dispatchEvent(new Event('locationchange'));
+    };
+
+    window.addEventListener('popstate', () => window.dispatchEvent(new Event('locationchange')));
+
+    window.addEventListener('locationchange', () => {
+        reapplyTranslationIfNeeded();
+    });
+})();
 
 window.onresize = () => {
     const navWidth = header.clientWidth;
@@ -896,6 +882,7 @@ window.onresize = () => {
         show = false;
     }
 };
+
 
 export function handleRedirect(href = "", type = "default") {
     const current = window.location.href;
@@ -928,30 +915,63 @@ export function handleRedirect(href = "", type = "default") {
     }
 }
 
-let timer;
-function createAlertBase(type) {
-    const parent = document.querySelector(".alert-message");
-    if (!parent) return null;
-    parent.dataset.translateWrapper = true;
 
-    parent.innerHTML = "";
-    clearTimeout(timer);
-    if (parent.dataset.countdownId) {
+let __alertTimer = null;
+
+function ensureAlertParent() {
+    let parent = document.querySelector(".alert-message");
+    if (!parent) {
+        parent = document.createElement("div");
+        parent.classList.add("alert-message");
+        // keep it in DOM but hidden by default
+        parent.style.display = "none";
+        parent.setAttribute("aria-hidden", "true");
+        document.body.insertAdjacentElement("afterbegin", parent);
+    }
+    return parent;
+}
+
+function safeClearCountdown(parent) {
+    if (parent?.dataset?.countdownId) {
         clearInterval(Number(parent.dataset.countdownId));
         delete parent.dataset.countdownId;
     }
-    parent.classList.remove("fadeOut", "shop");
-    parent.style.display = "flex";
+}
 
-    if (type === "toast") {
-        parent.classList.add("shop");
-        return parent;
-    } else {
-        const div = document.createElement("div");
-        div.classList.add("alert-div", "zoom-in");
-        parent.appendChild(div);
-        return div;
-    }
+
+function createAlertBase(type) {
+    const parent = ensureAlertParent();
+    if (!parent) return null;
+    parent.dataset.translateWrapper = true;
+
+    // Stop any pending hide timers
+    clearTimeout(__alertTimer);
+    safeClearCountdown(parent);
+
+    // Hide politely (avoid immediate innerHTML flush to prevent Safari layer freeze)
+    parent.style.opacity = "0";
+    parent.style.pointerEvents = "none";
+    parent.classList.remove("fadeOut", "shop");
+
+        parent.innerHTML = "";
+    parent.style.display = "flex";
+    
+    // Force repaint so Safari sees the cleanup
+    void parent.offsetHeight;
+
+        parent.style.opacity = "1";
+        parent.style.pointerEvents = "";
+
+        if (type === "toast") {
+            parent.classList.add("shop");
+
+            return parent;
+        } else {
+            const div = document.createElement("div");
+            div.classList.add("alert-div", "zoom-in");
+            parent.appendChild(div);
+            return div;
+        }
 }
 
 function addAlertContent(div, titled, titleText, message) {
@@ -960,12 +980,15 @@ function addAlertContent(div, titled, titleText, message) {
         newTitle.classList.add("alert-title");
         newTitle.innerHTML = titleText || "Title";
         div.appendChild(newTitle);
+        console.log("title added");
     }
     if (message) {
         const newMessage = document.createElement("div");
         newMessage.classList.add("alert-text", "moveUp");
         newMessage.innerHTML = message;
         div.appendChild(newMessage);
+
+        console.log("message added....")
     }
 }
 
@@ -984,7 +1007,6 @@ function addAlertTimer(div, options, parent) {
     resendEl.style.display = "none";
     resendEl.innerHTML = `<strong style="cursor:pointer; color: var(--link, #007bff);">Request a new OTP</strong>`;
 
-    const input = document.querySelector(".alert-message input");
 
     div.appendChild(timerP);
     div.appendChild(resendEl);
@@ -998,6 +1020,7 @@ function addAlertTimer(div, options, parent) {
 
         const timerIntervalId = setInterval(() => {
             timeLeft--;
+            const input = document.querySelector(".alert-message input");
             timerP.querySelector(".alert-timer-count").textContent = `${timeLeft} seconds`;
             if (timeLeft <= 0) {
                 clearInterval(timerIntervalId);
@@ -1012,10 +1035,14 @@ function addAlertTimer(div, options, parent) {
     };
 
     startCountdown();
-    resendEl.addEventListener("click", async () => {
+
+    const onResend = async (e) => {
+        e?.preventDefault();
+
         if (resendEl.dataset.sending === "1" || typeof options.timer.onResend !== "function") return;
         resendEl.dataset.sending = "1";
         resendEl.innerHTML = `<strong>Sending...</strong>`;
+
         try {
             await options.timer.onResend();
             startCountdown(options.timer.duration);
@@ -1026,11 +1053,15 @@ function addAlertTimer(div, options, parent) {
                 errorDiv.style.display = "block";
             }
         } finally {
+            const input = document.querySelector(".alert-message input");
             resendEl.dataset.sending = "0";
             resendEl.innerHTML = `<strong style="cursor:pointer; color: var(--link, #007bff);">Request a new OTP</strong>`;
             if (input) input.disabled = false;
         }
-    });
+    }
+
+    resendEl.addEventListener("touchstart", () => { }, { passive: true });
+    resendEl.addEventListener("click", onResend);
 }
 
 function addAlertInput(div, options) {
@@ -1059,7 +1090,11 @@ function addAlertButtons(div, closing, closingConfig, closeAlert, defaultFunctio
         newBtn.textContent = text || "Close";
         newBtn.style.width = arrange?.toLowerCase() === "column" ? "100%" : "160px";
 
-        newBtn.addEventListener("click", async () => {
+        newBtn.addEventListener("touchstart", () => { }, { passive: true });
+
+        newBtn.addEventListener("click", async (e) => {
+            e?.preventDefault();
+
             errorDiv.style.display = "none";
             if (loading) {
                 newBtn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
@@ -1110,12 +1145,10 @@ async function handleAlert(
     arrange = "row",
     defaultFunction = () => { },
 ) {
-    const parent = document.querySelector(".alert-message");
-    if (!parent) {
-        let newParent = document.createElement("div");
-        newParent.classList.add("alert-message");
-        document.body.insertAdjacentElement("afterbegin", newParent);
-    };
+    const parent = ensureAlertParent();
+    if (parent) {
+        console.log(parent)
+    }
 
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
@@ -1125,10 +1158,22 @@ async function handleAlert(
             const parent = document.querySelector(".alert-message");
             if (base) base.classList.add("zoom-out");
             parent?.classList.add("fadeOut");
-            timer = setTimeout(() => {
-                parent?.remove();
+
+            // Force repaint to ensure iOS touch layer rebuild
+            void parent.offsetHeight;
+
+            __alertTimer = setTimeout(() => {
+                parent.style.display = "none";
+                parent.innerHTML = "";
+                parent.setAttribute("aria-hidden", "true");
+
+                // restore scrolling
+                document.body.style.overflow = "";
+
+                // additional repaint tick
+                void document.body.offsetHeight;
                 defaultFunction();
-            }, 1200);
+            }, 1000);
         };
 
         if (type === "toast") {
@@ -1136,11 +1181,20 @@ async function handleAlert(
             newMessage.className = "alert-text moveUp";
             newMessage.innerHTML = finalMessage;
             base.appendChild(newMessage);
+
+
+            parent.style.display = "flex";
+            parent.setAttribute("aria-hidden", "false");
+
+            safeVibrate(30);
             setTimeout(closeAlert, 4000);
             return;
         }
 
         document.activeElement?.blur();
+        document.body.style.overflow = "hidden";
+
+
         addAlertContent(base, titled, finalTitle, finalMessage);
         addAlertTimer(base, options, parent);
         addAlertInput(base, options);
@@ -1152,12 +1206,42 @@ async function handleAlert(
 
         addAlertButtons(base, closing, finalButtons, closeAlert, defaultFunction, arrange, errorDiv);
 
+
+        // show parent
+        parent.style.display = "flex";
+        parent.setAttribute("aria-hidden", "false");
+
+        // small repaint tick to address Safari layering problems
+        void parent.offsetHeight;
+
+        // vibrate once when modal appears (Android; iOS ignored safely)
+        safeVibrate(60);
+
         if (!closing) {
             setTimeout(closeAlert, 4000);
         }
     };
 
     renderAlert(titleText, message, closingConfig);
+
+    // global iOS touchstart recovery hook (idempotent)
+    if (!window.__alert_touch_wakeup__) {
+        document.addEventListener("touchstart", () => { }, { passive: true });
+        window.__alert_touch_wakeup__ = true;
+    }
+}
+
+/* safe vibrate wrapper */
+function safeVibrate(durationOrPattern) {
+    try {
+        if (navigator && typeof navigator.vibrate === "function") {
+            navigator.vibrate(durationOrPattern);
+        }
+    } catch (e) {
+        // swallow - iOS historically doesn't support vibrate; don't break execution
+        // optionally log to analytics: e
+        console.log(e);
+    }
 }
 
 export default handleAlert;
