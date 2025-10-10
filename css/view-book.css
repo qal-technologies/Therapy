@@ -41,6 +41,8 @@ body {
     height: 100%;
     -webkit-user-select: none;
     user-select: none;
+    overflow: hidden;
+    overscroll-behavior: none;
 }
 
 body {
@@ -67,7 +69,7 @@ body {
 .top-toolbar,
 .bottom-toolbar {
     width: 100%;
-    max-width: calc(var(--book-width) * 2 + 40px);
+    max-width: calc(var(--book-width) * 2.5 + 40px);
     height: var(--toolbar-height);
     background: #040404ae;
     color: white;
@@ -91,6 +93,7 @@ body {
 }
 
 .bottom-toolbar {
+    width: 90%;
     max-width: calc(var(--book-width) * 1.6) !important;
     place-self: center;
     position: sticky !important;
@@ -362,6 +365,10 @@ body {
     box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
     overflow: hidden;
     z-index: 99;
+
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    overflow: hidden;
 }
 
 .flip>.face {
@@ -502,4 +509,17 @@ body {
         padding: 10px;
         border-radius: 15px;
     }
+}
+
+.book, .page, .flip, .face {
+    transform-style: preserve-3d;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+.page,
+.flip .face {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
