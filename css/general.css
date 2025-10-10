@@ -83,8 +83,7 @@
 html,
 body,
 div#body {
-  scroll-padding-top: 200px;
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth;
   background: var(--gradient-color);
   background-position: 100%;
   background-clip: border-box;
@@ -104,10 +103,10 @@ div#body {
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
   height: 100%;
-  min-height: 100dvh;
+  min-height: 100dvh; */
 }
 
-body, html {
+/* body, html {
   overflow-y: hidden !important;
   overflow-x: hidden !important;
   overflow: hidden !important;
@@ -119,7 +118,7 @@ body, html {
   position: absolute;
   border: 9px solid blue;
   margin: 0 !important;
-}
+} */
 
 
 div#body{
@@ -974,29 +973,21 @@ span, i {
   }
 }
 
-/* --- Fix bottom padding / scroll gap issue --- */
 
-html, body {
-  height: 102dvh;
-  min-height: 100%;
-  overflow: hidden;
-  flex: 1;
-}
-
-/*
-body {
+body, html {
   height: auto !important;
   min-height: 100vh;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: flex-start;
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
-}*/
+}
 
 /* Fix for mobile dynamic viewport (iOS + Chrome Android) */
-/*@supports (height: 100dvh) {
+@supports (height: 100dvh) {
   body {
     min-height: 100dvh;
   }
-}*/
+}
