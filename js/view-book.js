@@ -113,7 +113,7 @@ window.addEventListener('load', () => {
                     const label = checks ? "" : `${pageIdx}`;
                     const title = checks ? "" : BOOK.title;
                     div.innerHTML = `
-                    ${!checks ? `<div class="page-top"><span class="chapter">${title}</span></div>` : ""}
+                    ${!checks ? `<div class="notranslate page-top" translate="no"><span class="chapter">${title}</span></div>` : ""}
                     ${checks ? html : `<div class="page-middle">${html}</div>`}
                     ${!checks ? `<div class="page-bottom"><span class="page-num">${label}</span></div>` : ""}
                 `;
