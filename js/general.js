@@ -752,6 +752,9 @@ async function setupNewsletter(user) {
     if (!emailBTN || !emailInput) return;
 
     emailBTN.disabled = true;
+    emailBTN.offsetHeight;
+
+    await new Promise(res => setTimeout(res, 200));
 
     const thisUser = user ? await getUserData(user.uid) : false;
 
@@ -796,6 +799,7 @@ async function setupNewsletter(user) {
                 }, 100);
             });
         }
+        emailBTN.offsetHeight;
     } else {
         emailBTN.addEventListener("click", (e) => {
             e.preventDefault();
@@ -807,6 +811,7 @@ async function setupNewsletter(user) {
             }
             handleAlert("To subscribe to our newsletter, please log in or create an account.", "blur", true, "✉️ <br/> Login or Register", true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register"), type: "secondary" }]);
         });
+        emailBTN.offsetHeight;
     }
 }
 
@@ -837,6 +842,11 @@ async function initializeApp() {
 window.onload = initializeApp;
 window.addEventListener("beforeunload", saveTranslationsToSession);
 window.addEventListener("popstate", () => {
+    setTimeout(() => {
+        reapplyTranslationIfNeeded()
+    }, 10);
+});
+window.addEventListener("pageshow", () => {
     setTimeout(() => {
         reapplyTranslationIfNeeded()
     }, 10);
@@ -953,25 +963,25 @@ function createAlertBase(type) {
     parent.style.pointerEvents = "none";
     parent.classList.remove("fadeOut", "shop");
 
-        parent.innerHTML = "";
+    parent.innerHTML = "";
     parent.style.display = "flex";
-    
+
     // Force repaint so Safari sees the cleanup
     void parent.offsetHeight;
 
-        parent.style.opacity = "1";
-        parent.style.pointerEvents = "";
+    parent.style.opacity = "1";
+    parent.style.pointerEvents = "";
 
-        if (type === "toast") {
-            parent.classList.add("shop");
+    if (type === "toast") {
+        parent.classList.add("shop");
 
-            return parent;
-        } else {
-            const div = document.createElement("div");
-            div.classList.add("alert-div", "zoom-in");
-            parent.appendChild(div);
-            return div;
-        }
+        return parent;
+    } else {
+        const div = document.createElement("div");
+        div.classList.add("alert-div", "zoom-in");
+        parent.appendChild(div);
+        return div;
+    }
 }
 
 function addAlertContent(div, titled, titleText, message) {

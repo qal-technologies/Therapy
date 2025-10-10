@@ -13,7 +13,7 @@ import handleAlert, { handleRedirect } from './general.js';
         <form class="bottom" id="login-form-element">
           <div class="form-group">
             <label for="login-email">Email *</label>
-            <input type="email" id="login-email" required />
+            <input type="email" id="login-email" required autocapitalize="off" autocorrect="off" autocomplete="email" inputmode="email"/>
           </div>
           <div class="form-group">
             <label for="login-password">Password *</label>
@@ -51,7 +51,7 @@ import handleAlert, { handleRedirect } from './general.js';
       <form class="bottom" id="register-form-element">
         <div class="form-group">
           <label for="reg-email">Email *</label>
-          <input type="email" id="reg-email" required />
+          <input type="email" id="reg-email" required autocapitalize="off" autocorrect="off" autocomplete="email" inputmode="email"/>
           <p class="email-error password-error" id="email-error" style="display:none; margin-top:6px;"></p>
         </div>
 
