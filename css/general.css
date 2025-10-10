@@ -969,13 +969,15 @@ span, i {
 }
 
 /* --- Fix bottom padding / scroll gap issue --- */
+/*
 html, body {
   height: 100%;
   min-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-}
+}*/
 
+/*
 body {
   height: auto !important;
   min-height: 100vh;
@@ -984,16 +986,16 @@ body {
   justify-content: flex-start;
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
-}
+}*/
 
 /* Fix for mobile dynamic viewport (iOS + Chrome Android) */
-@supports (height: 100dvh) {
+/*@supports (height: 100dvh) {
   body {
     min-height: 100dvh;
   }
-}
+}*/
 
 /* Reset scroll-padding to not push page length */
-html {
+/*html {
   scroll-padding-top: 0 !important;
-}
+}*/
