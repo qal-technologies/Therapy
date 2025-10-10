@@ -138,11 +138,9 @@ window.addEventListener('load', () => {
 
     setTimeout(() => {
       const addToCartElements = document.querySelectorAll('.add-to-cart');
-
-      addToCartElements.forEach(element => {
-        element.scrollIntoView({
-          behavior: 'smooth',
-        });
+      
+      addToCartElements[0].scrollIntoView({
+        behavior: 'smooth',
       });
     }, 3000);
   }

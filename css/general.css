@@ -110,13 +110,14 @@ div#body {
 }
 
 body {
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
   overflow: hidden !important;
   visibility: hidden;
   align-items: center;
   justify-content: center;
   flex: 1 !important;
   opacity: 1;
-
 }
 
 a#scrollUp {
