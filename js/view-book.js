@@ -1,20 +1,20 @@
-import { handleAuthStateChange } from "./auth.js";
-import { getUserData } from "./database.js";
+// import { handleAuthStateChange } from "./auth.js";
+// import { getUserData } from "./database.js";
 import handleAlert, { handleRedirect } from './general.js';
 import BOOK from './books.js';
 
 window.addEventListener('load', () => {
-    handleAuthStateChange(async (user) => {
-        if (!user) {
-            handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register"), type: "secondary" }]);
-            return;
-        }
+    // handleAuthStateChange(async (user) => {
+    //     if (!user) {
+    //         handleAlert("Please login or create account to purchase and view book", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register"), type: "secondary" }]);
+    //         return;
+    //     }
 
-        if (user) {
-            const userdata = await getUserData(user.uid);
-            const paid = userdata.bookPaid;
+        // if (user) {
+        //     const userdata = await getUserData(user.uid);
+        //     const paid = userdata.bookPaid;
 
-            if (paid == true) {
+        //     if (paid == true) {
                 // DOM Elements:::::
                 const bookEl = document.getElementById('book');
                 const leftEl = document.getElementById('leftPage').querySelector('.content');
@@ -352,10 +352,10 @@ window.addEventListener('load', () => {
                     updateBookmarkIcon();
                 })();
 
-            } else {
-                handleAlert("Please go to the Book Page and purchase the book to start reading...", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "GET COPY", onClick: () => handleRedirect("/html/main/Shop.html", "replace") }, { text: "Close", onClick: () => handleRedirect("/html/main/Home.html"), type: "secondary" }]);
-            }
+    //         } else {
+    //             handleAlert("Please go to the Book Page and purchase the book to start reading...", "blur", true, '<i class="bi bi-book fs-2"></i>', true, [{ text: "GET COPY", onClick: () => handleRedirect("/html/main/Shop.html", "replace") }, { text: "Close", onClick: () => handleRedirect("/html/main/Home.html"), type: "secondary" }]);
+    //         }
 
-        }
-    });
+    //     }
+    // });
 });
