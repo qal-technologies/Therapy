@@ -958,6 +958,7 @@ function ensureAlertParent() {
     if (!parent) {
         parent = document.createElement("div");
         parent.classList.add("alert-message");
+        
         // keep it in DOM but hidden by default
         parent.style.display = "none";
         parent.setAttribute("aria-hidden", "true");
@@ -1181,9 +1182,6 @@ async function handleAlert(
     defaultFunction = () => { },
 ) {
     const parent = ensureAlertParent();
-    if (parent) {
-        console.log(parent)
-    }
 
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
@@ -1240,7 +1238,6 @@ async function handleAlert(
         base.appendChild(errorDiv);
 
         addAlertButtons(base, closing, finalButtons, closeAlert, defaultFunction, arrange, errorDiv);
-
 
         // show parent
         parent.style.display = "flex";
