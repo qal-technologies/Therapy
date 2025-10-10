@@ -605,11 +605,11 @@ div#details-div {
 div#details-div .details-top {
   min-width: 100vw;
   height: 80px;
-  /* position: sticky !important; */
+  position: sticky !important;
   top: 0 !important;
   /* z-index: 9999999999 !important; */
 
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   z-index: 1000;
   background: white;

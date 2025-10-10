@@ -120,6 +120,36 @@ window.addEventListener('load', () => {
     if (modal) modal.classList.toggle("fadeOut");
   };
 
+  function scrollToMakeVisible(selector) {
+    const modal = document.getElementById("details-div");
+    const content = modal.querySelector(".modal-content");
+    const target = content.querySelector(selector);
+    const header = modal.querySelector(".details-top");
+
+    if (!target || !content) return;
+
+    // Compute offset
+    const headerHeight = header.getBoundingClientRect().height;
+
+    // Compute the distance of target relative to content
+    const targetRect = target.getBoundingClientRect();
+    const contentRect = content.getBoundingClientRect();
+
+    // How far from top of content we need to scroll
+    const currentScroll = content.scrollTop;
+    // target's top relative to content's top
+    const targetOffset = targetRect.top - contentRect.top;
+
+    // scroll such that targetOffset minus headerHeight is visible
+    const scrollTo = currentScroll + targetOffset - headerHeight - 8; // extra margin
+
+    content.scrollTo({
+      top: scrollTo >= 0 ? scrollTo : 0,
+      behavior: 'smooth',
+    });
+  }
+
+
   function showDetailsModal(e) {
     const modal = document.querySelector("#details-div");
     const cartCount = document.querySelector(".details-top span.cart-count");
@@ -142,6 +172,8 @@ window.addEventListener('load', () => {
       // addToCartElements[0].scrollIntoView({
       //   behavior: 'smooth',
       // });
+
+      scrollToMakeVisible('.add-to-cart:last-of-type');
     }, 3000);
   }
 
