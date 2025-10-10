@@ -941,9 +941,9 @@ section#newsletter {
   display: none !important;
 }
 
-body {
+/* body {
   top: 0 !important;
-}
+} */
 
 span, i {
   -webkit-user-select: text !important;
