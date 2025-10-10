@@ -657,15 +657,15 @@ div#details-div .details-top {
   max-width: 800px;
   padding: 1rem;
   overflow: hidden;
-  /* top: 10%; */
+  /* margin-top: 20vh; */
   background: red;
   left: 0%;
   right: 0%;
   overflow-y: auto;
   height: auto;
   z-index: 999;
-  position: relative !important;
-  max-height: 100%;
+  position: static !important;
+  max-height: 90vh;
 }
 
 .modal-content p {
