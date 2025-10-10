@@ -107,16 +107,20 @@ div#body {
   min-height: 100dvh;
 }
 
-body {
+body, html {
   overflow-y: hidden !important;
   overflow-x: hidden !important;
   overflow: hidden !important;
   visibility: hidden;
   flex: 1 !important;
-  height: 100vh !important;
+  height: 100%;
+  min-height: 100vh !important;
   padding: 10px;
+  position: absolute;
   border: 9px solid blue;
+  margin: 0 !important;
 }
+
 
 div#body{
 border:9px solid red;
