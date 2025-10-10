@@ -136,6 +136,9 @@ export function loadGoogleTranslateAndApply(userLang) {
                     lastTranslatedPath = window.location.pathname;
                     sessionStorage.setItem(sessionKeyForPath(), "translated");
                 };
+
+                document.documentElement.lang = userLang;
+
             } else {
                 // already present -> call initializer if possible
                 setTimeout(() => { initializer(); }, 0);
@@ -362,6 +365,27 @@ function setGoogleTransCookie(source, target) {
         document.cookie = `googtrans=${encodeURIComponent(cookieValue)};path=/;domain=.${location.hostname};`;
     } catch (e) {
         console.warn("Failed to set googtrans cookie:", e);
+    }
+}
+
+function resetGoogleTranslateState() {
+    try {
+        // Force-clear Google Translate's cookies
+        document.cookie.split(";").forEach(cookie => {
+            const eqPos = cookie.indexOf("=");
+            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            if (name.trim().startsWith("googtrans") || name.trim().startsWith("goog")) {
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+            }
+        });
+
+        // Force HTML lang reset
+        document.documentElement.setAttribute("lang", "en");
+        // Sometimes the translate widget stores its state in local/session storage too
+        sessionStorage.removeItem("googtrans");
+        localStorage.removeItem("googtrans");
+    } catch (e) {
+        console.warn("Translate reset error:", e);
     }
 }
 
@@ -817,6 +841,7 @@ async function setupNewsletter(user) {
 
 async function initializeApp() {
     await handleTranslateFirstLoad();
+
     setupCommonUI();
     setupEventListeners();
     // setupMutationObserver();
