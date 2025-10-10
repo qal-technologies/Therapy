@@ -971,13 +971,14 @@ span, i {
 }
 
 /* --- Fix bottom padding / scroll gap issue --- */
-/*
+
 html, body {
   height: 100%;
   min-height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-}*/
+  flex: 1;
+}
 
 /*
 body {
@@ -995,9 +996,4 @@ body {
   body {
     min-height: 100dvh;
   }
-}*/
-
-/* Reset scroll-padding to not push page length */
-/*html {
-  scroll-padding-top: 0 !important;
 }*/
