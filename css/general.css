@@ -976,7 +976,8 @@ span, i {
 
 body, html {
   height: auto !important;
-  min-height: 100vh;
+  min-height: 100%;
+  height: 100dvh;
   display: flex;
   flex: 1;
   flex-direction: column;
