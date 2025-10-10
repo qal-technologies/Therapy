@@ -161,7 +161,7 @@ header#header {
   -webkit-backdrop-filter: blur(50px);
   backdrop-filter: blur(50px);
   background-clip: border-box;
-  position: absolute;
+  position: fixed;
   top: 0;
   z-index: 99999;
   border-bottom-right-radius: 40px;
