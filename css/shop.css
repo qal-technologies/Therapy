@@ -592,10 +592,10 @@ div#details-div {
 }
 
 div#details-div .details-top {
-  min-width: 100%;
+  min-width: 100vw;
   height: max-content;
-  position: fixed !important;
-  top: 0px !important;
+  position: sticky !important;
+  top: 0 !important;
   z-index: 9999999999 !important;
   display: flex;
   flex-direction: row;
@@ -657,14 +657,15 @@ div#details-div .details-top {
   max-width: 800px;
   padding: 1rem;
   overflow: hidden;
-  top: 10%;
+  /* top: 10%; */
+  background: red;
   left: 0%;
   right: 0%;
   overflow-y: auto;
   height: auto;
   z-index: 999;
-  position: fixed;
-  max-height: 80%;
+  position: relative !important;
+  max-height: 100%;
 }
 
 .modal-content p {
