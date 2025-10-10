@@ -138,10 +138,10 @@ window.addEventListener('load', () => {
 
     setTimeout(() => {
       const addToCartElements = document.querySelectorAll('.add-to-cart');
-      
-      addToCartElements[0].scrollIntoView({
-        behavior: 'smooth',
-      });
+
+      // addToCartElements[0].scrollIntoView({
+      //   behavior: 'smooth',
+      // });
     }, 3000);
   }
 
