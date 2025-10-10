@@ -973,10 +973,9 @@ span, i {
 /* --- Fix bottom padding / scroll gap issue --- */
 
 html, body {
-  height: 100%;
+  height: 102dvh;
   min-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden;
   flex: 1;
 }
 
