@@ -304,7 +304,7 @@ ${bonuses.join('')}
           a.style.transform = 'rotate(0deg)';
         });
 
-        lower.style.maxHeight = '300px';
+        lower.style.maxHeight = "2000px";
         arrow.style.transform = 'rotate(90deg)';
       }
     });

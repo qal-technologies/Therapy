@@ -694,7 +694,7 @@ ${session.type == "inner" ?
 					a.style.transform = 'rotate(0deg)';
 				});
 
-				lower.style.maxHeight = "1000px";
+				lower.style.maxHeight = "2000px";
 				arrow.style.transform = 'rotate(90deg)';
 			}
 		});
