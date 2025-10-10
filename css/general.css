@@ -114,12 +114,12 @@ body {
   visibility: hidden;
   flex: 1 !important;
   height: 100vh !important;
-
-  border: 2px solid blue;
+  padding: 10px;
+  border: 9px solid blue;
 }
 
 div#body{
-border:2px solid red;
+border:9px solid red;
 }
 
 a#scrollUp {
