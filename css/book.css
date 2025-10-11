@@ -32,7 +32,7 @@ header.header {
   position: relative;
   padding-bottom: 6rem;
   font-size: 1.2rem;
-  z-index: -99;
+  z-index: 9;
   gap: 15px;
   color: var(--mainText);
 }
@@ -107,7 +107,7 @@ header.header p.intro {
 
 
 .container {
-  z-index: 99;
+  z-index: 999;
   width: 92vw;
   margin: 0 auto;
   background: white;

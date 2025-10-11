@@ -22,8 +22,7 @@ header.header {
   width: 100%;
   padding: 5rem;
   background-color: var(--accentTrans);
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
   text-align: center;
   margin-bottom: -70px;
   overflow: hidden;
@@ -31,8 +30,9 @@ header.header {
   min-height: 45%;
   padding-bottom: 5.5rem;
   font-size: 1.2rem;
-  z-index: -99;
+  z-index: 9;
   gap: 15px;
+  flex-direction: column;
   color: var(--mainText);
 }
 
@@ -73,7 +73,7 @@ header.header h3 {
 }
 
 .container {
-  z-index: 99;
+  z-index: 999;
   width: 95vw;
   margin: 0 auto;
   background: white;
