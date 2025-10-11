@@ -458,7 +458,7 @@ window.addEventListener('load', async () => {
       {
         timer: {
           duration: 60,
-          onResend
+          onResend 
         },
         input: {
           id: "email-otp",
