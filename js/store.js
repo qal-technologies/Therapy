@@ -688,3 +688,5 @@ function applyTranslationsFromCache(cachedTranslations) {
         }
     });
 }
+
+const data= `Welcome back, [Name]. There are moments in life when healing doesn’t wait, it calls. This is one of those moments. Choose the session that speaks to your soul and step into the space where your story begins to mend. Every session is a quiet space to remember who you were before the world asked you to be someone else.`
