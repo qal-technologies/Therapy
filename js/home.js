@@ -701,11 +701,35 @@ ${session.type == "inner" ?
 	});
 
 
+	async function timeoutMessage(user) {
+		if (!user) return;
+
+		const banner = document.querySelector('section#timeout');
+
+		if (user && banner) {
+			const userName = user.details.firstName;
+
+			banner.innerHTML = `
+      <p class="text dropdown">
+Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
+
+<p style="font-size:16px;">There are moments in life when healing doesn’t wait, it calls. This is one of those moments. Choose the session that speaks to your soul and step into the space where your story begins to mend. Every session is a quiet space to remember who you were before the world asked you to be someone else.</p>
+
+        <div class="button moveUpNfadeIn">
+          <a href="/html/main/Book.html" class="register">BOOK NOW</a>
+        </div>
+      `;
+		}
+	}
+
 	handleAuthStateChange(async (user) => {
 		offlineUser = user ? true : false;
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
+		
+		const userData = await getUserData(user.uid);
+		await timeoutMessage(userData);
 
 		if (!userdata.waitlist) {
 			waitlistBTN.addEventListener("click", async () => {

@@ -6,113 +6,134 @@ import { handleRedirect } from "./general.js";
 
 window.addEventListener("load", () => {
 
-const sessionTypes = [
-  {
-    type: "virtual",
-    route: "virtual",
-    name: "VIRTUAL SESSION",
-    price: "800",
-    description:
-      "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
-    button: "BOOK NOW",
-    bonus: [
-      "BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
-      "BONUS! Exclusive discounts from session sponsors",
-      "5+ hours of live online content",
-      "Session recordings and additional resources",
-      "Guided workshops, live polling, and more for interactive learning",
-      "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
-    ]
-  },
-  {
-    type: "in-person",
-    route: "inPerson",
-    name: "IN-PERSON SESSION",
-    extra: "(in Europe/Monaco)",
-    price: "1600",
-    description:
-      "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
-    button: "BOOK NOW",
-    bonus: [
-      "Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
-      "Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
-    ]
-  },
-  {
-    type: "inner",
-    route: "inner",
-    name: "INNER CIRCLE EXPERIENCE",
-    extra: "This plan is sold out for now",
-    price: "6,850",
-    description:
-      "For those who seek not just a session, but a sanctuary.",
-    button: "SOLD OUT",
-    bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
-  },
-  {
-    type: "community",
-    route: "community",
-    name: "COMMUNITY SESSION",
-    extra: "Accessible Plan",
-    price: "550",
-    description:
-      "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
-    button: "BOOK NOW",
-    bonus: [
-      "Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
-    ]
-  },
-];
+  const sessionTypes = [
+    {
+      type: "virtual",
+      route: "virtual",
+      name: "VIRTUAL SESSION",
+      price: "800",
+      description:
+        "You don't need to travel to be heard. This session brings you and me face-to-face-virtually, but intimately. I will be with you, fully present, to listen, reflect, and help you begin to heal.",
+      button: "BOOK NOW",
+      bonus: [
+        "BONUS! Exclusive live webinar with Charlotte Casiraghi before the session",
+        "BONUS! Exclusive discounts from session sponsors",
+        "5+ hours of live online content",
+        "Session recordings and additional resources",
+        "Guided workshops, live polling, and more for interactive learning",
+        "Breakout sessions, live chats, and other unique networking opportunities", "Access to the Healing Live App"
+      ]
+    },
+    {
+      type: "in-person",
+      route: "inPerson",
+      name: "IN-PERSON SESSION",
+      extra: "(in Europe/Monaco)",
+      price: "1600",
+      description:
+        "There are things that only silence and physical presence can heal. Sit with me, in person, in a space that holds truth, tenderness, and transformation.",
+      button: "BOOK NOW",
+      bonus: [
+        "Private one-on-one time with Charlotte Casiraghi in a serene, carefully selected healing environment",
+        "Bonus healing kit provided at session", "Follow-up reflection message", "Access to session notes and personal progress tools"
+      ]
+    },
+    {
+      type: "inner",
+      route: "inner",
+      name: "INNER CIRCLE EXPERIENCE",
+      extra: "This plan is sold out for now",
+      price: "6,850",
+      description:
+        "For those who seek not just a session, but a sanctuary.",
+      button: "SOLD OUT",
+      bonus: ["Private extended session", "Signed Personal letter", "Custom healing plan", "Soul-to-soul guided ritual", "Curated gifts and energy cleansing tools", "Ongoing private check-ins for 2 weeks"]
+    },
+    {
+      type: "community",
+      route: "community",
+      name: "COMMUNITY SESSION",
+      extra: "Accessible Plan",
+      price: "550",
+      description:
+        "Healing should not be a luxury. Full session, full attention, at a reduced rate for those in need. Your story matters just as much.",
+      button: "BOOK NOW",
+      bonus: [
+        "Same full session as others", "Gentle sliding scale available on request", "Private and confidential", "Follow-up resources sent digitally", "Option for one-time check-in after the session"
+      ]
+    },
+  ];
 
-const faq = [
-  {
-    question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session, whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
-  },
-  {
-    question: "What is the difference between a virtual and in-person session?", answer: "Virtual sessions happen securely online (video call) and are just as personal and transformative. In-person sessions take place in a private, serene setting in Monaco or Paris, allowing for deeper connection, presence, and healing energy."
-  },
-  {
-    question: "Are the sessions confidential?", answer: "Absolutely. Every conversation with Charlotte is completely private, sacred, and protected. Your story, emotions, and healing remain between you and her alone."
-  },
-  {
-    question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards, debit cards and paysafecard 16 digit prepaid codes to ensure flexibility and security."
-  },
-  {
-    question: "What happens after I make a payment?",
-    answer: "Once your payment is confirmed, you will receive a welcome message and personalized instructions on how to prepare for your session. You’ll also receive the official booking confirmation."
-  }, {
-    question: "Can I reschedule or cancel my session?", answer: "Yes, you can reschedule your session with at least 72 hours' notice. Cancellations are reviewed individually, but we encourage rescheduling to honor the healing process."
-  },
-  {
-    question: "What if I cannot afford a full session?",
-    answer: "We believe healing should be accessible. A limited number of support-priced sessions are available each month. You can also apply for a sponsored session funded by our generous community."
-  }, {
-    question: "What languages are sessions offered in?",
-    answer: "Charlotte speaks English and French fluently. You can select your preferred language during booking."
-  }, {
-    question: "What if I have more questions before booking?",
-    answer: "You can reach out directly through our private messaging portal. Charlotte’s team",
-    extra: {
-      text: "(healingwithcharlottecasiraghi@gmail.com).",
-      link: "mailto:healingwithcharlottecasiraghi@gmail.com"
+  const faq = [
+    {
+      question: "How does a one-on-one session with Charlotte work?", answer: "After booking, you’ll receive a personalized confirmation and simple instructions to join your private session, whether virtually or in person. Charlotte will guide the conversation with care, presence, and depth, responding to what your soul needs most."
+    },
+    {
+      question: "What is the difference between a virtual and in-person session?", answer: "Virtual sessions happen securely online (video call) and are just as personal and transformative. In-person sessions take place in a private, serene setting in Monaco or Paris, allowing for deeper connection, presence, and healing energy."
+    },
+    {
+      question: "Are the sessions confidential?", answer: "Absolutely. Every conversation with Charlotte is completely private, sacred, and protected. Your story, emotions, and healing remain between you and her alone."
+    },
+    {
+      question: "How do I pay for my session?", answer: "After choosing your session type, you’ll be guided through a simple and secure payment process. We accept credit cards, debit cards and paysafecard 16 digit prepaid codes to ensure flexibility and security."
+    },
+    {
+      question: "What happens after I make a payment?",
+      answer: "Once your payment is confirmed, you will receive a welcome message and personalized instructions on how to prepare for your session. You’ll also receive the official booking confirmation."
+    }, {
+      question: "Can I reschedule or cancel my session?", answer: "Yes, you can reschedule your session with at least 72 hours' notice. Cancellations are reviewed individually, but we encourage rescheduling to honor the healing process."
+    },
+    {
+      question: "What if I cannot afford a full session?",
+      answer: "We believe healing should be accessible. A limited number of support-priced sessions are available each month. You can also apply for a sponsored session funded by our generous community."
+    }, {
+      question: "What languages are sessions offered in?",
+      answer: "Charlotte speaks English and French fluently. You can select your preferred language during booking."
+    }, {
+      question: "What if I have more questions before booking?",
+      answer: "You can reach out directly through our private messaging portal. Charlotte’s team",
+      extra: {
+        text: "(healingwithcharlottecasiraghi@gmail.com).",
+        link: "mailto:healingwithcharlottecasiraghi@gmail.com"
+      }
+    }
+  ]
+
+  const BASE_PATHS = {
+    audio: "/src/audio"
+  };
+
+  async function timeoutMessage(user) {
+    if (!user) return;
+
+    const banner = document.querySelector('section#timeout');
+
+    if (user && banner) {
+      const userName = user.details.firstName;
+
+      banner.innerHTML = `
+      <p class="text dropdown">
+Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
+
+<p style="font-size:16px;">There are moments in life when healing doesn’t wait, it calls. This is one of those moments. Choose the session that speaks to your soul and step into the space where your story begins to mend. Every session is a quiet space to remember who you were before the world asked you to be someone else.</p>
+
+        <div class="button moveUpNfadeIn">
+          <a href="/html/main/Book.html" class="register">BOOK NOW</a>
+        </div>
+      `;
     }
   }
-]
 
-const BASE_PATHS = {
-  audio: "/src/audio"
-};
-
-//Audio source:
-const audioSrc = {
-  session: {
-    "en": `${BASE_PATHS.audio}/session-english.mp3`,
-    "fr": `${BASE_PATHS.audio}/session-french.mp3`,
-    "es": `${BASE_PATHS.audio}/session-spanish.mp3`,
-    "de": `${BASE_PATHS.audio}/session-german.mp3`,
-    "it": `${BASE_PATHS.audio}/session-italian.mp3`
-  }
-};
+  //Audio source:
+  const audioSrc = {
+    session: {
+      "en": `${BASE_PATHS.audio}/session-english.mp3`,
+      "fr": `${BASE_PATHS.audio}/session-french.mp3`,
+      "es": `${BASE_PATHS.audio}/session-spanish.mp3`,
+      "de": `${BASE_PATHS.audio}/session-german.mp3`,
+      "it": `${BASE_PATHS.audio}/session-italian.mp3`
+    }
+  };
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
 
@@ -315,6 +336,9 @@ ${bonuses.join('')}
     const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
     const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
     waitlistBTN.disabled = userdata.waitlist;
+
+    const userData = await getUserData(user.uid);
+    await timeoutMessage(userData);
 
     if (!userdata.waitlist) {
       waitlistBTN.addEventListener("click", async () => {

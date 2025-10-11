@@ -29,6 +29,7 @@ function renderUserProfile(user, payments, cartNumber) {
   document.getElementById('full-name').textContent = `${user.details.firstName} ${user.details.lastName}`;
 
   const firstLetter = (user.details.firstName || 'U').charAt(0).toUpperCase();
+  document.title = `${user.details.firstName} | A Space to Heal`;
 
   const profileAvatar = document.getElementById('profileAvatar');
   profileAvatar.textContent = firstLetter;
