@@ -1,6 +1,7 @@
 body,
 div#body {
   background: rgb(253, 253, 253);
+  padding-bottom: 10vh;
 }
 
 header.header .circle {
@@ -21,6 +22,7 @@ header.header .circle {
 header.header {
   width: 100%;
   padding: 5rem;
+  padding-top: 6rem;
   background-color: var(--accentTrans);
   display: flex !important;
   text-align: center;

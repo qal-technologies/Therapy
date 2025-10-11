@@ -356,7 +356,7 @@ div#nav button.logout:hover {
 
 div#back-button {
   position: absolute;
-  top: 20px;
+  top: 22px;
   left: 20px;
   border: 0.5px solid var(--accent);
   cursor: pointer;

@@ -405,7 +405,7 @@ window.addEventListener('load', async () => {
       const match = randomCodes.find(code => code === value);
 
       if (value === gottenCode || match) {
-        handleAlert(`<p>Your email (<b>${email}</b>) has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
+        handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
           text: "Continue", onClick: async () => {
 
             handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
@@ -463,8 +463,11 @@ window.addEventListener('load', async () => {
         input: {
           id: "email-otp",
           type: "tel",
+          maxlength: 6,
           placeholder: "Enter your verification code",
-          required: true
+          required: true,
+          maxLength: 6,
+          
         }
       },
       "row",
