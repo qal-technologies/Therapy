@@ -16,11 +16,11 @@ async function renderCart(userId) {
             cartContainer.style.display = "flex";
             cartContainer.innerHTML = `<p style="min-width:100%; text-align:center; font-size:16px; padding-block:10vh; font-family:PoppinsMed; color:gray;">Your cart is empty.</p>`;
         } else {
-            cartContainer.innerHTML = ''; 
+            cartContainer.innerHTML = '';
             carts.forEach(cart => {
                 const cartDiv = document.createElement("div");
                 cartDiv.classList.add("cart-div");
-                cartDiv.dataset.id = cart.id; 
+                cartDiv.dataset.id = cart.id;
 
                 cartDiv.innerHTML = `
                   <div class="upper">
@@ -93,16 +93,17 @@ function setupEventListeners(userId) {
     });
 }
 
-window.addEventListener('load', () => {
-    handleAuthStateChange((user) => {
-        if (user) {
-            renderCart(user.uid);
-            setupEventListeners(user.uid);
-        } else {
-            handleAlert("Please log in to view your cart.", "toast");
-            setTimeout(() => {
-                window.location.replace("/html/regs/Signup.html");
-            }, 1500);
-        }
-    });
-});
+// window.addEventListener('load', () => {
+//     handleAuthStateChange((user) => {
+//         if (user) {
+//             renderCart(user.uid);
+//             setupEventListeners(user.uid);
+//         } else {
+//             handleAlert("Please log in or register to view your cart.", "blur", true, `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart4 fs-2"
+//             viewBox = "0 0 16 16" >
+//                 <path
+//                     d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+//           </svg >`, true, [{ text: "LOGIN", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "REGISTER", onClick: () => handleRedirect("/html/regs/Signup.html?type=register"), type: "secondary" }]);
+//         }
+//     });
+// });

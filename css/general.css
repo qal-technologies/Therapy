@@ -38,8 +38,8 @@
 }
 
 * {
-  margin: 0;
   padding: 0;
+  margin: 0;
   text-decoration: none;
   box-sizing: border-box;
   font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
@@ -83,7 +83,7 @@
 html,
 body,
 div#body {
-  /* scroll-behavior: smooth;
+  scroll-behavior: smooth;
   background: var(--gradient-color);
   background-position: 100%;
   background-clip: border-box;
@@ -103,10 +103,10 @@ div#body {
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
   height: 100%;
-  min-height: 100dvh; */
+  min-height: 100dvh;
 }
 
-/* body, html {
+body, html {
   overflow-y: hidden !important;
   overflow-x: hidden !important;
   overflow: hidden !important;
@@ -116,13 +116,8 @@ div#body {
   min-height: 100vh !important;
   padding: 10px;
   position: absolute;
-  border: 9px solid blue;
   margin: 0 !important;
-} */
-
-
-div#body{
-border:9px solid blue;
+  padding: 0 !important;
 }
 
 a#scrollUp {
@@ -231,6 +226,10 @@ div#menu {
 
 svg.menu {
   fill: var(--link);
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
 }
 
 div#nav {
@@ -656,36 +655,36 @@ section#newsletter {
 .alert-message {
   width: 100%;
   height: 100%;
-  position: fixed;
+  position: absolute;
   overflow: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
   top: 0;
   left: 0;
-  z-index: 999999999999999999;
+  z-index: 9999999999999999999;
   display: none;
   flex: 1;
-  background: rgba(0, 0, 0, 0.3);
-  -webkit-backdrop-filter: blur(5px) brightness(80%);
-  backdrop-filter: blur(5px) brightness(80%);
+  background: rgba(0, 0, 0, 0.25);
+  -webkit-backdrop-filter: blur(4px) brightness(60%);
+  backdrop-filter: blur(4px) brightness(60%);
   justify-content: center;
   align-items: center;
 }
 
 .alert-message .alert-div {
-  width: 92%;
+  width: 95%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  padding-top: 30px;
+ padding-top: 30px;
   background: rgba(255, 255, 255, 0.99);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
-  border-radius: 20px;
+  border-radius: 30px;
   gap: 10px;
 }
 
@@ -708,10 +707,11 @@ section#newsletter {
   flex-direction: column;
   flex-wrap: wrap;
   text-align: left;
+  place-self: center;
   color: black;
   font-family: PoppinsLight;
   font-size: 0.9rem;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .alert-message .alert-text span {
@@ -743,7 +743,9 @@ section#newsletter {
   align-items: center;
   cursor: pointer;
   opacity: .76;
+  transition: all 0.3s ease;
 }
+
 
 .alert-message .alert-error {
   color: rgb(255, 0, 0) !important;
@@ -861,7 +863,6 @@ section#newsletter {
   appearance: none;
 }
 
-
 .loading-section, .wait-loading-section {
   text-align: center;
   padding: 40px 30px;
@@ -971,19 +972,6 @@ span, i {
   to {
     transform: translateX(calc(-1 * var(--ticker-width)));
   }
-}
-
-
-body, html {
-  height: auto !important;
-  min-height: 100%;
-  height: 100dvh;
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding-bottom: 0 !important;
-  margin-bottom: 0 !important;
 }
 
 /* Fix for mobile dynamic viewport (iOS + Chrome Android) */

@@ -586,15 +586,6 @@ function setupCommonUI() {
     if (year) year.innerHTML = date;
 }
 
-function setupEventListeners() {
-    const backButton = document.querySelector("div#back-button");
-    const refreshButton = document.querySelector("div#refresh-button");
-
-    menu && menu.addEventListener("click", toggleMenu);
-    backButton && backButton.addEventListener("click", goBackButton);
-    refreshButton && refreshButton.addEventListener("click", handleRefresh);
-}
-
 
 function toggleMenu() {
     if (!show) {
@@ -615,8 +606,27 @@ class="menu">
 d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
 </svg>`;
     }
+    menu.style.pointerEvents = "none";
+    menu.offsetHeight; // trigger reflow
+    menu.style.pointerEvents = "auto";
     show = !show;
 }
+
+function setupEventListeners() {
+    const backButton = document.querySelector("div#back-button");
+    const refreshButton = document.querySelector("div#refresh-button");
+
+    const menu = document.querySelector("header#header div#menu");
+
+    if (menu) {
+        menu.addEventListener("click", toggleMenu);
+        menu.addEventListener("touchstart", () => { }, { passive: true });
+    }
+    backButton && backButton.addEventListener("click", goBackButton);
+    refreshButton && refreshButton.addEventListener("click", handleRefresh);
+}
+
+
 
 let backClicked = false;
 function goBackButton() {
@@ -958,7 +968,7 @@ function ensureAlertParent() {
     if (!parent) {
         parent = document.createElement("div");
         parent.classList.add("alert-message");
-        
+
         // keep it in DOM but hidden by default
         parent.style.display = "none";
         parent.setAttribute("aria-hidden", "true");
@@ -1016,15 +1026,12 @@ function addAlertContent(div, titled, titleText, message) {
         newTitle.classList.add("alert-title");
         newTitle.innerHTML = titleText || "Title";
         div.appendChild(newTitle);
-        console.log("title added");
     }
     if (message) {
         const newMessage = document.createElement("div");
         newMessage.classList.add("alert-text", "moveUp");
         newMessage.innerHTML = message;
         div.appendChild(newMessage);
-
-        console.log("message added....")
     }
 }
 
@@ -1182,6 +1189,7 @@ async function handleAlert(
     defaultFunction = () => { },
 ) {
     const parent = ensureAlertParent();
+    safeVibrate(60);
 
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
@@ -1191,23 +1199,29 @@ async function handleAlert(
             const parent = document.querySelector(".alert-message");
             if (base) base.classList.add("zoom-out");
             parent?.classList.add("fadeOut");
-
+            safeVibrate(10);
+            
             // Force repaint to ensure iOS touch layer rebuild
             void parent.offsetHeight;
 
             __alertTimer = setTimeout(() => {
-                parent.style.display = "none";
-                parent.innerHTML = "";
-                parent.setAttribute("aria-hidden", "true");
+                requestAnimationFrame(() => {
+                    parent.style.display = "none";
+                    parent.innerHTML = "";
+                    parent.setAttribute("aria-hidden", "true");
 
-                // restore scrolling
-                document.body.style.overflow = "";
+                    document.body.style.overflow = "";
 
-                // additional repaint tick
-                void document.body.offsetHeight;
-                defaultFunction();
-            }, 1000);
+                    // 👇 iOS fix: force a full reflow and touch layer rebuild
+                    parent.style.transform = "translateZ(0)";
+                    document.body.offsetHeight; // trigger reflow
+
+                    defaultFunction();
+                });
+            }, 900);
         };
+
+
 
         if (type === "toast") {
             const newMessage = document.createElement("p");
@@ -1219,7 +1233,6 @@ async function handleAlert(
             parent.style.display = "flex";
             parent.setAttribute("aria-hidden", "false");
 
-            safeVibrate(30);
             setTimeout(closeAlert, 4000);
             return;
         }
@@ -1246,8 +1259,6 @@ async function handleAlert(
         // small repaint tick to address Safari layering problems
         void parent.offsetHeight;
 
-        // vibrate once when modal appears (Android; iOS ignored safely)
-        safeVibrate(60);
 
         if (!closing) {
             setTimeout(closeAlert, 4000);
@@ -1260,6 +1271,16 @@ async function handleAlert(
     if (!window.__alert_touch_wakeup__) {
         document.addEventListener("touchstart", () => { }, { passive: true });
         window.__alert_touch_wakeup__ = true;
+    }
+
+    if (!window.__alert_touch_recovery__) {
+        document.addEventListener("touchend", () => {
+            const alertParent = document.querySelector(".alert-message");
+            if (alertParent && alertParent.style.display === "flex") {
+                alertParent.style.transform = "translateZ(0)";
+            }
+        }, { passive: true });
+        window.__alert_touch_recovery__ = true;
     }
 }
 

@@ -16,117 +16,29 @@
   <!-- FOR STYLING -->
   <link rel="shortcut icon" href="/src/images/logo.jpg" type="image/x-icon" />
 
-  <!-- <link rel="stylesheet" href="/css/general.css" /> -->
-  <!-- <link rel="stylesheet" href="/css/animation.css" /> -->
+  <link rel="stylesheet" href="/css/general.css" />
+  <link rel="stylesheet" href="/css/animation.css" />
 
-  <!-- <link rel="stylesheet" href="/css/shop.css" /> -->
+  <link rel="stylesheet" href="/css/shop.css" />
 
-  <!-- <link rel="stylesheet" href="/css/home.css" /> -->
+  <link rel="stylesheet" href="/css/home.css" />
 
-  <!-- <link rel="stylesheet" href="/css/media.css" /> -->
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: content-box;
-    }
-
-      * {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  box-sizing: border-box;
-  font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
-  font-display: swap;
-  /* font-size: clamp(12px, 2vw, 16px); */
-  /* word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word; */
-  transition: all 400ms ease;
-  list-style: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-user-drag: none;
-  user-drag: none;
-  border: none;
-  -webkit-font-smoothing: antialiased;
-  -webkit-scrollbar-width: thin;
-  scrollbar-width: thin;
-  -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
-  scrollbar-color: var(--accent) var(--primaryTrans);
-
-}
-
-    /* html,
-    body {
-      background: wheat;
-      width: 100%;
-      height: 100%;
-    }*/
-
-    /*div#body {
-      background: white;
-      width: 100%;
-      flex: 1;
-      height: 100vh !important;
-      overflow: hidden;
-      overflow-y: auto;
-    } */
-
-    html,
-body,
-div#body {
-  scroll-padding-top: 200px;
-  scroll-behavior: smooth;
-  background: var(--gradient-color);
-  background-position: 100%;
-  background-clip: border-box;
-  background-size: cover;
-  background-attachment: local;
-  background-repeat: no-repeat;
-  width: 100%;
-  overflow: hidden;
-  overflow-y: auto;
-  height: 100%;
-  top: 0 !important;
-  position: relative;
-  z-index: -99999999;
-  user-select: none;
-  display: block;
-  flex: 1;
-
-  overflow-x: hidden;
-  overflow-scrolling: touch;
-  -webkit-overflow-scrolling: touch;
-
-  height: 100%;
-  min-height: 100%;
-}
-
-body {
-  overflow: hidden !important;
-  visibility: hidden;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-
-}
-  </style>
+  <link rel="stylesheet" href="/css/media.css" />
   <title>Charlotte Casiraghi - A Space to Heal</title>
 </head>
 
 <body class="fadeIn">
 
-  <!-- <div class="alert-message">
+  <div class="alert-message">
     <div class="zoom-in alert-div">
       <p class="alert-title">✨ You're on the List!</p>
       <p class="alert-text">My message</p>
       <button class="alert-button">OK</button>
     </div>
-  </div> -->
+  </div>
 
   <!-- Details Modal -->
-  <!-- <div id="details-div" class="modal moveUp">
+  <div id="details-div" class="modal moveUp">
 
     <div class="details-top">
       <button type="button" title="Close Details" class="close-details">&lt;</button>
@@ -145,9 +57,9 @@ body {
 
     <div class="modal-content book-flex" id="bookCollection">
     </div>
-  </div> -->
+  </div>
 
-  <!-- <div id="body"> -->
+  <div id="body">
   <header id="header">
     <div class="logoSection">
       <div id="logo-div" class="moveUpNfadeIn">
@@ -204,7 +116,7 @@ body {
       </div>
 
       <div class="message">
-        <audio src="/" id="audio-message" class="page-audio" hidden></audio>
+        <audio src="/src/audio/home-english.mp3" id="audio-message" class="page-audio" hidden></audio>
         <p class="text">
           A voice message from
           <span class="highlight">Charlotte Casiraghi</span>
@@ -359,7 +271,7 @@ body {
 
   <section id="sessions">
     <div class="upper-title">
-      <audio src="/" id="audio-message2" class="page-audio" hidden></audio>
+      <audio src="/src/audio/session-english.mp3" id="audio-message2" class="page-audio" hidden></audio>
       <p class="text">SESSION INFO</p>
 
       <div class="player moveUpNfadeIn">
@@ -660,20 +572,20 @@ body {
       Copyright &copy; <span id="year">2025</span>
     </div>
   </footer>
-  <!-- </div> -->
+  </div>
 
-  <!-- <a id="scrollUp" href="#banner" title="Scroll Up" class="moveUpNfadeIn">
+  <a id="scrollUp" href="#banner" title="Scroll Up" class="moveUpNfadeIn">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--link)" class="up" viewBox="0 0 16 16">
       <path fill-rule="evenodd"
         d="M7.646 2.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 3.707 2.354 9.354a.5.5 0 1 1-.708-.708z" />
       <path fill-rule="evenodd"
         d="M7.646 6.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 7.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
     </svg>
-  </a> -->
+  </a>
 </body>
 
 </html>
 
-<!-- <script src="/js/general.js" type="module"></script> -->
-<!-- <script src="/js/shop.js" type="module"></script> -->
-<!-- <script src="/js/home.js" type="module"></script> -->
+<script src="/js/general.js" type="module"></script>
+<script src="/js/shop.js" type="module"></script>
+<script src="/js/home.js" type="module"></script>
