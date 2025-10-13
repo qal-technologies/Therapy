@@ -154,7 +154,7 @@ header#header {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding-inline: 20px;
+  padding-inline: 15px;
   padding-block: 20px;
   background: transparent;
   background-color: var(--primaryTrans);
@@ -164,13 +164,13 @@ header#header {
   position: fixed;
   top: 0;
   z-index: 99999;
-  border-bottom-right-radius: 40px;
-  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 35px;
+  border-bottom-left-radius: 35px;
   border-bottom: 0.2px solid var(--accentTrans);
 }
 
 .heightShow {
-  animation: show 600ms ease 100ms forwards;
+  animation: show 600ms ease-in-out 100ms forwards;
   box-shadow: 1px 1px 15px var(--accentTrans);
 }
 

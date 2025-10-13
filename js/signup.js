@@ -579,7 +579,7 @@ window.addEventListener('load', async () => {
   async function handleCheck() {
     handleAuthStateChange((user) => {
       if (user) {
-        handleAlert("You are already logged in!", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("", "backwards") }]);
+        handleAlert("You are already logged in. Please log out or go back and continue your journey.", "blur", false, "", true, [{text:"LOGIN", onClick:()=>{}, loading:true,},{ text: "Go Back", onClick: () => handleRedirect("", "backwards"), type:"secondary" }]);
       }
     })
   }

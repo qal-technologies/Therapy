@@ -148,13 +148,6 @@ export function loadGoogleTranslateAndApply(userLang) {
 }
 
 /**
- * Checks if the current page has been translated before
- */
-function pageWasTranslatedBefore() {
-    return !!sessionStorage.getItem(sessionKeyForPath());
-}
-
-/**
  * Reapply translation after navigation (forward/back)
  */
 function reapplyTranslationIfNeeded() {
@@ -167,25 +160,22 @@ function reapplyTranslationIfNeeded() {
     }
 }
 
-/**
- * MutationObserver to reapply translation if DOM changes significantly
- */
-function setupTranslationObserver() {
-    const observer = new MutationObserver(() => {
-        const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-        // Check if Google translate frames are lost after content updates
-        const bannerExists = document.querySelector('.goog-te-banner-frame');
-        const iframeExists = document.querySelector('.goog-te-menu-frame');
-        if (!bannerExists && !iframeExists) {
-            // Translation seems removed — reinit
-            loadGoogleTranslateAndApply(userLang);
-        }
-    });
+export function getOS() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-    observer.observe(document.body, { childList: true, subtree: true });
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return "unknown";
 }
 
 async function handleTranslateFirstLoad() {
+    const os = getOS();
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
@@ -199,6 +189,10 @@ async function handleTranslateFirstLoad() {
             cookieStore.delete();
         }
         return;
+    }
+
+    if (os === 'iOS') {
+        setGoogleTransCookie('en', userLang);
     }
 
     loadGoogleTranslateAndApply(userLang);
@@ -307,55 +301,6 @@ async function handleTranslateFirstLoad() {
 
 }
 
-
-const delay = ms => new Promise(res => setTimeout(res, ms));
-
-function waitForCombo(timeout = 100) {
-    return new Promise(resolve => {
-        const existing = document.querySelector('.goog-te-combo');
-        if (existing) return resolve(existing);
-
-        const obs = new MutationObserver(() => {
-            const el = document.querySelector('.goog-te-combo');
-            if (el) {
-                obs.disconnect();
-                resolve(el);
-            }
-        });
-        obs.observe(document.body, { childList: true, subtree: true });
-
-        setTimeout(() => {
-            obs.disconnect();
-            resolve(document.querySelector('.goog-te-combo'));
-        }, timeout);
-    });
-}
-
-function dispatchAllEvents(el) {
-    // trigger multiple events (bubbles:true)
-    ['mousedown', 'mouseup', 'click', 'input', 'change'].forEach(name => {
-        try { el.dispatchEvent(new Event(name, { bubbles: true })); } catch (e) { }
-    });
-
-    // also dispatch an InputEvent for some browsers
-    try { el.dispatchEvent(new InputEvent('input', { bubbles: true })); } catch (e) { }
-}
-
-function setSelectToValue(select, val) {
-    // try matching by option.value (case-insensitive)
-    const opts = Array.from(select.options || []);
-    const idx = opts.findIndex(o => (o.value && o.value.toLowerCase() === String(val).toLowerCase()));
-    if (idx >= 0) {
-        select.selectedIndex = idx;
-        select.options[idx].selected = true;
-        return true;
-    }
-
-    // fallback: try to set .value directly
-    try { select.value = val; } catch (e) { }
-    return select.value === val;
-}
-
 function setGoogleTransCookie(source, target) {
     try {
         const cookieValue = `/${source}/${target}`;
@@ -365,105 +310,6 @@ function setGoogleTransCookie(source, target) {
         document.cookie = `googtrans=${encodeURIComponent(cookieValue)};path=/;domain=.${location.hostname};`;
     } catch (e) {
         console.warn("Failed to set googtrans cookie:", e);
-    }
-}
-
-function resetGoogleTranslateState() {
-    try {
-        // Force-clear Google Translate's cookies
-        document.cookie.split(";").forEach(cookie => {
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            if (name.trim().startsWith("googtrans") || name.trim().startsWith("goog")) {
-                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
-            }
-        });
-
-        // Force HTML lang reset
-        document.documentElement.setAttribute("lang", "en");
-        // Sometimes the translate widget stores its state in local/session storage too
-        sessionStorage.removeItem("googtrans");
-        localStorage.removeItem("googtrans");
-    } catch (e) {
-        console.warn("Translate reset error:", e);
-    }
-}
-
-
-/**
- * Robust force reapply translation
- * Returns: { success: boolean, method: 'select'|'cookie'|'none' }
- */
-async function forceReapplyTranslation(lang, { source = 'en', timeout = 300 } = {}) {
-    if (!lang || lang === source) return { success: false, method: 'none', reason: 'no-lang-or-english' };
-
-    // Wait for the combo (the widget must be initialized)
-    const select = await waitForCombo(timeout);
-    if (!select) {
-        console.warn("forceReapplyTranslation: .goog-te-combo not found within timeout");
-        // fallback to cookie + reload
-        setGoogleTransCookie(source, lang);
-        // reload to let widget pick up cookie
-        // location.reload();
-        return { success: true, method: 'cookie' };
-    }
-
-    try {
-        const current = (select.value || '').toLowerCase();
-        const target = String(lang).toLowerCase();
-
-        // If already target, attempt a reset cycle
-        if (current === target) {
-            // Prefer an empty/blank option as reset; else pick any other option
-            const blankOpt = Array.from(select.options).find(o => o.value === '' || o.text.toLowerCase().includes('select'));
-            if (blankOpt) {
-                select.selectedIndex = Array.from(select.options).indexOf(blankOpt);
-                blankOpt.selected = true;
-                dispatchAllEvents(select);
-                await delay(30);
-                setSelectToValue(select, target);
-                dispatchAllEvents(select);
-                await delay(20); // let GTranslate do its work
-                return { success: true, method: 'select' };
-            }
-
-            // fallback: pick another non-target option, then back
-            const otherOpt = Array.from(select.options).find(o => o.value && o.value.toLowerCase() !== target);
-            if (otherOpt) {
-                select.selectedIndex = Array.from(select.options).indexOf(otherOpt);
-                otherOpt.selected = true;
-                dispatchAllEvents(select);
-                await delay(100);
-                setSelectToValue(select, target);
-                dispatchAllEvents(select);
-                await delay(10);
-                return { success: true, method: 'select' };
-            }
-
-            // no other option to swap to: use cookie
-            setGoogleTransCookie(source, lang);
-            // location.reload();
-            return { success: true, method: 'cookie' };
-        }
-
-        // If different, set to target directly
-        const ok = setSelectToValue(select, target);
-        if (ok) {
-            dispatchAllEvents(select);
-            await delay(600);
-            return { success: true, method: 'select' };
-        }
-
-        // If direct assignment failed, cookie fallback
-        setGoogleTransCookie(source, lang);
-        // location.reload();
-        return { success: true, method: 'cookie' };
-    } catch (e) {
-        console.warn("forceReapplyTranslation error:", e);
-        // fallback
-        setGoogleTransCookie(source, lang);
-        // location.reload();
-        return { success: true, method: 'cookie' };
     }
 }
 
@@ -501,44 +347,6 @@ export async function translateElementFragment(el, lang) {
     // }, 100);
     // Clean up sandbox
     sandbox.remove();
-}
-
-function setupMutationObserver() {
-    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-    const online = navigator.onLine;
-
-    // Skip if English or offline
-    if (userLang === "en" || !online) return;
-
-    const observer = new MutationObserver(mutations => {
-        for (const mutation of mutations) {
-            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                for (const node of mutation.addedNodes) {
-                    // Check text nodes
-                    if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim().length > 0) {
-                        translateElementFragment(node, userLang);
-                    }
-
-                    // Check elements with text inside
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
-                        let n;
-                        while ((n = walker.nextNode())) {
-                            if (n.nodeValue.trim().length > 0) {
-                                translateElementFragment(n, userLang);
-                                break;
-                            }
-                        }
-                    }
-
-                }
-            }
-
-            if (shouldTranslate) break;
-        }
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
 }
 
 function handleInputFocusFix() {
@@ -606,9 +414,9 @@ class="menu">
 d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
 </svg>`;
     }
-    menu.style.pointerEvents = "none";
-    menu.offsetHeight; // trigger reflow
-    menu.style.pointerEvents = "auto";
+    menu.style.transform = "translateZ(0)";
+    void menu.offsetHeight;
+
     show = !show;
 }
 
@@ -619,13 +427,19 @@ function setupEventListeners() {
     const menu = document.querySelector("header#header div#menu");
 
     if (menu) {
-        menu.addEventListener("click", toggleMenu);
-        menu.addEventListener("touchstart", () => { }, { passive: true });
+        const os = getOS();
+        if (os === 'iOS') {
+            menu.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                toggleMenu();
+            }, { passive: false });
+        } else {
+            menu.addEventListener("click", toggleMenu);
+        }
     }
     backButton && backButton.addEventListener("click", goBackButton);
     refreshButton && refreshButton.addEventListener("click", handleRefresh);
 }
-
 
 
 let backClicked = false;
@@ -648,91 +462,6 @@ function handleRefresh() {
         { text: button_cancel, onClick: "closeAlert", type: "secondary" },
         { text: button_reload, onClick: () => window.location.reload() }
     ]);
-}
-
-function initTicker() {
-    const tickerItems = [
-        { text: `A Transformative Journey with Charlotte Casiraghi` },
-        { text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." },
-        { text: `A Transformative Journey with Charlotte Casiraghi` },
-        { text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." }
-    ];
-
-    const container = document.querySelector('section.ticker-container');
-    const ticker = document.getElementById('ticker');
-    if (!ticker || !container) {
-        console.warn('initTicker aborted: missing #ticker or #ticker-container');
-        return;
-    }
-
-    // build content
-    ticker.innerHTML = '';
-    tickerItems.forEach(item => {
-        const span = document.createElement('span');
-        span.className = `ticker-item ${item.class ? ' ' + item.class : ''}`;
-        span.textContent = item.text;
-        ticker.appendChild(span);
-    });
-
-    // duplicate content for smooth infinite scroll
-    ticker.insertAdjacentHTML('beforeend', ticker.innerHTML);
-
-    // wait for layout to finish before measuring widths
-    const items = ticker.querySelectorAll('.ticker-item');
-    if (!items.length) {
-        console.warn('initTicker: no .ticker-item found after render');
-        return;
-    }
-
-    // compute width of a single set (first half)
-    const half = items.length / 2;
-    let singleWidth = 0;
-    for (let i = 0; i < half; i++) {
-        const w = items[i].offsetWidth;
-        const style = getComputedStyle(items[i]);
-        const marginRight = parseFloat(style.marginRight) || 0;
-        singleWidth += w + marginRight;
-    }
-
-    if (singleWidth <= 0) {
-        console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
-        return;
-    }
-
-    // Set CSS variable for animation
-    ticker.style.setProperty('--ticker-width', `${singleWidth}px`);
-    container.classList.add('animate');
-
-    if (!window.__tickerLoadAttached) {
-        window.addEventListener('load', () => {
-            // small delay to allow layout to settle
-            setTimeout(initTicker, 800);
-        });
-        window.__tickerLoadAttached = true;
-    }
-
-    // attach a single resize listener
-    if (!window.__tickerResizeAttached) {
-        window.addEventListener('resize', () => {
-            // small delay to allow layout to settle
-            setTimeout(initTicker, 150);
-        });
-        window.__tickerResizeAttached = true;
-    }
-}
-
-function runTicker() {
-    const t = document.getElementById('ticker');
-    if (t) {
-        initTicker();
-        let prev = getComputedStyle(t).transform;
-        setInterval(() => {
-            const cur = getComputedStyle(t).transform;
-            if (cur !== prev) {
-                prev = cur;
-            }
-        }, 500);
-    }
 }
 
 function setupAuthUI(user) {
@@ -782,6 +511,7 @@ function setupAuthUI(user) {
 async function setupNewsletter(user) {
     const emailInput = document.querySelector("input#subscribe-email");
     const emailBTN = document.querySelector(".newsletter-form button");
+    const placeholder = getOS();
 
     if (!emailBTN || !emailInput) return;
 
@@ -790,7 +520,7 @@ async function setupNewsletter(user) {
 
     await new Promise(res => setTimeout(res, 200));
 
-    const thisUser = user ? await getUserData(user.uid) : false;
+    const thisUser = user ? await getUserData(user.uid) : { emailSub: false };
 
 
     function validateEmailValue(email) {
@@ -810,7 +540,8 @@ async function setupNewsletter(user) {
     if (user) {
         if (thisUser.emailSub) {
             emailInput.disabled = true;
-            emailInput.placeholder = "You have already subscribed...";
+            emailInput.placeholder = placeholder;
+            // emailInput.placeholder = "You have already subscribed...";
             emailInput.style.cursor = "not-allowed";
             emailBTN.disabled = true;
             emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
@@ -851,12 +582,8 @@ async function setupNewsletter(user) {
 
 async function initializeApp() {
     await handleTranslateFirstLoad();
-
     setupCommonUI();
     setupEventListeners();
-    // setupMutationObserver();
-    initTicker();
-    runTicker();
     let loadUser;
 
     if ("serviceWorker" in navigator) {
@@ -1200,7 +927,7 @@ async function handleAlert(
             if (base) base.classList.add("zoom-out");
             parent?.classList.add("fadeOut");
             safeVibrate(10);
-            
+
             // Force repaint to ensure iOS touch layer rebuild
             void parent.offsetHeight;
 

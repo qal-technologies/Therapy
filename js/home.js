@@ -701,6 +701,91 @@ ${session.type == "inner" ?
 	});
 
 
+	function initTicker() {
+		const tickerItems = [
+			{ text: `A Transformative Journey with Charlotte Casiraghi` },
+			{ text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." },
+			{ text: `A Transformative Journey with Charlotte Casiraghi` },
+			{ text: "Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself." }
+		];
+
+		const container = document.querySelector('section.ticker-container');
+		const ticker = document.getElementById('ticker');
+		if (!ticker || !container) {
+			console.warn('initTicker aborted: missing #ticker or #ticker-container');
+			return;
+		}
+
+		// build content
+		ticker.innerHTML = '';
+		tickerItems.forEach(item => {
+			const span = document.createElement('span');
+			span.className = `ticker-item ${item.class ? ' ' + item.class : ''}`;
+			span.textContent = item.text;
+			ticker.appendChild(span);
+		});
+
+		// duplicate content for smooth infinite scroll
+		ticker.insertAdjacentHTML('beforeend', ticker.innerHTML);
+
+		// wait for layout to finish before measuring widths
+		const items = ticker.querySelectorAll('.ticker-item');
+		if (!items.length) {
+			console.warn('initTicker: no .ticker-item found after render');
+			return;
+		}
+
+		// compute width of a single set (first half)
+		const half = items.length / 2;
+		let singleWidth = 0;
+		for (let i = 0; i < half; i++) {
+			const w = items[i].offsetWidth;
+			const style = getComputedStyle(items[i]);
+			const marginRight = parseFloat(style.marginRight) || 0;
+			singleWidth += w + marginRight;
+		}
+
+		if (singleWidth <= 0) {
+			console.warn('initTicker: computed singleWidth is 0 — check visibility/CSS');
+			return;
+		}
+
+		// Set CSS variable for animation
+		ticker.style.setProperty('--ticker-width', `${singleWidth}px`);
+		container.classList.add('animate');
+
+		if (!window.__tickerLoadAttached) {
+			window.addEventListener('load', () => {
+				// small delay to allow layout to settle
+				setTimeout(initTicker, 800);
+			});
+			window.__tickerLoadAttached = true;
+		}
+
+		// attach a single resize listener
+		if (!window.__tickerResizeAttached) {
+			window.addEventListener('resize', () => {
+				// small delay to allow layout to settle
+				setTimeout(initTicker, 150);
+			});
+			window.__tickerResizeAttached = true;
+		}
+	}
+
+	function runTicker() {
+		const t = document.getElementById('ticker');
+		if (t) {
+			initTicker();
+			let prev = getComputedStyle(t).transform;
+			setInterval(() => {
+				const cur = getComputedStyle(t).transform;
+				if (cur !== prev) {
+					prev = cur;
+				}
+			}, 500);
+		}
+	}
+
 	async function timeoutMessage(user) {
 		if (!user) return;
 
@@ -728,7 +813,10 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
 		
-		const userData = await getUserData(user.uid);
+		const userData = await getUserData(user?.uid);
+		initTicker();
+		runTicker();
+		
 		await timeoutMessage(userData);
 
 		if (!userdata.waitlist) {
