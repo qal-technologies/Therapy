@@ -1,3 +1,17 @@
+export function getOS() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    if (/android/i.test(userAgent)) {
+        return "Android";
+    }
+
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+    }
+
+    return "unknown";
+}
+
 import { handleAuthStateChange, logout } from './auth.js';
 import { getUserData, saveTranslationToFirestore, updateUserData } from './database.js';
 
@@ -186,6 +200,7 @@ function setupTranslationObserver() {
 }
 
 async function handleTranslateFirstLoad() {
+    const os = getOS();
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
@@ -199,6 +214,10 @@ async function handleTranslateFirstLoad() {
             cookieStore.delete();
         }
         return;
+    }
+
+    if (os === 'iOS') {
+        setGoogleTransCookie('en', userLang);
     }
 
     loadGoogleTranslateAndApply(userLang);
@@ -619,8 +638,15 @@ function setupEventListeners() {
     const menu = document.querySelector("header#header div#menu");
 
     if (menu) {
-        menu.addEventListener("click", toggleMenu);
-        menu.addEventListener("touchstart", () => { }, { passive: true });
+        const os = getOS();
+        if (os === 'iOS') {
+            menu.addEventListener("touchstart", (e) => {
+                e.preventDefault();
+                toggleMenu();
+            }, { passive: false });
+        } else {
+            menu.addEventListener("click", toggleMenu);
+        }
     }
     backButton && backButton.addEventListener("click", goBackButton);
     refreshButton && refreshButton.addEventListener("click", handleRefresh);
