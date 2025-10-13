@@ -1,9 +1,9 @@
-import { signup, login, handleAuthStateChange } from './auth.js';
+import { signup, login, handleAuthStateChange, logout } from './auth.js';
 import { createUserProfile } from './database.js';
 import handleAlert, { handleRedirect } from './general.js';
 
-  const TEMPLATE = {
-    login: `
+const TEMPLATE = {
+  login: `
    <div class="form-container rightIntro active" id="login-form">
         <div class="header">
           <h1>Login</h1>
@@ -35,7 +35,7 @@ import handleAlert, { handleRedirect } from './general.js';
         </form>
       </div>
   `,
-    register: `
+  register: `
   <div class="form-container leftIntro active" id="register-form">
     <div class="register-upper upper">
       <div class="header register-header">
@@ -109,7 +109,7 @@ import handleAlert, { handleRedirect } from './general.js';
       </form>
     </div>
   </div>`
-  };
+};
 
 window.addEventListener('load', async () => {
   const DOM = {
@@ -149,19 +149,19 @@ window.addEventListener('load', async () => {
     const regPassword = document.getElementById("reg-password");
     const confirmPassword = document.getElementById("confirm-reg-password");
     const errorMsg = document.getElementById("password-error2");
-          const errorMsg2 = document.getElementById("password-error1");
+    const errorMsg2 = document.getElementById("password-error1");
 
     if (regPassword && confirmPassword) {
       const validatePasswords = () => {
         const pwd = regPassword.value.trim();
         const confirm = confirmPassword.value.trim();
 
-        if (errorMsg2.classList.contains("active") && pwd.length >=3 ) {
-              errorMsg2.textContent = "";
-              regPassword.style.borderColor = "var(--accent)";
-              errorMsg2.classList.remove("active");
+        if (errorMsg2.classList.contains("active") && pwd.length >= 3) {
+          errorMsg2.textContent = "";
+          regPassword.style.borderColor = "var(--accent)";
+          errorMsg2.classList.remove("active");
         }
-        
+
         regPassword.addEventListener("blur", () => {
           const pwd = regPassword.value.trim();
 
@@ -222,7 +222,7 @@ window.addEventListener('load', async () => {
     const container = DOM.formSection();
     if (!container) return;
     document.activeElement?.blur();
-  
+
     container.innerHTML = state.currentForm === 'login' ? TEMPLATE.login : TEMPLATE.register;
     attachFormListeners();
     handleStroll();
@@ -458,7 +458,7 @@ window.addEventListener('load', async () => {
       {
         timer: {
           duration: 60,
-          onResend 
+          onResend
         },
         input: {
           id: "email-otp",
@@ -467,7 +467,7 @@ window.addEventListener('load', async () => {
           placeholder: "Enter your verification code",
           required: true,
           maxLength: 6,
-          
+
         }
       },
       "row",
@@ -579,7 +579,21 @@ window.addEventListener('load', async () => {
   async function handleCheck() {
     handleAuthStateChange((user) => {
       if (user) {
-        handleAlert("You are already logged in. Please log out or go back and continue your journey.", "blur", false, "", true, [{text:"LOGIN", onClick:()=>{}, loading:true,},{ text: "Go Back", onClick: () => handleRedirect("", "backwards"), type:"secondary" }]);
+        handleAlert("Please log out or go back and continue your journey in healing.", "blur", true, "<i class='bi bi-exclamation-triangle text-warning fs-2'></i> <br/> You are logged in", true, [{
+          text: "LOGOUT", onClick: async () => {
+            try {
+              await logout();
+              handleAlert("Please log in again if you'd like to continue.", "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> You have been logged out.", true, [{ text: "OK", onClick: () => handleRedirect("/html/main/Home.html") }]);
+            } catch (error) {
+              handleAlert(`Failed to log out, because: ${error}.`, "toast");
+
+              setTimeout(() => {
+                handleRedirect("", "backwards");
+                return "closeAlert";
+              }, 1500);
+            }
+          }, loading: true,
+        }, { text: "Go Back", onClick: () => handleRedirect("", "backwards"), type: "secondary" }]);
       }
     })
   }
@@ -619,5 +633,5 @@ window.addEventListener('load', async () => {
     updateFormUI();
   }
 
- await init();
+  await init();
 });
