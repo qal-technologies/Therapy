@@ -4,7 +4,7 @@ import { getUserData } from './database.js';
 
 //I changed something here pasqal, check it out!
 window.addEventListener('DOMContentLoaded', () => {
-     handleAuthStateChange(async (user) => {
+    handleAuthStateChange(async (user) => {
         if (user) {
             let waitlist = false;
             const TOPICS_DATA = {
@@ -228,6 +228,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            function checkProceedBTN() {
+                const btn = DOM.proceed;
+
+                if (btn.disabled) {
+                    btn.innerHTML = `<div class="spinner-container">
+							<div class="spinner"></div>
+						</div>`
+                } else {
+                    btn.innerHTML = `<p class="text">PROCEED</p>`;
+                }
+            }
+
             function showCompletion() {
                 const session = state.selectedTopic;
                 const topic = TOPICS_DATA[session];
@@ -256,9 +268,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 DOM.acceptRadio.disabled = false;
                 DOM.proceed.disabled = !DOM.acceptRadio.checked;
 
+                checkProceedBTN();
+
                 if (!DOM.acceptRadio.dataset.listenerAttached) {
                     DOM.acceptRadio.addEventListener('change', () => {
                         DOM.proceed.disabled = !DOM.acceptRadio.checked;
+                        checkProceedBTN();
                     });
                     DOM.acceptRadio.dataset.listenerAttached = 'true';
                 }
@@ -266,6 +281,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (!DOM.proceed.dataset.listenerAttached) {
                     DOM.proceed.addEventListener('click', () => {
                         if (!DOM.acceptRadio.checked) return;
+
+                        DOM.proceed.disabled = true;
+                        DOM.proceed.innerHTML = `<div class="spinner-container">
+							<div class="spinner"></div>
+						</div>`;
+
                         const language = navigator.language;
                         const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
                         const session = TOPICS_DATA[state.selectedTopic];
@@ -354,6 +375,11 @@ window.addEventListener('DOMContentLoaded', () => {
                     DOM.acceptRadio.checked = true;
                     DOM.acceptRadio.disabled = true;
                 }
+
+                if (DOM.dropdownHeader && DOM.dropdownOptions) {
+                    DOM.dropdownOptions.classList.add('open');
+                    DOM.chevron.classList.add('open');
+                }
                 if (DOM.proceed) {
                     DOM.proceed.disabled = true;
                 }
@@ -380,36 +406,44 @@ window.addEventListener('DOMContentLoaded', () => {
                     if (type == "session") {
                         selectTopic(topic);
                     }
-                    const audioMessage2 = document.getElementById('audio-message2');
-                    if (audioMessage2) {
-                        audioMessage2.src = audioSrc.session[lang] || `${BASE_PATHS.audio}/session-english.mp3`;
-                        const listenBTN = document.getElementById('play2');
-                        if (listenBTN) {
-                            listenBTN.addEventListener('click', (e) => {
-                                e.preventDefault();
-                                try {
-                                    if (audioMessage2.paused) {
-                                        audioMessage2.play().then(() => {
-                                            listenBTN.innerHTML = SVG_ICONS.PAUSE;
-                                        }).catch(error => {
-                                            console.error('Audio playback failed:', error);
-                                            handleAlert('Audio playback failed. Please try again.', 'toast');
-                                        });
-                                    } else {
-                                        audioMessage2.pause();
-                                        listenBTN.innerHTML = SVG_ICONS.PLAY;
-                                    }
-                                } catch (error) {
-                                    console.error('Audio error:', error);
-                                }
-                            });
-                            audioMessage2.addEventListener("ended", () => {
-                                listenBTN.innerHTML = SVG_ICONS.PLAY;
-                            });
-                        }
-                    }
+
                 } catch (error) {
                     console.error('Error parsing booking details:', error);
+                }
+            }
+
+            const audioMessage2 = document.getElementById('audio-message2');
+            if (audioMessage2) {
+                audioMessage2.src = audioSrc.session[lang] || `${BASE_PATHS.audio}/session-english.mp3`;
+                const listenBTN = document.getElementById('play2');
+                if (listenBTN) {
+                    listenBTN.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        audioMessage2.currentTime = 0;
+
+                        try {
+                            if (audioMessage2.paused) {
+                                audioMessage2.play().then(() => {
+                                    listenBTN.innerHTML = SVG_ICONS.PAUSE;
+                                }).catch(error => {
+                                    console.error('Audio playback failed:', error);
+                                    handleAlert('Audio playback failed. Please try again.', 'toast');
+                                });
+                            } else {
+                                audioMessage2.pause();
+                                listenBTN.innerHTML = SVG_ICONS.PLAY;
+                            }
+                        } catch (error) {
+                            console.error('Audio error:', error);
+                        }
+                    });
+                    audioMessage2.addEventListener("ended", () => {
+                        listenBTN.innerHTML = SVG_ICONS.PLAY;
+                    });
+
+                    audioMessage2.addEventListener("pause", () => {
+                        listenBTN.innerHTML = SVG_ICONS.PLAY;
+                    });
                 }
             }
         } else if (!user) {

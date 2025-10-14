@@ -6,6 +6,7 @@ import {
     updateGlobalTransaction,
     updateUserData
 } from './database.js';
+import { scrollToMakeVisible } from './shop.js';
 
 // ==================== STATE MANAGEMENT ====================
 function initializeState() {
@@ -302,6 +303,8 @@ function handleCreditCard(state, elements) {
 
                 setTimeout(() => {
                     state.creditCardError = true;
+                    scrollToMakeVisible(".card-error");
+
                     state.creditCardTrials = state.creditCardTrials + 1;
 
                     btn.disabled = false;
@@ -310,8 +313,6 @@ function handleCreditCard(state, elements) {
                     if (state.creditCardTrials > 1) {
                         btn.disabled = true;
                         state.detectedBrand = null;
-
-                        // then for redirecting bk to selecting methods
 
                         backToMethod(state, elements);
                     }
@@ -478,7 +479,7 @@ const paySafeSteps = [
 Buy a paysafecard voucher online or at a shop near you.
 You’ll receive a paper slip or digital code containing your 16-digit code.`,
         buttons: [
-            { text: "Next >", action: "next" }
+            { text: "Next >", action: "next", }
         ]
     },
     {
@@ -1191,7 +1192,6 @@ async function initializePaymentFlow(e, state, elements) {
     checkPaymentMethodSelection(state, elements);
     return true;
 }
-
 
 document.addEventListener("DOMContentLoaded", (e) => {
     handleAuthStateChange(async (user) => {

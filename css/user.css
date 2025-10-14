@@ -69,7 +69,7 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   font-family: PoppinsSemi;
-  color: white;
+  color: var(--accent);
   place-self: center;
   -webkit-user-select: none;
   user-select: none;

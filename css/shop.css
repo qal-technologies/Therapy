@@ -137,6 +137,8 @@
 }
 
 .preview-banner .under-text-div .under-text {
+  display: flex;
+  flex-direction: column;
   place-self: center;
   width: 95%;
   max-width: 600px;
@@ -162,6 +164,8 @@
 .under-text p.author-name {
   width: 70%;
   place-self: center;
+  display: flex;
+  flex-direction: column;
   padding-top: 12px;
   border-top: 1px solid #d1d1d1;
   font-weight: bolder;
@@ -238,8 +242,9 @@
 
 .preview-image-div button, .preview-image-div a {
   border: none;
-  width: 60%;
-  min-width: 200px;
+  width: max-content;
+  min-width: 250px;
+  max-width: 90%;
   background: var(--link);
   color: white;
   font-size: 1.2rem;
@@ -250,6 +255,7 @@
   text-align: center;
   border-radius: 50px;
   padding: 5px;
+  padding-inline: 10px;
   cursor: pointer;
   justify-content: center;
 }
@@ -477,7 +483,6 @@
 .book-item .quantity .qty-main-div span {
   cursor: pointer;
   background: var(--accentTrans);
-  padding: 8px;
   width: 30px;
   height: 30px;
   font-family: PoppinsSemi;
@@ -486,6 +491,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  place-content: center;
   border: 0.5px solid var(--accent);
   text-align: center;
   -webkit-user-select: none;

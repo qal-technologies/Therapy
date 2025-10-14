@@ -286,10 +286,15 @@ window.addEventListener('load', () => {
                 }
 
                 function toggleFullscreen() {
-                    if (!document.fullscreenElement) {
-                        document.documentElement.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
-                    } else {
-                        document.exitFullscreen();
+                    try {
+
+                        if (!document.fullscreenElement) {
+                            document.documentElement.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
+                        } else {
+                            document.exitFullscreen();
+                        }
+                    } catch (e) {
+                        alert(e);
                     }
                 }
 
@@ -373,12 +378,14 @@ window.addEventListener('load', () => {
                         if (bookmarkedPage) state.page = bookmarkedPage;
                     }
                     state.zoom = 1;
-                    // state.soundOn = true;
+                    if (state.soundOn == false) {
+                        state.soundOn = true;
+                        volumeIconToggle();
+                    }
 
                     setupEventListeners();
                     applyLayout();
                     updateBookmarkIcon();
-                    // volumeIconToggle();
 
                 })();
 

@@ -3,6 +3,34 @@ import { handleAuthStateChange, getCurrentUser } from './auth.js';
 import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
 import { handleRedirect, translateElementFragment } from "./general.js";
 
+export function scrollToMakeVisible(selector) {
+  const modal = document.getElementById("details-div");
+  const content = modal.querySelector(".modal-content");
+  const target = content.querySelector(selector);
+  const header = modal.querySelector(".details-top");
+
+  if (!target || !content) return;
+
+  // Compute offset
+  const headerHeight = header.getBoundingClientRect().height;
+
+  // Compute the distance of target relative to content
+  const targetRect = target.getBoundingClientRect();
+  const contentRect = content.getBoundingClientRect();
+
+  // How far from top of content we need to scroll
+  const currentScroll = content.scrollTop;
+  // target's top relative to content's top
+  const targetOffset = targetRect.top - contentRect.top;
+
+  // scroll such that targetOffset minus headerHeight is visible
+  const scrollTo = currentScroll + targetOffset - headerHeight - 8; // extra margin
+
+  content.scrollTo({
+    top: scrollTo >= 0 ? scrollTo : 0,
+    behavior: 'smooth',
+  });
+}
 
 // Initialize both sections
 window.addEventListener('load', () => {
@@ -23,14 +51,6 @@ window.addEventListener('load', () => {
       "it": `${BASE_PATHS.audio}/book-italian.mp3`
     }
   };
-
-  function toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
-    } else {
-      document.exitFullscreen();
-    }
-  }
 
 
   function handleAudio(lang) {
@@ -120,35 +140,6 @@ window.addEventListener('load', () => {
     if (modal) modal.classList.toggle("fadeOut");
   };
 
-  function scrollToMakeVisible(selector) {
-    const modal = document.getElementById("details-div");
-    const content = modal.querySelector(".modal-content");
-    const target = content.querySelector(selector);
-    const header = modal.querySelector(".details-top");
-
-    if (!target || !content) return;
-
-    // Compute offset
-    const headerHeight = header.getBoundingClientRect().height;
-
-    // Compute the distance of target relative to content
-    const targetRect = target.getBoundingClientRect();
-    const contentRect = content.getBoundingClientRect();
-
-    // How far from top of content we need to scroll
-    const currentScroll = content.scrollTop;
-    // target's top relative to content's top
-    const targetOffset = targetRect.top - contentRect.top;
-
-    // scroll such that targetOffset minus headerHeight is visible
-    const scrollTo = currentScroll + targetOffset - headerHeight - 8; // extra margin
-
-    content.scrollTo({
-      top: scrollTo >= 0 ? scrollTo : 0,
-      behavior: 'smooth',
-    });
-  }
-
 
   function showDetailsModal(e) {
     const modal = document.querySelector("#details-div");
@@ -158,8 +149,6 @@ window.addEventListener('load', () => {
     const contains = modal.classList.contains("fadeOut");
     contains && modal.classList.remove("fadeOut");
 
-    // toggleFullscreen();
-
     const bookId = e.target.closest(".sub-preview").dataset.id;
     const book = BOOK_COLLECTION.find(b => b.id == bookId);
 
@@ -167,14 +156,9 @@ window.addEventListener('load', () => {
     renderBookCollection(book);
 
     setTimeout(() => {
-      const addToCartElements = document.querySelectorAll('.add-to-cart');
-
-      // addToCartElements[0].scrollIntoView({
-      //   behavior: 'smooth',
-      // });
 
       scrollToMakeVisible('.add-to-cart:last-of-type');
-    }, 3000);
+    }, 2500);
   }
 
   function handleQuantityChange(e) {
@@ -465,6 +449,3 @@ Select Book Format
     }
   });
 });
-
-
-

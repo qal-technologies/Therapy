@@ -83,6 +83,7 @@
 html,
 body,
 div#body {
+  scroll-padding-top: 100px;
   scroll-behavior: smooth;
   background: var(--gradient-color);
   background-position: 100%;
@@ -120,9 +121,15 @@ body, html {
   padding: 0 !important;
 }
 
+@supports (height: 100dvh) {
+  body {
+    min-height: 100dvh;
+  }
+}
+
 a#scrollUp {
   position: absolute;
-  background: var(--gradient-color);
+  background: var(--vert-gradient-color);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   padding: 10px;
@@ -131,14 +138,14 @@ a#scrollUp {
   height: 50px;
   z-index: 999999999;
   display: flex;
-  box-shadow: 1px 1px 10px var(--accent);
-  text-shadow: 1px 1px 10px white;
+  box-shadow: 0px 0px 12px var(--accent);
+  text-shadow: 0px 0px 20px var(--accent);
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  bottom: 20px;
-  right: 20px;
-  border: none;
+  bottom: 5dvh;
+  right: 5dvw;
+  border: 0.2px solid var(--accentTrans);
 }
 
 a#scrollUp:hover {
@@ -162,7 +169,7 @@ header#header {
   backdrop-filter: blur(50px);
   background-clip: border-box;
   position: fixed;
-  top: 0;
+  top: 0dvh;
   z-index: 99999;
   border-bottom-right-radius: 35px;
   border-bottom-left-radius: 35px;
@@ -680,7 +687,7 @@ section#newsletter {
   align-items: center;
   justify-content: center;
   padding: 20px;
- padding-top: 30px;
+  padding-top: 30px;
   background: rgba(255, 255, 255, 0.99);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
@@ -942,10 +949,6 @@ section#newsletter {
   display: none !important;
 }
 
-/* body {
-  top: 0 !important;
-} */
-
 span, i {
   -webkit-user-select: text !important;
   user-select: text !important;
@@ -971,12 +974,5 @@ span, i {
 
   to {
     transform: translateX(calc(-1 * var(--ticker-width)));
-  }
-}
-
-/* Fix for mobile dynamic viewport (iOS + Chrome Android) */
-@supports (height: 100dvh) {
-  body {
-    min-height: 100dvh;
   }
 }

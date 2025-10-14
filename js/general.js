@@ -44,6 +44,7 @@ function saveTranslationsToSession() {
 
     sessionStorage.setItem(pathKey, JSON.stringify(translations));
     console.log("Saved translations to session storage.");
+    iOS() ? alert("Saved translations to session storage.") : "";
 }
 
 
@@ -187,6 +188,25 @@ function iOS() {
     return (getOS() === "iOS");
 }
 
+function addPadding() {
+    const body = document.body;
+    const bodyDiv = document.querySelector("div#body");
+
+    if (iOS()) {
+        if (
+            !window.location.pathname.toLowerCase().includes("view") && !window.location.pathname.toLowerCase().includes("payment"))
+        {
+            if (bodyDiv) {
+                const lastElement = bodyDiv.lastElementChild;
+                lastElement.style.paddingBottom = "100px";
+            } else {
+                const lastElement = body.lastElementChild;
+                lastElement.style.paddingBottom = "100px";
+            }
+        }
+    }
+}
+
 async function handleTranslateFirstLoad() {
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
@@ -199,7 +219,7 @@ async function handleTranslateFirstLoad() {
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
         if (document.cookie || cookieStore) {
-            cookieStore.delete();
+            document.cookie = "";
         }
         return;
     }
@@ -208,11 +228,14 @@ async function handleTranslateFirstLoad() {
         try {
             setGoogleTransCookie('en', userLang);
         } catch (e) {
-            alert("error in cookie: ", e)
+            alert(`error in cookie: ${e}`)
         }
     }
-
-    loadGoogleTranslateAndApply(userLang);
+    try {
+        loadGoogleTranslateAndApply(userLang);
+    } catch (e) {
+        alert(e);
+    }
 
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
@@ -306,7 +329,7 @@ async function handleTranslateFirstLoad() {
                         }
                     }).catch((err) => {
                         console.warn("waitForTranslationFinish failed:", err);
-                        iOS() ? alert("waitForTranslationFinish failed:", err) : ""; 
+                        iOS() ? alert("waitForTranslationFinish failed:", err) : "";
                         cleanup();
                         resolve(false);
                     });
@@ -330,12 +353,14 @@ function setGoogleTransCookie(source, target) {
         document.cookie = `googtrans=${encodeURIComponent(cookieValue)};path=/;domain=.${location.hostname};`;
     } catch (e) {
         console.warn("Failed to set googtrans cookie:", e);
+        iOS() ? ("Failed to set googtrans cookie:") : "";
     }
 }
 
 export async function translateElementFragment(el, lang) {
     if (!window.google || !window.google.translate) {
         console.warn("Google Translate not ready");
+        iOS() ? ("Google Translate not ready") : "";
         return;
     }
     // document.body.style.display = "none";
@@ -354,6 +379,7 @@ export async function translateElementFragment(el, lang) {
     const select = document.querySelector(".goog-te-combo");
     if (!select) {
         console.warn("No translate combo found");
+        iOS() ? alert("No translate combo found") : ""; 
         return;
     }
 
@@ -594,6 +620,7 @@ async function setupNewsletter(user) {
 
 async function initializeApp() {
     await handleTranslateFirstLoad();
+    addPadding();
     setupCommonUI();
     setupEventListeners();
     let loadUser;
@@ -601,6 +628,7 @@ async function initializeApp() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
             console.error("Service Worker registration failed:", error);
+            iOS() ? alert("Service Worker registration failed:") : "";
         });
     }
 
@@ -808,7 +836,13 @@ function addAlertTimer(div, options, parent) {
                 clearInterval(timerIntervalId);
                 timerP.style.display = "none";
                 resendEl.style.display = "block";
-                if (input) input.disabled = true;
+                if (input) {
+                    input.disabled = true;
+                    input.value = "";
+                    const errorDiv = div.querySelector(".alert-error");
+                    errorDiv.innerHTML = "";
+                    errorDiv.style.display = "none";
+                }
 
                 if (typeof options.timer.onExpire === "function") options.timer.onExpire();
             }
@@ -838,7 +872,10 @@ function addAlertTimer(div, options, parent) {
             const input = document.querySelector(".alert-message input");
             resendEl.dataset.sending = "0";
             resendEl.innerHTML = `<strong style="cursor:pointer; color: var(--link, #007bff);">Request a new OTP</strong>`;
-            if (input) input.disabled = false;
+            if (input) {
+                input.disabled = false;
+                input.focus();
+            }
         }
     }
 
@@ -953,7 +990,7 @@ async function handleAlert(
 
                     // 👇 iOS fix: force a full reflow and touch layer rebuild
                     parent.style.transform = "translateZ(0)";
-                    document.body.offsetHeight; // trigger reflow
+                    document.body.offsetHeight;
 
                     defaultFunction();
                 });
@@ -1032,7 +1069,7 @@ function safeVibrate(durationOrPattern) {
     } catch (e) {
         // swallow - iOS historically doesn't support vibrate; don't break execution
         // optionally log to analytics: e
-        console.log(e);
+        alert(e);
     }
 }
 
