@@ -457,13 +457,13 @@ Select Book Format
       const details = document.querySelector("#preview .details");
       const userLang = navigator.language || navigator.languages[0];
 
-      if (thisUser.bookPaid === true) {
+      if (thisUser.bookPaid === true && copyBTN && details) {
         copyBTN.innerHTML = "START READING NOW";
         details.innerHTML = `<p> 🌹 Click <b>“START READING NOW”</b>.<br/> She has been waiting for you.</p>`;
 
         copyBTN.addEventListener("click", () => handleRedirect("/html/main/ViewBook.html"));
         translateElementFragment(copyBTN, userLang);
-      } else if (!thisUser || thisUser.bookPaid === false) {
+      } else if (!thisUser || thisUser.bookPaid === false && copyBTN) {
         copyBTN.addEventListener("click", showDetailsModal);
       }
 

@@ -6,7 +6,7 @@ const BOOK = {
                 `<p>---</p>`,
                 `
 <div class="inner-content flex center-self text-center fx-top-30p  align-center">
-    <h1 style="margin-bottom:-5px;">COMPAGNON FÉMININ</h1>
+    <h1 style="margin-bottom:-5px;" class="notranslate" translate="no">COMPAGNON FÉMININ</h1>
     <p class="text-center">A Journey Through Womanhood, Healing, and Hope</p>
 </div>
 

@@ -64,7 +64,7 @@
 .zoom-in {
   animation-duration: 500ms;
   animation-name: zoomin;
-  animation-timing-function: ease-in-out;
+  animation-timing-function: ease;
   animation-delay: 10ms;
   animation-fill-mode: forwards;
 }

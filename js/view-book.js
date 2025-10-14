@@ -351,6 +351,9 @@ window.addEventListener('load', () => {
                     });
 
                     const searchBar = document.getElementById('search');
+                    searchBar.addEventListener("focus", (e) => {
+                        e.preventDefault();
+                    })
                     searchBar.addEventListener('change', (e) => {
                         e.preventDefault();
                         const value = searchBar.value.trim().toLowerCase();
