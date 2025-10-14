@@ -203,8 +203,14 @@ async function handleTranslateFirstLoad() {
     const os = getOS();
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
-    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-    console.log(userLang);
+    let userLang;
+
+    if (os === 'iOS' && navigator.languages && navigator.languages.length > 0) {
+        userLang = navigator.languages[0].split("-")[0];
+    } else {
+        userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    }
+    console.log(`Detected language: ${userLang}`);
 
 
     //  Don't translate if the user's language is English
@@ -561,21 +567,45 @@ function setupMutationObserver() {
 }
 
 function handleInputFocusFix() {
-    const inputs = document.querySelectorAll("input, textarea, select");
-    if (inputs) {
-
-        inputs.forEach(input => {
-            input.addEventListener("focus", () => {
-                setTimeout(() => {
-                    input.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                    });
-                    window.scrollBy(0, -60);
-                }, 300);
+    const os = getOS();
+    if (os !== 'iOS') {
+        // The original behavior for Android and other devices.
+        const inputs = document.querySelectorAll("input, textarea, select");
+        if (inputs) {
+            inputs.forEach(input => {
+                input.addEventListener("focus", () => {
+                    setTimeout(() => {
+                        input.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                        });
+                        window.scrollBy(0, -60);
+                    }, 300);
+                });
             });
-        });
+        }
+        return;
     }
+
+    // iOS-specific viewport correction
+    const inputs = document.querySelectorAll("input, textarea");
+    let lastScrollY = window.scrollY;
+
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            lastScrollY = window.scrollY;
+        });
+
+        input.addEventListener('blur', () => {
+            // Use a timeout to allow the keyboard to fully retract before scrolling
+            setTimeout(() => {
+                window.scrollTo({
+                    top: lastScrollY,
+                    behavior: 'smooth'
+                });
+            }, 200);
+        });
+    });
 }
 
 function setupCommonUI() {
@@ -1223,28 +1253,23 @@ async function handleAlert(
 
         const closeAlert = () => {
             const parent = document.querySelector(".alert-message");
+            if (!parent) return;
+
+            // Clear any timers associated with this alert
+            clearTimeout(__alertTimer);
+            safeClearCountdown(parent);
+
+            // Add animation classes
             if (base) base.classList.add("zoom-out");
-            parent?.classList.add("fadeOut");
+            parent.classList.add("fadeOut");
             safeVibrate(10);
-            
-            // Force repaint to ensure iOS touch layer rebuild
-            void parent.offsetHeight;
 
+            // Remove the element from the DOM after the animation completes
             __alertTimer = setTimeout(() => {
-                requestAnimationFrame(() => {
-                    parent.style.display = "none";
-                    parent.innerHTML = "";
-                    parent.setAttribute("aria-hidden", "true");
-
-                    document.body.style.overflow = "";
-
-                    // 👇 iOS fix: force a full reflow and touch layer rebuild
-                    parent.style.transform = "translateZ(0)";
-                    document.body.offsetHeight; // trigger reflow
-
-                    defaultFunction();
-                });
-            }, 900);
+                parent.remove();
+                document.body.style.overflow = ""; // Restore scrolling
+                defaultFunction();
+            }, 500); // Matches the fadeOut animation time
         };
 
 
