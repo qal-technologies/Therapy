@@ -108,7 +108,6 @@ div#body {
   min-height: 100dvh;
   zoom: 100% !important;
   height: 100dvh;
-  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 body, html {
@@ -236,9 +235,8 @@ div#menu {
   cursor: pointer;
 }
 
-svg.menu {
+svg.menu, i.menu {
   fill: var(--link);
-
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   pointer-events: auto;
