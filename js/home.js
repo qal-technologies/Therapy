@@ -1,4 +1,4 @@
-import handleAlert from "/js/general.js";
+import handleAlert, { getOS } from "/js/general.js";
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
@@ -184,233 +184,56 @@ window.addEventListener('load', () => {
 	};
 
 	function handleAudio(lang) {
+		// JULES: FIX - Use iOS-style icons for play/pause buttons on iOS devices.
+		const os = getOS();
+		const playIcon = os === 'iOS' ? `<i class="bi bi-play-fill"></i>` : `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/></svg>`;
+		const pauseIcon = os === 'iOS' ? `<i class="bi bi-pause-fill"></i>` : `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/></svg>`;
+
 		if (audioMessage && audioMessage2 && audioMessage3) {
 			audioMessage.src = HOME_AUDIO_SRC.banner[lang] || `${HOME_BASE_PATH.audio}/home-english.mp3`;
 			audioMessage2.src = HOME_AUDIO_SRC.session[lang] || `${HOME_BASE_PATH.audio}/session-english.mp3`;
 			audioMessage3.src = HOME_AUDIO_SRC.book[lang] || `${HOME_BASE_PATH.audio}/book-english.mp3`;
 		}
 
-		if (playBTN && audioMessage) {
-			playBTN.addEventListener('click', () => {
-				audioMessage.currentTime = 0;
-				if (!audioMessage2.paused) {
-					listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage2.pause()
-				};
+		function setupPlayer(button, audio) {
+			if (!button || !audio) return;
 
-				if (!audioMessage3.paused) {
-					bookPlayBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage3.pause()
-				}
+			button.addEventListener('click', () => {
+				// Pause all other audio
+				[audioMessage, audioMessage2, audioMessage3].forEach(otherAudio => {
+					if (otherAudio !== audio && !otherAudio.paused) {
+						otherAudio.pause();
+						const otherButton = getButtonForAudio(otherAudio);
+						if (otherButton) otherButton.innerHTML = playIcon;
+					}
+				});
 
-				if (!audioMessage.paused) {
-					playBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage.pause();
+				// Toggle current audio
+				if (!audio.paused) {
+					audio.pause();
+					button.innerHTML = playIcon;
 				} else {
-					playBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-					audioMessage.play();
-				}
-			});
-		}
-
-		const listenBTN = document.querySelector("#sessions .player button#play2");
-		if (listenBTN && audioMessage2) {
-			listenBTN.addEventListener('click', () => {
-				audioMessage2.currentTime = 0;
-				if (!audioMessage.paused) {
-					playBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage.pause()
-				};
-
-				if (!audioMessage3.paused) {
-					bookPlayBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage3.pause()
-				}
-
-				if (!audioMessage2.paused) {
-					listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage2.pause();
-				} else {
-					listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-					audioMessage2.play();
-				}
-			});
-		}
-
-		if (bookPlayBTN && audioMessage3) {
-			bookPlayBTN.addEventListener('click', () => {
-				audioMessage3.currentTime = 0;
-
-				if (!audioMessage.paused) {
-					playBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage.pause();
-				};
-
-				if (!audioMessage2.paused) {
-					listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage2.pause();
-				}
-
-				if (!audioMessage3.paused) {
-					bookPlayBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-					audioMessage3.pause();
-				} else if (audioMessage3.paused) {
-					bookPlayBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
-</svg>`;
-					audioMessage3.play();
+					audio.currentTime = 0;
+					audio.play();
+					button.innerHTML = pauseIcon;
 				}
 			});
 
+			audio.addEventListener("ended", () => {
+				button.innerHTML = playIcon;
+			});
 		}
 
-		audioMessage?.addEventListener("ended", () => {
-			playBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-		});
+		function getButtonForAudio(audio) {
+			if (audio === audioMessage) return playBTN;
+			if (audio === audioMessage2) return listenBTN;
+			if (audio === audioMessage3) return bookPlayBTN;
+			return null;
+		}
 
-		audioMessage2?.addEventListener("ended", () => {
-			listenBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-		});
-
-		audioMessage3?.addEventListener("ended", () => {
-			bookPlayBTN.innerHTML = ` <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="currentColor"
-                  class="bi bi-play-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"
-                  />
-                </svg>`;
-		});
+		setupPlayer(playBTN, audioMessage);
+		setupPlayer(listenBTN, audioMessage2);
+		setupPlayer(bookPlayBTN, audioMessage3);
 	}
 
 	testimonies.innerHTML = "";

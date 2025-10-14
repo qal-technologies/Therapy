@@ -90,15 +90,16 @@ window.addEventListener('load', () => {
                     localStorage.setItem('bookState', JSON.stringify(state));
                 }
 
-                state.soundOn = true;
-                saveState();
-
                 function loadState() {
                     const savedState = localStorage.getItem('bookState');
                     if (!savedState) return false;
                     try {
                         const parsed = JSON.parse(savedState);
                         state = { ...state, ...parsed };
+                        // JULES: FIX - Default sound to on if not explicitly set.
+                        if (typeof state.soundOn !== 'boolean') {
+                            state.soundOn = true;
+                        }
                         return true;
                     } catch (e) {
                         console.error("Failed to parse saved book state:", e);
@@ -177,6 +178,7 @@ window.addEventListener('load', () => {
                 }
 
                 function playTurnSound(isClosing) {
+                    // JULES: FIX - Ensure thud sound plays on first/last page.
                     if (!state.soundOn) return;
                     try {
                         const sound = isClosing ? thudSound : pageTurnSound;
@@ -286,10 +288,19 @@ window.addEventListener('load', () => {
                 }
 
                 function toggleFullscreen() {
-                    if (!document.fullscreenElement) {
-                        document.documentElement.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
+                    // JULES: FIX - Add webkit prefix for iOS Safari compatibility.
+                    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                        if (document.documentElement.requestFullscreen) {
+                            document.documentElement.requestFullscreen();
+                        } else if (document.documentElement.webkitRequestFullscreen) { // Safari
+                            document.documentElement.webkitRequestFullscreen();
+                        }
                     } else {
-                        document.exitFullscreen();
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) { // Safari
+                            document.webkitExitFullscreen();
+                        }
                     }
                 }
 

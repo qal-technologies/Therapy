@@ -136,7 +136,8 @@ a#scrollUp {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  bottom: 20px;
+  /* JULES: FIX - Adjust bottom position to account for iOS home bar */
+  bottom: calc(20px + env(safe-area-inset-bottom));
   right: 20px;
   border: none;
 }
