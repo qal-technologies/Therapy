@@ -300,7 +300,12 @@ function handleCreditCard(state, elements) {
                 <div class="spinner-container"><div class="spinner"></div></div>
                 Verifying...
                 `;
-
+                const brands = document.querySelector(".card-brands");
+                brands.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                });
+                
                 setTimeout(() => {
                     state.creditCardError = true;
 

@@ -17,6 +17,7 @@ section.parent {
     place-content: center;
     place-items: center;
     place-self: center;
+    position: relative;
     flex: 1;
     font-family: PoppinsLight;
     overflow: hidden;
@@ -120,7 +121,7 @@ h2 {
     backdrop-filter: blur(10px);
     place-self: center;
     display: none;
-    width: 100%;
+    min-width: 100%;
     max-width: 500px;
     height: max-content;
     position: fixed;
@@ -152,6 +153,7 @@ h2 {
     overflow-y: auto;
     width: 90%;
     border-radius: 5px;
+    position: relative;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.06), -4px 10px 10px rgba(0, 47, 255, 0.08);
 }
 
