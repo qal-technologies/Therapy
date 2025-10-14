@@ -192,7 +192,7 @@ async function handleTranslateFirstLoad() {
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
 
-    iOS() ? alert("USER LANGUAGE: ", userLang) : console.log(userLang);
+    iOS() ? alert(`USER LANGUAGE: ${userLang}`) : console.log(userLang);
 
 
     //  Don't translate if the user's language is English
