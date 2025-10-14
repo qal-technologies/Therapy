@@ -190,7 +190,7 @@ function iOS() {
 async function handleTranslateFirstLoad() {
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
-    const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    const userLang = (navigator.language || navigator.userLanguage || navigator.languages[0] || "en").split("-")[0];
 
     iOS() ? alert(`USER LANGUAGE: ${userLang}`) : console.log(userLang);
 
