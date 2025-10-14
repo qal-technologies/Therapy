@@ -465,3 +465,13 @@ p#receiptDate {
   height: 30px;
   fill: var(--danger);
 }
+
+.no-payments-message{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  width: 100%;
+  height: max-content;
+}

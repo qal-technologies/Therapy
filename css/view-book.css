@@ -97,7 +97,7 @@ body {
     max-width: calc(var(--book-width) * 1.6) !important;
     place-self: center;
     position: fixed !important;
-    bottom: 4dvh !important;
+    /* bottom: 4dvh !important; */
     border-radius: 18px;
 }
 
@@ -228,7 +228,7 @@ body {
     justify-content: center;
     flex: 1;
     position: relative;
-    padding-top: calc(var(--zoom) * 4rem + 1vh);
+    padding-top: calc(var(--zoom) * 3rem + 1.5vh);
 }
 
 /* Book */

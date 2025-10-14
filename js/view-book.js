@@ -1,6 +1,6 @@
 import { handleAuthStateChange } from "./auth.js";
 import { getUserData } from "./database.js";
-import handleAlert, { handleRedirect } from './general.js';
+import handleAlert, { getOS, handleRedirect } from './general.js';
 import BOOK from './books.js';
 
 window.addEventListener('load', () => {
@@ -352,8 +352,9 @@ window.addEventListener('load', () => {
 
                     const searchBar = document.getElementById('search');
                     searchBar.addEventListener("focus", (e) => {
-                        e.preventDefault();
-                    })
+                        getOS() === "iOS" ? e.preventDefault() : "";
+                    });
+
                     searchBar.addEventListener('change', (e) => {
                         e.preventDefault();
                         const value = searchBar.value.trim().toLowerCase();
@@ -387,6 +388,23 @@ window.addEventListener('load', () => {
                     if (state.soundOn == false) {
                         state.soundOn = true;
                         volumeIconToggle();
+                    }
+
+                        const bottomToolBar = document.querySelector(".bottom-toolbar");
+                    if (getOS() !== "PC") {
+                        const height = window.innerHeight;
+                        const mainHeight = height - 20 * 1 /100
+
+                        try {
+                            bottomToolBar.style.top = `${mainHeight
+                        }px`;
+                            console.log("done...");
+                            console.log(mainHeight);
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    } else {
+                        bottomToolBar.style.bottom = "2dvh";
                     }
 
                     setupEventListeners();
