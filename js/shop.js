@@ -1,7 +1,7 @@
 import handleAlert from "/js/general.js";
 import { handleAuthStateChange, getCurrentUser } from './auth.js';
 import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
-import { handleRedirect, translateElementFragment } from "./general.js";
+import { getOS, handleRedirect, translateElementFragment } from "./general.js";
 
 export function scrollToMakeVisible(selector, parent) {
   const content = document.querySelector(parent);
@@ -9,22 +9,21 @@ export function scrollToMakeVisible(selector, parent) {
 
   if (!target || !content) return;
 
-  // Compute the distance of target relative to content
   const targetRect = target.getBoundingClientRect();
   const contentRect = content.getBoundingClientRect();
 
-  // How far from top of content we need to scroll
   const currentScroll = content.scrollTop;
-  // target's top relative to content's top
   const targetOffset = targetRect.top - contentRect.top;
 
-  // scroll such that targetOffset minus headerHeight is visible
-  const scrollTo = currentScroll + targetOffset + 8; // extra margin
-
-  content.scrollTo({
-    top: scrollTo >= 0 ? scrollTo : 0,
-    behavior: 'smooth',
-  });
+  const scrollTo = currentScroll + targetOffset;
+  try {
+    content.scrollTo({
+      top: scrollTo >= 0 ? scrollTo : 0,
+      behavior: 'smooth',
+    });
+  } catch (e) {
+    getOS() == "iOS" ? alert(e) : console.log(e);
+  }
 };
 
 // Initialize both sections

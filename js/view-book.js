@@ -289,7 +289,7 @@ window.addEventListener('load', () => {
                     try {
 
                         if (!document.fullscreenElement) {
-                            document.documentElement.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
+                            document.body.requestFullscreen().catch(err => console.error("Fullscreen request failed:", err));
                         } else {
                             document.exitFullscreen();
                         }
@@ -351,9 +351,12 @@ window.addEventListener('load', () => {
                     });
 
                     const searchBar = document.getElementById('search');
-                    searchBar.addEventListener('change', () => {
+                    searchBar.addEventListener('change', (e) => {
+                        e.preventDefault();
                         const value = searchBar.value.trim().toLowerCase();
                         searchBar.value = '';
+                        searchBar.blur();
+
                         if (!value) return;
                         if (value.includes("cover")) state.page = 0;
                         else if (value.includes('end')) state.page = LAST;

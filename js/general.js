@@ -198,10 +198,10 @@ function addPadding() {
         {
             if (bodyDiv) {
                 const lastElement = bodyDiv.lastElementChild;
-                lastElement.style.paddingBottom = "100px";
+                lastElement.style.paddingBottom = "150px";
             } else {
                 const lastElement = body.lastElementChild;
-                lastElement.style.paddingBottom = "100px";
+                lastElement.style.paddingBottom = "150px";
             }
         }
     }

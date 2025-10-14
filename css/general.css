@@ -105,6 +105,7 @@ div#body {
   overflow-scrolling: touch;
   height: 100%;
   min-height: 100dvh;
+  zoom: 100% !important;
 }
 
 body, html {

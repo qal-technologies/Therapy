@@ -228,7 +228,7 @@ body {
     justify-content: center;
     flex: 1;
     position: relative;
-    padding-top: calc(var(--zoom) * 4.2rem + 2vh);
+    padding-top: calc(var(--zoom) * 4rem + 1vh);
 }
 
 /* Book */
