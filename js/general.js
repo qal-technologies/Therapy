@@ -82,6 +82,7 @@ export function loadGoogleTranslateAndApply(userLang) {
                     lastTranslatedPath = window.location.pathname;
                     sessionStorage.setItem(sessionKeyForPath(), "translated");
                 } catch (err) {
+                    iOS() ? alert("INITIAZER ERROR: ", err) : "";
                     // non-fatal
                     cleanup();
                 }
@@ -95,6 +96,7 @@ export function loadGoogleTranslateAndApply(userLang) {
                                 select.value = userLang;
                                 select.dispatchEvent(new Event("change"));
                             } catch (e) {
+                                iOS() ? alert("TRY COMBO ERROR: ", e) : "";
                             }
                         }
                         resolve();
@@ -103,7 +105,9 @@ export function loadGoogleTranslateAndApply(userLang) {
 
                 // fallback resolve after a short delay (we'll still let GT run)
                 setTimeout(() => {
-                    try { clearInterval(tryCombo); } catch (e) { }
+                    try { clearInterval(tryCombo); } catch (e) {
+                        iOS() ? alert("TIMOUT ERROR, ", e) : ""
+                    }
                     resolve();
                 }, 1500);
             }
@@ -125,6 +129,7 @@ export function loadGoogleTranslateAndApply(userLang) {
 
                 gtScript.onerror = () => {
                     console.warn("Google Translate script failed to load.");
+                    iOS() ? alert("Google Translate script failed to load.") : "";
                     resolve();
                 };
                 document.head.appendChild(gtScript);
@@ -171,32 +176,43 @@ export function getOS() {
         return "iOS";
     }
 
+    if (/Windows|mac|windows|mac|imac|iMac/.test(userAgent)) {
+        return "PC"
+    }
+
     return "unknown";
 }
 
+function iOS() {
+    return (getOS() === "iOS");
+}
+
 async function handleTranslateFirstLoad() {
-    const os = getOS();
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-    console.log(userLang);
+
+    iOS() ? alert("USER LANGUAGE: ", userLang) : console.log(userLang);
 
 
     //  Don't translate if the user's language is English
     if (userLang === "en" || !navigator.onLine) {
         document.body.style.visibility = "visible";
-        if (cookieStore) {
+        if (document.cookie || cookieStore) {
             cookieStore.delete();
         }
         return;
     }
 
-    if (os === 'iOS') {
-        setGoogleTransCookie('en', userLang);
+    if (iOS()) {
+        try {
+            setGoogleTransCookie('en', userLang);
+        } catch (e) {
+            alert("error in cookie: ", e)
+        }
     }
 
     loadGoogleTranslateAndApply(userLang);
-    // setupTranslationObserver();
 
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
@@ -219,6 +235,7 @@ async function handleTranslateFirstLoad() {
             const fallbackTimeout = setTimeout(() => {
                 if (!done) {
                     console.warn("Translation timeout, proceeding without translation.");
+                    iOS() ? alert("Translation timeout, proceeding without translation.") : "";
                     cleanup();
                     resolve(false);
                 }
@@ -244,6 +261,8 @@ async function handleTranslateFirstLoad() {
                             htmlEl.classList.contains("translated-rtl")) {
                             clearTimeout(timeout);
                             observer.disconnect();
+
+                            iOS() ? alert("HTML class Tag added") : "";
 
                             setTimeout(() => res(), 600);
                         }
@@ -287,6 +306,7 @@ async function handleTranslateFirstLoad() {
                         }
                     }).catch((err) => {
                         console.warn("waitForTranslationFinish failed:", err);
+                        iOS() ? alert("waitForTranslationFinish failed:", err) : ""; 
                         cleanup();
                         resolve(false);
                     });
@@ -368,14 +388,6 @@ function handleInputFocusFix() {
 }
 
 function setupCommonUI() {
-    // const alertMessage = document.querySelector(".alert-message");
-    // if (alertMessage && alertMessage.innerHTML !== "") {
-    //     // alertMessage.innerHTML = "";
-    //     // alertMessage.style.display = "none";
-
-    //     alertMessage.remove();
-    // }
-
     if (!document.querySelector("link[rel='preload'][as='font']")) {
         const link = document.createElement("link");
         link.rel = "preload";
@@ -475,6 +487,7 @@ function setupAuthUI(user) {
         logoutBTN.id = "logout-button";
         logoutBTN.dataset.action = "logout";
         logoutBTN.innerText = "LOG OUT";
+
         logoutBTN.addEventListener("click", async (e) => {
             e.preventDefault();
             try {
@@ -540,8 +553,7 @@ async function setupNewsletter(user) {
     if (user) {
         if (thisUser.emailSub) {
             emailInput.disabled = true;
-            emailInput.placeholder = placeholder;
-            // emailInput.placeholder = "You have already subscribed...";
+            emailInput.placeholder = "You have already subscribed...";
             emailInput.style.cursor = "not-allowed";
             emailBTN.disabled = true;
             emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
