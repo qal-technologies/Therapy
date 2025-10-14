@@ -103,9 +103,12 @@ div#body {
   flex: 1 !important;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   min-height: 100dvh;
   zoom: 100% !important;
+  height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }
 
 body, html {
@@ -145,6 +148,7 @@ a#scrollUp {
   justify-content: center;
   border-radius: 50%;
   bottom: 5dvh;
+  bottom: calc(20px + env(safe-area-inset-bottom, 5vh));
   right: 5dvw;
   border: 0.2px solid var(--accentTrans);
 }

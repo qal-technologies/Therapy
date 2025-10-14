@@ -126,7 +126,8 @@ h2 {
     max-width: 500px;
     height: max-content;
     position: fixed;
-    min-height: 100vh;
+    min-height: 100%;
+    max-height: 95vh;
     place-self: center;
     overflow-x: hidden !important;
     overflow-y: auto !important;

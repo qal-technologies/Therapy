@@ -194,8 +194,7 @@ function addPadding() {
 
     if (iOS()) {
         if (
-            !window.location.pathname.toLowerCase().includes("view") && !window.location.pathname.toLowerCase().includes("payment"))
-        {
+            !window.location.pathname.toLowerCase().includes("view") && !window.location.pathname.toLowerCase().includes("payment")) {
             if (bodyDiv) {
                 const lastElement = bodyDiv.lastElementChild;
                 lastElement.style.paddingBottom = "150px";
@@ -208,9 +207,17 @@ function addPadding() {
 }
 
 async function handleTranslateFirstLoad() {
+    const os = getOS();
+
     const pathKey = `translated_texts:${window.location.pathname}`;
     const cachedJson = sessionStorage.getItem(pathKey);
-    const userLang = (navigator.language || navigator.userLanguage || navigator.languages[0] || "en").split("-")[0];
+    let userLang;
+
+    if (os === 'iOS' && navigator.languages && navigator.languages.length > 0) {
+        userLang = navigator.languages[0].split("-")[0];
+    } else {
+        userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+    }
 
     iOS() ? alert(`USER LANGUAGE: ${userLang}`) : console.log(userLang);
 
@@ -231,11 +238,16 @@ async function handleTranslateFirstLoad() {
             alert(`error in cookie: ${e}`)
         }
     }
+
+
+
     try {
         loadGoogleTranslateAndApply(userLang);
     } catch (e) {
         alert(e);
     }
+
+
 
     // If we have cached translations, apply them directly to the DOM
     if (cachedJson) {
@@ -379,7 +391,7 @@ export async function translateElementFragment(el, lang) {
     const select = document.querySelector(".goog-te-combo");
     if (!select) {
         console.warn("No translate combo found");
-        iOS() ? alert("No translate combo found") : ""; 
+        iOS() ? alert("No translate combo found") : "";
         return;
     }
 
@@ -396,21 +408,44 @@ export async function translateElementFragment(el, lang) {
 }
 
 function handleInputFocusFix() {
-    const inputs = document.querySelectorAll("input, textarea, select");
-    if (inputs) {
+    const ios = iOS();
 
-        inputs.forEach(input => {
-            input.addEventListener("focus", () => {
-                setTimeout(() => {
-                    input.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                    });
-                    window.scrollBy(0, -60);
-                }, 300);
+    if (!ios) {
+        const inputs = document.querySelectorAll("input, textarea, select");
+        if (inputs) {
+
+            inputs.forEach(input => {
+                input.addEventListener("focus", () => {
+                    setTimeout(() => {
+                        input.scrollIntoView({
+                            behavior: "smooth",
+                            block: "nearest",
+                        });
+                        window.scrollBy(0, -60);
+                    }, 300);
+                });
             });
-        });
+        }
+        return;
     }
+
+    const inputs = document.querySelectorAll("input, textarea");
+    let lastScrollY = window.scrollY;
+
+    inputs.forEach(input => {
+        input.addEventListener("focus", () => {
+            lastScrollY = window.scrollY;
+        });
+
+        input.addEventListener("blur", () => {
+            setTimeout(() => {
+                window.scrollTo({
+                    top: lastScrollY,
+                    behavior: 'smooth'
+                });
+            }, 200);
+        });
+    });
 }
 
 function setupCommonUI() {
@@ -434,15 +469,26 @@ function setupCommonUI() {
 
 
 function toggleMenu() {
+    const os = getOS();
+
     if (!show) {
         header.classList.add("heightShow");
-        menu.innerHTML = `
+
+        if (os === 'iOS') {
+            menu.innerHTML = `<i class="bi bi-x-lg menu"></i>`;
+        } else {
+            menu.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="menu" viewBox="0 0 16 16">
 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
 </svg>`;
+        }
     } else {
         header.classList.remove("heightShow");
-        menu.innerHTML = `<svg
+
+        if (os === 'iOS') {
+            menu.innerHTML = `<i class="bi bi-list menu"></i>`;
+        } else {
+            menu.innerHTML = `<svg
 xmlns="http://www.w3.org/2000/svg"
 height="30"
 viewBox="0 -960 960 960"
@@ -451,6 +497,7 @@ class="menu">
 <path
 d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
 </svg>`;
+        }
     }
     menu.style.transform = "translateZ(0)";
     void menu.offsetHeight;
@@ -518,7 +565,7 @@ function setupAuthUI(user) {
             e.preventDefault();
             try {
                 await logout();
-                handleAlert("Please log in again if you'd like to continue.", "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> You have been logged out.", true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
+                handleAlert("Please log in again if you'd like to continue.", "blur", true, `${iOS() ? `<i class="bi bi-exclamation-circle text-danger fs-2"></i>` : `<i class='bi bi-exclamation-triangle text-danger fs-2'></i>`} <br/> You have been logged out.`, true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
             } catch (error) {
                 handleAlert(`Failed to log out, because: ${error}.`, "toast");
             }
@@ -550,7 +597,6 @@ function setupAuthUI(user) {
 async function setupNewsletter(user) {
     const emailInput = document.querySelector("input#subscribe-email");
     const emailBTN = document.querySelector(".newsletter-form button");
-    const placeholder = getOS();
 
     if (!emailBTN || !emailInput) return;
 
@@ -623,7 +669,6 @@ async function initializeApp() {
     addPadding();
     setupCommonUI();
     setupEventListeners();
-    let loadUser;
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
@@ -965,7 +1010,7 @@ async function handleAlert(
     defaultFunction = () => { },
 ) {
     const parent = ensureAlertParent();
-    safeVibrate(60);
+    safeVibrate(80);
 
     const renderAlert = (finalTitle, finalMessage, finalButtons) => {
         const base = createAlertBase(type);
@@ -973,6 +1018,13 @@ async function handleAlert(
 
         const closeAlert = () => {
             const parent = document.querySelector(".alert-message");
+            if (!parent) return;
+
+            // Clear any timers associated with this alert
+            clearTimeout(__alertTimer);
+            safeClearCountdown(parent);
+
+
             if (base) base.classList.add("zoom-out");
             parent?.classList.add("fadeOut");
             safeVibrate(10);
@@ -994,7 +1046,7 @@ async function handleAlert(
 
                     defaultFunction();
                 });
-            }, 900);
+            }, 550);
         };
 
 
@@ -1067,9 +1119,7 @@ function safeVibrate(durationOrPattern) {
             navigator.vibrate(durationOrPattern);
         }
     } catch (e) {
-        // swallow - iOS historically doesn't support vibrate; don't break execution
-        // optionally log to analytics: e
-        alert(e);
+        console.log(e);
     }
 }
 

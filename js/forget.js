@@ -1,4 +1,4 @@
-import handleAlert, { handleRedirect, translateElementFragment } from './general.js';
+import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 import { resetPassword } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -66,8 +66,10 @@ document.addEventListener("DOMContentLoaded", () => {
             resetButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
             try {
                 const internet = navigator.onLine;
+                const ios = getOS() === "iOS";
+
                 if (!internet) {
-                    handleAlert("Network error. Please check your internet connection and try again.", "blur", true, "<i class='bi bi-wifi-off text-danger fs-2'></i> <br/> Network Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+                    handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${ios ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{ text: "Try Again", onClick: "closeAlert" }]);
                     return;
                 }
                 emailInput.disabled = true;
@@ -90,9 +92,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 console.error("Password reset error:", error);
                 const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
+               
 
                 if (errorMessage.includes("network-request-failed")) {
-                    handleAlert("Network error. Please check your internet connection and try again.", "blur", true, "<i class='bi bi-wifi-off text-danger fs-2'></i> <br/> Network Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+                    handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${getOS() === "iOS" ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{ text: "Try Again", onClick: "closeAlert" }]);
                     return;
                 }
 

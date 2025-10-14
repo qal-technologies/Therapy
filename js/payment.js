@@ -1185,8 +1185,18 @@ async function initializePaymentFlow(e, state, elements) {
             return true;
         }
     } catch (error) {
-        console.error("Error parsing payment details:", error);
-        handleAlert(`Error parsing payment details because: ${error}`, "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/main/Session.html", "replace") }]);
+        const errorMessage = error.message.split('(').pop().split(')')[0].replace('/', '');
+        console.error("Error parsing payment details:", errorMessage);
+        const ios = getOS() === "iOS";
+        
+        if (errorMessage.includes("client is offline")) {
+            handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${ios ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{
+                text: "Try Again", onClick: () => {
+                    window.location.reload();
+                    return "closeAlert";
+                }
+            }]);
+        }
 
         return false;
     } finally {
@@ -1212,7 +1222,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
             state.userId = user.uid;
             state.initialContent = elements.paymentDisplay.innerHTML;
-
+                
             await initializePaymentFlow(e, state, elements);
         } else {
             handleAlert("You must be logged in to make a payment.", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/regs/Signup.html") }]);

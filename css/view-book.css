@@ -96,8 +96,9 @@ body {
     width: 90%;
     max-width: calc(var(--book-width) * 1.6) !important;
     place-self: center;
-    position: fixed !important;
-    /* bottom: 4dvh !important; */
+    position: sticky !important;
+    bottom: 0;
+    bottom: calc(8px + env(safe-area-inset-bottom)) !important;
     border-radius: 18px;
 }
 

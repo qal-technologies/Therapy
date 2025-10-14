@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout } from './auth.js';
 import { createUserProfile } from './database.js';
-import handleAlert, { handleRedirect } from './general.js';
+import handleAlert, { getOS, handleRedirect } from './general.js';
 
 const TEMPLATE = {
   login: `
@@ -558,11 +558,12 @@ window.addEventListener('load', async () => {
     try {
       await login(email, password);
 
-      handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Login Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
+      handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-check2-circle text-success fs-2"></i>` : `<i class='bi bi-check-circle-fill text-success fs-2'></i>`} <br/> Login Successful`, true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
     } catch (error) {
       const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
+
       if (errorMessage.includes("network-request-failed")) {
-        handleAlert("Network error. Please check your internet connection and try again.", "blur", true, "<i class='bi bi-wifi-off text-danger fs-2'></i> <br/> Network Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+        handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{ text: "Try Again", onClick: "closeAlert" }]);
       } else {
         handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert", type: "secondary" }]);
       }
@@ -583,7 +584,7 @@ window.addEventListener('load', async () => {
           text: "LOGOUT", onClick: async () => {
             try {
               await logout();
-              handleAlert("Please log in again if you'd like to continue.", "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> You have been logged out.", true, [{ text: "OK", onClick: () => handleRedirect("/html/main/Home.html") }]);
+              handleAlert("Please log in again if you'd like to continue.", "blur", true, `${getOS() === "iOS" ? `<i class="bi bi-exclamation-circle text-danger fs-2"></i>` : `<i class='bi bi-exclamation-triangle text-danger fs-2'></i>`} <br/> You have been logged out.`, true, [{ text: "OK", onClick: () => handleRedirect("/html/main/Home.html") }]);
             } catch (error) {
               handleAlert(`Failed to log out, because: ${error}.`, "toast");
 
