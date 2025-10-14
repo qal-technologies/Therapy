@@ -303,9 +303,9 @@ function handleCreditCard(state, elements) {
 
                 setTimeout(() => {
                     state.creditCardError = true;
-                    scrollToMakeVisible(".card-error");
 
                     state.creditCardTrials = state.creditCardTrials + 1;
+                    scrollToMakeVisible(".card-error", ".credit-card-section");
 
                     btn.disabled = false;
                     btn.innerHTML = `Pay`;

@@ -3,16 +3,11 @@ import { handleAuthStateChange, getCurrentUser } from './auth.js';
 import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
 import { handleRedirect, translateElementFragment } from "./general.js";
 
-export function scrollToMakeVisible(selector) {
-  const modal = document.getElementById("details-div");
-  const content = modal.querySelector(".modal-content");
+export function scrollToMakeVisible(selector, parent) {
+  const content = document.querySelector(parent);
   const target = content.querySelector(selector);
-  const header = modal.querySelector(".details-top");
 
   if (!target || !content) return;
-
-  // Compute offset
-  const headerHeight = header.getBoundingClientRect().height;
 
   // Compute the distance of target relative to content
   const targetRect = target.getBoundingClientRect();
@@ -24,13 +19,13 @@ export function scrollToMakeVisible(selector) {
   const targetOffset = targetRect.top - contentRect.top;
 
   // scroll such that targetOffset minus headerHeight is visible
-  const scrollTo = currentScroll + targetOffset - headerHeight - 8; // extra margin
+  const scrollTo = currentScroll + targetOffset + 8; // extra margin
 
   content.scrollTo({
     top: scrollTo >= 0 ? scrollTo : 0,
     behavior: 'smooth',
   });
-}
+};
 
 // Initialize both sections
 window.addEventListener('load', () => {
@@ -140,6 +135,35 @@ window.addEventListener('load', () => {
     if (modal) modal.classList.toggle("fadeOut");
   };
 
+
+  function scrollToMakeVisible(selector) {
+    const modal = document.getElementById("details-div");
+    const content = modal.querySelector(".modal-content");
+    const target = content.querySelector(selector);
+    const header = modal.querySelector(".details-top");
+
+    if (!target || !content) return;
+
+    // Compute offset
+    const headerHeight = header.getBoundingClientRect().height;
+
+    // Compute the distance of target relative to content
+    const targetRect = target.getBoundingClientRect();
+    const contentRect = content.getBoundingClientRect();
+
+    // How far from top of content we need to scroll
+    const currentScroll = content.scrollTop;
+    // target's top relative to content's top
+    const targetOffset = targetRect.top - contentRect.top;
+
+    // scroll such that targetOffset minus headerHeight is visible
+    const scrollTo = currentScroll + targetOffset - headerHeight - 8; // extra margin
+
+    content.scrollTo({
+      top: scrollTo >= 0 ? scrollTo : 0,
+      behavior: 'smooth',
+    });
+  }
 
   function showDetailsModal(e) {
     const modal = document.querySelector("#details-div");
