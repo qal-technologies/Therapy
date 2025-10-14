@@ -1,4 +1,4 @@
-import handleAlert, { handleRedirect, translateElementFragment } from './general.js';
+import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
     getPaymentById,
@@ -305,7 +305,7 @@ function handleCreditCard(state, elements) {
                     behavior: "smooth",
                     block: "center",
                 });
-                
+
                 setTimeout(() => {
                     state.creditCardError = true;
 
@@ -468,7 +468,12 @@ function addNewCode(state) {
 
     inputDiv.insertAdjacentElement("beforeend", newInput);
     translateElementFragment(newInput, userLang);
-
+    if (getOS() == "iOS") {
+        btns.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+        })
+    }
     newInput.addEventListener("input", () => {
         const toggle = saveCodeToArray(state, newInput)
 

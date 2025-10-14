@@ -9,7 +9,7 @@ body {
 section.parent {
     place-self: center;
     width: 100%;
-    height: max-content;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,6 +20,7 @@ section.parent {
     position: relative;
     flex: 1;
     font-family: PoppinsLight;
+    background: white !important;
     overflow: hidden;
 }
 
@@ -121,26 +122,20 @@ h2 {
     backdrop-filter: blur(10px);
     place-self: center;
     display: none;
-    min-width: 100%;
+    width: 100%;
     max-width: 500px;
     height: max-content;
     position: fixed;
     min-height: 100vh;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
     place-self: center;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    overflow: scroll !important;
     font-family: PoppinsLight, sans-serif;
 }
 
 .payment-summary-container {
     display: none;
     flex-direction: column;
-    max-width: 400px;
     padding: 10px;
     font-family: PoppinsLight, sans-serif;
     text-align: center;
@@ -148,13 +143,14 @@ h2 {
     place-self: center;
     height: 80vh;
     min-height: max-content;
-    max-height: 600px;
+    max-height: 600px !important;
     padding-top: 80px;
     overflow-y: auto;
-    width: 90%;
+    width: 90% !important;
+    max-width: 400px;
     border-radius: 5px;
     position: relative;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.06), -4px 10px 10px rgba(0, 47, 255, 0.08);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.08), -4px 10px 10px rgba(255, 47, 0, 0.1);
 }
 
 .payment-section.paypal-section, .payment-section.card-section {
