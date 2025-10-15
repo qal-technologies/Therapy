@@ -13,7 +13,7 @@ header.header .circle {
   position: absolute;
   right: -20%;
   top: -30px;
-  opacity: 0.25;
+  opacity: 0.25 !important;
   z-index: -99;
   border-radius: 50%;
   filter: blur(1px);

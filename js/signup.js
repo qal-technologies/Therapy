@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout } from './auth.js';
 import { createUserProfile } from './database.js';
-import handleAlert, { getOS, handleRedirect } from './general.js';
+import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
   login: `
@@ -110,6 +110,13 @@ const TEMPLATE = {
     </div>
   </div>`
 };
+
+
+export function disableAllInputs(status) {
+  const all = document.querySelectorAll('input');
+  all.forEach(input => input.disabled = status);
+}
+
 
 window.addEventListener('load', async () => {
   const DOM = {
@@ -374,7 +381,6 @@ window.addEventListener('load', async () => {
     }
   }
 
-
   function handleVerifyEmail(e) {
     const email = document.getElementById('reg-email')?.value;
     const emailInput = document.getElementById('reg-email');
@@ -384,8 +390,6 @@ window.addEventListener('load', async () => {
     const randomCodes = ["109283", "308492", "083472", "942937", "542456", "783483", "903459", "213421", "462325", "038349"];
     const otpCode = randomCodes[Math.floor(Math.random() * randomCodes.length)];
     sessionStorage.setItem("verification-otp-pp", JSON.stringify(otpCode));
-    console.log(otpCode);
-
 
     const check = () => {
       const verifyInput = document.getElementById('email-otp');
@@ -402,13 +406,25 @@ window.addEventListener('load', async () => {
         return false;
       }
 
+       if (value.length<=5) {
+        if (errorDiv) {
+          errorDiv.innerHTML = "Your verification code should be up to 6. Please check your email or input a valid code.";
+          errorDiv.style.display = "flex";
+        }
+        verifyInput?.focus();
+        return false;
+      }
+
       const match = randomCodes.find(code => code === value);
 
       if (value === gottenCode || match) {
         handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
           text: "Continue", onClick: async () => {
-
-            handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+            try {
+              handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+            } catch (error) {
+              disableAllInputs(false);
+            }
           }, loading: true,
         }]);
         return true;
@@ -427,7 +443,6 @@ window.addEventListener('load', async () => {
       const newOtp = randomCodes[Math.floor(Math.random() * randomCodes.length)];
       sessionStorage.setItem("verification-otp-pp", JSON.stringify(newOtp));
       console.log(newOtp);
-      // handleVerifyEmail(e);
       verifyInput ? verifyInput.value = "" : "";
       verifyInput?.focus();
       // await sendOTPToEmail(email, newOtp);
@@ -444,6 +459,7 @@ window.addEventListener('load', async () => {
         {
           text: "Change Email",
           onClick: () => {
+            disableAllInputs(false);
             emailInput?.focus();
             return "closeAlert";
           },
@@ -467,7 +483,6 @@ window.addEventListener('load', async () => {
           placeholder: "Enter your verification code",
           required: true,
           maxLength: 6,
-
         }
       },
       "row",
@@ -488,6 +503,7 @@ window.addEventListener('load', async () => {
 
   function handleConfirm(e) {
     e.preventDefault();
+    disableAllInputs(true);
     updateFormState();
 
     const registerButton = document.getElementById('register-button');
@@ -497,7 +513,15 @@ window.addEventListener('load', async () => {
     }
 
     handleAlert("Please review your details carefully. This information will be used for bookings and payments.", "blur", true, "🔐 <br/> Details Confirmation", true, [
-      { text: "Check Details", onClick: "closeAlert", type: "secondary" },
+      {
+        text: "Check Details", onClick: () => {
+          disableAllInputs(false);
+
+          const email = document.getElementById('reg-email')
+          email?.focus();
+          return "closeAlert";
+        }, type: "secondary"
+      },
       { text: "Proceed", onClick: () => handleVerifyEmail(e), loading: true }
     ]);
   }
@@ -516,6 +540,7 @@ window.addEventListener('load', async () => {
       return;
     }
 
+    disableAllInputs(true);
     try {
       const userCredential = await signup(email, password);
       const user = userCredential.user;
@@ -536,8 +561,15 @@ window.addEventListener('load', async () => {
       handleAlert(`Registration failed: ${errorMessage}`, "toast");
 
       if (errorMessage.includes("email-already-in-use")) {
-        handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Try Again", onClick: "closeAlert", type: "secondary" }]);
+        handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, {
+          text: "Try Again", onClick: () => {
+            document.getElementById('reg-email')?.focus();
+            return "closeAlert";
+          }, type: "secondary"
+        }]);
       }
+    } finally {
+      disableAllInputs(false);
     }
   }
 
@@ -555,6 +587,7 @@ window.addEventListener('load', async () => {
       btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
     }
 
+    disableAllInputs(true);
     try {
       await login(email, password);
 
@@ -565,15 +598,26 @@ window.addEventListener('load', async () => {
       if (errorMessage.includes("network-request-failed")) {
         handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{ text: "Try Again", onClick: "closeAlert" }]);
       } else {
-        handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, { text: "Try Again", onClick: "closeAlert", type: "secondary" }]);
+        handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, {
+          text: "Try Again", onClick: () => {
+            if (email) email.focus();
+            return "closeAlert";
+
+          }
+          , type: "secondary"
+        }]);
       }
 
       if (btn) {
         btn.disabled = false;
         btn.innerHTML = `<p class="text">LOGIN</p>`;
+
+        translateElementFragment(btn, navigator.languages[0].split("-")[0]);
       }
 
       console.error("The error is: ", errorMessage);
+    } finally {
+      disableAllInputs(false);
     }
   }
 

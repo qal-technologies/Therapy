@@ -406,23 +406,8 @@ window.addEventListener('load', () => {
                             volumeIconToggle();
                         }
 
-                        const bottomToolBar = document.querySelector(".bottom-toolbar");
-                        if (getOS() !== "PC") {
-                            const height = window.innerHeight;
-                            const mainHeight = height - 20 * 1 / 100
-
-                            try {
-                                bottomToolBar.style.top = `${mainHeight
-                                    }px`;
-                                console.log("done...");
-                                console.log(mainHeight);
-                            } catch (e) {
-                                console.log(e);
-                            }
-                        } else {
-                            bottomToolBar.style.bottom = "2dvh";
-                        }
-
+                        document.body.currentCSSZoom = 1;
+                        
                         setupEventListeners();
                         applyLayout();
                         updateBookmarkIcon();

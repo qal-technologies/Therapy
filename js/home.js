@@ -874,9 +874,12 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 						true, "🌸 <br/> Members Only",
 						true,
 						[{
-							text: "LOGIN", onClick: () => { handleRedirect("/html/regs/Signup.html") }, type: "primary"
+							text: "LOGIN", onClick: () => { handleRedirect("/html/regs/Signup.html?type=login") }, type: "primary"
 						}, {
-							text: "Close", onClick: "closeAlert", type: "secondary"
+							text: "Close", onClick: () => {
+								void document.body.offsetWidth;
+								return "closeAlert";
+							}, type: "secondary"
 						}]);
 				}
 			});
