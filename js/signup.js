@@ -600,7 +600,7 @@ window.addEventListener('load', async () => {
       } else {
         handleAlert(`The email or password you entered is incorrect. <br/> Please check your details and try again.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Login Failed", true, [{ text: "Forgot Password", onClick: () => handleRedirect("/html/regs/Forget.html") }, {
           text: "Try Again", onClick: () => {
-            if (email) email.focus();
+            document.getElementById('login-email')?.focus();
             return "closeAlert";
 
           }
