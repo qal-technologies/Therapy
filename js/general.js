@@ -679,6 +679,7 @@ async function initializeApp() {
 window.onload = initializeApp;
 window.addEventListener("beforeunload", saveTranslationsToSession);
 window.addEventListener("popstate", () => {
+location.reload();
     setTimeout(() => {
         reapplyTranslationIfNeeded()
     }, 10);
