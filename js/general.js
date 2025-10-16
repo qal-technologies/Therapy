@@ -712,7 +712,6 @@ window.addEventListener("pageshow", () => {
 window.addEventListener('popstate', () => {
         reapplyTranslationIfNeeded();
     });
-})();
 
 window.onresize = () => {
     const navWidth = header.clientWidth;
