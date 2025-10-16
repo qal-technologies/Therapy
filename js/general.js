@@ -704,9 +704,12 @@ window.addEventListener("pageshow", () => {
         window.dispatchEvent(new Event('locationchange'));
     };
 
-    window.addEventListener('popstate', () => window.dispatchEvent(new Event('locationchange')));
-
     window.addEventListener('locationchange', () => {
+        reapplyTranslationIfNeeded();
+    });
+})();
+
+window.addEventListener('popstate', () => {
         reapplyTranslationIfNeeded();
     });
 })();
