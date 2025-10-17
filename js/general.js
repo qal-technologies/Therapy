@@ -713,11 +713,14 @@ window.addEventListener("pageshow", (event) => {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
             // location.reload();
-            loadGoogleTranslateAndApply(userLang);
-            setGoogleTransCookie('en', userLang);
+            // loadGoogleTranslateAndApply(userLang);
+            // setGoogleTransCookie('en', userLang);
 
-            !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
+            // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
 
+            if (event.persisted && getOS() !== "PC") {
+                location.reload();
+            }
         }
     }
 });
