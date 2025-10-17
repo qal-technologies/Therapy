@@ -191,7 +191,7 @@ window.addEventListener('load', () => {
                             sound.currentTime = 0;
                             sound.play().catch(err => {
                                 console.warn(`Sound playback failed: ${err}`);
-                                handleAlert(`Sound playback failed: ${err}`, "toast");
+                                // handleAlert(`Sound playback failed: ${err}`, "toast");
                             });
                         } catch (err) {
                             console.error("Error playing sound:", err);
