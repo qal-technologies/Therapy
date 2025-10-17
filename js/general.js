@@ -698,10 +698,10 @@ window.addEventListener("popstate", () => {
 
     if (userLang && userLang !== "en") {
         try {
-            // loadGoogleTranslateAndApply(userLang);
-            // setGoogleTransCookie('en', userLang);
+            loadGoogleTranslateAndApply(userLang);
+            setGoogleTransCookie('en', userLang);
             // location.reload();
-            alert("popstate langaugae added!");
+            !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
         } catch (error) {
             alert(error);
         }
@@ -713,11 +713,11 @@ window.addEventListener("pageshow", (event) => {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
             // location.reload();
+            loadGoogleTranslateAndApply(userLang);
+            setGoogleTransCookie('en', userLang);
 
-            alert("page show langaugae added!");
+            !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
 
-            // loadGoogleTranslateAndApply(userLang);
-            // setGoogleTransCookie('en', userLang);
         }
     }
 });
@@ -747,7 +747,7 @@ if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
         // reapplyTranslationIfNeeded();
     };
 
-    window.addEventListener('locationchange', () => {
+    window.addEventListener('locationchange', (event) => {
         reapplyTranslationIfNeeded();
     });
 })();
@@ -757,7 +757,7 @@ const observer = new MutationObserver(() => {
         const userLang = sessionStorage.getItem("last_lang") || (navigator.language || "en").split("-")[0];
         if (userLang !== "en") {
             loadGoogleTranslateAndApply(userLang);
-            alert("observer langaugae added!");
+            !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
 
         }
     }
