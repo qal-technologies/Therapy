@@ -698,10 +698,10 @@ window.addEventListener("popstate", () => {
 
     if (userLang && userLang !== "en") {
         try {
-            loadGoogleTranslateAndApply(userLang);
-            setGoogleTransCookie('en', userLang);
-
-            !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
+            // loadGoogleTranslateAndApply(userLang);
+            // setGoogleTransCookie('en', userLang);
+            // location.reload();
+            alert("popstate langaugae added!");
         } catch (error) {
             alert(error);
         }
@@ -712,11 +712,12 @@ window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
+            // location.reload();
 
-            !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
+            alert("page show langaugae added!");
 
-            loadGoogleTranslateAndApply(userLang);
-            setGoogleTransCookie('en', userLang);
+            // loadGoogleTranslateAndApply(userLang);
+            // setGoogleTransCookie('en', userLang);
         }
     }
 });
@@ -735,6 +736,7 @@ if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
         pushState.apply(this, args);
         window.dispatchEvent(new Event('pushstate'));
         window.dispatchEvent(new Event('locationchange'));
+        // reapplyTranslationIfNeeded();
     };
 
     const replaceState = history.replaceState;
@@ -742,6 +744,7 @@ if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
         replaceState.apply(this, args);
         window.dispatchEvent(new Event('replacestate'));
         window.dispatchEvent(new Event('locationchange'));
+        // reapplyTranslationIfNeeded();
     };
 
     window.addEventListener('locationchange', () => {
@@ -754,7 +757,7 @@ const observer = new MutationObserver(() => {
         const userLang = sessionStorage.getItem("last_lang") || (navigator.language || "en").split("-")[0];
         if (userLang !== "en") {
             loadGoogleTranslateAndApply(userLang);
-            !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
+            alert("observer langaugae added!");
 
         }
     }
