@@ -722,13 +722,13 @@ window.addEventListener("pageshow", (event) => {
     }
 });
 
-if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-    window.addEventListener("pageshow", (event) => {
-        if (event.persisted) {
-            location.reload();
-        }
-    });
-}
+// if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
+//     window.addEventListener("pageshow", (event) => {
+//         if (event.persisted) {
+//             location.reload();
+//         }
+//     });
+// }
 
 (function patchHistoryMethods() {
     const pushState = history.pushState;
@@ -758,7 +758,6 @@ const observer = new MutationObserver(() => {
         if (userLang !== "en") {
             loadGoogleTranslateAndApply(userLang);
             !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
-
         }
     }
 });
