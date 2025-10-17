@@ -208,7 +208,11 @@ function addPadding() {
             !window.location.pathname.toLowerCase().includes("view") && !window.location.pathname.toLowerCase().includes("payment")) {
             if (bodyDiv) {
                 const lastElement = bodyDiv.lastElementChild;
-                lastElement.style.paddingBottom = "150px";
+                if (lastElement.classList.contains("container")) {
+                    body.style.paddingBottom = "150px";
+                } else {
+                    lastElement.style.paddingBottom = "150px";
+                }
             } else {
                 const lastElement = body.lastElementChild;
                 lastElement.style.paddingBottom = "150px";
@@ -683,7 +687,6 @@ async function initializeApp() {
     await handleAuthStateChange(async user => {
         setupAuthUI(user);
         await setupNewsletter(user);
-        loadUser = user;
     });
 }
 
@@ -691,11 +694,17 @@ window.onload = initializeApp;
 window.addEventListener("beforeunload", saveTranslationsToSession);
 window.addEventListener("popstate", () => {
     const userLang = sessionStorage.getItem("last_lang");
-  const lastPath = sessionStorage.getItem("last_translated_path");
+    const lastPath = sessionStorage.getItem("last_translated_path");
 
     if (userLang && userLang !== "en") {
-        loadGoogleTranslateAndApply(userLang);
-        setGoogleTransCookie('en', userLang);
+        try {
+            loadGoogleTranslateAndApply(userLang);
+            setGoogleTransCookie('en', userLang);
+
+            !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
+        } catch (error) {
+            alert(error);
+        }
     }
 });
 
@@ -703,6 +712,9 @@ window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
+
+            !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
+
             loadGoogleTranslateAndApply(userLang);
             setGoogleTransCookie('en', userLang);
         }
@@ -742,6 +754,8 @@ const observer = new MutationObserver(() => {
         const userLang = sessionStorage.getItem("last_lang") || (navigator.language || "en").split("-")[0];
         if (userLang !== "en") {
             loadGoogleTranslateAndApply(userLang);
+            !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
+
         }
     }
 });
