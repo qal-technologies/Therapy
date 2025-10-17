@@ -68,8 +68,6 @@ export function loadGoogleTranslateAndApply(userLang) {
                 div.id = "google_translate_element";
                 div.style.display = "none";
                 document.body.appendChild(div);
-
-                alert("header added")
             }
 
             // initializer that the GT script will call (cb)

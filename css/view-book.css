@@ -82,7 +82,7 @@ body {
     box-sizing: border-box;
     border-radius: 16px;
     position: fixed !important;
-    z-index: 999999999999;
+    z-index: 999999999;
     gap: 10px;
     padding: 8px var(--gutter);
 }

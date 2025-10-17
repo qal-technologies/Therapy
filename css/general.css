@@ -671,7 +671,7 @@ section#newsletter {
   overflow-scrolling: touch;
   top: 0;
   left: 0;
-  z-index: 9999999999999999999;
+  z-index: 99999999999999999999999999999999999 !important;
   display: none;
   flex: 1;
   background: rgba(0, 0, 0, 0.25);
@@ -709,6 +709,7 @@ section#newsletter {
   font-family: PoppinsMed;
   text-align: center;
   font-size: 1.4rem;
+  color: black;
 }
 
 .alert-message .alert-text {
@@ -717,7 +718,7 @@ section#newsletter {
   flex-wrap: wrap;
   text-align: left;
   place-self: center;
-  color: black;
+  color: rgba(0, 0, 0, 0.98);
   font-family: PoppinsLight;
   font-size: 0.9rem;
   margin-bottom: 16px;
