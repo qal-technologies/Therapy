@@ -405,8 +405,6 @@ window.addEventListener('load', () => {
                             state.soundOn = true;
                             volumeIconToggle();
                         }
-
-                        document.body.currentCSSZoom = 1;
                         
                         setupEventListeners();
                         applyLayout();
