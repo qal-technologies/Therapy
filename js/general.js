@@ -715,14 +715,13 @@ window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
-            loadGoogleTranslateAndApply(userLang);
-            setGoogleTransCookie('en', userLang);
-
-            // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
-
-            if (getOS() !== "PC") {
-                alert("reloading...")
-                location.reload();
+            try {
+                loadGoogleTranslateAndApply(userLang);
+                setGoogleTransCookie('en', userLang);
+                // location.reload();
+                !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
+            } catch (error) {
+                alert(error);
             }
         }
     }
