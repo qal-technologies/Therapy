@@ -100,7 +100,7 @@ body {
     max-width: calc(var(--book-width) * 1.6) !important;
     place-self: center;
     position: absolute !important;
-    border-radius: 18px;
+    border-radius: 25px;
 }
 
 .brand {
