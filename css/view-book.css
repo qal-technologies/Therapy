@@ -231,7 +231,7 @@ padding-inline:10px;
     justify-content: center;
     flex: 1;
     position: relative;
-    padding-top: calc(var(--zoom) * 3rem + 1.5vh);
+    padding-top: calc(var(--zoom) * 3rem + 1vh);
 }
 
 /* Book */
