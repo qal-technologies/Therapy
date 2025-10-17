@@ -82,6 +82,9 @@ export function loadGoogleTranslateAndApply(userLang) {
                     }, "google_translate_element");
                     lastTranslatedPath = window.location.pathname;
                     sessionStorage.setItem(sessionKeyForPath(), "translated");
+                    
+                    sessionStorage.setItem("last_lang", userLang);
+                    sessionStorage.setItem("last_translated_path", window.location.pathname);
                 } catch (err) {
                     iOS() ? alert("INITIAZER ERROR: ", err) : "";
                     // non-fatal
@@ -162,6 +165,7 @@ export function loadGoogleTranslateAndApply(userLang) {
 function reapplyTranslationIfNeeded() {
     const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
     const currentPath = window.location.pathname;
+    lastTranslatedPath = sessionStorage.getItem("last_translated_pathg");
     if (currentPath !== lastTranslatedPath) {
         setTimeout(() => {
             if (!document.querySelector(".goog-te-combo")) {
@@ -694,7 +698,6 @@ window.onload = initializeApp;
 window.addEventListener("beforeunload", saveTranslationsToSession);
 window.addEventListener("popstate", () => {
     const userLang = sessionStorage.getItem("last_lang");
-    const lastPath = sessionStorage.getItem("last_translated_path");
 
     if (userLang && userLang !== "en") {
         try {
@@ -712,13 +715,13 @@ window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
-            // location.reload();
-            // loadGoogleTranslateAndApply(userLang);
-            // setGoogleTransCookie('en', userLang);
+            loadGoogleTranslateAndApply(userLang);
+            setGoogleTransCookie('en', userLang);
 
             // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
 
-            if (event.persisted && getOS() !== "PC") {
+            if (getOS() !== "PC") {
+                alert("reloading...")
                 location.reload();
             }
         }
@@ -759,7 +762,7 @@ const observer = new MutationObserver(() => {
     if (!document.querySelector(".goog-te-combo")) {
         const userLang = sessionStorage.getItem("last_lang") || (navigator.language || "en").split("-")[0];
         if (userLang !== "en") {
-            loadGoogleTranslateAndApply(userLang);
+            reapplyTranslationIfNeeded();
             !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
         }
     }

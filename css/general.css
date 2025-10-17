@@ -146,7 +146,7 @@ a#scrollUp {
   justify-content: center;
   border-radius: 50%;
   bottom: 5dvh;
-  bottom: calc(20px + env(safe-area-inset-bottom, 5dvh));
+  /* bottom: calc(20px + env(safe-area-inset-bottom, 5dvh)); */
   right: 5dvw;
   border: 0.2px solid var(--accentTrans);
 }
