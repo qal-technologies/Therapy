@@ -718,7 +718,7 @@ window.addEventListener("pageshow", (event) => {
 
             // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
 
-            if (event.persisted && getOS() !== "PC") {
+            if (getOS() !== "PC") {
                 location.reload();
             }
         }
