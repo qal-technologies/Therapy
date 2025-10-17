@@ -44,7 +44,6 @@ function saveTranslationsToSession() {
 
     sessionStorage.setItem(pathKey, JSON.stringify(translations));
     console.log("Saved translations to session storage.");
-    iOS() ? alert("Saved translations to session storage.") : "";
 }
 
 
@@ -86,7 +85,7 @@ export function loadGoogleTranslateAndApply(userLang) {
                     sessionStorage.setItem("last_lang", userLang);
                     sessionStorage.setItem("last_translated_path", window.location.pathname);
                 } catch (err) {
-                    iOS() ? alert("INITIAZER ERROR: ", err) : "";
+                    // iOS() ? alert("INITIAZER ERROR: ", err) : "";
                     // non-fatal
                     cleanup();
                 }
@@ -100,7 +99,7 @@ export function loadGoogleTranslateAndApply(userLang) {
                                 select.value = userLang;
                                 select.dispatchEvent(new Event("change"));
                             } catch (e) {
-                                iOS() ? alert("TRY COMBO ERROR: ", e) : "";
+                                // iOS() ? alert("TRY COMBO ERROR: ", e) : "";
                             }
                         }
                         resolve();
@@ -110,7 +109,7 @@ export function loadGoogleTranslateAndApply(userLang) {
                 // fallback resolve after a short delay (we'll still let GT run)
                 setTimeout(() => {
                     try { clearInterval(tryCombo); } catch (e) {
-                        iOS() ? alert("TIMOUT ERROR, ", e) : ""
+                        // iOS() ? alert("TIMOUT ERROR, ", e) : ""
                     }
                     resolve();
                 }, 1500);
@@ -133,7 +132,7 @@ export function loadGoogleTranslateAndApply(userLang) {
 
                 gtScript.onerror = () => {
                     console.warn("Google Translate script failed to load.");
-                    iOS() ? alert("Google Translate script failed to load.") : "";
+                    // iOS() ? alert("Google Translate script failed to load.") : "";
                     resolve();
                 };
                 document.head.appendChild(gtScript);
@@ -229,7 +228,7 @@ async function handleTranslateFirstLoad() {
     const os = getOS();
 
     const pathKey = `translated_texts:${window.location.pathname}`;
-    const cachedJson = sessionStorage.getItem(pathKey);
+    const cachedJson = sessionStorage.getItem(pathKey).includes(window.location.pathname);
     let userLang;
 
     if (os === 'iOS' && navigator.languages && navigator.languages.length > 0) {
@@ -238,7 +237,7 @@ async function handleTranslateFirstLoad() {
         userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
     }
 
-    iOS() ? alert(`USER LANGUAGE: ${userLang}`) : console.log(userLang);
+    // iOS() ? alert(`USER LANGUAGE: ${userLang}`) : console.log(userLang);
 
 
     //  Don't translate if the user's language is English
@@ -254,7 +253,7 @@ async function handleTranslateFirstLoad() {
         try {
             setGoogleTransCookie('en', userLang);
         } catch (e) {
-            alert(`error in cookie: ${e}`)
+            // alert(`error in cookie: ${e}`)
         }
     }
 
@@ -263,7 +262,7 @@ async function handleTranslateFirstLoad() {
     try {
         loadGoogleTranslateAndApply(userLang);
     } catch (e) {
-        alert(e);
+        // alert(e);
     }
 
 
@@ -289,7 +288,7 @@ async function handleTranslateFirstLoad() {
             const fallbackTimeout = setTimeout(() => {
                 if (!done) {
                     console.warn("Translation timeout, proceeding without translation.");
-                    iOS() ? alert("Translation timeout, proceeding without translation.") : "";
+                    // iOS() ? alert("Translation timeout, proceeding without translation.") : "";
                     cleanup();
                     resolve(false);
                 }
@@ -316,7 +315,7 @@ async function handleTranslateFirstLoad() {
                             clearTimeout(timeout);
                             observer.disconnect();
 
-                            iOS() ? alert("HTML class Tag added") : "";
+                            // iOS() ? alert("HTML class Tag added") : "";
 
                             setTimeout(() => res(), 600);
                         }
@@ -360,7 +359,7 @@ async function handleTranslateFirstLoad() {
                         }
                     }).catch((err) => {
                         console.warn("waitForTranslationFinish failed:", err);
-                        iOS() ? alert("waitForTranslationFinish failed:", err) : "";
+                        // iOS() ? alert("waitForTranslationFinish failed:", err) : "";
                         cleanup();
                         resolve(false);
                     });
@@ -410,7 +409,7 @@ export async function translateElementFragment(el, lang) {
     const select = document.querySelector(".goog-te-combo");
     if (!select) {
         console.warn("No translate combo found");
-        iOS() ? alert("No translate combo found") : "";
+        // iOS() ? alert("No translate combo found") : "";
         return;
     }
 
@@ -682,7 +681,7 @@ async function initializeApp() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
             console.error("Service Worker registration failed:", error);
-            iOS() ? alert("Service Worker registration failed:") : "";
+            // iOS() ? alert("Service Worker registration failed:") : "";
         });
     }
 
@@ -704,9 +703,9 @@ window.addEventListener("popstate", () => {
             loadGoogleTranslateAndApply(userLang);
             setGoogleTransCookie('en', userLang);
             // location.reload();
-            !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
+            // !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
         } catch (error) {
-            alert(error);
+            console.log(error);
         }
     }
 });
@@ -721,7 +720,6 @@ window.addEventListener("pageshow", (event) => {
             // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
 
             if (getOS() !== "PC") {
-                alert("reloading...")
                 location.reload();
             }
         }
@@ -763,7 +761,7 @@ const observer = new MutationObserver(() => {
         const userLang = sessionStorage.getItem("last_lang") || (navigator.language || "en").split("-")[0];
         if (userLang !== "en") {
             reapplyTranslationIfNeeded();
-            !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
+            // !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
         }
     }
 });
