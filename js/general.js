@@ -68,6 +68,8 @@ export function loadGoogleTranslateAndApply(userLang) {
                 div.id = "google_translate_element";
                 div.style.display = "none";
                 document.body.appendChild(div);
+
+                alert("header added")
             }
 
             // initializer that the GT script will call (cb)
@@ -715,13 +717,14 @@ window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
         const userLang = sessionStorage.getItem("last_lang");
         if (userLang && userLang !== "en") {
-            try {
-                loadGoogleTranslateAndApply(userLang);
-                setGoogleTransCookie('en', userLang);
-                // location.reload();
-                !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
-            } catch (error) {
-                alert(error);
+            loadGoogleTranslateAndApply(userLang);
+            setGoogleTransCookie('en', userLang);
+
+            // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
+
+            if (getOS() !== "PC") {
+                alert("reloading...")
+                location.reload();
             }
         }
     }
