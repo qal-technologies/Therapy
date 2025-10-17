@@ -228,7 +228,7 @@ async function handleTranslateFirstLoad() {
     const os = getOS();
 
     const pathKey = `translated_texts:${window.location.pathname}`;
-    const cachedJson = sessionStorage.getItem(pathKey).includes(window.location.pathname);
+    const cachedJson = window.location.pathname.includes(JSON.parse(sessionStorage.getItem(pathKey)));
     let userLang;
 
     if (os === 'iOS' && navigator.languages && navigator.languages.length > 0) {
