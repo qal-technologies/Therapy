@@ -1,0 +1,457 @@
+2. Welcome Email
+
+Subject: Welcome to  Healing with Charlotte Casiraghi. Your journey begins now
+
+Body:
+
+> Dear {{first_name}},
+
+Welcome to Healing with Charlotte Casiraghi.  I’m honoured that you’ve chosen to embark on this journey with me.  Here, your story will be seen and treasured.  Healing with me is not just therapy, it’s a rare and sacred connection.
+
+What you can expect:
+
+• Face‑to‑face connection.  Whether virtually or in person, we meet soul‑to‑soul.
+• Personal letters & follow‑ups. After each session, I write a private letter just for you and check in afterwards.
+• An inner circle of support. When needed, I introduce you to mentors and friends who can open new doors and invite you to intimate gatherings.
+
+Next steps:
+
+1. Book your session: Choose between Virtual, In‑Person or Community sessions.  Each option includes unique bonuses and is tailored to your needs (prices range from €550 to €1,600).
+
+
+2. Explore our book: Compagnon Féminin is a soul‑companion that speaks to every woman you’ve been and will become.  Copies are limited, so consider reserving yours today.
+
+
+3. Review our FAQs: Learn about payment methods (credit/debit cards or a 16‑digit paysafecard), rescheduling (72‑hour notice required) and confidentiality (all sessions are private).
+
+
+4. Stay connected: As part of this community, you’ll receive occasional audio messages, reflections and special offers.  You may opt out at any time.
+
+
+
+Your healing journey is sacred.  If you need anything, please reply to this email or write to healingwithcharlottecasiraghi@gmail.com.
+
+With warmth and gratitude,
+
+Charlotte Casiraghi
+
+
+
+
+3. Login Alert
+
+Subject: New login to your Healing with Charlotte Casiraghi account
+
+Body:
+
+> Hello {{first_name}},
+
+We noticed a new sign‑in to your Healing with Charlotte Casiraghi account on {{date_time}} from {{location}}.  Protecting your privacy and healing journey is our priority.
+
+Was this you?
+
+• Yes: No action needed.
+• No: Please reset your password immediately using our secure link and contact us at healingwithcharlottecasiraghi@gmail.com.
+
+If you’re travelling or using a new device, you might receive these alerts more often.  They’re just a reminder that we’re keeping your account secure.  Thank you for being part of this sacred space.
+
+With care,
+Companion support
+
+
+
+
+4. Password Reset Request
+
+Subject: Reset your Healing with Charlotte Casiraghi password
+
+Body:
+
+> Hello {{first_name}},
+
+We received a request to reset the password for your  Healing with Charlotte Casiraghi account.  If you made this request, please click the link below.  Your personal information and notes are treated with the utmost respect, and a strong password helps keep your healing journey private.
+
+Reset My Password
+
+This link will expire in 24 hours.  If you didn’t request a password reset, you can safely ignore this email, your existing password will remain unchanged.  For assistance, write to healingwithcharlottecasiraghi@gmail.com.
+
+With care,
+
+Companion support
+
+
+
+
+5. Password Changed Confirmation
+
+Subject: Your Healing with Charlotte Casiraghi password has been updated
+
+Body:
+
+> Hello {{first_name}},
+
+This is a confirmation that your Healing with Charlotte Casiraghi password was successfully changed.  If you initiated this change, no further action is necessary.  Protecting your privacy and data is important to us, and we implement industry‑standard encryption to safeguard your account.
+
+Didn’t change your password?
+Please reset it immediately using our secure link and notify us at healingwithcharlottecasiraghi@gmail.com.
+
+Thank you for continuing to entrust us with your healing.  We’re honoured to walk alongside you.
+
+Warm regards,
+
+Companion support
+
+
+
+
+25. Payment Initiated / Pending Approval
+
+Subject: We’ve received your payment – awaiting confirmation
+
+Body:
+
+> Dear {{first_name}},
+
+Thank you for initiating your payment for {{purchase_type}}.  We’ve received your payment details and our secure payment processor (powered by Stripe) is reviewing it.  Your transaction ID is {{transaction_id}}.
+
+What happens next?
+• We verify the payment to ensure everything is complete.
+• Once confirmed, you’ll receive a welcome message and personalized instructions on how to prepare for your session or access your book.
+• If we need more information, we’ll contact you.  In the meantime, feel free to review our FAQ about payment methods (credit/debit card or 16‑digit paysafecard) and rescheduling policies.
+• You can track the status of your payment at any time by logging into your account and visiting your  Payment History section under profile . Each transaction will display its current status and details.
+
+If you have any questions or need assistance while we review your payment, please reply to this email or write to healingwithcharlottecasiraghi@gmail.com.
+
+With gratitude,
+Companion support
+
+
+
+
+26. Payment Approved (Success)
+
+Subject: Your payment is confirmed – {{purchase_type}} booked
+
+Body:
+
+> Hello {{first_name}},
+
+Great news!  Your payment for {{purchase_type}} has been approved.  Below is a summary of your transaction:
+
+• Transaction ID: {{transaction_id}}
+• Amount: {{amount}}
+• Payment Method: {{payment_method}}
+
+For Sessions:
+Your booking is now official.  You’ll soon receive a separate email with your session date, time and personalized preparation details.  Remember, all sessions are completely confidential.  After our meeting, you’ll receive a personal letter and follow‑up messages to support your healing.
+
+ For Book Purchases:
+Your order has been confirmed.  You purchased Compagnon Féminin, you’ll be able to read it directly on our website, it’s been crafted to feel like a real book, complete with page-flipping sounds, interactive turning pages, and the ability to search by page number for a truly immersive reading experience.
+
+Compagnon Féminin is not available on Amazon or in bookstores. Thank you for choosing to experience it here, exactly as it was meant to be.
+If you have any questions, please contact us at healingwithcharlottecasiraghi@gmail.com.  We’re honoured to be part of your journey.
+
+You can view this and all of your past transactions by logging in and visiting the Payment History section under profile of your account. There you’ll find your bookings, order dates, amounts, and status updates.
+
+With heartfelt thanks,
+
+Companion support
+
+
+
+
+
+27. Payment Declined / Failed
+
+Subject: Issue with your payment attempt
+
+Body:
+
+> Dear {{first_name}},
+
+Unfortunately, we couldn’t process your recent payment for {{purchase_type}} (Transaction ID {{transaction_id}}).  This could be due to an incorrect card number, insufficient funds, or a network issue.
+
+What you can do:
+• Double‑check that your card details and billing address are correct.
+• Try another payment method—our secure processor accepts credit/debit cards and 16‑digit paysafecard codes.
+• Contact your bank to ensure there are no restrictions on your card.
+
+If the problem persists, reply to this email or contact healingwithcharlottecasiraghi@gmail.com.  We’re here to help so you can continue your healing journey without delay.
+
+You can also see all your payment attempts and their status by logging into your account and viewing the Payment History section under profile . This log will help you track pending, declined or successful transactions.
+
+Warm regards,
+Companion support
+
+
+
+
+
+
+Subject: Issue with your paysafecard payment
+
+Body:
+
+> Dear {{first_name}},
+
+We couldn’t complete your payment for {{purchase_type}} (Transaction ID {{transaction_id}}) using paysafecard.
+
+What to check:
+• Re-enter the 16-digit code exactly as printed (no spaces).
+• Make sure the code has enough balance to cover {{amount}} in {{currency}}.
+• Confirm the code is unused and matches your country/region.
+
+Next steps:
+• Try a different paysafecard code, or
+• Select another method (credit/debit card).
+
+If the problem persists, reply to this email or contact healingwithcharlottecasiraghi@gmail.com and include your Transaction ID.
+You can review all attempts under Profile → Payment History.
+
+Warm regards,
+Companion Support
+
+
+
+
+
+
+29. Booking Reminder (Payment Pending)
+
+Subject: Finalize your booking to secure your session
+
+Body:
+
+> Dear {{first_name}},
+
+You recently selected a {{session_type}} but haven’t completed your payment yet. Our session spots are limited and fill quickly, particularly the Virtual and In-Person options. To secure your place and receive your personalized preparation details, please finalize your payment as soon as possible.
+
+What to do next:
+
+1. Log in to your account, open the Sessions section, and book your session again to resume your healing journey.
+
+2. Choose your payment method. We accept credit/debit cards and 16-digit Paysafecard codes. All payments are processed securely through Stripe.
+
+
+3. Complete the transaction. Once your payment is confirmed, you’ll receive a welcome email with your session date, time, and joining instructions.
+
+
+
+If your credit or debit card was rejected:
+Don’t worry, this often happens due to local bank restrictions or online limits. In this case, please select Paysafecard as your payment method.
+
+How to pay with Paysafecard:
+• Visit www.paysafecard.com and choose your country.
+• Find a nearby sales outlet and purchase a Paysafecard (available in most supermarkets, gas stations, and kiosks).
+• You’ll receive a 16-digit code on your receipt.
+• Return to our website, select “Pay with Paysafecard”, and enter the code to complete your booking instantly.
+
+If finances are a concern, we also offer Community Sessions and sliding-scale options. Don’t hesitate to reach out. we want healing to remain accessible for everyone.
+
+Remember, all sessions are confidential and your data is protected. For assistance, simply reply to this email or contact healingwithcharlottecasiraghi@gmail.com.
+
+With warmth,
+Companion support
+
+
+
+
+
+
+
+PENDING BOOK PAYMENT REMINDER 
+
+
+Body:
+
+> Dear {{first_name}},
+
+You recently began purchasing Compagnon Féminin but your payment hasn’t been completed yet. Since copies are limited and access is exclusive to this platform, please finalize your order soon to begin your reading journey.
+
+What to do next:
+
+1. Log in to your account, open the Books section, and add Compagnon Féminin to your cart to continue your reading journey.
+
+
+2. Choose your payment method. We accept credit/debit cards and 16-digit Paysafecard codes. All transactions are securely processed through Stripe.
+
+
+3. Once your payment is confirmed, your access will automatically unlock and you’ll be able to read Compagnon Féminin directly on our website. Complete with authentic page-flipping sounds, realistic turning pages, and the ability to search by page number, for a truly immersive book experience.
+
+
+
+If your card was declined:
+Don’t worry. This can happen due to local or international bank restrictions. You can easily complete your payment with Paysafecard instead.
+
+How to pay with Paysafecard:
+• Visit www.paysafecard.com and select your country.
+• Find a nearby outlet (supermarket, kiosk, or gas station) that sells Paysafecard.
+• Purchase one in your preferred amount and you’ll receive a 16-digit code on your receipt.
+• Return to our website, choose “Pay with Paysafecard”, and enter the code to complete your order instantly.
+
+If you experience any issue, simply reply to this email or contact healingwithcharlottecasiraghi@gmail.com — we’ll be happy to assist you.
+
+Thank you for choosing to read Compagnon Féminin exactly as it was meant to be experienced. Privately, personally, and beautifully within our site.
+
+With care,
+Companion support
+
+
+
+
+
+
+
+
+32. Waitlist Confirmation
+
+Subject: You’ve been added to the waitlist
+
+Body:
+
+> Dear {{first_name}},
+
+Thank you for your interest in the Inner Circle Experience.  This special program offers a private extended session, a signed personal letter, a custom healing plan, soul‑to‑soul guided ritual and curated gifts.  Spots are limited and currently sold out, so we’ve added you to our waitlist.
+
+What happens next:
+• You’re now on the priority list to be notified as soon as a spot becomes available.
+• While you wait, you might explore our Virtual, In‑Person and Community sessions (priced from €550 to €1,600) for immediate healing support.
+• Feel free to read Compagnon Féminin, a soulful companion for women, or browse our FAQs to learn more about payment options and rescheduling policies.
+
+We appreciate your patience and are honoured by your interest.  If you have questions, please reply to this email.
+
+With gratitude,
+Companion support
+
+
+
+
+
+
+
+33. Waitlist Update / Spot Available
+
+Subject: A spot is available – claim your Inner Circle Experience
+
+Body:
+
+> Hello {{first_name}},
+
+We have wonderful news!  A spot in the Inner Circle Experience has opened up.  This programme includes a private extended session, signed personal letter, custom healing plan, soul‑to‑soul ritual and curated gifts.  The investment is €6,850 and it comes with ongoing private check‑ins for two weeks.
+
+What to do next:
+
+1. Click the link below to confirm your spot and complete payment.
+
+
+2. If you’re unable to take the spot at this time, reply to let us know so we can offer it to the next person.
+
+
+
+Claim My Spot
+
+Spots are offered on a first‑come, first‑served basis.  We look forward to welcoming you into this sanctuary.
+
+Warmly,
+Companion support
+
+
+
+
+
+
+
+
+
+34. Newsletter Subscription Confirmation
+
+Subject: Welcome to Charlotte’s circle of healing insights
+
+Body:
+
+> Hello {{first_name}},
+
+Thank you for subscribing to our newsletter.  At Healing with Charlotte Casiraghi, your privacy and trust mean everything.  By subscribing, you’ll receive occasional audio messages, reflections, and special offers designed to inspire and guide you.
+
+You can expect:
+
+• Invitations to book new session types and community gatherings.
+• Early access to limited‑edition books and healing tools.
+• Stories and tips to help you navigate a world on edge and become a better version of yourself.
+
+If at any time you’d rather not receive our messages, just click “unsubscribe” at the bottom of any email.  For questions, write to healingwithcharlottecasiraghi@gmail.com.
+
+With love,
+Companion support
+
+
+
+
+
+
+
+36. Regular Newsletter (Template)
+
+Subject: {{month}} Healing Insights and Updates
+
+Body:
+
+> Dear {{first_name}},
+
+Here are your healing updates for {{month}} from Healing with Charlotte Casiraghi:
+
+1. Featured Insight
+Go into yourself and see how deep the place is from which your life flows
+
+.  Take a moment this month to sit quietly with your own heart and notice the wisdom it holds.  I’ve recorded a short audio reflection for you—listen here.
+
+2. Upcoming Sessions
+• Virtual Sessions (€800) – connect with me face‑to‑face online from anywhere.
+• In‑Person Sessions (€1,600) – meet me in Monaco or Paris for deep, tender healing.
+• Community Sessions (€550) – accessible plan; full attention at a reduced rate.
+
+3. Book Highlight – Compagnon Féminin
+This book speaks to every woman you’ve been and will be.  A limited number of copies remain—click here to reserve yours.
+
+4. Client Story
+“After my session, the personal letter Charlotte wrote became my lifeline.  Her follow‑up messages reminded me I wasn’t alone.”  – A recent client (shared with permission).
+
+5. Community Corner
+We’re planning intimate gatherings for past clients.  Keep an eye on your inbox for invitations.
+
+Thank you for allowing me to walk alongside you.  Your journey is sacred, and I’m honoured to witness it.  As always, our sessions remain confidential, and your data is protected.
+
+With love and light,
+Companion support
+
+
+
+
+
+
+
+
+1. Email Verification
+
+Subject: Confirm your email to begin your healing journey
+
+Body:
+
+> Hello {{first_name}},
+
+Thank you for registering with Healing with Charlotte Casiraghi. Before we continue, please verify your email by entering the 6-digit code we’ve sent to you. Protecting your privacy is important to us, and verifying your email helps keep your account secure.
+
+Your verification code: {{123456}}
+
+Why verify?
+• It ensures we can send you important session updates, personal reflections, and invitations.
+• It protects your healing journey by confirming the right person is accessing your account.
+• It unlocks access to book private sessions with Charlotte, where your story will be heard and cherished.
+
+If you didn’t create an account with us, please ignore this message. For any questions, reach out to healingwithcharlottecasiraghi@gmail.com.
+
+With care,
+
+Companion support
+
+
