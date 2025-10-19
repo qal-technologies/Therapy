@@ -74,19 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 emailInput.disabled = true;
 
-                // await resetPassword(email);
-                // handleAlert(
-                //     `A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.`,
-                //     "blur",
-                //     true,
-                //     "<i class='bi bi-envelope-check text-success'></i><br/> Email Sent",
-                //     true,
-                //     [{ text: "Back to Login", onClick: () => window.location.replace("/html/regs/Signup.html?type=login") }]
-                // );
+                const actionCodeSettings = {
+                    url: `${window.location.origin}/html/regs/reset-password.html?email=${email}`,
+                    handleCodeInApp: true,
+                };
 
-                handleAlert(`<p>On free trial, you can only reset your password from the Admin dashboard. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{
-                    text: "Close", onClick: "closeAlert", loading: true,
-                }]);
+                await resetPassword(email, actionCodeSettings);
+                handleAlert(
+                    `<p>A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.</p>`,
+                    "blur",
+                    true,
+                    "<i class='bi bi-envelope-check text-success fs-2'></i><br/> Email Sent",
+                    true,
+                    [{ text: "Back to Login", onClick: () => window.location.replace("/html/regs/Signup.html?type=login") }]
+                );
+
 
             } catch (error) {
 
