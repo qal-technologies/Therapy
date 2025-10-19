@@ -445,10 +445,10 @@ Select Book Format
 
   handleAuthStateChange(async (user) => {
     const cartCount = document.querySelector(".details-top span.cart-count");
-    if (!user && cartCount) {
-      const bookButtons = document.querySelectorAll("#preview button.get-copy");
-      bookButtons?.forEach(button => button.addEventListener("click", showDetailsModal));
-      cartCount.textContent = 0;
+    if (!user) {
+      const bookButton = document.querySelector("#preview button.get-copy");
+      if (bookButton) bookButton.addEventListener("click", showDetailsModal);
+      if (cartCount) cartCount.textContent = 0;
     }
 
     if (user) {
@@ -463,10 +463,9 @@ Select Book Format
 
         copyBTN.addEventListener("click", () => handleRedirect("/html/main/ViewBook.html"));
         translateElementFragment(copyBTN, userLang);
-      } else if (!thisUser || thisUser.bookPaid === false && copyBTN) {
-        copyBTN.addEventListener("click", showDetailsModal);
+      } else if (!thisUser.bookPaid || thisUser.bookPaid === false) {
+        if (copyBTN) copyBTN.addEventListener("click", showDetailsModal);
       }
-
       const items = await getCartItems(user.uid);
       if (cartCount) cartCount.textContent = items.length;
     }

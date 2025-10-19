@@ -95,7 +95,7 @@ body {
 
 .bottom-toolbar {
     position: absolute;
-    bottom: 3dvh;
+    bottom: 2dvh;
     width: 90%;
     max-width: calc(var(--book-width) * 1.6) !important;
     place-self: center;

@@ -81,7 +81,7 @@ export function loadGoogleTranslateAndApply(userLang) {
                     }, "google_translate_element");
                     lastTranslatedPath = window.location.pathname;
                     sessionStorage.setItem(sessionKeyForPath(), "translated");
-                    
+
                     sessionStorage.setItem("last_lang", userLang);
                     sessionStorage.setItem("last_translated_path", window.location.pathname);
                 } catch (err) {
@@ -646,11 +646,13 @@ async function setupNewsletter(user) {
 
                 emailBTN.disabled = true;
                 emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
-                await updateUserData(user?.uid, { emailSub: true });
+                await updateUserData(user.uid, { emailSub: true });
                 setTimeout(() => {
                     emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
-                    emailInput.value = "";
                     emailBTN.disabled = true;
+                    emailInput.value = "";
+                    emailInput.disabled = true;
+                    emailInput.placeholder = "You have already subscribed...";
 
                     handleAlert("Your subscription has been confirmed. From now on, you’ll receive thoughtful updates, healing insights, and special messages directly in your inbox. <br/> We’ll be here to gently stay connected with you each day.", "blur", true, "✉️ Companion Support", true, [{ text: "OK", onClick: "closeAlert" }]);
                 }, 100);
