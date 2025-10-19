@@ -5,25 +5,12 @@ import handleAlert, { handleRedirect } from './general.js';
 window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const oobCode = urlParams.get('oobCode');
-    const email = urlParams.get('email');
 
     const newPasswordInput = document.getElementById('new-password');
     const confirmPasswordInput = document.getElementById('confirm-password');
     const updatePasswordButton = document.getElementById('update-password-button');
     const userEmailSpan = document.getElementById('user-email');
     const passwordError = document.querySelector('.password-error');
-
-    if (userEmailSpan && email) {
-        userEmailSpan.textContent = email;
-    }
-
-    if (!email) {
-        handleAlert('No email address provided. Please try again.', 'blur', true, 'Error', true, [{
-            text: 'OK',
-            onClick: () => handleRedirect('/html/regs/Forget.html')
-        }]);
-        return;
-    }
 
     if (!oobCode) {
         handleAlert('Invalid or expired password reset link.', 'blur', true, 'Error', true, [{
