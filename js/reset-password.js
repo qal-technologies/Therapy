@@ -20,55 +20,57 @@ window.addEventListener('load', () => {
         return;
     }
 
-    verifyResetCode(oobCode).then(() => {
-        // Code is valid
+    verifyResetCode(oobCode).then((email) => {
+        if (userEmailSpan) {
+            userEmailSpan.textContent = email;
+        }
+
+        const validatePasswords = () => {
+            const newPassword = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (newPassword !== confirmPassword) {
+                passwordError.textContent = 'Passwords do not match.';
+                updatePasswordButton.disabled = true;
+            } else if (newPassword.length < 6) {
+                passwordError.textContent = 'Password must be at least 6 characters long.';
+                updatePasswordButton.disabled = true;
+            } else {
+                passwordError.textContent = '';
+                updatePasswordButton.disabled = false;
+            }
+        };
+
+        newPasswordInput.addEventListener('input', validatePasswords);
+        confirmPasswordInput.addEventListener('input', validatePasswords);
+
+        updatePasswordButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const newPassword = newPasswordInput.value;
+
+            updatePasswordButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
+            updatePasswordButton.disabled = true;
+
+            confirmNewPassword(oobCode, newPassword).then(() => {
+                // sendChangedEmail(); // Placeholder function
+                sessionStorage.setItem('userEmail', email);
+                handleAlert('Password updated successfully!', 'blur', true, 'Success', true, [{
+                    text: 'OK',
+                    onClick: () => handleRedirect('/html/regs/Signup.html?type=login')
+                }]);
+            }).catch((error) => {
+                handleAlert(`Error updating password: ${error.message}`, 'blur', true, 'Error', true, [{
+                    text: 'OK',
+                    onClick: 'closeAlert'
+                }]);
+                updatePasswordButton.innerHTML = '<p class="reset-text">UPDATE PASSWORD</p>';
+                updatePasswordButton.disabled = false;
+            });
+        });
     }).catch(() => {
         handleAlert('Invalid or expired password reset link.', 'blur', true, 'Error', true, [{
             text: 'OK',
             onClick: () => handleRedirect('/html/regs/Forget.html')
         }]);
-    });
-
-    const validatePasswords = () => {
-        const newPassword = newPasswordInput.value;
-        const confirmPassword = confirmPasswordInput.value;
-
-        if (newPassword !== confirmPassword) {
-            passwordError.textContent = 'Passwords do not match.';
-            updatePasswordButton.disabled = true;
-        } else if (newPassword.length < 6) {
-            passwordError.textContent = 'Password must be at least 6 characters long.';
-            updatePasswordButton.disabled = true;
-        } else {
-            passwordError.textContent = '';
-            updatePasswordButton.disabled = false;
-        }
-    };
-
-    newPasswordInput.addEventListener('input', validatePasswords);
-    confirmPasswordInput.addEventListener('input', validatePasswords);
-
-    updatePasswordButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        const newPassword = newPasswordInput.value;
-
-        updatePasswordButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
-        updatePasswordButton.disabled = true;
-
-        confirmNewPassword(oobCode, newPassword).then(() => {
-            // sendChangedEmail(); // Placeholder function
-            sessionStorage.setItem('userEmail', email);
-            handleAlert('Password updated successfully!', 'blur', true, 'Success', true, [{
-                text: 'OK',
-                onClick: () => handleRedirect('/html/regs/Signup.html?type=login')
-            }]);
-        }).catch((error) => {
-            handleAlert(`Error updating password: ${error.message}`, 'blur', true, 'Error', true, [{
-                text: 'OK',
-                onClick: 'closeAlert'
-            }]);
-            updatePasswordButton.innerHTML = '<p class="reset-text">UPDATE PASSWORD</p>';
-            updatePasswordButton.disabled = false;
-        });
     });
 });
