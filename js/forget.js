@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Jules: Send password reset email with custom redirect
                 const actionCodeSettings = {
-                    url: `${window.location.origin}/html/regs/reset-password.html?email=${email}`,
+                    url: `${window.location.origin}/html/regs/reset-password.html`,
                     handleCodeInApp: true,
                 };
 
