@@ -95,15 +95,15 @@ body {
 
 .bottom-toolbar {
     position: absolute;
-bottom:0;
+    bottom: 0;
     bottom: 0.5dvh;
-width:95vw;
+    width: 95vw;
     width: 95dvw;
     max-width: calc(var(--book-width) * 1.8) !important;
     place-self: center;
     position: absolute !important;
     border-radius: 25px;
-padding-inline:10px;
+    padding-inline: 10px;
 }
 
 .brand {
