@@ -5,7 +5,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  updateProfile,
+  verifyPasswordResetCode,
+  confirmPasswordReset
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
@@ -81,6 +84,20 @@ const getCurrentUser = () => {
   return auth.currentUser;
 };
 
+// Jules: Added updateProfile function
+const updateUserProfile = (user, profile) => {
+  return updateProfile(user, profile);
+};
+
+// Jules: Added verifyPasswordResetCode and confirmPasswordReset functions
+const verifyResetCode = (code) => {
+  return verifyPasswordResetCode(auth, code);
+};
+
+const confirmNewPassword = (code, newPassword) => {
+  return confirmPasswordReset(auth, code, newPassword);
+};
+
 //I changed something here pasqal, check it out!
 export {
   auth,
@@ -91,4 +108,7 @@ export {
   handleAuthStateChange,
   getCurrentUser,
   resetPassword,
+  updateUserProfile,
+  verifyResetCode,
+  confirmNewPassword,
 };

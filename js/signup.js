@@ -1,4 +1,4 @@
-import { signup, login, handleAuthStateChange, logout } from './auth.js';
+import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
@@ -554,6 +554,11 @@ window.addEventListener('load', async () => {
         waitlist
       });
 
+      // Jules: Update the user's display name
+      await updateUserProfile(user, {
+        displayName: firstName,
+      });
+
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
     } catch (error) {
@@ -590,6 +595,11 @@ window.addEventListener('load', async () => {
     disableAllInputs(true);
     try {
       await login(email, password);
+
+      // Jules: Remove userEmail from sessionStorage after login
+      if (sessionStorage.getItem("userEmail")) {
+        sessionStorage.removeItem("userEmail");
+      }
 
       handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-check2-circle text-success fs-2"></i>` : `<i class='bi bi-check-circle-fill text-success fs-2'></i>`} <br/> Login Successful`, true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
     } catch (error) {
@@ -662,6 +672,20 @@ window.addEventListener('load', async () => {
     setupEventListeners();
     updateFormUI();
     updateFormState();
+
+    // Jules: Check for userEmail in sessionStorage and pre-fill the login form
+    const userEmail = sessionStorage.getItem("userEmail");
+    if (userEmail && state.currentForm === "login") {
+      const emailInput = document.getElementById("login-email");
+      const passwordInput = document.getElementById("login-password");
+      if (emailInput) {
+        emailInput.value = userEmail;
+        emailInput.blur();
+        if (passwordInput) {
+          passwordInput.focus();
+        }
+      }
+    }
   }
 
   function handleTabClick(e) {
