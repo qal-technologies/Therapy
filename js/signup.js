@@ -172,8 +172,8 @@ window.addEventListener('load', async () => {
         regPassword.addEventListener("blur", () => {
           const pwd = regPassword.value.trim();
 
-          if (pwd.length > 0 && pwd.length <= 2) {
-            errorMsg2.textContent = "Password must be more than 2 characters long";
+          if (pwd.length > 0 && pwd.length <= 5) {
+            errorMsg2.textContent = "Password must be more than 5 characters long";
             regPassword.style.borderColor = "red";
             errorMsg2.classList.add("active");
           } else {
@@ -552,6 +552,10 @@ window.addEventListener('load', async () => {
         email,
         country,
         waitlist
+      });
+
+await updateUserProfile(user, {
+        displayName: firstName,
       });
 
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
