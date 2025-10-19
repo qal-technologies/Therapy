@@ -5,7 +5,10 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  updateProfile,
+  verifyPasswordResetCode,
+  confirmPasswordReset
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
@@ -50,13 +53,14 @@ const logout = () => {
 /**
  * Sends a password reset email to the user
  * @param {string} email - The email of the user to reset password for
+ * @param {object} actionCodeSettings - The action code settings for the email
  * @returns {Promise<boolean>} - true if sent successfully, false if failed
  */
-async function resetPassword(email) {
+async function resetPassword(email, actionCodeSettings) {
   if (!email) throw new Error("Email is required for password reset.");
 
   try {
-    await sendPasswordResetEmail(auth, email);
+    await sendPasswordResetEmail(auth, email, actionCodeSettings);
     return true;
   } catch (error) {
     console.error("Password reset error:", error);
@@ -81,6 +85,20 @@ const getCurrentUser = () => {
   return auth.currentUser;
 };
 
+// Jules: Added updateProfile function
+const updateUserProfile = (user, profile) => {
+  return updateProfile(user, profile);
+};
+
+// Jules: Added verifyPasswordResetCode and confirmPasswordReset functions
+const verifyResetCode = (code) => {
+  return verifyPasswordResetCode(auth, code);
+};
+
+const confirmNewPassword = (code, newPassword) => {
+  return confirmPasswordReset(auth, code, newPassword);
+};
+
 //I changed something here pasqal, check it out!
 export {
   auth,
@@ -91,4 +109,7 @@ export {
   handleAuthStateChange,
   getCurrentUser,
   resetPassword,
+  updateUserProfile,
+  verifyResetCode,
+  confirmNewPassword,
 };
