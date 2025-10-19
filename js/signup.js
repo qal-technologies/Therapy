@@ -1,4 +1,4 @@
-import { signup, login, handleAuthStateChange, logout } from './auth.js';
+import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
