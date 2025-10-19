@@ -53,13 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const valid = validateEmailValue(email);
 
         if (!email) {
-            handleAlert("Please enter a valid email.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i><br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
+            handleAlert("Please enter a valid email.", "blur", true, "<i class='bi bi-exclamation-circle text-danger fs-2'></i><br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
             return;
         }
 
 
         if (!valid) {
-            handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
+            handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger fs-2'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
             throw new Error("Please enter a valid email address.");
         } else {
             resetButton.disabled = true;
@@ -75,13 +75,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 emailInput.disabled = true;
 
                 const actionCodeSettings = {
-                    url: `${window.location.origin}/html/regs/reset-password.html?email=${email}`,
+                    url: `${window.location.origin}/html/regs/reset-password.html`,
                     handleCodeInApp: true,
                 };
 
                 await resetPassword(email, actionCodeSettings);
                 handleAlert(
-                    `<p>A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.</p>`,
+                    `A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.`,
                     "blur",
                     true,
                     "<i class='bi bi-envelope-check text-success fs-2'></i><br/> Email Sent",
