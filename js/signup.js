@@ -562,8 +562,7 @@ window.addEventListener('load', async () => {
 
     } catch (error) {
       const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-      handleAlert(`Registration failed: ${errorMessage}`, "toast");
-
+      
       if (errorMessage.includes("email-already-in-use")) {
         handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, {
           text: "Try Again", onClick: () => {
@@ -571,7 +570,10 @@ window.addEventListener('load', async () => {
             return "closeAlert";
           }, type: "secondary"
         }]);
-      }
+      } else{
+handleAlert(`Registration failed: ${errorMessage}`, "toast");
+}
+disableAllInputs(false);
     } finally {
       disableAllInputs(false);
     }
