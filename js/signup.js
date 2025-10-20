@@ -172,8 +172,8 @@ window.addEventListener('load', async () => {
         regPassword.addEventListener("blur", () => {
           const pwd = regPassword.value.trim();
 
-          if (pwd.length > 0 && pwd.length <= 5) {
-            errorMsg2.textContent = "Password must be more than 5 characters long";
+          if (pwd.length > 0 && pwd.length < 6) {
+            errorMsg2.textContent = 'Password must be at least 6 characters long.';
             regPassword.style.borderColor = "red";
             errorMsg2.classList.add("active");
           } else {
@@ -406,7 +406,7 @@ window.addEventListener('load', async () => {
         return false;
       }
 
-       if (value.length<=5) {
+      if (value.length <= 5) {
         if (errorDiv) {
           errorDiv.innerHTML = "Your verification code should be up to 6. Please check your email or input a valid code.";
           errorDiv.style.display = "flex";
@@ -554,7 +554,7 @@ window.addEventListener('load', async () => {
         waitlist
       });
 
-await updateUserProfile(user, {
+      await updateUserProfile(user, {
         displayName: firstName,
       });
 
@@ -594,6 +594,10 @@ await updateUserProfile(user, {
     disableAllInputs(true);
     try {
       await login(email, password);
+
+      if (sessionStorage.getItem("userEmail")) {
+        sessionStorage.removeItem("userEmail");
+      }
 
       handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-check2-circle text-success fs-2"></i>` : `<i class='bi bi-check-circle-fill text-success fs-2'></i>`} <br/> Login Successful`, true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
     } catch (error) {
@@ -666,6 +670,19 @@ await updateUserProfile(user, {
     setupEventListeners();
     updateFormUI();
     updateFormState();
+
+    const userEmail = sessionStorage.getItem("userEmail");
+    if (userEmail && state.currentForm === "login") {
+      const emailInput = document.getElementById("login-email");
+      const passwordInput = document.getElementById("login-password");
+      if (emailInput) {
+        emailInput.value = userEmail;
+        emailInput.blur();
+        if (passwordInput) {
+          passwordInput.focus();
+        }
+      }
+    }
   }
 
   function handleTabClick(e) {

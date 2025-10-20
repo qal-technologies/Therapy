@@ -665,7 +665,7 @@ async function setupNewsletter(user) {
             const value = emailInput.value.trim();
 
             if (!validateEmailValue(value)) {
-                handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
+                handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger fs-2'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
                 throw new Error("Please enter a valid email address.");
             }
             handleAlert("To subscribe to our newsletter, please log in or create an account.", "blur", true, "✉️ <br/> Login or Register", true, [{ text: "Log in", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, { text: "Register", onClick: () => handleRedirect("/html/regs/Signup.html?type=register"), type: "secondary" }]);
@@ -719,8 +719,6 @@ window.addEventListener("pageshow", (event) => {
             loadGoogleTranslateAndApply(userLang);
             setGoogleTransCookie('en', userLang);
 
-            // !iOS() ? console.log("page show lanfguage added!") : alert("page show langaugae added!");
-
             if (getOS() !== "PC") {
                 location.reload();
             }
@@ -728,21 +726,12 @@ window.addEventListener("pageshow", (event) => {
     }
 });
 
-// if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-//     window.addEventListener("pageshow", (event) => {
-//         if (event.persisted) {
-//             location.reload();
-//         }
-//     });
-// }
-
 (function patchHistoryMethods() {
     const pushState = history.pushState;
     history.pushState = function (...args) {
         pushState.apply(this, args);
         window.dispatchEvent(new Event('pushstate'));
         window.dispatchEvent(new Event('locationchange'));
-        // reapplyTranslationIfNeeded();
     };
 
     const replaceState = history.replaceState;
@@ -750,7 +739,6 @@ window.addEventListener("pageshow", (event) => {
         replaceState.apply(this, args);
         window.dispatchEvent(new Event('replacestate'));
         window.dispatchEvent(new Event('locationchange'));
-        // reapplyTranslationIfNeeded();
     };
 
     window.addEventListener('locationchange', (event) => {
@@ -763,7 +751,6 @@ const observer = new MutationObserver(() => {
         const userLang = sessionStorage.getItem("last_lang") || (navigator.language || "en").split("-")[0];
         if (userLang !== "en") {
             reapplyTranslationIfNeeded();
-            // !iOS() ? console.log("observer lanfguage added!") : alert("observer langaugae added!");
         }
     }
 });
@@ -803,7 +790,7 @@ export function handleRedirect(href = "", type = "default") {
 
     if (type.toLowerCase() === "backwards") {
         const previous = lastNav?.previous?.toLowerCase();
-        if (!lastNav || !lastNav.previous || !previous || previous.includes("login") || previous.includes("signup")) {
+        if (!lastNav || !lastNav.previous || !previous || previous.includes("login") || previous.includes("signup") || previous.includes('forget') || previous.includes('reset')) {
             sessionStorage.setItem("url-navigation", JSON.stringify(data));
             window.location.href = "/html/main/Home.html";
         } else {
