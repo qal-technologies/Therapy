@@ -455,3 +455,22 @@ With care,
 Companion support
 
 
+
+
+Add the following contact numbers to the email footer as official support lines:
+
+Phone (EU): +33 7 45 62 46 34
+Phone (US): +1 (302) 277-8716
+
+You can place them right below the signature, like this:
+
+
+---
+
+Warm regards,
+Companion Support
+📞 EU: +33 7 45 62 46 34
+📞 US: +1 (302) 277-8716
+✉️ healingwithcharlottecasiraghi@gmail.com
+
+
