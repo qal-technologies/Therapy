@@ -421,7 +421,7 @@ window.addEventListener('load', async () => {
         handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
           text: "Continue", onClick: async () => {
             try {
-              handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+              await handleRegistration()
             } catch (error) {
               disableAllInputs(false);
             }
