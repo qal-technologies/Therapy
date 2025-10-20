@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 emailInput.disabled = true;
 
                 const actionCodeSettings = {
-                    url: `${window.location.origin}/html/regs/reset-password.html`,
+                    url: `${window.location.origin}/html/regs/Signup.html?type=login`,
                     handleCodeInApp: true,
                 };
 
