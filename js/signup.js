@@ -41,7 +41,7 @@ const TEMPLATE = {
       <div class="header register-header">
         <h1>Register</h1>
         <p>
-          Welcome! complete the form below to begin
+          Welcome! Complete the form below to begin
         </p>
         <p>
           Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself
@@ -251,7 +251,7 @@ window.addEventListener('load', async () => {
       const regPassword = document.getElementById('reg-password');
       const confirmPassword = document.getElementById('confirm-reg-password');
 
-      const passwordsMatch = regPassword && confirmPassword ? (regPassword.value.trim() === confirmPassword.value.trim() && regPassword.value.trim().length >= 3) : false;
+      const passwordsMatch = regPassword && confirmPassword ? (regPassword.value.trim() === confirmPassword.value.trim() && regPassword.value.trim().length >= 6) : false;
 
       const accept = document.getElementById('accept');
       const accepted = accept ? accept.checked : false;
