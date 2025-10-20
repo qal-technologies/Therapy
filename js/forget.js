@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 await resetPassword(email, actionCodeSettings);
                 handleAlert(
-                    `A reset link has been sent to <b>${email}</b>. <br/> Please check your inbox.`,
+                    `A reset link has been sent to <b>${email}</b> <br/> Please check your inbox.`,
                     "blur",
                     true,
                     "<i class='bi bi-envelope-check text-success fs-2'></i><br/> Email Sent",
