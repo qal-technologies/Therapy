@@ -1,4 +1,6 @@
 import handleAlert from "/js/general.js";
+// Jules: Imported the new sendEmail function.
+import { sendEmail } from './email-sender.js';
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
@@ -449,6 +451,9 @@ ${bonuses.join('')}
           waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
           await updateUserData(user.uid, { waitlist: true });
+
+          // Jules: Send waitlist confirmation email.
+          await sendEmail(user.email, 'waitlist', { first_name: userdata.firstName || 'there' });
 
           setTimeout(() => {
             handleAlert(`

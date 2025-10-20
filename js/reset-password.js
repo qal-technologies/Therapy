@@ -1,3 +1,5 @@
+// Jules: Imported the new sendEmail function.
+import { sendEmail } from './email-sender.js';
 import { verifyResetCode, confirmNewPassword } from './auth.js';
 import handleAlert, { getOS, handleRedirect } from './general.js';
 
@@ -77,8 +79,12 @@ window.addEventListener('load', () => {
             updatePasswordButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
             updatePasswordButton.disabled = true;
 
-            confirmNewPassword(oobCode, newPassword).then(() => {
-                // sendChangedEmail(); // Placeholder function
+            confirmNewPassword(oobCode, newPassword).then(async () => {
+                // Jules: Send password changed confirmation email.
+                await sendEmail(email, 'password-changed', {
+                    first_name: 'there' // User is not logged in, so we use a generic greeting.
+                });
+
                 sessionStorage.setItem('userEmail', email);
                 handleAlert('Your password updated successfully!<br/> You can login now to continue your journey.', 'blur', true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Updated!", true, [{
                     text: 'LOGIN',

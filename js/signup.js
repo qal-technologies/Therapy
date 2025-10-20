@@ -1,3 +1,5 @@
+// Jules: Imported the new sendEmail function to integrate real email sending.
+import { sendEmail } from './email-sender.js';
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
@@ -381,71 +383,58 @@ window.addEventListener('load', async () => {
     }
   }
 
-  function handleVerifyEmail(e) {
+  // Jules: Overhauled the email verification flow to send a real OTP code.
+  async function handleVerifyEmail() {
     const email = document.getElementById('reg-email')?.value;
+    const firstName = document.getElementById('reg-firstname')?.value;
     const emailInput = document.getElementById('reg-email');
 
-    const verifyInput = document.getElementById('email-otp');
+    // Generate a real OTP
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    sessionStorage.setItem("verification-otp-pp", otpCode);
 
-    const randomCodes = ["109283", "308492", "083472", "942937", "542456", "783483", "903459", "213421", "462325", "038349"];
-    const otpCode = randomCodes[Math.floor(Math.random() * randomCodes.length)];
-    sessionStorage.setItem("verification-otp-pp", JSON.stringify(otpCode));
+    // Send the verification email
+    const { success, message } = await sendEmail(email, 'verification', {
+      first_name: firstName,
+      otpCode: otpCode,
+    });
+
+    if (!success) {
+      handleAlert(`<p>There was an error sending the verification email: <br/><b>${message}</b></p>`, 'blur', true, '<i class="bi bi-x-circle-fill text-danger fs-2"></i> <br/> Email Error', true, [{ text: "Ok", onClick: "closeAlert" }]);
+      disableAllInputs(false);
+      return;
+    }
 
     const check = () => {
       const verifyInput = document.getElementById('email-otp');
       const errorDiv = document.querySelector(".alert-message .alert-error");
       const value = verifyInput?.value.trim();
-      const gottenCode = JSON.parse(sessionStorage.getItem("verification-otp-pp"));
+      const storedOtp = sessionStorage.getItem("verification-otp-pp");
 
-      if (!value || value === "") {
-        if (errorDiv) {
-          errorDiv.innerHTML = "Input can't be empty!";
-          errorDiv.style.display = "flex";
-        }
-        verifyInput?.focus();
+      if (!value) {
+        if (errorDiv) errorDiv.innerHTML = "Input can't be empty!";
+        return false;
+      }
+      if (value !== storedOtp) {
+        if (errorDiv) errorDiv.innerHTML = "The code you entered is invalid or expired. Please check your email and try again.";
         return false;
       }
 
-      if (value.length <= 5) {
-        if (errorDiv) {
-          errorDiv.innerHTML = "Your verification code should be up to 6. Please check your email or input a valid code.";
-          errorDiv.style.display = "flex";
-        }
-        verifyInput?.focus();
-        return false;
-      }
-
-      const match = randomCodes.find(code => code === value);
-
-      if (value === gottenCode || match) {
-        handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
-          text: "Continue", onClick: async () => {
-            try {
-              handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
-            } catch (error) {
-              disableAllInputs(false);
-            }
-          }, loading: true,
-        }]);
-        return true;
-      } else {
-        if (errorDiv) {
-          errorDiv.innerHTML = "The code you entered is invalid or expired. Please check your email and try again.";
-          errorDiv.style.display = "flex";
-          verifyInput ? verifyInput.value = "" : "";
-          verifyInput?.focus();
-        }
-        return false;
-      }
-    }
+      // Jules: On successful verification, proceed with registration.
+      handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
+        text: "Continue",
+        onClick: handleRegistration,
+        loading: true,
+      }]);
+      return true;
+    };
 
     const onResend = async () => {
-      const newOtp = randomCodes[Math.floor(Math.random() * randomCodes.length)];
-      sessionStorage.setItem("verification-otp-pp", JSON.stringify(newOtp));
-      console.log(newOtp);
-      verifyInput ? verifyInput.value = "" : "";
-      verifyInput?.focus();
-      // await sendOTPToEmail(email, newOtp);
+      const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+      sessionStorage.setItem("verification-otp-pp", newOtp);
+      await sendEmail(email, 'verification', { first_name: firstName, otpCode: newOtp });
+      const verifyInput = document.getElementById('email-otp');
+      if (verifyInput) verifyInput.value = "";
       return true;
     };
 
@@ -522,12 +511,12 @@ window.addEventListener('load', async () => {
           return "closeAlert";
         }, type: "secondary"
       },
-      { text: "Proceed", onClick: () => handleVerifyEmail(e), loading: true }
+      { text: "Proceed", onClick: handleVerifyEmail, loading: true }
     ]);
   }
 
+  // Jules: Added a welcome email trigger after successful registration.
   async function handleRegistration() {
-
     const firstName = document.getElementById('reg-firstname').value;
     const lastName = document.getElementById('reg-lastname').value;
     const email = document.getElementById('reg-email').value;
@@ -558,6 +547,9 @@ window.addEventListener('load', async () => {
         displayName: firstName,
       });
 
+      // Jules: Send welcome email.
+      await sendEmail(email, 'welcome', { first_name: firstName });
+
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
     } catch (error) {
@@ -578,6 +570,7 @@ window.addEventListener('load', async () => {
   }
 
 
+  // Jules: Added login alert email trigger with device and location data.
   async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
@@ -593,11 +586,32 @@ window.addEventListener('load', async () => {
 
     disableAllInputs(true);
     try {
-      await login(email, password);
+      const userCredential = await login(email, password);
+      const user = userCredential.user;
 
       if (sessionStorage.getItem("userEmail")) {
         sessionStorage.removeItem("userEmail");
       }
+
+      // Jules: Get location and device info for login alert.
+      let location = "an unknown location";
+      try {
+        const geoResponse = await fetch('https://ipapi.co/json/');
+        const geoData = await geoResponse.json();
+        location = `${geoData.city}, ${geoData.country_name}`;
+      } catch (geoError) {
+        console.error("Could not fetch geolocation data:", geoError);
+      }
+
+      const device = getOS();
+      const date = new Date().toLocaleString();
+
+      await sendEmail(email, 'login-alert', {
+        first_name: user.displayName || 'there',
+        date_time: date,
+        location: location,
+        device: device
+      });
 
       handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-check2-circle text-success fs-2"></i>` : `<i class='bi bi-check-circle-fill text-success fs-2'></i>`} <br/> Login Successful`, true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
     } catch (error) {

@@ -1,3 +1,5 @@
+// Jules: Imported the new sendEmail function.
+import { sendEmail } from './email-sender.js';
 import { handleAuthStateChange, logout } from './auth.js';
 import { getUserData, saveTranslationToFirestore, updateUserData } from './database.js';
 
@@ -647,6 +649,10 @@ async function setupNewsletter(user) {
                 emailBTN.disabled = true;
                 emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
                 await updateUserData(user.uid, { emailSub: true });
+
+                // Jules: Send newsletter confirmation email.
+                await sendEmail(user.email, 'newsletter', { first_name: thisUser.firstName || 'there' });
+
                 setTimeout(() => {
                     emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
                     emailBTN.disabled = true;
