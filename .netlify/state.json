@@ -1,0 +1,20 @@
+{
+	"siteId": "61003532-9426-4303-a9ef-c62d70a2e3c6",
+	"geolocation": {
+		"data": {
+			"city": "Port Harcourt",
+			"country": {
+				"code": "NG",
+				"name": "Nigeria"
+			},
+			"subdivision": {
+				"code": "RI",
+				"name": "Rivers State"
+			},
+			"timezone": "Africa/Lagos",
+			"latitude": 4.7731,
+			"longitude": 7.0085
+		},
+		"timestamp": 1761040269517
+	}
+}
