@@ -13,7 +13,7 @@
 const API_URL =
     window.location.hostname === "localhost"
         ? "http://localhost:8888/.netlify/functions/send-email"
-        : "/.netlify/functions/send-email";
+        : "/netlify/functions/send-email";
 
 export async function sendEmail(to, templateName, variables) {
   try {
