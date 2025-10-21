@@ -2,6 +2,7 @@
 
 [build]
   functions = "netlify/functions"
+  publish = "."
 
 [dev]
   publish = "."
