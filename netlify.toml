@@ -1,8 +1,8 @@
 # netlify.toml
 
 [build]
-  functions = "netlify/functions"
   publish = "."
+  functions = "netlify/functions"
 
 [dev]
   publish = "."
