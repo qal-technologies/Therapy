@@ -1,1 +1,0 @@
-export const boni = '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';
