@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
-import { sendEmail } from '../emailHelper.js';
+import { sendEmail } from '../emailHelper2.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
