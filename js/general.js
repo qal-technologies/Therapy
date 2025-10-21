@@ -1,6 +1,6 @@
 import { handleAuthStateChange, logout } from './auth.js';
 import { getUserData, updateUserData } from './database.js';
-import { sendEmail } from '../emailHelper.js';
+import { sendEmail } from '../emailHelper2.js';
 
 let show = false;
 let header;
