@@ -65,7 +65,9 @@ self.addEventListener("fetch", event => {
     ) {
         return; 
     }
+    if (event.request.method !== 'GET') return;
 
+    
     // If HTML request -> try translated cache first (exact URL)
     if (event.request.destination === 'document' || url.pathname.endsWith(".html")) {
         event.respondWith((async () => {

@@ -1,6 +1,7 @@
 // Jules: This is the secure Netlify serverless function that acts as a central hub for sending all emails.
 // It reads API keys from environment variables and routes email requests to the appropriate provider.
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
@@ -47,10 +48,17 @@ const sendWithBrevo = async (from, to, subject, html) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        sender: { email: from },
-        to: [{ email: to }],
-        subject,
-        htmlContent: html,
+        "sender":{
+          "name": "Healing with Charlotte Casiraghi",
+          "email": from
+        },
+        "to": [{ "email": to }],
+        "subject": subject,
+        "htmlContent": html,
+        "replyTo": {
+          "email": "healingwithcharlottecasiraghi@gmail.com",
+          "name": "Companion support"
+        },
       }),
     });
     if (!response.ok) {

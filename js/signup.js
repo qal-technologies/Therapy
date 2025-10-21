@@ -437,13 +437,7 @@ window.addEventListener('load', async () => {
 
       if (match) {
         handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
-          text: "Continue", onClick: async () => {
-            try {
-              await handleRegistration()
-            } catch (error) {
-              disableAllInputs(false);
-            }
-          }, loading: true,
+          text: "REGISTER", onClick: async () => await handleRegistration(), loading: true,
         }]);
         return true;
       } else {
@@ -459,11 +453,13 @@ window.addEventListener('load', async () => {
 
     const onResend = async () => {
       const newOtp = randomCodes[Math.floor(Math.random() * randomCodes.length)];
-      sessionStorage.setItem("verification-otp-pp", JSON.stringify(newOtp));
-      console.log(newOtp);
-      verifyInput ? verifyInput.value = "" : "";
-      verifyInput?.focus();
-      // await sendOTPToEmail(email, newOtp);
+      await sendEmail(email, 'verification', { first_name: firstName, otpCode: newOtp });
+
+      if (verifyInput) {
+        verifyInput.value = "";
+        verifyInput.focus();
+      }
+
       return true;
     };
 
@@ -540,12 +536,11 @@ window.addEventListener('load', async () => {
           return "closeAlert";
         }, type: "secondary"
       },
-      { text: "Proceed", onClick: () => handleVerifyEmail(), loading: true }
+      { text: "Proceed", onClick: handleVerifyEmail, loading: true }
     ]);
   }
 
   async function handleRegistration() {
-
     const firstName = document.getElementById('reg-firstname').value;
     const lastName = document.getElementById('reg-lastname').value;
     const email = document.getElementById('reg-email').value;
@@ -576,11 +571,13 @@ window.addEventListener('load', async () => {
         displayName: firstName,
       });
 
+      await sendEmail(email, 'welcome', { first_name: firstName });
+
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
     } catch (error) {
       const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-      
+
       if (errorMessage.includes("email-already-in-use")) {
         handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, {
           text: "Try Again", onClick: () => {
@@ -588,10 +585,10 @@ window.addEventListener('load', async () => {
             return "closeAlert";
           }, type: "secondary"
         }]);
-      } else{
-handleAlert(`Registration failed: ${errorMessage}`, "toast");
-}
-disableAllInputs(false);
+      } else {
+        handleAlert(`Registration failed: ${errorMessage}`, "toast");
+      }
+      disableAllInputs(false);
     } finally {
       disableAllInputs(false);
     }
@@ -613,11 +610,31 @@ disableAllInputs(false);
 
     disableAllInputs(true);
     try {
-      await login(email, password);
+      const userCredential = await login(email, password);;
+      const user = userCredential.user;
 
       if (sessionStorage.getItem("userEmail")) {
         sessionStorage.removeItem("userEmail");
       }
+
+      let location = "an unknown location";
+      try {
+        const geoResponse = await fetch('https://ipapi.co/json/');
+        const geoData = await geoResponse.json();
+        location = `${geoData.city}, ${geoData.country_name}`;
+      } catch (geoError) {
+        console.error("Could not fetch geolocation data:", geoError);
+      }
+
+      const device = getOS() === "iOS" ? "iPhone" : getOS();
+      const date = new Date().toLocaleString();
+
+      await sendEmail(email, 'login-alert', {
+        first_name: user.displayName || 'there',
+        date_time: date,
+        location: location,
+        device: device
+      });
 
       handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-check2-circle text-success fs-2"></i>` : `<i class='bi bi-check-circle-fill text-success fs-2'></i>`} <br/> Login Successful`, true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
     } catch (error) {
@@ -686,7 +703,7 @@ disableAllInputs(false);
         };
       });
     }
-
+    
     setupEventListeners();
     updateFormUI();
     updateFormState();
