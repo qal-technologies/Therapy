@@ -10,10 +10,7 @@
  * @returns {Promise<{success: boolean, message: string}>} - An object indicating the outcome of the email sending attempt.
  */
 
-const API_URL =
-    window.location.hostname === "localhost"
-        ? "http://localhost:8888/.netlify/functions/send-email"
-        : "https://guerisonendirectavecharlottecasiraghi.netlify.app/.netlify/functions/send-email";
+const API_URL = "/.netlify/functions/send-email";
 
 export async function sendEmail(to, templateName, variables) {
   try {
