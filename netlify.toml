@@ -5,7 +5,7 @@
   functions = "netlify/functions"
 
 [functions]
-  included_files = ["templates/**/"]
+  included_files = ["templates/**"]
 
 [[redirects]]
   from = "/.netlify/functions/*"
