@@ -4,6 +4,9 @@
   publish = "."
   functions = "netlify/functions"
 
+[functions]
+  included_files = ["templates/**"]
+
 [[redirects]]
   from = ".netlify/functions/*"
   to = ".netlify/functions/:splat"

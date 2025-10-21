@@ -57,7 +57,7 @@ exports.handler = async (event) => {
         }
 
         // ✅ Correct path to templates directory
-        const templatePath = path.join(__dirname, "..", "..", "templates", `${templateName}.html`);
+        const templatePath = path.join(__dirname, "templates", `${templateName}.html`);
         if (!fs.existsSync(templatePath)) {
             return { statusCode: 404, body: JSON.stringify({ error: `Template '${templateName}.html' not found.` }) };
         }
