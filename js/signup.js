@@ -666,8 +666,11 @@ window.addEventListener('load', async () => {
     }
   }
 
-  async function handleCheck() {
-    handleAuthStateChange((user) => {
+
+async function handleCheck() {
+    const unsubscribe = handleAuthStateChange((user) => {
+      // Unsubscribe immediately after the first check to prevent it from running again.
+      unsubscribe();
       if (user) {
         handleAlert("Please log out or go back and continue your journey in healing.", "blur", true, "<i class='bi bi-exclamation-triangle text-warning fs-2'></i> <br/> You are logged in", true, [{
           text: "LOGOUT", onClick: async () => {
@@ -685,7 +688,7 @@ window.addEventListener('load', async () => {
           }, loading: true,
         }, { text: "Go Back", onClick: () => handleRedirect("", "backwards"), type: "secondary" }]);
       }
-    })
+    });
   }
 
   async function init() {
