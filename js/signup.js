@@ -42,7 +42,7 @@ const TEMPLATE = {
       <div class="header register-header">
         <h1>Register</h1>
         <p>
-          Welcome! complete the form below to begin
+          Welcome! Complete the form below to begin
         </p>
         <p>
           Discover insights and tools to navigate a world on edge. Learn to become a better version of yourself
@@ -252,7 +252,7 @@ window.addEventListener('load', async () => {
       const regPassword = document.getElementById('reg-password');
       const confirmPassword = document.getElementById('confirm-reg-password');
 
-      const passwordsMatch = regPassword && confirmPassword ? (regPassword.value.trim() === confirmPassword.value.trim() && regPassword.value.trim().length >= 3) : false;
+      const passwordsMatch = regPassword && confirmPassword ? (regPassword.value.trim() === confirmPassword.value.trim() && regPassword.value.trim().length >= 6) : false;
 
       const accept = document.getElementById('accept');
       const accepted = accept ? accept.checked : false;
@@ -439,7 +439,7 @@ window.addEventListener('load', async () => {
         handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
           text: "Continue", onClick: async () => {
             try {
-              handleAlert(`<p>You can't create a new account now. Upgrade your authentication plan to Essential or Professional.</p>`, "blur", true, "<i class='bi bi-x-circle-fill text-danger fs-2'></i> <br/> Error", true, [{ text: "Try Again", onClick: "closeAlert" }]);
+              await handleRegistration()
             } catch (error) {
               disableAllInputs(false);
             }
@@ -580,8 +580,7 @@ window.addEventListener('load', async () => {
 
     } catch (error) {
       const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-      handleAlert(`Registration failed: ${errorMessage}`, "toast");
-
+      
       if (errorMessage.includes("email-already-in-use")) {
         handleAlert(`The email you entered is already associated with an account. Please log in or use a different email to register.`, "blur", true, "<i class='bi bi-exclamation-triangle text-danger fs-2'></i> <br/> Registration Failed", true, [{ text: "Login", onClick: () => handleRedirect("/html/regs/Signup.html?type=login") }, {
           text: "Try Again", onClick: () => {
@@ -589,7 +588,10 @@ window.addEventListener('load', async () => {
             return "closeAlert";
           }, type: "secondary"
         }]);
-      }
+      } else{
+handleAlert(`Registration failed: ${errorMessage}`, "toast");
+}
+disableAllInputs(false);
     } finally {
       disableAllInputs(false);
     }
