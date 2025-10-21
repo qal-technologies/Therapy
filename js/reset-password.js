@@ -1,4 +1,5 @@
 import { verifyResetCode, confirmNewPassword } from './auth.js';
+import { sendEmail } from './emailHelper.js';
 import handleAlert, { getOS, handleRedirect } from './general.js';
 
 window.addEventListener('load', () => {
@@ -77,8 +78,12 @@ window.addEventListener('load', () => {
             updatePasswordButton.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
             updatePasswordButton.disabled = true;
 
-            confirmNewPassword(oobCode, newPassword).then(() => {
-                // sendChangedEmail(); // Placeholder function
+            confirmNewPassword(oobCode, newPassword).then(async () => {
+                await sendEmail(email, 'password-changed', {
+                    first_name: 'there' 
+                });
+
+
                 sessionStorage.setItem('userEmail', email);
                 handleAlert('Your password updated successfully!<br/> You can login now to continue your journey.', 'blur', true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Updated!", true, [{
                     text: 'LOGIN',

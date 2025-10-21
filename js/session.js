@@ -2,6 +2,7 @@ import handleAlert from "/js/general.js";
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
+import { sendEmail } from "./emailHelper.js";
 
 
 window.addEventListener("load", () => {
@@ -449,6 +450,8 @@ ${bonuses.join('')}
           waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
           await updateUserData(user.uid, { waitlist: true });
+
+          await sendEmail(user.email, 'waitlist', { first_name: userdata.firstName || 'there' });
 
           setTimeout(() => {
             handleAlert(`

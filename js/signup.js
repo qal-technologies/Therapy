@@ -1,5 +1,6 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
+import { sendEmail } from './emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
@@ -381,21 +382,38 @@ window.addEventListener('load', async () => {
     }
   }
 
-  function handleVerifyEmail(e) {
+  async function handleVerifyEmail() {
     const email = document.getElementById('reg-email')?.value;
     const emailInput = document.getElementById('reg-email');
+    const firstName = document.getElementById('reg-firstname')?.value;
 
     const verifyInput = document.getElementById('email-otp');
 
+    //Generatee a ransdom code:::
     const randomCodes = ["109283", "308492", "083472", "942937", "542456", "783483", "903459", "213421", "462325", "038349"];
     const otpCode = randomCodes[Math.floor(Math.random() * randomCodes.length)];
-    sessionStorage.setItem("verification-otp-pp", JSON.stringify(otpCode));
+
+    // Send the verification email
+    const { success, message } = await sendEmail(email, 'verification', {
+      first_name: firstName,
+      otpCode: otpCode,
+    });
+
+    if (!success) {
+      handleAlert(`<p>There was an error sending the verification email: <br/><b>${message}</b></p>`, 'blur', true, '<i class="bi bi-x-circle-fill text-danger fs-2"></i> <br/> Email Error', true, [{
+        text: "Try Again", onClick: () => {
+          emailInput?.focus();
+          return "closeAlert";
+        }
+      }]);
+      disableAllInputs(false);
+      return;
+    }
 
     const check = () => {
       const verifyInput = document.getElementById('email-otp');
       const errorDiv = document.querySelector(".alert-message .alert-error");
       const value = verifyInput?.value.trim();
-      const gottenCode = JSON.parse(sessionStorage.getItem("verification-otp-pp"));
 
       if (!value || value === "") {
         if (errorDiv) {
@@ -417,7 +435,7 @@ window.addEventListener('load', async () => {
 
       const match = randomCodes.find(code => code === value);
 
-      if (value === gottenCode || match) {
+      if (match) {
         handleAlert(`<p>Your email <b>(${email})</b> has been verified successfully.</p>`, "blur", true, "<i class='bi bi-check-circle-fill text-success fs-2'></i> <br/> Email Verified", true, [{
           text: "Continue", onClick: async () => {
             try {
@@ -522,7 +540,7 @@ window.addEventListener('load', async () => {
           return "closeAlert";
         }, type: "secondary"
       },
-      { text: "Proceed", onClick: () => handleVerifyEmail(e), loading: true }
+      { text: "Proceed", onClick: () => handleVerifyEmail(), loading: true }
     ]);
   }
 
