@@ -1,12 +1,10 @@
+# netlify.toml
+
 [build]
   publish = "."
   functions = "netlify/functions"
 
-[dev]
-  publish = "."
-
 [[redirects]]
-  from = "/api/*"
-  to   = "/.netlify/functions/:splat"
+  from = ".netlify/functions/*"
+  to = ".netlify/functions/:splat"
   status = 200
-  force = true

@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
-import { sendEmail } from './emailHelper.js';
+import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
@@ -703,7 +703,7 @@ window.addEventListener('load', async () => {
         };
       });
     }
-    
+
     setupEventListeners();
     updateFormUI();
     updateFormState();
