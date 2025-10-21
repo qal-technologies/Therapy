@@ -17,4 +17,4 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 
-src/keys/zanned/
+# src/keys/zanned/
