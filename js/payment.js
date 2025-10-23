@@ -1,10 +1,11 @@
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
-import { handleAuthStateChange } from './auth.js';
+import { handleAuthStateChange, getCurrentUser } from './auth.js';
 import {
     getPaymentById,
     updateUserPayment,
     updateGlobalTransaction,
-    updateUserData
+    updateUserData,
+    getUserData
 } from './database.js';
 import { scrollToMakeVisible } from './shop.js';
 
@@ -704,6 +705,19 @@ function triggerVibration() {
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
     if (!finalPayment || finalPayment.status == null) {
+
+        const user = getCurrentUser();
+        if (user) {
+            const userData = await getUserData(user.uid);
+            if (userData && userData.details && userData.details.email) {
+                await sendEmail(userData.details.email, 'payment-processing', {
+                    first_name: userData.details.firstName,
+                    purchase_type: state.paymentType,
+                    transaction_id: state.txn,
+                });
+            }
+        }
+
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
             <div class="paysafe-header">
@@ -1188,7 +1202,7 @@ async function initializePaymentFlow(e, state, elements) {
         const errorMessage = error.message.split('(').pop().split(')')[0].replace('/', '');
         console.error("Error parsing payment details:", errorMessage);
         const ios = getOS() === "iOS";
-        
+
         if (errorMessage.includes("client is offline")) {
             handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${ios ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{
                 text: "Try Again", onClick: () => {
@@ -1222,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
             state.userId = user.uid;
             state.initialContent = elements.paymentDisplay.innerHTML;
-                
+
             await initializePaymentFlow(e, state, elements);
         } else {
             handleAlert("You must be logged in to make a payment.", "blur", false, "", true, [{ text: "OK", onClick: () => handleRedirect("/html/regs/Signup.html") }]);
