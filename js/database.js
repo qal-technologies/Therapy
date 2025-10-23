@@ -274,4 +274,102 @@ export {
   getCartById,
   updateUserData,
   updateGlobalTransaction,
+  addToWaitlist,
+  addToNewsletter,
+  getWaitlist,
+  getNewsletterSubscribers,
+  removeFromNewsletter,
+  updateWaitlistEntry,
+  updateNewsletterEntry,
+};
+
+// --- WAITLIST FUNCTIONS ---
+
+/**
+ * Adds a user to the waitlist collection.
+ * @param {string} email - The user's email address.
+ * @returns {Promise<DocumentReference>}
+ */
+const addToWaitlist = (email) => {
+  const waitlistColRef = collection(db, "waitlist");
+  return addDoc(waitlistColRef, {
+    email: email,
+    joinedAt: serverTimestamp(),
+  });
+};
+
+/**
+ * Retrieves all users from the waitlist.
+ * @returns {Promise<Array>} An array of waitlist user objects.
+ */
+const getWaitlist = async () => {
+  const waitlistColRef = collection(db, "waitlist");
+  const querySnapshot = await getDocs(waitlistColRef);
+  const users = [];
+  querySnapshot.forEach((doc) => {
+    users.push({ id: doc.id, ...doc.data() });
+  });
+  return users;
+};
+
+/**
+ * Updates a waitlist entry.
+ * @param {string} docId - The document ID of the waitlist entry to update.
+ * @param {object} data - The data to update.
+ * @returns {Promise<void>}
+ */
+const updateWaitlistEntry = (docId, data) => {
+    const waitlistDocRef = doc(db, "waitlist", docId);
+    return setDoc(waitlistDocRef, data, { merge: true });
+};
+
+
+// --- NEWSLETTER FUNCTIONS ---
+
+/**
+ * Adds a user to the newsletter collection.
+ * @param {string} email - The user's email address.
+ * @returns {Promise<DocumentReference>}
+ */
+const addToNewsletter = (email) => {
+  const newsletterColRef = collection(db, "newsletter");
+  return addDoc(newsletterColRef, {
+    email: email,
+    subscribedAt: serverTimestamp(),
+  });
+};
+
+/**
+ * Retrieves all newsletter subscribers.
+ * @returns {Promise<Array>} An array of subscriber objects.
+ */
+const getNewsletterSubscribers = async () => {
+  const newsletterColRef = collection(db, "newsletter");
+  const querySnapshot = await getDocs(newsletterColRef);
+  const subscribers = [];
+  querySnapshot.forEach((doc) => {
+    subscribers.push({ id: doc.id, ...doc.data() });
+  });
+  return subscribers;
+};
+
+/**
+ * Removes a subscriber from the newsletter collection.
+ * @param {string} docId - The document ID of the subscriber to remove.
+ * @returns {Promise<void>}
+ */
+const removeFromNewsletter = (docId) => {
+  const newsletterDocRef = doc(db, "newsletter", docId);
+  return deleteDoc(newsletterDocRef);
+};
+
+/**
+ * Updates a newsletter entry.
+ * @param {string} docId - The document ID of the newsletter entry to update.
+ * @param {object} data - The data to update.
+ * @returns {Promise<void>}
+ */
+const updateNewsletterEntry = (docId, data) => {
+    const newsletterDocRef = doc(db, "newsletter", docId);
+    return setDoc(newsletterDocRef, data, { merge: true });
 };

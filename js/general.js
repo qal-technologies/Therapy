@@ -1,5 +1,5 @@
 import { handleAuthStateChange, logout } from './auth.js';
-import { getUserData, updateUserData } from './database.js';
+import { getUserData, updateUserData, addToNewsletter } from './database.js';
 import { sendEmail } from '../emailHelper2.js';
 
 let show = false;
@@ -647,7 +647,7 @@ async function setupNewsletter(user) {
 
                 emailBTN.disabled = true;
                 emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
-                await updateUserData(user.uid, { emailSub: true });
+                await addToNewsletter(user.email);
 
 
                 await sendEmail(user.email, 'newsletter', { first_name: thisUser.firstName || 'there' });

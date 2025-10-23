@@ -1,5 +1,5 @@
 import handleAlert from "/js/general.js";
-import { getUserData, updateUserData } from "./database.js";
+import { getUserData, updateUserData, addToWaitlist } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
 import { sendEmail } from "../emailHelper.js";
@@ -846,7 +846,7 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 					waitlistBTN.style.fontSize = "12px";
 					waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-					await updateUserData(user.uid, { waitlist: true });
+					await addToWaitlist(user.email);
 
 					await sendEmail(user.email, 'waitlist', { first_name: userdata.firstName || 'there' });
 
