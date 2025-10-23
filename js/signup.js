@@ -464,7 +464,7 @@ window.addEventListener('load', async () => {
     };
 
     handleAlert(
-      `<p>We've sent a code to your email: <b>${email}</b>. Please check your inbox. If you don't see it, check your spam/junk folder or search for '<b>Charlotte Casiraghi</b>'.</p>`,
+      `<p>We've sent a code to your email: <b>${email}</b></p>`,
       "blur",
       true,
       "Verify Email",
