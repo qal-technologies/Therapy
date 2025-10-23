@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
         try {
             if (user) {
                 let waitlist = false;
+                let email;
                 const TOPICS_DATA = {
                     virtual: {
                         name: "VIRTUAL SESSION",
@@ -294,6 +295,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             const session = TOPICS_DATA[state.selectedTopic];
                             const details = {
                                 type: "session",
+                                email: email || null,
                                 description: session.description,
                                 title: session.name,
                                 price: parseFloat(session.price.replace(',', '')),
@@ -399,6 +401,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const urlParams = new URLSearchParams(window.location.search);
                 const userdata = await getUserData(user.uid);
                 waitlist = userdata.waitlist;
+                email = userdata.details.email
                 init();
                 if (urlParams.get('type')) {
                     try {
@@ -464,18 +467,18 @@ window.addEventListener('DOMContentLoaded', () => {
                 }]);
             }
         } catch (error) {
-             const errorMessage = error.message.split('(').pop().split(')')[0].replace('/', '');
+            const errorMessage = error.message.split('(').pop().split(')')[0].replace('/', '');
             console.error("Error parsing payment details:", errorMessage);
             const ios = getOS() === "iOS";
 
-                    if (errorMessage.includes("client is offline")) {
-                        handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${ios ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{
-                            text: "Try Again", onClick: () => {
-                                window.location.reload();
-                                return "closeAlert";
-                            }
-                        }]);
+            if (errorMessage.includes("client is offline")) {
+                handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${ios ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{
+                    text: "Try Again", onClick: () => {
+                        window.location.reload();
+                        return "closeAlert";
                     }
+                }]);
+            }
         }
     });
 });

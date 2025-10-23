@@ -46,6 +46,7 @@ window.addEventListener('load', () => {
     }
   };
 
+  let email;
 
   function handleAudio(lang) {
     const shopAudio = document.querySelector('.preview-banner audio#book-audio-message');
@@ -251,12 +252,14 @@ window.addEventListener('load', () => {
   async function hardCopy(book, user) {
     const language = navigator.language;
     const transactionId = `TXN-${Math.random().toString(36).substring(2, 10).toUpperCase()}-${language.substring(0, 2).toUpperCase()}`;
+
     const itemData = {
       id: book.id,
       bookId: book.id,
       title: book.title,
       price: book.price,
       image: book.image,
+      email: email || null,
       quantity: 1,
       transactionId: transactionId,
       description: `You are buying one or more copies of Compagnon Féminin, a special digital book available to only 5,000 readers worldwide. It has been carefully designed to feel like a real book, even though you read it on a phone, tablet, or computer.`,
@@ -394,6 +397,7 @@ Select Book Format
       title: book.title,
       price: book.price,
       image: book.image,
+      email: email || null,
       quantity: book.quantity,
       transactionId: transactionId,
       description: `You are buying one or more copies of Compagnon Féminin, a special digital book available to only 5,000 readers worldwide. It has been carefully designed to feel like a real book, even though you read it on a phone, tablet, or computer.`,
@@ -456,6 +460,7 @@ Select Book Format
       const copyBTN = document.querySelector("#preview button.get-copy");
       const details = document.querySelector("#preview .details");
       const userLang = navigator.language || navigator.languages[0];
+      email = thisUser.details.email;
 
       if (thisUser.bookPaid === true && copyBTN && details) {
         copyBTN.innerHTML = "START READING NOW";

@@ -1,6 +1,6 @@
 import { handleAuthStateChange, logout } from './auth.js';
 import { getUserData, updateUserData } from './database.js';
-import { sendEmail } from '../emailHelper2.js';
+import { sendEmail } from '../emailHelper.js';
 
 let show = false;
 let header;
@@ -650,7 +650,7 @@ async function setupNewsletter(user) {
                 await updateUserData(user.uid, { emailSub: true });
 
 
-                await sendEmail(user.email, 'newsletter', { first_name: thisUser.firstName || 'there' });
+                await sendEmail(user.email, 'newsletter', { first_name: thisUser.details.firstName || 'there' });
 
                 setTimeout(() => {
                     emailBTN.innerHTML = `<p class="text">Subscribed</p>`;
@@ -688,7 +688,6 @@ async function initializeApp() {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("/service-worker.js").catch(error => {
             console.error("Service Worker registration failed:", error);
-            // iOS() ? alert("Service Worker registration failed:") : "";
         });
     }
 
@@ -709,8 +708,6 @@ window.addEventListener("popstate", () => {
         try {
             loadGoogleTranslateAndApply(userLang);
             setGoogleTransCookie('en', userLang);
-            // location.reload();
-            // !iOS() ? console.log("popstate lanfguage added!") : alert("popstate langaugae added!");
         } catch (error) {
             console.log(error);
         }

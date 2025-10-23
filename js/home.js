@@ -848,7 +848,7 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 
 					await updateUserData(user.uid, { waitlist: true });
 
-					await sendEmail(user.email, 'waitlist', { first_name: userdata.firstName || 'there' });
+					await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
 
 					setTimeout(() => {
 						handleAlert(`

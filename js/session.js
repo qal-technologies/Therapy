@@ -2,7 +2,7 @@ import handleAlert from "/js/general.js";
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
-import { sendEmail } from "../emailHelper2.js";
+import { sendEmail } from "../emailHelper.js";
 
 
 window.addEventListener("load", () => {
@@ -451,7 +451,7 @@ ${bonuses.join('')}
 
           await updateUserData(user.uid, { waitlist: true });
 
-          await sendEmail(user.email, 'waitlist', { first_name: userdata.firstName || 'there' });
+          await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
 
           setTimeout(() => {
             handleAlert(`

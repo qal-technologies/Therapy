@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
-import { sendEmail } from '../emailHelper2.js';
+import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
@@ -571,7 +571,8 @@ window.addEventListener('load', async () => {
         displayName: firstName,
       });
 
-      await sendEmail(email, 'welcome', { first_name: firstName });
+      const pathName = window.location.hostname;
+      await sendEmail(email, 'welcome', { first_name: firstName, origin: pathName });
 
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
@@ -667,7 +668,7 @@ window.addEventListener('load', async () => {
   }
 
 
-async function handleCheck() {
+  async function handleCheck() {
     const unsubscribe = handleAuthStateChange((user) => {
       // Unsubscribe immediately after the first check to prevent it from running again.
       unsubscribe();
@@ -706,7 +707,7 @@ async function handleCheck() {
         };
       });
     }
-    
+
     setupEventListeners();
     updateFormUI();
     updateFormState();
