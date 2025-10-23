@@ -1,3 +1,4 @@
+import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 import { handleAuthStateChange } from './auth.js';
 import {
@@ -704,6 +705,14 @@ function triggerVibration() {
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
     if (!finalPayment || finalPayment.status == null) {
+        // Jules: As per your request, I am adding the sendEmail call here for pending payments.
+        console.log("Sending payment processing email...");
+        await sendEmail(state.details.email, 'payment-processing', {
+            first_name: state.details.firstName,
+            purchase_type: state.paymentType,
+            transaction_id: state.txn,
+        });
+
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
             <div class="paysafe-header">
