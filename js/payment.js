@@ -1,12 +1,13 @@
-import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
-import { handleAuthStateChange } from './auth.js';
+import { handleAuthStateChange, getCurrentUser } from './auth.js';
 import {
     getPaymentById,
     updateUserPayment,
     updateGlobalTransaction,
-    updateUserData
+    updateUserData,
+    getUserData
 } from './database.js';
+import { sendEmail } from './emailHelper.js';
 import { scrollToMakeVisible } from './shop.js';
 
 // ==================== STATE MANAGEMENT ====================
@@ -705,13 +706,19 @@ function triggerVibration() {
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
     if (!finalPayment || finalPayment.status == null) {
-        // Jules: As per your request, I am adding the sendEmail call here for pending payments.
-        console.log("Sending payment processing email...");
-        await sendEmail(state.details.email, 'payment-processing', {
-            first_name: state.details.firstName,
-            purchase_type: state.paymentType,
-            transaction_id: state.txn,
-        });
+        // Jules: As per your request, I am fetching the user's email before sending the notification.
+        const user = getCurrentUser();
+        if (user) {
+            const userData = await getUserData(user.uid);
+            if (userData && userData.details && userData.details.email) {
+                console.log("Sending payment processing email...");
+                await sendEmail(userData.details.email, 'payment-processing', {
+                    first_name: userData.details.firstName,
+                    purchase_type: state.paymentType,
+                    transaction_id: state.txn,
+                });
+            }
+        }
 
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
