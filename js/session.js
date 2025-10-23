@@ -2,7 +2,7 @@ import handleAlert from "/js/general.js";
 import { getUserData, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { handleRedirect } from "./general.js";
-import { sendEmail } from "./emailHelper.js";
+import { sendEmail } from "../emailHelper2.js";
 
 
 window.addEventListener("load", () => {

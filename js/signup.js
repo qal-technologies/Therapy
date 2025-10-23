@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile } from './database.js';
-import { sendEmail } from '../emailHelper.js';
+import { sendEmail } from '../emailHelper2.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
@@ -464,7 +464,7 @@ window.addEventListener('load', async () => {
     };
 
     handleAlert(
-      `<p>We've sent a code to your email: <b>${email}</b>. Please check your inbox. If you don't see it, check your spam/junk folder or search for '<b>Charlotte Casiraghi</b>'.</p>`,
+      `<p>We've sent a code to your email: <b>${email}</b></p>`,
       "blur",
       true,
       "Verify Email",
@@ -666,8 +666,11 @@ window.addEventListener('load', async () => {
     }
   }
 
-  async function handleCheck() {
-    handleAuthStateChange((user) => {
+
+async function handleCheck() {
+    const unsubscribe = handleAuthStateChange((user) => {
+      // Unsubscribe immediately after the first check to prevent it from running again.
+      unsubscribe();
       if (user) {
         handleAlert("Please log out or go back and continue your journey in healing.", "blur", true, "<i class='bi bi-exclamation-triangle text-warning fs-2'></i> <br/> You are logged in", true, [{
           text: "LOGOUT", onClick: async () => {
@@ -685,7 +688,7 @@ window.addEventListener('load', async () => {
           }, loading: true,
         }, { text: "Go Back", onClick: () => handleRedirect("", "backwards"), type: "secondary" }]);
       }
-    })
+    });
   }
 
   async function init() {
