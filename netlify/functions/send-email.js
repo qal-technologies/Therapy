@@ -275,7 +275,7 @@ const templates = {
           style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">€550</b> – <b
           style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">€1,600</b>).
       </li>
-      <a href="{{origin}}/main/Book.html" class="cta book"
+      <a href="{{origin}}/html/main/Book.html" class="cta book"
         style="margin-top: 10px; padding:5px; padding-inline:20px; background:#8b5e5a; border-radius:15px; color:white; text-decoration:none; font-weight:bolder; ">Book
         Now</a>
 
@@ -286,7 +286,7 @@ const templates = {
         woman you’ve been and are becoming. Copies are limited; you may wish to
         reserve yours.been and will become. Copies are limited, so consider reserving yours today.
       </li>
-      <a href="{{origin}}/main/Shop.html" class="cta book"
+      <a href="{{origin}}/html/main/Shop.html" class="cta book"
         style="margin-top: 10px; padding:5px; padding-inline:20px; background:#8b5e5a; border-radius:15px; color:white; text-decoration:none; font-weight:bolder; ">Reserve
         a copy</a>
 
@@ -298,7 +298,7 @@ const templates = {
         hours), and
         confidentiality (all sessions are private).</li>
 
-      <a href="{{origin}}/main/FAQ.html" class="cta book"
+      <a href="{{origin}}/html/main/FAQ.html" class="cta book"
         style="margin-top: 10px; padding:5px; padding-inline:20px; background:#8b5e5a; border-radius:15px; color:white; text-decoration:none; font-weight:bolder; ">Read
         FAQs</a>
 
