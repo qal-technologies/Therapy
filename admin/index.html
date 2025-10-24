@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h1>Admin Panel</h1>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <button type="button" id="request-otp-btn">Request OTP</button>
+                <div class="input-group otp-group" style="display: none;">
+                    <label for="otp">OTP</label>
+                    <input type="text" id="otp" name="otp" required>
+                    <button type="submit" id="login-btn">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

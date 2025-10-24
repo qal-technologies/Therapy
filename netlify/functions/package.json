@@ -2,6 +2,7 @@
   "name": "send-email-function",
   "version": "1.0.0",
   "dependencies": {
+    "firebase-admin": "^13.5.0",
     "node-fetch": "^2.6.7"
   }
 }
