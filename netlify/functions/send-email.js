@@ -334,6 +334,59 @@ const templates = {
 
 </html>`,
     
+    'payment-approved': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Approved</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">A Space to Heal</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Hello <b>{{first_name}}</b>,</p>
+        <p>Great news! Your payment for <b>{{purchase_type}}</b> has been approved. Below is a summary of your transaction:</p>
+        <ul style="list-style: none; padding: 0;">
+            <li><b>Transaction ID:</b> {{transaction_id}}</li>
+            <li><b>Amount:</b> {{amount}}</li>
+            <li><b>Payment Method:</b> {{payment_method}}</li>
+        </ul>
+        <p><b>For Sessions:</b> Your booking is now official. You’ll soon receive a separate email with your session date, time and personalized preparation details.</p>
+        <p><b>For Book Purchases:</b> Your order has been confirmed. You purchased <i>Compagnon Féminin</i>, you’ll be able to read it directly on our website.</p>
+        <p>You can view this and all of your past transactions by logging in and visiting the Payment History section under your profile.</p>
+        <br>
+        <p>With heartfelt thanks,<br>Companion support</p>
+    </div>
+</body>
+</html>`,
+
+    'payment-declined': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Declined</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">A Space to Heal</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Dear <b>{{first_name}}</b>,</p>
+        <p>Unfortunately, we couldn’t process your recent payment for <b>{{purchase_type}}</b> (Transaction ID {{transaction_id}}). This could be due to an incorrect card number, insufficient funds, or a network issue.</p>
+        <p><b>What you can do:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Double‑check that your card details and billing address are correct.</li>
+            <li>Try another payment method.</li>
+            <li>Contact your bank to ensure there are no restrictions on your card.</li>
+        </ul>
+        <p>If the problem persists, please reply to this email. We’re here to help.</p>
+        <br>
+        <p>Warm regards,<br>Companion support</p>
+    </div>
+</body>
+</html>`,
+
     'payment-processing': `<!DOCTYPE html>
 
 <head>
@@ -472,6 +525,8 @@ exports.handler = async (event) => {
             "password-changed": "Your password has been updated",
             waitlist: "You’ve been added to the waitlist",
             newsletter: "Welcome to Charlotte’s circle of healing insights",
+            "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
+            "payment-declined": "Issue with your payment attempt",
         };
 
         const subject = subjects[templateName] || "Update from Healing with Charlotte Casiraghi";

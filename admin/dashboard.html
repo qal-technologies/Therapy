@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/animation.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <div id="admin-dashboard">
+        <aside class="sidebar">
+            <header class="sidebar-header">
+                <div class="sidebar-header-top">
+                    <p class="user-avatar">A</p>
+                    <P class="admin-tag">Admin Panel</P>
+                </div>
+
+                <div class="header-icons">
+                    <!-- <i class="bi bi-people-fill"></i> -->
+                    <!-- <i class="bi bi-arrow-clockwise refresh"></i> -->
+                    <!-- <i class="bi bi-three-dots-vertical"></i> -->
+                </div>
+                <div class="search-bar">
+                    <i class="bi bi-search"></i>
+                    <input type="text" placeholder="Search users">
+                </div>
+            </header>
+
+            <div class="user-list-container">
+                <!-- User list will be dynamically inserted here -->
+
+                <p class="chat-empty">No User Activity yet</p>
+            </div>
+
+            <div class="moveUpNfadeIn visit-site bottom">
+                <a href="../index.html" class="visit-link">VISIT SITE >></a>
+                <button class="logout">LOG OUT</button>
+            </div>
+        </aside>
+
+        <main class="chat-view">
+            <header class="chat-header">
+                <div class="user-avatar">J</div>
+                <div class="user-info">
+                    <span class="user-name">Justin Nelson</span>
+                    <span class="user-status">email@gmail.com</span>
+                </div>
+                <div class="header-icons">
+                    <i class="bi bi-search"></i>
+                    <i class="bi bi-three-dots-vertical"></i>
+                </div>
+            </header>
+            <div class="message-container">
+                <!-- Messages will be dynamically loaded here -->
+
+                <div class="batch receive-batch">
+                    <div class="message-bubble received">
+                        <div class="message-content">
+                            <div class="tag-div">
+                                <p class="tag-name" dataset-type="payment">payment</p>
+                            </div>
+                            <p>Payment of €550.00 initiated for a session.</p>
+                            <span class="message-meta">10:49 AM</span>
+                        </div>
+                    </div>
+
+                    <div class="message-bubble received">
+                        <div class="message-content">
+                            <div class="tag-div">
+                                <p class="tag-name" dataset-type="payment">payment</p>
+                            </div>
+                            <p>Payment of €550.00 initiated for a session.</p>
+                            <span class="message-meta">10:49 AM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="batch send-batch">
+                    <div class="message-bubble sent">
+                        <div class="message-content">
+                            <p>approved</p>
+                            <span class="message-meta">10:50 AM</span>
+                        </div>
+                    </div>
+
+                    <div class="message-bubble sent">
+                        <div class="message-content">
+                            <p>approved</p>
+                            <span class="message-meta">10:50 AM</span>
+                        </div>
+                    </div>
+
+                    <div class="message-bubble sent">
+                        <div class="message-content">
+                            <p>approved</p>
+                            <span class="message-meta">10:50 AM</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="chat-footer">
+                <!-- <i class="bi bi-emoji-smile"></i>
+                <i class="bi bi-paperclip"></i> -->
+                <input type="text" class="message-input" placeholder="Type a message">
+                <!-- <i class="bi bi-mic-fill"></i> -->
+
+                <button class="send-button">SEND</button>
+            </footer>
+        </main>
+    </div>
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>

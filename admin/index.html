@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safe Space for Admin</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+
+    <link rel="stylesheet" href="animation.css">
+    <link rel="stylesheet" href="../css/general.css">
+    <link rel="stylesheet" href="admin-login.css">
+</head>
+
+<body>
+    <div class="alert-message"></div>
+    <div class=" zoom-in glow-border login-container">
+        <div class="login-box">
+            <h1 class="moveUpNfadeIn">Admin Panel</h1>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" autofocus
+                        inputmode="email">
+                    <p class="email-error"></p>
+                    <button type="button" id="request-otp-btn">Request OTP</button>
+                </div>
+
+                <div class="input-group otp-group" style="display:none;">
+                    <label for="otp">OTP</label>
+                    <input type="text" id="otp" name="otp" required>
+                    <p class="otp-error"></p>
+
+                    <button type="submit" id="login-btn">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>
