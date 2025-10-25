@@ -15,14 +15,25 @@
                     <!-- Placeholder for admin avatar -->
                 </div>
                 <div class="header-icons">
-                    <i class="bi bi-people-fill"></i>
-                    <i class="bi bi-arrow-clockwise"></i>
-                    <i class="bi bi-three-dots-vertical"></i>
+                    <i class="bi bi-brightness-high-fill" id="theme-switcher"></i>
+                    <a href="/html/main/Home.html" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                    <i class="bi bi-box-arrow-right" id="logout-btn"></i>
                 </div>
             </header>
             <div class="search-bar">
                 <i class="bi bi-search"></i>
                 <input type="text" placeholder="Search or start new chat">
+                <div class="filter-icon">
+                    <i class="bi bi-filter"></i>
+                </div>
+            </div>
+            <div class="filter-options">
+                <button data-filter="all">All</button>
+                <button data-filter="unread">Unread</button>
+                <button data-filter="signup">Signup</button>
+                <button data-filter="login">Login</button>
+                <button data-filter="payment">Payment</button>
+                <button data-filter="waitlist">Waitlist</button>
             </div>
             <div class="user-list-container">
                 <!-- User list will be dynamically inserted here -->
@@ -47,6 +58,9 @@
                         <p>Payment of €550.00 initiated for a session.</p>
                         <span class="message-meta">10:49 AM</span>
                     </div>
+                    <div class="reply-button">
+                        <i class="bi bi-reply-fill"></i>
+                    </div>
                 </div>
                 <div class="message-bubble sent">
                     <div class="message-content">
@@ -58,8 +72,10 @@
             <footer class="chat-footer">
                 <i class="bi bi-emoji-smile"></i>
                 <i class="bi bi-paperclip"></i>
-                <input type="text" class="message-input" placeholder="Type a message">
-                <i class="bi bi-mic-fill"></i>
+                <textarea class="message-input" placeholder="Type a message"></textarea>
+                <button id="send-btn" class="send-btn">
+                    <i class="bi bi-send-fill"></i>
+                </button>
             </footer>
         </main>
     </div>

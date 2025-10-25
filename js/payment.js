@@ -1,11 +1,14 @@
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
-import { handleAuthStateChange, getCurrentUser } from './auth.js';
+import { handleAuthStateChange, getCurrentUser, db } from './auth.js';
+import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 import {
     getPaymentById,
     updateUserPayment,
     updateGlobalTransaction,
     updateUserData,
-    getUserData
+    getUserData,
+    addUserActivityPayment,
+    updateUserActivity
 } from './database.js';
 import { scrollToMakeVisible } from './shop.js';
 
@@ -149,6 +152,21 @@ function handlePaymentMethodClick(option, state, elements) {
 
 async function handleProceedClick(e, state) {
     e.preventDefault();
+
+    // Jules: Notify admin that payment has been initiated
+    try {
+        await updateUserActivity(state.userId, {
+            payment_initiated: {
+                timestamp: new Date(),
+                amount: state.amount,
+                paymentType: state.paymentType,
+            },
+            last_update: new Date(),
+            opened: false,
+        });
+    } catch (error) {
+        console.error("Failed to update user activity for payment initiation:", error);
+    }
 
     const button = document.getElementById("proceed-button");
     button.disabled = true;
@@ -688,6 +706,8 @@ async function savePaymentData(state) {
     try {
         await updateGlobalTransaction(txn, paymentData);
         await updateUserPayment(userId, txn, paymentData);
+        // Jules: Also save the payment to the user_activities collection
+        await addUserActivityPayment(userId, txn, paymentData);
         return true;
     } catch (error) {
         console.error("Error saving payment data:", error);
@@ -705,6 +725,14 @@ function triggerVibration() {
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
     if (!finalPayment || finalPayment.status == null) {
+        // Jules: Implement real-time listener for payment status
+        const unsub = onSnapshot(doc(db, "transactions", state.txn), (doc) => {
+            const payment = doc.data();
+            if (payment && payment.status !== null) {
+                unsub(); // Stop listening once we have a final status
+                showResultScreen(state, elements, payment);
+            }
+        });
 
         const user = getCurrentUser();
         if (user) {

@@ -76,17 +76,25 @@ exports.handler = async (event) => {
             return { statusCode: 200, body: JSON.stringify({ message: 'No action keyword found.' }) };
         }
 
-        // Update Firestore
-        const userPaymentRef = db.collection('users').doc(userId).collection('payments').doc(paymentId);
+        // Jules: Update Firestore using the new user_activities model
+        const userActivityPaymentRef = db.collection('user_activities').doc(userId).collection('payments').doc(paymentId);
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
 
         await db.runTransaction(async (transaction) => {
-            transaction.update(userPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
+            transaction.update(userActivityPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
             transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
         });
 
-        // Trigger email notification to the user
-        const userDoc = await db.collection('users').doc(userId).get();
+        // Jules: Save the admin's reply
+        const adminReplyRef = db.collection('user_activities').doc(userId).collection('admin_replies').doc();
+        await adminReplyRef.set({
+            replyTo: paymentId,
+            text: replyText,
+            timestamp: new Date(),
+        });
+
+        // Jules: Trigger email notification to the user
+        const userDoc = await db.collection('user_activities').doc(userId).get();
         const userData = userDoc.data();
         const userEmail = userData.details.email;
         const firstName = userData.details.firstName;

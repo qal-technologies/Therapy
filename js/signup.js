@@ -1,5 +1,5 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
-import { createUserProfile } from './database.js';
+import { createUserProfile, createUserActivity, updateUserActivity } from './database.js';
 import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
@@ -559,12 +559,29 @@ window.addEventListener('load', async () => {
       const user = userCredential.user;
       const waitlist = false;
 
+      // Jules: Create the user profile in the 'users' collection
       await createUserProfile(user.uid, {
         firstName,
         lastName,
         email,
         country,
         waitlist
+      });
+
+      // Jules: Create the initial user activity document
+      await createUserActivity(user.uid, {
+        details: {
+          firstName,
+          lastName,
+          email,
+          country,
+        },
+        signup: {
+          timestamp: new Date(),
+          device: getOS(),
+        },
+        last_update: new Date(),
+        opened: false,
       });
 
       await updateUserProfile(user, {
@@ -629,6 +646,16 @@ window.addEventListener('load', async () => {
 
       const device = getOS() === "iOS" ? "iPhone" : getOS();
       const date = new Date().toLocaleString();
+
+      // Jules: Update the user activity document with login info
+      await updateUserActivity(user.uid, {
+        login: {
+          timestamp: new Date(),
+          device: device,
+        },
+        last_update: new Date(),
+        opened: false,
+      });
 
       await sendEmail(email, 'login-alert', {
         first_name: user.displayName || 'there',

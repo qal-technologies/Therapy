@@ -42,7 +42,7 @@ async function sendWithBrevo(from, to, subject, html) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                sender: { name: "Admin System", email: from },
+                sender: { name: "Healing with Charlotte Casiraghi - Admin", email: from },
                 to: [{ email: to }],
                 subject,
                 htmlContent: html,
@@ -65,7 +65,7 @@ exports.handler = async (event) => {
 
     try {
         const { email } = JSON.parse(event.body);
-        const from = "qaltech.company@gmail.com";
+        const from = "healingwithcharlottecasiraghi@gmail.com";
 
         if (!email) {
             return { statusCode: 400, body: JSON.stringify({ error: "Missing 'email' parameter" }) };
