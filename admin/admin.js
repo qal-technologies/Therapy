@@ -251,14 +251,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.removeEventListener('touchend', handleEnd);
 
             if (isSwiping) {
-                focusedMessage = messageBubble;
                 if (navigator.vibrate) navigator.vibrate(30);
+                setFocusedMessage(messageBubble);
 
-                // Highlight focused message
-                document.querySelectorAll('.message-bubble').forEach(b => b.classList.remove('focused'));
-                messageBubble.classList.add('focused');
-
-                document.querySelector('.message-input').focus();
             }
 
             // Reset translation
@@ -324,6 +319,22 @@ document.addEventListener('DOMContentLoaded', () => {
         sendBtn.disabled = false;
         messageInput.disabled = false;
         messageInput.focus();
+
+        const replyPreview = document.getElementById('reply-preview');
+        const replyTag = document.getElementById('reply-tag');
+        const replySnippet = document.getElementById('reply-snippet');
+
+        const tagElement = messageElement.querySelector('.tag-name');
+        const tagText = tagElement ? tagElement.textContent : 'Message';
+
+        const messageText = messageElement.querySelector('.message-content p')?.textContent || '';
+        const snippet = messageText.length > 50 ? messageText.slice(0, 50) + '...' : messageText;
+
+        replyTag.textContent = tagText;
+        replySnippet.textContent = snippet;
+
+        replyPreview.style.display = 'flex';
+
     }
 
     async function processAdminAction(userId, paymentId, replyText) {
@@ -340,6 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
             addSentMessage(replyText);
+            document.getElementById('reply-preview').style.display = 'none';
+
 
         } catch (error) {
             console.error(error);
@@ -378,6 +391,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+
+    document.getElementById('cancel-reply').addEventListener('click', () => {
+        const replyPreview = document.getElementById('reply-preview');
+        replyPreview.style.display = 'none';
+        if (focusedMessage) focusedMessage.classList.remove('focused');
+        focusedMessage = null;
+    });
 
     const filterIcon = document.querySelector('.filter-icon');
     const filterOptions = document.querySelector('.filter-options');

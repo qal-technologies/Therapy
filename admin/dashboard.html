@@ -77,14 +77,24 @@
                 </div>
                 <!-- Messages will be dynamically loaded here -->
             </div>
-            <footer class="chat-footer">
-                <!-- <i class="bi bi-emoji-smile"></i>
-                <i class="bi bi-paperclip"></i> -->
-                <textarea class="message-input" placeholder="Type a message" disabled></textarea>
 
-                <button id="send-btn" class="send-btn" title="Send Admin Reply" disabled>
-                    <i class="bi bi-send-fill"></i>
-                </button>
+            <footer class="chat-footer">
+                <div class="reply-preview" id="reply-preview" style="display: none;">
+                    <div class="reply-tag" id="reply-tag">dfgd</div>
+                    <div class="reply-snippet" id="reply-snippet">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, sunt? Mollitia optio, natus facere cum similique harum suscipit odit dolores.
+                    </div>
+                    <i class="bi bi-x-lg" id="cancel-reply"></i>
+                </div>
+
+                <div class="under">
+                    <!-- <i class="bi bi-emoji-smile"></i>
+                    <i class="bi bi-paperclip"></i> -->
+                    <textarea class="message-input" placeholder="Type a message" disabled></textarea>
+                    <button id="send-btn" class="send-btn" title="Send Admin Reply" disabled>
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
             </footer>
         </main>
     </div>
