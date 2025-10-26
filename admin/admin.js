@@ -172,6 +172,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>Email:</strong> ${email}</p>
                         <p><strong>Country</strong>: ${country}</p>
                     </div>
+
+                    <div class="reply-button">
+                        <i class="bi bi-reply-fill"></i>
+                    </div>
                 `;
             } else if (event.type === 'login') {
                 messageBubble.classList.add('received');
