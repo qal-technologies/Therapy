@@ -144,22 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            const prevEvent = events[i - 1];
-            const nextEvent = events[i + 1];
+            // const prevEvent = events[i - 1];
+            // const nextEvent = events[i + 1];
 
             const messageBubble = document.createElement('div');
             messageBubble.classList.add('message-bubble');
 
-            let batchClass = '';
-            const isSameSender = prevEvent && prevEvent.type === event.type;
-            const isWithin5Mins = prevEvent && (event.timestamp.seconds - prevEvent.timestamp.seconds) < 300;
-            const nextIsSame = nextEvent && nextEvent.type === event.type && (nextEvent.timestamp.seconds - event.timestamp.seconds) < 300;
+            // let batchClass = '';
+            // const isSameSender = prevEvent && prevEvent.type === event.type;
+            // const isWithin5Mins = prevEvent && (event.timestamp.seconds - prevEvent.timestamp.seconds) < 300;
+            // const nextIsSame = nextEvent && nextEvent.type === event.type && (nextEvent.timestamp.seconds - event.timestamp.seconds) < 300;
 
-            if (isSameSender && isWithin5Mins) {
-                batchClass = nextIsSame ? 'batch-middle' : 'batch-end';
-            } else {
-                batchClass = 'batch-start';
-            }
+            // if (isSameSender && isWithin5Mins) {
+            //     batchClass = nextIsSame ? 'batch-middle' : 'batch-end';
+            // } else {
+            //     batchClass = 'batch-start';
+            // }
 
             if (event.type === 'signup') {
                 messageBubble.classList.add('received');
