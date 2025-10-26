@@ -402,7 +402,7 @@ border:1px solid red
 .message-content {
     display: flex;
     flex-direction: column;
-    max-width: 70%;
+    max-width: 80%;
     padding: 8px;
     border-radius: 16px;
     position: relative;
@@ -438,6 +438,7 @@ border:1px solid red
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
+    gap: 10px;
     padding-inline: 1px;
     position: relative;
 }
