@@ -656,6 +656,7 @@ button .spinner {
         width: 100%;
         max-width: 100%;
         border-right: none;
+        display: none;
     }
 
     .chat-view {
@@ -680,8 +681,9 @@ button .spinner {
         z-index: 101;
     }
 
-    .chat-view .message-container {
-        padding-top: 20px;
+    .chat-view.active .message-container {
+        padding-top: 11vh;
+        padding-top: 11dvh;
     }
 }
 
