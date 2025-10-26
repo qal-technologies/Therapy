@@ -78,12 +78,12 @@ document.addEventListener("DOMContentLoaded", () => {
             if (success) {
                 // Store OTP and expiry in sessionStorage
                 const otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes
-                sessionStorage.setItem('adminOtp', data.otp);
+                sessionStorage.setItem('adminOtp', otpCode);
                 sessionStorage.setItem('adminOtpExpiry', otpExpiry);
                 handleAlert('An OTP has been sent to your email.', 'toast');
                 return true;
             } else {
-                throw new Error(data.message || 'An unknown error occurred.');
+                throw new Error(message || 'An unknown error occurred.');
             }
         } catch (error) {
             console.error('Error sending OTP:', error);
