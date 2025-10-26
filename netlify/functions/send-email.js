@@ -458,7 +458,24 @@ const templates = {
     </footer>
 </body>
 
-</html>`
+</html>`,
+    
+  'admin-otp': `<!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <title>Admin Login OTP</title>
+    </head>
+    <body style="font-family: sans-serif; text-align: center; background-color: #f4f4f4; padding: 20px;">
+        <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <h2 style="color: #333;">Admin Panel Access</h2>
+            <p style="font-size: 16px; color: #555;">Here is your One-Time Password (OTP) to access the admin panel. This code will expire in 5 minutes.</p>
+            <p style="font-size: 24px; font-weight: bold; color: #000; letter-spacing: 2px; margin: 20px 0; background-color: #f0f2f5; padding: 15px; border-radius: 5px;">{{otpCode}}</p>
+            <p style="font-size: 14px; color: #777;">If you did not request this code, please ignore this email immediately.</p>
+        </div>
+    </body>
+    </html>`
 };
 
 // Utility to inject {{placeholders}} inside email templates
@@ -526,7 +543,9 @@ exports.handler = async (event) => {
             waitlist: "You’ve been added to the waitlist",
             newsletter: "Welcome to Charlotte’s circle of healing insights",
             "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
-            "payment-declined": "Issue with your payment attempt",
+          "payment-declined": "Issue with your payment attempt",
+          "payment-processing": "Your payment is being processed",
+          'admin-otp': "Your Admin Panel OTP Code",
         };
 
         const subject = subjects[templateName] || "Update from Healing with Charlotte Casiraghi";

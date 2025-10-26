@@ -1,3 +1,4 @@
+import { sendEmail } from '../emailHelper.js';
 import { login, logout } from '../js/auth.js';
 import handleAlert from '../js/general.js'
 
@@ -66,11 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function sendOtp(email) {
         try {
-            const response = await fetch('/.netlify/functions/send-admin-otp', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
+            const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+            const response = await sendEmail(email, 'admin-otp', otpCode);
 
             if (!response.ok) {
                 throw new Error('Failed to send OTP.');
