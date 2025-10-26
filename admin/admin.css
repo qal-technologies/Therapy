@@ -670,7 +670,6 @@ button .spinner {
         width: 100%;
         max-width: 100%;
         border-right: none;
-        display: none;
     }
 
     .chat-view {
