@@ -293,16 +293,18 @@ border:1px solid red
 
 .user-name {
     font-weight: 600;
-    color: #1a272e;
+    color: #92a3ad;
 }
 
 .user-list-item.active .user-name {
+    font-weight: bolder;
+    font-family: PoppinsSemi;
     color: white;
 }
 
 .last-message {
     font-size: 13px;
-    color: #667781;
+    color: #60696e;
 }
 
 .user-list-item.active .last-message {
@@ -341,7 +343,8 @@ border:1px solid red
 }
 
 
-* button:disabled, * input:disabled {
+* button:disabled, * input:disabled, * textarea:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
@@ -378,6 +381,7 @@ border:1px solid red
     display: flex;
     flex-direction: column;
     user-select: none;
+    position: relative;
 }
 
 .message-container .message-bubble {
@@ -391,12 +395,16 @@ border:1px solid red
     gap: 10px;
 }
 
+.message-container .message-bubble.focused {
+    background: rgba(220, 255, 238, 0.1);
+}
+
 .message-content {
     display: flex;
     flex-direction: column;
     max-width: 70%;
     padding: 8px;
-    border-radius: 12px;
+    border-radius: 16px;
     position: relative;
     transition: transform 0.2s ease;
     background: rgb(250, 255, 255);
@@ -428,9 +436,9 @@ border:1px solid red
     display: flex;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
     padding-inline: 1px;
-    text-align: left;
     position: relative;
 }
 
@@ -452,7 +460,7 @@ border:1px solid red
     line-height: 15px;
     margin: 0;
     padding: 0;
-    margin-top: 3px;
+    margin-top: 5px;
     user-select: text;
 }
 
@@ -580,6 +588,35 @@ border:1px solid red
     cursor: pointer;
 }
 
+.chat-footer button i {
+    color: black;
+}
+
+.chat-footer button:disabled {
+    background: #25d36266;
+    cursor: not-allowed !important;
+}
+
+.chat-footer button:disabled .chat-footer i {
+    color: #444444;
+    cursor: not-allowed !important;
+}
+
+.loading-parent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background: transparent;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px) brightness(80%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
 .spinner-container {
     width: 30px;
     height: 30px;
@@ -601,6 +638,11 @@ border:1px solid red
     border-radius: 50%;
     animation: spin 600ms linear 100ms infinite alternate forwards;
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.loading-parent .spinner {
+    border-left: 4px dotted white;
+    border-top: 4px dotted white;
 }
 
 button .spinner {
@@ -632,9 +674,14 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: sticky;
+        position: absolute;
         top: 0;
+        width: 100%;
         z-index: 101;
+    }
+
+    .chat-view .message-container {
+        padding-top: 20px;
     }
 }
 

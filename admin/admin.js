@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="user-meta">
                 <span class="last-message-time">${displayTime}</span>
+                <span class="unread-count" style="display: none;">0</span>
             </div>
         `;
 
@@ -91,13 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadChatForUser(user) {
         const messageContainer = document.querySelector('.message-container');
-        messageContainer.innerHTML = '';
+
+        const chatHeaderIcon = document.querySelector('.chat-header .user-avatar');
+        chatHeaderIcon.textContent = `${user.details.firstName[0] || "U"}`;
 
         const chatHeaderName = document.querySelector('.chat-header .user-name');
         chatHeaderName.textContent = `${user.details.firstName} ${user.details.lastName}`;
 
-        const chatHeaderIcon = document.querySelector('.chat-header .user-avatar');
-        chatHeaderIcon.textContent = `${user.details.firstName[0] || "U"}`;
+        const chatHeaderEmail = document.querySelector('.chat-header .user-status');
+        chatHeaderEmail.textContent = `${user.details.email}`;
 
         const events = [];
 
@@ -144,22 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            // const prevEvent = events[i - 1];
-            // const nextEvent = events[i + 1];
 
             const messageBubble = document.createElement('div');
             messageBubble.classList.add('message-bubble');
-
-            // let batchClass = '';
-            // const isSameSender = prevEvent && prevEvent.type === event.type;
-            // const isWithin5Mins = prevEvent && (event.timestamp.seconds - prevEvent.timestamp.seconds) < 300;
-            // const nextIsSame = nextEvent && nextEvent.type === event.type && (nextEvent.timestamp.seconds - event.timestamp.seconds) < 300;
-
-            // if (isSameSender && isWithin5Mins) {
-            //     batchClass = nextIsSame ? 'batch-middle' : 'batch-end';
-            // } else {
-            //     batchClass = 'batch-start';
-            // }
 
             if (event.type === 'signup') {
                 messageBubble.classList.add('received');
@@ -179,11 +169,8 @@ document.addEventListener('DOMContentLoaded', () => {
                              <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
                         </div>
                         <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p>Email: ${email}</p>
-                        <p>Country: ${country}</p>
-                    </div>
-                    <div class="reply-button">
-                        <i class="bi bi-reply-fill"></i>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
                     </div>
                 `;
             } else if (event.type === 'login') {
@@ -197,9 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
 
                         <p>User logged in from ${event.device}.</p>                    
-                    </div>
-                    <div class="reply-button">
-                        <i class="bi bi-reply-fill"></i>
                     </div>
                 `;
             } else if (event.type === 'payment') {
@@ -227,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
+            sessionStorage.setItem('userId', user.id);
+            messageContainer.innerHTML = '';
             messageContainer.appendChild(messageBubble);
         }
 
@@ -241,42 +227,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Swipe to reply logic
     let focusedMessage = null;
-    document.querySelector('.message-container').addEventListener('mousedown', (e) => {
+    function handleSwipeStart(e) {
         const messageBubble = e.target.closest('.message-bubble');
         if (!messageBubble) return;
 
-        let startX = e.clientX;
+        let startX = e.touches ? e.touches[0].clientX : e.clientX;
         let isSwiping = false;
 
-        const handleMouseMove = (moveEvent) => {
-            const currentX = moveEvent.clientX;
+        function handleMove(moveEvent) {
+            const currentX = moveEvent.touches ? moveEvent.touches[0].clientX : moveEvent.clientX;
             const diffX = currentX - startX;
 
             if (diffX < -50) {
                 isSwiping = true;
                 messageBubble.style.transform = `translateX(${diffX}px)`;
             }
-        };
+        }
 
-        const handleMouseUp = () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
+        function handleEnd() {
+            document.removeEventListener('mousemove', handleMove);
+            document.removeEventListener('mouseup', handleEnd);
+            document.removeEventListener('touchmove', handleMove);
+            document.removeEventListener('touchend', handleEnd);
 
             if (isSwiping) {
                 focusedMessage = messageBubble;
-                // Add a visual indicator for the focused message
+                if (navigator.vibrate) navigator.vibrate(30);
+
+                // Highlight focused message
                 document.querySelectorAll('.message-bubble').forEach(b => b.classList.remove('focused'));
                 messageBubble.classList.add('focused');
+
                 document.querySelector('.message-input').focus();
             }
 
-            // Reset transform
+            // Reset translation
             messageBubble.style.transform = 'translateX(0)';
-        };
+        }
 
-        document.addEventListener('mousemove', handleMouseMove);
-        document.addEventListener('mouseup', handleMouseUp);
-    });
+        // Desktop
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
+
+        // Mobile
+        document.addEventListener('touchmove', handleMove, { passive: true });
+        document.addEventListener('touchend', handleEnd);
+    }
+
+    const messageContainer = document.querySelector('.message-container');
+    messageContainer.addEventListener('mousedown', handleSwipeStart);
+    messageContainer.addEventListener('touchstart', handleSwipeStart, { passive: true });
 
     // Handle message sending
     const messageInput = document.querySelector('.message-input');
@@ -287,9 +287,9 @@ document.addEventListener('DOMContentLoaded', () => {
         messageInput.style.height = 'auto';
         messageInput.style.height = `${messageInput.scrollHeight}px`;
 
-        // if (sendBtn.disabled) {
-        //     sendBtn.disabled = false;
-        // }
+        if (sendBtn.disabled) {
+            sendBtn.disabled = false;
+        }
     });
 
     sendBtn.addEventListener('click', () => {
@@ -300,12 +300,13 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="spinner"></div>
       </div>`;
 
-        const userId = document.querySelector('.user-list-item.active').dataset.userId;
+        const userId = sessionStorage.getItem('userId') || focusedMessage.dataset.eventData && JSON.parse(focusedMessage.dataset.eventData).id;
         const eventData = JSON.parse(focusedMessage.dataset.eventData);
 
         processAdminAction(userId, eventData.id, replyText).then(() => {
             messageInput.value = '';
             messageInput.style.height = 'auto';
+            messageInput.disabled = true;
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
             sendBtn.disabled = true;
@@ -321,6 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         focusedMessage = messageElement;
         focusedMessage.classList.add('focused');
         sendBtn.disabled = false;
+        messageInput.disabled = false;
         messageInput.focus();
     }
 
@@ -369,6 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHeader.prepend(backButton);
 
         backButton.addEventListener('click', () => {
+            sessionStorage.removeItem('userId');
             if (window.innerWidth <= 768) {
                 chatView.classList.remove('active');
                 sidebar.style.display = 'flex';
@@ -446,7 +449,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if ('Notification' in window) {
             Notification.requestPermission().then(permission => {
                 if (permission === 'granted') {
-                    handleAlert('Notification permission granted', 'toast');
+                    const granted = localStorage.getItem('notificationPermission');
+
+                    if (!granted) {
+                        localStorage.setItem('notificationPermission', 'granted');
+
+                        handleAlert('Notification permission granted', 'toast');
+                    }
                 } else {
                     handleAlert("Please grant notification permission for the admin dashboard functions to work properly.", "blur", true, "Notification", true, [{ text: "CLOSE", onClick: "closeAlert", type: 'secondary' }, {
                         text: "ACCEPT", onClick: () => {
@@ -471,6 +480,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Implement the onSnapshot listener for real-time updates
     const usersCollectionRef = collection(db, 'user_activities');
     const q = query(usersCollectionRef, orderBy('last_update', 'desc'));
+
+    const notifiedUsers = new Set();
+
     onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
             const user = { id: change.doc.id, ...change.doc.data() };
@@ -481,10 +493,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             addUserToList(user, true);
 
-            if (change.type === "added") {
-                showNotification('New User', `${user.details.firstName} has signed up.`);
-            } else if (change.type === "modified") {
-                showNotification('User Updated', `${user.details.firstName}'s profile has been updated.`);
+
+            if (user.opened === false && !notifiedUsers.has(user.id)) {
+                let title = '';
+                let message = '';
+
+                if (change.type === 'added') {
+                    title = 'New User';
+                    message = `${user.details?.firstName || 'A user'} just signed up.`;
+                } else if (change.type === 'modified') {
+                    title = 'Unread User Updated';
+                    message = `${user.details?.firstName || 'A user'}’s activity was updated.`;
+                }
+
+                if (title && message) {
+                    showNotification(title, message);
+                    notifiedUsers.add(user.id);
+                }
             }
         });
     });
@@ -493,6 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const userActivityRef = doc(db, 'user_activities', userId);
         try {
             await updateDoc(userActivityRef, { opened: true });
+            notifiedUsers.delete(userId);
         } catch (error) {
             console.error("Error marking user as opened:", error);
         }

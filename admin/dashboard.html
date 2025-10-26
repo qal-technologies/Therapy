@@ -55,6 +55,18 @@
 
             <div class="user-list-container">
                 <!-- User list will be dynamically loaded here -->
+
+                <div class="user-list-item">
+                    <div class="user-avatar">u</div>
+                    <div class="user-info">
+                        <span class="user-name">Paschal</span>
+                        <span class="last-message">user@gmail.com</span>
+                    </div>
+                    <div class="user-meta">
+                        <span class="last-message-time">Today</span>
+                        <span class="unread-count" style="display: none;">1</span>
+                    </div>
+                </div>
             </div>
         </aside>
 
@@ -70,33 +82,20 @@
                 </div>
             </header>
             <div class="message-container">
+                <div class="loading-parent">
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
                 <!-- Messages will be dynamically loaded here -->
-                <div class="message-bubble received">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name">Payment</span>
-                            <span class="message-meta">10:49 AM</span>
-                        </div>
 
-                        <p>Payment of €550.00 initiated for a session.</p>
-                    </div>
-                    <div class="reply-button">
-                        <i class="bi bi-reply-fill"></i>
-                    </div>
-                </div>
-
-                <div class="message-bubble sent">
-                    <div class="message-content">
-                        <p>approved</p>
-                        <span class="message-meta">10:50 AM</span>
-                    </div>
-                </div>
             </div>
             <footer class="chat-footer">
                 <!-- <i class="bi bi-emoji-smile"></i>
                 <i class="bi bi-paperclip"></i> -->
-                <textarea class="message-input" placeholder="Type a message"></textarea>
-                <button id="send-btn" class="send-btn" title="Send Admin Reply">
+                <textarea class="message-input" placeholder="Type a message" disabled></textarea>
+
+                <button id="send-btn" class="send-btn" title="Send Admin Reply" disabled>
                     <i class="bi bi-send-fill"></i>
                 </button>
             </footer>
