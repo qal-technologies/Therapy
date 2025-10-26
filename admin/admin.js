@@ -320,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         focusedMessage = messageElement;
         focusedMessage.classList.add('focused');
-        sendBtn.disabled = false;
         messageInput.disabled = false;
         messageInput.focus();
 
@@ -400,8 +399,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cancel-reply').addEventListener('click', () => {
         const replyPreview = document.getElementById('reply-preview');
         replyPreview.style.display = 'none';
-        if (focusedMessage) focusedMessage.classList.remove('focused');
-        focusedMessage = null;
+        if (focusedMessage) {
+            focusedMessage.classList.remove('focused');
+            focusedMessage = null;
+            sendBtn.disabled = true;
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            messageInput.disabled = true;
+        }
     });
 
     const filterIcon = document.querySelector('.filter-icon');
