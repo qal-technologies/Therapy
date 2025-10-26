@@ -182,7 +182,8 @@ border:1px solid red
 
 .search-bar input {
     flex: 1;
-    max-width: 90%;
+    width: 90%;
+    max-width: 80vw;
     border: none;
     border-radius: 12px;
     padding: 8px;
