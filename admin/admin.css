@@ -353,8 +353,8 @@ border:1px solid red
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
-    background-repeat: repeat;
+    /* background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+    background-repeat: repeat; */
 }
 
 .chat-header .user-info {
@@ -427,7 +427,7 @@ border:1px solid red
     transition: opacity 0.2s;
 }
 
-.message-bubble:hover .reply-button {
+.message-bubble:hover .reply-button, .message-bubble:active .reply-button {
     opacity: 1;
 }
 
@@ -674,7 +674,7 @@ button .spinner {
     }
 
     .chat-view {
-        /* display: none; */
+        display: none;
     }
 
     /* Logic to show chat view when a user is selected will be in JS */
