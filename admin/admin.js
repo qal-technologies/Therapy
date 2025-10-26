@@ -116,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const payment = data.payment || null;
             const waitlist = data.waitlist || null;
             const newsletter = data.newsletter || null;
+            const logout = data.logout || null;
 
             if (signup) events.push({ type: 'signup', ...signup });
             if (login) events.push({ type: 'login', ...login });
@@ -123,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (details) events.push({ type: 'details', ...details });
             if (waitlist) events.push({ type: 'waitlist', ...waitlist });
             if (newsletter) events.push({ type: 'newsletter', ...newsletter });
+            if (logout) events.push({ type: 'logout', ...logout });
         }
 
         try {
@@ -203,6 +205,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="reply-button">
                         <i class="bi bi-reply-fill"></i>
+                    </div>
+                `;
+            } else if (event.type === 'waitlist') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">WAITLIST</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User joined waitlist</p>
+                    </div>
+                `;
+            } else if (event.type === 'newsletter') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">NEWSLTTER</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User subscribed for newsletter</p>
+                    </div>
+                `;
+            } else if (event.type === 'logout') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">LOGOUT</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User logged out from this device: ${event.device}</p>
                     </div>
                 `;
             } else if (event.type === 'reply') {

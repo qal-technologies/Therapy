@@ -1,5 +1,5 @@
 import { handleAuthStateChange, logout } from './auth.js';
-import { getUserData, updateUserData } from './database.js';
+import { getUserData, updateUserActivity, updateUserData } from './database.js';
 import { sendEmail } from '../emailHelper.js';
 
 let show = false;
@@ -574,7 +574,17 @@ function setupAuthUI(user) {
             e.preventDefault();
             try {
                 await logout();
+
                 handleAlert("Please log in again if you'd like to continue.", "blur", true, `${iOS() ? `<i class="bi bi-exclamation-circle text-danger fs-2"></i>` : `<i class='bi bi-exclamation-triangle text-danger fs-2'></i>`} <br/> You have been logged out.`, true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
+
+                await updateUserActivity(user.uid, {
+                    logout: {
+                        timestamp: new Date(),
+                        device: getOS() == "iOS" ? 'iPhone' : getOS(),
+                    },
+                    last_update: new Date(),
+                    opened: false,
+                });
             } catch (error) {
                 handleAlert(`Failed to log out, because: ${error}.`, "toast");
             }
@@ -649,6 +659,14 @@ async function setupNewsletter(user) {
                 emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
                 await updateUserData(user.uid, { emailSub: true });
 
+                await updateUserActivity(user.uid, {
+                    newsletter: {
+                        timestamp: new Date(),
+                        device: getOS() == "iOS" ? 'iPhone' : getOS(),
+                    },
+                    last_update: new Date(),
+                    opened: false,
+                });
 
                 await sendEmail(user.email, 'newsletter', { first_name: thisUser.details.firstName || 'there' });
 
