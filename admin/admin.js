@@ -96,21 +96,51 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatHeaderName = document.querySelector('.chat-header .user-name');
         chatHeaderName.textContent = `${user.details.firstName} ${user.details.lastName}`;
 
+        const chatHeaderIcon = document.querySelector('.chat-header .user-avatar');
+        chatHeaderIcon.textContent = `${user.details.firstName[0] || "U"}`;
+
         const events = [];
-        // Fetch and combine all user activities and admin replies
-        const signupSnapshot = await getDoc(doc(db, 'user_activities', user.id, 'signup'));
-        if (signupSnapshot.exists()) events.push({ type: 'signup', ...signupSnapshot.data() });
 
-        const loginSnapshot = await getDoc(doc(db, 'user_activities', user.id, 'login'));
-        if (loginSnapshot.exists()) events.push({ type: 'login', ...loginSnapshot.data() });
+        const userActivityRef = doc(db, 'user_activities', user.id);
+        const userActivitySnap = await getDoc(userActivityRef);
 
-        const paymentsSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'payments'));
-        paymentsSnapshot.forEach(doc => events.push({ type: 'payment', ...doc.data() }));
+        if (userActivitySnap.exists()) {
+            const data = userActivitySnap.data();
 
-        const repliesSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'admin_replies'));
-        repliesSnapshot.forEach(doc => events.push({ type: 'reply', ...doc.data() }));
+            const signup = data.signup || null;
+            const details = data.details || null;
+            const login = data.login || null;
+            const payment = data.payment || null;
+            const waitlist = data.waitlist || null;
+            const newsletter = data.newsletter || null;
 
-        events.sort((a, b) => a.timestamp.seconds - b.timestamp.seconds);
+            if (signup) events.push({ type: 'signup', ...signup });
+            if (login) events.push({ type: 'login', ...login });
+            if (payment) events.push({ type: 'payment', ...payment });
+            if (details) events.push({ type: 'details', ...details });
+            if (waitlist) events.push({ type: 'waitlist', ...waitlist });
+            if (newsletter) events.push({ type: 'newsletter', ...newsletter });
+        }
+
+        try {
+            const paymentsSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'payments'));
+            paymentsSnapshot.forEach(docSnap => events.push({ type: 'payment', ...docSnap.data() }));
+        } catch (_) {
+            // Ignore if subcollection doesn't exist
+        }
+
+        try {
+            const repliesSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'admin_replies'));
+            repliesSnapshot.forEach(docSnap => events.push({ type: 'reply', ...docSnap.data() }));
+        } catch (_) {
+            // Ignore if subcollection doesn't exist
+        }
+
+        events.sort((a, b) => {
+            const ta = a.timestamp?.seconds || 0;
+            const tb = b.timestamp?.seconds || 0;
+            return ta - tb;
+        });
 
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
@@ -118,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const nextEvent = events[i + 1];
 
             const messageBubble = document.createElement('div');
-
             messageBubble.classList.add('message-bubble');
 
             let batchClass = '';
@@ -135,13 +164,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.type === 'signup') {
                 messageBubble.classList.add('received');
                 messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'signup' });
+
+                const userDetails = events.find(e => e.type === 'details');
+
+                const name = userDetails ? `${userDetails.firstName} ${userDetails.lastName}` : "Unknown User";
+                const email = userDetails?.email || "No email available";
+                const country = userDetails?.country || "Unknown";
+                const device = event.device || "Unknown device";
+
                 messageBubble.innerHTML = `
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">SIGNUP</span>
                              <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
                         </div>
-                        <p>User signed up.</p>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p>Email: ${email}</p>
+                        <p>Country: ${country}</p>
                     </div>
                     <div class="reply-button">
                         <i class="bi bi-reply-fill"></i>

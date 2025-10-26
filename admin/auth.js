@@ -3,8 +3,8 @@ import { login, logout } from '../js/auth.js';
 import handleAlert from '../js/general.js'
 
 // Hardcoded admin email for client-side check
-// const ADMIN_EMAIL = "healingwithcharlottecasiraghi@gmail.com";
-const ADMIN_EMAIL = "qaltech.company@gmail.com";
+const ADMIN_EMAIL = "healingwithcharlottecasiraghi@gmail.com";
+// const ADMIN_EMAIL = "qaltech.company@gmail.com";
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
