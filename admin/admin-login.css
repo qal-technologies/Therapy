@@ -19,7 +19,7 @@ body {
     padding: 0;
     color: white;
     visibility: visible;
-    background: linear-gradient(137deg, #0d001b 40%, #000f33, #004917);
+    background: linear-gradient(137deg, #130028 40%, #00133f, #005c1d);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite alternate-reverse;
 }

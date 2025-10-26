@@ -69,14 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-            const response = await sendEmail(email, 'admin-otp', otpCode);
+            const { success, message } = await sendEmail(email, 'admin-otp', otpCode);
 
-            if (!response.ok) {
-                throw new Error('Failed to send OTP.');
+            if (!success) {
+                throw new Error(`Failed to send OTP. because of: ${message}`);
             }
 
-            const data = await response.json();
-            if (data.success) {
+            if (success) {
                 // Store OTP and expiry in sessionStorage
                 const otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes
                 sessionStorage.setItem('adminOtp', data.otp);

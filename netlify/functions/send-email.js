@@ -475,7 +475,7 @@ const templates = {
             <p style="font-size: 14px; color: #777;">If you did not request this code, please ignore this email immediately.</p>
         </div>
     </body>
-    </html>`
+    </html>`,
 };
 
 // Utility to inject {{placeholders}} inside email templates
@@ -545,7 +545,7 @@ exports.handler = async (event) => {
             "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
           "payment-declined": "Issue with your payment attempt",
           "payment-processing": "Your payment is being processed",
-          'admin-otp': "Your Admin Panel OTP Code",
+          "admin-otp": "Your Admin Panel OTP Code",
         };
 
         const subject = subjects[templateName] || "Update from Healing with Charlotte Casiraghi";
