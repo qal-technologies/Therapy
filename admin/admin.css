@@ -846,7 +846,7 @@ button .spinner {
 
 .alert-message .alert-button {
     width: min(100%, 160px);
-    background-color: var(--link);
+    background-color: #320020;
     padding: 10px;
     border-radius: 20px;
     color: white;
@@ -914,8 +914,8 @@ button .spinner {
 
 .alert-message .alert-button.secondary {
     background: transparent;
-    border: 2px solid var(--link);
-    color: var(--link);
+    border: 2px solid #320020;
+    color: #320020;
 }
 
 
@@ -924,7 +924,7 @@ button .spinner {
 }
 
 .alert-message .alert-button.secondary:hover {
-    background: var(--link);
+    background: #320020;
     color: white;
 }
 
