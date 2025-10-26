@@ -7,16 +7,16 @@ const admin = require('firebase-admin');
 const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT ?
     JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT) :
     {
-      "type": "service_account",
-      "project_id": "your-project-id",
-      "private_key_id": "your-private-key-id",
-      "private_key": "your-private-key",
-      "client_email": "your-client-email",
-      "client_id": "your-client-id",
-      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      "token_uri": "https://oauth2.googleapis.com/token",
-      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-      "client_x509_cert_url": "your-client-x509-cert-url"
+        "type": "service_account",
+        "project_id": "therapy-b0747",
+        "private_key_id": "your-private-key-id",
+        "private_key": "your-private-key",
+        "client_email": "your-client-email",
+        "client_id": "your-client-id",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "your-client-x509-cert-url"
     };
 
 // Initialize Firebase Admin SDK
@@ -27,23 +27,30 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
+const API_URL = "/.netlify/functions/send-email";
 
 // Helper function to send emails (reusing Brevo logic)
-async function sendEmail(to, templateName, variables) {
-    // This is a simplified version. In a real app, you would want to use a shared email service.
-    // For now, we'll invoke the 'send-email' function.
-    // This requires node-fetch to be installed in the root of the functions directory.
-    const fetch = require('node-fetch');
-    const { NETLIFY_URL } = process.env; // Or your site's URL
-
+export async function sendEmail(to, templateName, variables) {
     try {
-        await fetch(`${NETLIFY_URL || 'http://localhost:8888'}/.netlify/functions/send-email`, {
+        const response = await fetch(API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify({ to, templateName, variables }),
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'An unknown error occurred while sending the email.');
+        }
+
+        const result = await response.json();
+        console.log('Email sent successfully:', result.message);
+        return { success: true, message: result.message };
     } catch (error) {
-        console.error("Failed to trigger send-email function:", error);
+        console.error('Failed to send email:', error);
+        return { success: false, message: error.message };
     }
 }
 
@@ -76,13 +83,20 @@ exports.handler = async (event) => {
             return { statusCode: 200, body: JSON.stringify({ message: 'No action keyword found.' }) };
         }
 
-        // Update Firestore
-        const userPaymentRef = db.collection('users').doc(userId).collection('payments').doc(paymentId);
+        // Update Firestore::::
+        const userActivityPaymentRef = db.collection('user_activities').doc(userId).collection('payments').doc(paymentId);
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
 
         await db.runTransaction(async (transaction) => {
-            transaction.update(userPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
+            transaction.update(userActivityPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
             transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
+        });
+
+        const adminReplyRef = db.collection('user_activities').doc(userId).collection('admin_replies').doc();
+        await adminReplyRef.set({
+            replyTo: paymentId,
+            text: replyText,
+            timestamp: new Date(),
         });
 
         // Trigger email notification to the user
@@ -95,7 +109,6 @@ exports.handler = async (event) => {
         await sendEmail(userEmail, templateName, {
             first_name: firstName,
             status_message: statusMessage,
-            // You can add more variables here as needed by the email templates
         });
 
         return {

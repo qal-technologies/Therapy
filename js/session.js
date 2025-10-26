@@ -1,7 +1,7 @@
 import handleAlert from "/js/general.js";
-import { getUserData, updateUserData } from "./database.js";
+import { getUserData, updateUserActivity, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
-import { handleRedirect } from "./general.js";
+import { getOS, handleRedirect } from "./general.js";
 import { sendEmail } from "../emailHelper.js";
 
 
@@ -453,6 +453,15 @@ ${bonuses.join('')}
 
           await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
 
+          await updateUserActivity(user.uid, {
+            waitlist: {
+              timestamp: new Date(),
+              device: getOS() == "iOS" ? 'iPhone' : getOS(),
+            },
+            last_update: new Date(),
+            opened: false,
+          });
+
           setTimeout(() => {
             handleAlert(`
  Thank you for reserving your place for the Private Extended Healing Experience. This is an intimate, limited offering,and you’re now one step closer to joining the next opening.
@@ -481,7 +490,7 @@ ${bonuses.join('')}
             [{
               text: "LOGIN", onClick: () => handleRedirect("/html/regs/Signup.html?type=login"), type: "primary"
             }, {
-                text: "Close", onClick: () => {
+              text: "Close", onClick: () => {
                 void document.body.offsetWidth;
                 return "closeAlert";
               }, type: "secondary"

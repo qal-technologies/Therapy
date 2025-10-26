@@ -24,6 +24,42 @@ const createUserProfile = (userId, userDetails) => {
   return setDoc(userDocRef, { details: userDetails });
 };
 
+/**
+ * Creates a new user activity document in Firestore.
+ * @param {string} userId - The user's ID from Firebase Auth.
+ * @param {object} initialData - The initial data to store (e.g., { details: ..., signup: ... }).
+ * @returns {Promise<void>}
+ */
+const createUserActivity = (userId, initialData) => {
+  const userActivityDocRef = doc(db, "user_activities", userId);
+  return setDoc(userActivityDocRef, initialData);
+};
+
+
+/**
+ * Updates a user activity document in Firestore.
+ * @param {string} userId - The user's ID.
+ * @param {object} dataToUpdate - The data to merge into the document.
+ * @returns {Promise<void>}
+ */
+const updateUserActivity = (userId, dataToUpdate) => {
+  const userActivityDocRef = doc(db, "user_activities", userId);
+  return setDoc(userActivityDocRef, dataToUpdate, { merge: true });
+};
+
+
+/**
+ * Adds a payment document to the user's activity sub-collection.
+ * @param {string} userId - The user's ID.
+ * @param {string} paymentId - The ID of the payment.
+ * @param {object} paymentData - The payment data to store.
+ * @returns {Promise<void>}
+ */
+const addUserActivityPayment = (userId, paymentId, paymentData) => {
+  const paymentDocRef = doc(db, "user_activities", userId, "payments", paymentId);
+  return setDoc(paymentDocRef, paymentData);
+};
+
 
 /**
  * Retrieves a user's full data from Firestore.
@@ -260,6 +296,9 @@ export async function saveTranslationToFirestore(pageKey, translatedTexts) {
 
 export {
   createUserProfile,
+  createUserActivity,
+  updateUserActivity,
+  addUserActivityPayment,
   getUserData,
   addUserPayment,
   getUserPayments,

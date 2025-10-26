@@ -1,6 +1,5 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
-import { createUserProfile } from './database.js';
-import { sendEmail } from '../emailHelper.js';
+import { createUserProfile, createUserActivity, updateUserActivity } from './database.js'; import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
@@ -567,12 +566,29 @@ window.addEventListener('load', async () => {
         waitlist
       });
 
+
+
       await updateUserProfile(user, {
         displayName: firstName,
       });
 
       const pathName = window.location.hostname;
       await sendEmail(email, 'welcome', { first_name: firstName, origin: pathName });
+
+      await createUserActivity(user.uid, {
+        details: {
+          firstName,
+          lastName,
+          email,
+          country,
+        },
+        signup: {
+          timestamp: new Date(),
+          device: getOS() == "iOS" ? 'iPhone' : getOS(),
+        },
+        last_update: new Date(),
+        opened: false,
+      });
 
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
 
@@ -636,6 +652,16 @@ window.addEventListener('load', async () => {
         location: location,
         device: device
       });
+
+      await updateUserActivity(user.uid, {
+        login: {
+          timestamp: new Date(),
+          device: device,
+        },
+        last_update: new Date(),
+        opened: false,
+      });
+
 
       handleAlert("Welcome back! You'll be redirected shortly to continue your journey.", "blur", true, `${getOS() == "iOS" ? `<i class="bi bi-check2-circle text-success fs-2"></i>` : `<i class='bi bi-check-circle-fill text-success fs-2'></i>`} <br/> Login Successful`, true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }]);
     } catch (error) {

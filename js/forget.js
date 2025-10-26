@@ -1,4 +1,4 @@
-import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
+import handleAlert, { getOS, translateElementFragment } from './general.js';
 import { resetPassword } from "./auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {

@@ -17,18 +17,36 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-    background: linear-gradient(137deg, #05000a 40%, #000717, #001005);
     color: white;
     visibility: visible;
+    background: linear-gradient(137deg, #0d001b 40%, #000f33, #004917);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite alternate-reverse;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .login-container {
-    width: 80%;
-    max-width: 650px;
+    width: 90%;
+    max-width: 700px;
     place-self: center;
-    border: 1px solid rgba(200, 200, 200, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(200, 200, 200, 0.03);
+    border-left: 1px solid rgba(150, 150, 150, 0.09);
     padding: 10px;
-    border-radius: 40px;
+    border-radius: 50px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -36,9 +54,10 @@ body {
     align-items: center;
     height: max-content;
     padding-block: 60px;
-    background: transparent;
     max-height: 500px;
-    backdrop-filter: blur(50px);
+    background: rgba(255, 255, 255, 0.05);
+    max-height: 500px;
+    backdrop-filter: blur(60px) brightness(1.5);
     box-shadow: 0px 1px 23px rgba(0, 0, 0, 0.15);
 }
 
@@ -60,7 +79,10 @@ body {
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+    display: flex;
+    align-items: center;
     font-family: PoppinsSemi, PoppinsMed, Arial, Helvetica, sans-serif;
+    gap: 10px;
 }
 
 form {

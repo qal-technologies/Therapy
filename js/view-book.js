@@ -1,5 +1,5 @@
 import { handleAuthStateChange } from "./auth.js";
-import { getUserData } from "./database.js";
+import { getUserData, updateUserActivity } from "./database.js";
 import handleAlert, { getOS, handleRedirect } from './general.js';
 import BOOK from './books.js';
 
@@ -392,7 +392,7 @@ window.addEventListener('load', () => {
                         mq.addEventListener('change', applyLayout);
                     }
 
-                    (function init() {
+                    (async function init() {
                         document.getElementById('bookTitle').textContent = BOOK.title;
                         document.getElementById('search').placeholder = `Search page – ${BOOK.title}`;
 
@@ -410,6 +410,14 @@ window.addEventListener('load', () => {
                         applyLayout();
                         updateBookmarkIcon();
 
+                        await updateUserActivity(user.uid, {
+                            book: {
+                                timestamp: new Date(),
+                                device: getOS() =="iOS"? 'iPhone' : getOS(),
+                            },
+                            last_update: new Date(),
+                            opened: false,
+                        });
                     })();
 
                 } else {

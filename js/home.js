@@ -1,7 +1,7 @@
 import handleAlert from "/js/general.js";
-import { getUserData, updateUserData } from "./database.js";
+import { getUserData, updateUserActivity, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
-import { handleRedirect } from "./general.js";
+import { getOS, handleRedirect } from "./general.js";
 import { sendEmail } from "../emailHelper.js";
 
 
@@ -93,7 +93,7 @@ function runTicker() {
 		}, 500);
 	}
 }
-	
+
 window.addEventListener('load', () => {
 	const reviews = [
 		[
@@ -275,7 +275,7 @@ window.addEventListener('load', () => {
 	};
 
 	function handleAudio(lang) {
-	
+
 		if (audioMessage && audioMessage2 && audioMessage3) {
 			audioMessage.src = HOME_AUDIO_SRC.banner[lang] || `${HOME_BASE_PATH.audio}/home-english.mp3`;
 			audioMessage2.src = HOME_AUDIO_SRC.session[lang] || `${HOME_BASE_PATH.audio}/session-english.mp3`;
@@ -829,11 +829,11 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
-		
+
 		const userData = await getUserData(user?.uid);
 		initTicker();
 		runTicker();
-		
+
 		await timeoutMessage(userData);
 
 		if (!userdata.waitlist) {
@@ -848,7 +848,17 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 
 					await updateUserData(user.uid, { waitlist: true });
 
+
 					await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
+
+					await updateUserActivity(user.uid, {
+						waitlist: {
+							timestamp: new Date(),
+							device: getOS() == "iOS" ? 'iPhone' : getOS(),
+						},
+						last_update: new Date(),
+						opened: false,
+					});
 
 					setTimeout(() => {
 						handleAlert(`

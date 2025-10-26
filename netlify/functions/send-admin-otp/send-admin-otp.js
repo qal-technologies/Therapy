@@ -46,8 +46,13 @@ async function sendWithBrevo(from, to, subject, html) {
                 to: [{ email: to }],
                 subject,
                 htmlContent: html,
+                replyTo: {
+                    email: "healingwithcharlottecasiraghi@gmail.com",
+                    name: "Support Team",
+                },
             }),
         });
+
         const text = await response.text();
         if (!response.ok) throw new Error(`Brevo error: ${text}`);
         return { success: true, message: "Email sent successfully via Brevo" };
@@ -57,6 +62,7 @@ async function sendWithBrevo(from, to, subject, html) {
     }
 }
 
+const API_URL = "/.netlify/functions/send-email";
 // Main Netlify function handler
 exports.handler = async (event) => {
     if (event.httpMethod !== "POST") {

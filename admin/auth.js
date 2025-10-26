@@ -87,8 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 throw new Error(data.message || 'An unknown error occurred.');
             }
-
-            return falase;
         } catch (error) {
             console.error('Error sending OTP:', error);
             handleAlert(`Error: ${error.message}`, 'toast');
