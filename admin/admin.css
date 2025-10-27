@@ -418,6 +418,11 @@ border:1px solid red
     background: rgb(250, 255, 255);
 }
 
+.message-container .message-bubble.focused .message-content {
+    border: 1px solid rgba(146, 255, 164, 0.1);
+    opacity: .9;
+}
+
 .sent.message-bubble {
     justify-content: flex-end;
 }
@@ -549,7 +554,7 @@ border:1px solid red
     bottom: 0;
     border-radius: 15px 15px 0 0;
     overflow: hidden;
-    position: relative;
+    position: sticky;
     background: transparent;
 }
 
@@ -558,6 +563,7 @@ border:1px solid red
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     gap: 10px;
     padding: 10px;
     height: max-content;
@@ -571,7 +577,6 @@ border:1px solid red
 }
 
 .message-input {
-    flex: 0.9;
     border: none;
     border-radius: 20px;
     padding: 10px 15px;
@@ -584,6 +589,7 @@ border:1px solid red
     resize: none;
     height: 50px;
     resize: none;
+    width: 90%;
     min-height: 20px;
     max-height: 100px;
     overflow-y: auto;
@@ -599,9 +605,12 @@ border:1px solid red
 }
 
 .chat-footer button {
-    flex: 0.1;
     border: none;
-    display: block;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    width: 50px;
+    height: 50px;
     padding: 6px;
     border-radius: 20px;
     background: #25d362;
@@ -679,16 +688,17 @@ button .spinner {
         width: 100%;
         max-width: 100%;
         border-right: none;
-    }
-
-    .chat-view {
         display: none;
     }
+
+    /* .chat-view {
+        display: none;
+    } */
 
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
-        position: absolute;
+        position: fixed;
         flex: 1;
         top: 0;
         left: 0;
@@ -698,22 +708,23 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: sticky;
+        position: absolute;
         top: 0;
         width: 100%;
         z-index: 101;
     }
 
-    /* .chat-view.active .message-container {
+    .chat-view.active .message-container {
         padding-top: 11vh;
         padding-top: 11dvh;
-    }*/
+    }
 
     .chat-view.active .chat-footer {
-        position: sticky;
+        position: absolute;
         bottom: 0;
         width: 100vw;
         width: 100dvw;
+        z-index: 101;
     }
 }
 
