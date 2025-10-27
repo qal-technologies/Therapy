@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">CART</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User added book (${event.title} - ${event.price}) to cart.</p>
+                        <p>User added book (<b>${event.title}</b> - €${event.price}) to cart.</p>
                     </div>
                 `;
             } else if (event.type === 'initiated') {
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User initiated payment for: <strong>${event.paymentType} - ${event.amount}</strong>, with ID: <strong>${event.id}</strong></p>
+                        <p>User initiated payment for: <strong>${event.paymentType} - €${event.amount}</strong>. <br/> Transaction ID: <strong>${event.id}</strong></p>
                     </div>
                 `;
             } else if (event.type === 'method-selected') {
@@ -405,7 +405,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User selected <strong>${event.method}</strong>, for <strong>${event.paymentType}</strong> payment. Transaction ID: <strong>${event.id}</strong></p>
+                        <p>User selected <strong>${event.method}</strong> payment method for <strong>${event.paymentType}</strong> payment.
+<br/> Transaction ID: <strong>${event.id}</strong></p>
                     </div>
                 `;
             } else if (event.type === 'paysafe-code') {
