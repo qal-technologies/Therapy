@@ -398,9 +398,10 @@ body {
 
 /* Chat View (Right Panel) */
 .chat-view {
-    height: 100%;
+    flex: 1;
     height: 100vh;
     height: 100dvh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -429,7 +430,7 @@ body {
 .message-container {
     width: 100%;
     padding: 10px;
-    height: max-content;
+    height: 100%;
     overflow: hidden;
     overflow-y: auto;
     display: flex;
@@ -600,6 +601,7 @@ body {
     gap: 10px;
     padding: 10px;
     height: max-content;
+    margin-bottom: 10px;
 }
 
 .chat-footer i {
