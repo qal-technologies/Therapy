@@ -734,7 +734,7 @@ button .spinner {
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
-        position: sticky;
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
@@ -744,7 +744,7 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
+        position: sticky;
         top: 0vh;
         top: 0dvh;
         width: 100%;
@@ -754,7 +754,7 @@ button .spinner {
     .chat-view.active .message-container {
         padding-top: 11vh;
         padding-top: 11dvh;
-        height: 90%;
+        height: 70%;
         overflow-y: auto;
     }
 
