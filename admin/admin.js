@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const currentX = moveEvent.touches ? moveEvent.touches[0].clientX : moveEvent.clientX;
             const diffX = currentX - startX;
 
-            if (diffX < -50) {
+            if (diffX > 50) {
                 isSwiping = true;
                 messageBubble.style.transform = `translateX(${diffX}px)`;
             }
