@@ -446,12 +446,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <p>User booked a session for: <strong>${event.title} - (${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
 
-                        <p>
-                        <strong>HERE ARE THE BOOKING RESPONSE FOR ${event.title}:</strong><br/>
+                        <div>
+                        <p>HERE ARE THE BOOKING RESPONSE FOR <strong>${event.title}:</strong></p>
+
                         ${event.answers.map(answer => {
-                    return `<span><strong>${answer.question}</strong> - ${answer.answer}</span><br/>`;
+                    return `<p><strong>${answer.question}</strong> <br/> Answer: ${answer.answer}</p><br/>`;
                 }).join('')}
-                        </p>
+                        </div>
                     </div>
                 `;
             } else if (event.type === 'reply') {
