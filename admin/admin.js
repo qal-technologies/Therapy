@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">SESSION</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User booked a session for: <strong>${event.title} - (${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
+                        <p>User booked a session for: <strong>${event.title} - (€${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
 
 <br/>
                         <div>
