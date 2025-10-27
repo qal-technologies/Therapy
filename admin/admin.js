@@ -757,6 +757,7 @@ document.addEventListener('DOMContentLoaded', () => {
             searchIcon.addEventListener('click', (e) => {
                 const opened = chatHeader.style.maxHeight === '200px';
                 chatSearchInput.value = '';
+                if (!opened) chatSearchInput.focus();
                 if (opened) {
                     chatSearchInput?.blur();
                     const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
