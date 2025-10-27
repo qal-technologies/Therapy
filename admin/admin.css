@@ -743,8 +743,10 @@ button .spinner {
         left: 0;
         width: 100%;
         height: 100%;
+height:100vh;
+width:100vw;
         z-index: 100;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
 
     .chat-view.active .chat-header {
@@ -755,7 +757,7 @@ button .spinner {
     }
 
     .chat-view.active .message-container {
-position: relative;
+/*position: relative;*/
         padding-block: 8vh;
         padding-block: 8dvh;
         height: 100%;
