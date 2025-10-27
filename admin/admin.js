@@ -528,17 +528,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendBtn = document.getElementById('send-btn');
 
     // Auto-resize textarea
-    messageInput.addEventListener('input', () => {
-        messageInput.style.height = `${messageInput.scrollHeight}px`;
+    messageInput.addEventListener('input', (e) => {
+        const value = e.target.value;
+        const replyText = value.trim();
 
-        if (sendBtn.disabled) {
-            sendBtn.disabled = false;
+        if (replyText.length === 0) {
+            sendBtn.disabled = true;
+            messageInput.style.height = '50px';
+            return;
         }
+
+        messageInput.style.height = `${messageInput.scrollHeight}px`;
+        sendBtn.disabled = replyText.length === 0;
     });
 
     sendBtn.addEventListener('click', () => {
-        const replyText = messageInput.value.trim();
-        if (replyText === '' || !focusedMessage) return;
+        const hasText = messageInput.value.trim().length > 0;
+        if (sendBtn.disabled || !hasText || !focusedMessage) return;
 
         sendBtn.innerHTML = `<div class="spinner-container">
         <div class="spinner"></div>
@@ -584,7 +590,8 @@ document.addEventListener('DOMContentLoaded', () => {
             replySnippet.textContent = snippet;
             replyPreview.style.display = 'flex';
 
-            replySnippet.onclick = () => {
+            replyPreview.onclick = (e) => {
+                if (e.target.closest(".cancel-reply")) return;
                 focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
         }
@@ -646,7 +653,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    document.getElementById('cancel-reply').addEventListener('click', () => {
+    document.getElementById('cancel-reply').addEventListener('click', (e) => {
+        e.stopPropagation();
         const replyPreview = document.getElementById('reply-preview');
         replyPreview.style.display = 'fadeOut';
         if (focusedMessage) {
@@ -753,7 +761,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
 
                     messageBubbles.forEach(bubble => {
-                        // Remove highlight
                         bubble.style.border = '';
                     });
                     firstMatch = null;
@@ -786,12 +793,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (!firstMatch) {
                         firstMatch = bubble;
                     }
-                    // Optional: highlight all matches
                     bubble.style.border = '1px solid green';
                     bubble.style.borderRadius = '20px';
                 } else {
-                    // Optional: remove highlight
                     bubble.style.border = '';
+                    bubble.style.borderRadius = '';
                 }
             });
 
