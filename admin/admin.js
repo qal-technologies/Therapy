@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
-focusedMessage.style.transform = 'translateX(0)';
+            focusedMessage.style.transform = 'translateX(0)';
         }
 
         focusedMessage = messageElement;
