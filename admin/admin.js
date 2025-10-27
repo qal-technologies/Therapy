@@ -742,8 +742,12 @@ document.addEventListener('DOMContentLoaded', () => {
         searchIcons.forEach(searchIcon => {
             searchIcon.addEventListener('click', (e) => {
                 const opened = chatHeader.style.maxHeight === '200px';
-                chatHeader.style.maxHeight = opened ? '70px' : '200px';
                 chatSearchInput.value = '';
+                if (opened) {
+                    chatSearchInput?.blur();
+                }
+
+                chatHeader.style.maxHeight = opened ? '70px' : '200px';
                 firstMatch = null;
 
                 searchIcons.forEach(btn => btn.classList.add('active'));
