@@ -604,8 +604,8 @@ width:90%;
     display: flex;
 place-content:center;
 place-items:center;
-width:55px;
-height:55px;
+width:50px;
+height:50px;
     padding: 6px;
     border-radius: 20px;
     background: #25d362;
@@ -692,7 +692,7 @@ button .spinner {
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
-        position: relative;
+        position: fixed;
 flex:1;
         top: 0;
         left: 0;
@@ -715,7 +715,7 @@ flex:1;
 
     .chat-view.active .chat-footer {
 position: absolute;
-
+background: red;
 bottom:0;
         width: 100vw;
         width: 100dvw;
