@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const user = { id: doc.id, ...doc.data() };
                 addUserToList(user);
             });
+
+            userListContainer.querySelector('.loading-parent')?.remove();
         } catch (error) {
             console.error("Error fetching users: ", error);
         }
