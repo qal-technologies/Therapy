@@ -784,13 +784,14 @@ button .spinner {
 
 .reply-snippet {
     flex: 1;
-    max-width: 400px;
+    max-width: 450px;
     color: #333;
     margin-top: 2px;
     font-size: 0.85rem;
     white-space: nowrap;
     overflow: hidden;
     line-height: 1.1rem;
+    padding-block: 10px;
     text-overflow: ellipsis;
 }
 

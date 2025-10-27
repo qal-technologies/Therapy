@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>User just played Session bookings Audio Message.</p>                    
                     </div>
                 `;
-            }  else if (event.type === 'waitlist') {
+            } else if (event.type === 'waitlist') {
                 messageBubble.classList.add('received');
                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'waitlist' });
                 messageBubble.innerHTML = `
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             replySnippet.textContent = snippet;
             replyPreview.style.display = 'flex';
 
-            replyPreview.onclick = () => {
+            replySnippet.onclick = () => {
                 focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
         }
@@ -754,10 +754,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chatSearchInput.addEventListener('input', () => {
         if (searchTimer !== null) clearTimeout(searchTimer);
+
         searchTimer = setTimeout(() => {
             const searchTerm = chatSearchInput.value.toLowerCase();
-            const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
+            if (searchTerm === '') {
+                firstMatch = null;
+                return;
+            }
 
+            const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
 
             messageBubbles.forEach(bubble => {
                 const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
