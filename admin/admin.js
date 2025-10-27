@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
-        messageContainer.innerHTML = '';
         sessionStorage.setItem('userId', user.id);
 
         events.forEach(event => {
@@ -459,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageContainer.appendChild(messageBubble);
         });
 
-
+        messageContainer.innerHTML = '';
         messageContainer.scrollTop = messageContainer.scrollHeight;
 
         // Add event listeners to reply buttons
@@ -735,6 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let firstMatch = null;
+    let shouldSearch = false;
     const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
     let searchTimer = null;
     const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
@@ -746,9 +746,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (opened) {
                     chatSearchInput?.blur();
                 }
+                shouldSearch = !opened;
 
                 chatHeader.style.maxHeight = opened ? '70px' : '200px';
-                firstMatch = null;
 
                 searchIcons.forEach(btn => btn.classList.add('active'));
                 e.target.classList.remove('active');
@@ -766,11 +766,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+
             const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
 
             messageBubbles.forEach(bubble => {
                 const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
-                if (messageContent && messageContent.includes(searchTerm)) {
+                if (messageContent && messageContent.includes(searchTerm) && bubble.classList.contains('received') && !bubble.classList.contains('sent') && shouldSearch) {
                     if (!firstMatch) {
                         firstMatch = bubble;
                     }
