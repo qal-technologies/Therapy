@@ -572,7 +572,6 @@ align-items:flex-start;
 }
 
 .message-input {
-    /*flex: 0.9;*/
     border: none;
     border-radius: 20px;
     padding: 10px 15px;
@@ -601,11 +600,12 @@ width:90%;
 }
 
 .chat-footer button {
-    /*flex: 0.1;*/
     border: none;
-    display: block;
-width:50px;
-height:50px;
+    display: flex;
+place-content:center;
+place-items:center;
+width:55px;
+height:55px;
     padding: 6px;
     border-radius: 20px;
     background: #25d362;
