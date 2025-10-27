@@ -702,7 +702,7 @@ flex:1;
     }
 
     .chat-view.active .chat-header {
-        position: fixed;
+        position: absolute;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -714,10 +714,12 @@ flex:1;
     }
 
     .chat-view.active .chat-footer {
-position:sticky;
+position: absolute;
+
 bottom:0;
         width: 100vw;
         width: 100dvw;
+z-index: 101;
     }
 }
 
