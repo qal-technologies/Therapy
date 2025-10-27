@@ -431,7 +431,6 @@ body {
 
 .message-container {
     width: 100%;
-    padding: 10px;
     height: 100%;
     overflow: hidden;
     overflow-y: auto;
@@ -450,11 +449,12 @@ body {
     justify-content: flex-start;
     margin-bottom: 8px;
     gap: 10px;
+padding-inline-start:10px;
 }
 
 .message-container .message-bubble.focused {
-    background: rgba(220, 255, 238, 0.2);
-    border-radius: 15px;
+    background: rgba(220, 255, 238, 0.4);
+    /*border-radius: 15px;*/
     backdrop-filter: brightness(110%);
 }
 
@@ -476,6 +476,8 @@ body {
 
 .sent.message-bubble {
     justify-content: flex-end;
+padding:0;
+padding-inline-end:10px;
 }
 
 .sent .message-content {
@@ -513,9 +515,9 @@ body {
     backdrop-filter: blur(20px);
     padding-inline: 8px;
     border-radius: 15px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bolder;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
     color: #3d1512;
     border: 1px solid #8b5e5a27;
 }
@@ -535,7 +537,7 @@ body {
 }
 
 .message-meta {
-    font-size: 10px;
+    font-size: 12px;
     color: #8696a0;
     margin-top: 3px;
     text-align: right;
@@ -736,7 +738,7 @@ button .spinner {
     .chat-view.active {
         display: flex;
         position: fixed;
-        flex: auto;
+        flex: content;
         top: 0;
         left: 0;
         width: 100%;
@@ -747,15 +749,16 @@ button .spinner {
 
     .chat-view.active .chat-header {
         position: fixed;
-        top: 5px;
+        top: 0;
         width: 100%;
         z-index: 101;
     }
 
     .chat-view.active .message-container {
+position: relative;
         padding-top: 8vh;
         padding-top: 8dvh;
-        height: 90%;
+        height: 80%;
         overflow-y: auto;
     }
 
@@ -775,7 +778,7 @@ button .spinner {
     flex-direction: column;
     align-items: flex-start;
     background-color: var(--chat-bubble-bg, #f0f0f0);
-    border-left: 5px solid #13c000;
+    border-left: 5px solid #01c000;
     padding: 8px 12px;
     border-radius: 15px 15px 0 0;
     animation: fadeIn 0.2s ease-in-out;
@@ -783,15 +786,15 @@ button .spinner {
     flex: 1;
     overflow: hidden;
     align-self: flex-start;
-    margin-bottom: -10px;
-    box-shadow: 0px 2px 6px rgba(166, 255, 234, 0.1);
+    margin-bottom: -8px;
+    box-shadow: 0px 2px 6px rgba(166, 255, 234, 0.2);
     user-select: none;
 }
 
 .reply-tag {
     font-size: 0.75rem;
     font-weight: bolder;
-    color: #13c000;
+    color: #01c000;
     min-width: 100%;
 }
 
