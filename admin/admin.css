@@ -693,7 +693,7 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
+        position: sticky;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -705,6 +705,8 @@ button .spinner {
     }
 
     .chat-view.active .chat-footer {
+position:sticky;
+bottom:0;
         width: 100vw;
         width: 100dvw;
     }
