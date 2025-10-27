@@ -514,7 +514,7 @@ body {
 
 .message-content p {
     font-size: 14px;
-    line-height: 16px;
+    line-height: 17px;
     margin: 0;
     padding: 0;
     margin-top: 5px;
@@ -741,6 +741,7 @@ button .spinner {
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
+flex-direction: column;
         position: fixed;
         top: 0;
         left: 0;
@@ -755,7 +756,7 @@ button .spinner {
 
     .chat-view.active .chat-header {
         position: sticky;
-        top: 0px;
+        top: 0;
         width: 100%;
         z-index: 101;
     }
