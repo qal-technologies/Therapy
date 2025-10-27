@@ -107,6 +107,8 @@ body {
     gap: 10px;
     align-items: center;
     border: none;
+    padding-bottom: 10px;
+    padding-top: 20px;
 }
 
 .chat-header {
@@ -520,11 +522,12 @@ body {
 
 .message-content p {
     font-size: 14px;
-    line-height: 15px;
+    line-height: 10px;
     margin: 0;
     padding: 0;
     margin-top: 5px;
     user-select: text;
+    letter-spacing: 0.6px;
 }
 
 
@@ -745,23 +748,21 @@ button .spinner {
 
     .chat-view.active .chat-header {
         position: absolute;
-        top: 0vh;
-        top: 0dvh;
+        top: 0;
         width: 100%;
         z-index: 101;
     }
 
     .chat-view.active .message-container {
-        padding-top: 11vh;
-        padding-top: 11dvh;
-        height: 70%;
+        padding-top: 8vh;
+        padding-top: 8dvh;
+        height: 90%;
         overflow-y: auto;
     }
 
     .chat-view.active .chat-footer {
         position: absolute;
-        bottom: 0vh;
-        bottom: 0dvh;
+        bottom: 0;
         width: 100vw;
         width: 100dvw;
         z-index: 101;
