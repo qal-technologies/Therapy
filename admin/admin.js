@@ -446,6 +446,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <p>User booked a session for: <strong>${event.title} - (${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
 
+<br/>
                         <div>
                         <p>HERE ARE THE BOOKING RESPONSE FOR <strong>${event.title}:</strong></p>
 
