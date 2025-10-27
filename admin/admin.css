@@ -504,7 +504,7 @@ body {
     backdrop-filter: blur(20px);
     padding-inline: 8px;
     border-radius: 15px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: bolder;
     letter-spacing: 0.5px;
     color: #3d1512;
@@ -512,7 +512,7 @@ body {
 }
 
 .message-content p {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 15px;
     margin: 0;
     padding: 0;
