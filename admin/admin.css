@@ -462,8 +462,8 @@ body {
     display: flex;
     flex-direction: column;
     max-width: 80%;
-    padding: 8px;
-    border-radius: 16px;
+    padding: 10px;
+    border-radius: 20px;
     position: relative;
     transition: transform 0.2s ease;
     background: rgb(250, 255, 255);
@@ -522,7 +522,6 @@ body {
 
 .message-content p {
     font-size: 14px;
-    line-height: 10px;
     margin: 0;
     padding: 0;
     margin-top: 5px;
@@ -682,7 +681,7 @@ body {
     background: transparent;
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px) brightness(80%);
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     z-index: 10;
@@ -737,7 +736,7 @@ button .spinner {
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
