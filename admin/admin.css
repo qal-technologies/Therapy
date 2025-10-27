@@ -755,14 +755,14 @@ flex-direction: column;
     }
 
     .chat-view.active .chat-header {
-        position: sticky;
+        position: absolute;
         top: 0;
         width: 100%;
         z-index: 101;
     }
 
     .chat-view.active .message-container {
-        /*position: relative;*/
+        position: relative;
         padding-block: 8vh;
         padding-block: 8dvh;
         max-height: 100%;
@@ -770,7 +770,7 @@ flex-direction: column;
     }
 
     .chat-view.active .chat-footer {
-        position: sticky;
+        position: absolute;
         bottom: 0;
         width: 100vw;
         width: 100dvw;
@@ -793,7 +793,7 @@ flex-direction: column;
     flex: 1;
     overflow: hidden;
     align-self: flex-start;
-    margin-bottom: -10px;
+    margin-bottom: -5px;
     box-shadow: 0px 2px 16px rgba(166, 255, 234, 0.3);
     user-select: none;
 }
