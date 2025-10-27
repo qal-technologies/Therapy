@@ -361,6 +361,10 @@ background: #dcf8c6;
     background-repeat: repeat; */
 }
 
+.chat-header .user-avatar{
+background:#dcf8c6;
+}
+
 .chat-header .user-info {
     flex: 1;
     display: flex;
@@ -685,6 +689,7 @@ button .spinner {
     .chat-view.active {
         display: flex;
         position: absolute;
+flex:1;
         top: 0;
         left: 0;
         width: 100%;
@@ -699,10 +704,10 @@ button .spinner {
         z-index: 101;
     }
 
-    .chat-view.active .message-container {
+   /* .chat-view.active .message-container {
         padding-top: 11vh;
         padding-top: 11dvh;
-    }
+    }*/
 
     .chat-view.active .chat-footer {
 position:sticky;
