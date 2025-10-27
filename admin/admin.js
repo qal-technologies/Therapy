@@ -216,8 +216,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return ta - tb;
         });
 
-
+        messageContainer.innerHTML = '';
         sessionStorage.setItem('userId', user.id);
+
+        messageContainer.innerHTML = `<div class="loading-parent">
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
+                    </div>
+                </div>`;
 
         events.forEach(event => {
             const messageBubble = document.createElement('div');
@@ -458,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageContainer.appendChild(messageBubble);
         });
 
-        messageContainer.innerHTML = '';
+        messageContainer.querySelector('.loading-parent')?.remove();
         messageContainer.scrollTop = messageContainer.scrollHeight;
 
         // Add event listeners to reply buttons
