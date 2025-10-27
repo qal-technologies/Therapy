@@ -284,6 +284,10 @@ border:1px solid red
     background-color: #4545451f;
 }
 
+.user-list-item .user-avatar{
+background: #dcf8c6;
+}
+
 .user-list-item .user-info {
     flex: 1;
     margin-left: 15px;
