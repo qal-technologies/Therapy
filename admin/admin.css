@@ -745,7 +745,7 @@ width:100vw;
     }
 
     .chat-view.active .chat-header {
-        position: sticky;
+        position: fixed;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -755,12 +755,12 @@ width:100vw;
 /*position: relative;*/
         padding-block: 8vh;
         padding-block: 8dvh;
-        height: 90%;
+        max-height: 90%;
         overflow-y: auto;
     }
 
     .chat-view.active .chat-footer {
-        position: sticky;
+        position: fixed;
         bottom: 0;
         width: 100vw;
         width: 100dvw;
