@@ -574,12 +574,6 @@ body {
     margin-right: 15px;
 }
 
-@media (max-width: 768px) {
-    .back-button {
-        display: block;
-    }
-}
-
 .chat-footer {
     display: flex;
     max-width: 100%;
@@ -722,6 +716,11 @@ button .spinner {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+
+    .back-button {
+        display: block;
+    }    
+
     .sidebar {
         width: 100%;
         max-width: 100%;
@@ -737,6 +736,7 @@ button .spinner {
     .chat-view.active {
         display: flex;
         position: fixed;
+        flex: auto;
         top: 0;
         left: 0;
         width: 100%;
@@ -746,8 +746,8 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
-        top: 0;
+        position: fixed;
+        top: 5px;
         width: 100%;
         z-index: 101;
     }
@@ -760,7 +760,7 @@ button .spinner {
     }
 
     .chat-view.active .chat-footer {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         width: 100vw;
         width: 100dvw;
