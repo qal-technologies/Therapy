@@ -252,11 +252,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-.filter-icon {
-    padding: 8px;
-    cursor: pointer;
-}
-
 .filter-options {
     display: none;
     padding: 10px;
@@ -271,9 +266,9 @@ body {
 }
 
 .filter-icon {
-    padding: 8px;
+    padding: 0px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .filter-options button {
