@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
                         <p><strong>Email:</strong> ${email}</p>
                         <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>language</strong>: ${language}</p>
+                        <p><strong>Language</strong>: ${language}</p>
                     </div>
                 `;
             } else if (event.type === 'login') {
@@ -326,22 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>User just played Session bookings Audio Message.</p>                    
                     </div>
                 `;
-            } else if (event.type === 'payment') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name">PAYMENT</span>
-                             <span class="message-meta">${new Date(event.date.seconds * 1000).toLocaleString()}</span>
-                        </div>
-                        <p>Payment of €${event.price} => ${event.currency} ${event.converted} for ${event.paymentType}. Status: ${event.statusName}</p>
-                    </div>
-                    <div class="reply-button">
-                        <i class="bi bi-reply-fill"></i>
-                    </div>
-                `;
-            } else if (event.type === 'waitlist') {
+            }  else if (event.type === 'waitlist') {
                 messageBubble.classList.add('received');
                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'waitlist' });
                 messageBubble.innerHTML = `
@@ -400,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User initiated payment for: <strong>${event.paymentType} - ${event.price}</strong>, with ID: <strong>${event.id}</strong></p>
+                        <p>User initiated payment for: <strong>${event.paymentType} - ${event.amount}</strong>, with ID: <strong>${event.id}</strong></p>
                     </div>
                 `;
             } else if (event.type === 'method-selected') {
@@ -419,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if (event.type === 'paysafe-code') {
                 messageBubble.classList.add('received');
                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'paysafe-code' });
+                messageBubble.dataset.replyable = true;
 
                 messageBubble.innerHTML = `
                     <div class="message-content">
@@ -426,7 +412,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User made payment for <strong>${event.paymentType} - (€${event.amount})</strong> with ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
+                        <p>User made payment for <strong>${event.paymentType} - (€${event.amount})</strong>.<br/>
+                        Transaction ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
                         <p>
                         <strong>CODES:</strong><br/>
                         ${event.codes.map(code => {
@@ -512,7 +499,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isSwiping) {
                 if (navigator.vibrate) navigator.vibrate(30);
                 setFocusedMessage(messageBubble);
-
             }
 
             // Reset translation
@@ -573,28 +559,30 @@ document.addEventListener('DOMContentLoaded', () => {
             focusedMessage.style.transform = 'translateX(0)';
         }
 
-        focusedMessage = messageElement;
-        focusedMessage.classList.add('focused');
-        messageInput.disabled = false;
-        messageInput.focus();
+        if (messageElement.dataset.replyable == true) {
+            focusedMessage = messageElement;
+            focusedMessage.classList.add('focused');
+            messageInput.disabled = false;
+            messageInput.focus();
 
-        const replyPreview = document.getElementById('reply-preview');
-        const replyTag = document.getElementById('reply-tag');
-        const replySnippet = document.getElementById('reply-snippet');
+            const replyPreview = document.getElementById('reply-preview');
+            const replyTag = document.getElementById('reply-tag');
+            const replySnippet = document.getElementById('reply-snippet');
 
-        const tagElement = messageElement.querySelector('.tag-name');
-        const tagText = tagElement ? tagElement.textContent : 'Message';
+            const tagElement = messageElement.querySelector('.tag-name');
+            const tagText = tagElement ? tagElement.textContent : 'Message';
 
-        const messageText = messageElement.querySelector('.message-content p')?.textContent || '';
-        const snippet = messageText.length > 50 ? messageText.slice(0, 50) + '...' : messageText;
+            const messageText = messageElement.querySelector('.message-content p')?.textContent || '';
+            const snippet = messageText.length > 50 ? messageText.slice(0, 50) + '...' : messageText;
 
-        replyTag.textContent = tagText;
-        replySnippet.textContent = snippet;
-        replyPreview.style.display = 'flex';
+            replyTag.textContent = tagText;
+            replySnippet.textContent = snippet;
+            replyPreview.style.display = 'flex';
 
-        replyPreview.onclick = () => {
-            focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        };
+            replyPreview.onclick = () => {
+                focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            };
+        }
     }
 
     async function processAdminAction(userId, paymentId, replyText) {
