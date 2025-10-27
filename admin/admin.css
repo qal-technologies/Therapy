@@ -399,6 +399,8 @@ body {
 /* Chat View (Right Panel) */
 .chat-view {
     flex: 1;
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -425,8 +427,9 @@ body {
 }
 
 .message-container {
-    flex: 1;
+    width: 100%;
     padding: 10px;
+    height: max-content;
     overflow: hidden;
     overflow-y: auto;
     display: flex;
@@ -449,6 +452,7 @@ body {
 .message-container .message-bubble.focused {
     background: rgba(220, 255, 238, 0.2);
     border-radius: 15px;
+    backdrop-filter: brightness(110%);
 }
 
 .message-content {
@@ -464,6 +468,7 @@ body {
 
 .message-container .message-bubble.focused .message-content {
     border: 1px solid rgba(146, 255, 164, 0.1);
+    opacity: 0.9;
 }
 
 .sent.message-bubble {
@@ -727,17 +732,17 @@ button .spinner {
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
-        position: absolute;
-        flex: 1;
+        position: sticky;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         z-index: 100;
+        overflow: hidden;
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
+        position: sticky;
         top: 0vh;
         top: 0dvh;
         width: 100%;
@@ -747,6 +752,7 @@ button .spinner {
     .chat-view.active .message-container {
         padding-top: 11vh;
         padding-top: 11dvh;
+        height: max-content;
     }
 
     .chat-view.active .chat-footer {
@@ -805,6 +811,7 @@ button .spinner {
     position: absolute;
     top: 5px;
     right: 5px;
+    z-index: 102;
 }
 
 #cancel-reply:hover {

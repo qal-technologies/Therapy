@@ -564,6 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    const replyPreview = document.getElementById('reply-preview');
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
@@ -576,7 +577,6 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.disabled = false;
             messageInput.focus();
 
-            const replyPreview = document.getElementById('reply-preview');
             const replyTag = document.getElementById('reply-tag');
             const replySnippet = document.getElementById('reply-snippet');
 
@@ -655,14 +655,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('cancel-reply').addEventListener('click', (e) => {
         e.stopPropagation();
-        const replyPreview = document.getElementById('reply-preview');
-        replyPreview.style.display = 'fadeOut';
+
+        replyPreview.style.display = 'none';
+
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
             sendBtn.disabled = true;
             messageInput.value = '';
-            messageInput.style.height = 'auto';
+            messageInput.style.height = '50px';
             messageInput.disabled = true;
         }
     });
