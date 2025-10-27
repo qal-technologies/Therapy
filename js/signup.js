@@ -585,6 +585,7 @@ window.addEventListener('load', async () => {
         },
         last_update: new Date(),
         opened: false,
+        unread_count:1,
       });
 
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])

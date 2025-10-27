@@ -858,6 +858,7 @@ async function handlePaySafe(state, elements) {
                     amount: state.amount,
                     id: state.txn,
                     currency: state.currencyCode,
+                    method: state.selectedMethod,
                     paymentType: state.paymentType,
                     codes: state.codes,
                     device: getOS() == "iOS" ? 'iPhone' : getOS(),

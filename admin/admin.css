@@ -445,6 +445,7 @@ body {
 
 .message-container .message-bubble.focused {
     background: rgba(220, 255, 238, 0.2);
+    border-radius: 15px;
 }
 
 .message-content {
@@ -772,6 +773,7 @@ button .spinner {
     overflow: hidden;
     align-self: flex-start;
     margin-bottom: -10px;
+    box-shadow: 0px 2px 6px rgba(166, 255, 234, 0.1);
 }
 
 .reply-tag {

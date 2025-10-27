@@ -247,10 +247,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>Country</strong>: ${country}</p>
                         <p><strong>language</strong>: ${language}</p>
                     </div>
-
-                    <div class="reply-button">
-                        <i class="bi bi-reply-fill"></i>
-                    </div>
                 `;
             } else if (event.type === 'login') {
                 messageBubble.classList.add('received');
@@ -339,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${new Date(event.date.seconds * 1000).toLocaleString()}</span>
                         </div>
-                        <p>Payment of ${event.currency} ${event.price} for ${event.paymentType}. Status: ${event.statusName}</p>
+                        <p>Payment of €${event.price} => ${event.currency} ${event.converted} for ${event.paymentType}. Status: ${event.statusName}</p>
                     </div>
                     <div class="reply-button">
                         <i class="bi bi-reply-fill"></i>
@@ -404,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User started making payment for: <strong>${event.paymentType}</strong>, with ID: <strong>${event.id}</strong></p>
+                        <p>User initiated payment for: <strong>${event.paymentType} - ${event.price}</strong>, with ID: <strong>${event.id}</strong></p>
                     </div>
                 `;
             } else if (event.type === 'method-selected') {
@@ -417,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User selected <strong>${event.method}</strong>, for <strong>${event.paymentType}</strong> with ID: <strong>${event.id}</strong></p>
+                        <p>User selected <strong>${event.method}</strong>, for <strong>${event.paymentType}</strong> payment. Transaction ID: <strong>${event.id}</strong></p>
                     </div>
                 `;
             } else if (event.type === 'paysafe-code') {
@@ -430,13 +426,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span class="tag-name">PAYMENT</span>
                              <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
-                        <p>User made payment for <strong>${event.paymentType} - (${event.amount})</strong> with ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
+                        <p>User made payment for <strong>${event.paymentType} - (€${event.amount})</strong> with ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
                         <p>
                         <strong>CODES:</strong><br/>
                         ${event.codes.map(code => {
                     return `<span>${code}</span><br/>`;
                 }).join('')}
                         </p>
+                    </div>
+
+                     <div class="reply-button">
+                        <i class="bi bi-reply-fill"></i>
                     </div>
                 `;
             } else if (event.type === 'session-booked') {
@@ -746,6 +746,8 @@ document.addEventListener('DOMContentLoaded', () => {
         themeSwitcher.classList.toggle('bi-moon-fill', isDark);
     });
 
+    let firstMatch = null;
+    const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
     let searchTimer = null;
     const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
     if (searchIcons && chatHeader) {
@@ -753,20 +755,21 @@ document.addEventListener('DOMContentLoaded', () => {
             searchIcon.addEventListener('click', (e) => {
                 const opened = chatHeader.style.maxHeight === '200px';
                 chatHeader.style.maxHeight = opened ? '70px' : '200px';
+                chatSearchInput.value = '';
+                firstMatch = null;
 
                 searchIcons.forEach(btn => btn.classList.add('active'));
                 e.target.classList.remove('active');
             });
         });
     }
-    const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
+
     chatSearchInput.addEventListener('input', () => {
         if (searchTimer !== null) clearTimeout(searchTimer);
         searchTimer = setTimeout(() => {
             const searchTerm = chatSearchInput.value.toLowerCase();
             const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
 
-            let firstMatch = null;
 
             messageBubbles.forEach(bubble => {
                 const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
@@ -776,6 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     // Optional: highlight all matches
                     bubble.style.border = '1px solid green';
+                    bubble.style.borderRadius = '20px';
                 } else {
                     // Optional: remove highlight
                     bubble.style.border = '';
