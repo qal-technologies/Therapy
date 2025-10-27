@@ -750,7 +750,7 @@ width:100vw;
     }
 
     .chat-view.active .chat-header {
-        position: fixed;
+        position: absolute;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -760,12 +760,12 @@ width:100vw;
 /*position: relative;*/
         padding-block: 8vh;
         padding-block: 8dvh;
-        height: 100%;
+        height: 90%;
         overflow-y: auto;
     }
 
     .chat-view.active .chat-footer {
-        position: fixed;
+        position: absolute;
         bottom: 0;
         width: 100vw;
         width: 100dvw;
