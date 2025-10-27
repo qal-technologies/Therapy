@@ -132,12 +132,13 @@ body {
 
 .chat-header input.chat-search-input {
     width: 100%;
-    background: rgba(25, 25, 25, 0.8);
+    background-color: #ffffff36;
     padding: 10px;
     padding-inline-start: 30%;
     border-radius: 20px;
     caret-color: #13c000;
     color: white;
+    border: 1px solid transparent;
 }
 
 .chat-header input.chat-search-input::placeholder {
@@ -148,6 +149,7 @@ body {
 
 .chat-header input.chat-search-input:focus {
     padding: 10px;
+    border-color: #13c000;
 }
 
 .chat-header .header-icons .bi {
@@ -230,7 +232,7 @@ body {
     border-radius: 12px;
     padding: 8px;
     padding-inline-start: 25%;
-    background-color: #ffffff22;
+    background-color: #ffffff36;
     backdrop-filter: blur(19px);
     font-size: 14px;
     color: white;
