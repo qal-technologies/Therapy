@@ -755,7 +755,7 @@ flex-direction: column;
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
+        position: sticky;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -770,7 +770,8 @@ flex-direction: column;
     }
 
     .chat-view.active .chat-footer {
-        position: absolute;
+        position: sticky;
+transition: all 400ms ease;
         bottom: 0;
         width: 100vw;
         width: 100dvw;
