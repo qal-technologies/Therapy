@@ -99,6 +99,13 @@ exports.handler = async (event) => {
             timestamp: new Date(),
         });
 
+        const userActivityRef = db.collection('user_activities').doc(userId);
+        await userActivityRef.update({
+            unread_count: admin.firestore.FieldValue.increment(1),
+            last_update: admin.firestore.FieldValue.serverTimestamp(), // Also update the timestamp to bring it to the top
+            opened: false // Mark as unread
+        });
+        
         // Trigger email notification to the user
         const userDoc = await db.collection('users').doc(userId).get();
         const userData = userDoc.data();

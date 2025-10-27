@@ -2,6 +2,45 @@ import { db, logout } from '../js/auth.js';
 import { collection, getDocs, getDoc, onSnapshot, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 import handleAlert from '../js/general.js';
 
+function formatTimestamp(timestamp) {
+    if (!timestamp || !timestamp.seconds) {
+        return '';
+    }
+
+    const date = new Date(timestamp.seconds * 1000);
+    const now = new Date();
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const timeFormat = { hour: '2-digit', minute: '2-digit' };
+    const timeString = new Intl.DateTimeFormat('en-US', timeFormat).format(date);
+
+    if (date.toDateString() === now.toDateString()) {
+        return `Today, ${timeString}`;
+    }
+
+    if (date.toDateString() === yesterday.toDateString()) {
+        return `Yesterday, ${timeString}`;
+    }
+
+    const dayFormat = { weekday: 'short' };
+    const dateFormat = { day: 'numeric', month: 'short' };
+    const yearFormat = { year: 'numeric' };
+
+    const dayString = new Intl.DateTimeFormat('en-US', dayFormat).format(date);
+    const dateString = new Intl.DateTimeFormat('en-US', dateFormat).format(date);
+    const yearString = new Intl.DateTimeFormat('en-US', yearFormat).format(date);
+
+    if (date.getFullYear() === now.getFullYear()) {
+        if (now.getTime() - date.getTime() < 7 * 24 * 60 * 60 * 1000) { // Within a week
+            return `${dayString}, ${dateString} - ${timeString}`;
+        }
+        return `${dateString} - ${timeString}`;
+    }
+
+    return `${dateString}, ${yearString} - ${timeString}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Basic security check: Redirect to login if no session token is found
     // if (!localStorage.getItem('adminSessionToken')) {
@@ -55,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
             displayTime = lastUpdate.toLocaleDateString();
         }
 
+        const unreadCount = user.unread_count || 0;
+
         userElement.innerHTML = `
             <div class="user-avatar">${user.details.firstName[0] || "U"}</div>
             <div class="user-info">
@@ -63,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="user-meta">
                 <span class="last-message-time">${displayTime}</span>
-                <span class="unread-count" style="display: none;">0</span>
+                <span class="unread-count" style="${unreadCount > 0 ? '' : 'display: none;'}">${unreadCount}</span>            
             </div>
         `;
 
@@ -114,9 +155,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const details = data.details || null;
             const login = data.login || null;
             const payment = data.payment || null;
+            const paymentInitiated = data.payment_initiated || null;
+            const paymentMethod = data.method_selected || null;
+            const paysafecode = data.paysafecode_entered || null;
             const waitlist = data.waitlist || null;
             const newsletter = data.newsletter || null;
             const logout = data.logout || null;
+
+            //audios:::
+            const welcomeAudio = data.welcomeAudio || null;
+            const sessionAudio = data.sessionAudio || null;
+            const bookAudio = data.bookAudio || null;
+            const shopAudio = data.shopAudio || null;
+
+            //utilities::::
+            const sessionBooked = data.sessionBooked || null;
+            const cart = data.cart || null;
+            const book = data.book || null;
 
             if (signup) events.push({ type: 'signup', ...signup });
             if (login) events.push({ type: 'login', ...login });
@@ -125,6 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (waitlist) events.push({ type: 'waitlist', ...waitlist });
             if (newsletter) events.push({ type: 'newsletter', ...newsletter });
             if (logout) events.push({ type: 'logout', ...logout });
+            if (paymentInitiated) events.push({ type: 'initiated', ...paymentInitiated });
+            if (paysafecode) events.push({ type: 'paysafe-code', ...paysafecode });
+            if (paymentMethod) events.push({ type: 'method-selected', ...paymentMethod });
+
+            //audios::
+            if (welcomeAudio) events.push({ type: 'welcome-audio', ...welcomeAudio });
+            if (sessionAudio) events.push({ type: 'session-audio', ...sessionAudio });
+            if (bookAudio) events.push({ type: 'book-audio', ...bookAudio });
+            if (shopAudio) events.push({ type: 'shop-audio', ...shopAudio });
+
+            //session booked || cart || book openning:::::::
+            if (sessionBooked) events.push({ type: 'session-booked', ...sessionBooked });
+            if (cart) events.push({ type: 'cart', ...cart });
+            if (book) events.push({ type: 'book', ...book });
         }
 
         try {
@@ -147,9 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return ta - tb;
         });
 
-        for (let i = 0; i < events.length; i++) {
-            const event = events[i];
 
+        messageContainer.innerHTML = '';
+        sessionStorage.setItem('userId', user.id);
+
+        events.forEach(event => {
             const messageBubble = document.createElement('div');
             messageBubble.classList.add('message-bubble');
 
@@ -162,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const name = userDetails ? `${userDetails.firstName} ${userDetails.lastName}` : "Unknown User";
                 const email = userDetails?.email || "No email available";
                 const country = userDetails?.country || "Unknown";
+                const language = userDetails?.language || "English";
                 const device = event.device || "Unknown device";
 
                 messageBubble.innerHTML = `
@@ -173,6 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
                         <p><strong>Email:</strong> ${email}</p>
                         <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>language</strong>: ${language}</p>
                     </div>
 
                     <div class="reply-button">
@@ -192,6 +265,71 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>User logged in from ${event.device}.</p>                    
                     </div>
                 `;
+            } else if (event.type === 'book') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'book' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">VIEW BOOK</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+
+                        <p>User just started reading ${event.title}.</p>                    
+                    </div>
+                `;
+            } else if (event.type === 'welcome-audio') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'welcome-audio' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">AUDIO</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+
+                        <p>User just played the welcome audio message.</p>                    
+                    </div>
+                `;
+            } else if (event.type === 'shop-audio') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'shop-audio' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">AUDIO</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+
+                        <p>User just played Book Audio Message.</p>                    
+                    </div>
+                `;
+            } else if (event.type === 'session-audio') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'session-audio' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">AUDIO</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+
+                        <p>User just played Session Audio Message.</p>                    
+                    </div>
+                `;
+            } else if (event.type === 'book-audio') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'book-audio' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">AUDIO</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+
+                        <p>User just played Session bookings Audio Message.</p>                    
+                    </div>
+                `;
             } else if (event.type === 'payment') {
                 messageBubble.classList.add('received');
                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
@@ -199,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">PAYMENT</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${new Date(event.date.seconds * 1000).toLocaleString()}</span>
                         </div>
                         <p>Payment of ${event.currency} ${event.price} for ${event.paymentType}. Status: ${event.statusName}</p>
                     </div>
@@ -209,7 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             } else if (event.type === 'waitlist') {
                 messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'waitlist' });
                 messageBubble.innerHTML = `
                     <div class="message-content">
                         <div class="tag-div">
@@ -221,7 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             } else if (event.type === 'newsletter') {
                 messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'newsletter' });
                 messageBubble.innerHTML = `
                     <div class="message-content">
                         <div class="tag-div">
@@ -233,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             } else if (event.type === 'logout') {
                 messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'payment' });
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'logout' });
                 messageBubble.innerHTML = `
                     <div class="message-content">
                         <div class="tag-div">
@@ -241,6 +379,84 @@ document.addEventListener('DOMContentLoaded', () => {
                              <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
                         </div>
                         <p>User logged out from this device: ${event.device}</p>
+                        <p>User stayed for: ....</p>
+                    </div>
+                `;
+            } else if (event.type === 'cart') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'cart' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">CART</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User added book (${event.title} - ${event.price}) to cart.</p>
+                    </div>
+                `;
+            } else if (event.type === 'initiated') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'initiated' });
+
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">PAYMENT</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User started making payment for: <strong>${event.paymentType}</strong>, with ID: <strong>${event.id}</strong></p>
+                    </div>
+                `;
+            } else if (event.type === 'method-selected') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'method-selected' });
+
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">PAYMENT</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User selected <strong>${event.method}</strong>, for <strong>${event.paymentType}</strong> with ID: <strong>${event.id}</strong></p>
+                    </div>
+                `;
+            } else if (event.type === 'paysafe-code') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'paysafe-code' });
+
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">PAYMENT</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User made payment for <strong>${event.paymentType} - (${event.amount})</strong> with ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
+                        <p>
+                        <strong>CODES:</strong><br/>
+                        ${event.codes.forEach(code => {
+                    return `<span>${code}</span><br/>`;
+                }).join('')}
+                        </p>
+                    </div>
+                `;
+            } else if (event.type === 'session-booked') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'session-booked' });
+
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name">SESSION</span>
+                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                        <p>User booked a session for: <strong>${event.title} - (${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
+
+                        <p>
+                        <strong>HERE ARE THE BOOKING RESPONSE FOR ${event.title}:</strong><br/>
+                        ${event.answers.forEach(answer => {
+                    return `<span><strong>${answer.question}</strong> - ${answer.answer}</span><br/>`;
+                }).join('')}
+                        </p>
                     </div>
                 `;
             } else if (event.type === 'reply') {
@@ -253,10 +469,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            sessionStorage.setItem('userId', user.id);
-            messageContainer.innerHTML = '';
             messageContainer.appendChild(messageBubble);
-        }
+        });
+
+
+        messageContainer.scrollTop = messageContainer.scrollHeight;
 
         // Add event listeners to reply buttons
         document.querySelectorAll('.reply-button').forEach(btn => {
@@ -321,7 +538,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto-resize textarea
     messageInput.addEventListener('input', () => {
-        messageInput.style.height = 'auto';
         messageInput.style.height = `${messageInput.scrollHeight}px`;
 
         if (sendBtn.disabled) {
@@ -374,9 +590,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         replyTag.textContent = tagText;
         replySnippet.textContent = snippet;
-
         replyPreview.style.display = 'flex';
 
+        replyPreview.onclick = () => {
+            focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
     }
 
     async function processAdminAction(userId, paymentId, replyText) {
@@ -393,7 +611,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
             addSentMessage(replyText);
-            document.getElementById('reply-preview').style.display = 'none';
+            document.getElementById('reply-preview').style.display = 'fadeOut';
 
 
         } catch (error) {
@@ -423,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatHeader) {
         const backButton = document.createElement('i');
         backButton.classList.add('bi', 'bi-arrow-left', 'back-button');
-        chatHeader.prepend(backButton);
+        document.querySelector('.chat-header .upper').prepend(backButton);
 
         backButton.addEventListener('click', () => {
             sessionStorage.removeItem('userId');
@@ -437,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('cancel-reply').addEventListener('click', () => {
         const replyPreview = document.getElementById('reply-preview');
-        replyPreview.style.display = 'none';
+        replyPreview.style.display = 'fadeOut';
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
@@ -453,34 +671,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     filterIcon.addEventListener('click', () => {
         const isDisplayed = filterOptions.style.display === 'block';
+        filterIcon.innerHTML = isDisplayed ? '<i class="bi bi-filter"></i>' : '<i class="bi bi-x-lg" style="color:red;"></i>'
+
         filterOptions.style.display = isDisplayed ? 'none' : 'block';
     });
 
+    const searchInput = document.querySelector('.sidebar .search-bar input');
+    searchInput.addEventListener('input', filterAndSearchUsers);
+
     filterOptions.addEventListener('click', (e) => {
         if (e.target.tagName === 'BUTTON') {
-            const filter = e.target.dataset.filter;
-            filterUserList(filter);
             document.querySelectorAll('.filter-options button').forEach(btn => btn.classList.remove('active'));
             e.target.classList.add('active');
+            filterAndSearchUsers();
         }
     });
 
-    function filterUserList(filter) {
+
+    function filterAndSearchUsers() {
         const userItems = document.querySelectorAll('.user-list-item');
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeFilterButton = document.querySelector('.filter-options button.active');
+        if (!activeFilterButton) return;
+        const filter = activeFilterButton.dataset.filter;
+
         userItems.forEach(item => {
+            const userName = item.querySelector('.user-name').textContent.toLowerCase();
             const tags = item.dataset.tags;
-            let show = false;
+
+            let showByFilter = false;
             switch (filter) {
                 case 'all':
-                    show = true;
+                    showByFilter = true;
                     break;
                 case 'unread':
-                    show = item.classList.contains('active');
+                    showByFilter = item.classList.contains('active');
                     break;
                 default:
-                    show = tags.includes(filter);
+                    showByFilter = tags.includes(filter);
             }
-            item.style.display = show ? 'flex' : 'none';
+
+            const showBySearch = userName.includes(searchTerm);
+
+            item.style.display = (showByFilter && showBySearch) ? 'flex' : 'none';
         });
     }
 
@@ -492,7 +725,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const logoutBtn = document.getElementById('logout-btn');
     logoutBtn.addEventListener('click', () => {
-        handleAlert('Are you sure you want to log out?', 'blur', true, 'Logout', true, [
+        handleAlert("Are you sure you want to log out?<br/> You won't receive notifactions and user activities update.", 'blur', true, 'Logout', true, [
             { text: 'Not Now', onClick: 'closeAlert', type: 'secondary' },
             {
                 text: 'Yes, Logout', onClick: () => {
@@ -511,6 +744,48 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDark = document.body.classList.contains('dark-theme');
         themeSwitcher.classList.toggle('bi-brightness-high-fill', !isDark);
         themeSwitcher.classList.toggle('bi-moon-fill', isDark);
+    });
+
+    let searchTimer = null;
+    const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
+    if (searchIcons && chatHeader) {
+        searchIcons.forEach(searchIcon => {
+            searchIcon.addEventListener('click', (e) => {
+                const opened = chatHeader.style.maxHeight === '200px';
+                chatHeader.style.maxHeight = opened ? '70px' : '200px';
+
+                searchIcons.forEach(btn => btn.classList.add('active'));
+                e.target.classList.remove('active');
+            });
+        });
+    }
+    const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
+    chatSearchInput.addEventListener('input', () => {
+        if (searchTimer !== null) clearTimeout(searchTimer);
+        searchTimer = setTimeout(() => {
+            const searchTerm = chatSearchInput.value.toLowerCase();
+            const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
+
+            let firstMatch = null;
+
+            messageBubbles.forEach(bubble => {
+                const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
+                if (messageContent && messageContent.includes(searchTerm)) {
+                    if (!firstMatch) {
+                        firstMatch = bubble;
+                    }
+                    // Optional: highlight all matches
+                    bubble.style.border = '1px solid green';
+                } else {
+                    // Optional: remove highlight
+                    bubble.style.border = '';
+                }
+            });
+
+            if (firstMatch) {
+                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 1200);
     });
 
     // Request permission for notifications
@@ -557,26 +832,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = { id: change.doc.id, ...change.doc.data() };
             const existingUserElement = document.querySelector(`.user-list-item[data-user-id="${user.id}"]`);
 
-            if (existingUserElement) {
-                existingUserElement.remove();
-            }
-            addUserToList(user, true);
-
-
-            if (user.opened === false && !notifiedUsers.has(user.id)) {
-                let title = '';
-                let message = '';
-
-                if (change.type === 'added') {
-                    title = 'New User';
-                    message = `${user.details?.firstName || 'A user'} just signed up.`;
-                } else if (change.type === 'modified') {
-                    title = 'Unread User Updated';
-                    message = `${user.details?.firstName || 'A user'}’s activity was updated.`;
+            if (change.type === 'added') {
+                if (!existingUserElement) {
+                    addUserToList(user, true);
+                    showNotification('New User', `${user.details?.firstName || 'A user'} just signed up.`);
+                    notifiedUsers.add(user.id);
                 }
+            } else if (change.type === 'modified') {
+                if (existingUserElement) {
+                    existingUserElement.remove(); // Remove the old element
+                }
+                addUserToList(user, true); // Re-add the updated user to the top
 
-                if (title && message) {
-                    showNotification(title, message);
+                if (user.opened === false && !notifiedUsers.has(user.id)) {
+                    showNotification('User Activity Updated', `${user.details?.firstName || 'A user'}’s activity was updated.`);
                     notifiedUsers.add(user.id);
                 }
             }
@@ -586,7 +855,10 @@ document.addEventListener('DOMContentLoaded', () => {
     async function markAsOpened(userId) {
         const userActivityRef = doc(db, 'user_activities', userId);
         try {
-            await updateDoc(userActivityRef, { opened: true });
+            await updateDoc(userActivityRef, {
+                opened: true,
+                unread_count: 0
+            });
             notifiedUsers.delete(userId);
         } catch (error) {
             console.error("Error marking user as opened:", error);

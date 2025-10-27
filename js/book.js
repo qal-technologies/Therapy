@@ -1,6 +1,6 @@
 import handleAlert, { getOS, handleRedirect } from './general.js';
 import { handleAuthStateChange } from './auth.js';
-import { getUserData } from './database.js';
+import { getUserData, updateUserActivity } from './database.js';
 
 //I changed something here pasqal, check it out!
 window.addEventListener('DOMContentLoaded', () => {
@@ -115,7 +115,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const state = {
                     selectedTopic: null,
                     currentQuestion: 0,
-                    answers: {},
+                    answers: [],
                     completed: false,
                     clicked: false,
                 };
@@ -282,7 +282,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     }
 
                     if (!DOM.proceed.dataset.listenerAttached) {
-                        DOM.proceed.addEventListener('click', () => {
+                        DOM.proceed.addEventListener('click', async () => {
                             if (!DOM.acceptRadio.checked) return;
 
                             DOM.proceed.disabled = true;
@@ -302,6 +302,19 @@ window.addEventListener('DOMContentLoaded', () => {
                                 date: new Date(),
                                 transactionId: transactionId,
                             };
+
+                            await updateUserActivity(user.uid, {
+                                sessionBooked: {
+                                    timestamp: new Date(),
+                                    title: details.title,
+                                    transactionId: details.transactionId,
+                                    price: details.price,
+                                    answers: state.answers,
+                                },
+                                last_update: new Date(),
+                                opened: false,
+                            });
+
                             const params = new URLSearchParams({
                                 type: "session",
                                 details: JSON.stringify(details)
@@ -313,7 +326,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
 
                 function saveAnswer(question, answer) {
-                    state.answers[question] = answer;
+                    state.answers += { 'question': question, 'answer': answer };
                 }
 
                 function updateSessionInfo(topic) {
@@ -428,8 +441,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
                             try {
                                 if (audioMessage2.paused) {
-                                    audioMessage2.play().then(() => {
+                                    audioMessage2.play().then(async () => {
                                         listenBTN.innerHTML = SVG_ICONS.PAUSE;
+                                        await updateUserActivity(user.uid, {
+                                            bookAudio: {
+                                                timestamp: new Date(),
+                                            },
+                                            last_update: new Date(),
+                                            opened: false,
+                                        });
                                     }).catch(error => {
                                         console.error('Audio playback failed:', error);
                                         handleAlert('Audio playback failed. Please try again.', 'toast');

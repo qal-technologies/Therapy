@@ -556,17 +556,13 @@ window.addEventListener('load', async () => {
     try {
       const userCredential = await signup(email, password);
       const user = userCredential.user;
-      const waitlist = false;
 
       await createUserProfile(user.uid, {
         firstName,
         lastName,
         email,
         country,
-        waitlist
       });
-
-
 
       await updateUserProfile(user, {
         displayName: firstName,
@@ -581,6 +577,7 @@ window.addEventListener('load', async () => {
           lastName,
           email,
           country,
+          language: navigator.language[0]
         },
         signup: {
           timestamp: new Date(),

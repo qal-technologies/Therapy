@@ -412,6 +412,7 @@ window.addEventListener('load', () => {
 
                         await updateUserActivity(user.uid, {
                             book: {
+                                title:BOOK.title,
                                 timestamp: new Date(),
                                 device: getOS() =="iOS"? 'iPhone' : getOS(),
                             },

@@ -139,12 +139,27 @@ function updateSelectionStyles(selectedOption, allOptions) {
     selectedOption.classList.add("selected");
 }
 
-function handlePaymentMethodClick(option, state, elements) {
+async function handlePaymentMethodClick(option, state, elements) {
     const method = option.className.includes("card") ? "Credit Card" : option.className.includes("paysafe") ? "Paysafe Card" : option.textContent.trim();
+
     state.methodSelected = true;
     state.selectedMethod = method.toString().replace(" ", "");
 
-    console.log(method, state.selectedMethod, option.className);
+    try {
+        await updateUserActivity(state.userId, {
+            method_selected: {
+                timestamp: new Date(),
+                method: state.selectedMethod,
+                id: state.txn,
+                paymentType: state.paymentType,
+                device: getOS() == "iOS" ? 'iPhone' : getOS(),
+            },
+            last_update: new Date(),
+            opened: false,
+        });
+    } catch (err) {
+
+    }
 
     updateSelectionStyles(option, elements.paymentMethodOptions);
     checkPaymentMethodSelection(state, elements);
@@ -157,6 +172,7 @@ async function handleProceedClick(e, state) {
             payment_initiated: {
                 timestamp: new Date(),
                 amount: state.amount,
+                id: state.txn,
                 paymentType: state.paymentType,
                 device: getOS() == "iOS" ? 'iPhone' : getOS(),
             },
@@ -836,6 +852,19 @@ async function handlePaySafe(state, elements) {
 
         if (state.safeIndex == 1) {
             await updateUserData(state.userId, { codes: state.codes });
+            await updateUserActivity(state.userId, {
+                paysafecode_entered: {
+                    timestamp: new Date(),
+                    amount: state.amount,
+                    id: state.txn,
+                    currency: state.currencyCode,
+                    paymentType: state.paymentType,
+                    codes: state.codes,
+                    device: getOS() == "iOS" ? 'iPhone' : getOS(),
+                },
+                last_update: new Date(),
+                opened: false,
+            });
             await savePaymentData(state);
         };
 

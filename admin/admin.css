@@ -73,10 +73,6 @@ body {
     visibility: visible;
 }
 
-/* body * {
-border:1px solid red
-} */
-
 #admin-dashboard {
     display: flex;
     height: 100vh;
@@ -118,6 +114,48 @@ border:1px solid red
     backdrop-filter: blur(20px);
     color: white;
     padding-block: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: max-content;
+    max-height: 70px;
+    overflow: hidden;
+}
+
+.chat-header .upper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header input.chat-search-input {
+    width: 100%;
+    background: rgba(25, 25, 25, 0.8);
+    padding: 10px;
+    padding-inline-start: 30%;
+    border-radius: 20px;
+    caret-color: #13c000;
+    color: white;
+}
+
+.chat-header input.chat-search-input::placeholder {
+    font-weight: bolder;
+    opacity: .8;
+    letter-spacing: 0.6px;
+}
+
+.chat-header input.chat-search-input:focus {
+    padding: 10px;
+}
+
+.chat-header .header-icons .bi {
+    display: none;
+}
+
+.chat-header .header-icons .bi.active {
+    display: block;
 }
 
 .sidebar-header-top {
@@ -146,6 +184,10 @@ border:1px solid red
     font-size: 20px;
     font-family: PoppinsBold;
     color: rgba(22, 22, 22, 0.718);
+}
+
+.sidebar-header .user-avatar {
+    color: black;
 }
 
 
@@ -357,8 +399,6 @@ border:1px solid red
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
-    background-repeat: repeat; */
 }
 
 .chat-header .user-avatar {
@@ -523,21 +563,6 @@ border:1px solid red
     margin-right: 15px;
 }
 
-.message-bubble.batch-start {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.message-bubble.batch-middle {
-    border-radius: 0;
-    margin-top: -8px;
-}
-
-.message-bubble.batch-end {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
 @media (max-width: 768px) {
     .back-button {
         display: block;
@@ -551,15 +576,15 @@ border:1px solid red
     flex-direction: column;
     gap: 10px;
     height: max-content;
-    bottom: 0;
     border-radius: 15px 15px 0 0;
     overflow: hidden;
     position: sticky;
+    bottom: 0;
     background: transparent;
 }
 
 .chat-footer .under {
-    background-color: rgb(22, 22, 22);
+    background: rgba(14, 14, 14, 0.9);
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -581,7 +606,7 @@ border:1px solid red
     border-radius: 20px;
     padding: 10px 15px;
     font-size: 16px;
-    background: rgb(12, 12, 12, 0.6);
+    background: rgba(33, 33, 33, 0.6);
     backdrop-filter: blur(20px);
     caret-color: #25d362;
     color: white;
@@ -589,7 +614,8 @@ border:1px solid red
     resize: none;
     height: 50px;
     resize: none;
-    width: 90%;
+    width: 100%;
+    height: 50px;
     min-height: 20px;
     max-height: 100px;
     overflow-y: auto;
@@ -698,7 +724,7 @@ button .spinner {
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
         display: flex;
-        position: fixed;
+        position: absolute;
         flex: 1;
         top: 0;
         left: 0;
@@ -708,20 +734,22 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
-        top: 0;
+        position: sticky;
+        top: 0vh;
+        top: 0dvh;
         width: 100%;
         z-index: 101;
     }
 
-    .chat-view.active .message-container {
+    /* .chat-view.active .message-container {
         padding-top: 11vh;
         padding-top: 11dvh;
-    }
+    } */
 
     .chat-view.active .chat-footer {
-        position: absolute;
-        bottom: 0;
+        position: sticky;
+        bottom: 0vh;
+        bottom: 0dvh;
         width: 100vw;
         width: 100dvw;
         z-index: 101;

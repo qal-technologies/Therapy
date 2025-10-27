@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
             console.error('Firebase login failed:', error);
-            handleAlert('Failed to log in. Please check the console for details.', 'toast');
+            handleAlert(`Failed to log in, because: ${error}.`, 'toast');
             loginBtn.disabled = false;
             loginBtn.textContent = "Login";
         } finally {

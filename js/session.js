@@ -135,6 +135,8 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
     }
   }
 
+  let userObj;
+
   //Audio source:
   const audioSrc = {
     session: {
@@ -264,7 +266,17 @@ ${bonuses.join('')}
         listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
-        audioMessage2.play();
+        audioMessage2.play().then(async () => {
+          if (userObj) {
+            await updateUserActivity(userObj.uid, {
+              sessionAudio: {
+                timestamp: new Date(),
+              },
+              last_update: new Date(),
+              opened: false,
+            });
+          }
+        });
       }
     });
   }
@@ -429,6 +441,7 @@ ${bonuses.join('')}
   }
 
   handleAuthStateChange(async (user) => {
+    userObj = user;
     const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
     const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
     waitlistBTN.disabled = userdata.waitlist;

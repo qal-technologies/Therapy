@@ -1,6 +1,6 @@
 import handleAlert from "/js/general.js";
 import { handleAuthStateChange, getCurrentUser } from './auth.js';
-import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems } from './database.js';
+import { addToCart as addToCartInDb, createNewCartItem, getCartById, getCartItems, getUserData, updateCartItems, updateUserActivity } from './database.js';
 import { getOS, handleRedirect, translateElementFragment } from "./general.js";
 
 export function scrollToMakeVisible(selector, parent) {
@@ -48,7 +48,7 @@ window.addEventListener('load', () => {
 
   let email;
 
-  function handleAudio(lang) {
+  function handleAudio(lang, user) {
     const shopAudio = document.querySelector('.preview-banner audio#book-audio-message');
     const homePage = window.location.pathname.toLowerCase().includes("home");
 
@@ -81,7 +81,17 @@ window.addEventListener('load', () => {
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
 
-          shopAudio.play();
+          shopAudio.play().then(async () => {
+            if (user) {
+              await updateUserActivity(user.uid, {
+                shopAudio: {
+                  timestamp: new Date(),
+                },
+                last_update: new Date(),
+                opened: false,
+              });
+            }
+          });;
         }
       });
 
@@ -416,6 +426,17 @@ Select Book Format
       } else {
         await addToCartInDb(user.uid, itemData);
       }
+
+      await updateUserActivity(user.uid, {
+        cart: {
+          timestamp: new Date(),
+          title: itemData.title,
+          transactionId: itemData.transactionId,
+          price: itemData.price,
+        },
+        last_update: new Date(),
+        opened: false,
+      });
       handleAlert(`${book.quantity} ${book.quantity > 1 ? 'copies' : 'copy'} of "${book.title}" added to cart!`, "toast");
 
 
@@ -441,7 +462,8 @@ Select Book Format
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
 
-  handleAudio(lang);
+  let userObj;
+  handleAudio(lang, userObj);
 
 
   const closeButton = document.querySelector("#details-div button.close-details");
@@ -456,6 +478,7 @@ Select Book Format
     }
 
     if (user) {
+      userObj = user;
       const thisUser = await getUserData(user.uid);
       const copyBTN = document.querySelector("#preview button.get-copy");
       const details = document.querySelector("#preview .details");

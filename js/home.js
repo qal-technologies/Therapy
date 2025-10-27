@@ -274,7 +274,7 @@ window.addEventListener('load', () => {
 		BTNText.innerHTML = "BOOK NOW";
 	};
 
-	function handleAudio(lang) {
+	function handleAudio(lang, user) {
 
 		if (audioMessage && audioMessage2 && audioMessage3) {
 			audioMessage.src = HOME_AUDIO_SRC.banner[lang] || `${HOME_BASE_PATH.audio}/home-english.mp3`;
@@ -335,7 +335,17 @@ window.addEventListener('load', () => {
 					playBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
-					audioMessage.play();
+					audioMessage.play().then(async () => {
+						if (user) {
+							await updateUserActivity(user.uid, {
+								welcomeAudio: {
+									timestamp: new Date(),
+								},
+								last_update: new Date(),
+								opened: false,
+							});
+						}
+					})
 				}
 			});
 		}
@@ -394,7 +404,17 @@ window.addEventListener('load', () => {
 					listenBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
-					audioMessage2.play();
+					audioMessage2.play().then(async () => {
+						if (user) {
+							await updateUserActivity(user.uid, {
+								sessionAudio: {
+									timestamp: new Date(),
+								},
+								last_update: new Date(),
+								opened: false,
+							});
+						}
+					});
 				}
 			});
 		}
@@ -453,7 +473,17 @@ window.addEventListener('load', () => {
 					bookPlayBTN.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
   <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/>
 </svg>`;
-					audioMessage3.play();
+					audioMessage3.play().then(async () => {
+						if (user) {
+							await updateUserActivity(user.uid, {
+								shopAudio: {
+									timestamp: new Date(),
+								},
+								last_update: new Date(),
+								opened: false,
+							});
+						}
+					});
 				}
 			});
 
@@ -731,7 +761,8 @@ ${session.type == "inner" ?
         </div>`
 	}).join("");
 
-	handleAudio(lang);
+	let userObj;
+	handleAudio(lang, userObj);
 
 	FAQ.innerHTML = faq.map((faq) => {
 		const checks = () => {
@@ -826,6 +857,7 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 
 	handleAuthStateChange(async (user) => {
 		offlineUser = user ? true : false;
+		userObj = user;
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;
