@@ -581,22 +581,6 @@ body {
     background: transparent;
 }
 
-.chat-header {
-    border: 1px solid green;
-}
-
-.chat-footer {
-    border: 1px solid red;
-}
-
-.message-container {
-    border: 1px solid blue;
-}
-
-.chat-view {
-    border: 1px solid white;
-}
-
 .chat-footer .under {
     background: rgba(14, 14, 14, 0.9);
     width: 100%;
