@@ -326,7 +326,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
 
                 function saveAnswer(question, answer) {
-                    state.answers.push({ 'question': question, 'answer': answer });
+                    if (!state.answers) state.answers = [];
+                    state.answers.push({ question, answer });
                 }
 
                 function updateSessionInfo(topic) {
