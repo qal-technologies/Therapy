@@ -398,7 +398,7 @@ body {
 
 /* Chat View (Right Panel) */
 .chat-view {
-    flex: 1;
+    height: 100%;
     height: 100vh;
     height: 100dvh;
     display: flex;
@@ -750,13 +750,13 @@ button .spinner {
     }
 
     .chat-view.active .message-container {
-        padding-top: 11vh;
-        padding-top: 11dvh;
+        /* padding-top: 11vh;
+        padding-top: 11dvh; */
         height: max-content;
     }
 
     .chat-view.active .chat-footer {
-        position: absolute;
+        position: sticky;
         bottom: 0vh;
         bottom: 0dvh;
         width: 100vw;
