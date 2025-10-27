@@ -757,7 +757,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchIcons && chatHeader) {
         searchIcons.forEach(searchIcon => {
             searchIcon.addEventListener('click', (e) => {
-                const opened = chatHeader.style.maxHeight === '200px';
+                const opened = chatHeader.style.maxHeight !== '70px';
                 chatSearchInput.value = '';
                 if (!opened) chatSearchInput.focus();
                 if (opened) {
@@ -771,7 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     firstMatch = null;
                 }
 
-                chatHeader.style.maxHeight = opened ? '70px' : '200px';
+                chatHeader.style.maxHeight = opened ? '70px' : '2000px';
 
                 searchIcons.forEach(btn => btn.classList.add('active'));
                 e.target.classList.remove('active');
