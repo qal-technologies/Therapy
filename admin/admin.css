@@ -266,7 +266,8 @@ body {
 }
 
 .filter-icon {
-    padding: 0px;
+    padding: 8px;
+margin:0;
     cursor: pointer;
     font-size: 22px;
 }
