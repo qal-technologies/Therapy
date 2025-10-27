@@ -706,11 +706,6 @@ section#timeout {
   font-family: PoppinsMed;
 }
 
-#timeout p {
-  max-width: 600px;
-  place-self: center;
-}
-
 #timeout p.sub-text {
   font-size: 1.5rem;
   color: rgb(221, 221, 221);
