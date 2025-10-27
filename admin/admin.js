@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">SIGNUP</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
                         <p><strong>Email:</strong> ${email}</p>
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">LOGIN</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
 
                         <p>User logged in from ${event.device}.</p>                    
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">VIEW BOOK</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
 
                         <p>User just started reading ${event.title}.</p>                    
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">AUDIO</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
 
                         <p>User just played the welcome audio message.</p>                    
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">AUDIO</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
 
                         <p>User just played Book Audio Message.</p>                    
@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">AUDIO</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
 
                         <p>User just played Session Audio Message.</p>                    
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">AUDIO</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
 
                         <p>User just played Session bookings Audio Message.</p>                    
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">WAITLIST</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User joined waitlist</p>
                     </div>
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">NEWSLTTER</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User subscribed for newsletter</p>
                     </div>
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">LOGOUT</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User logged out from this device: ${event.device}</p>
                         <p>User stayed for: ....</p>
@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">CART</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User added book (${event.title} - ${event.price}) to cart.</p>
                     </div>
@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">PAYMENT</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User started making payment for: <strong>${event.paymentType}</strong>, with ID: <strong>${event.id}</strong></p>
                     </div>
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">PAYMENT</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User selected <strong>${event.method}</strong>, for <strong>${event.paymentType}</strong> with ID: <strong>${event.id}</strong></p>
                     </div>
@@ -428,12 +428,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">PAYMENT</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User made payment for <strong>${event.paymentType} - (${event.amount})</strong> with ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
                         <p>
                         <strong>CODES:</strong><br/>
-                        ${event.codes.forEach(code => {
+                        ${event.codes.map(code => {
                     return `<span>${code}</span><br/>`;
                 }).join('')}
                         </p>
@@ -447,13 +447,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="message-content">
                         <div class="tag-div">
                             <span class="tag-name">SESSION</span>
-                             <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                         </div>
                         <p>User booked a session for: <strong>${event.title} - (${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
 
                         <p>
                         <strong>HERE ARE THE BOOKING RESPONSE FOR ${event.title}:</strong><br/>
-                        ${event.answers.forEach(answer => {
+                        ${event.answers.map(answer => {
                     return `<span><strong>${answer.question}</strong> - ${answer.answer}</span><br/>`;
                 }).join('')}
                         </p>
@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageBubble.innerHTML = `
                     <div class="message-content">
                         <p>${event.text}</p>
-                        <span class="message-meta">${new Date(event.timestamp.seconds * 1000).toLocaleString()}</span>
+                        <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                     </div>
                 `;
             }

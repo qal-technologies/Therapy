@@ -706,11 +706,9 @@ section#timeout {
   font-family: PoppinsMed;
 }
 
-#timeout p.text {
-  color: var(--primary);
-  font-size: 2rem;
-  font-family: PoppinsSemi;
-  letter-spacing: 1px;
+#timeout p {
+  max-width: 600px;
+  place-self: center;
 }
 
 #timeout p.sub-text {
