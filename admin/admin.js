@@ -762,6 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     messageBubbles.forEach(bubble => {
                         bubble.style.border = '';
+                        bubble.style.borderRadius = '';
                     });
                     firstMatch = null;
                 }
@@ -780,6 +781,12 @@ document.addEventListener('DOMContentLoaded', () => {
         searchTimer = setTimeout(() => {
             const searchTerm = chatSearchInput.value.toLowerCase();
             if (searchTerm === '') {
+                const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
+
+                messageBubbles.forEach(bubble => {
+                    bubble.style.border = '';
+                    bubble.style.borderRadius = '';
+                });
                 firstMatch = null;
                 return;
             }
