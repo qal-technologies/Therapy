@@ -404,7 +404,7 @@ background:#dcf8c6;
 }
 
 .message-container .message-bubble.focused {
-    background: rgba(220, 255, 238, 0.1);
+    background: rgba(220, 255, 238, 0.2);
 }
 
 .message-content {
