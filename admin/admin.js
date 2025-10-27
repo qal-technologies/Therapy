@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p>HERE ARE THE BOOKING RESPONSE FOR <strong>${event.title}:</strong></p>
 
                         ${event.answers.map(answer => {
-                    return `<p><strong>${answer.question}</strong> <br/> Answer: ${answer.answer}</p><br/>`;
+                    return `<p><strong>${answer.question}</strong> <br/> Answer: ${answer.answer}</p>`;
                 }).join('')}
                         </div>
                     </div>
