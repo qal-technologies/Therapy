@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
             focusedMessage.style.transform = 'translateX(0)';
         }
 
-        if (messageElement.dataset.replyable == true) {
+        if (messageElement.dataset.replyable) {
             focusedMessage = messageElement;
             focusedMessage.classList.add('focused');
             messageInput.disabled = false;
