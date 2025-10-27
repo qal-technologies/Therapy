@@ -740,7 +740,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     let firstMatch = null;
-    let shouldSearch = false;
     const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
     let searchTimer = null;
     const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
@@ -751,8 +750,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 chatSearchInput.value = '';
                 if (opened) {
                     chatSearchInput?.blur();
+                    const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
+
+                    messageBubbles.forEach(bubble => {
+                        // Remove highlight
+                        bubble.style.border = '';
+                    });
+                    firstMatch = null;
                 }
-                shouldSearch = !opened;
 
                 chatHeader.style.maxHeight = opened ? '70px' : '200px';
 
@@ -777,7 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             messageBubbles.forEach(bubble => {
                 const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
-                if (messageContent && messageContent.includes(searchTerm) && bubble.classList.contains('received') && !bubble.classList.contains('sent') && shouldSearch) {
+                if (messageContent && messageContent.includes(searchTerm) && bubble.classList.contains('received') && !bubble.classList.contains('sent')) {
                     if (!firstMatch) {
                         firstMatch = bubble;
                     }
