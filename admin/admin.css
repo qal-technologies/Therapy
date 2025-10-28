@@ -91,6 +91,7 @@ body {
     border-right: 1px solid #3d3d3d8e;
     background: linear-gradient(0deg, rgb(12, 12, 12), black 60%);
     flex: 1;
+    position: relative;
 }
 
 .sidebar-header, .chat-header {
@@ -112,6 +113,9 @@ body {
     height: 20vh;
     min-height: max-content;
     max-height: 50%;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
 }
 
 .chat-header {
@@ -401,7 +405,6 @@ body {
     max-height: 80vh;
     padding: 10px;
     overflow-y: auto;
-    padding-bottom: 2vh;
     position: relative;
 }
 
@@ -546,7 +549,6 @@ body {
     height: 100%;
     max-height: 100%; */
     padding: 10px;
-    border: 1px solid red;
     overflow: hidden;
     overflow-y: auto;
     display: flex;
@@ -571,8 +573,8 @@ body {
 .message-container .message-bubble.focused {
     background: rgba(220, 255, 238, 0.4);
     /*border-radius: 15px;*/
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-top-left-radius: 22px;
+    border-bottom-left-radius:22px;
     backdrop-filter: brightness(110%);
 }
 
@@ -581,7 +583,7 @@ body {
     flex-direction: column;
     max-width: 80%;
     padding: 10px;
-    border-radius: 25px;
+    border-radius: 22px;
     position: relative;
     transition: transform 0.2s ease;
     background: rgb(250, 255, 255);
@@ -994,7 +996,7 @@ button .spinner {
         overflow-y: auto;
         padding-block: 8vh;
         padding-block: 8dvh;
-        margin-bottom: 12dvh;
+        padding-bottom: 12dvh;
         max-height: 100dvh;
     }
 

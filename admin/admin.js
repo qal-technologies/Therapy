@@ -663,6 +663,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (messageElement.dataset.replyable) {
             focusedMessage = messageElement;
             focusedMessage.classList.add('focused');
+            if (navigator.vibrate) navigator.vibrate(30);
+
             messageInput.disabled = false;
             messageInput.focus();
 
@@ -684,7 +686,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             replyPreview.onclick = (e) => {
                 if (e.target.closest(".cancel-reply")) return;
-                focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                focusedMessage.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+                if (navigator.vibrate) navigator.vibrate(30);
             };
         }
     }
@@ -768,6 +771,12 @@ document.addEventListener('DOMContentLoaded', () => {
         filterIcon.innerHTML = isDisplayed ? '<i class="bi bi-filter"></i>' : '<i class="bi bi-x-lg" style="color:red;"></i>'
 
         filterOptions.style.display = isDisplayed ? 'none' : 'block';
+        if (isDisplayed) {
+            searchInput.value = '';
+            document.querySelectorAll('.filter-options button').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.filter-options button[data-filter="all"]').classList.add('active');
+            filterAndSearchUsers();
+        }
     });
 
     const searchInput = document.querySelector('.sidebar .search-bar input');
@@ -822,9 +831,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        if (firstMatch) {
-            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        // if (firstMatch) {
+        //     firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // }
 
         if (emptyPlaceholder) {
             emptyPlaceholder.style.display = visibleUsers === 0 ? 'flex' : 'none';
@@ -892,7 +901,7 @@ document.addEventListener('DOMContentLoaded', () => {
     chatSearchInput.addEventListener('input', (e) => {
         searchButton.disabled = e.target.value.trim().length === 0
     });
-    
+
     searchButton.addEventListener('click', (e) => {
         e.preventDefault();
 
@@ -919,55 +928,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 bubble.style.border = '1px solid green';
                 bubble.style.borderRadius = '20px';
+                bubble.style.marginLeft = '20px';
             } else {
                 bubble.style.border = '';
                 bubble.style.borderRadius = '';
+                bubble.style.marginLeft = '';
             }
         });
 
         if (firstMatch) {
-            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center', });
         }
+    });
+
+    messageContainer.addEventListener('scroll', () => {
+        document.activeElement.blur();
     });
 
     // Request permission for notifications
     function requestNotificationPermission() {
-        if ('Notification' in window) {
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    const granted = localStorage.getItem('notificationPermission');
+            if ('Notification' in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        const granted = localStorage.getItem('notificationPermission');
 
-                    if (!granted) {
-                        localStorage.setItem('notificationPermission', 'granted');
+                        if (!granted) {
+                            localStorage.setItem('notificationPermission', 'granted');
 
-                        handleAlert('Notification permission granted', 'toast');
-                    }
-                } else {
-                    handleAlert("Please grant notification permission for the admin dashboard functions to work properly.", "blur", true, "Notification", true, [{ text: "CLOSE", onClick: "closeAlert", type: 'secondary' }, {
-                        text: "ACCEPT", onClick: () => {
-                            requestNotificationPermission();
-                            return 'closeAlert';
+                            handleAlert('Notification permission granted', 'toast');
                         }
-                    }])
-                }
-            });
+                    } else {
+                        handleAlert("Please grant notification permission for the admin dashboard functions to work properly.", "blur", true, "Notification", true, [{ text: "CLOSE", onClick: "closeAlert", type: 'secondary' }, {
+                            text: "ACCEPT", onClick: () => {
+                                requestNotificationPermission();
+                                return 'closeAlert';
+                            }
+                        }])
+                    }
+                });
+            }
         }
-    }
 
     // Show a browser notification
     function showNotification(title, body) {
-        if (Notification.permission === 'granted') {
-            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'show-notification',
-                    title: title,
-                    body: body
-                });
-            } else {
-                new Notification(title, { body });
+            if (Notification.permission === 'granted') {
+                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage({
+                        type: 'show-notification',
+                        title: title,
+                        body: body
+                    });
+                } else {
+                    new Notification(title, { body });
+                }
             }
         }
-    }
 
     fetchAndDisplayUsers();
 
