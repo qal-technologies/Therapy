@@ -94,6 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 addUserToList(user);
             });
 
+            const emptyDiv = document.querySelector('.chat-empty');
+
+            if (emptyDiv) {
+                emptyDiv.remove();
+            }
+
             const filterIconn = document.querySelector('.filter-icon')
             if (filterIconn) {
                 filterIconn.style.display = 'block';
