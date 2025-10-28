@@ -573,8 +573,8 @@ body {
 .message-container .message-bubble.focused {
     background: rgba(220, 255, 238, 0.4);
     /*border-radius: 15px;*/
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     backdrop-filter: brightness(110%);
 }
 
@@ -1009,7 +1009,7 @@ button .spinner {
         z-index: 101; */
 
         z-index: 101;
-        position: fixed;
+        position: absolute;
         bottom: 0;
         width: 100vw;
         flex-shrink: 0;
