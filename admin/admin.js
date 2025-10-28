@@ -861,10 +861,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (searchIcons && chatHeader) {
         searchIcons.forEach(searchIcon => {
             searchIcon.addEventListener('click', (e) => {
-                const isVisible = chatSearchInput.classList.contains('visible');
-                chatSearchInput.classList.toggle('visible');
-
-
+                const isVisible = chatHeader.classList.contains('visible');
+                chatHeader.classList.toggle('visible');
+                document.querySelector('.search-container')?.classList.toggle('visible');
 
                 if (!isVisible) {
                     chatSearchInput.focus();

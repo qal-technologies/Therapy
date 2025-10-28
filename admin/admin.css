@@ -112,27 +112,51 @@ body {
 }
 
 .chat-header {
-    background: rgb(2, 2, 2, 0.9);
-    backdrop-filter: blur(20px);
+    background: transparent;
     color: white;
-    padding-block: 15px;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    gap: 10px;
     height: max-content;
+    border: none;
     width: 100%;
-    max-height: 70px;
-    overflow: hidden;
-    position: relative;
     z-index: 99999;
 }
 
+/* 
+.chat-header.visible {
+    max-height: 200px;
+} */
+
 .chat-header .upper {
     width: 100%;
+    padding-block: 15px;
+    padding-inline: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    background: rgb(2, 2, 2, 0.9);
+    border-bottom: 1px solid #3d3d3d8e;
+}
+
+.search-container {
+    width: 98%;
+    place-self: center;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 50px;
+    background: rgb(2, 2, 2, 0.9);
+    backdrop-filter: blur(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease, display 0.2s ease;
+    opacity: 0;
+    display: none;
+    transform: translateY(-10px);
+    gap: 10px;
+    pointer-events: none;
 }
 
 .chat-header input.chat-search-input {
@@ -144,13 +168,10 @@ body {
     caret-color: #13c000;
     color: white;
     border: 1.6px solid transparent;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    transform: translateY(-20px);
-    pointer-events: none;
 }
 
-.chat-header input.chat-search-input.visible {
+.chat-header .search-container.visible {
+    display: flex;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
@@ -164,8 +185,20 @@ body {
 }
 
 .chat-header input.chat-search-input:focus {
+    border-radius: 18px;
     padding: 10px;
-    border-color: #ceffc9;
+    border-color: #007300;
+}
+
+.search-container button.chat-search-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 15px;
+    color: white;
+    background-color: #007300;
+    display: grid;
+    place-content: center;
 }
 
 .chat-header .header-icons .bi {
@@ -485,14 +518,17 @@ body {
 }
 
 .message-container {
-    width: 100%;
+    /* width: 100%;
     height: 100%;
-    max-height: 100%;
+    max-height: 100%; */
     padding: 10px;
+
+    border: 1px solid red;
     overflow: hidden;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    flex: 1;
     user-select: none;
     position: relative;
 }
@@ -648,7 +684,7 @@ body {
     user-select: text;
     letter-spacing: 0.6px;
 
-    overflow-wrap:break-word;
+    overflow-wrap: break-word;
     word-break: keep-all;
     word-wrap: break-word;
     hyphens: auto;
@@ -847,15 +883,35 @@ button .spinner {
     /* Chat View (Right Panel) */
     .chat-view {
         flex: 1;
-        height: 100%;
+        max-width: 100%;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         overflow: hidden;
         position: relative;
     }
 
-    .chat-footer {
-        padding-bottom: 10px;
+    .chat-view .chat-header {
+        max-width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 101;
+    }
+
+    .chat-view .chat-footer {
+        position: absolute;
+        bottom: 0;
+        z-index: 101;
+        box-shadow: 0px 0px 12px rgba(0, 34, 10, 0.3);
+    }
+
+    .message-container {
+        flex: 1;
+        width: 100%;
+        min-height: 100vh;
+        padding-block: 10dvh;
+        border: none !important;
     }
 }
 
@@ -884,31 +940,24 @@ button .spinner {
         position: fixed;
         top: 0;
         left: 0;
-        /*width: 100%;
-        height: 100%;*/
         height: 100vh;
         width: 100vw;
-        max-height: 100%;
         z-index: 100;
-        /* overflow: hidden !important; */
     }
 
     .chat-view.active {
         display: flex;
         flex-direction: column;
         height: 100vh;
-        /* Full viewport height */
         height: 100dvh;
     }
 
 
     .chat-view.active .chat-header {
-        /* position: fixed;
+        position: fixed;
         top: 0;
-        width: 100%;
-        z-index: 101; */
-
-        width: 100%;
+        width: 100vw;
+        z-index: 101;
         flex-shrink: 0;
     }
 
@@ -921,7 +970,7 @@ button .spinner {
         overflow-y: auto;
         padding-block: 8vh;
         padding-block: 8dvh;
-
+        max-height: 100dvh;
     }
 
     .chat-view.active .chat-footer {
@@ -932,14 +981,18 @@ button .spinner {
         width: 100dvw;
         z-index: 101; */
 
-        width: 100%;
+        z-index: 101;
+        position: fixed;
+        bottom: 0;
+        width: 100vw;
         flex-shrink: 0;
+        box-shadow: 0px 0px 12px rgba(0, 34, 10, 0.3);
     }
 }
 
 #scroll-to-bottom-btn {
     position: absolute;
-    bottom: 80px;
+    bottom: 10dvh;
     right: 20px;
     width: 40px;
     height: 40px;
@@ -957,7 +1010,7 @@ button .spinner {
     letter-spacing: -3px;
     text-align: center;
     transform: rotate(-90deg) translateX(-11px);
-    box-shadow: 0px 0px 12px rgb(0, 13, 4, 0.1);
+    box-shadow: 0px 0px 12px rgba(0, 255, 76, 0.172);
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 1000;
@@ -965,7 +1018,7 @@ button .spinner {
 }
 
 #scroll-to-bottom-btn.visible {
-    transform: translateX(0);
+    transform: rotate(-90deg) translateX(0);
     opacity: 1;
     pointer-events: auto;
 }

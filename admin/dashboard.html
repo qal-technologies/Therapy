@@ -30,12 +30,14 @@
                     <i class="bi bi-brightness-high-fill" id="theme-switcher" title="Change Theme" aria-hidden="true"
                         style="display: none;"></i>
 
-                    <i class="bi bi-arrow-clockwise" id="reload-activities" title="Reload Activities"></i>
+                    <i class="bi bi-arrow-clockwise" id="reload-activities" title="Reload Activities"
+                        style="color: white; text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);"></i>
 
-                    <a href="/html/main/Home.html" target="_blank" title="Visit Main Website"><i
-                            class="bi bi-globe"></i></a>
+                    <a href="/html/main/Home.html" target="_blank" title="Visit Main Website"><i class="bi bi-globe"
+                            style="color: rgb(124, 211, 255); text-shadow: 0px 0px 15px rgb(124, 211, 255, 0.5);"></i></a>
 
-                    <i class="bi bi-power" id="logout-btn" title="Log out" style="color:red; "></i>
+                    <i class="bi bi-power" id="logout-btn" title="Log out"
+                        style="color:red; text-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5);"></i>
                 </div>
 
                 <div class="search-bar">
@@ -88,15 +90,20 @@
                         <i class="bi bi-x-lg" style="color: red;"></i>
                     </div>
                 </div>
-                <input type="text" class="chat-search-input" placeholder="Search messages">
+                <div class="search-container">
+                    <input type="text" class="chat-search-input" placeholder="Search messages">
+                    <button class="chat-search-btn" title="Search Chat">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
             </header>
 
             <div class="message-container">
-                <div class="loading-parent">
+                <!-- <div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
                     </div>
-                </div>
+                </div> -->
                 <!-- Messages will be dynamically loaded here -->
             </div>
 
