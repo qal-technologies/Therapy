@@ -573,11 +573,7 @@ function setupAuthUI(user) {
         logoutBTN.addEventListener("click", async (e) => {
             e.preventDefault();
             try {
-                await logout();
-
-                handleAlert("Please log in again if you'd like to continue.", "blur", true, `${iOS() ? `<i class="bi bi-exclamation-circle text-danger fs-2"></i>` : `<i class='bi bi-exclamation-triangle text-danger fs-2'></i>`} <br/> You have been logged out.`, true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
-
-                await updateUserActivity(user.uid, {
+await updateUserActivity(user.uid, {
                     logout: {
                         timestamp: new Date(),
                         device: getOS() == "iOS" ? 'iPhone' : getOS(),
@@ -585,6 +581,12 @@ function setupAuthUI(user) {
                     last_update: new Date(),
                     opened: false,
                 });
+
+                await logout();
+
+                handleAlert("Please log in again if you'd like to continue.", "blur", true, `${iOS() ? `<i class="bi bi-exclamation-circle text-danger fs-2"></i>` : `<i class='bi bi-exclamation-triangle text-danger fs-2'></i>`} <br/> You have been logged out.`, true, [{ text: "OK", onClick: () => window.location.replace('/html/main/Home.html') }]);
+
+                
             } catch (error) {
                 handleAlert(`Failed to log out, because: ${error}.`, "toast");
             }
