@@ -91,7 +91,6 @@ body {
     border-right: 1px solid #3d3d3d8e;
     background: linear-gradient(0deg, rgb(12, 12, 12), black 60%);
     flex: 1;
-    position: relative;
 }
 
 .sidebar-header, .chat-header {
@@ -110,8 +109,6 @@ body {
     border: none;
     padding-bottom: 10px;
     padding-top: 30px;
-    position: sticky;
-    top: 0;
     height: 20vh;
     min-height: max-content;
     max-height: 50%;
@@ -124,7 +121,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     height: max-content;
     border: none;
     width: 100%;
@@ -135,6 +132,7 @@ body {
     width: 100%;
     padding-block: 15px;
     padding-inline: 10px;
+    padding-inline-end: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -155,7 +153,7 @@ body {
     backdrop-filter: blur(20px);
     transition: opacity 0.3s ease, transform 0.3s ease, display 0.2s ease;
     opacity: 0;
-    display: none;
+    display: flex;
     transform: translateY(-10px);
     gap: 10px;
     pointer-events: none;
@@ -235,7 +233,7 @@ body {
     margin-inline-start: 8px;
     padding-inline-start: 10px;
     height: max-content;
-    border-left: 1px solid rgba(130, 130, 130, 0.3);
+    border-left: 1px solid rgba(130, 130, 130, 0.5);
 }
 
 .admin-name-div p {
@@ -243,8 +241,8 @@ body {
     color: #cbcbcbb9;
     letter-spacing: 0.5px;
     margin-top: -5px;
-    align-self: flex-start;
-    text-align: left;
+    align-self: flex-end;
+    text-align: right;
 }
 
 .user-avatar {
@@ -404,6 +402,7 @@ body {
     padding: 10px;
     overflow-y: auto;
     padding-bottom: 2vh;
+    position: relative;
 }
 
 .empty-list-placeholder {
@@ -547,7 +546,6 @@ body {
     height: 100%;
     max-height: 100%; */
     padding: 10px;
-
     border: 1px solid red;
     overflow: hidden;
     overflow-y: auto;
@@ -583,7 +581,7 @@ body {
     flex-direction: column;
     max-width: 80%;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 25px;
     position: relative;
     transition: transform 0.2s ease;
     background: rgb(250, 255, 255);
@@ -710,11 +708,6 @@ body {
     margin-top: 5px;
     user-select: text;
     letter-spacing: 0.6px;
-
-    overflow-wrap: break-word;
-    word-break: keep-all;
-    word-wrap: break-word;
-    hyphens: auto;
     box-sizing: border-box;
     max-width: 100%;
 }
@@ -979,7 +972,6 @@ button .spinner {
         height: 100dvh;
     }
 
-
     .chat-view.active .chat-header {
         position: fixed;
         top: 0;
@@ -988,7 +980,12 @@ button .spinner {
         flex-shrink: 0;
     }
 
-    .chat-view.active .message-container {
+    .chat-view.active .chat-header{
+
+    }
+    
+    
+     .chat-view.active .message-container {
         /* position: relative;
         max-height: 100%;
         overflow-y: auto; */
@@ -997,6 +994,7 @@ button .spinner {
         overflow-y: auto;
         padding-block: 8vh;
         padding-block: 8dvh;
+        margin-bottom: 12dvh;
         max-height: 100dvh;
     }
 
