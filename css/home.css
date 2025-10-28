@@ -706,6 +706,11 @@ section#timeout {
   font-family: PoppinsMed;
 }
 
+#timeout p.text{
+  font-size: 2rem;
+  font-family: PoppinsSemi;
+}
+
 #timeout p.sub-text {
   font-size: 1.5rem;
   color: rgb(221, 221, 221);
