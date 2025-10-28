@@ -108,7 +108,7 @@ body {
     align-items: center;
     border: none;
     padding-bottom: 10px;
-    padding-top: 20px;
+    padding-top: 30px;
 }
 
 .chat-header {
@@ -181,10 +181,11 @@ body {
     display: flex;
     gap: 12px;
     align-items: center;
+    justify-content: flex-start;
     color: white;
     flex-wrap: wrap;
     font-family: PoppinsSemi;
-    padding-top: 20px;
+    padding-block: 15px;
     max-width: 200px;
     height: max-content;
     align-self: flex-start;
@@ -205,9 +206,44 @@ body {
 }
 
 .sidebar-header .user-avatar {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
     color: black;
+    box-shadow: 0px 0px 10px rgba(73, 255, 63, 0.5);
+    animation: boxAnimation 15s 100ms ease-in infinite;
+    transform: translateZ(0);
 }
 
+@keyframes boxAnimation {
+    0% {
+        box-shadow: 0px 0px 10px rgba(73, 255, 63, 0.5), 1px -2px 10px rgba(139, 16, 255, 0.5);
+    }
+
+    25% {
+        box-shadow: -5px 5px 15px rgba(139, 16, 255, 0.5), 2px -1px 12px rgba(73, 255, 63, 0.5);
+    }
+
+    50% {
+        box-shadow: 5px -5px 20px rgb(255, 251, 40, 0.5), -1px 1px 18px rgba(139, 16, 255, 0.5);
+    }
+
+    75% {
+        box-shadow: -5px 5px 12px rgba(16, 195, 255, 0.5), 3px -4px 15px rgb(255, 251, 40, 0.5);
+
+    }
+}
+
+.sidebar-header .user-avatar i {
+    margin-top: 18px;
+    font-size: 2.8rem;
+}
+
+.admin-tag {
+    font-size: 20px;
+    font-family: PoppinsSemi;
+    font-weight: bolder;
+}
 
 .sidebar-header .header-icons {
     width: 100%;
@@ -266,6 +302,14 @@ body {
     letter-spacing: 0.5px;
 }
 
+.filter-icon {
+    /* padding: 8px; */
+    margin: 0;
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 22px;
+}
+
 .filter-options {
     display: none;
     padding: 10px;
@@ -277,13 +321,6 @@ body {
     background-color: #dcf8c6;
     color: black;
     font-weight: bolder;
-}
-
-.filter-icon {
-    padding: 8px;
-    margin: 0;
-    cursor: pointer;
-    font-size: 22px;
 }
 
 .filter-options button {
@@ -298,6 +335,7 @@ body {
     backdrop-filter: blur(20px);
     cursor: pointer;
 }
+
 
 .user-list-container {
     flex: 1;
@@ -814,7 +852,7 @@ button .spinner {
         position: relative;
     }
 
-    .chat-footer{
+    .chat-footer {
         padding-bottom: 10px;
     }
 }

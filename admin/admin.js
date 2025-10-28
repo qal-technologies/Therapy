@@ -84,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const querySnapshot = await getDocs(q);
             if (querySnapshot.empty) {
                 userListContainer.innerHTML = `<p class="chat-empty ">No users activities yet.</p>`;
+
+
                 return;
             }
 
@@ -91,6 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const user = { id: doc.id, ...doc.data() };
                 addUserToList(user);
             });
+
+            const filterIconn = document.querySelector('.filter-icon')
+            if (filterIconn) {
+                filterIconn.style.display = 'block';
+            }
 
             userListContainer.querySelector('.loading-parent')?.remove();
         } catch (error) {
@@ -171,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chatHeaderEmail.textContent = `${user.details.email}`;
 
         const events = [];
+        messageContainer.innerHTML = '';
 
         const userActivityRef = doc(db, 'user_activities', user.id);
         const userActivitySnap = await getDoc(userActivityRef);
@@ -248,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return ta - tb;
         });
 
-        messageContainer.innerHTML = '';
         sessionStorage.setItem('userId', user.id);
 
         messageContainer.innerHTML = `<div class="loading-parent">
