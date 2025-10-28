@@ -8,6 +8,7 @@ import {
   getDocs,
   deleteDoc,
   serverTimestamp,
+  increment,
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 // --- USER DATA FUNCTIONS ---
