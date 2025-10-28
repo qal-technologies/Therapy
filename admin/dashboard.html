@@ -50,7 +50,7 @@
             </header>
 
             <div class="filter-options">
-                <button data-filter="all" class="active" >All</button>
+                <button data-filter="all" class="active">All</button>
                 <button data-filter="unread">Unread</button>
                 <button data-filter="signup">Signup</button>
                 <button data-filter="login">Login</button>
@@ -61,6 +61,11 @@
             </div>
 
             <div class="user-list-container">
+                <div class="empty-list-placeholder" style="display: none;">
+                    <i class="bi bi-person-x"></i>
+                    <p>No users in this category.</p>
+                </div>
+
                 <!-- User list will be dynamically loaded here -->
 
                 <div class="loading-parent">
@@ -95,6 +100,10 @@
                 </div>
                 <!-- Messages will be dynamically loaded here -->
             </div>
+
+            <button id="scroll-to-bottom-btn" title="Scroll to bottom">
+                &lt; &lt;
+            </button>
 
             <footer class="chat-footer">
                 <div class="reply-preview" id="reply-preview" style="display: none;">

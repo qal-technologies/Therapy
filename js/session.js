@@ -136,6 +136,9 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
   }
 
   let userObj;
+  handleAuthStateChange(user => {
+    userObj = user;
+  });
 
   //Audio source:
   const audioSrc = {
@@ -441,7 +444,6 @@ ${bonuses.join('')}
   }
 
   handleAuthStateChange(async (user) => {
-    userObj = user;
     const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
     const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
     waitlistBTN.disabled = userdata.waitlist;

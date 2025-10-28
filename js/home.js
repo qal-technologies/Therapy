@@ -761,8 +761,9 @@ ${session.type == "inner" ?
         </div>`
 	}).join("");
 
-	let userObj;
-	handleAudio(lang, userObj);
+	handleAuthStateChange(user => {
+		handleAudio(lang, user);
+	});
 
 	FAQ.innerHTML = faq.map((faq) => {
 		const checks = () => {
@@ -857,7 +858,6 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 
 	handleAuthStateChange(async (user) => {
 		offlineUser = user ? true : false;
-		userObj = user;
 		const waitlistBTN = document.querySelector("#sessions #waitlist.inner a#waitBTN");
 		const userdata = user ? (await getUserData(user.uid)) : { waitlist: false };
 		if (waitlistBTN) waitlistBTN.disabled = userdata.waitlist;

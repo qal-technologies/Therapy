@@ -85,12 +85,10 @@ const getCurrentUser = () => {
   return auth.currentUser;
 };
 
-// Jules: Added updateProfile function
 const updateUserProfile = (user, profile) => {
   return updateProfile(user, profile);
 };
 
-// Jules: Added verifyPasswordResetCode and confirmPasswordReset functions
 const verifyResetCode = (code) => {
   return verifyPasswordResetCode(auth, code);
 };

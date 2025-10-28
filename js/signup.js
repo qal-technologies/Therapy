@@ -1,6 +1,6 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
 import { createUserProfile, createUserActivity, updateUserActivity } from './database.js'; import { sendEmail } from '../emailHelper.js';
-import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
+import handleAlert, { getDisplayLanguage, getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
   login: `
@@ -571,13 +571,16 @@ window.addEventListener('load', async () => {
       const pathName = window.location.hostname;
       await sendEmail(email, 'welcome', { first_name: firstName, origin: pathName });
 
+      const userLangCode = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
+      const userLangName = getDisplayLanguage(userLangCode);
+
       await createUserActivity(user.uid, {
         details: {
           firstName,
           lastName,
           email,
           country,
-          language: navigator.language[0]
+          language: userLangName
         },
         signup: {
           timestamp: new Date(),

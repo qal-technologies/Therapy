@@ -462,9 +462,9 @@ Select Book Format
   const language = navigator.language;
   const lang = language.toLowerCase().substring(0, 2);
 
-  let userObj;
-  handleAudio(lang, userObj);
-
+  handleAuthStateChange(user => {
+    handleAudio(lang, user);
+  });
 
   const closeButton = document.querySelector("#details-div button.close-details");
   closeButton?.addEventListener("click", removeDetailsModal);
@@ -478,7 +478,6 @@ Select Book Format
     }
 
     if (user) {
-      userObj = user;
       const thisUser = await getUserData(user.uid);
       const copyBTN = document.querySelector("#preview button.get-copy");
       const details = document.querySelector("#preview .details");

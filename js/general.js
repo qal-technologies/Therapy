@@ -1182,4 +1182,24 @@ function safeVibrate(durationOrPattern) {
     }
 }
 
+
+/**
+ * Converts a language code into its full display name.
+ * @param {string} langCode - The language code (e.g., "en-US", "fr").
+ * @returns {string} The full language name (e.g., "English", "French") or the original code on failure.
+ */
+export function getDisplayLanguage(langCode) {
+    if (!langCode) return 'Unknown';
+    try {
+        // Use Intl.DisplayNames to get the human-readable language name.
+        const languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
+        const codeOnly = langCode.split('-')[0];
+        return languageNames.of(codeOnly);
+    } catch (error) {
+        console.warn(`Could not get display name for language code: ${langCode}`, error);
+        // Fallback to the original code if the API fails
+        return langCode;
+    }
+}
+
 export default handleAlert;

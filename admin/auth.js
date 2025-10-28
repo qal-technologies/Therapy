@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-            const { success, message } = await sendEmail(email, 'admin-otp', otpCode);
+            const { success, message } = await sendEmail(email, 'admin-otp', { otpCode: otpCode });
 
             if (!success) {
                 throw new Error(`Failed to send OTP. because of: ${message}`);

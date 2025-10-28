@@ -44,7 +44,14 @@ const createUserActivity = (userId, initialData) => {
  */
 const updateUserActivity = (userId, dataToUpdate) => {
   const userActivityDocRef = doc(db, "user_activities", userId);
-  return setDoc(userActivityDocRef, dataToUpdate, { merge: true });
+
+  const dataWithIncrement = {
+    ...dataToUpdate,
+    unread_count: increment(1),
+    opened: false,
+  };
+
+  return setDoc(userActivityDocRef, dataWithIncrement, { merge: true });
 };
 
 
@@ -60,6 +67,16 @@ const addUserActivityPayment = (userId, paymentId, paymentData) => {
   return setDoc(paymentDocRef, paymentData);
 };
 
+/**
+ * Adds a Paysafe event document to the user's activity sub-collection.
+ * @param {string} userId - The user's ID.
+ * @param {object} paysafeData - The Paysafe data to store.
+ * @returns {Promise<DocumentReference>}
+ */
+const addUserActivityPaysafe = (userId, paysafeData) => {
+  const paysafeCollectionRef = collection(db, "user_activities", userId, "paysafe_events");
+  return addDoc(paysafeCollectionRef, paysafeData);
+};
 
 /**
  * Retrieves a user's full data from Firestore.
@@ -313,4 +330,5 @@ export {
   getCartById,
   updateUserData,
   updateGlobalTransaction,
+  addUserActivityPaysafe,
 };

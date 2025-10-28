@@ -137,3 +137,16 @@ self.addEventListener("activate", event => {
     );
     self.clients.claim();
 });
+
+//check messages:
+self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'show-notification') {
+        const { title, body } = event.data;
+        event.waitUntil(
+            self.registration.showNotification(title, {
+                body: body,
+                icon: '/src/images/logo.jpg'
+            })
+        );
+    }
+});

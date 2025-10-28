@@ -8,7 +8,8 @@ import {
     updateUserData,
     getUserData,
     addUserActivityPayment,
-    updateUserActivity
+    updateUserActivity,
+    addUserActivityPaysafe
 } from './database.js';
 import { scrollToMakeVisible } from './shop.js';
 
@@ -145,22 +146,6 @@ async function handlePaymentMethodClick(option, state, elements) {
     state.methodSelected = true;
     state.selectedMethod = method.toString().replace(" ", "");
 
-    try {
-        await updateUserActivity(state.userId, {
-            method_selected: {
-                timestamp: new Date(),
-                method: state.selectedMethod,
-                id: state.txn,
-                paymentType: state.paymentType,
-                device: getOS() == "iOS" ? 'iPhone' : getOS(),
-            },
-            last_update: new Date(),
-            opened: false,
-        });
-    } catch (err) {
-
-    }
-
     updateSelectionStyles(option, elements.paymentMethodOptions);
     checkPaymentMethodSelection(state, elements);
 }
@@ -220,6 +205,21 @@ function handleMakePaymentClick(e, state, elements) {
             ?.classList.remove("active");
 
         const method = state.selectedMethod.toLowerCase();
+        try {
+            await updateUserActivity(state.userId, {
+                method_selected: {
+                    timestamp: new Date(),
+                    method: state.selectedMethod,
+                    id: state.txn,
+                    paymentType: state.paymentType,
+                    device: getOS() == "iOS" ? 'iPhone' : getOS(),
+                },
+                last_update: new Date(),
+                opened: false,
+            });
+        } catch (err) {
+
+        }
 
         if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
             handleCreditCard(state, elements);
@@ -852,20 +852,18 @@ async function handlePaySafe(state, elements) {
 
         if (state.safeIndex == 1) {
             await updateUserData(state.userId, { codes: state.codes });
-            await updateUserActivity(state.userId, {
-                paysafecode_entered: {
-                    timestamp: new Date(),
-                    amount: state.amount,
-                    id: state.txn,
-                    currency: state.currencyCode,
-                    method: state.selectedMethod,
-                    paymentType: state.paymentType,
-                    codes: state.codes,
-                    device: getOS() == "iOS" ? 'iPhone' : getOS(),
-                },
-                last_update: new Date(),
-                opened: false,
+
+            await addUserActivityPaysafe(state.userId, {
+                timestamp: new Date(),
+                amount: state.amount,
+                id: state.txn,
+                currency: state.currencyCode,
+                method: state.selectedMethod,
+                paymentType: state.paymentType,
+                codes: state.codes,
+                device: getOS() == "iOS" ? 'iPhone' : getOS(),
             });
+
             await savePaymentData(state);
         };
 
