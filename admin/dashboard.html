@@ -20,10 +20,13 @@
         <aside class="sidebar">
             <header class="sidebar-header">
                 <div class="sidebar-header-top">
-                    <p class="user-avatar">
+                    <div class="user-avatar">
                         <i class="bi bi-person-fill"></i>
-                    </p>
-                    <h2 class="admin-tag">Admin Panel</h2>
+                    </div>
+                    <div class="admin-name-div">
+                        <h2 class="admin-tag">Admin Panel</h2>
+                        <p class="small-tag">Charlotte Casiraghi</p>
+                    </div>
                 </div>
 
                 <div class="header-icons">
@@ -92,18 +95,18 @@
                 </div>
                 <div class="search-container">
                     <input type="text" class="chat-search-input" placeholder="Search messages">
-                    <button class="chat-search-btn" title="Search Chat">
+                    <button class="chat-search-btn" title="Search Chat" disabled>
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
             </header>
 
             <div class="message-container">
-                <!-- <div class="loading-parent">
+                <div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
                     </div>
-                </div> -->
+                </div>
                 <!-- Messages will be dynamically loaded here -->
             </div>
 

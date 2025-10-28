@@ -652,6 +652,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const replyPreview = document.getElementById('reply-preview');
+    const chatFooter = document.querySelector('.chat-view .chat-footer');
+
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
@@ -675,6 +677,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             replyTag.textContent = tagText;
             replySnippet.textContent = snippet;
+
+            scrollToBottomBtn.style.bottom = `${chatFooter.innerHeight + 8}px`;
+            messageContainer.style.paddingBottom = `${chatFooter.innerHeight + 10}px`;
             replyPreview.style.display = 'flex';
 
             replyPreview.onclick = (e) => {
@@ -738,12 +743,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     document.getElementById('cancel-reply').addEventListener('click', (e) => {
         e.stopPropagation();
 
         replyPreview.style.display = 'none';
-
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
@@ -751,6 +754,9 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.value = '';
             messageInput.style.height = '50px';
             messageInput.disabled = true;
+
+            scrollToBottomBtn.style.bottom = '10vh';
+            messageContainer.style.paddingBottom = `8vh`;
         }
     });
 
@@ -856,7 +862,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let firstMatch = null;
     const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
-    let searchTimer = null;
     const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
     if (searchIcons && chatHeader) {
         searchIcons.forEach(searchIcon => {
@@ -883,43 +888,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    chatSearchInput.addEventListener('input', () => {
-        if (searchTimer !== null) clearTimeout(searchTimer);
+    const searchButton = document.querySelector('.chat-view .chat-search-btn');
+    chatSearchInput.addEventListener('input', (e) => {
+        searchButton.disabled = e.target.value.trim().length === 0
+    });
+    
+    searchButton.addEventListener('click', (e) => {
+        e.preventDefault();
 
-        searchTimer = setTimeout(() => {
-            const searchTerm = chatSearchInput.value.toLowerCase();
-            if (searchTerm === '') {
-                const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
-
-                messageBubbles.forEach(bubble => {
-                    bubble.style.border = '';
-                    bubble.style.borderRadius = '';
-                });
-                firstMatch = null;
-                return;
-            }
-
-
+        const searchTerm = chatSearchInput.value.toLowerCase();
+        if (searchTerm === '') {
             const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
 
             messageBubbles.forEach(bubble => {
-                const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
-                if (messageContent && messageContent.includes(searchTerm) && bubble.classList.contains('received') && !bubble.classList.contains('sent')) {
-                    if (!firstMatch) {
-                        firstMatch = bubble;
-                    }
-                    bubble.style.border = '1px solid green';
-                    bubble.style.borderRadius = '20px';
-                } else {
-                    bubble.style.border = '';
-                    bubble.style.borderRadius = '';
-                }
+                bubble.style.border = '';
+                bubble.style.borderRadius = '';
             });
+            firstMatch = null;
+            return;
+        }
 
-            if (firstMatch) {
-                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
+
+        messageBubbles.forEach(bubble => {
+            const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
+            if (messageContent && messageContent.includes(searchTerm) && bubble.classList.contains('received') && !bubble.classList.contains('sent')) {
+                if (!firstMatch) {
+                    firstMatch = bubble;
+                }
+                bubble.style.border = '1px solid green';
+                bubble.style.borderRadius = '20px';
+            } else {
+                bubble.style.border = '';
+                bubble.style.borderRadius = '';
             }
-        }, 1200);
+        });
+
+        if (firstMatch) {
+            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     });
 
     // Request permission for notifications
