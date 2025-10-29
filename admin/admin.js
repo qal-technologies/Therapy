@@ -722,10 +722,11 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.disabled = true;
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
-            sendBtn.disabled = true;
-            sendBtn.innerHTML = `<i class="bi bi-send-fill"></i>`
         });
-    });
+    }).finally{
+sendBtn.disabled = true;
+            sendBtn.innerHTML = `<i class="bi bi-send-fill"></i>`
+};
 
     const replyPreview = document.getElementById('reply-preview');
     const chatFooter = document.querySelector('.chat-view .chat-footer');
@@ -733,7 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resizeObserver = new ResizeObserver(entries => {
         for (let entry of entries) {
             const newHeight = entry.contentRect.height;
-            messageContainer.style.paddingBottom = `${newHeight + 20}px`;
+            messageContainer.style.paddingBottom = `${newHeight + 2}px`;
         }
     });
 
@@ -851,6 +852,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.innerWidth <= 768) {
                 chatView.classList.remove('active');
                 sidebar.style.display = 'flex';
+
+searchIcons.forEach(btn => btn.classList.toggle('active', btn.classList.contains('bi-search')));
+           
             }
         });
     }
