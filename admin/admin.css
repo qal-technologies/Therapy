@@ -1075,7 +1075,7 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: absolute;
+        position: relative;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -1085,8 +1085,8 @@ button .spinner {
     .chat-view.active .message-container {
         flex: 1;
         overflow-y: auto;
-        padding-block: 8vh;
-        padding-block: 8dvh;
+        /*padding-block: 8vh;
+        padding-block: 8dvh;*/
         max-height: none;
     }
 
