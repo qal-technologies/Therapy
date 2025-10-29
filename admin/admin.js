@@ -794,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addSentMessage(replyText);
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
-                replyPreview.classList.add('fadeOut');
+                replyPreview.classList.add('leftOut');
                 setTimeout(() => {
                     replyPreview.style.display = 'none';
                 }, 1000);
@@ -840,7 +840,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('cancel-reply').addEventListener('click', (e) => {
         e.stopPropagation();
 
-        replyPreview.style.display = 'none';
+        if (replyPreview) {
+            replyPreview.classList.add('leftOut');
+            setTimeout(() => {
+                replyPreview.style.display = 'none';
+            }, 1000);
+        }
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
             focusedMessage = null;

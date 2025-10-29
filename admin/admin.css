@@ -954,6 +954,18 @@ button .spinner {
         border-radius: 50%;
         margin-bottom: 20px;
         box-shadow: 0px 0px 24vw rgb(40, 0, 53);
+        animation: scaleAnimation 1s 100ms ease-in infinite;
+        transform: translateZ(0);
+    }
+
+    @keyframes scaleAnimation {
+        0% {
+            transform: scale(1);
+        }
+
+        100% {
+            transform: scale(1.05);
+        }
     }
 
     .chat-placeholder p {
@@ -1160,12 +1172,12 @@ button .spinner {
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(5px);
+        transform: translateY(5px) translateX(0);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) translateX(0);
     }
 }
 
