@@ -410,6 +410,7 @@ backdrop-filter:blur(20px);
     max-height: 80vh;
     padding: 10px;
 padding-block:20px;
+padding-bottom:30px;
     overflow-y: auto;
 }
 
@@ -927,14 +928,14 @@ button .spinner {
 
     .chat-view .chat-header {
         max-width: 100%;
-        position: sticky;
+        position: absolute;
         top: 0;
         left: 0;
         z-index: 101;
     }
 
     .chat-view .chat-footer {
-        position: sticky;
+        position: absolute;
         bottom: 0;
         z-index: 101;
         box-shadow: 0px 0px 12px rgba(0, 34, 10, 0.3);
@@ -1036,7 +1037,7 @@ flex: 1;
 
 #scroll-to-bottom-btn {
     position: absolute;
-    bottom: 10dvh;
+    bottom: 12dvh;
     right: 20px;
     width: 40px;
     height: 40px;
