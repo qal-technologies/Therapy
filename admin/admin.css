@@ -78,6 +78,10 @@ body {
     height: 100vh;
     width: 100vw;
     background: linear-gradient(#05000e, rgb(0, 0, 0));
+position:fixed;
+top:0;
+left:0;
+overflow:hidden;
 }
 
 /* Sidebar (Left Panel) */
@@ -91,7 +95,6 @@ body {
     border-right: 1px solid #3d3d3d8e;
     background: linear-gradient(0deg, rgb(12, 12, 12), black 60%);
     flex: 1;
-    position: relative;
 }
 
 .sidebar-header, .chat-header {
@@ -110,12 +113,7 @@ body {
     border: none;
     padding-bottom: 10px;
     padding-top: 30px;
-    height: 20vh;
-    min-height: max-content;
-    max-height: 50%;
-    position: sticky;
-    top: 0;
-    z-index: 9999;
+    height: max-content;
 }
 
 .chat-header {
@@ -197,8 +195,8 @@ body {
 .search-container button.chat-search-btn {
     width: 40px;
     height: 40px;
-    padding: 8px;
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 18px;
     color: white;
     background-color: #007300;
     display: grid;
@@ -238,6 +236,8 @@ body {
     padding-inline-start: 10px;
     height: max-content;
     border-left: 1px solid rgba(130, 130, 130, 0.5);
+user-select:none;
+pointer-event:none;
 }
 
 .admin-name-div p {
@@ -255,7 +255,7 @@ body {
     border-radius: 50%;
     background-color: #b7b7b7;
     border: 1px solid gray;
-    display: grid;
+    display: flex;
     text-align: center;
     place-content: center;
     font-size: 20px;
@@ -372,6 +372,7 @@ body {
     display: none;
     padding: 10px;
     background-color: transparent;
+backdrop-filter:blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 }
 
@@ -401,11 +402,11 @@ body {
     overflow: hidden;
     gap: 5px;
     height: 100%;
-    min-height: 50%;
+    min-height: max-content;
     max-height: 80vh;
     padding: 10px;
+padding-block:20px;
     overflow-y: auto;
-    position: relative;
 }
 
 .empty-list-placeholder {
@@ -443,6 +444,7 @@ body {
     background: transparent;
     backdrop-filter: blur(20px);
     border-radius: 18px;
+text-decoration:none;
 }
 
 .user-list-item.active {
@@ -457,6 +459,9 @@ body {
 .user-list-item .user-avatar {
     width: 40px !important;
     height: 40px !important;
+
+    min-width: 40px !important;
+    min-height: 40px !important;
     background: #dcf8c6;
 }
 
@@ -481,6 +486,7 @@ body {
 .last-message {
     font-size: 13px;
     color: #60696e;
+text-decoration:none;
 }
 
 .user-list-item.active .last-message {
@@ -533,6 +539,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-left: 15px;
+
 }
 
 .chat-header .user-name {
@@ -542,6 +549,7 @@ body {
 .user-status {
     font-size: 11.5px;
     color: #818b91;
+text-decoration: none;
 }
 
 .message-container {
@@ -555,7 +563,6 @@ body {
     flex-direction: column;
     flex: 1;
     user-select: none;
-    position: relative;
 }
 
 .message-container .message-bubble {
@@ -572,21 +579,22 @@ body {
 
 .message-container .message-bubble.focused {
     background: rgba(220, 255, 238, 0.4);
-    /*border-radius: 15px;*/
     border-top-left-radius: 22px;
     border-bottom-left-radius:22px;
     backdrop-filter: brightness(110%);
+margin-left:16px;
 }
 
 .message-content {
     display: flex;
     flex-direction: column;
-    max-width: 80%;
+    max-width: 85%;
     padding: 10px;
     border-radius: 22px;
     position: relative;
     transition: transform 0.2s ease;
     background: rgb(250, 255, 255);
+text-decoration: none;
 }
 
 .message-container .message-bubble.focused .message-content {
@@ -975,16 +983,13 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: fixed;
+        position: sticky;
         top: 0;
         width: 100vw;
         z-index: 101;
         flex-shrink: 0;
     }
 
-    .chat-view.active .chat-header{
-
-    }
     
     
      .chat-view.active .message-container {
@@ -994,8 +999,8 @@ button .spinner {
 
         flex: 1;
         overflow-y: auto;
-        padding-block: 8vh;
-        padding-block: 8dvh;
+        padding-block: 9vh;
+        padding-block: 9dvh;
         padding-bottom: 12dvh;
         max-height: 100dvh;
     }
@@ -1009,7 +1014,7 @@ button .spinner {
         z-index: 101; */
 
         z-index: 101;
-        position: absolute;
+        position: sticky;
         bottom: 0;
         width: 100vw;
         flex-shrink: 0;
@@ -1137,7 +1142,7 @@ button .spinner {
 }
 
 .alert-message .alert-div {
-    width: 95%;
+    width: 90%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
