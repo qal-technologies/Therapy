@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         userElement.innerHTML = `
-            <div class="user-avatar">${user.details.firstName[0] || "U"}</div>
+            <div class="user-avatar" style="background:${randomColor}">${user.details.firstName[0] || "U"}</div>
                     <div class="side">
                         <div class="user-info upper">
                              <span class="user-name">${user.details.firstName || ''} ${user.details.lastName || ''}</span>
