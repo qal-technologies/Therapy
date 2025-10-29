@@ -722,11 +722,12 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.disabled = true;
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
-        });
-    }).finally{
+}).finally{
 sendBtn.disabled = true;
             sendBtn.innerHTML = `<i class="bi bi-send-fill"></i>`
 };
+        });
+    
 
     const replyPreview = document.getElementById('reply-preview');
     const chatFooter = document.querySelector('.chat-view .chat-footer');
@@ -738,7 +739,7 @@ sendBtn.disabled = true;
         }
     });
 
-    resizeObserver.observe(chatFooter);
+   /* resizeObserver.observe(chatFooter);*/
 
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
