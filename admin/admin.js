@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
 
                         <div class="lower">
-                            <span class="last-message">${user.details.email}</span>
+                            <span class="last-message">${user.last_message || user.details.email}</span>
                              <span class="unread-count" style="${unreadCount > 0 ? '' : 'display: none;'}">${unreadCount}</span>  
                         </div>
                     </div>
@@ -185,6 +185,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const chatHeader = document.querySelector('.chat-header');
             if (chatHeader) chatHeader.classList.remove('visible');
+
+            const noResultsMessage = document.querySelector('#no-results-message');
+            noResultsMessage.style.display = 'none';
 
             document.querySelectorAll('.message-container .message-bubble').forEach(bubble => {
                 bubble.style.border = '';
@@ -985,6 +988,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isVisible = chatHeader.classList.contains('visible');
                 chatHeader.classList.toggle('visible');
                 document.querySelector('.search-container')?.classList.toggle('visible');
+                const noResultsMessage = document.getElementById('no-results-message');
+                if (noResultsMessage && noResultsMessage.style.display === 'block') {
+                    noResultsMessage.style.display = 'none';
+                }
 
                 if (!isVisible) {
                     chatSearchInput.focus();

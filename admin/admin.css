@@ -964,6 +964,10 @@ button .spinner {
         color: white;
     }
 
+    .chat-view.active .chat-placeholder {
+        display: none;
+    }
+
     .chat-view.no-chat .chat-placeholder {
         display: flex;
     }
