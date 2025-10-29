@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadChatForUser(user) {
         const messageContainer = document.querySelector('.message-container');
+        chatView.classList.remove('no-chat');
 
         const chatHeaderIcon = document.querySelector('.chat-header .user-avatar');
         chatHeaderIcon.textContent = `${user.details.firstName[0] || "U"}`;
