@@ -1000,6 +1000,10 @@ button .spinner {
     display: none;
 }
 
+.chat-view {
+    display: none;
+}
+
 @media (min-width:768px) {
 
     /* Chat View (Right Panel) */
@@ -1049,9 +1053,6 @@ button .spinner {
         border-right: none;
     }
 
-    .chat-view {
-        display: none;
-    }
 
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
@@ -1408,11 +1409,12 @@ button .spinner {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid #2929298e;
     color: white;
     padding: 20px;
-    border-radius: 14px;
+    border-radius: 20px;
     z-index: 1001;
     width: 80%;
     max-width: 500px;
@@ -1429,6 +1431,17 @@ button .spinner {
 
 .payment-instructions li {
     margin-bottom: 10px;
+}
+
+.payment-instructions button#close-instructions-btn {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background-color: #15dd5b;
+    border: none;
+    border-radius: 15px;
+    color: black;
+    font-weight: bolder;
+    cursor: pointer;
 }
 
 a, a:hover, a:focus, a:active {

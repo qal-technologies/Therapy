@@ -198,9 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.user-list-item').forEach(item => item.classList.remove('active'));
             userElement.classList.add('active');
 
+            paymentInstructions.style.display = 'none';
+            
             markAsOpened(user.id);
             userElement.classList.remove('active');
-
 
             if (window.innerWidth <= 768) {
                 sidebar.style.display = 'none';
