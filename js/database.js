@@ -377,6 +377,7 @@ export async function saveTranslationToFirestore(pageKey, translatedTexts) {
 const addToPendingWaitlist = (userId, firstName) => {
   const pendingWaitlistRef = doc(db, "pending_waitlist", userId);
   return setDoc(pendingWaitlistRef, {
+    id:userId,
     timestamp: serverTimestamp(),
     firstName: firstName,
   });

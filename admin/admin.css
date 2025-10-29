@@ -1104,8 +1104,8 @@ button .spinner {
     .chat-view.active .message-container {
         flex: 1;
         overflow-y: auto;
-        padding-block: 8vh !important;
-        padding-block: 8dvh !important;
+        padding-block: 10vh !important;
+        padding-block: 10dvh !important;
         max-height: none;
     }
 

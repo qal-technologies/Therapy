@@ -466,7 +466,7 @@ ${bonuses.join('')}
 
           // await updateUserData(user.uid, { waitlist: true });
 
-          // await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
+          await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
 
           await addToPendingWaitlist(user.uid, userdata.details.firstName);
           await updateUserActivity(user.uid, {

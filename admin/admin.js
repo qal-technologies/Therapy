@@ -74,12 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.style.height = '50px';
             messageInput.disabled = true;
 
-            messageContainer.style.paddingBottom = '';
-
-            replyPreview.classList.add('zoom-out');
-            setTimeout(() => {
-                replyPreview.style.display = 'none';
-            }, 500);
+            replyPreview.style.display = 'none';
         }
 
         if (paymentInstructions && paymentInstructions.style.display === 'block') {
@@ -720,6 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
         }).finally(() => {
+            cleanUp();
             sendBtn.disabled = true;
             sendBtn.innerHTML = `<i class="bi bi-send-fill"></i>`;
         });
@@ -749,13 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageInput.style.height = '50px';
                 messageInput.disabled = true;
 
-                messageContainer.style.paddingBottom = '';
-
-
-                replyPreview.classList.add('zoom-out');
-                setTimeout(() => {
-                    replyPreview.style.display = 'none';
-                }, 1000);
+                replyPreview.style.display = 'none';
             }
         }
 
@@ -781,7 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
             replySnippet.textContent = snippet;
 
             scrollToBottomBtn.style.bottom = `${chatFooter.innerHeight + 8}px`;
-            messageContainer.style.paddingBottom = `${chatFooter.innerHeight + 10}px`;
+
             const check = replyPreview.classList.contains('zoom-out');
             if (check) replyPreview.classList.remove('zoom-out');
 
@@ -811,10 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addSentMessage(replyText);
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
-                replyPreview.classList.add('zoom-out');
-                setTimeout(() => {
-                    replyPreview.style.display = 'none';
-                }, 1000);
+                replyPreview.style.display = 'none';
             }
         } catch (error) {
             console.error(error);
@@ -862,10 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
 
         if (replyPreview) {
-            replyPreview.classList.add('zoom-out');
-            setTimeout(() => {
-                replyPreview.style.display = 'none';
-            }, 1000);
+            replyPreview.style.display = 'none';
         }
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
@@ -874,8 +858,6 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.value = '';
             messageInput.style.height = '50px';
             messageInput.disabled = true;
-
-            messageContainer.style.paddingBottom = '';
         }
     });
 
