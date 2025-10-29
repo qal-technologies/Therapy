@@ -843,7 +843,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatHeader) {
         const backButton = document.createElement('i');
         backButton.classList.add('bi', 'bi-arrow-left', 'back-button');
-        document.querySelector('.chat-header .upper').prepend(backButton);
+        document.querySelector('.chat-header .upper .out').prepend(backButton);
 
         backButton.addEventListener('click', () => {
             cleanUp();

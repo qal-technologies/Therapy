@@ -89,15 +89,21 @@
 
             <header class="chat-header">
                 <div class="upper">
-                    <div class="user-avatar"></div>
-                    <div class="user-info">
-                        <span class="user-name">User</span>
-                        <span class="user-status">test@gmail.com</span>
+                    <div class="out">
+                        <div class="user-avatar"></div>
                     </div>
-                    <div class="header-icons">
-                        <i class="bi bi-info-circle" id="info-btn" title="Payment Instructions"></i>
-                        <i class="bi bi-search use active" title="Search chat messages"></i>
-                        <i class="bi bi-x-lg use" style="color: red;"></i>
+
+                    <div class="beside">
+                        <div class="user-info">
+                            <span class="user-name">User</span>
+                            <span class="user-status">test@gmail.com</span>
+                        </div>
+
+                        <div class="header-icons">
+                            <i class="bi bi-info-circle" id="info-btn" title="Payment Instructions"></i>
+                            <i class="bi bi-search use active" title="Search chat messages"></i>
+                            <i class="bi bi-x-lg use" style="color: red;"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="search-container">
@@ -127,14 +133,19 @@
                 <p>To approve or decline a payment, swipe left on the payment message or click the reply button, then
                     type one of
                     the following keywords followed by your message:</p>
+                <br />
                 <ul>
                     <li><strong>approved</strong> - Marks the payment as successful.</li>
                     <li><strong>declined</strong> - Marks the payment as failed.</li>
                 </ul>
 
-                <p>Always add a message when you mark payment as declined or failed. Keywords like <b>Incomplete</b>, <b>Incorrect</b>, and <b>Used</b> are necessary for get the right payment response to the user.</p>
-                
-                <p><strong>Example:</strong> approved Payment confirmed. The book is now available.</p>
+                <br />
+
+                <p>Always add a message when you mark payment as declined or failed. Keywords like <b>Incomplete</b>,
+                    <b>Incorrect</b>, and <b>Used</b> are necessary for get the right payment response to the user.
+                </p>
+
+                <p style="margin-top: 8px;"><strong>Example:</strong> approved Payment confirmed. The book is now available.</p>
                 <button id="close-instructions-btn">Close</button>
             </div>
 
