@@ -1171,6 +1171,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     showNotification(notificationTitle, notificationBody);
                     notifiedUsers.add(user.id);
                 }
+
+                const currentUserId = sessionStorage.getItem('userId');
+                if (currentUserId === user.id) {
+                    loadChatForUser(user);
+                    markAsOpened(user.id);
+                }
             }
 
             // if (change.type === 'added') {
