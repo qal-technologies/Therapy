@@ -689,7 +689,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     sendBtn.addEventListener('click', () => {
-        const hasText = messageInput.value.trim().length > 0;
+        const replyText = messageInput.value.trim();
+        const hasText = replyText.length > 0;
         if (sendBtn.disabled || !hasText || !focusedMessage) return;
 
         sendBtn.innerHTML = `<div class="spinner-container">
@@ -736,7 +737,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageContainer.style.paddingBottom = '';
 
 
-                replyPreview.classList.add('leftOut');
+                replyPreview.classList.add('zoom-out');
                 setTimeout(() => {
                     replyPreview.style.display = 'none';
                 }, 1000);
@@ -766,8 +767,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             scrollToBottomBtn.style.bottom = `${chatFooter.innerHeight + 8}px`;
             messageContainer.style.paddingBottom = `${chatFooter.innerHeight + 10}px`;
-            const check = replyPreview.classList.contains('leftOut');
-            if (check) replyPreview.classList.remove('leftOut');
+            const check = replyPreview.classList.contains('zoom-out');
+            if (check) replyPreview.classList.remove('zoom-out');
 
             replyPreview.style.display = 'flex';
 
@@ -795,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addSentMessage(replyText);
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
-                replyPreview.classList.add('leftOut');
+                replyPreview.classList.add('zoom-out');
                 setTimeout(() => {
                     replyPreview.style.display = 'none';
                 }, 1000);
@@ -842,7 +843,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
 
         if (replyPreview) {
-            replyPreview.classList.add('leftOut');
+            replyPreview.classList.add('zoom-out');
             setTimeout(() => {
                 replyPreview.style.display = 'none';
             }, 1000);
