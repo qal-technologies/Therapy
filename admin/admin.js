@@ -41,7 +41,52 @@ function formatTimestamp(timestamp) {
     return `${dateString}, ${yearString} - ${timeString}`;
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
+    function cleanUp() {
+        const messageInput = document.querySelector('.message-input');
+        if (messageInput) messageInput.value = '';
+
+        const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
+        if (chatSearchInput) chatSearchInput.value = '';
+
+        const searchContainer = document.querySelector('.search-container');
+        if (searchContainer) searchContainer.classList.remove('visible');
+
+        const chatHeader = document.querySelector('.chat-header');
+        if (chatHeader) chatHeader.classList.remove('visible');
+
+        const noResultsMessage = document.querySelector('#no-results-message');
+        if (noResultsMessage) noResultsMessage.style.display = 'none';
+
+        document.querySelectorAll('.message-container .message-bubble').forEach(bubble => {
+            bubble.style.border = '';
+            bubble.style.borderRadius = '';
+            bubble.style.marginLeft = '';
+        });
+
+        document.querySelectorAll('.user-list-item').forEach(item => item.classList.remove('active'));
+
+        if (replyPreview && replyPreview.style.display === 'flex') {
+            focusedMessage = null;
+            sendBtn.disabled = true;
+            messageInput.value = '';
+            messageInput.style.height = '50px';
+            messageInput.disabled = true;
+
+            messageContainer.style.paddingBottom = '';
+
+            replyPreview.classList.add('zoom-out');
+            setTimeout(() => {
+                replyPreview.style.display = 'none';
+            }, 500);
+        }
+
+        if (paymentInstructions && paymentInstructions.style.display === 'block') {
+            paymentInstructions.style.display = 'none';
+        }
+    }
+
     async function verifyAdminSession() {
         const adminId = localStorage.getItem('adminId');
         const sessionToken = localStorage.getItem('adminSessionToken');
@@ -113,16 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // const element = `<div class="user-avatar">${user.details.firstName[0] || "U"}</div>
-    //         <div class="user-info">
-    //             <span class="user-name">${user.details.firstName || ''} ${user.details.lastName || ''}</span>
-    //             <span class="last-message">${user.details.email}</span>
-    //         </div>
-    //         <div class="user-meta">
-    //             <span class="last-message-time">${displayTime}</span>
-    //             <span class="unread-count" style="${unreadCount > 0 ? '' : 'display: none;'}">${unreadCount}</span>            
-    //         </div>`
-
     function addUserToList(user, prepend = false) {
         const colors = ['#dcf8c6', '#b7f8c8', '#b7e8f8', '#f8b7b7', '#f8d8b7', '#f8f8b7'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -174,49 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         userElement.addEventListener('click', () => {
-            const messageInput = document.querySelector('.message-input');
-            if (messageInput) messageInput.value = '';
-
-            const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
-            if (chatSearchInput) chatSearchInput.value = '';
-
-            const searchContainer = document.querySelector('.search-container');
-            if (searchContainer) searchContainer.classList.remove('visible');
-
-            const chatHeader = document.querySelector('.chat-header');
-            if (chatHeader) chatHeader.classList.remove('visible');
-
-            const noResultsMessage = document.querySelector('#no-results-message');
-            noResultsMessage.style.display = 'none';
-
-            document.querySelectorAll('.message-container .message-bubble').forEach(bubble => {
-                bubble.style.border = '';
-                bubble.style.borderRadius = '';
-                bubble.style.marginLeft = '';
-            });
-
-            document.querySelectorAll('.user-list-item').forEach(item => item.classList.remove('active'));
-            userElement.classList.add('active');
-
-            if (replyPreview && replyPreview.style.display === 'flex') {
-                focusedMessage = null;
-                sendBtn.disabled = true;
-                messageInput.value = '';
-                messageInput.style.height = '50px';
-                messageInput.disabled = true;
-
-                messageContainer.style.paddingBottom = '';
-
-                replyPreview.classList.add('zoom-out');
-                setTimeout(() => {
-                    replyPreview.style.display = 'none';
-                }, 1000);
-            }
-
-            paymentInstructions.style.display = 'none';
-
             markAsOpened(user.id);
             userElement.classList.remove('active');
+
+            cleanUp();
 
             if (window.innerWidth <= 768) {
                 sidebar.style.display = 'none';
@@ -850,6 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.chat-header .upper').prepend(backButton);
 
         backButton.addEventListener('click', () => {
+            cleanUp();
             sessionStorage.removeItem('userId');
             if (window.innerWidth <= 768) {
                 chatView.classList.remove('active');
