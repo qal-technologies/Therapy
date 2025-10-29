@@ -959,6 +959,10 @@ button .spinner {
 
 @keyframes scaleAnimation {
     0% {
+        transform: scale(100%);
+    }
+
+    50% {
         transform: scale(80%);
     }
 
@@ -1058,7 +1062,7 @@ button .spinner {
     }
 
     .chat-view.active .chat-header {
-        position: fixed;
+        position: sticky;
         top: 0;
         width: 100%;
         z-index: 101;
@@ -1075,7 +1079,7 @@ button .spinner {
     }
 
     .chat-view.active .chat-footer {
-        position: relative;
+        position: fixed;
         bottom: 0;
         width: 100%;
         z-index: 101;
