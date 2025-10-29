@@ -1,28 +1,11 @@
-// Netlify Serverless Function — Process Admin Action
-
 const admin = require('firebase-admin');
-
-// !! IMPORTANT !!
-// The service account credentials need to be configured in the Netlify environment variables.
-const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT ?
-    JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT) :
-    {
-        "type": "service_account",
-        "project_id": "therapy-b0747",
-        "private_key_id": "your-private-key-id",
-        "private_key": "your-private-key",
-        "client_email": "your-client-email",
-        "client_id": "your-client-id",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "your-client-x509-cert-url"
-    };
+const { HttpsError } = require('firebase-functions/v1/https');
 
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
+        credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
+        databaseURL: process.env.DATABASE_URL
     });
 }
 
@@ -71,10 +54,10 @@ exports.handler = async (event) => {
         let statusMessage = '';
 
         // Keyword parsing logic
-        if (reply.includes('approved')) {
+        if (reply.startsWith('approved')) {
             paymentStatus = true;
             statusMessage = 'Approved';
-        } else if (reply.includes('declined') || reply.includes('failed') || reply.includes('not approved')) {
+        } else if (reply.startsWith('declined') || reply.startsWith('failed') || reply.startsWith('not approved')) {
             paymentStatus = false;
             if (reply.includes('used')) {
                 statusMessage = `used - ${replyText}`;
@@ -91,13 +74,15 @@ exports.handler = async (event) => {
 
         // Update Firestore::::
         const userActivityPaymentRef = db.collection('user_activities').doc(userId).collection('payments').doc(paymentId);
+
         const userActivityPaysafetRef = db.collection('user_activities').doc(userId).collection('paysafe_events').doc(paymentId);
+
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
 
         await db.runTransaction(async (transaction) => {
             transaction.update(userActivityPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
 
-            transaction.update(userActivityPaysafetRef, { status: paymentStatus});
+            transaction.update(userActivityPaysafetRef, { status: paymentStatus });
 
             transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
         });
@@ -106,13 +91,14 @@ exports.handler = async (event) => {
         await adminReplyRef.set({
             replyTo: paymentId,
             text: replyText,
-            timestamp: new Date(),
+            timestamp: admin.firestore.FieldValue.serverTimestamp(),
+            paymentId: paymentId,
         });
 
         const userActivityRef = db.collection('user_activities').doc(userId);
         await userActivityRef.update({
             unread_count: admin.firestore.FieldValue.increment(1),
-            last_update: admin.firestore.FieldValue.serverTimestamp(), 
+            last_update: admin.firestore.FieldValue.serverTimestamp(),
             opened: false
         });
 
@@ -123,9 +109,20 @@ exports.handler = async (event) => {
         const firstName = userData.details.firstName;
 
         const templateName = paymentStatus ? 'payment-approved' : 'payment-declined';
-        await sendEmail(userEmail, templateName, {
+
+        const paymentDoc = await globalTransactionRef.get();
+        const paymentData = paymentDoc.data();
+
+        const { paymentType, price, method, id } = paymentData;
+
+        await sendEmail(email, templateName, {
             first_name: firstName,
-            status_message: statusMessage,
+            purchase_type: paymentType,
+            transaction_id: id,
+            method:method,
+            status_message: statusMessage, 
+            amount: price, 
+            payment_method:method,
         });
 
         return {

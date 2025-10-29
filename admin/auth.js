@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Disable email input and button
             emailInput.disabled = true;
             requestOtpBtn.disabled = true;
-            requestOtpBtn.textContent = "OTP Requested";
+            requestOtpBtn.textContent = "Sending...";
 
             // // Call Netlify function to send OTP
             sendOtp(email).then(value => {

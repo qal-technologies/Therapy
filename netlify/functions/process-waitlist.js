@@ -1,0 +1,95 @@
+// Jules: This scheduled function processes the pending waitlist every hour.
+const fetch = require('node-fetch');
+const admin = require('firebase-admin');
+
+// Server-side email sending helper
+async function sendEmail(email, templateName, variables) {
+    const SEND_EMAIL_FUNCTION_URL = `/.netlify/functions/send-email`;
+    try {
+        const response = await fetch(SEND_EMAIL_FUNCTION_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, templateName, variables }),
+        });
+        if (!response.ok) {
+            const errorBody = await response.text();
+            throw new Error(`Failed to send email: ${response.status} ${errorBody}`);
+        }
+        return { success: true };
+    } catch (error) {
+        console.error('Error in sendEmail helper:', error);
+        return { success: false, message: error.message };
+    }
+}
+
+
+// Initialize Firebase Admin SDK
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount)
+    });
+}
+const db = admin.firestore();
+
+exports.handler = async function (event, context) {
+    console.log("Running process-waitlist scheduled function...");
+    const now = new Date();
+    const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+
+    try {
+        const pendingUsersRef = db.collection('pending_waitlist');
+        const snapshot = await pendingUsersRef.where('timestamp', '<=', admin.firestore.Timestamp.fromDate(twentyFourHoursAgo)).get();
+
+        if (snapshot.empty) {
+            console.log("No pending users to process.");
+            return {
+                statusCode: 200,
+                body: "No pending users to process."
+            };
+        }
+
+        const processingPromises = snapshot.docs.map(async (doc) => {
+            const userData = doc.data();
+            const { userId, email, firstName } = userData;
+
+            try {
+                // 1. Send the waitlist confirmation email
+                await sendEmail(email, 'waitlist-added', { firstName });
+
+                // 2. Update the main user_activities document
+                const userActivityRef = db.collection('user_activities').doc(userId);
+                await userActivityRef.update({
+                    'waitlist.status': true,
+                    'waitlist.timestamp': admin.firestore.FieldValue.serverTimestamp(),
+                    last_update: admin.firestore.FieldValue.serverTimestamp(),
+                    last_message: "User was added to the waitlist.",
+                    unread_count: admin.firestore.FieldValue.increment(1)
+                });
+
+                // 3. Delete from the pending_waitlist
+                await doc.ref.delete();
+                console.log(`Successfully processed waitlist for user ${userId}`);
+
+            } catch (error) {
+                console.error(`Failed to process waitlist for user ${userId}:`, error);
+                // Decide on an error handling strategy, e.g., leave them in the queue for the next run
+            }
+        });
+
+        await Promise.all(processingPromises);
+
+        console.log(`Processed ${snapshot.docs.length} users from the pending waitlist.`);
+        return {
+            statusCode: 200,
+            body: `Successfully processed ${snapshot.docs.length} users.`
+        };
+
+    } catch (error) {
+        console.error("Error processing pending waitlist:", error);
+        return {
+            statusCode: 500,
+            body: "Error processing pending waitlist."
+        };
+    }
+};

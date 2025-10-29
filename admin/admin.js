@@ -818,7 +818,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error(error);
-            alert('Failed to process your request. Please try again.');
+            alert('Failed to process your request. Please try again.', error);
         }
     }
 
