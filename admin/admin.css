@@ -221,7 +221,7 @@ body {
     gap: 8px;
 }
 
-.chat-header .header-icons .bi {
+.chat-header .header-icons .bi.use {
     display: none;
 }
 
