@@ -207,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 messageContainer.style.paddingBottom = '';
 
-
                 replyPreview.classList.add('zoom-out');
                 setTimeout(() => {
                     replyPreview.style.display = 'none';
@@ -246,6 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const events = [];
         messageContainer.innerHTML = '';
+
+sessionStorage.setItem('userId', user.id);
+
+        messageContainer.innerHTML = `<div class="loading-parent">
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
+                    </div>
+                </div>`;
+
 
         const userActivityRef = doc(db, 'user_activities', user.id);
         const userActivitySnap = await getDoc(userActivityRef);
@@ -325,13 +333,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return ta - tb;
         });
 
-        sessionStorage.setItem('userId', user.id);
-
-        messageContainer.innerHTML = `<div class="loading-parent">
-                    <div class="spinner-container">
-                        <div class="spinner"></div>
-                    </div>
-                </div>`;
 
         events.forEach(event => {
             const messageBubble = document.createElement('div');
