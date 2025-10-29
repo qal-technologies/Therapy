@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const events = [];
         messageContainer.innerHTML = '';
 
-sessionStorage.setItem('userId', user.id);
+        sessionStorage.setItem('userId', user.id);
 
         messageContainer.innerHTML = `<div class="loading-parent">
                     <div class="spinner-container">
@@ -723,12 +723,12 @@ sessionStorage.setItem('userId', user.id);
             messageInput.disabled = true;
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
-}).finally{
-sendBtn.disabled = true;
-            sendBtn.innerHTML = `<i class="bi bi-send-fill"></i>`
-};
+        }).finally(() => {
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = `<i class="bi bi-send-fill"></i>`;
         });
-    
+    });
+
 
     const replyPreview = document.getElementById('reply-preview');
     const chatFooter = document.querySelector('.chat-view .chat-footer');
@@ -740,7 +740,7 @@ sendBtn.disabled = true;
         }
     });
 
-   /* resizeObserver.observe(chatFooter);*/
+    /* resizeObserver.observe(chatFooter);*/
 
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
@@ -855,8 +855,8 @@ sendBtn.disabled = true;
                 chatView.classList.remove('active');
                 sidebar.style.display = 'flex';
 
-searchIcons.forEach(btn => btn.classList.toggle('active', btn.classList.contains('bi-search')));
-           
+                searchIcons.forEach(btn => btn.classList.toggle('active', btn.classList.contains('bi-search')));
+
             }
         });
     }
@@ -1210,25 +1210,6 @@ searchIcons.forEach(btn => btn.classList.toggle('active', btn.classList.contains
                     markAsOpened(user.id);
                 }
             }
-
-            // if (change.type === 'added') {
-            //     if (!existingUserElement) {
-            //         addUserToList(user, true);
-            //         await handleNotification();
-            //     }
-            // } else if (change.type === 'modified') {
-            //     if (existingUserElement) {
-            //         existingUserElement.remove();
-            //     }
-            //     addUserToList(user, true); 
-            //     await handleNotification();
-
-            //     const currentUserId = sessionStorage.getItem('userId');
-            //     if (currentUserId === user.id) {
-            //         loadChatForUser(user);
-            //         markAsOpened(user.id);
-            //     }
-            // }
         });
     });
 
