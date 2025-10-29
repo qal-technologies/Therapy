@@ -87,6 +87,9 @@ const updateUserActivity = (userId, dataToUpdate) => {
         last_message = `Booked a session for ${eventData.title}.`;
         break;
     }
+    if (eventKey.toLowerCase().includes('audio')) {
+      last_message = `User played an audio: ${eventKey}.`;
+    }
   }
 
   const dataWithIncrement = {

@@ -1137,21 +1137,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
 
+            const notificationTitle = change.type === 'added' ? 'New User' : `Update from ${user.details?.firstName || 'user'}`;
+            const notificationBody = user.last_message || `${user.details?.firstName || 'A user'}’s activity was updated.`;
+
 
             if (change.type === 'added') {
                 if (!existingUserElement) {
                     addUserToList(user, true);
-                    showNotification('New User', `${user.details?.firstName || 'A user'} just signed up.`);
+
+                    showNotification(notificationTitle, notificationBody);
                     notifiedUsers.add(user.id);
                 }
             } else if (change.type === 'modified') {
                 if (existingUserElement) {
-                    existingUserElement.remove(); 
+                    existingUserElement.remove();
                 }
-                addUserToList(user, true); 
+                addUserToList(user, true);
 
                 if (user.opened === false && !notifiedUsers.has(user.id)) {
-                    showNotification('User Activity Updated', `${user.details?.firstName || 'A user'}’s activity was updated.`);
+                    showNotification(notificationTitle, notificationBody);
                     notifiedUsers.add(user.id);
                 }
             }
