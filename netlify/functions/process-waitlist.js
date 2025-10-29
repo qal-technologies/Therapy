@@ -9,7 +9,7 @@ async function sendEmail(email, templateName, variables) {
         const response = await fetch(SEND_EMAIL_FUNCTION_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, templateName, variables }),
+            body: JSON.stringify({ to: email, templateName, variables }),
         });
         if (!response.ok) {
             const errorBody = await response.text();
@@ -55,17 +55,25 @@ exports.handler = async function (event, context) {
 
             try {
                 // 1. Send the waitlist confirmation email
-                await sendEmail(email, 'waitlist-added', { firstName });
+                await sendEmail(email, 'waitlist-spot', { firstName });
 
                 // 2. Update the main user_activities document
                 const userActivityRef = db.collection('user_activities').doc(userId);
-                await userActivityRef.update({
-                    'waitlist.status': true,
-                    'waitlist.timestamp': admin.firestore.FieldValue.serverTimestamp(),
+
+                const userRef = db.collection("users").doc(userId);
+                await userRef.set({
+                    waitlist: true,
+                }, { merge: true });
+
+                await userActivityRef.set({
+                    waitlist: {
+                        status: true,
+                        timestamp: admin.firestore.FieldValue.serverTimestamp()
+                    },
                     last_update: admin.firestore.FieldValue.serverTimestamp(),
                     last_message: "User was added to the waitlist.",
                     unread_count: admin.firestore.FieldValue.increment(1)
-                });
+                }, { merge: true });
 
                 // 3. Delete from the pending_waitlist
                 await doc.ref.delete();

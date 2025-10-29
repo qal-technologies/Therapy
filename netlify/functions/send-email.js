@@ -474,6 +474,9 @@ const templates = {
         </div>
     </body>
     </html>`,
+
+  'waitlist-spot': `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>A spot is available – claim your Inner Circle Experience</title></head><body style="font-family: sans-serif; line-height: 1.6;"><p>Hello {{first_name}},</p><p>We have wonderful news! A spot in the Inner Circle Experience has opened up. This programme includes a private extended session, signed personal letter, custom healing plan, soul‑to‑soul ritual and curated gifts. The investment is €6,850 and it comes with ongoing private check‑ins for two weeks.</p><p><strong>What to do next:</strong></p><ol><li>Click the link below to confirm your spot and complete payment.</li><li>If you’re unable to take the spot at this time, reply to let us know so we can offer it to the next person.</li></ol><p><a href="#">Claim My Spot</a></p><p>Spots are offered on a first‑come, first‑served basis. We look forward to welcoming you into this sanctuary.</p><p>Warmly,<br>Companion support</p></body></html>`,
+
 };
 
 // Utility to inject {{placeholders}} inside email templates
@@ -556,6 +559,8 @@ exports.handler = async (event) => {
       "payment-declined": "Issue with your payment attempt",
       "payment-processing": "Your payment is being processed",
       "admin-otp": "Your Admin Panel OTP Code",
+      'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
+
     };
 
     const subject = subjects[templateName] || "Update from Healing with Charlotte Casiraghi";

@@ -168,8 +168,8 @@ const updateUserData = (userId, changingData) => {
     console.warn("updateUserData called without valid userId");
     return null;
   }
-  const paymentDocRef = doc(db, "users", userId);
-  return setDoc(paymentDocRef, changingData, { merge: true });
+  const userRef = doc(db, "users", userId);
+  return setDoc(userRef, changingData, { merge: true });
 };
 
 

@@ -652,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Desktop
-        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('mousemove', handleMove, { passive: true });
         document.addEventListener('mouseup', handleEnd);
 
         // Mobile
