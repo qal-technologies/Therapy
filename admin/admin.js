@@ -831,9 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // if (firstMatch) {
-        //     firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // }
+        
 
         if (emptyPlaceholder) {
             emptyPlaceholder.style.display = visibleUsers === 0 ? 'flex' : 'none';
@@ -888,6 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageBubbles.forEach(bubble => {
                         bubble.style.border = '';
                         bubble.style.borderRadius = '';
+bubble.style.marginLeft= '';
                     });
                     firstMatch = null;
                 }
@@ -912,6 +911,9 @@ document.addEventListener('DOMContentLoaded', () => {
             messageBubbles.forEach(bubble => {
                 bubble.style.border = '';
                 bubble.style.borderRadius = '';
+
+bubble.style.marginLeft= '';
+
             });
             firstMatch = null;
             return;
@@ -939,10 +941,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (firstMatch) {
             firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center', });
         }
-    });
-
-    messageContainer.addEventListener('scroll', () => {
-        document.activeElement.blur();
     });
 
     // Request permission for notifications
