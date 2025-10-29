@@ -3,8 +3,8 @@ import { login, logout } from '../js/auth.js';
 import handleAlert from '../js/general.js'
 
 // Hardcoded admin email for client-side check
-const ADMIN_EMAIL = "healingwithcharlottecasiraghi@gmail.com";
-// const ADMIN_EMAIL = "qaltech.company@gmail.com";
+// const ADMIN_EMAIL = "healingwithcharlottecasiraghi@gmail.com";
+const ADMIN_EMAIL = "qaltech.company@gmail.com";
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
@@ -14,6 +14,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const otpInput = document.getElementById("otp");
     const loginBtn = document.getElementById("login-btn");
     const error = document.querySelector('p.email-error');
+
+    if (requestOtpBtn) requestOtpBtn.disabled = true;
+    if (loginBtn) loginBtn.disabled = true;
+
+    emailInput?.addEventListener('input', () => {
+        if (requestOtpBtn) requestOtpBtn.disabled = emailInput.value.trim() === '';
+    });
+
+    otpInput?.addEventListener('input', () => {
+        if (loginBtn) loginBtn.disabled = otpInput.value.trim() === '';
+    });
 
     // 1. Handle Request OTP button click
     requestOtpBtn?.addEventListener("click", (e) => {
@@ -76,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (success) {
-                // Store OTP and expiry in sessionStorage
                 const otpExpiry = Date.now() + 5 * 60 * 1000; // 5 minutes
                 sessionStorage.setItem('adminOtp', otpCode);
                 sessionStorage.setItem('adminOtpExpiry', otpExpiry);
@@ -88,10 +98,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             console.error('Error sending OTP:', error);
             handleAlert(`Error: ${error.message}`, 'toast');
-            // Re-enable the button if sending fails
 
             emailInput.disabled = false;
-            requestOtpBtn.disabled = false;
+            // requestOtpBtn.disabled = false;
             requestOtpBtn.textContent = "Request OTP";
 
             otpGroup.style.display = "none";
@@ -128,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
             handleAlert("Invalid OTP. Please try again.", 'toast');
             otpInput.value = "";
             otpInput.focus();
+            loginBtn.disabled = true;
         }
     });
 

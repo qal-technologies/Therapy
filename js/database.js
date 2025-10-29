@@ -46,8 +46,52 @@ const createUserActivity = (userId, initialData) => {
 const updateUserActivity = (userId, dataToUpdate) => {
   const userActivityDocRef = doc(db, "user_activities", userId);
 
+  let last_message = 'User activity updated.';
+  const ignoredKeys = ['last_update', 'opened', 'unread_count', 'details', 'last_message'];
+  const eventKey = Object.keys(dataToUpdate).find(k => !ignoredKeys.includes(k));
+
+  if (eventKey) {
+    const eventData = dataToUpdate[eventKey];
+    switch (eventKey) {
+      case 'signup':
+        last_message = `User signed up.`;
+        break;
+      case 'login':
+        last_message = `User logged in from ${eventData.device || 'an unknown device'}.`;
+        break;
+      case 'logout':
+        last_message = `User logged out.`;
+        break;
+      case 'payment_initiated':
+        last_message = `Initiated payment for: ${eventData.paymentType} - €${eventData.amount}`;
+        break;
+      case 'method_selected':
+        last_message = `Selected ${eventData.method} for ${eventData.paymentType} payment.`;
+        break;
+      case 'paysafe_code':
+        last_message = `Made payment for ${eventData.paymentType} - €${eventData.amount} using Paysafe.`;
+        break;
+      case 'waitlist':
+        last_message = 'User joined the waitlist.';
+        break;
+      case 'newsletter':
+        last_message = 'User subscribed to the newsletter.';
+        break;
+      case 'cart':
+        last_message = `Added ${eventData.title} to cart.`;
+        break;
+      case 'book':
+        last_message = `Started reading ${eventData.title}.`;
+        break;
+      case 'sessionBooked':
+        last_message = `Booked a session for ${eventData.title}.`;
+        break;
+    }
+  }
+
   const dataWithIncrement = {
     ...dataToUpdate,
+    last_message: last_message,
     unread_count: increment(1),
     opened: false,
   };
@@ -76,6 +120,16 @@ const addUserActivityPayment = (userId, paymentId, paymentData) => {
  */
 const addUserActivityPaysafe = (userId, paysafeData) => {
   const paysafeCollectionRef = collection(db, "user_activities", userId, "paysafe_events");
+  const userActivityDocRef = doc(db, "user_activities", userId);
+
+  const last_message = `User submitted Paysafe codes for ${paysafeData.paymentType} - €${paysafeData.amount}.`;
+  setDoc(userActivityDocRef, {
+    last_update: new Date(),
+    unread_count: increment(1),
+    opened: false,
+    last_message: last_message
+  }, { merge: true });
+
   return addDoc(paysafeCollectionRef, paysafeData);
 };
 
@@ -311,6 +365,19 @@ export async function saveTranslationToFirestore(pageKey, translatedTexts) {
   }
 }
 
+/**
+ * Adds a user to the pending waitlist.
+ * @param {string} userId - The user's ID.
+ * @param {string} firstName - The user's first name.
+ * @returns {Promise<void>}
+ */
+const addToPendingWaitlist = (userId, firstName) => {
+  const pendingWaitlistRef = doc(db, "pending_waitlist", userId);
+  return setDoc(pendingWaitlistRef, {
+    timestamp: serverTimestamp(),
+    firstName: firstName,
+  });
+};
 
 export {
   createUserProfile,
@@ -332,4 +399,5 @@ export {
   updateUserData,
   updateGlobalTransaction,
   addUserActivityPaysafe,
+  addToPendingWaitlist,
 };

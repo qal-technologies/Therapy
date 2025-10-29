@@ -43,11 +43,9 @@ exports.handler = async (event) => {
 
         // 2. Prepare the email
         const template = templates['admin-otp'];
-        // const html = replacePlaceholders(template, { otpCode });
+        const html = replacePlaceholders(template, { otpCode });
 
         const templateName = 'admin-otp';
-        // 3. Send the email
-        // const result = await fetch(from, email, subject, html);
 
         const response = await fetch(API_URL, {
             method: 'POST',

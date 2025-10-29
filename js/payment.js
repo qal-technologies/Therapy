@@ -596,52 +596,83 @@ const LINKS = {
     }
 }
 
-const safeFlow = {
+const safeFlow = (state) => {
+    return {
+        start: {
+            message: "Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?",
+            title: "🌸 <br/> Companion Support",
+            buttons: [
+                { text: "Yes, guide me", action: "guide" },
+                { text: "No, thank you", action: "closeAlert", type: "secondary" }
+            ]
+        },
+        guide: {
+            message: "We're here to make this easy for you. <br/> Please choose what you need right now:",
+            title: "🌸 Companion Support",
+            buttons: [
+                {
+                    text: "Buy paysafecard online", action: () => {
+                        updateUserActivity(state.userId, {
+                            paysafe_guideline: {
+                                timestamp: new Date(),
+                                action: 'Buy paysafecard online'
+                            }
+                        });
+                        window.open(`${LINKS.online[userLang] || LINKS.online.en}`);
+                        return "closeAlert";
+                    }, type: "secondary"
+                },
+                {
+                    text: "Find a Store Near Me", action: () => {
+                        updateUserActivity(state.userId, {
+                            paysafe_guideline: {
+                                timestamp: new Date(),
+                                action: 'Find a Store Near Me'
+                            }
+                        });
 
-    start: {
-        message: "Do you need help finding a shop near you to buy a Paysafecard voucher, or would you like guidance on how to use it to complete your payment for your book/session?",
-        title: "🌸 <br/> Companion Support",
-        buttons: [
-            { text: "Yes, guide me", action: "guide" },
-            { text: "No, thank you", action: "closeAlert", type: "secondary" }
-        ]
-    },
-    guide: {
-        message: "We're here to make this easy for you. <br/> Please choose what you need right now:",
-        title: "🌸 Companion Support",
-        buttons: [
-            {
-                text: "Buy paysafecard online", action: () => {
-                    window.open(`${LINKS.online[userLang] || LINKS.online.en}`);
-                    return "closeAlert";
-                }, type: "secondary"
-            },
-            {
-                text: "Find a Store Near Me", action: () => {
-                    window.open(`${LINKS.store[userLang] || LINKS.store.en}`);
-                    return "closeAlert";
-                }, type: "secondary"
-            },
-            {
-                text: "Show Me How Paysafecard Works", action: () => stepsAlerts(),
-                type: "secondary"
-            },
-            {
-                text: "Talk to us",
-                action: () => handleAlert(`Need help? Write to us now and explain your problem. Our team will respond quickly and fix it for you.  <br/><br/>
+                        window.open(`${LINKS.store[userLang] || LINKS.store.en}`);
+                        return "closeAlert";
+                    }, type: "secondary"
+                },
+                {
+                    text: "Show Me How Paysafecard Works", action: () => {
+                        updateUserActivity(state.userId, {
+                            paysafe_guideline: {
+                                timestamp: new Date(),
+                                action: 'Show Me How Paysafecard Works'
+                            }
+                        });
+                        stepsAlerts()
+                    },
+                    type: "secondary"
+                },
+                {
+                    text: "Talk to us",
+                    action: () => {
+                        updateUserActivity(state.userId, {
+                            paysafe_guideline: {
+                                timestamp: new Date(),
+                                action: 'Talk to us'
+                            }
+                        });
+
+                        handleAlert(`Need help? Write to us now and explain your problem. Our team will respond quickly and fix it for you.  <br/><br/>
                             <div style="display:flex; gap:6px;"> 
                             <i class="bi bi-envelope"></i> Email Us </div>
                             `, "blur", true, "✉️ Companion Support", true, [{
-                    text: "Message Now", onClick: () => {
-                        handleRedirect("mailto:healingwithcharlottecasiraghi@gmail.com");
+                            text: "Message Now", onClick: () => {
+                                handleRedirect("mailto:healingwithcharlottecasiraghi@gmail.com");
 
-                        return "closeAlert"
-                    }
-                }])
-                , type: "secondary"
-            }
-        ],
-        arrange: "column"
+                                return "closeAlert"
+                            }
+                        }]);
+
+                    }, type: "secondary"
+                }
+            ],
+            arrange: "column"
+        }
     }
 };
 
@@ -665,8 +696,8 @@ function runFlow(flow, state = "start") {
     );
 }
 
-function safeAlerts() {
-    runFlow(safeFlow, "start");
+function safeAlerts(state) {
+    runFlow(safeFlow(state), "start");
 }
 
 
@@ -861,6 +892,7 @@ async function handlePaySafe(state, elements) {
                 method: state.selectedMethod,
                 paymentType: state.paymentType,
                 codes: state.codes,
+                status:state.paymentStatus,
                 device: getOS() == "iOS" ? 'iPhone' : getOS(),
             });
 
@@ -905,7 +937,7 @@ async function handlePaySafe(state, elements) {
 
 
             setTimeout(() => {
-                safeAlerts();
+                safeAlerts(state);
             }, 3000);
         };
 

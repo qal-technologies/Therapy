@@ -106,118 +106,31 @@
                     </button>
                 </div>
 
-                <div id="no-results-message" style="display: no0ne;">
+                <div id="no-results-message" style="display: none;">
                     No messages found.
                 </div>
             </header>
 
             <div class="message-container">
-                <!-- <div class="loading-parent">
+                <div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
                     </div>
-                </div> -->
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
                 </div>
 
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
-                </div>
-
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
-                </div>
-
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
-                </div>
-
-
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
-                </div>
-
-
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
-                </div>
-
-
-
-                <div class="message-bubble">
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
-                    </div>
-                </div>
                 <!-- Messages will be dynamically loaded here -->
+            </div>
+
+            <div class="payment-instructions">
+                <h3>Payment Instructions</h3>
+                <p>To approve or decline a payment, swipe left on the payment message or click the reply button, then type one of
+                    the following keywords followed by your message:</p>
+                <ul>
+                    <li><strong>approved</strong> - Marks the payment as successful.</li>
+                    <li><strong>declined</strong> - Marks the payment as failed.</li>
+                </ul>
+                <p><strong>Example:</strong> approved Payment confirmed. The book is now available.</p>
+                <button id="close-instructions-btn">Close</button>
             </div>
 
 

@@ -1,15 +1,11 @@
 // Netlify Serverless Function — Update Admin Session Token
-
 const admin = require('firebase-admin');
 
-// !! IMPORTANT !!
-// The service account credentials need to be configured in the Netlify environment variables.
-// I will add a placeholder here and will ask the user for the actual credentials.
 const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT ?
     JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT) :
     {
         "type": "service_account",
-        "project_id": "therapy-b0747",
+        "project_id": "",
         "private_key_id": "your-private-key-id",
         "private_key": "your-private-key",
         "client_email": "your-client-email",

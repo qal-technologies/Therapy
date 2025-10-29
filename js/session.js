@@ -1,5 +1,5 @@
 import handleAlert from "/js/general.js";
-import { getUserData, updateUserActivity, updateUserData } from "./database.js";
+import { addToPendingWaitlist, getUserData, updateUserActivity, updateUserData } from "./database.js";
 import { handleAuthStateChange } from "./auth.js";
 import { getOS, handleRedirect } from "./general.js";
 import { sendEmail } from "../emailHelper.js";
@@ -464,10 +464,11 @@ ${bonuses.join('')}
           waitlistBTN.style.fontSize = "12px";
           waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-          await updateUserData(user.uid, { waitlist: true });
+          // await updateUserData(user.uid, { waitlist: true });
 
-          await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
+          // await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
 
+          await addToPendingWaitlist(user.uid, userdata.details.firstName);
           await updateUserActivity(user.uid, {
             waitlist: {
               timestamp: new Date(),
@@ -476,6 +477,7 @@ ${bonuses.join('')}
             last_update: new Date(),
             opened: false,
           });
+
 
           setTimeout(() => {
             handleAlert(`

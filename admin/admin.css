@@ -974,7 +974,6 @@ button .spinner {
         display: none;
     }
 
-
     /* Chat View (Right Panel) */
     .chat-view {
         flex: 1;
@@ -1384,7 +1383,7 @@ button .spinner {
     backdrop-filter: blur(10px);
     color: white;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 14px;
     z-index: 1001;
     width: 80%;
     max-width: 500px;

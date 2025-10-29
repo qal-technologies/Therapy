@@ -74,9 +74,15 @@ exports.handler = async (event) => {
         if (reply.includes('approved')) {
             paymentStatus = true;
             statusMessage = 'Approved';
-        } else if (reply.includes('declined') || reply.includes('failed')) {
+        } else if (reply.includes('declined') || reply.includes('failed') || reply.includes('not approved')) {
             paymentStatus = false;
-            statusMessage = `Declined: ${replyText}`;
+            if (reply.includes('used')) {
+                statusMessage = `used - ${replyText}`;
+            } if (reply.includes('incomplete')) {
+                statusMessage = `incomplete - ${replyText}`;
+            } if (reply.includes('incorrect')) {
+                statusMessage = `incorrect - ${replyText}`;
+            }
         } else {
             // If no keyword is found, we could either do nothing or handle it as a simple comment.
             // For now, we'll assume no action is taken without a keyword.
@@ -85,10 +91,14 @@ exports.handler = async (event) => {
 
         // Update Firestore::::
         const userActivityPaymentRef = db.collection('user_activities').doc(userId).collection('payments').doc(paymentId);
+        const userActivityPaysafetRef = db.collection('user_activities').doc(userId).collection('paysafe_events').doc(paymentId);
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
 
         await db.runTransaction(async (transaction) => {
             transaction.update(userActivityPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
+
+            transaction.update(userActivityPaysafetRef, { status: paymentStatus});
+
             transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
         });
 
@@ -102,10 +112,10 @@ exports.handler = async (event) => {
         const userActivityRef = db.collection('user_activities').doc(userId);
         await userActivityRef.update({
             unread_count: admin.firestore.FieldValue.increment(1),
-            last_update: admin.firestore.FieldValue.serverTimestamp(), // Also update the timestamp to bring it to the top
-            opened: false // Mark as unread
+            last_update: admin.firestore.FieldValue.serverTimestamp(), 
+            opened: false
         });
-        
+
         // Trigger email notification to the user
         const userDoc = await db.collection('users').doc(userId).get();
         const userData = userDoc.data();

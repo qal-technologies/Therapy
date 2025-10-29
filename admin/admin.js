@@ -1114,30 +1114,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const notifiedUsers = new Set();
 
     onSnapshot(q, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
+        snapshot.docChanges().forEach(async (change) => {
             const user = { id: change.doc.id, ...change.doc.data() };
             const existingUserElement = document.querySelector(`.user-list-item[data-user-id="${user.id}"]`);
+
+            const handleNotification = async () => {
+                const lastUpdate = user.last_update?.toMillis() || 0;
+                const lastNotified = user.last_notified?.toMillis() || 0;
+
+                if (user.unread_count > 0 && lastUpdate > lastNotified) {
+                    // Jules: Use the last_message field for more specific notifications
+                    const notificationTitle = change.type === 'added' ? 'New User' : `Update from ${user.details?.firstName || 'user'}`;
+                    const notificationBody = user.last_message || `${user.details?.firstName || 'A user'}’s activity was updated.`;
+                    showNotification(notificationTitle, notificationBody);
+
+                    try {
+                        const userDocRef = doc(db, 'user_activities', user.id);
+                        await updateDoc(userDocRef, { last_notified: serverTimestamp() });
+                    } catch (error) {
+                        console.error("Error updating last_notified timestamp:", error);
+                    }
+                }
+            };
+
 
             if (change.type === 'added') {
                 if (!existingUserElement) {
                     addUserToList(user, true);
-                    showNotification('New User', `${user.details?.firstName || 'A user'} just signed up.`);
-                    notifiedUsers.add(user.id);
+                    await handleNotification();
                 }
             } else if (change.type === 'modified') {
                 if (existingUserElement) {
-                    existingUserElement.remove(); // Remove the old element
+                    existingUserElement.remove();
                 }
-                addUserToList(user, true); // Re-add the updated user to the top
-
-                if (user.opened === false && !notifiedUsers.has(user.id)) {
-                    showNotification('User Activity Updated', `${user.details?.firstName || 'A user'}’s activity was updated.`);
-                    notifiedUsers.add(user.id);
-                }
+                addUserToList(user, true); 
+                await handleNotification();
 
                 const currentUserId = sessionStorage.getItem('userId');
                 if (currentUserId === user.id) {
                     loadChatForUser(user);
+                    markAsOpened(user.id);
                 }
             }
         });

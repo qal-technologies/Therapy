@@ -23,7 +23,7 @@ exports.handler = async (event) => {
             return { statusCode: 400, body: JSON.stringify({ error: 'Missing adminId or token' }) };
         }
 
-        const adminDocRef = db.collection('admins').doc(adminId);
+        const adminDocRef = db.collection('admin').doc(adminId);
         const doc = await adminDocRef.get();
 
         if (!doc.exists) {
