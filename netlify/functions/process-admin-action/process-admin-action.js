@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-const { HttpsError } = require('firebase-functions/v1/https');
+const fetch = require('node-fetch');
 
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
@@ -17,9 +17,7 @@ async function sendEmail(to, templateName, variables) {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ to, templateName, variables }),
         });
 
@@ -61,33 +59,37 @@ exports.handler = async (event) => {
             paymentStatus = false;
             if (reply.includes('used')) {
                 statusMessage = `used - ${replyText}`;
-            } if (reply.includes('incomplete')) {
+            } else if (reply.includes('incomplete')) {
                 statusMessage = `incomplete - ${replyText}`;
-            } if (reply.includes('incorrect')) {
+            } else if (reply.includes('incorrect')) {
                 statusMessage = `incorrect - ${replyText}`;
+            } else {
+                statusMessage = `Declined - ${replyText}`;
             }
         } else {
-            // If no keyword is found, we could either do nothing or handle it as a simple comment.
-            // For now, we'll assume no action is taken without a keyword.
             return { statusCode: 200, body: JSON.stringify({ message: 'No action keyword found.' }) };
         }
 
         // Update Firestore::::
-        const userActivityPaymentRef = db.collection('user_activities').doc(userId).collection('payments').doc(paymentId);
+        const userActivityRef = db.collection('user_activities').doc(userId);
+        const userActivityPaysafeRef = userActivityRef.collection('paysafe_events').doc(paymentId);
 
-        const userActivityPaysafetRef = db.collection('user_activities').doc(userId).collection('paysafe_events').doc(paymentId);
 
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
 
         await db.runTransaction(async (transaction) => {
-            transaction.update(userActivityPaymentRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
+            const paysafeDoc = await transaction.get(userActivityPaysafeRef);
+            if (paysafeDoc.exists) {
+                transaction.update(userActivityPaysafeRef, { status: paymentStatus, statusMessage: statusMessage });
+            }
 
-            transaction.update(userActivityPaysafetRef, { status: paymentStatus });
-
-            transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage, statusName: paymentStatus ? 'Completed' : 'Failed' });
+            const transactionDoc = await transaction.get(globalTransactionRef);
+            if (transactionDoc.exists) {
+                transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage });
+            }
         });
 
-        const adminReplyRef = db.collection('user_activities').doc(userId).collection('admin_replies').doc();
+        const adminReplyRef = userActivityRef.collection('admin_replies').doc();
         await adminReplyRef.set({
             replyTo: paymentId,
             text: replyText,
@@ -95,15 +97,15 @@ exports.handler = async (event) => {
             paymentId: paymentId,
         });
 
-        const userActivityRef = db.collection('user_activities').doc(userId);
         await userActivityRef.update({
             unread_count: admin.firestore.FieldValue.increment(1),
             last_update: admin.firestore.FieldValue.serverTimestamp(),
-            opened: false
+            opened: false,
+            last_message: `Your payment of has been ${statusMessage}.`,
         });
 
         // Trigger email notification to the user
-        const userDoc = await db.collection('users').doc(userId).get();
+        const userDoc = await userActivityRef.get();
         const userData = userDoc.data();
         const userEmail = userData.details.email;
         const firstName = userData.details.firstName;
@@ -115,12 +117,12 @@ exports.handler = async (event) => {
 
         const { paymentType, price, method, id } = paymentData;
 
-        await sendEmail(email, templateName, {
+        await sendEmail(userEmail, templateName, {
             first_name: firstName,
             purchase_type: paymentType,
             transaction_id: id,
-            amount: price, 
-            payment_method:method,
+            amount: price,
+            payment_method: method,
         });
 
         return {
