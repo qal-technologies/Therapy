@@ -971,7 +971,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let firstMatch = null;
     const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
-    const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
+    const searchIcons = document.querySelectorAll('.chat-view .header-icons i.use');
 
     const infoBtn = document.getElementById('info-btn');
     const paymentInstructions = document.querySelector('.payment-instructions');
