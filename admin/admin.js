@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (paymentInstructions && paymentInstructions.style.display === 'block') {
             paymentInstructions.style.display = 'none';
         }
+
+
+        searchIcons.forEach(btn => btn.classList.toggle('active', btn.classList.contains('bi-search')));
+
     }
 
     async function verifyAdminSession() {
@@ -838,9 +842,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.innerWidth <= 768) {
                 chatView.classList.remove('active');
                 sidebar.style.display = 'flex';
-
-                searchIcons.forEach(btn => btn.classList.toggle('active', btn.classList.contains('bi-search')));
-
             }
         });
     }

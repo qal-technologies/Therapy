@@ -612,7 +612,7 @@ body {
 .chat-header .user-info {
     width: max-content;
     flex: 1;
-    max-width: 70%;
+    max-width: 65%;
     display: flex;
     flex-direction: column;
 }

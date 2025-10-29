@@ -13,7 +13,7 @@ const db = admin.firestore();
 const API_URL = "/.netlify/functions/send-email";
 
 // Helper function to send emails (reusing Brevo logic)
-export async function sendEmail(to, templateName, variables) {
+async function sendEmail(to, templateName, variables) {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -119,8 +119,6 @@ exports.handler = async (event) => {
             first_name: firstName,
             purchase_type: paymentType,
             transaction_id: id,
-            method:method,
-            status_message: statusMessage, 
             amount: price, 
             payment_method:method,
         });
