@@ -735,7 +735,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageContainer.style.paddingBottom = '';
 
 
-                replyPreview.classList.add('fadeOut');
+                replyPreview.classList.add('leftOut');
                 setTimeout(() => {
                     replyPreview.style.display = 'none';
                 }, 1000);
@@ -765,8 +765,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             scrollToBottomBtn.style.bottom = `${chatFooter.innerHeight + 8}px`;
             messageContainer.style.paddingBottom = `${chatFooter.innerHeight + 10}px`;
-            const check = replyPreview.classList.contains('fadeOut');
-            if (check) replyPreview.classList.remove('fadeOut');
+            const check = replyPreview.classList.contains('leftOut');
+            if (check) replyPreview.classList.remove('leftOut');
 
             replyPreview.style.display = 'flex';
 
