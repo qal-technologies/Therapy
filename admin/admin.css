@@ -1117,6 +1117,7 @@ button .spinner {
     box-shadow: 0px 0px 16px rgba(0, 52, 11, 0.5);
     user-select: none;
     margin-inline-start: 5px;
+    position: relative;
 }
 
 .reply-tag {

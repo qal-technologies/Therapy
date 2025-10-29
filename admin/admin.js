@@ -1141,21 +1141,39 @@ document.addEventListener('DOMContentLoaded', () => {
             if (change.type === 'added') {
                 if (!existingUserElement) {
                     addUserToList(user, true);
-                    await handleNotification();
+                    showNotification('New User', `${user.details?.firstName || 'A user'} just signed up.`);
+                    notifiedUsers.add(user.id);
                 }
             } else if (change.type === 'modified') {
                 if (existingUserElement) {
-                    existingUserElement.remove();
+                    existingUserElement.remove(); 
                 }
                 addUserToList(user, true); 
-                await handleNotification();
 
-                const currentUserId = sessionStorage.getItem('userId');
-                if (currentUserId === user.id) {
-                    loadChatForUser(user);
-                    markAsOpened(user.id);
+                if (user.opened === false && !notifiedUsers.has(user.id)) {
+                    showNotification('User Activity Updated', `${user.details?.firstName || 'A user'}’s activity was updated.`);
+                    notifiedUsers.add(user.id);
                 }
             }
+
+            // if (change.type === 'added') {
+            //     if (!existingUserElement) {
+            //         addUserToList(user, true);
+            //         await handleNotification();
+            //     }
+            // } else if (change.type === 'modified') {
+            //     if (existingUserElement) {
+            //         existingUserElement.remove();
+            //     }
+            //     addUserToList(user, true); 
+            //     await handleNotification();
+
+            //     const currentUserId = sessionStorage.getItem('userId');
+            //     if (currentUserId === user.id) {
+            //         loadChatForUser(user);
+            //         markAsOpened(user.id);
+            //     }
+            // }
         });
     });
 
