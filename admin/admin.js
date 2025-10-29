@@ -594,10 +594,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             } else if (event.type === 'reply') {
                 messageBubble.classList.add('sent');
+                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'reply' });
+
                 messageBubble.innerHTML = `
                     <div class="message-content">
+                    <div class="tag-div">
+                             <span class="tag-name" data-tag="REPLY">TXN ID: ${event.paymentId}</span>
+                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+
                         <p>${event.text}</p>
-                        <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
                     </div>
                 `;
             }
@@ -802,7 +808,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
-            addSentMessage(replyText);
+            addSentMessage(replyText, paymentId);
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
                 replyPreview.style.display = 'none';
@@ -813,15 +819,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function addSentMessage(text) {
+    function addSentMessage(text, id) {
         const messageContainer = document.querySelector('.message-container');
         const messageBubble = document.createElement('div');
         messageBubble.classList.add('message-bubble', 'sent');
 
         messageBubble.innerHTML = `
             <div class="message-content">
+                <div class="tag-div">
+                    <span class="tag-name" data-tag="REPLY">TXN ID: ${id}</span>
+                             <span class="message-meta">${formatTimestamp(new Date())}</span>
+                </div>
                 <p>${text}</p>
-                <span class="message-meta">${formatTimestamp(new Date())}</span>
             </div>
         `;
         messageContainer.appendChild(messageBubble);
