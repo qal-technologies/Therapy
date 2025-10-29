@@ -258,7 +258,7 @@ display:grid;
     border-radius: 50%;
     background-color: #b7b7b7;
     border: 1px solid gray;
-    display: flex;
+    display: grid;
     text-align: center;
     place-content: center;
     font-size: 20px;
@@ -996,7 +996,7 @@ flex: 1;
     }
 
     .chat-view.active .chat-header {
-        position: sticky;
+        position: absolute;
         top: 0;
         width: 100vw;
         z-index: 101;
@@ -1027,7 +1027,7 @@ flex: 1;
         z-index: 101; */
 
         z-index: 101;
-        position: sticky;
+        position: absolute;
         bottom: 0;
         width: 100vw;
         flex-shrink: 0;
