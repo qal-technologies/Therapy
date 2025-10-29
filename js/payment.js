@@ -12,6 +12,7 @@ import {
     addUserActivityPaysafe
 } from './database.js';
 import { scrollToMakeVisible } from './shop.js';
+import { sendEmail } from '../emailHelper.js';
 
 // ==================== STATE MANAGEMENT ====================
 function initializeState() {
@@ -781,7 +782,7 @@ async function showResultScreen(state, elements, finalPayment) {
         });
 
         const user = getCurrentUser();
-        if (user) {
+        if (user && finalPayment.status === null) {
             const userData = await getUserData(user.uid);
             if (userData && userData.details && userData.details.email) {
                 await sendEmail(userData.details.email, 'payment-processing', {

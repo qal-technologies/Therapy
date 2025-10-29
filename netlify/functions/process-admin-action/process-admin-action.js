@@ -10,7 +10,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const API_URL = "/.netlify/functions/send-email";
+const API_URL = `${process.env.PORT}/.netlify/functions/send-email`;
 
 // Helper function to send emails (reusing Brevo logic)
 async function sendEmail(to, templateName, variables) {
@@ -77,6 +77,8 @@ exports.handler = async (event) => {
 
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
 
+        const userPaymentRef = db.collection('users').doc(userId).collection('payments').doc(paymentId);
+
         await db.runTransaction(async (transaction) => {
             const paysafeDoc = await transaction.get(userActivityPaysafeRef);
             if (paysafeDoc.exists) {
@@ -86,6 +88,11 @@ exports.handler = async (event) => {
             const transactionDoc = await transaction.get(globalTransactionRef);
             if (transactionDoc.exists) {
                 transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage });
+            }
+
+            const paymentDoc = await transaction.get(userPaymentRef);
+            if (paymentDoc.exists) {
+                transaction.update(userPaymentRef, { status: paymentStatus, statusMessage: statusMessage });
             }
         });
 
