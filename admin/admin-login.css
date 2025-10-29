@@ -140,6 +140,8 @@ button {
     font-size: 16px;
     background: white;
     cursor: pointer;
+    color: black;
+    font-weight: bold;
 }
 
 button:hover {

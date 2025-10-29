@@ -1,5 +1,5 @@
 import { db, logout } from '../js/auth.js';
-import { collection, getDocs, getDoc, onSnapshot, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import { collection, getDocs, getDoc, onSnapshot, query, orderBy, doc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 import handleAlert from '../js/general.js';
 
 function formatTimestamp(timestamp) {
@@ -77,6 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatView = document.querySelector('.chat-view');
     const sidebar = document.querySelector('.sidebar');
 
+    if (window.innerWidth > 768) {
+        chatView.classList.add('no-chat');
+    }
+
     async function fetchAndDisplayUsers() {
         try {
             const usersCollectionRef = collection(db, 'user_activities');
@@ -84,8 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const querySnapshot = await getDocs(q);
             if (querySnapshot.empty) {
                 userListContainer.innerHTML = `<p class="chat-empty ">No users activities yet.</p>`;
-
-
                 return;
             }
 
@@ -111,7 +113,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // const element = `<div class="user-avatar">${user.details.firstName[0] || "U"}</div>
+    //         <div class="user-info">
+    //             <span class="user-name">${user.details.firstName || ''} ${user.details.lastName || ''}</span>
+    //             <span class="last-message">${user.details.email}</span>
+    //         </div>
+    //         <div class="user-meta">
+    //             <span class="last-message-time">${displayTime}</span>
+    //             <span class="unread-count" style="${unreadCount > 0 ? '' : 'display: none;'}">${unreadCount}</span>            
+    //         </div>`
+
     function addUserToList(user, prepend = false) {
+        const colors = ['#dcf8c6', '#b7f8c8', '#b7e8f8', '#f8b7b7', '#f8d8b7', '#f8f8b7'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
         const userElement = document.createElement('div');
         userElement.classList.add('moveUpNfadeIn', 'user-list-item');
         userElement.dataset.userId = user.id;
@@ -136,16 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const unreadCount = user.unread_count || 0;
 
+
         userElement.innerHTML = `
             <div class="user-avatar">${user.details.firstName[0] || "U"}</div>
-            <div class="user-info">
-                <span class="user-name">${user.details.firstName || ''} ${user.details.lastName || ''}</span>
-                <span class="last-message">${user.details.email}</span>
-            </div>
-            <div class="user-meta">
-                <span class="last-message-time">${displayTime}</span>
-                <span class="unread-count" style="${unreadCount > 0 ? '' : 'display: none;'}">${unreadCount}</span>            
-            </div>
+                    <div class="side">
+                        <div class="user-info upper">
+                             <span class="user-name">${user.details.firstName || ''} ${user.details.lastName || ''}</span>
+                             <span class="last-message-time">${displayTime}</span>
+                        </div>
+
+                        <div class="lower">
+                            <span class="last-message">${user.details.email}</span>
+                             <span class="unread-count" style="${unreadCount > 0 ? '' : 'display: none;'}">${unreadCount}</span>  
+                        </div>
+                    </div>
         `;
 
         if (prepend) {
@@ -155,7 +174,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         userElement.addEventListener('click', () => {
-            // Set the active user
+            const messageInput = document.querySelector('.message-input');
+            if (messageInput) messageInput.value = '';
+
+            const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
+            if (chatSearchInput) chatSearchInput.value = '';
+
+            const searchContainer = document.querySelector('.search-container');
+            if (searchContainer) searchContainer.classList.remove('visible');
+
+            const chatHeader = document.querySelector('.chat-header');
+            if (chatHeader) chatHeader.classList.remove('visible');
+
+            document.querySelectorAll('.message-container .message-bubble').forEach(bubble => {
+                bubble.style.border = '';
+                bubble.style.borderRadius = '';
+                bubble.style.marginLeft = '';
+            });
+
             document.querySelectorAll('.user-list-item').forEach(item => item.classList.remove('active'));
             userElement.classList.add('active');
 
@@ -166,6 +202,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.innerWidth <= 768) {
                 sidebar.style.display = 'none';
                 chatView.classList.add('active');
+            }
+
+            if (window.innerWidth > 768) {
+                chatView.classList.remove('no-chat');
             }
             loadChatForUser(user);
         });
@@ -201,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const waitlist = data.waitlist || null;
             const newsletter = data.newsletter || null;
             const logout = data.logout || null;
+            const paysafeGuideline = data.paysafe_guideline || null;
 
             //audios:::
             const welcomeAudio = data.welcomeAudio || null;
@@ -233,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (sessionBooked) events.push({ type: 'session-booked', ...sessionBooked });
             if (cart) events.push({ type: 'cart', ...cart });
             if (book) events.push({ type: 'book', ...book });
+            if (paysafeGuideline) events.push({ type: 'paysafe_guideline', ...paysafeGuideline });
         }
 
         try {
@@ -434,6 +476,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <p>User logged out from this device: ${event.device}</p>
                         <p>User stayed for: ${duration}</p>
+                    </div>
+                `;
+            } else if (event.type === 'paysafe_guideline') {
+                messageBubble.classList.add('received');
+                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'paysafe_guideline' });
+                messageBubble.innerHTML = `
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                                <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p>User clicked this paysafe guideline option: <strong>${event.action}</strong></p>
                     </div>
                 `;
             } else if (event.type === 'cart') {
@@ -654,11 +708,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const replyPreview = document.getElementById('reply-preview');
     const chatFooter = document.querySelector('.chat-view .chat-footer');
 
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) {
+            const newHeight = entry.contentRect.height;
+            messageContainer.style.paddingBottom = `${newHeight + 20}px`;
+        }
+    });
+
+    resizeObserver.observe(chatFooter);
+
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
             focusedMessage.classList.remove('focused');
             focusedMessage.style.transform = 'translateX(0)';
+            if (replyPreview && replyPreview.style.display === 'flex' && !messageElement.dataset.replyable) {
+                focusedMessage = null;
+                sendBtn.disabled = true;
+                messageInput.value = '';
+                messageInput.style.height = '50px';
+                messageInput.disabled = true;
+
+                messageContainer.style.paddingBottom = '';
+
+
+                replyPreview.classList.add('fadeOut');
+                setTimeout(() => {
+                    replyPreview.style.display = 'none';
+                }, 1000);
+            }
         }
+
 
         if (messageElement.dataset.replyable) {
             focusedMessage = messageElement;
@@ -682,6 +761,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             scrollToBottomBtn.style.bottom = `${chatFooter.innerHeight + 8}px`;
             messageContainer.style.paddingBottom = `${chatFooter.innerHeight + 10}px`;
+            const check = replyPreview.classList.contains('fadeOut');
+            if (check) replyPreview.classList.remove('fadeOut');
+
             replyPreview.style.display = 'flex';
 
             replyPreview.onclick = (e) => {
@@ -694,20 +776,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function processAdminAction(userId, paymentId, replyText) {
         try {
-            // const response = await fetch('/.netlify/functions/process-admin-action', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ userId, paymentId, replyText }),
-            // });
+            const response = await fetch('/.netlify/functions/process-admin-action', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, paymentId, replyText }),
+            });
 
-            // if (!response.ok) {
-            //     throw new Error('Failed to process admin action.');
-            // }
+            if (!response.ok) {
+                throw new Error('Failed to process admin action.');
+            }
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
             addSentMessage(replyText);
-            document.getElementById('reply-preview').style.display = 'fadeOut';
-
+            const replyPreview = document.getElementById('reply-preview');
+            if (replyPreview) {
+                replyPreview.classList.add('fadeOut');
+                setTimeout(() => {
+                    replyPreview.style.display = 'none';
+                }, 1000);
+            }
         } catch (error) {
             console.error(error);
             alert('Failed to process your request. Please try again.');
@@ -758,8 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageInput.style.height = '50px';
             messageInput.disabled = true;
 
-            scrollToBottomBtn.style.bottom = '10vh';
-            messageContainer.style.paddingBottom = `8vh`;
+            messageContainer.style.paddingBottom = '';
         }
     });
 
@@ -780,6 +866,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const searchInput = document.querySelector('.sidebar .search-bar input');
+    const searchIcon = document.querySelector('.sidebar .search-bar .bi-search');
+
+    if (searchIcon && searchInput) {
+        searchIcon.addEventListener('click', () => {
+            searchInput.focus();
+        });
+    }
     searchInput.addEventListener('input', filterAndSearchUsers);
 
     filterOptions.addEventListener('click', (e) => {
@@ -831,7 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        
+
 
         if (emptyPlaceholder) {
             emptyPlaceholder.style.display = visibleUsers === 0 ? 'flex' : 'none';
@@ -870,6 +963,21 @@ document.addEventListener('DOMContentLoaded', () => {
     let firstMatch = null;
     const chatSearchInput = document.querySelector('.chat-view .chat-search-input');
     const searchIcons = document.querySelectorAll('.chat-view .header-icons i');
+
+    const infoBtn = document.getElementById('info-btn');
+    const paymentInstructions = document.querySelector('.payment-instructions');
+    const closeInstructionsBtn = document.getElementById('close-instructions-btn');
+
+    if (infoBtn && paymentInstructions && closeInstructionsBtn) {
+        infoBtn.addEventListener('click', () => {
+            paymentInstructions.style.display = 'block';
+        });
+
+        closeInstructionsBtn.addEventListener('click', () => {
+            paymentInstructions.style.display = 'none';
+        });
+    }
+
     if (searchIcons && chatHeader) {
         searchIcons.forEach(searchIcon => {
             searchIcon.addEventListener('click', (e) => {
@@ -886,7 +994,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageBubbles.forEach(bubble => {
                         bubble.style.border = '';
                         bubble.style.borderRadius = '';
-bubble.style.marginLeft= '';
+                        bubble.style.marginLeft = '';
                     });
                     firstMatch = null;
                 }
@@ -901,6 +1009,14 @@ bubble.style.marginLeft= '';
         searchButton.disabled = e.target.value.trim().length === 0
     });
 
+    chatSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !searchButton.disabled) {
+            e.preventDefault();
+            searchButton.click();
+        }
+    });
+
+
     searchButton.addEventListener('click', (e) => {
         e.preventDefault();
 
@@ -912,7 +1028,7 @@ bubble.style.marginLeft= '';
                 bubble.style.border = '';
                 bubble.style.borderRadius = '';
 
-bubble.style.marginLeft= '';
+                bubble.style.marginLeft = '';
 
             });
             firstMatch = null;
@@ -921,6 +1037,8 @@ bubble.style.marginLeft= '';
 
 
         const messageBubbles = document.querySelectorAll('.message-container .message-bubble');
+        const noResultsMessage = document.getElementById('no-results-message');
+        let matchesFound = 0;
 
         messageBubbles.forEach(bubble => {
             const messageContent = bubble.querySelector('.message-content p')?.textContent.toLowerCase();
@@ -931,6 +1049,7 @@ bubble.style.marginLeft= '';
                 bubble.style.border = '1px solid green';
                 bubble.style.borderRadius = '20px';
                 bubble.style.marginLeft = '20px';
+                matchesFound++;
             } else {
                 bubble.style.border = '';
                 bubble.style.borderRadius = '';
@@ -941,46 +1060,50 @@ bubble.style.marginLeft= '';
         if (firstMatch) {
             firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center', });
         }
+
+        if (noResultsMessage) {
+            noResultsMessage.style.display = matchesFound === 0 ? 'block' : 'none';
+        }
     });
 
     // Request permission for notifications
     function requestNotificationPermission() {
-            if ('Notification' in window) {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        const granted = localStorage.getItem('notificationPermission');
+        if ('Notification' in window) {
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    const granted = localStorage.getItem('notificationPermission');
 
-                        if (!granted) {
-                            localStorage.setItem('notificationPermission', 'granted');
+                    if (!granted) {
+                        localStorage.setItem('notificationPermission', 'granted');
 
-                            handleAlert('Notification permission granted', 'toast');
-                        }
-                    } else {
-                        handleAlert("Please grant notification permission for the admin dashboard functions to work properly.", "blur", true, "Notification", true, [{ text: "CLOSE", onClick: "closeAlert", type: 'secondary' }, {
-                            text: "ACCEPT", onClick: () => {
-                                requestNotificationPermission();
-                                return 'closeAlert';
-                            }
-                        }])
+                        handleAlert('Notification permission granted', 'toast');
                     }
-                });
-            }
+                } else {
+                    handleAlert("Please grant notification permission for the admin dashboard functions to work properly.", "blur", true, "Notification", true, [{ text: "CLOSE", onClick: "closeAlert", type: 'secondary' }, {
+                        text: "ACCEPT", onClick: () => {
+                            requestNotificationPermission();
+                            return 'closeAlert';
+                        }
+                    }])
+                }
+            });
         }
+    }
 
     // Show a browser notification
     function showNotification(title, body) {
-            if (Notification.permission === 'granted') {
-                if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                    navigator.serviceWorker.controller.postMessage({
-                        type: 'show-notification',
-                        title: title,
-                        body: body
-                    });
-                } else {
-                    new Notification(title, { body });
-                }
+        if (Notification.permission === 'granted') {
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'show-notification',
+                    title: title,
+                    body: body
+                });
+            } else {
+                new Notification(title, { body });
             }
         }
+    }
 
     fetchAndDisplayUsers();
 

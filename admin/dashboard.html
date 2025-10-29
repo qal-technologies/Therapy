@@ -81,6 +81,12 @@
         </aside>
 
         <main class="chat-view">
+
+            <div class="chat-placeholder">
+                <img src="../src/images/logo.jpg" alt="Logo" class="dropdown logo">
+                <p class="moveUpNfadeIn">Healing with Charlotte Casiraghi</p>
+            </div>
+
             <header class="chat-header">
                 <div class="upper">
                     <div class="user-avatar"></div>
@@ -99,22 +105,127 @@
                         <i class="bi bi-search"></i>
                     </button>
                 </div>
+
+                <div id="no-results-message" style="display: no0ne;">
+                    No messages found.
+                </div>
             </header>
 
             <div class="message-container">
-                <div class="loading-parent">
+                <!-- <div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
+                    </div>
+                </div> -->
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
+                    </div>
+                </div>
+
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
+                    </div>
+                </div>
+
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
+                    </div>
+                </div>
+
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
+                    </div>
+                </div>
+
+
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
+                    </div>
+                </div>
+
+
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
+                    </div>
+                </div>
+
+
+
+                <div class="message-bubble">
+                    <div class="message-content">
+                        <div class="tag-div">
+                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                            <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
+                        </div>
+                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Country</strong>: ${country}</p>
+                        <p><strong>Language</strong>: ${language}</p>
                     </div>
                 </div>
                 <!-- Messages will be dynamically loaded here -->
             </div>
 
-            <button id="scroll-to-bottom-btn" title="Scroll to bottom">
-                &lt; &lt;
-            </button>
 
             <footer class="chat-footer">
+                <button id="scroll-to-bottom-btn" title="Scroll to bottom">
+                    &lt; &lt;
+                </button>
+
                 <div class="reply-preview" id="reply-preview" style="display: none;">
                     <div class="reply-tag" id="reply-tag"></div>
                     <div class="reply-snippet" id="reply-snippet">
@@ -123,8 +234,6 @@
                 </div>
 
                 <div class="under">
-                    <!-- <i class="bi bi-emoji-smile"></i>
-                    <i class="bi bi-paperclip"></i> -->
                     <textarea class="message-input" placeholder="Type a message" disabled></textarea>
                     <button id="send-btn" class="send-btn" title="Send Admin Reply" disabled>
                         <i class="bi bi-send-fill"></i>
