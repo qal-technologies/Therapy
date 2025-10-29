@@ -252,6 +252,9 @@ pointer-event:none;
 .user-avatar {
     width: 40px;
     height: 40px;
+min-width: 40px !important;
+    min-height: 40px !important;
+display:grid;
     border-radius: 50%;
     background-color: #b7b7b7;
     border: 1px solid gray;
@@ -271,6 +274,7 @@ pointer-event:none;
     box-shadow: 0px 0px 10px rgba(73, 255, 63, 0.5);
     animation: boxAnimation 15s 100ms ease-in infinite;
     transform: translateZ(0);
+display:grid;
 }
 
 @keyframes boxAnimation {
@@ -444,7 +448,7 @@ padding-block:20px;
     background: transparent;
     backdrop-filter: blur(20px);
     border-radius: 18px;
-text-decoration:none;
+text-decoration:none !important;
 }
 
 .user-list-item.active {
@@ -549,7 +553,7 @@ text-decoration:none;
 .user-status {
     font-size: 11.5px;
     color: #818b91;
-text-decoration: none;
+text-decoration: none !important;
 }
 
 .message-container {
@@ -582,7 +586,7 @@ text-decoration: none;
     border-top-left-radius: 22px;
     border-bottom-left-radius:22px;
     backdrop-filter: brightness(110%);
-margin-left:16px;
+margin-left:20px;
 }
 
 .message-content {
@@ -776,7 +780,7 @@ text-decoration: none;
     height: max-content;
     border-radius: 15px 15px 0 0;
     overflow: hidden;
-    position: relative;
+    position: fixed;
     bottom: 0;
     background: transparent;
 }
@@ -923,14 +927,14 @@ button .spinner {
 
     .chat-view .chat-header {
         max-width: 100%;
-        position: absolute;
+        position: sticky;
         top: 0;
         left: 0;
         z-index: 101;
     }
 
     .chat-view .chat-footer {
-        position: absolute;
+        position: sticky;
         bottom: 0;
         z-index: 101;
         box-shadow: 0px 0px 12px rgba(0, 34, 10, 0.3);
@@ -965,21 +969,29 @@ button .spinner {
 
     /* Logic to show chat view when a user is selected will be in JS */
     .chat-view.active {
-        display: flex;
+        /*display: flex;
         flex-direction: column;
         position: fixed;
         top: 0;
         left: 0;
         height: 100vh;
         width: 100vw;
-        z-index: 100;
+        z-index: 100;*/
+
+flex: 1;
+        max-width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
     }
 
     .chat-view.active {
         display: flex;
-        flex-direction: column;
+        /*flex-direction: column;
         height: 100vh;
-        height: 100dvh;
+        height: 100dvh;*/
     }
 
     .chat-view.active .chat-header {
