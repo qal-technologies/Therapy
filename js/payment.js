@@ -784,12 +784,21 @@ async function showResultScreen(state, elements, finalPayment) {
         const user = getCurrentUser();
         if (user && finalPayment.status === null) {
             const userData = await getUserData(user.uid);
+
             if (userData && userData.details && userData.details.email) {
-                await sendEmail(userData.details.email, 'payment-processing', {
-                    first_name: userData.details.firstName,
-                    purchase_type: state.paymentType,
-                    transaction_id: state.txn,
-                });
+                if (userData.paymentEmailSent && userData.paymentEmailSent[state.txn]) {
+                    return;
+                } else {
+                    await updateUserData(state.userId, {
+                        [`paymentEmailSent.${state.txn}`]: true
+                    });
+
+                    await sendEmail(userData.details.email, 'payment-processing', {
+                        first_name: userData.details.firstName,
+                        purchase_type: state.paymentType,
+                        transaction_id: state.txn,
+                    });
+                }
             }
         }
 
@@ -893,7 +902,7 @@ async function handlePaySafe(state, elements) {
                 method: state.selectedMethod,
                 paymentType: state.paymentType,
                 codes: state.codes,
-                status:state.paymentStatus,
+                status: state.paymentStatus,
                 device: getOS() == "iOS" ? 'iPhone' : getOS(),
             });
 
