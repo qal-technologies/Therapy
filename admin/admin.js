@@ -198,8 +198,24 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.user-list-item').forEach(item => item.classList.remove('active'));
             userElement.classList.add('active');
 
+            if (replyPreview && replyPreview.style.display === 'flex') {
+                focusedMessage = null;
+                sendBtn.disabled = true;
+                messageInput.value = '';
+                messageInput.style.height = '50px';
+                messageInput.disabled = true;
+
+                messageContainer.style.paddingBottom = '';
+
+
+                replyPreview.classList.add('zoom-out');
+                setTimeout(() => {
+                    replyPreview.style.display = 'none';
+                }, 1000);
+            }
+
             paymentInstructions.style.display = 'none';
-            
+
             markAsOpened(user.id);
             userElement.classList.remove('active');
 
@@ -702,7 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         processAdminAction(userId, eventData.id, replyText).then(() => {
             messageInput.value = '';
-            messageInput.style.height = 'auto';
+            messageInput.style.height = '50px';
             messageInput.disabled = true;
             focusedMessage.classList.remove('focused');
             focusedMessage = null;
@@ -1021,12 +1037,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const searchButton = document.querySelector('.chat-view .chat-search-btn');
     chatSearchInput.addEventListener('input', (e) => {
+        const noResultsMessage = document.querySelector('#no-results-message');
+        if (noResultsMessage && noResultsMessage.style.display === 'block') noResultsMessage.style.display = 'none';
         searchButton.disabled = e.target.value.trim().length === 0
     });
 
     chatSearchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !searchButton.disabled) {
             e.preventDefault();
+            const noResultsMessage = document.querySelector('#no-results-message');
+            if (noResultsMessage && noResultsMessage.style.display === 'block') {
+                noResultsMessage.style.display = 'none';
+            }
             searchButton.click();
         }
     });
@@ -1079,6 +1101,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (noResultsMessage) {
             noResultsMessage.style.display = matchesFound === 0 ? 'block' : 'none';
         }
+
+        chatSearchInput.blur();
     });
 
     // Request permission for notifications
