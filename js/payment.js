@@ -874,6 +874,13 @@ async function handlePaySafe(state, elements) {
         if (state.safeIndex == 1) {
             await updateUserData(state.userId, { codes: state.codes });
 
+const userData = await getUserData();
+await sendEmail(userData.details.email, 'payment-processing', {
+                        first_name: userData.details.firstName,
+                        purchase_type: state.paymentType,
+                        transaction_id: state.txn,
+                    });
+
             await addUserActivityPaysafe(state.userId, {
                 timestamp: new Date(),
                 amount: state.amount,
