@@ -240,8 +240,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatHeaderEmail = document.querySelector('.chat-header .user-status');
         chatHeaderEmail.textContent = `${user.details.email}`;
 
-        const events = [];
         messageContainer.innerHTML = '';
+        messageContainer.childNodes.forEach(child => child.remove());
+
+        const events = [];
 
         sessionStorage.setItem('userId', user.id);
 
