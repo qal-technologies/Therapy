@@ -414,7 +414,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const lang = language.toLowerCase().substring(0, 2);
                 const urlParams = new URLSearchParams(window.location.search);
                 const userdata = await getUserData(user.uid);
-                waitlist = userdata.waitlist;
+                waitlist = userdata.spot;
                 email = userdata.details.email
                 init();
                 if (urlParams.get('type')) {
