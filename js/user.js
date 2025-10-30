@@ -169,7 +169,7 @@ function showPayslip(payment) {
   document.getElementById('receiptMethod').textContent = payment.method;
   document.getElementById('receiptCurrency').textContent = payment.currency;
   document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-  document.getElementById('receiptStatus').textContent = Completed;
+  document.getElementById('receiptStatus').textContent = 'Completed';
   document.getElementById('receiptDescription').textContent = payment.description;
   document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
 
