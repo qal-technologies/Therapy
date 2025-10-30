@@ -827,7 +827,7 @@ body {
     flex-direction: column;
     width: 100%;
     bottom: 0;
-    gap: 10px;
+    gap: 5px;
 }
 
 .chat-footer .under {
