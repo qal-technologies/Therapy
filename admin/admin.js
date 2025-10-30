@@ -154,9 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ;
         } catch (error) {
             console.error("Error fetching users: ", error);
-        }finally{
-userListContainer.querySelector('.loading-parent')?.remove()
-}
+        } finally {
+            userListContainer.querySelector('.loading-parent')?.remove()
+        }
     }
 
     function addUserToList(user, prepend = false) {
@@ -596,7 +596,7 @@ userListContainer.querySelector('.loading-parent')?.remove()
                 `;
             } else if (event.type === 'reply') {
                 messageBubble.classList.add('sent');
-                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'reply' });
+                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'reply' });
 
                 messageBubble.innerHTML = `
                     <div class="message-content">

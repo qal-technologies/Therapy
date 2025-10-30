@@ -73,63 +73,76 @@ exports.handler = async (event) => {
         // Update Firestore::::
         const userActivityRef = db.collection('user_activities').doc(userId);
         const userActivityPaysafeRef = userActivityRef.collection('paysafe_events').doc(paymentId);
-
-
         const globalTransactionRef = db.collection('transactions').doc(paymentId);
-
         const userPaymentRef = db.collection('users').doc(userId).collection('payments').doc(paymentId);
 
-        await db.runTransaction(async (transaction) => {
-            const paysafeDoc = await transaction.get(userActivityPaysafeRef);
-            if (paysafeDoc.exists) {
-                transaction.update(userActivityPaysafeRef, { status: paymentStatus, statusMessage: statusMessage });
-            }
+        const [paysafeDoc, transactionDoc, paymentDoc, userDoc] = await Promise.all([
+            userActivityPaysafeRef.get(),
+            globalTransactionRef.get(),
+            userPaymentRef.get(),
+            userActivityRef.get()
+        ]);
 
-            const transactionDoc = await transaction.get(globalTransactionRef);
-            if (transactionDoc.exists) {
-                transaction.update(globalTransactionRef, { status: paymentStatus, statusMessage: statusMessage });
-            }
+        const userData = userDoc.data();
+        if (!userData || !userData.details) {
+            return { statusCode: 404, body: JSON.stringify({ error: 'User data missing.' }) };
+        }
 
-            const paymentDoc = await transaction.get(userPaymentRef);
-            if (paymentDoc.exists) {
-                transaction.update(userPaymentRef, { status: paymentStatus, statusMessage: statusMessage });
-            }
-        });
+        const { email: userEmail, firstName } = userData.details;
+
+        const paymentData = transactionDoc.exists ? transactionDoc.data() : {};
+        const { paymentType, price, method, id } = paymentData;
+
+
+        const batch = db.batch();
+
+        if (paysafeDoc.exists) {
+            batch.update(userActivityPaysafeRef, {
+                status: paymentStatus,
+                statusMessage
+            });
+        }
+
+        if (transactionDoc.exists) {
+            batch.update(globalTransactionRef, {
+                status: paymentStatus,
+                statusMessage
+            });
+        }
+
+        if (paymentDoc.exists) {
+            batch.update(userPaymentRef, {
+                status: paymentStatus,
+                statusMessage
+            });
+        }
 
         const adminReplyRef = userActivityRef.collection('admin_replies').doc();
-        await adminReplyRef.set({
-            replyTo: paymentId,
+        batch.set(adminReplyRef, {
             text: replyText,
             timestamp: admin.firestore.FieldValue.serverTimestamp(),
-            paymentId: paymentId,
+            paymentId
         });
 
-        await userActivityRef.update({
+        const paymentStatusText = paymentStatus ? 'Approved' : 'Declined';
+        batch.update(userActivityRef, {
             unread_count: admin.firestore.FieldValue.increment(1),
             last_update: admin.firestore.FieldValue.serverTimestamp(),
             opened: false,
-            last_message: `Your payment of has been ${statusMessage}.`,
+            last_message: `The payment ${price ? `of ${price}` : ''} has been ${paymentStatusText}.`
         });
 
+        await batch.commit();
+
         // Trigger email notification to the user
-        const userDoc = await userActivityRef.get();
-        const userData = userDoc.data();
-        const userEmail = userData.details.email;
-        const firstName = userData.details.firstName;
 
         const templateName = paymentStatus ? 'payment-approved' : 'payment-declined';
-
-        const paymentDoc = await globalTransactionRef.get();
-        const paymentData = paymentDoc.data();
-
-        const { paymentType, price, method, id } = paymentData;
-
         await sendEmail(userEmail, templateName, {
             first_name: firstName,
             purchase_type: paymentType,
             transaction_id: id,
             amount: price,
-            payment_method: method,
+            payment_method: method
         });
 
         return {
