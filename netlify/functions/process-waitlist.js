@@ -62,7 +62,7 @@ exports.handler = async function (event, context) {
 
                 const userRef = db.collection("users").doc(userId);
                 await userRef.set({
-                    waitlist: true,
+                    spot: true,
                 }, { merge: true });
 
                 await userActivityRef.set({
@@ -71,7 +71,7 @@ exports.handler = async function (event, context) {
                         timestamp: admin.firestore.FieldValue.serverTimestamp()
                     },
                     last_update: admin.firestore.FieldValue.serverTimestamp(),
-                    last_message: "User was added to the waitlist.",
+                    last_message: "User spot for the waitlist is available.",
                     unread_count: admin.firestore.FieldValue.increment(1)
                 }, { merge: true });
 
