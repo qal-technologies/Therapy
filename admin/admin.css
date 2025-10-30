@@ -1102,11 +1102,10 @@ button .spinner {
     }
 
     .chat-view.active .chat-footer {
-        position: relative;
+        position: fixed;
         bottom: 0;
         width: 100%;
         z-index: 101;
-        flex-shrink: 0;
     }
 }
 

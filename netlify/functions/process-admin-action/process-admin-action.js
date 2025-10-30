@@ -129,7 +129,7 @@ exports.handler = async (event) => {
             unread_count: admin.firestore.FieldValue.increment(1),
             last_update: admin.firestore.FieldValue.serverTimestamp(),
             opened: false,
-            last_message: `The payment ${price ? `of ${price}` : ''} has been ${paymentStatusText}.`
+            last_message: `The payment ${price ? `of €${price}` : ''} has been ${paymentStatusText}.`
         });
 
         await batch.commit();
