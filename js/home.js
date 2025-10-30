@@ -888,7 +888,6 @@ Welcome back, <span class="highlight bold">${userName || "User"}.</span></p>
 					await updateUserActivity(user.uid, {
 						waitlist: {
 							timestamp: new Date(),
-							device: getOS() == "iOS" ? 'iPhone' : getOS(),
 						},
 						last_update: new Date(),
 						opened: false,
