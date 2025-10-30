@@ -63,7 +63,6 @@ function renderUserProfile(user, payments, cartNumber) {
       else if (payment.status === false) statusClass = 'status-failed';
       else statusClass = 'status-pending';
 
-
       let statusName = '';
       if (payment.status === true) statusName = 'completed';
       else if (payment.status === false) statusClass = 'failed';

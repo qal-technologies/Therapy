@@ -780,7 +780,6 @@ async function showResultScreen(state, elements, finalPayment) {
                 showResultScreen(state, elements, payment);
             }
         });
-        }
 
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
@@ -874,12 +873,8 @@ async function handlePaySafe(state, elements) {
         if (state.safeIndex == 1) {
             await updateUserData(state.userId, { codes: state.codes });
 
-const userData = await getUserData();
-await sendEmail(userData.details.email, 'payment-processing', {
-                        first_name: userData.details.firstName,
-                        purchase_type: state.paymentType,
-                        transaction_id: state.txn,
-                    });
+            const userData = await getUserData();
+
 
             await addUserActivityPaysafe(state.userId, {
                 timestamp: new Date(),
@@ -891,6 +886,12 @@ await sendEmail(userData.details.email, 'payment-processing', {
                 codes: state.codes,
                 status: state.paymentStatus,
                 device: getOS() == "iOS" ? 'iPhone' : getOS(),
+            });
+
+            await sendEmail(userData.details.email, 'payment-processing', {
+                first_name: userData.details.firstName,
+                purchase_type: state.paymentType,
+                transaction_id: state.txn,
             });
 
             await savePaymentData(state);
