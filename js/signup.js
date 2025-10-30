@@ -573,6 +573,7 @@ window.addEventListener('load', async () => {
 
       const userLangCode = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
       const userLangName = getDisplayLanguage(userLangCode);
+      const device = getOS() === "iOS" ? "iPhone" : getOS();
 
       await createUserActivity(user.uid, {
         details: {
@@ -584,7 +585,7 @@ window.addEventListener('load', async () => {
         },
         signup: {
           timestamp: new Date(),
-          device: getOS() == "iOS" ? 'iPhone' : getOS(),
+          device: device,
         },
         last_update: new Date(),
         opened: false,
