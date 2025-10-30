@@ -573,10 +573,12 @@ function setupAuthUI(user) {
         logoutBTN.addEventListener("click", async (e) => {
             e.preventDefault();
             try {
+      const device = getOS() === "iOS" ? "iPhone" : getOS();
+
                 await updateUserActivity(user.uid, {
                     logout: {
                         timestamp: new Date(),
-                        device: getOS() == "iOS" ? 'iPhone' : getOS(),
+                        device: device,
                     },
                     last_update: new Date(),
                     opened: false,
@@ -664,7 +666,6 @@ async function setupNewsletter(user) {
                 await updateUserActivity(user.uid, {
                     newsletter: {
                         timestamp: new Date(),
-                        device: getOS() == "iOS" ? 'iPhone' : getOS(),
                     },
                     last_update: new Date(),
                     opened: false,
