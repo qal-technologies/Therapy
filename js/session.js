@@ -464,7 +464,7 @@ ${bonuses.join('')}
           waitlistBTN.style.fontSize = "12px";
           waitlistBTN.innerHTML = `  <div class="spinner-container"><div class="spinner"></div></div> Adding you to the queue...`;
 
-          // await updateUserData(user.uid, { waitlist: true });
+          await updateUserData(user.uid, { waitlist: true });
 
           await sendEmail(user.email, 'waitlist', { first_name: userdata.details.firstName || 'there' });
 
