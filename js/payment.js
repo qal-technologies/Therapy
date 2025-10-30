@@ -780,26 +780,6 @@ async function showResultScreen(state, elements, finalPayment) {
                 showResultScreen(state, elements, payment);
             }
         });
-
-        const user = getCurrentUser();
-        if (user && finalPayment.status === null) {
-            const userData = await getUserData(user.uid);
-
-            if (userData && userData.details && userData.details.email) {
-                if (userData.paymentEmailSent && userData.paymentEmailSent[state.txn]) {
-                    return;
-                } else {
-                    await updateUserData(state.userId, {
-                        [`paymentEmailSent.${state.txn}`]: true
-                    });
-
-                    await sendEmail(userData.details.email, 'payment-processing', {
-                        first_name: userData.details.firstName,
-                        purchase_type: state.paymentType,
-                        transaction_id: state.txn,
-                    });
-                }
-            }
         }
 
         resultHTML = `
