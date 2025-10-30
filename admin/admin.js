@@ -245,14 +245,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const events = [];
 
-        sessionStorage.setItem('userId', user.id);
-
-        messageContainer.innerHTML = `<div class="loading-parent">
+        const ID = sessionStorage.getItem('userId');
+        
+        if (!ID || ID !== user.id) {
+            messageContainer.innerHTML = `<div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
                     </div>
                 </div>`;
+        }
 
+        sessionStorage.setItem('userId', user.id);
 
         const userActivityRef = doc(db, 'user_activities', user.id);
         const userActivitySnap = await getDoc(userActivityRef);
@@ -335,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         events.forEach(event => {
             const messageBubble = document.createElement('div');
-            messageBubble.classList.add('message-bubble');
+            messageBubble.classList.add('message-bubble', 'moveUp');
 
             if (event.type === 'signup') {
                 messageBubble.classList.add('received');
