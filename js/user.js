@@ -63,6 +63,14 @@ function renderUserProfile(user, payments, cartNumber) {
       else if (payment.status === false) statusClass = 'status-failed';
       else statusClass = 'status-pending';
 
+
+      let statusName = '';
+      if (payment.status === true) statusName = 'completed';
+      else if (payment.status === false) statusClass = 'failed';
+      else statusClass = 'pending';
+
+
+
       const optionsDate = {
         month: "long",
         day: "numeric",
@@ -89,7 +97,7 @@ function renderUserProfile(user, payments, cartNumber) {
               <div class="payment-header">
                 <div class="header-upper">
                   <div class="indicator-circle ${statusClass}"></div>
-                  <span class="payment-status ${statusClass}">${payment.statusName.toUpperCase()}</span>
+                  <span class="payment-status ${statusClass}">${statusName.toUpperCase()}</span>
                 </div>
                 <div class="header-lower">
                   <div class="payment-type">${payment.title.toUpperCase()}</div>
@@ -138,12 +146,13 @@ function renderUserProfile(user, payments, cartNumber) {
 
 function showPayslip(payment) {
   const icon = document.getElementById('icon');
-  icon.classList.add(`${payment.statusName.toLowerCase()}`);
+
+  icon.classList.add(`completed`);
   icon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle-fill"
 								viewBox="0 0 16 16">
 								<path
 									d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-							</svg> ${payment.statusName.toUpperCase()}`;
+							</svg> COMPLETED`;
   const symbol = getCurrencySymbol(payment.currency);
   const options = {
     month: "long",
@@ -160,7 +169,7 @@ function showPayslip(payment) {
   document.getElementById('receiptMethod').textContent = payment.method;
   document.getElementById('receiptCurrency').textContent = payment.currency;
   document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-  document.getElementById('receiptStatus').textContent = payment.statusName.charAt(0).toUpperCase() + payment.statusName.slice(1);
+  document.getElementById('receiptStatus').textContent = Completed;
   document.getElementById('receiptDescription').textContent = payment.description;
   document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
 
