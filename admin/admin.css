@@ -1094,11 +1094,14 @@ button .spinner {
     }
 
     .chat-view.active .message-container {
-        flex: 1;
+        /*flex: 1;*/
+width:100%;
+height:auto;
+justify-self:flex-start;
         overflow-y: auto;
         padding-block: 10vh !important;
         padding-block: 10dvh !important;
-        max-height: none;
+        max-height: max-content;
     }
 
     .chat-view.active .chat-footer {
