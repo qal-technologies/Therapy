@@ -65,10 +65,8 @@ function renderUserProfile(user, payments, cartNumber) {
 
       let statusName = '';
       if (payment.status === true) statusName = 'completed';
-      else if (payment.status === false) statusClass = 'failed';
-      else statusClass = 'pending';
-
-
+      else if (payment.status === false) statusName = 'failed';
+      else statusName = 'pending';
 
       const optionsDate = {
         month: "long",
@@ -96,7 +94,7 @@ function renderUserProfile(user, payments, cartNumber) {
               <div class="payment-header">
                 <div class="header-upper">
                   <div class="indicator-circle ${statusClass}"></div>
-                  <span class="payment-status ${statusClass}">${statusName.toUpperCase()}</span>
+                  <span class="payment-status ${statusClass}">${statusName.toUpperCase() || 'PENDING'}</span>
                 </div>
                 <div class="header-lower">
                   <div class="payment-type">${payment.title.toUpperCase()}</div>
@@ -168,7 +166,7 @@ function showPayslip(payment) {
   document.getElementById('receiptMethod').textContent = payment.method;
   document.getElementById('receiptCurrency').textContent = payment.currency;
   document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted).toFixed(2)}`;
-  document.getElementById('receiptStatus').textContent = 'Completed';
+  document.getElementById('receiptStatus').textContent = payment.status === true ? 'COMPLETED' : 'FAILED';
   document.getElementById('receiptDescription').textContent = payment.description;
   document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
 
