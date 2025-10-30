@@ -151,10 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 filterIconn.style.display = 'block';
             }
 
-            userListContainer.querySelector('.loading-parent')?.remove();
+            ;
         } catch (error) {
             console.error("Error fetching users: ", error);
-        }
+        }finally{
+userListContainer.querySelector('.loading-parent')?.remove()
+}
     }
 
     function addUserToList(user, prepend = false) {
