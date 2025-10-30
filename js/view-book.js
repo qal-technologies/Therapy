@@ -410,11 +410,13 @@ window.addEventListener('load', () => {
                         applyLayout();
                         updateBookmarkIcon();
 
+      const device = getOS() === "iOS" ? "iPhone" : getOS();
+
                         await updateUserActivity(user.uid, {
                             book: {
                                 title:BOOK.title,
                                 timestamp: new Date(),
-                                device: getOS() =="iOS"? 'iPhone' : getOS(),
+                                device: device
                             },
                             last_update: new Date(),
                             opened: false,
