@@ -247,13 +247,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const ID = sessionStorage.getItem('userId');
 
-        // if (!ID || ID !== user.id) {
         messageContainer.innerHTML = `<div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
                     </div>
                 </div>`;
-        // }
 
         sessionStorage.setItem('userId', user.id);
 
@@ -600,7 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
             } else if (event.type === 'reply') {
-                messageBubble.classList.add('sent');
+                messageBubble.classList.add('rightIntro','sent');
                 messageBubble.classList.remove('leftIntro')
                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'reply' });
 

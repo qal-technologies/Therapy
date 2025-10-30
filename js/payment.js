@@ -773,7 +773,7 @@ function triggerVibration() {
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
     if (!finalPayment || finalPayment.status == null) {
-        const unsub = onSnapshot(doc(db, "transactions", state.txn), (doc) => {
+        const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
             const payment = doc.data();
             if (payment && payment.status !== null) {
                 unsub();
@@ -929,7 +929,9 @@ async function handlePaySafe(state, elements) {
             );
 
             const addButton = document.querySelector("button.another-code");
-            addButton.addEventListener('click', () => addNewCode(state));
+            addButton.addEventListener('click', () => {
+                addNewCode(state)
+            });
 
 
             setTimeout(() => {

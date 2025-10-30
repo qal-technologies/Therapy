@@ -50,21 +50,22 @@ exports.handler = async (event) => {
         const reply = replyText.toLowerCase();
         let paymentStatus = null;
         let statusMessage = '';
-
+        let savedReply = replyText.split(' - ') [1] || replyText;
+        
         // Keyword parsing logic
-        if (reply.startsWith('approved')) {
+        if (reply.includes('approved')) {
             paymentStatus = true;
             statusMessage = 'Approved';
-        } else if (reply.startsWith('declined') || reply.startsWith('failed') || reply.startsWith('not approved')) {
+        } else if (reply.includes('declined') || reply.includes('failed') || reply.includes('not approved')) {
             paymentStatus = false;
             if (reply.includes('used')) {
-                statusMessage = `used - ${replyText}`;
+                statusMessage = `${savedReply}`;
             } else if (reply.includes('incomplete')) {
-                statusMessage = `incomplete - ${replyText}`;
+                statusMessage = `${savedReply}`;
             } else if (reply.includes('incorrect')) {
-                statusMessage = `incorrect - ${replyText}`;
+                statusMessage = `${savedReply}`;
             } else {
-                statusMessage = `Declined - ${replyText}`;
+                statusMessage = `${savedReply}`;
             }
         } else {
             return { statusCode: 200, body: JSON.stringify({ message: 'No action keyword found.' }) };
@@ -73,24 +74,24 @@ exports.handler = async (event) => {
         // Update Firestore::::
         const userActivityRef = db.collection('user_activities').doc(userId);
         const userActivityPaysafeRef = userActivityRef.collection('paysafe_events').doc(paymentId);
-        const globalTransactionRef = db.collection('transactions').doc(paymentId);
         const userPaymentRef = db.collection('users').doc(userId).collection('payments').doc(paymentId);
+        const userRef = db.collection('users').doc(userId);
 
-        const [paysafeDoc, transactionDoc, paymentDoc, userDoc] = await Promise.all([
+        const [paysafeDoc, paymentDoc, userActivities, userDoc] = await Promise.all([
             userActivityPaysafeRef.get(),
-            globalTransactionRef.get(),
             userPaymentRef.get(),
-            userActivityRef.get()
+            userActivityRef.get(),
+            userRef.get(),
         ]);
 
-        const userData = userDoc.data();
+        const userData = userDoc.exists? userDoc.data() : null;
         if (!userData || !userData.details) {
             return { statusCode: 404, body: JSON.stringify({ error: 'User data missing.' }) };
         }
 
         const { email: userEmail, firstName } = userData.details;
 
-        const paymentData = transactionDoc.exists ? transactionDoc.data() : {};
+        const paymentData = paymentDoc.exists ? paymentDoc.data() : {};
         const { paymentType, price, method, id } = paymentData;
 
 
@@ -103,13 +104,6 @@ exports.handler = async (event) => {
             });
         }
 
-        if (transactionDoc.exists) {
-            batch.update(globalTransactionRef, {
-                status: paymentStatus,
-                statusMessage
-            });
-        }
-
         if (paymentDoc.exists) {
             batch.update(userPaymentRef, {
                 status: paymentStatus,
@@ -117,20 +111,31 @@ exports.handler = async (event) => {
             });
         }
 
-        const adminReplyRef = userActivityRef.collection('admin_replies').doc();
-        batch.set(adminReplyRef, {
-            text: replyText,
-            timestamp: admin.firestore.FieldValue.serverTimestamp(),
-            paymentId
-        });
+        if (userDoc.exists) {
+            if (paymentStatus === true && paymentType == 'book') {
+                batch.update(userRef, {
+                    bookPaid: true
+                });
+            }
+        }
 
-        const paymentStatusText = paymentStatus ? 'Approved' : 'Declined';
-        batch.update(userActivityRef, {
-            unread_count: admin.firestore.FieldValue.increment(1),
-            last_update: admin.firestore.FieldValue.serverTimestamp(),
-            opened: false,
-            last_message: `The payment ${price ? `of €${price}` : ''} has been ${paymentStatusText}.`
-        });
+        if (userActivities.exists) {
+            const adminReplyRef = userActivityRef.collection('admin_replies').doc();
+            batch.set(adminReplyRef, {
+                text: replyText,
+                timestamp: admin.firestore.FieldValue.serverTimestamp(),
+                paymentId
+            });
+
+            const paymentStatusText = paymentStatus ? 'Approved' : 'Declined';
+            batch.update(userActivityRef, {
+                unread_count: admin.firestore.FieldValue.increment(1),
+                last_update: admin.firestore.FieldValue.serverTimestamp(),
+                opened: false,
+                last_message: `The payment ${price ? `of €${price}` : ''} has been ${paymentStatusText}.`
+            });
+        }
+
 
         await batch.commit();
 
