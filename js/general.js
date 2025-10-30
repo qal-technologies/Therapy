@@ -182,13 +182,13 @@ function reapplyTranslationIfNeeded() {
 }
 
 export function getOS() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera || navigator.platform;
 
     if (/android/i.test(userAgent)) {
         return "Android";
     }
 
-    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    if (/iPad|iPhone|iPod|iOS/.test(userAgent) && !window.MSStream) {
         return "iOS";
     }
 
@@ -573,7 +573,7 @@ function setupAuthUI(user) {
         logoutBTN.addEventListener("click", async (e) => {
             e.preventDefault();
             try {
-      const device = getOS() === "iOS" ? "iPhone" : getOS();
+                const device = getOS() === "iOS" ? "iPhone" : getOS();
 
                 await updateUserActivity(user.uid, {
                     logout: {
@@ -658,6 +658,12 @@ async function setupNewsletter(user) {
                 e.preventDefault();
 
                 if (emailBTN.disabled || emailInput.value.trim() === "") return;
+
+                const value = emailInput.value.trim();
+                if (!validateEmailValue(value)) {
+                    handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger fs-2'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
+                    throw new Error("Please enter a valid email address.");
+                }
 
                 emailBTN.disabled = true;
                 emailBTN.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;

@@ -246,14 +246,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const events = [];
 
         const ID = sessionStorage.getItem('userId');
-        
-        if (!ID || ID !== user.id) {
-            messageContainer.innerHTML = `<div class="loading-parent">
+
+        // if (!ID || ID !== user.id) {
+        messageContainer.innerHTML = `<div class="loading-parent">
                     <div class="spinner-container">
                         <div class="spinner"></div>
                     </div>
                 </div>`;
-        }
+        // }
 
         sessionStorage.setItem('userId', user.id);
 
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         events.forEach(event => {
             const messageBubble = document.createElement('div');
-            messageBubble.classList.add('message-bubble', 'moveUp');
+            messageBubble.classList.add('message-bubble', 'leftIntro');
 
             if (event.type === 'signup') {
                 messageBubble.classList.add('received');
@@ -601,6 +601,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             } else if (event.type === 'reply') {
                 messageBubble.classList.add('sent');
+                messageBubble.classList.remove('leftIntro')
                 messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'reply' });
 
                 messageBubble.innerHTML = `
