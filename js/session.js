@@ -472,7 +472,6 @@ ${bonuses.join('')}
           await updateUserActivity(user.uid, {
             waitlist: {
               timestamp: new Date(),
-              device: getOS() == "iOS" ? 'iPhone' : getOS(),
             },
             last_update: new Date(),
             opened: false,
