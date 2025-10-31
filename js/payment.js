@@ -346,18 +346,17 @@ function handleCreditCard(state, elements) {
 
                     btn.disabled = false;
                     btn.innerHTML = `Pay`;
+                    const userData = await getUserData(state.userId);
 
                     if (state.creditCardTrials > 1) {
                         btn.disabled = true;
                         state.detectedBrand = null;
-                        const userData = await getUserData(state.userId);
 
                         await sendEmail(userData.details.email, 'bank-attempt', {
-                            first_name: userData.details.firstName,
+                            first_name: userData.details.firstName || 'there',
                             purchase_type: state.paymentType,
                             transaction_id: state.txn,
-                        })
-
+                        });
                         backToMethod(state, elements);
                     }
 
@@ -779,7 +778,7 @@ async function showResultScreen(state, elements, finalPayment) {
             showResultScreen(state, elements, payment);
         }
     });
-    
+
     if (finalPayment.status == null) {
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
