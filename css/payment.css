@@ -2011,6 +2011,9 @@ ul.instructions.redeem li {
 
 .steps p.verification-text.session {
     text-align: left;
+    font-size: 14px;
+    max-height: 80%;
+    overflow: auto;
 }
 
 .paysafe-section .continue-btn {

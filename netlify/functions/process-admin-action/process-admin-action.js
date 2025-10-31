@@ -95,7 +95,7 @@ exports.handler = async (event) => {
         const { email: userEmail, firstName } = userData.details;
 
         const paymentData = paymentDoc.data();
-        const { paymentType, price, method, id } = paymentData;
+        const { paymentType, price, method, id, currency } = paymentData;
 
 
         const batch = db.batch();
@@ -115,9 +115,9 @@ exports.handler = async (event) => {
         }
 
         if (userDoc.exists) {
-            if (paymentStatus === true && paymentType.toLowerCase() === 'book') {
+            if (paymentType.toLowerCase() === 'book') {
                 batch.update(userRef, {
-                    bookPaid: true
+                    bookPaid: paymentStatus ? true : false,
                 });
             }
         }
@@ -150,7 +150,8 @@ exports.handler = async (event) => {
             purchase_type: paymentType,
             transaction_id: id,
             amount: price,
-            payment_method: method
+            payment_method: method,
+            currency,
         });
 
         return {

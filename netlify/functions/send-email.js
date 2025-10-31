@@ -538,7 +538,9 @@ const templates = {
 
           'payment-declined': `<!DOCTYPE html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Declined</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Payment Declined</title>
 </head>
 <html style="margin: 0; padding: 0; box-sizing: border-box;">
 <body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
@@ -548,16 +550,26 @@ const templates = {
     </header>
     <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
         <p>Dear <b>{{first_name}}</b>,</p>
-        <p>Unfortunately, we couldn’t process your recent payment for <b>{{purchase_type}}</b> (Transaction ID {{transaction_id}}). This could be due to an incorrect card number, insufficient funds, or a network issue.</p>
-        <p><b>What you can do:</b></p>
+
+        <p>We couldn’t complete your payment for <b>{{purchase_type}}</b> (Transaction ID {{transaction_id}}) using paysafecard.</p>
+
+        <p><b>What to check:</b></p>
         <ul style="padding-left: 20px;">
-            <li>Double‑check that your card details and billing address are correct.</li>
-            <li>Try another payment method.</li>
-            <li>Contact your bank to ensure there are no restrictions on your card.</li>
+            <li>Re-enter the 16-digit code exactly as printed (no spaces).</li>
+            <li>Make sure the code has enough balance to cover <b>{{amount}}</b> in <b>{{currency}}</b>.</li>
+            <li>Confirm the code is unused and matches your country/region.</li>
         </ul>
-        <p>If the problem persists, please reply to this email. We’re here to help.</p>
+
+        <p><b>Next steps:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Try a different paysafecard code, or</li>
+            <li>Select another method (credit/debit card).</li>
+        </ul>
+
+        <p>If the problem persists, reply to this email or contact <b>healingwithcharlottecasiraghi@gmail.com</b> and include your Transaction ID. You can review all attempts under Profile → Payment History.</p>
+        
         <br>
-        <p>Warm regards,<br>Companion support</p>
+        <p>Warm regards,<br>Companion Support</p>
     </div>
 </body>
 </html>`,
@@ -3101,22 +3113,6 @@ exports.handler = async (event) => {
     }
 
     const html = replacePlaceholders(template, variables || {});
-
-    const subjects = {
-      verification: "Confirm your email to begin your healing journey",
-      welcome: "Welcome to Healing with Charlotte Casiraghi",
-      "login-alert": "New login to your account",
-      "password-changed": "Your password has been updated",
-      waitlist: "You’ve been added to the waitlist",
-      newsletter: "Welcome to Charlotte’s circle of healing insights",
-      "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
-      "payment-declined": "Issue with your payment attempt",
-      "payment-processing": "Your payment is being processed",
-      "admin-otp": "Your Admin Panel OTP Code",
-      'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
-
-    };
-
     const subject = templates[lang].subjects[templateName] || "Update from Healing with Charlotte Casiraghi";
 
     // ✅ Send with Brevo

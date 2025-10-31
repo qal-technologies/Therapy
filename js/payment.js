@@ -802,12 +802,6 @@ async function showResultScreen(state, elements, finalPayment) {
         const { status, statusMessage, paymentType } = finalPayment;
         triggerVibration();
 
-        if (status === true) {
-            if (paymentType.toLowerCase() === "book") {
-                await updateUserData(state.userId, { bookPaid: true })
-            }
-        }
-
         // Determine result content based on status
         const isSuccess = status === true;
 
