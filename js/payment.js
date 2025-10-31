@@ -39,7 +39,7 @@ function initializeState() {
         initialContent: "",
         details: {},
         country: "",
-        paymentType: "Session",
+        paymentType: "",
     };
 }
 
@@ -746,7 +746,6 @@ async function savePaymentData(state) {
         date: new Date(),
         index: index,
         userId: userId,
-        device: getOS() == "iOS" ? 'iPhone' : getOS(),
     };
 
     try {
@@ -1232,6 +1231,7 @@ async function initializePaymentFlow(e, state, elements) {
             state.currencyCode = paymentToProcess.currency || "EUR";
             state.paymentStatus = paymentToProcess.status || null;
             state.statusMessage = paymentToProcess.statusMessage || "";
+state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
 
             const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
             state.pendingIndex = `${indexName}Index`;
