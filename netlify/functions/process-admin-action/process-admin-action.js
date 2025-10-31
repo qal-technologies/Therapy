@@ -115,7 +115,7 @@ exports.handler = async (event) => {
         }
 
         if (userDoc.exists) {
-            if (paymentStatus === true && paymentType == 'book') {
+            if (paymentStatus === true && paymentType.toLowerCase() === 'book') {
                 batch.update(userRef, {
                     bookPaid: true
                 });
