@@ -1206,7 +1206,7 @@ sessionStorage.setItem('userId', user.id);
         }
     }
 
-   // fetchAndDisplayUsers();
+   fetchAndDisplayUsers();
 
     // Implement the onSnapshot listener for real-time updates
     const usersCollectionRef = collection(db, 'user_activities');
