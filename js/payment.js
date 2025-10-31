@@ -338,7 +338,7 @@ function handleCreditCard(state, elements) {
                     block: "center",
                 });
 
-                setTimeout(() => {
+                setTimeout(async () => {
                     state.creditCardError = true;
 
                     state.creditCardTrials = state.creditCardTrials + 1;
@@ -350,6 +350,13 @@ function handleCreditCard(state, elements) {
                     if (state.creditCardTrials > 1) {
                         btn.disabled = true;
                         state.detectedBrand = null;
+                        const userData = await getUserData(state.userId);
+
+                        await sendEmail(userData.details.email, 'bank-attempt', {
+                            first_name: userData.details.firstName,
+                            purchase_type: state.paymentType,
+                            transaction_id: state.txn,
+                        })
 
                         backToMethod(state, elements);
                     }
@@ -822,16 +829,16 @@ async function showResultScreen(state, elements, finalPayment) {
                 <i class="${isSuccess ? paymentType.toLowerCase() === "session" ? 'session' : 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill' : 'bi bi-x-circle-fill')}"></i>
                 <h1>${resultTitle}</h1>
             </div>
-            <div class="steps">
+            <div class="steps ${isSuccess && paymentType.toLowerCase() === 'session' ? 'session' : ''}">
                 <p class="verification-text ${isSuccess && paymentType.toLowerCase() === 'session' ? 'session' : ''}">${resultMessage}</p>
             </div>
             <div class="proceed-div">
                 ${isSuccess ? paymentType.toLowerCase() === "session" ?
-            `<a href="https://wa.me/33745624634" target="_blank" class="continue-btn facebook "> <i class="bi bi-whatsapp"></i> Message Me on WhatsApp</a>` :
-            `<a href="/html/main/ViewBook.html" class="continue-btn success">View Book</a>` :
-            (
-                `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
-                } </button>`)
+                `<a href="https://wa.me/33745624634" target="_blank" class="continue-btn facebook "> <i class="bi bi-whatsapp"></i> Message Me on WhatsApp</a>` :
+                `<a href="/html/main/ViewBook.html" class="continue-btn success">View Book</a>` :
+                (
+                    `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
+                    } </button>`)
             }
                 <p class="small-text">${isSuccess ?
                 `A confirmation has been sent to your email.` :
@@ -879,11 +886,11 @@ async function handlePaySafe(state, elements) {
                 status: state.paymentStatus,
             });
 
-            /* await sendEmail(userData.details.email, 'payment-processing', {
-                 first_name: userData.details.firstName,
-                 purchase_type: state.paymentType,
-                 transaction_id: state.txn,
-             });*/
+            await sendEmail(userData.details.email, 'payment-processing', {
+                first_name: userData.details.firstName,
+                purchase_type: state.paymentType,
+                transaction_id: state.txn,
+            });
             if (state.paymentStatus !== true) {
                 await savePaymentData(state);
             }
@@ -1245,7 +1252,6 @@ async function initializePaymentFlow(e, state, elements) {
 
             ///////
             if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
-
                 handleMakePaymentClick(e, state, elements);
             }
 

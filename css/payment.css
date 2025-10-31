@@ -1881,7 +1881,7 @@ ul.instructions.redeem li {
     width: 90%;
     border-radius: 15px;
     height: max-content;
-    min-height: max-content;
+    min-height: 95vh;
     flex: 0.45;
 }
 
@@ -2012,10 +2012,14 @@ ul.instructions.redeem li {
 .steps p.verification-text.session {
     text-align: left;
     font-size: 14px;
-    max-height: 80%;
-    overflow: auto;
+    max-height: 100%;
+    overflow-y: auto;
 }
 
+.steps.session{
+    max-height: 80vh;
+    overflow-y: auto;
+}
 .paysafe-section .continue-btn {
     background: var(--link);
     opacity: 0.8;

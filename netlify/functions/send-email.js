@@ -5,22 +5,23 @@ require('dotenv').config();
 const fetch = require("node-fetch");
 
 const templates = {
-    en: {
-        subjects: {
-            verification: "Confirm your email to begin your healing journey",
-            welcome: "Welcome to Healing with Charlotte Casiraghi",
-            "login-alert": "New login to your account",
-            "password-changed": "Your password has been updated",
-            waitlist: "You’ve been added to the waitlist",
-            newsletter: "Welcome to Charlotte’s circle of healing insights",
-            "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
-            "payment-declined": "Issue with your payment attempt",
-            "payment-processing": "Your payment is being processed",
-            "admin-otp": "Your Admin Panel OTP Code",
-            'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
-        },
-        templates: {
-          'login-alert': `<!DOCTYPE html>
+  en: {
+    subjects: {
+      verification: "Confirm your email to begin your healing journey",
+      welcome: "Welcome to Healing with Charlotte Casiraghi",
+      "login-alert": "New login to your account",
+      "password-changed": "Your password has been updated",
+      waitlist: "You’ve been added to the waitlist",
+      newsletter: "Welcome to Charlotte’s circle of healing insights",
+      "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
+      "bank-attempt": "Issue with your payment attempt",
+      "payment-declined": "Issue with your paysafecard payment",
+      "payment-processing": "Your payment is being processed",
+      "admin-otp": "Your Admin Panel OTP Code",
+      'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
+    },
+    templates: {
+      'login-alert': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,7 +108,7 @@ const templates = {
 
 </html>`,
 
-          'newsletter': `<!DOCTYPE html>
+      'newsletter': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -186,7 +187,7 @@ const templates = {
 
 </html>`,
 
-          'password-changed': `
+      'password-changed': `
     <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -246,7 +247,7 @@ const templates = {
 </body>
 </html>`,
 
-          'verification': `<!DOCTYPE html>
+      'verification': `<!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
@@ -300,7 +301,7 @@ const templates = {
 </body>
 </html>`,
 
-          'waitlist': `<!DOCTYPE html>
+      'waitlist': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -395,7 +396,7 @@ const templates = {
 </body>
 </html>`,
 
-          'welcome': `
+      'welcome': `
     <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -509,7 +510,7 @@ const templates = {
 
 </html>`,
 
-          'payment-approved': `<!DOCTYPE html>
+      'payment-approved': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Approved</title>
 </head>
@@ -535,8 +536,32 @@ const templates = {
     </div>
 </body>
 </html>`,
-
-          'payment-declined': `<!DOCTYPE html>
+      'bank-attempt': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Declined</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">A Space to Heal</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Dear <b>{{first_name}}</b>,</p>
+        <p>Unfortunately, we couldn’t process your recent payment for <b>{{purchase_type}}</b> (Transaction ID {{transaction_id}}). This could be due to an incorrect card number, insufficient funds, or a network issue.</p>
+        <p><b>What you can do:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Double‑check that your card details and billing address are correct.</li>
+            <li>Try another payment method.</li>
+            <li>Contact your bank to ensure there are no restrictions on your card.</li>
+        </ul>
+        <p>If the problem persists, please reply to this email. We’re here to help.</p>
+        <br>
+        <p>Warm regards,<br>Companion support</p>
+    </div>
+</body>
+</html>`,
+      'payment-declined': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -574,7 +599,7 @@ const templates = {
 </body>
 </html>`,
 
-          'payment-processing': `<!DOCTYPE html>
+      'payment-processing': `<!DOCTYPE html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -647,7 +672,7 @@ const templates = {
 
 </html>`,
 
-          'admin-otp': `<!DOCTYPE html>
+      'admin-otp': `<!DOCTYPE html>
     <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -664,7 +689,7 @@ const templates = {
     </body>
     </html>`,
 
-          'waitlist-spot': `<!DOCTYPE html>
+      'waitlist-spot': `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -690,24 +715,25 @@ const templates = {
 </body>
 
 </html>`,
-        }
+    }
+  },
+  fr: {
+    subjects: {
+      verification: "Confirmez votre e-mail pour commencer votre parcours de guérison",
+      welcome: "Bienvenue chez Healing with Charlotte Casiraghi",
+      "login-alert": "Nouvelle connexion à votre compte",
+      "password-changed": "Votre mot de passe a été mis à jour",
+      waitlist: "Vous avez été ajouté à la liste d'attente",
+      newsletter: "Bienvenue dans le cercle d'aperçus de guérison de Charlotte",
+      "payment-approved": "Votre paiement est confirmé – {{purchase_type}} réservé",
+      "bank-attempt": "Problème avec votre tentative de paiement",
+      "payment-declined":"Problème avec votre paiement paysafecard",
+      "payment-processing": "Votre paiement est en cours de traitement",
+      "admin-otp": "Votre code OTP pour le panneau d'administration",
+      'waitlist-spot': "Une place est disponible – réclamez votre Expérience du Cercle Intérieur",
     },
-    fr: {
-        subjects: {
-            verification: "Confirmez votre e-mail pour commencer votre parcours de guérison",
-            welcome: "Bienvenue chez Healing with Charlotte Casiraghi",
-            "login-alert": "Nouvelle connexion à votre compte",
-            "password-changed": "Votre mot de passe a été mis à jour",
-            waitlist: "Vous avez été ajouté à la liste d'attente",
-            newsletter: "Bienvenue dans le cercle d'aperçus de guérison de Charlotte",
-            "payment-approved": "Votre paiement est confirmé – {{purchase_type}} réservé",
-            "payment-declined": "Problème avec votre tentative de paiement",
-            "payment-processing": "Votre paiement est en cours de traitement",
-            "admin-otp": "Votre code OTP pour le panneau d'administration",
-            'waitlist-spot': "Une place est disponible – réclamez votre Expérience du Cercle Intérieur",
-        },
-        templates: {
-            'login-alert': `
+    templates: {
+      'login-alert': `
             <!DOCTYPE html>
 
 <head>
@@ -780,7 +806,7 @@ const templates = {
 </body>
 
 </html>`,
-            'newsletter': `
+      'newsletter': `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -810,7 +836,7 @@ const templates = {
     </body>
     </html>
         `,
-            'password-changed': `
+      'password-changed': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -869,7 +895,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-            'verification': `<!DOCTYPE html>
+      'verification': `<!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
@@ -920,7 +946,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-            'waitlist': `<!DOCTYPE html>
+      'waitlist': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1005,7 +1031,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-            'welcome': `
+      'welcome': `
     <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1105,7 +1131,7 @@ const templates = {
 </body>
 
 </html>`,
-            'payment-approved': `<!DOCTYPE html>
+      'payment-approved': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Paiement approuvé</title>
 </head>
@@ -1131,7 +1157,44 @@ const templates = {
     </div>
 </body>
 </html>`,
-            'payment-declined': `<!DOCTYPE html>    
+      'payment-declined': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Paiement Refusé</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">Un espace pour guérir</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Cher/chère <b>{{first_name}}</b>,</p>
+
+        <p>Nous n’avons pas pu finaliser votre paiement pour <b>{{purchase_type}}</b> (ID de transaction {{transaction_id}}) avec paysafecard.</p>
+
+        <p><b>À vérifier :</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Renseignez à nouveau le code à 16 chiffres exactement comme indiqué (sans espaces).</li>
+            <li>Assurez-vous que le code dispose de suffisamment de fonds pour couvrir <b>{{amount}}</b> en <b>{{currency}}</b>.</li>
+            <li>Vérifiez que le code n’a pas été utilisé et correspond à votre pays/région.</li>
+        </ul>
+
+        <p><b>Étapes suivantes :</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Essayez un autre code paysafecard, ou</li>
+            <li>Choisissez un autre mode de paiement (carte de crédit/débit).</li>
+        </ul>
+
+        <p>Si le problème persiste, répondez à cet email ou contactez <b>healingwithcharlottecasiraghi@gmail.com</b> en indiquant votre ID de transaction. Vous pouvez consulter toutes vos tentatives dans Profil → Historique des paiements.</p>
+        
+        <br>
+        <p>Cordialement,<br>Companion Support</p>
+    </div>
+</body>
+</html>`,
+      'bank-attempt': `<!DOCTYPE html>    
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Paiement refusé</title>
 </head>
@@ -1156,7 +1219,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-            'payment-processing': `<!DOCTYPE html>
+      'payment-processing': `<!DOCTYPE html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1230,7 +1293,7 @@ const templates = {
     </footer>
 </body>
 </html>`,
-            'admin-otp': `<!DOCTYPE html>
+      'admin-otp': `<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1246,7 +1309,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-            'waitlist-spot': `<!DOCTYPE html>
+      'waitlist-spot': `<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -1275,24 +1338,25 @@ const templates = {
 
 </html>`,
 
-        }
+    }
+  },
+  es: {
+    subjects: {
+      verification: "Confirma tu correo electrónico para comenzar tu viaje de sanación",
+      welcome: "Bienvenido a Healing with Charlotte Casiraghi",
+      "login-alert": "Nuevo inicio de sesión en tu cuenta",
+      "password-changed": "Tu contraseña ha sido actualizada",
+      waitlist: "Has sido añadido a la lista de espera",
+      newsletter: "Bienvenido al círculo de ideas de sanación de Charlotte",
+      "payment-approved": "Tu pago está confirmado – {{purchase_type}} reservado",
+      "bank-attempt": "Problema con tu intento de pago",
+      "payment-declined":"Problema con su pago de paysafecard",
+      "payment-processing": "Tu pago está siendo procesado",
+      "admin-otp": "Tu código OTP para el panel de administración",
+      'waitlist-spot': "Hay un lugar disponible – reclama tu Experiencia del Círculo Íntimo",
     },
-    es: {
-        subjects: {
-            verification: "Confirma tu correo electrónico para comenzar tu viaje de sanación",
-            welcome: "Bienvenido a Healing with Charlotte Casiraghi",
-            "login-alert": "Nuevo inicio de sesión en tu cuenta",
-            "password-changed": "Tu contraseña ha sido actualizada",
-            waitlist: "Has sido añadido a la lista de espera",
-            newsletter: "Bienvenido al círculo de ideas de sanación de Charlotte",
-            "payment-approved": "Tu pago está confirmado – {{purchase_type}} reservado",
-            "payment-declined": "Problema con tu intento de pago",
-            "payment-processing": "Tu pago está siendo procesado",
-            "admin-otp": "Tu código OTP para el panel de administración",
-            'waitlist-spot': "Hay un lugar disponible – reclama tu Experiencia del Círculo Íntimo",
-        },
-        templates: {
-          'login-alert': `<!DOCTYPE html>
+    templates: {
+      'login-alert': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1363,7 +1427,7 @@ const templates = {
 </body>
 
 </html>`,
-          'newsletter': `<!DOCTYPE html>
+      'newsletter': `<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -1429,7 +1493,7 @@ const templates = {
 
 </body>
 </html>`,
-          'password-changed': `
+      'password-changed': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1483,7 +1547,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-          'verification': `<!DOCTYPE html>
+      'verification': `<!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
@@ -1533,7 +1597,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-          'waitlist': `<!DOCTYPE html>
+      'waitlist': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1632,7 +1696,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-          'welcome': `
+      'welcome': `
     <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1740,9 +1804,45 @@ const templates = {
     </p>
   </footer>
 </body>
-
 </html>`,
-          'payment-approved': `<!DOCTYPE html>
+      'payment-declined': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Pago Rechazado</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">Un espacio para sanar</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Estimado/a <b>{{first_name}}</b>,</p>
+
+        <p>No pudimos completar su pago por <b>{{purchase_type}}</b> (ID de transacción {{transaction_id}}) utilizando paysafecard.</p>
+
+        <p><b>Qué verificar:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Ingrese nuevamente el código de 16 dígitos exactamente como aparece (sin espacios).</li>
+            <li>Asegúrese de que el código tenga suficiente saldo para cubrir <b>{{amount}}</b> en <b>{{currency}}</b>.</li>
+            <li>Confirme que el código no haya sido usado y que coincida con su país/región.</li>
+        </ul>
+
+        <p><b>Próximos pasos:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Pruebe con otro código de paysafecard, o</li>
+            <li>Seleccione otro método de pago (tarjeta de crédito/débito).</li>
+        </ul>
+
+        <p>Si el problema persiste, responda a este correo o contacte a <b>healingwithcharlottecasiraghi@gmail.com</b> e incluya su ID de transacción. Puede revisar todos los intentos en Perfil → Historial de pagos.</p>
+        
+        <br>
+        <p>Atentamente,<br>Companion Support</p>
+    </div>
+</body>
+</html>`,
+      'payment-approved': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Pago Aprobado</title>
 </head>
@@ -1768,7 +1868,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'payment-declined': `<!DOCTYPE html>
+      'bank-attempt': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Pago Rechazado</title>
 </head>
@@ -1793,7 +1893,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'payment-processing': `<!DOCTYPE html>
+      'payment-processing': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -1849,7 +1949,7 @@ const templates = {
     </footer>
 </body>
 </html>`,
-          'admin-otp': `<!DOCTYPE html>
+      'admin-otp': `<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1865,7 +1965,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'waitlist-spot': `<!DOCTYPE html>
+      'waitlist-spot': `<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -1893,24 +1993,25 @@ const templates = {
 
 </html>`,
 
-        }
+    }
+  },
+  it: {
+    subjects: {
+      verification: "Conferma la tua email per iniziare il tuo percorso di guarigione",
+      welcome: "Benvenuto in Healing with Charlotte Casiraghi",
+      "login-alert": "Nuovo accesso al tuo account",
+      "password-changed": "La tua password è stata aggiornata",
+      waitlist: "Sei stato aggiunto alla lista d'attesa",
+      newsletter: "Benvenuto nel cerchio di intuizioni di guarigione di Charlotte",
+      "payment-approved": "Il tuo pagamento è confermato – {{purchase_type}} prenotato",
+      "bank-attempt": "Problema con il tuo tentativo di pagamento",
+      "payment-declined":"Problema con il tuo pagamento paysafecard",
+      "payment-processing": "Il tuo pagamento è in fase di elaborazione",
+      "admin-otp": "Il tuo codice OTP per il pannello di amministrazione",
+      'waitlist-spot': "È disponibile un posto – richiedi la tua Esperienza del Cerchio Interno",
     },
-    it: {
-        subjects: {
-            verification: "Conferma la tua email per iniziare il tuo percorso di guarigione",
-            welcome: "Benvenuto in Healing with Charlotte Casiraghi",
-            "login-alert": "Nuovo accesso al tuo account",
-            "password-changed": "La tua password è stata aggiornata",
-            waitlist: "Sei stato aggiunto alla lista d'attesa",
-            newsletter: "Benvenuto nel cerchio di intuizioni di guarigione di Charlotte",
-            "payment-approved": "Il tuo pagamento è confermato – {{purchase_type}} prenotato",
-            "payment-declined": "Problema con il tuo tentativo di pagamento",
-            "payment-processing": "Il tuo pagamento è in fase di elaborazione",
-            "admin-otp": "Il tuo codice OTP per il pannello di amministrazione",
-            'waitlist-spot': "È disponibile un posto – richiedi la tua Esperienza del Cerchio Interno",
-        },
-        templates: {
-          'login-alert': `<!DOCTYPE html>
+    templates: {
+      'login-alert': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1981,7 +2082,7 @@ const templates = {
 </body>
 
 </html>`,
-          'newsletter': `<!DOCTYPE html>
+      'newsletter': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2053,7 +2154,7 @@ const templates = {
 </body>
 
 </html>`,
-          'password-changed': `
+      'password-changed': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2117,7 +2218,7 @@ const templates = {
 </body>
 </html>
 `,
-          'verification': `<!DOCTYPE html>
+      'verification': `<!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
@@ -2174,7 +2275,7 @@ const templates = {
 
 </body>
 </html>`,
-          'waitlist': `<!DOCTYPE html>
+      'waitlist': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2278,8 +2379,8 @@ const templates = {
   </footer>
 
 </body>
-</html>`, 
-          'welcome': `
+</html>`,
+      'welcome': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2389,7 +2490,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-'payment-approved': `<!DOCTYPE html>
+      'payment-approved': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -2417,7 +2518,44 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'payment-declined': `<!DOCTYPE html>
+      'payment-declined': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Pagamento Rifiutato</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">Uno spazio per guarire</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Caro/a <b>{{first_name}}</b>,</p>
+
+        <p>Non siamo riusciti a completare il tuo pagamento per <b>{{purchase_type}}</b> (ID transazione {{transaction_id}}) utilizzando paysafecard.</p>
+
+        <p><b>Da controllare:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Inserisci nuovamente il codice a 16 cifre esattamente come stampato (senza spazi).</li>
+            <li>Assicurati che il codice abbia un saldo sufficiente a coprire <b>{{amount}}</b> in <b>{{currency}}</b>.</li>
+            <li>Verifica che il codice non sia stato già utilizzato e che corrisponda al tuo paese/regione.</li>
+        </ul>
+
+        <p><b>Prossimi passi:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Prova con un altro codice paysafecard, oppure</li>
+            <li>Seleziona un altro metodo di pagamento (carta di credito/debito).</li>
+        </ul>
+
+        <p>Se il problema persiste, rispondi a questa email o contatta <b>healingwithcharlottecasiraghi@gmail.com</b> e includi il tuo ID transazione. Puoi controllare tutti i tentativi nella sezione Profilo → Storico Pagamenti.</p>
+        
+        <br>
+        <p>Cordiali saluti,<br>Companion Support</p>
+    </div>
+</body>
+</html>`,
+      'bank-attempt': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -2444,7 +2582,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'payment-processing': `<!DOCTYPE html>
+      'payment-processing': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -2511,7 +2649,7 @@ const templates = {
     </footer>
 </body>
 </html>`,
-          'admin-otp': `<!DOCTYPE html>
+      'admin-otp': `<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2527,7 +2665,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'waitlist-spot': `<!DOCTYPE html>
+      'waitlist-spot': `<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -2550,24 +2688,25 @@ const templates = {
 </body>
 
 </html>`
-        }
+    }
+  },
+  de: {
+    subjects: {
+      verification: "Bestätigen Sie Ihre E-Mail, um Ihre Heilungsreise zu beginnen",
+      welcome: "Willkommen bei Healing with Charlotte Casiraghi",
+      "login-alert": "Neuer Login in Ihrem Konto",
+      "password-changed": "Ihr Passwort wurde aktualisiert",
+      waitlist: "Sie wurden zur Warteliste hinzugefügt",
+      newsletter: "Willkommen in Charlottes Kreis der Heilungseinblicke",
+      "payment-approved": "Ihre Zahlung ist bestätigt – {{purchase_type}} gebucht",
+      "bank-attempt": "Problem bei Ihrem Zahlungsversuch",
+      "payment-declined":"Problem mit Ihrer Paysafecard-Zahlung",
+      "payment-processing": "Ihre Zahlung wird bearbeitet",
+      "admin-otp": "Ihr OTP-Code für das Admin-Panel",
+      'waitlist-spot': "Ein Platz ist verfügbar – sichern Sie sich Ihr Inner Circle Erlebnis",
     },
-    de: {
-        subjects: {
-            verification: "Bestätigen Sie Ihre E-Mail, um Ihre Heilungsreise zu beginnen",
-            welcome: "Willkommen bei Healing with Charlotte Casiraghi",
-            "login-alert": "Neuer Login in Ihrem Konto",
-            "password-changed": "Ihr Passwort wurde aktualisiert",
-            waitlist: "Sie wurden zur Warteliste hinzugefügt",
-            newsletter: "Willkommen in Charlottes Kreis der Heilungseinblicke",
-            "payment-approved": "Ihre Zahlung ist bestätigt – {{purchase_type}} gebucht",
-            "payment-declined": "Problem bei Ihrem Zahlungsversuch",
-            "payment-processing": "Ihre Zahlung wird bearbeitet",
-            "admin-otp": "Ihr OTP-Code für das Admin-Panel",
-            'waitlist-spot': "Ein Platz ist verfügbar – sichern Sie sich Ihr Inner Circle Erlebnis",
-        },
-        templates: {
-          'login-alert': `<!DOCTYPE html>
+    templates: {
+      'login-alert': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2639,7 +2778,7 @@ const templates = {
 </body>
 
 </html>`,
-          'newsletter': `<!DOCTYPE html>
+      'newsletter': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2687,7 +2826,7 @@ const templates = {
 
 </body>
 </html>`,
-          'password-changed': `
+      'password-changed': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2730,7 +2869,7 @@ const templates = {
 
 </body>
 </html>`,
-          'verification': `
+      'verification': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2771,7 +2910,7 @@ const templates = {
 
 </body>
 </html>`,
-          'waitlist': `
+      'waitlist': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2823,7 +2962,7 @@ const templates = {
 
 </body>
 </html>`,
-          'welcome': `
+      'welcome': `
 <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2890,7 +3029,7 @@ const templates = {
 </body>
 </html>
 `,
-          'payment-approved': `
+      'payment-approved': `
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2922,8 +3061,44 @@ const templates = {
 
 </body>
 </html>`,
-          
-          'payment-declined': `<!DOCTYPE html>
+      'payment-declined': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Zahlung abgelehnt</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">Ein Raum zur Heilung</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Lieber/ Liebe <b>{{first_name}}</b>,</p>
+
+        <p>Wir konnten Ihre Zahlung für <b>{{purchase_type}}</b> (Transaktions-ID {{transaction_id}}) mit Paysafecard nicht abschließen.</p>
+
+        <p><b>Bitte prüfen Sie:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Geben Sie den 16-stelligen Code genau wie aufgedruckt ein (ohne Leerzeichen).</li>
+            <li>Stellen Sie sicher, dass der Code genügend Guthaben für <b>{{amount}}</b> in <b>{{currency}}</b> hat.</li>
+            <li>Überprüfen Sie, dass der Code noch nicht verwendet wurde und zu Ihrem Land/Ihrer Region passt.</li>
+        </ul>
+
+        <p><b>Nächste Schritte:</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Versuchen Sie einen anderen Paysafecard-Code oder</li>
+            <li>Wählen Sie eine andere Zahlungsmethode (Kredit-/Debitkarte).</li>
+        </ul>
+
+        <p>Wenn das Problem weiterhin besteht, antworten Sie bitte auf diese E-Mail oder kontaktieren Sie <b>healingwithcharlottecasiraghi@gmail.com</b> und geben Sie Ihre Transaktions-ID an. Alle Versuche können Sie unter Profil → Zahlungsverlauf einsehen.</p>
+
+        <br>
+        <p>Mit freundlichen Grüßen,<br>Companion Support</p>
+    </div>
+</body>
+</html>`,
+      'bank-attempt': `<!DOCTYPE html>
           <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
@@ -2954,7 +3129,7 @@ const templates = {
 </body>
 </html>
 `,
-          'payment-processing': `
+      'payment-processing': `
 <!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -3000,7 +3175,7 @@ const templates = {
 </body>
 </html>
 `,
-          'admin-otp': `<!DOCTYPE html>
+      'admin-otp': `<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -3016,7 +3191,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-          'waitlist-spot': `<!DOCTYPE html>
+      'waitlist-spot': `<!DOCTYPE html>
 <html lang="de">
 
 <head>
@@ -3039,7 +3214,7 @@ const templates = {
 </body>
 
 </html>`
-        }
+    }
   },
 };
 
@@ -3113,7 +3288,7 @@ exports.handler = async (event) => {
     }
 
     const html = replacePlaceholders(template, variables || {});
-    const subject = templates[lang].subjects[templateName] || "Update from Healing with Charlotte Casiraghi";
+    const subject = replacePlaceholders(templates[lang].subjects[templateName]) || "Update from Healing with Charlotte Casiraghi";
 
     // ✅ Send with Brevo
     const result = await sendWithBrevo(from, to, subject, html);
