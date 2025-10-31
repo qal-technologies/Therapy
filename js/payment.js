@@ -888,7 +888,7 @@ async function handlePaySafe(state, elements) {
                 purchase_type: state.paymentType,
                 transaction_id: state.txn,
             });*/
-if (state.paymentStatus !== true)
+if (state.paymentStatus !== true){
             await savePaymentData(state);
 }
         };
