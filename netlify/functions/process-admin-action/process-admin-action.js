@@ -10,7 +10,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const API_URL = `${process.env.PORT}/.netlify/functions/send-email`;
+const API_URL = `/.netlify/functions/send-email`;
 
 // Helper function to send emails (reusing Brevo logic)
 async function sendEmail(to, templateName, variables) {
@@ -50,7 +50,7 @@ exports.handler = async (event) => {
         const reply = replyText.toLowerCase().trim();
         let paymentStatus = null;
         let statusMessage = '';
-        let savedReply = (replyText.split(' - ')[1] || replyText).trim();
+        let savedReply = replyText.split(' - ')[1] || replyText;
 
         // Keyword parsing logic
         if (reply.includes('approved')) {
@@ -65,7 +65,7 @@ exports.handler = async (event) => {
             } else if (reply.includes('incorrect')) {
                 statusMessage = `${savedReply}`;
             } else {
-                statusMessage = `${savedReply}`;
+                statusMessage = `${reply}`;
             }
         } else {
             return { statusCode: 200, body: JSON.stringify({ message: 'No action keyword found.' }) };
