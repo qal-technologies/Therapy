@@ -144,21 +144,37 @@ const addUserActivityPaysafe = (userId, paysafeData) => {
 /**
  * Retrieves a user's full data from Firestore.
  * @param {string} userId - The user's ID.
- * @returns {Promise<object | null>} The user's data or null if not found.
+ * @returns {Promise<object>} The user's data, or a default object if not found.
  */
 const getUserData = async (userId) => {
+  // Jules: Added a default user object to prevent crashes when data fetch fails.
+  const defaultUser = {
+    details: {
+      email: "",
+      firstName: "User",
+      lastName: "",
+    },
+    emailSub: false,
+    waitlist: false,
+  };
+
   if (!userId) {
-    console.warn("getUserData called without valid userId");
-    return null;
+    console.warn("getUserData called without a valid userId.");
+    return defaultUser;
   }
 
-  const userDocRef = doc(db, "users", userId);
-  const docSnap = await getDoc(userDocRef);
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    console.log("No such user document!");
-    return null;
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such user document! Returning default user data.");
+      return defaultUser;
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return defaultUser;
   }
 };
 

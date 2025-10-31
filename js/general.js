@@ -711,6 +711,12 @@ async function setupNewsletter(user) {
 }
 
 async function initializeApp() {
+    // Jules: Prioritize Firebase auth and data loading before translation to prevent race conditions.
+    await handleAuthStateChange(async user => {
+        setupAuthUI(user);
+        await setupNewsletter(user);
+    });
+
     await handleTranslateFirstLoad();
     addPadding();
     setupCommonUI();
@@ -723,11 +729,6 @@ async function initializeApp() {
     }
 
     handleInputFocusFix();
-
-    await handleAuthStateChange(async user => {
-        setupAuthUI(user);
-        await setupNewsletter(user);
-    });
 }
 
 window.onload = initializeApp;
