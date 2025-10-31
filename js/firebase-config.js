@@ -24,12 +24,4 @@ const db = initializeFirestore(app, {
     })
 });
 
-enableIndexedDbPersistence(db).catch((err) => {
-    if (err.code === 'failed-precondition') {
-        console.warn("Firestore persistence failed: Multiple tabs open.");
-    } else if (err.code === 'unimplemented') {
-        console.warn("Firestore persistence not supported.");
-    }
-});
-
 export { app, db };
