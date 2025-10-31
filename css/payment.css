@@ -1881,7 +1881,7 @@ ul.instructions.redeem li {
     width: 90%;
     border-radius: 15px;
     height: max-content;
-    max-height: max-content;
+    min-height: max-content;
     flex: 0.45;
 }
 
@@ -1956,11 +1956,6 @@ ul.instructions.redeem li {
     font-family: PoppinsMed;
 }
 
-.paysafe-section.session{
-    max-height: 86vh;
-    overflow-y: auto;
-}
-
 .paysafe-section .steps {
     width: 100%;
     display: flex;
@@ -2017,8 +2012,15 @@ ul.instructions.redeem li {
 .steps p.verification-text.session {
     text-align: left;
     font-size: 14px;
+    max-height: 80%;
+    overflow: auto;
 }
 
+
+.paysafe-section.session {
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
 .paysafe-section .continue-btn {
     background: var(--link);
@@ -2031,14 +2033,13 @@ ul.instructions.redeem li {
 }
 
 .paysafe-section .continue-btn.success {
-    min-width: max-content;
     background: rgb(0, 184, 0);
 }
 
 .paysafe-section .continue-btn.facebook {
-    gap: 5px;
     width: max-content;
     max-width: 90%;
+    gap: 5px;
     background: rgb(0, 184, 40);
 }
 
