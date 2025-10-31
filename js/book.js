@@ -303,16 +303,21 @@ window.addEventListener('DOMContentLoaded', () => {
                                 transactionId: transactionId,
                             };
 
+                            const sanitizedAnswers = state.answers.map(a => ({
+                                question: a.question || null,
+                                answer: a.answer ?? null,
+                            }));
+
+
                             await updateUserActivity(user.uid, {
                                 sessionBooked: {
                                     timestamp: new Date(),
-                                    title: details.title,
-                                    transactionId: details.transactionId,
-                                    price: details.price,
-                                    answers: state.answers,
+                                    title: details.title || 'Session',
+                                    transactionId: details.transactionId || null,
+                                price: isNaN(details.price) ? 0 : details.price,
+                                    answers: sanitizedAnswers,
                                 },
                                 last_update: new Date(),
-                                opened: false,
                             });
 
                             const params = new URLSearchParams({
@@ -325,11 +330,14 @@ window.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
+
+
                 function saveAnswer(question, answer) {
                     if (!state.answers) state.answers = [];
                     state.answers.push({ question, answer });
                 }
 
+                
                 function updateSessionInfo(topic) {
                     let bonuses = topic.bonus.map(bonus => {
                         if (bonus.length > 0) {

@@ -51,12 +51,27 @@ const createUserActivity = (userId, initialData) => {
 const updateUserActivity = (userId, dataToUpdate) => {
   const userActivityDocRef = doc(db, "user_activities", userId);
 
+  const sanitize = obj => {
+    if (obj === undefined) return null;
+    if (obj instanceof Date) return obj;
+    if (Array.isArray(obj)) return obj.map(sanitize);
+    if (obj && typeof obj === 'object') {
+      return Object.fromEntries(
+        Object.entries(obj).map(([k, v]) => [k, sanitize(v)])
+      );
+    }
+    return obj;
+  };
+
+  const sanitizedData = sanitize(dataToUpdate);
+
   let last_message = 'User activity updated.';
   const ignoredKeys = ['last_update', 'opened', 'unread_count', 'details', 'last_message'];
+
   const eventKey = Object.keys(dataToUpdate).find(k => !ignoredKeys.includes(k));
 
   if (eventKey) {
-    const eventData = dataToUpdate[eventKey];
+    const eventData = sanitizedData[eventKey] || {};
     switch (eventKey) {
       case 'signup':
         last_message = `User signed up.`;
@@ -97,14 +112,11 @@ const updateUserActivity = (userId, dataToUpdate) => {
     }
   }
 
-  const dataWithIncrement = {
-    ...dataToUpdate,
-    last_message: last_message,
-    unread_count: increment(1),
-    opened: false,
-  };
+  sanitizedData.unread_count = increment(1);
+  sanitizedData.opened = false;
+  sanitizedData.last_message = last_message;
 
-  return setDoc(userActivityDocRef, dataWithIncrement, { merge: true });
+  return setDoc(userActivityDocRef, sanitizedData, { merge: true });
 };
 
 
