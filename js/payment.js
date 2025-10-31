@@ -772,7 +772,7 @@ function triggerVibration() {
 
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
-    if (!finalPayment || finalPayment.status !== true) {
+    if (!finalPayment || finalPayment.status == null) {
         const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
             const payment = doc.data();
             if (payment && payment.status !== null) {
