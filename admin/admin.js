@@ -257,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userRenderedEvents.set(user.id, new Set());
         }
         const renderedSet = userRenderedEvents.get(user.id);
+sessionStorage.setItem('userId', user.id);
 
         if (!userInitialized.has(user.id)) {
             messageContainer.innerHTML = `
