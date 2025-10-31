@@ -806,7 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* resizeObserver.observe(chatFooter);*/
+    resizeObserver.observe(chatFooter);
 
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {
