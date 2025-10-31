@@ -772,15 +772,23 @@ function triggerVibration() {
 
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
-    if (!finalPayment || finalPayment.status == null) {
-        const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
+     const unsub = onSnapshot(
+        doc(db, "users", state.userId, 'payments', state.txn),
+        (doc) => {
             const payment = doc.data();
-            if (payment && payment.status !== null) {
-                unsub();
-                showResultScreen(state, elements, payment);
-            }
-        });
+            if (!payment) return;
 
+            // Always update the UI
+            showResultScreen(state, elements, payment);
+
+            // Only stop listening when status is true
+            if (payment.status === true) {
+                unsub();
+            }
+        }
+    );
+
+    if (finalPayment.status == null) {
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
             <div class="paysafe-header">
