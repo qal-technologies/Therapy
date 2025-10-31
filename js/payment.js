@@ -821,7 +821,7 @@ async function showResultScreen(state, elements, finalPayment) {
 
         resultHTML = `
         <div class="payment-section paysafe-section active" id="paysafe-outcome">
-        ${paymentType.toLowerCase() !=='session' ?`<div class="paysafe-header">
+        ${paymentType.toLowerCase() !== 'session' ? `<div class="paysafe-header">
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
             </div>` : ''}
             <div class="outcome-section">
@@ -850,7 +850,10 @@ async function showResultScreen(state, elements, finalPayment) {
 
     if (tryAgainBtn) {
         tryAgainBtn.addEventListener("click", () => {
+            const initial = tryAgainBtn.innerHTML;
+            tryAgainBtn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>`;
             backToMethod(state, elements);
+            tryAgainBtn.innerHTML = initial;
         });
     }
 }
