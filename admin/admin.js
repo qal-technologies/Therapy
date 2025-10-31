@@ -148,6 +148,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             querySnapshot.forEach(doc => {
                 const user = { id: doc.id, ...doc.data() };
+                const allList = document.querySelectorAll('div.user-list-item')
+                    ?.forEach(list => {
+                        if (list.dataset.id == user.id) {
+                            list.remove();
+                        };
+                    });
                 addUserToList(user);
             });
 
@@ -174,8 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const allList = document.querySelectorAll('div.user-list-item')
             ?.forEach(list => {
                 if (list.dataset.id == user.id) {
-                    console.log('existing')
-                    return;
+                    list.remove();
                 };
             });
 
