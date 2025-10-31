@@ -158,7 +158,6 @@ async function handleProceedClick(e, state) {
                 amount: state.amount,
                 id: state.txn,
                 paymentType: state.paymentType,
-                device: getOS() == "iOS" ? 'iPhone' : getOS(),
             },
             last_update: new Date(),
             opened: false,

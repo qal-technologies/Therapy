@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const userElement = document.createElement('div');
         userElement.classList.add('moveUpNfadeIn', 'user-list-item');
-        userElement.dataset.userId = user.id;
+        userElement.dataset.id = user.id;
         userElement.dataset.tags = Object.keys(user).join(' '); // Add tags for filtering
         if (!user.opened) {
             userElement.classList.add('active');
@@ -355,16 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Remove spinner (after initial fetch)
             messageContainer.querySelector('.loading-parent')?.remove();
 
-            // Determine if we should auto-scroll
-            const shouldScroll = messageContainer.scrollHeight - messageContainer.scrollTop <= messageContainer.clientHeight + 100;
-
             for (const ev of events) {
                 appendEventIfNew(ev, events);
             }
 
-            if (shouldScroll) {
-                messageContainer.scrollTop = messageContainer.scrollHeight;
-            }
+            messageContainer.scrollTop = messageContainer.scrollHeight;
 
             // Add swipe handlers / reply-button listeners (in case some were added)
             document.querySelectorAll('.reply-button').forEach(btn => {
@@ -672,17 +667,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="message-meta">${time}</span>
                     </div>
                     <p>${event.text}</p>
-                </div>
-            `;
-
-            default:
-                return `
-                <div class="message-content">
-                    <div class="tag-div">
-                        <span class="tag-name">${event.type}</span>
-                        <span class="message-meta">${time}</span>
-                    </div>
-                    <p>New activity detected</p>
                 </div>
             `;
         }
@@ -1216,7 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onSnapshot(q, (snapshot) => {
         snapshot.docChanges().forEach(async (change) => {
             const user = { id: change.doc.id, ...change.doc.data() };
-            const existingUserElement = document.querySelector(`.user-list-item[data-user-id="${user.id}"]`);
+            const existingUserElement = document.querySelector(`.user-list-item[data-id="${user.id}"]`);
 
             const notificationTitle = change.type === 'added' ? 'New User' : `Update from ${user.details?.firstName || 'user'}`;
             const notificationBody = user.last_message || `${user.details?.firstName || 'A user'}’s activity was updated.`;
