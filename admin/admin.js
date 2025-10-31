@@ -257,6 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userRenderedEvents.set(user.id, new Set());
         }
         const renderedSet = userRenderedEvents.get(user.id);
+sessionStorage.setItem('userId', user.id);
 
         if (!userInitialized.has(user.id)) {
             messageContainer.innerHTML = `
@@ -456,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function generateBubbleHTML(event, allEvents = []) {
-        const time = formatTimestamp(event.timestamp);
+        const time = event.timestamp? formatTimestamp(event.timestamp) : format timestamp(new Date());
 
         switch (event.type) {
 
@@ -854,18 +855,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to process admin action.');
+                throw new Error(`Failed to process payment - ${response.json().error}`);
             }
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
-            addSentMessage(replyText, paymentId);
+            /*addSentMessage(replyText, paymentId);*/
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
                 replyPreview.style.display = 'none';
             }
         } catch (error) {
             console.error(error);
-            alert('Failed to process your request. Please try again.', error);
+            alert(`Failed to process payment - ${error}`);
         }
     }
 
@@ -1189,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    fetchAndDisplayUsers();
+   fetchAndDisplayUsers();
 
     // Implement the onSnapshot listener for real-time updates
     const usersCollectionRef = collection(db, 'user_activities');

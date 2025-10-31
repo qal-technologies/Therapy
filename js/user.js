@@ -173,7 +173,7 @@ window.addEventListener('load', () => {
 
     if (payment.status === false && payment.statusMessage) {
       const reasonElement = document.createElement('div');
-      reasonElement.className = 'payslip-detail failure-reason';
+      reasonElement.className = 'payslip-row failure-reason';
       reasonElement.innerHTML = `
       <span class="detail-label">Reason:</span>
       <span class="detail-value">${payment.statusMessage.charAt(0).toUpperCase() + payment.statusMessage.slice(1)}</span>
@@ -188,6 +188,7 @@ window.addEventListener('load', () => {
 
     if (payment.status === true) {
       actionButton.textContent = 'Continue your journey';
+      actionButton.style.backgroundColor = 'rgb(30, 200, 30)';
       actionButton.addEventListener('click', (e) => {
         e.preventDefault();
 

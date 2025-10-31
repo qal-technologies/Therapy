@@ -39,7 +39,7 @@ function initializeState() {
         initialContent: "",
         details: {},
         country: "",
-        paymentType: "Session",
+        paymentType: "",
     };
 }
 
@@ -745,7 +745,6 @@ async function savePaymentData(state) {
         date: new Date(),
         index: index,
         userId: userId,
-        device: getOS() == "iOS" ? 'iPhone' : getOS(),
     };
 
     try {
@@ -803,11 +802,11 @@ async function showResultScreen(state, elements, finalPayment) {
         const { status, statusMessage, paymentType } = finalPayment;
         triggerVibration();
 
-        // if (status === true) {
-        //     if (paymentType.toLowerCase() === "book") {
-        //         await updateUserData(state.userId, { bookPaid: true })
-        //     }
-        // }
+        if (status === true) {
+          if (paymentType.toLowerCase() === "book") {
+                await updateUserData(state.userId, { bookPaid: true })
+            }
+         }
 
         // Determine result content based on status
         const isSuccess = status === true;
@@ -883,13 +882,14 @@ async function handlePaySafe(state, elements) {
                 device: getOS() == "iOS" ? 'iPhone' : getOS(),
             });
 
-            await sendEmail(userData.details.email, 'payment-processing', {
+           /* await sendEmail(userData.details.email, 'payment-processing', {
                 first_name: userData.details.firstName,
                 purchase_type: state.paymentType,
                 transaction_id: state.txn,
-            });
-
+            });*/
+if (state.paymentStatus !== true){
             await savePaymentData(state);
+}
         };
 
         elements.paymentDisplay.innerHTML = "";
@@ -1231,6 +1231,7 @@ async function initializePaymentFlow(e, state, elements) {
             state.currencyCode = paymentToProcess.currency || "EUR";
             state.paymentStatus = paymentToProcess.status || null;
             state.statusMessage = paymentToProcess.statusMessage || "";
+state.paymentType = paymentToProcess.paymentType;
 
             const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
             state.pendingIndex = `${indexName}Index`;
