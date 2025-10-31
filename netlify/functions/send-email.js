@@ -3288,7 +3288,7 @@ exports.handler = async (event) => {
     }
 
     const html = replacePlaceholders(template, variables || {});
-    const subject = replacePlaceholders(templates[lang].subjects[templateName]) || "Update from Healing with Charlotte Casiraghi";
+    const subject = replacePlaceholders(templates[lang].subjects[templateName], variables || {}) || "Update from Healing with Charlotte Casiraghi";
 
     // ✅ Send with Brevo
     const result = await sendWithBrevo(from, to, subject, html);
