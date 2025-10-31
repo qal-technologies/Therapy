@@ -47,7 +47,7 @@ exports.handler = async (event) => {
             return { statusCode: 400, body: JSON.stringify({ error: 'Missing parameters.' }) };
         }
 
-        const reply = replyText.toLowerCase();
+        const reply = replyText.toLowerCase().trim();
         let paymentStatus = null;
         let statusMessage = '';
         let savedReply = (replyText.split(' - ')[1] || replyText).trim();
