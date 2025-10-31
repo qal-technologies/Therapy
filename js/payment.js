@@ -1231,7 +1231,7 @@ async function initializePaymentFlow(e, state, elements) {
             state.currencyCode = paymentToProcess.currency || "EUR";
             state.paymentStatus = paymentToProcess.status || null;
             state.statusMessage = paymentToProcess.statusMessage || "";
-state.paymentType = paymentType.charAt(0).toUpperCase() + paymentType.slice(1);
+state.paymentType = paymentToProcess.paymentType;
 
             const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
             state.pendingIndex = `${indexName}Index`;
