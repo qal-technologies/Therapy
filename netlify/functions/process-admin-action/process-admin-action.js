@@ -50,8 +50,8 @@ exports.handler = async (event) => {
         const reply = replyText.toLowerCase();
         let paymentStatus = null;
         let statusMessage = '';
-        let savedReply = replyText.split(' - ') [1] || replyText;
-        
+        let savedReply = (replyText.split(' - ')[1] || replyText).trim();
+
         // Keyword parsing logic
         if (reply.includes('approved')) {
             paymentStatus = true;
@@ -84,14 +84,17 @@ exports.handler = async (event) => {
             userRef.get(),
         ]);
 
-        const userData = userDoc.exists? userDoc.data() : null;
+        const userData = userDoc.exists ? userDoc.data() : null;
         if (!userData || !userData.details) {
             return { statusCode: 404, body: JSON.stringify({ error: 'User data missing.' }) };
+        }
+        if (!paymentDoc.exists) {
+            return { statusCode: 404, body: JSON.stringify({ error: 'Payment data not found.' }) };
         }
 
         const { email: userEmail, firstName } = userData.details;
 
-        const paymentData = paymentDoc.exists ? paymentDoc.data() : {};
+        const paymentData = paymentDoc.data();
         const { paymentType, price, method, id } = paymentData;
 
 

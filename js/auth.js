@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { db, app } from "./firebase-config.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -10,13 +10,9 @@ import {
   verifyPasswordResetCode,
   confirmPasswordReset
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-import { firebaseConfig } from "./firebase-config.js";
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 // --- AUTHENTICATION FUNCTIONS ---
 

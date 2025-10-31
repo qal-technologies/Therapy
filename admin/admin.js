@@ -1222,4 +1222,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     requestNotificationPermission();
+
+    window.addEventListener('resize', () => {
+        const chatView = document.querySelector('.chat-view.active');
+        if (chatView) {
+            chatView.style.height = '100vh';
+            setTimeout(() => {
+                chatView.style.height = '100dvh';
+            }, 100);
+        }
+    });
 });

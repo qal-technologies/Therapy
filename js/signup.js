@@ -555,6 +555,8 @@ window.addEventListener('load', async () => {
     disableAllInputs(true);
     try {
       const userCredential = await signup(email, password);
+      const device = getOS() === "iOS" ? "iPhone" : getOS();
+      const userLangName = getDisplayLanguage();
       const user = userCredential.user;
 
       await createUserProfile(user.uid, {
@@ -570,10 +572,6 @@ window.addEventListener('load', async () => {
 
       const pathName = window.location.hostname;
       await sendEmail(email, 'welcome', { first_name: firstName, origin: pathName });
-
-      const userLangCode = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
-      const userLangName = getDisplayLanguage(userLangCode);
-      const device = getOS() === "iOS" ? "iPhone" : getOS();
 
       await createUserActivity(user.uid, {
         details: {

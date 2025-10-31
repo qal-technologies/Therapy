@@ -8,7 +8,8 @@
 }
 
 body {
-  display: none;
+  /* display: none; */
+  visibility: visible;
 }
 
 #container {
@@ -420,6 +421,33 @@ p#receiptDate {
   font-size: 16px;
 }
 
+.modal .payslip-footer {
+  width: 100%;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.modal .payslip-footer button {
+  width: 60%;
+  max-width: 200px;
+  background: var(--link);
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 20px;
+  color: white;
+  font-family: PoppinsMed;
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.modal .payslip-footer button:hover, .modal .payslip-footer button:active {
+  transform: scale(95%);
+  opacity: .8;
+}
+
 @media (max-width: 768px) {
   .profile-section {
     flex-direction: column;
@@ -466,7 +494,7 @@ p#receiptDate {
   fill: var(--danger);
 }
 
-.no-payments-message{
+.no-payments-message {
   padding: 20px;
   display: flex;
   flex-direction: column;

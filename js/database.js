@@ -104,18 +104,6 @@ const updateUserActivity = (userId, dataToUpdate) => {
 
 
 /**
- * Adds a payment document to the user's activity sub-collection.
- * @param {string} userId - The user's ID.
- * @param {string} paymentId - The ID of the payment.
- * @param {object} paymentData - The payment data to store.
- * @returns {Promise<void>}
- */
-const addUserActivityPayment = (userId, paymentId, paymentData) => {
-  const paymentDocRef = doc(db, "user_activities", userId, "payments", paymentId);
-  return setDoc(paymentDocRef, paymentData);
-};
-
-/**
  * Adds a Paysafe event document to the user's activity sub-collection.
  * @param {string} userId - The user's ID.
  * @param {object} paysafeData - The Paysafe data to store.
@@ -182,7 +170,7 @@ const updateUserData = (userId, changingData) => {
  * @returns {Promise<DocumentReference>}
  */
 const addUserPayment = (userId, paymentData) => {
-  const paymentDocRef = doc(db, "users", userId, "payments", paymentData.id); 
+  const paymentDocRef = doc(db, "users", userId, "payments", paymentData.id);
   return setDoc(paymentDocRef, paymentData);
 };
 
@@ -200,19 +188,6 @@ const getUserPayments = async (userId) => {
   });
   return payments;
 };
-
-// --- GLOBAL TRANSACTION FUNCTIONS ---
-
-/**
- * Adds a transaction record to the global transactions collection.
- * @param {object} transactionData - The transaction data object.
- * @returns {Promise<DocumentReference>}
- */
-const createGlobalTransaction = (transactionData) => {
-  const transactionDocRef = doc(db, "transactions", transactionData.id); 
-  return setDoc(transactionDocRef, transactionData);
-};
-
 
 // --- CART FUNCTIONS ---
 
@@ -298,14 +273,14 @@ const removeCartItem = (userId, itemId) => {
  * @param {string} txnId - The transaction ID.
  * @returns {Promise<object|null>}
  */
-const getPaymentById = async (txnId) => {
-  const docRef = doc(db, "transactions", txnId);
+const getPaymentById = async (userId, txnId) => {
+  const docRef = doc(db, "users", userId, "payments", txnId);
   const snapshot = await getDoc(docRef);
 
   if (snapshot.exists()) {
     return { id: snapshot.id, ...snapshot.data() };
   } else {
-    return null; 
+    return null;
   }
 };
 
@@ -320,19 +295,6 @@ const updateUserPayment = (userId, paymentId, paymentData) => {
   const paymentDocRef = doc(db, "users", userId, "payments", paymentId);
   return setDoc(paymentDocRef, paymentData, { merge: true });
 };
-
-
-/**
- * Updates a transaction record in the global transactions collection.
- * @param {string} transactionId - The document ID of the transaction to update.
- * @param {object} transactionData - The data to update.
- * @returns {Promise<void>}
- */
-const updateGlobalTransaction = (transactionId, transactionData) => {
-  const transactionDocRef = doc(db, "transactions", transactionId);
-  return setDoc(transactionDocRef, transactionData, { merge: true });
-};
-
 
 
 //////////////////////////////////////
@@ -377,7 +339,7 @@ export async function saveTranslationToFirestore(pageKey, translatedTexts) {
 const addToPendingWaitlist = (userId, firstName) => {
   const pendingWaitlistRef = doc(db, "pending_waitlist", userId);
   return setDoc(pendingWaitlistRef, {
-    id:userId,
+    id: userId,
     timestamp: serverTimestamp(),
     firstName: firstName,
   });
@@ -387,11 +349,9 @@ export {
   createUserProfile,
   createUserActivity,
   updateUserActivity,
-  addUserActivityPayment,
   getUserData,
   addUserPayment,
   getUserPayments,
-  createGlobalTransaction,
   createNewCartItem,
   addToCart,
   getCartItems,
@@ -401,7 +361,6 @@ export {
   updateCartItems,
   getCartById,
   updateUserData,
-  updateGlobalTransaction,
   addUserActivityPaysafe,
   addToPendingWaitlist,
 };

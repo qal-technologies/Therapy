@@ -182,19 +182,23 @@ function reapplyTranslationIfNeeded() {
 }
 
 export function getOS() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera || navigator.platform;
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const platform = navigator.platform;
 
-    if (/android/i.test(userAgent)) {
-        return "Android";
-    }
 
-    if (/iPad|iPhone|iPod|iOS/.test(userAgent) && !window.MSStream) {
-        return "iOS";
-    }
+    if (/iPad|iPhone|iPod|iOS/.test(userAgent) && !window.MSStream) return "iOS";
+    if (platform === 'MacIntel' && navigator.maxTouchPoints > 1) return 'iOS';
 
-    if (/Windows|mac|windows|mac|imac|iMac/.test(userAgent)) {
-        return "PC"
-    }
+    if (/android/i.test(userAgent)) return "Android";
+
+
+    if (/windows phone/i.test(userAgent)) return "Android";
+    if (/win/i.test(platform)) return "PC";
+    if (/mac/i.test(platform)) return "PC";
+
+    if (/linux/i.test(platform) && !/android/i.test(userAgent)) return "PC";
+
+    if (/Windows|mac|windows|mac|imac|iMac/.test(userAgent)) return "PC";
 
     return "unknown";
 }
@@ -1195,19 +1199,28 @@ function safeVibrate(durationOrPattern) {
 /**
  * Converts a language code into its full display name.
  * @param {string} langCode - The language code (e.g., "en-US", "fr").
- * @returns {string} The full language name (e.g., "English", "French") or the original code on failure.
+ * @returns {string} The full language name (e.g., "English", "French").
  */
-export function getDisplayLanguage(langCode) {
+export function getDisplayLanguage() {
     if (!langCode) return 'Unknown';
     try {
+        const langCode = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
         // Use Intl.DisplayNames to get the human-readable language name.
         const languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
         const codeOnly = langCode.split('-')[0];
         return languageNames.of(codeOnly);
     } catch (error) {
-        console.warn(`Could not get display name for language code: ${langCode}`, error);
-        // Fallback to the original code if the API fails
-        return langCode;
+        console.warn('Could not determine full language name:', error);
+        const lang = (navigator.language || 'en').split('-')[0];
+        const langMap = {
+            'en': 'English',
+            'fr': 'French',
+            'es': 'Spanish',
+            'de': 'German',
+            'it': 'Italian',
+            'pt': 'Portuguese'
+        };
+        return langMap[lang] || 'English';
     }
 }
 

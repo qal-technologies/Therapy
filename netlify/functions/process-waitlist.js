@@ -50,17 +50,19 @@ exports.handler = async function (event, context) {
         }
 
         const processingPromises = snapshot.docs.map(async (doc) => {
-            const userData = doc.data();
-            const { userId, email, firstName } = userData;
+            const waitlistId = doc.data().id;
+            const userData = db.collection('users').doc(waitlistId);
+            const userDoc = await userData.get();
+            const {email, firstName } = userDoc.data();
 
             try {
                 // 1. Send the waitlist confirmation email
                 await sendEmail(email, 'waitlist-spot', { firstName });
 
                 // 2. Update the main user_activities document
-                const userActivityRef = db.collection('user_activities').doc(userId);
+                const userActivityRef = db.collection('user_activities').doc(waitlistId);
 
-                const userRef = db.collection("users").doc(userId);
+                const userRef = db.collection("users").doc(waitlistId);
                 await userRef.set({
                     spot: true,
                 }, { merge: true });
@@ -77,10 +79,10 @@ exports.handler = async function (event, context) {
 
                 // 3. Delete from the pending_waitlist
                 await doc.ref.delete();
-                console.log(`Successfully processed waitlist for user ${userId}`);
+                console.log(`Successfully processed waitlist for user ${waitlistId}`);
 
             } catch (error) {
-                console.error(`Failed to process waitlist for user ${userId}:`, error);
+                console.error(`Failed to process waitlist for user ${waitlistId}:`, error);
                 // Decide on an error handling strategy, e.g., leave them in the queue for the next run
             }
         });

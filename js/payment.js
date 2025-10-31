@@ -4,7 +4,6 @@ import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.1/fireb
 import {
     getPaymentById,
     updateUserPayment,
-    updateGlobalTransaction,
     updateUserData,
     getUserData,
     addUserActivityPayment,
@@ -707,14 +706,14 @@ function safeAlerts(state) {
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 let attempts = 0;
-async function pollForPaymentStatus(txnId) {
-    let payment = await getPaymentById(txnId);
+async function pollForPaymentStatus(state) {
+    let payment = await getPaymentById(state.userId, state.txn);
 
     while (payment === null && attempts < 40) {
         await delay(2500);
         attempts++;
 
-        payment = await getPaymentById(txnId);
+        payment = await getPaymentById(state.userId, state.txn);
     }
     return payment;
 }
@@ -752,10 +751,7 @@ async function savePaymentData(state) {
     };
 
     try {
-        await updateGlobalTransaction(txn, paymentData);
         await updateUserPayment(userId, txn, paymentData);
-        await addUserActivityPayment(userId, txn, paymentData);
-
         return true;
     } catch (error) {
         console.error("Error saving payment data:", error);
@@ -801,7 +797,6 @@ async function showResultScreen(state, elements, finalPayment) {
         </div>
     `
     } else {
-
         // Update state with the final payment details
         state.paymentStatus = finalPayment.status;
         state.statusMessage = finalPayment.statusMessage;
@@ -809,16 +804,20 @@ async function showResultScreen(state, elements, finalPayment) {
 
         const { status, statusMessage, paymentType } = finalPayment;
         triggerVibration();
-        if (status === true) {
-            if (paymentType.toLowerCase() === "book") {
-                await updateUserData(state.userId, { bookPaid: true })
-            }
-        }
+
+        // if (status === true) {
+        //     if (paymentType.toLowerCase() === "book") {
+        //         await updateUserData(state.userId, { bookPaid: true })
+        //     }
+        // }
+
         // Determine result content based on status
         const isSuccess = status === true;
+
         const resultTitle = isSuccess && paymentType.toLowerCase() !== "session" ? 'Payment Successful' : isSuccess && paymentType.toLowerCase() === "session" ? "✨ Your Session is Confirmed" : (statusMessage.includes("used") ? 'Code Already Used' : (statusMessage.includes("incomplete") ? 'Payment Not Fully Covered' : "Incorrect Code"));
+
         const resultMessage = isSuccess && paymentType.toLowerCase() !== "session" ?
-            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' : isSuccess && paymentType.toLowerCase() === "session" ? "Thank you for booking your session. <br/> To keep this experience truly personal, I handle confirmations directly myself. <br/>Please send me a short nessage on Facebook so I can: <br/> • Personally confirm your time with you. <br/> • Share important preparations notes before we meet. <br/> • Be sure you feel seen and supported from the very start." :
+            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' : isSuccess && paymentType.toLowerCase() === "session" ? "Thank you for booking your session. <br/> To keep this experience truly personal, I handle confirmations directly myself. <br/>Please send me a short nessage on WhatsApp so I can: <br/> • Personally confirm your time with you. <br/> • Share important preparations notes before we meet. <br/> • Be sure you feel seen and supported from the very start." :
                 (statusMessage.includes("used") ?
                     "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> ${statusMessage}` :
                         "The Paysafecard code you entered is not correct. Please check the digits and try again."));
@@ -837,7 +836,7 @@ async function showResultScreen(state, elements, finalPayment) {
             </div>
             <div class="proceed-div">
                 ${isSuccess ? paymentType.toLowerCase() === "session" ?
-                `<a href="https://www.facebook.com/charlotte.casiraghi.992551" target="_blank" class="continue-btn facebook "> <i class="bi bi-facebook"></i> Message Me on Facebook</a>` : `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
+                `<a href="https://wa.me/33745624634" target="_blank" class="continue-btn facebook "> <i class="bi bi-whatsapp"></i> Message Me on WhatsApp</a>` : `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
                 `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
                 } </button>`)
             }
@@ -866,7 +865,7 @@ async function handlePaySafe(state, elements) {
     const currentSection = state.paySafeSections[state.safeIndex + 1];
 
     if (state.safeIndex === 1 && state.pending) {
-        const finalPayment = await pollForPaymentStatus(state.txn);
+        const finalPayment = await pollForPaymentStatus(state);
         await showResultScreen(state, elements, finalPayment);
     } else if (currentSection) {
 
@@ -1213,7 +1212,7 @@ async function initializePaymentFlow(e, state, elements) {
         // Parse payment details
         const details = JSON.parse(decodeURIComponent(paymentDetails));
         state.txn = details.transactionId || details.id || `TXN-${Date.now()}`;
-        const existingPayment = await getPaymentById(state.txn);
+        const existingPayment = await getPaymentById(state.userId, state.txn);
 
         if (existingPayment || details.pending) {
             const paymentToProcess = existingPayment;
@@ -1246,7 +1245,7 @@ async function initializePaymentFlow(e, state, elements) {
             }
 
             // Start polling for the final status
-            const finalPayment = await pollForPaymentStatus(state.txn);
+            const finalPayment = await pollForPaymentStatus(state);
             await showResultScreen(state, elements, finalPayment);
 
             ///////
