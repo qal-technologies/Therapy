@@ -33,7 +33,12 @@ const createUserProfile = (userId, userDetails) => {
  */
 const createUserActivity = (userId, initialData) => {
   const userActivityDocRef = doc(db, "user_activities", userId);
-  return setDoc(userActivityDocRef, initialData);
+
+  const savingData = {
+    ...initialData,
+    last_message: `User signed up.`
+  }
+  return setDoc(userActivityDocRef, savingData);
 };
 
 
