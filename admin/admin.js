@@ -462,7 +462,7 @@ sessionStorage.setItem('userId', user.id);
     }
 
     function generateBubbleHTML(event, allEvents = []) {
-        const time = formatTimestamp(event.timestamp);
+        const time = event.timestamp? formatTimestamp(event.timestamp) : format timestamp(new Date());
 
         switch (event.type) {
 
@@ -875,7 +875,7 @@ sessionStorage.setItem('userId', user.id);
             }
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
-            addSentMessage(replyText, paymentId);
+            /*addSentMessage(replyText, paymentId);*/
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
                 replyPreview.style.display = 'none';
