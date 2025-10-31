@@ -435,6 +435,7 @@ p#receiptDate {
   max-width: 200px;
   background: var(--link);
   padding: 5px;
+  padding-inline: 12px;
   cursor: pointer;
   border-radius: 20px;
   color: white;

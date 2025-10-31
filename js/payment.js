@@ -6,7 +6,6 @@ import {
     updateUserPayment,
     updateUserData,
     getUserData,
-    addUserActivityPayment,
     updateUserActivity,
     addUserActivityPaysafe
 } from './database.js';
