@@ -871,7 +871,7 @@ sessionStorage.setItem('userId', user.id);
             });
 
             if (!response.ok) {
-                throw new Error('Failed to process admin action.');
+                throw new Error(`Failed to process payment - ${response.json().error}`);
             }
 
             // Optionally, add the admin's reply to the chat view as a "sent" message
@@ -882,7 +882,7 @@ sessionStorage.setItem('userId', user.id);
             }
         } catch (error) {
             console.error(error);
-            alert('Failed to process your request. Please try again.', error);
+            alert(`Failed to process payment - ${error}`);
         }
     }
 
