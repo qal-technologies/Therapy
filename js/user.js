@@ -188,6 +188,7 @@ window.addEventListener('load', () => {
 
     if (payment.status === true) {
       actionButton.textContent = 'Continue your journey';
+actionButton.style.backgroundColor = 'rgb(21, 218, 21)';
       actionButton.addEventListener('click', (e) => {
         e.preventDefault();
 
