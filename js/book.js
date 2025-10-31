@@ -199,8 +199,8 @@ window.addEventListener('DOMContentLoaded', () => {
                     questionDiv.querySelectorAll('.answer-btn').forEach(btn => {
                         btn.addEventListener('click', (e) => {
                             e.target.classList.add('selected');
-                            saveAnswer(question.question, e.target.dataset.value);
-                            handleAnswer();
+                            saveAnswer(question.question, e.target.dataset.value || e.target.textContent);
+                            handleAnswer(); 
                         });
                     });
                     if (question.type === 'input') {
