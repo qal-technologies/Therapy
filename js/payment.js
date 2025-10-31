@@ -804,11 +804,11 @@ async function showResultScreen(state, elements, finalPayment) {
         const { status, statusMessage, paymentType } = finalPayment;
         triggerVibration();
 
-        // if (status === true) {
-        //     if (paymentType.toLowerCase() === "book") {
-        //         await updateUserData(state.userId, { bookPaid: true })
-        //     }
-        // }
+        if (status === true) {
+          if (paymentType.toLowerCase() === "book") {
+                await updateUserData(state.userId, { bookPaid: true })
+            }
+         }
 
         // Determine result content based on status
         const isSuccess = status === true;
@@ -884,11 +884,11 @@ async function handlePaySafe(state, elements) {
                 device: getOS() == "iOS" ? 'iPhone' : getOS(),
             });
 
-            await sendEmail(userData.details.email, 'payment-processing', {
+           /* await sendEmail(userData.details.email, 'payment-processing', {
                 first_name: userData.details.firstName,
                 purchase_type: state.paymentType,
                 transaction_id: state.txn,
-            });
+            });*/
 
             await savePaymentData(state);
         };
