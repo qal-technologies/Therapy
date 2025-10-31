@@ -692,6 +692,7 @@ body {
 
 .sent.message-bubble {
     justify-content: flex-end;
+    margin-inline-start: 0;
     margin-inline-end: 10px;
 }
 
@@ -727,6 +728,7 @@ body {
 
 .message-bubble.sent {
     transform-origin: bottom right;
+    margin-inline-end: 10px;
     animation-name: bubbleSentFromInput;
 }
 

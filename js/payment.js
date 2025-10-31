@@ -803,10 +803,10 @@ async function showResultScreen(state, elements, finalPayment) {
         triggerVibration();
 
         if (status === true) {
-          if (paymentType.toLowerCase() === "book") {
+            if (paymentType.toLowerCase() === "book") {
                 await updateUserData(state.userId, { bookPaid: true })
             }
-         }
+        }
 
         // Determine result content based on status
         const isSuccess = status === true;
@@ -814,16 +814,16 @@ async function showResultScreen(state, elements, finalPayment) {
         const resultTitle = isSuccess && paymentType.toLowerCase() !== "session" ? 'Payment Successful' : isSuccess && paymentType.toLowerCase() === "session" ? "✨ Your Session is Confirmed" : (statusMessage.includes("used") ? 'Code Already Used' : (statusMessage.includes("incomplete") ? 'Payment Not Fully Covered' : "Incorrect Code"));
 
         const resultMessage = isSuccess && paymentType.toLowerCase() !== "session" ?
-            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' : isSuccess && paymentType.toLowerCase() === "session" ? "Thank you for booking your session. <br/> To keep this experience truly personal, I handle confirmations directly myself. <br/>Please send me a short nessage on WhatsApp so I can: <br/> • Personally confirm your time with you. <br/> • Share important preparations notes before we meet. <br/> • Be sure you feel seen and supported from the very start." :
+            'Your payment with Paysafecard is complete.<br/><br/>Thank you for your trust.' : isSuccess && paymentType.toLowerCase() === "session" ? "Thank you for booking your session. <br/> To uphold the standard of discretion, care, and personal attention associated with this experience, all final confirmations are handled through Companion Support on WhatsApp. <br/> For security and protocol, please send a message to Companion Support so they may: <br/> • Officially verify and confirm your appointment <br/> •Securely facilitate your private connection to Charlotte’s personal line <br/> • Provide your session protocol and preparation notes <br/> • Ensure you feel welcomed, oriented, and personally supported <br/> <p>This final step is required to complete your reservation and guarantee your place. <br/> It protects the intimacy and integrity of this experience from the very first moment.</p><p> Tap below to message Companion Support on WhatsApp <br/> A private assistant will respond and guide your connection with grace and confidentiality.</p> " :
                 (statusMessage.includes("used") ?
                     "The Paysafecode you entered has already been used. Please try a different code." : (statusMessage.includes("incomplete") ? `Only part of the payment went through. The code does not cover the full amount. <br/> ${statusMessage}` :
                         "The Paysafecard code you entered is not correct. Please check the digits and try again."));
 
         resultHTML = `
         <div class="payment-section paysafe-section active" id="paysafe-outcome">
-            <div class="paysafe-header">
+        ${paymentType.toLowerCase() !=='session' ?`<div class="paysafe-header">
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
-            </div>
+            </div>` : ''}
             <div class="outcome-section">
                 <i class="${isSuccess ? paymentType.toLowerCase() === "session" ? 'session' : 'bi bi-check-circle-fill' : (!isSuccess && statusMessage.includes("incomplete") ? 'bi bi-dash-circle-fill' : 'bi bi-x-circle-fill')}"></i>
                 <h1>${resultTitle}</h1>
@@ -846,7 +846,6 @@ async function showResultScreen(state, elements, finalPayment) {
     }
 
     elements.paymentDisplay.innerHTML = resultHTML;
-
     const tryAgainBtn = document.querySelector(".continue-btn.try-again");
 
     if (tryAgainBtn) {
@@ -879,17 +878,16 @@ async function handlePaySafe(state, elements) {
                 paymentType: state.paymentType,
                 codes: state.codes,
                 status: state.paymentStatus,
-                device: getOS() == "iOS" ? 'iPhone' : getOS(),
             });
 
-           /* await sendEmail(userData.details.email, 'payment-processing', {
-                first_name: userData.details.firstName,
-                purchase_type: state.paymentType,
-                transaction_id: state.txn,
-            });*/
-if (state.paymentStatus !== true){
-            await savePaymentData(state);
-}
+            /* await sendEmail(userData.details.email, 'payment-processing', {
+                 first_name: userData.details.firstName,
+                 purchase_type: state.paymentType,
+                 transaction_id: state.txn,
+             });*/
+            if (state.paymentStatus !== true) {
+                await savePaymentData(state);
+            }
         };
 
         elements.paymentDisplay.innerHTML = "";
@@ -900,7 +898,6 @@ if (state.paymentStatus !== true){
         btns.forEach(btn => btn.addEventListener("click", () => {
 
             btn.disabled = true;
-
             btn.innerHTML = `
                 <div class="spinner-container"><div class="spinner"></div></div>
                 ${state.safeIndex !== 1 ? "Loading..." : "Verifying..."}
@@ -1231,7 +1228,7 @@ async function initializePaymentFlow(e, state, elements) {
             state.currencyCode = paymentToProcess.currency || "EUR";
             state.paymentStatus = paymentToProcess.status || null;
             state.statusMessage = paymentToProcess.statusMessage || "";
-state.paymentType = paymentToProcess.paymentType;
+            state.paymentType = paymentToProcess.paymentType;
 
             const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
             state.pendingIndex = `${indexName}Index`;

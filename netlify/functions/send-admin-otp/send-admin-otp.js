@@ -23,7 +23,7 @@ const templates = {
     </html>`
 };
 
-const API_URL = "/.netlify/functions/send-email";
+const API_URL = `${process.env.SITE_URL}/.netlify/functions/send-email`;
 // Main Netlify function handler
 exports.handler = async (event) => {
     if (event.httpMethod !== "POST") {
@@ -41,18 +41,14 @@ exports.handler = async (event) => {
         // 1. Generate a 6-digit OTP
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // 2. Prepare the email
-        const template = templates['admin-otp'];
-        const html = replacePlaceholders(template, { otpCode });
 
         const templateName = 'admin-otp';
-
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, templateName, otpCode: otpCode }),
+            body: JSON.stringify({ to: email, templateName, otpCode: otpCode }),
         });
 
         // 4. Return the OTP to the client to be saved in sessionStorage

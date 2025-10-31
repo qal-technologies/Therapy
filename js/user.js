@@ -187,7 +187,7 @@ window.addEventListener('load', () => {
     actionButton.title = 'Your Next Action';
 
     if (payment.status === true) {
-      actionButton.textContent = 'Continue your journey';
+      actionButton.textContent = 'Continue your journey >>';
       actionButton.style.backgroundColor = 'rgb(30, 200, 30)';
       actionButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -200,7 +200,7 @@ window.addEventListener('load', () => {
         window.location.href = payment.paymentType.toLowerCase() === 'book' ? '/html/main/ViewBook.html' : `/html/main/Payment.html?${params}`;
       });
     } else {
-      actionButton.textContent = 'Check Payment';
+      actionButton.textContent = 'Check Payment >>';
       actionButton.addEventListener('click', (e) => {
         e.preventDefault();
 

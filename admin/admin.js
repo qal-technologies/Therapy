@@ -457,7 +457,7 @@ sessionStorage.setItem('userId', user.id);
     }
 
     function generateBubbleHTML(event, allEvents = []) {
-        const time = event.timestamp? formatTimestamp(event.timestamp) : format timestamp(new Date());
+        const time = event.timestamp? formatTimestamp(event.timestamp) : formatTimestamp(new Date());
 
         switch (event.type) {
 

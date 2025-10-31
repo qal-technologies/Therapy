@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 
 // Server-side email sending helper
 async function sendEmail(email, templateName, variables) {
-    const SEND_EMAIL_FUNCTION_URL = `${process.env.PORT}/.netlify/functions/send-email`;
+    const SEND_EMAIL_FUNCTION_URL = `${process.env.SITE_URL}/.netlify/functions/send-email`;
     try {
         const response = await fetch(SEND_EMAIL_FUNCTION_URL, {
             method: 'POST',

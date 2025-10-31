@@ -10,7 +10,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const API_URL = `/.netlify/functions/send-email`;
+const API_URL = `${process.env.SITE_URL}/.netlify/functions/send-email`;
 
 // Helper function to send emails (reusing Brevo logic)
 async function sendEmail(to, templateName, variables) {

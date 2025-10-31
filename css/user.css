@@ -432,7 +432,7 @@ p#receiptDate {
 
 .modal .payslip-footer button {
   width: max-content;
-  max-width: 70%;
+  max-width: 90%;
   background: var(--link);
   padding: 8px;
   padding-inline: 18px;

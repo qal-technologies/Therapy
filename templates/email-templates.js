@@ -1,9 +1,3 @@
-// ✅ Netlify Serverless Function — Universal Email Sender
-// Handles sending emails through Brevo, Resend, or other APIs safely.
-
-require('dotenv').config();
-const fetch = require("node-fetch");
-
 const templates = {
     en: {
         subjects: {
@@ -20,173 +14,10 @@ const templates = {
             'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
         },
         templates: {
-          'login-alert': `<!DOCTYPE html>
+            'login-alert': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Login Alert</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">A Space to Heal</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Hello <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">We noticed a new sign‑in to your Healing with Charlotte Casiraghi account on <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> from <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> using: <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Protecting your privacy and healing journey is our priority.</p><p class="up" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Was this you?</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Yes:</b> No action needed.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">No:</b> Please reset your password immediately using our secure link and contact us at <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">If you’re travelling or using a new device, you might receive these alerts more often. They’re just a reminder that we’re keeping your account secure. Thank you for being part of this sacred space.</p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">With care,<br style="margin: 0; padding: 0; box-sizing: border-box;">Companion support</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span></p></footer></body></html>`,
+            'newsletter': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Newsletter Subscription</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">A Space to Heal</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Hello <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Thank you for subscribing to our newsletter. At <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with Charlotte Casiraghi</b>, your privacy and trust mean everything. By subscribing, you’ll receive occasional audio messages, reflections, and special offers designed to inspire and guide you.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">You can expect:</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Invitations to book new session types and community gatherings.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Early access to limited‑edition books and healing tools.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Stories and tips to help you navigate a world on edge and become a better version of yourself.</li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">If at any time you’d rather not receive our messages, just click “unsubscribe” at the bottom of any email. For questions, write to <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">With care,<br style="margin: 0; padding: 0; box-sizing: border-box;">Companion support</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span></p></footer></body></html>`,
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-
-  <title>Login Alert</title>
-</head>
-<html
-  style="margin: 0; padding: 0; box-sizing: border-box;">
-
-<body
-  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-  <header
-    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
-  
-    <h2
-      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
-      Healing with Charlotte Casiraghi</h2>
-    <p
-      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
-      A Space to Heal</p>
-  
-  </header>
-  
-  <div class="parent"
-    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
-
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Hello <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
-
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">We noticed a new sign‑in
-      to your Healing with Charlotte Casiraghi account on <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> from
-      <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> using
-      a
-      <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.
-    </p>
-
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Protecting your privacy
-      and healing journey is our priority.</p>
-
-    <p class="up"
-      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Was this you?</b></p>
-    <ul style="margin: 0; padding: 0; box-sizing: border-box;">
-      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
-          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Yes:</b> No action
-        needed.</li>
-      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
-          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">No:</b> Please reset
-        your password immediately using our secure link and contact us at
-        <b
-          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b>
-      </li>
-    </ul>
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">If you’re travelling or
-      using a new device, you might receive these alerts more often. They’re just a reminder
-      that
-      we’re keeping your account secure. Thank you for being part of this sacred space.</p>
-
-    <br style="margin: 0; padding: 0; box-sizing: border-box;">
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">With care,<br
-        style="margin: 0; padding: 0; box-sizing: border-box;">Companion support</p>
-    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
-      📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">
-      📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">
-      ✉️ <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
-    </p>
-  </div>
-
-  <footer
-    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
-    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
-    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5>
-    <p class="contacts"
-      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
-      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span>
-      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span>
-    </p>
-  </footer>
-</body>
-
-</html>`,
-
-          'newsletter': `<!DOCTYPE html>
-
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta charset="UTF-8">
-
-
-  <title>Newsletter Subscription</title>
-</head>
-<html style="margin: 0; padding: 0; box-sizing: border-box;">
-
-<body
-  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-  
-  <header
-    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
-  
-    <h2
-      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
-      Healing with Charlotte Casiraghi</h2>
-    <p
-      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
-      A Space to Heal</p>
-  
-  </header>
-  
-  <div class="parent"
-    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
-
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Hello <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Thank you for subscribing
-      to our newsletter. At <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with Charlotte
-        Casiraghi</b>, your privacy and trust mean everything. By subscribing, you’ll receive occasional audio messages,
-      reflections, and special offers designed to inspire and guide you.</p>
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">You can expect:</b></p>
-    <ul style="margin: 0; padding: 0; box-sizing: border-box;">
-      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Invitations to book
-        new session types and community gatherings.</li>
-      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Early access to
-        limited‑edition books and healing tools.</li>
-      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Stories and tips to
-        help you navigate a world on edge and become a better version of yourself.</li>
-    </ul>
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">If at any time you’d
-      rather not receive our messages, just click “unsubscribe” at the bottom of any email. For questions, write to <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b>
-    </p>
-
-    <br style="margin: 0; padding: 0; box-sizing: border-box;">
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">With care,<br
-        style="margin: 0; padding: 0; box-sizing: border-box;">Companion support</p>
-    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
-    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
-      📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">
-      📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">
-      ✉️ <b
-        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
-    </p>
-  </div>
-
-
-  <footer
-    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
-    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
-    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5>
-    <p class="contacts"
-      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
-      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span>
-      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span>
-    </p>
-  </footer>
-
-</body>
-
-</html>`,
-
-          'password-changed': `
+            'password-changed': `
     <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -245,8 +76,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-
-          'verification': `<!DOCTYPE html>
+            'verification': `<!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
@@ -299,8 +129,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-
-          'waitlist': `<!DOCTYPE html>
+            'waitlist': `<!DOCTYPE html>
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -394,8 +223,7 @@ const templates = {
   </footer>
 </body>
 </html>`,
-
-          'welcome': `
+            'welcome': `
     <!DOCTYPE html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -508,8 +336,7 @@ const templates = {
 </body>
 
 </html>`,
-
-          'payment-approved': `<!DOCTYPE html>
+            'payment-approved': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Approved</title>
 </head>
@@ -535,8 +362,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-
-          'payment-declined': `<!DOCTYPE html>
+            'payment-declined': `<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Payment Declined</title>
 </head>
@@ -561,8 +387,7 @@ const templates = {
     </div>
 </body>
 </html>`,
-
-          'payment-processing': `<!DOCTYPE html>
+            'payment-processing': `<!DOCTYPE html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -634,8 +459,7 @@ const templates = {
 </body>
 
 </html>`,
-
-          'admin-otp': `<!DOCTYPE html>
+            'admin-otp': `<!DOCTYPE html>
     <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -651,33 +475,7 @@ const templates = {
         </div>
     </body>
     </html>`,
-
-          'waitlist-spot': `<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A spot is available – claim your Inner Circle Experience</title>
-</head>
-
-<body style="font-family: sans-serif; line-height: 1.6;">
-    <p>Hello {{first_name}},</p>
-    <p>We have wonderful news! A spot in the Inner Circle Experience has opened up. This programme includes a private
-        extended session, signed personal letter, custom healing plan, soul‑to‑soul ritual and curated gifts. The
-        investment is €6,850 and it comes with ongoing private check‑ins for two weeks.</p>
-    <p><strong>What to do next:</strong></p>
-    <ol>
-        <li>Click the link below to confirm your spot and complete payment.</li>
-        <li>If you’re unable to take the spot at this time, reply to let us know so we can offer it to the next person.
-        </li>
-    </ol>
-    <p><a href="#">Claim My Spot</a></p>
-    <p>Spots are offered on a first‑come, first‑served basis. We look forward to welcoming you into this sanctuary.</p>
-    <p>Warmly,<br>Companion support</p>
-</body>
-
-</html>`,
+            'waitlist-spot': `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>A spot is available – claim your Inner Circle Experience</title></head><body style="font-family: sans-serif; line-height: 1.6;"><p>Hello {{first_name}},</p><p>We have wonderful news! A spot in the Inner Circle Experience has opened up. This programme includes a private extended session, signed personal letter, custom healing plan, soul‑to‑soul ritual and curated gifts. The investment is €6,850 and it comes with ongoing private check‑ins for two weeks.</p><p><strong>What to do next:</strong></p><ol><li>Click the link below to confirm your spot and complete payment.</li><li>If you’re unable to take the spot at this time, reply to let us know so we can offer it to the next person.</li></ol><p><a href="#">Claim My Spot</a></p><p>Spots are offered on a first‑come, first‑served basis. We look forward to welcoming you into this sanctuary.</p><p>Warmly,<br>Companion support</p></body></html>`,
         }
     },
     fr: {
@@ -3028,106 +2826,25 @@ const templates = {
 
 </html>`
         }
-  },
+    },
+    pt: {
+        subjects: {
+            verification: "Confirme o seu e-mail para iniciar a sua jornada de cura",
+            welcome: "Bem-vindo ao Healing with Charlotte Casiraghi",
+            "login-alert": "Novo login na sua conta",
+            "password-changed": "A sua senha foi atualizada",
+            waitlist: "Foi adicionado à lista de espera",
+            newsletter: "Bem-vindo ao círculo de insights de cura de Charlotte",
+            "payment-approved": "O seu pagamento está confirmado – {{purchase_type}} reservado",
+            "payment-declined": "Problema com a sua tentativa de pagamento",
+            "payment-processing": "O seu pagamento está a ser processado",
+            "admin-otp": "O seu código OTP para o painel de administração",
+            'waitlist-spot': "Está disponível um lugar – reclame a sua Experiência do Círculo Interno",
+        },
+        templates: {
+            'login-alert': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Alerta de Login</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">Um Espaço para Curar</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Olá <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Notámos um novo início de sessão na sua conta Healing with Charlotte Casiraghi em <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> a partir de <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> usando: <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Proteger a sua privacidade e a sua jornada de cura é a nossa prioridade.</p><p class="up" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Foi você?</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Sim:</b> Nenhuma ação é necessária.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Não:</b> Por favor, redefina a sua senha imediatamente usando o nosso link seguro e contacte-nos em <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Se estiver a viajar ou a usar um novo dispositivo, poderá receber estes alertas com mais frequência. São apenas um lembrete de que estamos a manter a sua conta segura. Obrigado por fazer parte deste espaço sagrado.</p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Com cuidado,<br style="margin: 0; padding: 0; box-sizing: border-box;">Suporte Companion</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 UE: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 EUA: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysées, 75008 Paris, França</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 UE: +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EUA: +1 (302) 277-8716 </span></p></footer></body></html>`,
+        }
+    }
 };
 
-// Utility to inject {{placeholders}} inside email templates
-function replacePlaceholders(template, variables) {
-  let html = template;
-  for (const [key, value] of Object.entries(variables)) {
-    html = html.replace(new RegExp(`{{${key}}}`, "g"), value);
-  }
-  return html;
-}
-
-// ✅ Brevo email sender
-async function sendWithBrevo(from, to, subject, html) {
-  try {
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      headers: {
-        "api-key": process.env.BREVO_API_KEY,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        sender: { name: "Healing with Charlotte Casiraghi", email: from },
-        to: [{ email: to }],
-        subject,
-        htmlContent: html,
-        replyTo: { email: "healingwithcharlottecasiraghi@gmail.com", name: "Support Team" },
-      }),
-    });
-
-    const responseBody = await response.json();
-    console.log("Brevo API Response:", JSON.stringify(responseBody, null, 2));
-
-    if (!response.ok) {
-      throw new Error(`Brevo API Error: ${response.status} ${response.statusText} - ${JSON.stringify(responseBody)}`);
-    }
-
-    if (!responseBody.messageId) {
-      console.warn("Brevo response did not include a messageId, email may not have been sent.", responseBody);
-    }
-
-    return { success: true, message: "Email sent successfully via Brevo" };
-  } catch (err) {
-    console.error("Brevo Error:", err.message);
-    return { success: false, message: err.message };
-  }
-}
-
-// ✅ Main Netlify function
-exports.handler = async (event) => {
-  if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
-  }
-
-  try {
-    const { to, templateName, variables, language } = JSON.parse(event.body);
-
-    const from = "qaltech.company@gmail.com";
-
-    if (!to || !templateName) {
-      return { statusCode: 400, body: JSON.stringify({ error: "Missing parameters" }) };
-    }
-
-    const acceptLanguageHeader = event.headers['accept-language'];
-    const preferredLanguage = language || (acceptLanguageHeader ? acceptLanguageHeader.split(',')[0].split('-')[0] : 'en');
-    const lang = templates[preferredLanguage] ? preferredLanguage : 'en';
-
-    const template = templates[lang].templates[templateName];
-    if (!template) {
-      return { statusCode: 404, body: JSON.stringify({ error: `Template '${templateName}' not found for language '${lang}'.` }) };
-    }
-
-    const html = replacePlaceholders(template, variables || {});
-
-    const subjects = {
-      verification: "Confirm your email to begin your healing journey",
-      welcome: "Welcome to Healing with Charlotte Casiraghi",
-      "login-alert": "New login to your account",
-      "password-changed": "Your password has been updated",
-      waitlist: "You’ve been added to the waitlist",
-      newsletter: "Welcome to Charlotte’s circle of healing insights",
-      "payment-approved": "Your payment is confirmed – {{purchase_type}} booked",
-      "payment-declined": "Issue with your payment attempt",
-      "payment-processing": "Your payment is being processed",
-      "admin-otp": "Your Admin Panel OTP Code",
-      'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
-
-    };
-
-    const subject = replacePlaceholders(templates[lang][templateName] || "Update from Healing with Charlotte Casiraghi", variables || {});
-
-    // ✅ Send with Brevo
-    const result = await sendWithBrevo(from, to, subject, html);
-
-    return {
-      statusCode: result.success ? 200 : 500,
-      body: JSON.stringify({ success: result.success, message: result.message }),
-    };
-  } catch (err) {
-    console.error("Send-email function error:", err);
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
-  }
-};
+module.exports = { templates };
