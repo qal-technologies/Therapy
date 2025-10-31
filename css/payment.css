@@ -1881,12 +1881,12 @@ ul.instructions.redeem li {
     width: 90%;
     border-radius: 15px;
     height: max-content;
+    max-height: max-content;
     flex: 0.45;
 }
 
 #paysafe-outcome {
     height: max-content;
-    max-height: 90vh;
     flex: 0;
 }
 
@@ -1957,7 +1957,7 @@ ul.instructions.redeem li {
 }
 
 .paysafe-section.session{
-    max-height: 90vh;
+    max-height: 86vh;
     overflow-y: auto;
 }
 
