@@ -11,12 +11,13 @@ const API_URL = "/.netlify/functions/send-email";
 
 export async function sendEmail(to, templateName, variables) {
     try {
+        const language = navigator.languages && navigator.languages.length ? navigator.languages[0].split('-')[0] : navigator.language.split('-')[0];
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ to, templateName, variables }),
+            body: JSON.stringify({ to, templateName, variables, language }),
         });
 
         if (!response.ok) {

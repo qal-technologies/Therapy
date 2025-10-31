@@ -1,5 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getFirestore, enablePersistence } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+import {
+    getFirestore,
+    enableIndexedDbPersistence
+} from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
 
 export const firebaseConfig = {
@@ -16,13 +19,12 @@ export const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-enablePersistence(db)
-    .catch((err) => {
-        if (err.code == 'failed-precondition') {
-            console.warn("Firestore persistence failed: Multiple tabs open.");
-        } else if (err.code == 'unimplemented') {
-            console.warn("Firestore persistence failed: Browser not supported.");
-        }
-    });
+enableIndexedDbPersistence(db).catch((err) => {
+    if (err.code === 'failed-precondition') {
+        console.warn("Firestore persistence failed: Multiple tabs open.");
+    } else if (err.code === 'unimplemented') {
+        console.warn("Firestore persistence not supported.");
+    }
+});
 
 export { app, db };
