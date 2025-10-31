@@ -1202,7 +1202,6 @@ function safeVibrate(durationOrPattern) {
  * @returns {string} The full language name (e.g., "English", "French").
  */
 export function getDisplayLanguage() {
-    if (!langCode) return 'Unknown';
     try {
         const langCode = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
         // Use Intl.DisplayNames to get the human-readable language name.
