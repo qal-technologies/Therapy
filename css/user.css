@@ -243,26 +243,26 @@ body {
 
 .status-completed {
   background-color: rgba(209, 250, 229, 0.8);
-  color: #038553;
+  color: #00ff1a;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-color: #038553;
+  border-color: #00ff1a;
 }
 
 .status-pending {
   background-color: rgba(254, 243, 199, 0.8);
-  color: #a04004;
+  color: #ffaa00;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-color: #a04004;
+  border-color: #ffaa00;
 }
 
 .status-failed {
   background-color: rgba(254, 226, 226, 0.8);
-  color: #ad0505;
+  color: #ff0000;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border-color: #ad0505;
+  border-color: #ff0000;
 }
 
 .payment-type {

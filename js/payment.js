@@ -771,15 +771,16 @@ function triggerVibration() {
 
 async function showResultScreen(state, elements, finalPayment) {
     let resultHTML;
-    const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
-        const payment = doc.data();
-        if (payment && payment.status !== null) {
-            unsub();
-            showResultScreen(state, elements, payment);
-        }
-    });
 
-    if (finalPayment.status == null) {
+    if (!finalPayment || finalPayment.status == null) {
+        const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
+            const payment = doc.data();
+            if (payment && payment.status !== null) {
+                unsub();
+                showResultScreen(state, elements, payment);
+            }
+        });
+
         resultHTML = `
     <div class="payment-section paysafe-section active" id="paysafe-thank-you">
             <div class="paysafe-header">
