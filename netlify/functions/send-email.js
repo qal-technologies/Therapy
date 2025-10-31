@@ -3117,7 +3117,7 @@ exports.handler = async (event) => {
 
     };
 
-    const subject = replacePlaceholders(templates[lang][templateName] || "Update from Healing with Charlotte Casiraghi", variables || {});
+    const subject = templates[lang].subjects[templateName] || "Update from Healing with Charlotte Casiraghi";
 
     // ✅ Send with Brevo
     const result = await sendWithBrevo(from, to, subject, html);
