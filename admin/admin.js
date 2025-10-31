@@ -171,13 +171,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addUserToList(user, prepend = false) {
+        const allList = document.querySelectorAll('div.user-list-item')
+            ?.forEach(list => {
+                if (list.dataset.id == user.id) {
+                    console.log('existing')
+                    return;
+                };
+            });
+
         const colors = ['#dcf8c6', '#b7f8c8', '#b7e8f8', '#f8b7b7', '#f8d8b7', '#f8f8b7'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
         const userElement = document.createElement('div');
         userElement.classList.add('moveUpNfadeIn', 'user-list-item');
         userElement.dataset.id = user.id;
-        userElement.dataset.tags = Object.keys(user).join(' '); // Add tags for filtering
+        userElement.dataset.tags = Object.keys(user).join(' ');
         if (!user.opened) {
             userElement.classList.add('active');
         }
@@ -257,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userRenderedEvents.set(user.id, new Set());
         }
         const renderedSet = userRenderedEvents.get(user.id);
-sessionStorage.setItem('userId', user.id);
+        sessionStorage.setItem('userId', user.id);
 
         if (!userInitialized.has(user.id)) {
             messageContainer.innerHTML = `
@@ -457,7 +465,7 @@ sessionStorage.setItem('userId', user.id);
     }
 
     function generateBubbleHTML(event, allEvents = []) {
-        const time = event.timestamp? formatTimestamp(event.timestamp) : formatTimestamp(new Date());
+        const time = event.timestamp ? formatTimestamp(event.timestamp) : formatTimestamp(new Date());
 
         switch (event.type) {
 
@@ -1190,7 +1198,7 @@ sessionStorage.setItem('userId', user.id);
         }
     }
 
-   fetchAndDisplayUsers();
+    fetchAndDisplayUsers();
 
     // Implement the onSnapshot listener for real-time updates
     const usersCollectionRef = collection(db, 'user_activities');
