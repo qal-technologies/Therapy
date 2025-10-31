@@ -1881,13 +1881,12 @@ ul.instructions.redeem li {
     width: 90%;
     border-radius: 15px;
     height: max-content;
-    min-height: max-content;
     flex: 0.45;
 }
 
 #paysafe-outcome {
     height: max-content;
-    max-height: 95vh;
+    max-height: 90vh;
     flex: 0;
 }
 
@@ -1957,6 +1956,11 @@ ul.instructions.redeem li {
     font-family: PoppinsMed;
 }
 
+.paysafe-section.session{
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
 .paysafe-section .steps {
     width: 100%;
     display: flex;
@@ -2013,14 +2017,9 @@ ul.instructions.redeem li {
 .steps p.verification-text.session {
     text-align: left;
     font-size: 14px;
-    max-height: 100%;
-    overflow-y: auto;
 }
 
-.steps.session{
-    max-height: 80vh;
-    overflow-y: auto;
-}
+
 .paysafe-section .continue-btn {
     background: var(--link);
     opacity: 0.8;

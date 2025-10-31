@@ -821,7 +821,7 @@ async function showResultScreen(state, elements, finalPayment) {
                         "The Paysafecard code you entered is not correct. Please check the digits and try again."));
 
         resultHTML = `
-        <div class="payment-section paysafe-section active" id="paysafe-outcome">
+        <div class="payment-section paysafe-section active  ${isSuccess && paymentType.toLowerCase() === 'session' ? 'session' : ''}" id="paysafe-outcome">
         ${paymentType.toLowerCase() !== 'session' ? `<div class="paysafe-header">
                 <div class="logo"><img src="/src/images/paysafe.png" alt="Paysafe Logo"></div>
             </div>` : ''}
