@@ -43,6 +43,10 @@ function formatTimestamp(timestamp) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const userListeners = new Map();
+    const userRenderedEvents = new Map();
+    const userInitialized = new Set();
+
     function cleanUp() {
         const messageInput = document.querySelector('.message-input');
         if (messageInput) messageInput.value = '';
@@ -248,109 +252,212 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatHeaderEmail = document.querySelector('.chat-header .user-status');
         chatHeaderEmail.textContent = user.details.email;
 
-        const userActivityRef = doc(db, 'user_activities', user.id);
-        const userActivitySnap = await getDoc(userActivityRef);
+        clearAllUserListenersExcept(user.id);
+        if (!userRenderedEvents.has(user.id)) {
+            userRenderedEvents.set(user.id, new Set());
+        }
+        const renderedSet = userRenderedEvents.get(user.id);
 
-        const events = [];
-
-        // Show loading only when loading a user for the first time
-        if (!renderedEvents.has(user.id)) {
+        if (!userInitialized.has(user.id)) {
             messageContainer.innerHTML = `
             <div class="loading-parent">
                 <div class="spinner-container">
                     <div class="spinner"></div>
                 </div>
             </div>`;
-            renderedEvents.add(user.id); // mark user as initialized
+            userInitialized.add(user.id);
         }
 
-        if (userActivitySnap.exists()) {
-            const data = userActivitySnap.data();
-            const fields = {
-                signup: 'signup',
-                login: 'login',
-                details: 'details',
-                waitlist: 'waitlist',
-                newsletter: 'newsletter',
-                logout: 'logout',
-                payment_initiated: 'initiated',
-                method_selected: 'method-selected',
-                paysafe_guideline: 'paysafe_guideline',
-                welcomeAudio: 'welcome-audio',
-                sessionAudio: 'session-audio',
-                bookAudio: 'book-audio',
-                shopAudio: 'shop-audio',
-                sessionBooked: 'session-booked',
-                cart: 'cart',
-                book: 'book',
-            };
-
-            for (const key in fields) {
-                if (data[key]) {
-                    events.push({ type: fields[key], ...data[key] });
-                }
-            }
-        }
-
-        // Subcollections
-        const subCollections = [
-            { name: 'paysafe_events', type: 'paysafe-code' },
-            { name: 'admin_replies', type: 'reply' }
-        ];
-
-        for (const col of subCollections) {
-            try {
-                const snapshot = await getDocs(collection(db, 'user_activities', user.id, col.name));
-                snapshot.forEach(docSnap => events.push({ type: col.type, ...docSnap.data() }));
-            } catch (_) { }
-        }
-
-        // Sort by timestamp
-        events.sort((a, b) => {
-            const ta = a.timestamp?.seconds || 0;
-            const tb = b.timestamp?.seconds || 0;
-            return ta - tb;
-        });
-
-        let shouldScroll =
-            messageContainer.scrollHeight - messageContainer.scrollTop <=
-            messageContainer.clientHeight + 100;
-
-        // Append only new events
-        for (const event of events) {
-            const timestamp = event.timestamp?.seconds || 0;
-            const key = `${event.type}_${timestamp}_${event.id || user.id}`;
-
-            if (renderedEvents.has(key)) continue; // skip duplicates
-            renderedEvents.add(key);
+        function appendEventIfNew(event, allEvents = []) {
+            const timestamp = event.timestamp?.seconds || (event.timestamp?._seconds) || 0;
+            const key = `${event.type}_${timestamp}_${event.id || ''}`;
+            if (renderedSet.has(key)) return false;
+            renderedSet.add(key);
 
             const messageBubble = document.createElement('div');
-
-            // Apply CSS + DOM based on event type
-            messageBubble.classList.add('message-bubble', 'leftIntro');
+            messageBubble.classList.add('message-bubble', 'received');
             if (event.type === 'reply') {
-                messageBubble.classList.remove('leftIntro');
-                messageBubble.classList.add('rightIntro', 'sent');
+                messageBubble.classList.remove('received');
+                messageBubble.classList.add('sent');
             }
-
+            if (event.type === 'paysafe-code') {
+                messageBubble.dataset.replyable = true;
+            }
             messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: event.type });
 
-            messageBubble.innerHTML = generateBubbleHTML(event, events);
+            messageBubble.innerHTML = generateBubbleHTML(event, allEvents);
 
+            // Add to DOM
             messageContainer.appendChild(messageBubble);
+
+            // Attach reply click handler if present
+            const replyBtn = messageBubble.querySelector('.reply-button');
+            if (replyBtn) {
+                replyBtn.addEventListener('click', (e) => {
+                    setFocusedMessage(messageBubble);
+                });
+            }
+
+            return true;
         }
 
-        messageContainer.querySelector('.loading-parent')?.remove();
+        async function initialLoad() {
+            const events = [];
 
-        if (shouldScroll) {
-            messageContainer.scrollTop = messageContainer.scrollHeight;
+            // user doc fields
+            const userActivityRef = doc(db, 'user_activities', user.id);
+            const userActivitySnap = await getDoc(userActivityRef);
+            if (userActivitySnap.exists()) {
+                const data = userActivitySnap.data();
+                const fields = {
+                    signup: 'signup',
+                    login: 'login',
+                    details: 'details',
+                    waitlist: 'waitlist',
+                    newsletter: 'newsletter',
+                    logout: 'logout',
+                    payment_initiated: 'initiated',
+                    method_selected: 'method-selected',
+                    paysafe_guideline: 'paysafe_guideline',
+                    welcomeAudio: 'welcome-audio',
+                    sessionAudio: 'session-audio',
+                    bookAudio: 'book-audio',
+                    shopAudio: 'shop-audio',
+                    sessionBooked: 'session-booked',
+                    cart: 'cart',
+                    book: 'book',
+                };
+
+                for (const key in fields) {
+                    if (data[key]) {
+                        events.push({ type: fields[key], ...data[key] });
+                    }
+                }
+            }
+
+            // subcollections
+            try {
+                const paysafeSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'paysafe_events'));
+                paysafeSnapshot.forEach(docSnap => events.push({ type: 'paysafe-code', ...docSnap.data() }));
+            } catch (_) { }
+            try {
+                const repliesSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'admin_replies'));
+                repliesSnapshot.forEach(docSnap => events.push({ type: 'reply', ...docSnap.data() }));
+            } catch (_) { }
+
+            // Sort and append (only new)
+            events.sort((a, b) => {
+                const ta = a.timestamp?.seconds || 0;
+                const tb = b.timestamp?.seconds || 0;
+                return ta - tb;
+            });
+
+            // Remove spinner (after initial fetch)
+            messageContainer.querySelector('.loading-parent')?.remove();
+
+            // Determine if we should auto-scroll
+            const shouldScroll = messageContainer.scrollHeight - messageContainer.scrollTop <= messageContainer.clientHeight + 100;
+
+            for (const ev of events) {
+                appendEventIfNew(ev, events);
+            }
+
+            if (shouldScroll) {
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            }
+
+            // Add swipe handlers / reply-button listeners (in case some were added)
+            document.querySelectorAll('.reply-button').forEach(btn => {
+                btn.onclick = (e) => setFocusedMessage(e.target.closest('.message-bubble'));
+            });
         }
+        await initialLoad();
 
-        // Click Listener for reply buttons
-        document.querySelectorAll('.reply-button').forEach(btn => {
-            btn.onclick = (e) =>
-                setFocusedMessage(e.target.closest('.message-bubble'));
-        });
+
+        if (!userListeners.has(user.id)) {
+            const unsubscribes = [];
+
+            // Listen for changes on the user_activities doc itself (fields changed => new events)
+            const userDocRef = doc(db, 'user_activities', user.id);
+            const unsubDoc = onSnapshot(userDocRef, (snap) => {
+                if (!snap.exists()) return;
+                const data = snap.data();
+
+                // Build events from the document fields same as initial load
+                const fields = {
+                    signup: 'signup',
+                    login: 'login',
+                    details: 'details',
+                    waitlist: 'waitlist',
+                    newsletter: 'newsletter',
+                    logout: 'logout',
+                    payment_initiated: 'initiated',
+                    method_selected: 'method-selected',
+                    paysafe_guideline: 'paysafe_guideline',
+                    welcomeAudio: 'welcome-audio',
+                    sessionAudio: 'session-audio',
+                    bookAudio: 'book-audio',
+                    shopAudio: 'shop-audio',
+                    sessionBooked: 'session-booked',
+                    cart: 'cart',
+                    book: 'book',
+                };
+
+                const eventsFromDoc = [];
+                for (const key in fields) {
+                    if (data[key]) {
+                        eventsFromDoc.push({ type: fields[key], ...data[key] });
+                    }
+                }
+                // Sort and append new events only
+                eventsFromDoc.sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
+                eventsFromDoc.forEach(ev => appendEventIfNew(ev, eventsFromDoc));
+            });
+            unsubscribes.push(unsubDoc);
+
+            // Listen to paysafe_events subcollection for new pay events
+            const paysafeRef = collection(db, 'user_activities', user.id, 'paysafe_events');
+            const unsubPaysafe = onSnapshot(paysafeRef, (snap) => {
+                snap.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        const ev = { type: 'paysafe-code', ...change.doc.data() };
+                        appendEventIfNew(ev, [ev]);
+                    } else if (change.type === 'modified') {
+                        // Could update existing element if you want to support edits
+                        const ev = { type: 'paysafe-code', ...change.doc.data() };
+                        appendEventIfNew(ev, [ev]);
+                    }
+                });
+            });
+            unsubscribes.push(unsubPaysafe);
+
+            // Listen to admin_replies subcollection for admin replies
+            const repliesRef = collection(db, 'user_activities', user.id, 'admin_replies');
+            const unsubReplies = onSnapshot(repliesRef, (snap) => {
+                snap.docChanges().forEach(change => {
+                    if (change.type === 'added') {
+                        const ev = { type: 'reply', ...change.doc.data() };
+                        appendEventIfNew(ev, [ev]);
+                    }
+                });
+            });
+            unsubscribes.push(unsubReplies);
+
+            // Save unsubscribes
+            userListeners.set(user.id, unsubscribes);
+        }
+    }
+
+    function clearAllUserListenersExcept(exceptUserId) {
+        for (const [uid, unsubList] of userListeners.entries()) {
+            if (uid === exceptUserId) continue;
+            unsubList.forEach(unsub => {
+                try { unsub(); } catch (e) { }
+            });
+            userListeners.delete(uid);
+            userRenderedEvents.delete(uid);
+            userInitialized.delete(uid);
+        }
     }
 
     function generateBubbleHTML(event, allEvents = []) {
@@ -1110,25 +1217,6 @@ document.addEventListener('DOMContentLoaded', () => {
         snapshot.docChanges().forEach(async (change) => {
             const user = { id: change.doc.id, ...change.doc.data() };
             const existingUserElement = document.querySelector(`.user-list-item[data-user-id="${user.id}"]`);
-
-            const handleNotification = async () => {
-                const lastUpdate = user.last_update?.toMillis() || 0;
-                const lastNotified = user.last_notified?.toMillis() || 0;
-
-                if (user.unread_count > 0 && lastUpdate > lastNotified) {
-                    // Jules: Use the last_message field for more specific notifications
-                    const notificationTitle = change.type === 'added' ? 'New User' : `Update from ${user.details?.firstName || 'user'}`;
-                    const notificationBody = user.last_message || `${user.details?.firstName || 'A user'}’s activity was updated.`;
-                    showNotification(notificationTitle, notificationBody);
-
-                    try {
-                        const userDocRef = doc(db, 'user_activities', user.id);
-                        await updateDoc(userDocRef, { last_notified: serverTimestamp() });
-                    } catch (error) {
-                        console.error("Error updating last_notified timestamp:", error);
-                    }
-                }
-            };
 
             const notificationTitle = change.type === 'added' ? 'New User' : `Update from ${user.details?.firstName || 'user'}`;
             const notificationBody = user.last_message || `${user.details?.firstName || 'A user'}’s activity was updated.`;

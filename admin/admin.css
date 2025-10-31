@@ -657,6 +657,12 @@ body {
     margin-bottom: 8px;
     gap: 10px;
     margin-inline-start: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation-duration: 0.35s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+    animation-delay: 0.05s;
 }
 
 .message-container .message-bubble.focused {
@@ -700,6 +706,52 @@ body {
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.2s;
+}
+
+.message-bubble.received {
+    animation-name: bubbleReceive;
+}
+
+
+@keyframes bubbleReceive {
+    0% {
+        opacity: 0;
+        transform: translateX(-15px) translateY(10px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+    }
+}
+
+.message-bubble.sent {
+    transform-origin: bottom right;
+    animation-name: bubbleSentFromInput;
+}
+
+@keyframes bubbleSentFromInput {
+    0% {
+        opacity: 0;
+        transform: translateY(80px) translateX(50px) scale(0.6);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+}
+
+@keyframes bubbleSent {
+    0% {
+        opacity: 0;
+        transform: translateX(30px) translateY(20px) scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) translateY(0) scale(1);
+    }
 }
 
 .message-bubble:hover .reply-button, .message-bubble:active .reply-button {
@@ -872,6 +924,7 @@ body {
     caret-color: #25d362;
     color: white;
     border: 1px solid transparent;
+    position: relative;
 }
 
 .message-input:focus {
