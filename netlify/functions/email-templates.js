@@ -16,6 +16,7 @@ const templates = {
         templates: {
             'login-alert': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Login Alert</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">A Space to Heal</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Hello <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">We noticed a new sign‑in to your Healing with Charlotte Casiraghi account on <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> from <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> using: <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Protecting your privacy and healing journey is our priority.</p><p class="up" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Was this you?</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Yes:</b> No action needed.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">No:</b> Please reset your password immediately using our secure link and contact us at <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">If you’re travelling or using a new device, you might receive these alerts more often. They’re just a reminder that we’re keeping your account secure. Thank you for being part of this sacred space.</p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">With care,<br style="margin: 0; padding: 0; box-sizing: border-box;">Companion support</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span></p></footer></body></html>`,
             'newsletter': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Newsletter Subscription</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">A Space to Heal</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Hello <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Thank you for subscribing to our newsletter. At <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with Charlotte Casiraghi</b>, your privacy and trust mean everything. By subscribing, you’ll receive occasional audio messages, reflections, and special offers designed to inspire and guide you.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">You can expect:</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Invitations to book new session types and community gatherings.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Early access to limited‑edition books and healing tools.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Stories and tips to help you navigate a world on edge and become a better version of yourself.</li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">If at any time you’d rather not receive our messages, just click “unsubscribe” at the bottom of any email. For questions, write to <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">With care,<br style="margin: 0; padding: 0; box-sizing: border-box;">Companion support</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span></p></footer></body></html>`,
+
             'password-changed': `
     <!DOCTYPE html>
 <head>
@@ -492,7 +493,574 @@ const templates = {
             'waitlist-spot': "Une place est disponible – réclamez votre Expérience du Cercle Intérieur",
         },
         templates: {
-            'login-alert': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Alerte de connexion</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">Un espace pour guérir</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Bonjour <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Nous avons remarqué une nouvelle connexion à votre compte Healing with Charlotte Casiraghi le <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> depuis <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> en utilisant : <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">La protection de votre vie privée et de votre parcours de guérison est notre priorité.</p><p class="up" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Était-ce vous ?</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Oui :</b> Aucune action n'est nécessaire.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Non :</b> Veuillez réinitialiser votre mot de passe immédiatement en utilisant notre lien sécurisé et contactez-nous à <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Si vous voyagez ou utilisez un nouvel appareil, vous pourriez recevoir ces alertes plus souvent. Elles sont juste un rappel que nous gardons votre compte en sécurité. Merci de faire partie de cet espace sacré.</p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Avec soin,<br style="margin: 0; padding: 0; box-sizing: border-box;">Le support Companion</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU : +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysées, 75008 Paris, France</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU : +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716 </span></p></footer></body></html>`,
+            'login-alert': `
+            <!DOCTYPE html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Alerte de connexion</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+
+<body
+  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <header
+    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+    <h2
+      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+      Healing with Charlotte Casiraghi</h2>
+    <p
+      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+      Un espace pour guérir</p>
+  </header>
+  <div class="parent"
+    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Bonjour <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Nous avons remarqué une
+      nouvelle connexion à votre compte Healing with Charlotte Casiraghi le <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> depuis
+      <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> en
+      utilisant : <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.
+    </p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">La protection de votre
+      vie privée et de votre parcours de guérison est notre priorité.</p>
+    <p class="up"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Était-ce vous ?</b></p>
+    <ul style="margin: 0; padding: 0; box-sizing: border-box;">
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Oui :</b> Aucune
+        action n'est nécessaire.</li>
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Non :</b> Veuillez
+        réinitialiser votre mot de passe immédiatement en utilisant notre lien sécurisé et contactez-nous à <b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b>
+      </li>
+    </ul>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Si vous voyagez ou
+      utilisez un nouvel appareil, vous pourriez recevoir ces alertes plus souvent. Elles sont juste un rappel que nous
+      gardons votre compte en sécurité. Merci de faire partie de cet espace sacré.</p><br
+      style="margin: 0; padding: 0; box-sizing: border-box;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Avec soin,<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">Le support Companion</p>
+    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU : +33 7 45 62 46
+      34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
+    </p>
+  </div>
+  <footer
+    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
+    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysées, 75008 Paris, France</h5>
+    <p class="contacts"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU : +33 7 45 62 46 34</span><span
+        style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716 </span>
+    </p>
+  </footer>
+</body>
+
+</html>`,
+            'newsletter': `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Bienvenue dans le cercle d'aperçus de guérison de Charlotte</title>
+    </head>
+    
+    <body style="font-family: sans-serif; line-height: 1.6; margin: 0; padding: 0; box-sizing: border-box; width: 100%; background-color: #f9f9f9;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <header style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #333; margin: 0;">Bienvenue dans le cercle d'aperçus de guérison de Charlotte</h1>
+            <p style="color: #777; margin: 0;">Un espace pour guérir</p>
+        </header>
+        <p>Chère {{first_name}},</p>
+        <p>Nous sommes ravis de vous accueillir dans notre cercle d'aperçus de guérison. En tant que membre précieux de cette communauté, vous recevrez des réflexions inspirantes, des méditations guidées et des offres exclusives pour soutenir votre parcours de guérison.</p>
+        <p>Voici ce à quoi vous pouvez vous attendre :</p>
+        <ul>
+            <li style="margin-bottom: 10px;">   <b>Réflexions mensuelles :</b> Des messages personnels de Charlotte pour nourrir votre esprit et votre âme.</li>
+            <li style="margin-bottom: 10px;">   <b>Méditations guidées :</b> Des pratiques apaisantes pour vous aider à vous recentrer et à vous reconnecter.</li>
+            <li style="margin-bottom: 10px;">   <b>Offres exclusives :</b> Accès anticipé à nos sessions de guérison, ateliers et contenus spéciaux.</li>
+            </ul>
+            <p>Nous sommes honorés de faire partie de votre voyage de guérison. Si vous avez des questions ou des suggestions, n'hésitez pas à répondre à cet e-mail.</p>
+            <br>
+            <p>Avec chaleur et gratitude,<br>Le support Companion</p>
+    </div>
+    </body>
+    </html>
+        `,
+            'password-changed': `
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Changement de Mot de Passe</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+
+<body
+  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <header
+    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+    <h2
+      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+      Healing with Charlotte Casiraghi</h2>
+    <p
+      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+      Un Espace pour Guérir</p>
+  </header>
+  <div class="parent"
+    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Bonjour <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Ceci est une
+      confirmation que le mot de passe de votre compte <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with
+        Charlotte Casiraghi</b> a été modifié avec succès. Si vous êtes à l’origine de ce changement, aucune action
+      supplémentaire n’est requise. La protection de votre vie privée et de vos données est importante pour nous, et nous
+      utilisons des systèmes de chiffrement conformes aux normes de l’industrie afin de sécuriser votre compte.</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Vous n’êtes pas à
+        l’origine de ce changement&nbsp;?</b><br style="margin: 0; padding: 0; box-sizing: border-box;">Veuillez
+      réinitialiser votre mot de passe immédiatement à l’aide de notre lien sécurisé et nous en informer à l’adresse <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>.
+    </p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Merci de continuer à
+      nous faire confiance dans votre cheminement vers la guérison. Nous sommes honorés de vous accompagner.</p><br
+      style="margin: 0; padding: 0; box-sizing: border-box;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Cordialement,<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">Support Companion</p>
+    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU: +33 7 45 62 46
+      34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
+    </p>
+  </div>
+  <footer
+    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
+    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Élysées, 75008 Paris, France</h5>
+    <p class="contacts"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span><span
+        style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span>
+    </p>
+  </footer>
+</body>
+</html>`,
+            'verification': `<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Vérification de l'adresse e-mail</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body
+  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <header
+    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+    <h2
+      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+      Healing with Charlotte Casiraghi</h2>
+    <p
+      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+      Un espace pour guérir</p>
+  </header>
+  <div class="parent"
+    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Bonjour <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Merci de vous être inscrit(e)
+      à <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with
+        Charlotte Casiraghi</b>. Avant de continuer, veuillez vérifier votre adresse e-mail en saisissant le code
+      de 6 chiffres que nous vous avons envoyé. <br style="margin: 0; padding: 0; box-sizing: border-box;">Votre sécurité est essentielle pour nous, et la vérification de votre e-mail contribue à protéger votre compte.</p>
+    <p class="bottom up"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-block: 20px;">
+      Votre code de vérification : <strong style="margin: 0; padding: 0; box-sizing: border-box; font-size:x-large; margin-left:5px">{{otpCode}}</strong></p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Avec bienveillance,<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">Support Compagnon</p>
+    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #ffeeec; margin-block: 5px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU : +33 7 45 62 46
+      34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
+    </p>
+  </div>
+
+  <footer
+    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #ffeed8; padding-block: 40px; display: block;">
+    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Élysées, 75008 Paris, France</h5>
+    <p class="contacts"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: inline-flex; flex-direction: column; margin-top: 10px;">
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU : +33 7 45 62 46 34</span><span
+        style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716 </span>
+    </p>
+  </footer>
+</body>
+</html>`,
+            'waitlist': `<!DOCTYPE html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+
+  <title>Inscription sur Liste d’Attente</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+
+<body
+  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+  <header
+    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+
+    <h2
+      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+      Healing with Charlotte Casiraghi</h2>
+    <p
+      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+      Un espace pour guérir</p>
+
+  </header>
+
+  <div class="parent"
+    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Cher/Chère <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Merci d’avoir souhaité rejoindre le cercle de guérison privé de Charlotte.
+      Nous avons bien reçu votre demande et ajouté votre nom à la liste pour la prochaine session disponible.</p>
+
+    <p class="up"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Ce qui se passera ensuite :</b>
+    </p>
+    <p style="margin-top: -4px;">
+      Vous n’avez rien à faire pour le moment. Lorsqu’une place se libérera, vous recevrez un message personnel avec des instructions claires pour confirmer votre participation.</p>
+
+    <p class="up"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;">
+      <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">En attendant, vous pouvez :</b>
+    </p>
+
+    <ul style="margin: 0; padding: 0; box-sizing: border-box;">
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Lire <i>Compagnon Féminin</i>, un doux compagnon écrit pour réconforter et guider les femmes dans les moments de réflexion.</li>
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Explorer les lettres et messages de Charlotte partagés sur notre page privée pour une inspiration paisible.</li>
+    </ul>
+
+    <p style="margin-bottom: -15px; font-style:italic;">
+      Quelques mots de notre part
+    </p>
+
+    <p class="bottom">
+      Nous savons que demander de l’aide est un acte de courage. Charlotte et sa petite équipe prennent le temps d’examiner chaque demande personnellement, afin que chaque session reste intime et pleine de sens.</p>
+
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Votre intimité, votre histoire et votre tranquillité d’esprit resteront toujours prioritaires ici.</p>
+
+    <br style="margin: 0; padding: 0; box-sizing: border-box;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Avec chaleur et bienveillance,<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">L’équipe de soutien <br />
+      pour Healing with Charlotte Casiraghi — Un espace pour guérir
+    </p>
+    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+      📞 EU: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">
+      📞 US: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">
+      ✉️ <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
+    </p>
+  </div>
+
+  <footer
+    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
+    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Paris, France</h5>
+    <p class="contacts"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span>
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span>
+    </p>
+  </footer>
+</body>
+</html>`,
+            'welcome': `
+    <!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Message de bienvenue</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+
+<body
+  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <header
+    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">Bienvenue 🌸✨</h5>
+    <h2
+      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+      Healing with Charlotte Casiraghi</h2>
+    <p
+      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+      Un espace pour guérir</p>
+  </header>
+  <div class="parent"
+    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Chèr(e) <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Bienvenue dans <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with Charlotte
+        Casiraghi</b>. Je suis vraiment honorée que vous ayez choisi de commencer ce chemin avec moi. Ici, votre histoire
+      sera écoutée avec soin et gardée dans la plus grande confidentialité. Ce n’est pas qu’une thérapie ; c’est un lien
+      profond et personnel.</p>
+    <p class="up"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Ce que vous pouvez attendre :</b>
+    </p>
+    <ul style="margin: 0; padding: 0; box-sizing: border-box;">
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Une connexion en tête-à-tête.</b> Nous nous rencontrons calmement et sans précipitation, virtuellement ou en personne, d’âme à âme.</li>
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Des lettres personnelles & suivis.</b> Après chaque séance, je vous envoie une note privée et je prends de vos nouvelles.</li>
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Un cercle de soutien.</b> Quand cela est utile, je vous présente des mentors et amis de confiance pour ouvrir de nouvelles portes avec douceur.</li>
+    </ul>
+    <p class="up"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Vos prochaines étapes :</b></p>
+    <ol style="margin: 0; padding: 0; box-sizing: border-box; gap:10px;">
+      <li style="margin: 0; padding: 0px; padding-bottom:6px; box-sizing: border-box; width: 100%; margin-bottom: 0px;">
+        <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Réserver votre séance :</b>
+        Virtuelle, en personne, ou en communauté. Chaque option est adaptée à vos besoins et comprend des avantages attentionnés (<b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">550€</b> – <b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">1 600€</b>).
+      </li>
+      <a href="{{origin}}/html/main/Book.html" class="cta book"
+        style="margin-top: 10px; padding:5px; padding-inline:20px; background:#8b5e5a; border-radius:15px; color:white; text-decoration:none; font-weight:bolder; ">Réserver
+        maintenant</a>
+
+      <li
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; padding-top: 20px; padding-bottom:5px;">
+        <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Découvrir notre livre :</b>
+        <i style="margin: 0; padding: 0; box-sizing: border-box;">Compagnon Féminin</i> vous accompagne dans chaque femme que vous avez été et devenez aujourd’hui. Les exemplaires sont limités — vous pouvez réserver le vôtre.
+      </li>
+      <a href="{{origin}}/html/main/Shop.html" class="cta book"
+        style="margin-top: 10px; padding:5px; padding-inline:20px; background:#8b5e5a; border-radius:15px; color:white; text-decoration:none; font-weight:bolder; ">Réserver un exemplaire</a>
+
+
+      <li
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;  padding-top: 20px; padding-bottom:8px;">
+        <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Visiter la FAQ :</b>
+        Réponses simples sur les paiements (cartes bancaires ou Paysafecard à 16 chiffres), la reprogrammation (préavis 72h), et la confidentialité (séances strictement privées).</li>
+
+      <a href="{{origin}}/html/main/FAQ.html" class="cta book"
+        style="margin-top: 10px; padding:5px; padding-inline:20px; background:#8b5e5a; border-radius:15px; color:white; text-decoration:none; font-weight:bolder; ">Lire la FAQ</a>
+
+      <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; padding-top: 20px;"><b
+          style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Restez connectée :</b> Vous recevrez parfois des messages audio, des réflexions, et des offres spéciales. Vous pouvez vous désinscrire à tout moment.</li>
+    </ol>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Votre parcours de guérison est précieux. Pour toute demande, répondez simplement à cet e-mail ou écrivez à <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b>
+    </p><br style="margin: 0; padding: 0; box-sizing: border-box;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Avec chaleur et gratitude,<br style="margin: 0; padding: 0; box-sizing: border-box;">Charlotte Casiraghi</p>
+    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU : +33 7 45 62 46
+      34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
+    </p>
+  </div>
+  <footer
+    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
+    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Élysées, 75008 Paris, France</h5>
+    <p class="contacts"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU : +33 7 45 62 46 34</span><span
+        style="margin: 0; padding: 0; box-sizing: border-box;">📞 US : +1 (302) 277-8716 </span>
+    </p>
+  </footer>
+</body>
+
+</html>`,
+            'payment-approved': `<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Paiement approuvé</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">Un espace pour guérir</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Bonjour <b>{{first_name}}</b>,</p>
+        <p>Bonne nouvelle ! Votre paiement pour <b>{{purchase_type}}</b> a été approuvé. Voici un résumé de votre transaction :</p>
+        <ul style="list-style: none; padding: 0;">
+            <li><b>ID de transaction :</b> {{transaction_id}}</li>
+            <li><b>Montant :</b> {{amount}}</li>
+            <li><b>Méthode de paiement :</b> {{payment_method}}</li>
+        </ul>
+        <p><b>Pour les sessions :</b> Votre réservation est maintenant officielle. Vous recevrez bientôt un e-mail séparé avec la date et l'heure de votre session ainsi que des détails personnalisés de préparation.</p>
+        <p><b>Pour les achats de livres :</b> Votre commande a été confirmée. Vous avez acheté <i>Compagnon Féminin</i>, vous pourrez le lire directement sur notre site web.</p>
+        <p>Vous pouvez consulter cette transaction et toutes vos transactions passées en vous connectant et en visitant la section Historique des paiements sous votre profil.</p>
+        <br>
+        <p>Avec nos sincères remerciements,<br>Support Companion</p>
+    </div>
+</body>
+</html>`,
+            'payment-declined': `<!DOCTYPE html>    
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Paiement refusé</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+<body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; background:#ffeed8; text-align: center;">
+        <h2 style="margin: 0; letter-spacing: 0.4px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Healing with Charlotte Casiraghi</h2>
+        <p style="margin: 0; letter-spacing: 1px; font-weight: lighter;">Un espace pour guérir</p>
+    </header>
+    <div style="width: 95%; padding: 20px; margin-top: -10px; margin:auto; background: rgba(255, 255, 255, 0.787); border-radius: 25px;">
+        <p>Cher/Chère <b>{{first_name}}</b>,</p>
+        <p>Malheureusement, nous n'avons pas pu traiter votre récent paiement pour <b>{{purchase_type}}</b> (ID de transaction {{transaction_id}}). Cela peut être dû à un numéro de carte incorrect, des fonds insuffisants ou un problème de réseau.</p>
+        <p><b>Ce que vous pouvez faire :</b></p>
+        <ul style="padding-left: 20px;">
+            <li>Vérifiez que les détails de votre carte et votre adresse de facturation sont corrects.</li>
+            <li>Essayez une autre méthode de paiement.</li>
+            <li>Contactez votre banque pour vous assurer qu'il n'y a pas de restrictions sur votre carte.</li>
+        </ul>
+        <p>Si le problème persiste, veuillez répondre à cet e-mail. Nous sommes là pour vous aider.</p>
+        <br>
+        <p>Cordialement,<br>Support Companion</p>
+    </div>
+</body>
+</html>`,
+            'payment-processing': `<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Traitement du Paiement</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+
+<body
+    style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <header
+        style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+        <h2
+            style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+            Healing with Charlotte Casiraghi</h2>
+        <p
+            style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+            Un espace pour guérir</p>
+    </header>
+    <div class="parent"
+        style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+        <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Cher/Chère <b
+                style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,
+        </p>
+        <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+            Merci d’avoir initié votre paiement pour <b>{{purchase_type}}</b>. Nous avons bien reçu vos informations, et notre processeur de paiement sécurisé (propulsé par Stripe) est en train de les vérifier. 
+            Votre identifiant de transaction est <b>{{transaction_id}}</b>.
+        </p>
+        <p class="up"
+            style="margin: 0; padding: 0; box-sizing:border-box; width: 100%; margin-bottom: 5px; margin-top:10px;">
+            <b>Et maintenant ?</b>
+        </p>
+        <ul style="margin: 0; padding: 0; box-sizing: border-box;">
+            <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+                Nous vérifions que le paiement soit complet et validé.
+            </li>
+            <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+                Une fois confirmé, vous recevrez un message de bienvenue ainsi que des instructions personnalisées pour préparer votre séance ou accéder à votre livre.
+            </li>
+            <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+                Si nous avons besoin d’informations supplémentaires, nous vous contacterons. En attendant, vous pouvez consulter notre FAQ concernant les méthodes de paiement 
+                (carte bancaire ou Paysafecard 16 chiffres) et notre politique de reprogrammation.
+            </li>
+            <li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+                Vous pouvez suivre le statut de votre paiement à tout moment en vous connectant à votre compte et en consultant l’historique des paiements dans votre profil.
+            </li>
+        </ul>
+        <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+            Si vous avez des questions ou avez besoin d’assistance pendant le traitement de votre paiement, veuillez répondre à cet e-mail ou écrire à 
+            <b>healingwithcharlottecasiraghi@gmail.com</b>.
+        </p><br>
+        <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+            Avec gratitude,<br>Companion Support
+        </p>
+        <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
+        <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">
+            📞 Europe : +33 7 45 62 46 34<br>
+            📞 États-Unis : +1 (302) 277-8716<br>
+            ✉️ <b>healingwithcharlottecasiraghi@gmail.com</b>
+        </p>
+    </div>
+    <footer
+        style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
+        <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+        <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Élysées, 75008 Paris, France</h5>
+        <p class="contacts"
+            style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
+            <span>📞 Europe : +33 7 45 62 46 34</span>
+            <span>📞 États-Unis : +1 (302) 277-8716</span>
+        </p>
+    </footer>
+</body>
+</html>`,
+            'admin-otp': `<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>OTP de Connexion Admin</title>
+</head>
+<body style="font-family: sans-serif; text-align: center; background-color: #f4f4f4; padding: 20px;">
+    <div style="max-width: 600px; margin: auto; background-color: #ffffff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h2 style="color: #333;">Accès au Panneau d’Administration</h2>
+        <p style="font-size: 16px; color: #555;">Voici votre mot de passe à usage unique (OTP) pour accéder au panneau d’administration. Ce code expirera dans 5 minutes.</p>
+        <p style="font-size: 24px; font-weight: bold; color: #000; letter-spacing: 2px; margin: 20px 0; background-color: #f0f2f5; padding: 15px; border-radius: 5px;">{{otpCode}}</p>
+        <p style="font-size: 14px; color: #777;">Si vous n’avez pas demandé ce code, veuillez ignorer cet email immédiatement.</p>
+    </div>
+</body>
+</html>`,
+            'waitlist-spot': `<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Une place est disponible – rejoignez l’Inner Circle Experience</title>
+</head>
+
+<body style="font-family: sans-serif; line-height: 1.6;">
+    <p>Bonjour {{first_name}},</p>
+    <p>Nous avons une merveilleuse nouvelle ! Une place s’est libérée pour l’Inner Circle Experience. 
+       Ce programme comprend une séance privée prolongée, une lettre personnelle signée, un plan de guérison 
+       personnalisé, un rituel âme-à-âme et des cadeaux soigneusement sélectionnés. 
+       L’investissement est de 6 850 €, incluant deux semaines de suivi privé continu.</p>
+    <p><strong>Ce qu’il faut faire maintenant :</strong></p>
+    <ol>
+        <li>Cliquez sur le lien ci-dessous pour confirmer votre place et finaliser le paiement.</li>
+        <li>Si vous ne pouvez pas prendre cette place pour le moment, veuillez nous le faire savoir afin que 
+            nous puissions l’offrir à la prochaine personne sur la liste.</li>
+    </ol>
+    <p><a href="#">Réserver ma place</a></p>
+    <p>Les places sont attribuées selon le principe du premier arrivé, premier servi. 
+       Nous serions honorés de vous accueillir dans ce sanctuaire.</p>
+    <p>Chaleureusement,<br>Companion support</p>
+</body>
+
+</html>`,
+
         }
     },
     es: {
@@ -529,6 +1097,68 @@ const templates = {
         },
         templates: {
             'login-alert': `<!DOCTYPE html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><title>Avviso di accesso</title></head><html style="margin: 0; padding: 0; box-sizing: border-box;"><body style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;"><header style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;"><h2 style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">Healing with Charlotte Casiraghi</h2><p style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">Uno spazio per guarire</p></header><div class="parent" style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Ciao <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Abbiamo notato un nuovo accesso al tuo account Healing with Charlotte Casiraghi il <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{date_time}}</b> da <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{location}}</b> utilizzando: <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{device}}</b>.</p><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Proteggere la tua privacy e il tuo percorso di guarigione è la nostra priorità.</p><p class="up" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; margin-top: 10px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Eri tu?</b></p><ul style="margin: 0; padding: 0; box-sizing: border-box;"><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Sì:</b> Nessuna azione richiesta.</li><li style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">No:</b> Reimposta immediatamente la tua password utilizzando il nostro link sicuro e contattaci a <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com.</b></li></ul><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Se sei in viaggio o utilizzi un nuovo dispositivo, potresti ricevere questi avvisi più spesso. Sono solo un promemoria che stiamo mantenendo il tuo account sicuro. Grazie per far parte di questo spazio sacro.</p><br style="margin: 0; padding: 0; box-sizing: border-box;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Con cura,<br style="margin: 0; padding: 0; box-sizing: border-box;">Supporto Companion</p><hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;"><p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 UE: +33 7 45 62 46 34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 USA: +1 (302) 277-8716<br style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b></p></div><footer style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;"><h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3><h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysées, 75008 Parigi, Francia</h5><p class="contacts" style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;"><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 UE: +33 7 45 62 46 34</span><span style="margin: 0; padding: 0; box-sizing: border-box;">📞 USA: +1 (302) 277-8716 </span></p></footer></body></html>`,
+            
+            'password-changed': `
+<!DOCTYPE html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Cambio Password</title>
+</head>
+<html style="margin: 0; padding: 0; box-sizing: border-box;">
+
+<body
+  style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; place-content: center; display: block; flex-direction: column; gap: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+  <header
+    style="margin: 0; box-sizing: border-box; width: 100%; padding:20px; padding-top:30px; display: block; flex-direction: column; place-content: center; justify-content: center; align-items: center; text-align: center; color: black; font-weight: bold; gap: 5px; position: relative; overflow: hidden; background:#ffeed8;">
+    <h2
+      style="margin: 0; padding: 0; box-sizing: border-box; letter-spacing: 0.4px; font-weight: bolder; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; width: 100%;">
+      Healing with Charlotte Casiraghi</h2>
+    <p
+      style="margin: 0; padding: 0; box-sizing: border-box; margin-bottom: 5px; width: 100%; letter-spacing: 1px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: lighter;">
+      Uno Spazio per Guarire</p>
+  </header>
+  <div class="parent"
+    style="margin: 0; box-sizing: border-box; width: 95%; padding: 20px; margin-top: -10px; place-self: center; background: rgba(255, 255, 255, 0.787); backdrop-filter: blur(10px); border-radius: 25px; box-shadow: 0px 0px 15px rgba(225, 225, 225, 0.234); margin-bottom: 10px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Ciao <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">{{first_name}}</b>,</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Questa è una
+      conferma che la password del tuo account <b style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Healing with
+        Charlotte Casiraghi</b> è stata modificata con successo. Se hai effettuato tu stesso questo cambiamento, non è
+      richiesta alcuna ulteriore azione. Proteggere la tua privacy e i tuoi dati è importante per noi e utilizziamo
+      sistemi di crittografia standard del settore per proteggere il tuo account.</p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;"><b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Non hai cambiato tu la
+        password?</b><br style="margin: 0; padding: 0; box-sizing: border-box;">Reimpostala immediatamente utilizzando il
+      nostro link sicuro e informaci all’indirizzo <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>.
+    </p>
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Grazie per continuare
+      a riporre la tua fiducia in noi nel tuo percorso di guarigione. Siamo onorati di camminare al tuo fianco.</p><br
+      style="margin: 0; padding: 0; box-sizing: border-box;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">Cordiali saluti,<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">Supporto Companion</p>
+    <hr style="margin: 0; padding: 0; box-sizing: border-box; border-color: #c6a8a587; margin-block: 5px;">
+    <p style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">📞 EU: +33 7 45 62 46
+      34<br style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716<br
+        style="margin: 0; padding: 0; box-sizing: border-box;">✉️ <b
+        style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px;">healingwithcharlottecasiraghi@gmail.com</b>
+    </p>
+  </div>
+  <footer
+    style="margin: 0; box-sizing: border-box; width: 100%; text-align: center; padding: 20px; background: #e6d4bdaa; padding-block: 40px; display: block; flex-direction: column; gap: 2px;">
+    <h3 style="margin: 0; padding: 0; box-sizing: border-box;">Healing with Charlotte Casiraghi</h3>
+    <h5 style="margin: 0; padding: 0; box-sizing: border-box;">12 Avenue des Champs-Elysees, 75008 Parigi, Francia</h5>
+    <p class="contacts"
+      style="margin: 0; padding: 0; box-sizing: border-box; width: 100%; margin-bottom: 5px; display: flex; flex-direction: column; margin-top: 10px;">
+      <span style="margin: 0; padding: 0; box-sizing: border-box;">📞 EU: +33 7 45 62 46 34</span><span
+        style="margin: 0; padding: 0; box-sizing: border-box;">📞 US: +1 (302) 277-8716 </span>
+    </p>
+  </footer>
+</body>
+</html>`,
+
+            
         }
     },
     de: {

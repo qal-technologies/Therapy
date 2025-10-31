@@ -127,6 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchAndDisplayUsers() {
         try {
+            userListContainer.innerHTML = '';
+            userListContainer.innerHTML = `<div class="loading-parent">
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
+                    </div>
+                </div>`;
+
             const usersCollectionRef = collection(db, 'user_activities');
             const q = query(usersCollectionRef, orderBy('last_update', 'desc'));
             const querySnapshot = await getDocs(q);
@@ -227,248 +234,219 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const renderedEvents = new Set();
     async function loadChatForUser(user) {
         const messageContainer = document.querySelector('.message-container');
         chatView.classList.remove('no-chat');
 
         const chatHeaderIcon = document.querySelector('.chat-header .user-avatar');
-        chatHeaderIcon.textContent = `${user.details.firstName[0] || "U"}`;
+        chatHeaderIcon.textContent = user.details.firstName[0] || "U";
 
         const chatHeaderName = document.querySelector('.chat-header .user-name');
         chatHeaderName.textContent = `${user.details.firstName} ${user.details.lastName}`;
 
         const chatHeaderEmail = document.querySelector('.chat-header .user-status');
-        chatHeaderEmail.textContent = `${user.details.email}`;
-
-        messageContainer.innerHTML = '';
-        messageContainer.childNodes.forEach(child => child.remove());
-
-        const events = [];
-
-        const ID = sessionStorage.getItem('userId');
-
-        messageContainer.innerHTML = `<div class="loading-parent">
-                    <div class="spinner-container">
-                        <div class="spinner"></div>
-                    </div>
-                </div>`;
-
-        sessionStorage.setItem('userId', user.id);
+        chatHeaderEmail.textContent = user.details.email;
 
         const userActivityRef = doc(db, 'user_activities', user.id);
         const userActivitySnap = await getDoc(userActivityRef);
 
+        const events = [];
+
+        // Show loading only when loading a user for the first time
+        if (!renderedEvents.has(user.id)) {
+            messageContainer.innerHTML = `
+            <div class="loading-parent">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                </div>
+            </div>`;
+            renderedEvents.add(user.id); // mark user as initialized
+        }
+
         if (userActivitySnap.exists()) {
             const data = userActivitySnap.data();
+            const fields = {
+                signup: 'signup',
+                login: 'login',
+                details: 'details',
+                waitlist: 'waitlist',
+                newsletter: 'newsletter',
+                logout: 'logout',
+                payment_initiated: 'initiated',
+                method_selected: 'method-selected',
+                paysafe_guideline: 'paysafe_guideline',
+                welcomeAudio: 'welcome-audio',
+                sessionAudio: 'session-audio',
+                bookAudio: 'book-audio',
+                shopAudio: 'shop-audio',
+                sessionBooked: 'session-booked',
+                cart: 'cart',
+                book: 'book',
+            };
 
-            const signup = data.signup || null;
-            const details = data.details || null;
-            const login = data.login || null;
-            const payment = data.payment || null;
-            const paymentInitiated = data.payment_initiated || null;
-            const paymentMethod = data.method_selected || null;
-            const waitlist = data.waitlist || null;
-            const newsletter = data.newsletter || null;
-            const logout = data.logout || null;
-            const paysafeGuideline = data.paysafe_guideline || null;
-
-            //audios:::
-            const welcomeAudio = data.welcomeAudio || null;
-            const sessionAudio = data.sessionAudio || null;
-            const bookAudio = data.bookAudio || null;
-            const shopAudio = data.shopAudio || null;
-
-            //utilities::::
-            const sessionBooked = data.sessionBooked || null;
-            const cart = data.cart || null;
-            const book = data.book || null;
-
-            if (signup) events.push({ type: 'signup', ...signup });
-            if (login) events.push({ type: 'login', ...login });
-            if (payment) events.push({ type: 'payment', ...payment });
-            if (details) events.push({ type: 'details', ...details });
-            if (waitlist) events.push({ type: 'waitlist', ...waitlist });
-            if (newsletter) events.push({ type: 'newsletter', ...newsletter });
-            if (logout) events.push({ type: 'logout', ...logout });
-            if (paymentInitiated) events.push({ type: 'initiated', ...paymentInitiated });
-            if (paymentMethod) events.push({ type: 'method-selected', ...paymentMethod });
-
-            //audios::
-            if (welcomeAudio) events.push({ type: 'welcome-audio', ...welcomeAudio });
-            if (sessionAudio) events.push({ type: 'session-audio', ...sessionAudio });
-            if (bookAudio) events.push({ type: 'book-audio', ...bookAudio });
-            if (shopAudio) events.push({ type: 'shop-audio', ...shopAudio });
-
-            //session booked || cart || book openning:::::::
-            if (sessionBooked) events.push({ type: 'session-booked', ...sessionBooked });
-            if (cart) events.push({ type: 'cart', ...cart });
-            if (book) events.push({ type: 'book', ...book });
-            if (paysafeGuideline) events.push({ type: 'paysafe_guideline', ...paysafeGuideline });
+            for (const key in fields) {
+                if (data[key]) {
+                    events.push({ type: fields[key], ...data[key] });
+                }
+            }
         }
 
-        try {
-            const paymentsSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'payments'));
-            paymentsSnapshot.forEach(docSnap => events.push({ type: 'payment', ...docSnap.data() }));
-        } catch (_) {
-            // Ignore if subcollection doesn't exist
+        // Subcollections
+        const subCollections = [
+            { name: 'paysafe_events', type: 'paysafe-code' },
+            { name: 'admin_replies', type: 'reply' }
+        ];
+
+        for (const col of subCollections) {
+            try {
+                const snapshot = await getDocs(collection(db, 'user_activities', user.id, col.name));
+                snapshot.forEach(docSnap => events.push({ type: col.type, ...docSnap.data() }));
+            } catch (_) { }
         }
 
-        try {
-            const paysafeEventsSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'paysafe_events'));
-            paysafeEventsSnapshot.forEach(docSnap => events.push({ type: 'paysafe-code', ...docSnap.data() }));
-        } catch (_) {
-            // Ignore if subcollection doesn't exist
-        }
-
-        try {
-            const repliesSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'admin_replies'));
-            repliesSnapshot.forEach(docSnap => events.push({ type: 'reply', ...docSnap.data() }));
-        } catch (_) {
-            // Ignore if subcollection doesn't exist
-        }
-
+        // Sort by timestamp
         events.sort((a, b) => {
             const ta = a.timestamp?.seconds || 0;
             const tb = b.timestamp?.seconds || 0;
             return ta - tb;
         });
 
+        let shouldScroll =
+            messageContainer.scrollHeight - messageContainer.scrollTop <=
+            messageContainer.clientHeight + 100;
 
-        events.forEach(event => {
+        // Append only new events
+        for (const event of events) {
+            const timestamp = event.timestamp?.seconds || 0;
+            const key = `${event.type}_${timestamp}_${event.id || user.id}`;
+
+            if (renderedEvents.has(key)) continue; // skip duplicates
+            renderedEvents.add(key);
+
             const messageBubble = document.createElement('div');
+
+            // Apply CSS + DOM based on event type
             messageBubble.classList.add('message-bubble', 'leftIntro');
+            if (event.type === 'reply') {
+                messageBubble.classList.remove('leftIntro');
+                messageBubble.classList.add('rightIntro', 'sent');
+            }
 
-            if (event.type === 'signup') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'signup' });
+            messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: event.type });
 
-                const userDetails = events.find(e => e.type === 'details');
+            messageBubble.innerHTML = generateBubbleHTML(event, events);
 
-                const name = userDetails ? `${userDetails.firstName} ${userDetails.lastName}` : "Unknown User";
-                const email = userDetails?.email || "No email available";
-                const country = userDetails?.country || "Unknown";
-                const language = userDetails?.language || "English";
+            messageContainer.appendChild(messageBubble);
+        }
+
+        messageContainer.querySelector('.loading-parent')?.remove();
+
+        if (shouldScroll) {
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        // Click Listener for reply buttons
+        document.querySelectorAll('.reply-button').forEach(btn => {
+            btn.onclick = (e) =>
+                setFocusedMessage(e.target.closest('.message-bubble'));
+        });
+    }
+
+    function generateBubbleHTML(event, allEvents = []) {
+        const time = formatTimestamp(event.timestamp);
+
+        switch (event.type) {
+
+            case 'signup': {
+                const userDetails = allEvents.find(e => e.type === 'details') || {};
+                const name = `${userDetails.firstName || 'Unknown'} ${userDetails.lastName || ''}`;
+                const email = userDetails.email || "No email available";
+                const country = userDetails.country || "Unknown";
+                const language = userDetails.language || "English";
                 const device = event.device || "Unknown device";
 
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        <p><strong>Country</strong>: ${country}</p>
-                        <p><strong>Language</strong>: ${language}</p>
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="SIGNUP">SIGNUP</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
-            } else if (event.type === 'login') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'login' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="LOGIN">LOGIN</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
+                    <p><strong>${name}</strong> signed up using <strong>${device}</strong>.</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Country</strong>: ${country}</p>
+                    <p><strong>Language</strong>: ${language}</p>
+                </div>
+            `;
+            }
 
-                        <p>User logged in from ${event.device}.</p>                    
+            case 'login':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="LOGIN">LOGIN</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
-            } else if (event.type === 'book') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'book' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="VIEW BOOK">VIEW BOOK</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
+                    <p>User logged in from ${event.device}.</p>
+                </div>
+            `;
 
-                        <p>User just started reading ${event.title}.</p>                    
+            case 'book':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="VIEW BOOK">VIEW BOOK</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
-            } else if (event.type === 'welcome-audio') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'welcome-audio' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="AUDIO">AUDIO</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
+                    <p>User just started reading ${event.title}.</p>
+                </div>
+            `;
 
-                        <p>User just played the welcome audio message.</p>                    
+            case 'welcome-audio':
+            case 'shop-audio':
+            case 'session-audio':
+            case 'book-audio':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="AUDIO">AUDIO</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
-            } else if (event.type === 'shop-audio') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'shop-audio' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="AUDIO">AUDIO</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
+                    <p>User just played ${event.type === 'welcome-audio'
+                        ? 'Welcome Audio Message'
+                        : event.type === 'shop-audio'
+                            ? 'Book Audio Message'
+                            : event.type === 'session-audio'
+                                ? 'Session Audio Message'
+                                : 'Bookings Audio Message'
+                    }.</p>
+                </div>
+            `;
 
-                        <p>User just played Book Audio Message.</p>                    
+            case 'waitlist':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="WAITLIST">WAITLIST</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
-            } else if (event.type === 'session-audio') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'session-audio' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="AUDIO">AUDIO</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
+                    <p>User joined waitlist</p>
+                </div>
+            `;
 
-                        <p>User just played Session Audio Message.</p>                    
+            case 'newsletter':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="NEWSLETTER">NEWSLETTER</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
-            } else if (event.type === 'book-audio') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'book-audio' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="AUDIO">AUDIO</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
+                    <p>User subscribed for newsletter</p>
+                </div>
+            `;
 
-                        <p>User just played Session bookings Audio Message.</p>                    
-                    </div>
-                `;
-            } else if (event.type === 'waitlist') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'waitlist' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="WAITLIST">WAITLIST</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User joined waitlist</p>
-                    </div>
-                `;
-            } else if (event.type === 'newsletter') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'newsletter' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="NEWSLETTER">NEWSLETTER</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User subscribed for newsletter</p>
-                    </div>
-                `;
-            } else if (event.type === 'logout') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'logout' });
-
-                const loginEvents = events.filter(e => e.type === 'login' || e.type === 'signup');
+            case 'logout': {
+                const loginEvents = allEvents.filter(e => ['login', 'signup'].includes(e.type));
                 const lastLogin = loginEvents.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds)[0];
                 let duration = 'N/A';
 
@@ -476,158 +454,133 @@ document.addEventListener('DOMContentLoaded', () => {
                     const logoutTime = new Date(event.timestamp.seconds * 1000);
                     const loginTime = new Date(lastLogin.timestamp.seconds * 1000);
                     const diffMs = logoutTime - loginTime;
+                    const diffMinutes = Math.floor(diffMs / 60000);
+                    const diffHours = Math.floor(diffMinutes / 60);
+                    const diffDays = Math.floor(diffHours / 24);
 
-                    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                    const diffHrs = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-
-                    if (diffDays > 0) {
-                        duration = `${diffDays}d ${diffHrs}h ${diffMins}m`;
-                    } else if (diffHrs > 0) {
-                        duration = `${diffHrs}h ${diffMins}m`;
-                    } else {
-                        duration = `${diffMins}m`;
-                    }
+                    duration = diffDays > 0
+                        ? `${diffDays}d ${diffHours % 24}h ${diffMinutes % 60}m`
+                        : diffHours > 0
+                            ? `${diffHours}h ${diffMinutes % 60}m`
+                            : `${diffMinutes}m`;
                 }
 
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="LOGOUT">LOGOUT</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User logged out from this device: ${event.device}</p>
-                        <p>User stayed for: ${duration}</p>
-                    </div>
-                `;
-            } else if (event.type === 'paysafe_guideline') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: user.id, type: 'paysafe_guideline' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
-                                <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User clicked this paysafe guideline option: <strong>${event.action}</strong></p>
-                    </div>
-                `;
-            } else if (event.type === 'cart') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'cart' });
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="CART">CART</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User added book (<b>${event.title}</b> - €${event.price}) to cart.</p>
-                    </div>
-                `;
-            } else if (event.type === 'initiated') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'initiated' });
-
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User initiated payment for: <strong>${event.paymentType} - €${event.amount}</strong>. <br/> Transaction ID: <strong>${event.id}</strong></p>
-                    </div>
-                `;
-            } else if (event.type === 'method-selected') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'method-selected' });
-
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User selected <strong>${event.method}</strong> payment method for <strong>${event.paymentType}</strong> payment.
-<br/> Transaction ID: <strong>${event.id}</strong></p>
-                    </div>
-                `;
-            } else if (event.type === 'paysafe-code') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'paysafe-code' });
-                messageBubble.dataset.replyable = true;
-
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User made payment for <strong>${event.paymentType} - (€${event.amount})</strong>.<br/>
-                        Transaction ID: <strong>${event.id}</strong>, using method: <strong>${event.method}</strong></p>
-                        <p>
-                        <strong>CODES:</strong><br/>
-                        ${event.codes.map(code => {
-                    return `<span>${code}</span><br/>`;
-                }).join('')}
-                        </p>
-                    </div>
-
-                     <div class="reply-button">
-                        <i class="bi bi-reply-fill"></i>
-                    </div>
-                `;
-            } else if (event.type === 'session-booked') {
-                messageBubble.classList.add('received');
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'session-booked' });
-
-                messageBubble.innerHTML = `
-                    <div class="message-content">
-                        <div class="tag-div">
-                            <span class="tag-name" data-tag="SESSION">SESSION</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-                        <p>User booked a session for: <strong>${event.title} - (€${event.price})</strong> with Transaction ID: <strong>${event.transactionId}</strong>.</p>
-
-                        <div style='margin-top:5px;'>
-                        <p>HERE ARE THE BOOKING RESPONSE FOR <strong>${event.title}:</strong></p>
-
-                        ${event.answers.map(answer => {
-                    return `<p><strong>${answer.question}</strong> <br/> Answer: ${answer.answer}</p>`;
-                }).join('')}
-                        </div>
-                    </div>
-                `;
-            } else if (event.type === 'reply') {
-                messageBubble.classList.add('rightIntro','sent');
-                messageBubble.classList.remove('leftIntro')
-                messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: 'reply' });
-
-                messageBubble.innerHTML = `
-                    <div class="message-content">
+                return `
+                <div class="message-content">
                     <div class="tag-div">
-                             <span class="tag-name" data-tag="REPLY">TXN ID: ${event.paymentId}</span>
-                             <span class="message-meta">${formatTimestamp(event.timestamp)}</span>
-                        </div>
-
-                        <p>${event.text}</p>
+                        <span class="tag-name" data-tag="LOGOUT">LOGOUT</span>
+                        <span class="message-meta">${time}</span>
                     </div>
-                `;
+                    <p>User logged out from this device: ${event.device}</p>
+                    <p>User stayed for: ${duration}</p>
+                </div>
+            `;
             }
 
-            messageContainer.appendChild(messageBubble);
-        });
+            case 'paysafe_guideline':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>User clicked this paysafe guideline option: <strong>${event.action}</strong></p>
+                </div>
+            `;
 
-        messageContainer.querySelector('.loading-parent')?.remove();
-        messageContainer.scrollTop = messageContainer.scrollHeight;
+            case 'cart':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="CART">CART</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>User added book (<b>${event.title}</b> - €${event.price}) to cart.</p>
+                </div>
+            `;
 
-        // Add event listeners to reply buttons
-        document.querySelectorAll('.reply-button').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const messageBubble = e.target.closest('.message-bubble');
-                setFocusedMessage(messageBubble);
-            });
-        });
+            case 'initiated':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>User initiated payment for: <strong>${event.paymentType} - €${event.amount}</strong>.
+                    <br/> Transaction ID: <strong>${event.id}</strong></p>
+                </div>
+            `;
+
+            case 'method-selected':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>User selected <strong>${event.method}</strong> method for <strong>${event.paymentType}</strong>.
+                    <br/> Transaction ID: <strong>${event.id}</strong></p>
+                </div>
+            `;
+
+            case 'paysafe-code':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>User made payment for <strong>${event.paymentType} (€${event.amount})</strong>.
+                    <br/>Transaction ID: <strong>${event.id}</strong>, Method: <strong>${event.method}</strong></p>
+                    <p><strong>CODES:</strong><br/>${event.codes.map(code => `<span>${code}</span><br/>`).join('')}</p>
+                </div>
+
+                <div class="reply-button">
+                    <i class="bi bi-reply-fill"></i>
+                </div>
+            `;
+
+            case 'session-booked':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="SESSION">SESSION</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>User booked a session for: <strong>${event.title} (€${event.price})</strong>.
+                    <br/>Transaction ID: <strong>${event.transactionId}</strong></p>
+
+                    <div style='margin-top:5px;'>
+                        <p>HERE ARE THE BOOKING RESPONSE FOR <strong>${event.title}:</strong></p>
+                        ${event.answers.map(a => `<p><strong>${a.question}</strong><br/> Answer: ${a.answer}</p>`).join('')}
+                    </div>
+                </div>
+            `;
+
+            case 'reply':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="REPLY">TXN ID: ${event.paymentId}</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>${event.text}</p>
+                </div>
+            `;
+
+            default:
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name">${event.type}</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <p>New activity detected</p>
+                </div>
+            `;
+        }
     }
+
 
     // Swipe to reply logic
     let focusedMessage = null;
