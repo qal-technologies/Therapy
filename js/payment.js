@@ -833,7 +833,9 @@ async function showResultScreen(state, elements, finalPayment) {
             </div>
             <div class="proceed-div">
                 ${isSuccess ? paymentType.toLowerCase() === "session" ?
-                `<a href="https://wa.me/33745624634" target="_blank" class="continue-btn facebook "> <i class="bi bi-whatsapp"></i> Message Me on WhatsApp</a>` : `<a href="/html/main/User.html" class="continue-btn success">Continue</a>` : (
+            `<a href="https://wa.me/33745624634" target="_blank" class="continue-btn facebook "> <i class="bi bi-whatsapp"></i> Message Me on WhatsApp</a>` :
+            `<a href="/html/main/ViewBook.html" class="continue-btn success">View Book</a>` :
+            (
                 `<button class="continue-btn try-again">${!isSuccess && statusMessage.includes("incomplete") ? "Add Another Code" : "Try Again"
                 } </button>`)
             }
