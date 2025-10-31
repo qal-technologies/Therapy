@@ -1881,12 +1881,13 @@ ul.instructions.redeem li {
     width: 90%;
     border-radius: 15px;
     height: max-content;
-    min-height: 95vh;
+    min-height: max-content;
     flex: 0.45;
 }
 
 #paysafe-outcome {
     height: max-content;
+    max-height: 95vh;
     flex: 0;
 }
 
@@ -2031,11 +2032,14 @@ ul.instructions.redeem li {
 }
 
 .paysafe-section .continue-btn.success {
+    min-width: max-content;
     background: rgb(0, 184, 0);
 }
 
 .paysafe-section .continue-btn.facebook {
     gap: 5px;
+    width: max-content;
+    max-width: 90%;
     background: rgb(0, 184, 40);
 }
 
