@@ -556,15 +556,15 @@ window.addEventListener('load', async () => {
     try {
       const userCredential = await signup(email, password);
       const device = getOS() === "iOS" ? "iPhone" : getOS();
-      const userLangName = getDisplayLanguage();
       const user = userCredential.user;
+      const langCode = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
 
       await createUserProfile(user.uid, {
         firstName,
         lastName,
         email,
         country,
-        language: userLangName
+        language: langCode,
       });
 
       await updateUserProfile(user, {
@@ -574,6 +574,7 @@ window.addEventListener('load', async () => {
       const pathName = window.location.hostname;
       await sendEmail(email, 'welcome', { first_name: firstName, origin: pathName });
 
+      const userLangName = getDisplayLanguage();
       await createUserActivity(user.uid, {
         details: {
           firstName,
@@ -588,7 +589,7 @@ window.addEventListener('load', async () => {
         },
         last_update: new Date(),
         opened: false,
-        unread_count:1,
+        unread_count: 1,
       });
 
       handleAlert("Registration successful! You'll be redirected shortly to continue your journey.", "blur", true, "<i class='bi bi-check-circle-fill fs-2 text-success'></i> <br/> Registration Successful", true, [{ text: "Continue", onClick: () => handleRedirect("", "backwards") }])
@@ -628,10 +629,10 @@ window.addEventListener('load', async () => {
 
     disableAllInputs(true);
     try {
-      const userLangName = getDisplayLanguage();
+      const langCode = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
       const userCredential = await login(email, password);;
       const user = userCredential.user;
-      updateUserData(user.uid, { language: userLangName });
+      updateUserData(user.uid, { language: langCode });
 
       if (sessionStorage.getItem("userEmail")) {
         sessionStorage.removeItem("userEmail");
