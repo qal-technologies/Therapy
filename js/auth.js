@@ -59,7 +59,7 @@ async function resetPassword(email) {
   try {
 
     const link = await sendPasswordResetEmail(auth, email, {
-      url: `${window.location.origin}/html/regs/reset-password`,
+      url: `https://guerisonendirectavecharlottecasiraghi.netlify.app/html/regs/reset-password`,
       handleCodeInApp: true
     });
 
