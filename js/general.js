@@ -526,14 +526,14 @@ function setupEventListeners() {
 
     if (menu) {
         const os = getOS();
-        if (os === 'iOS') {
+       
             menu.addEventListener("touchstart", (e) => {
                 e.preventDefault();
                 toggleMenu();
             }, { passive: false });
-        } else {
+        
             menu.addEventListener("click", toggleMenu);
-        }
+        
     }
     backButton && backButton.addEventListener("click", goBackButton);
     refreshButton && refreshButton.addEventListener("click", handleRefresh);
