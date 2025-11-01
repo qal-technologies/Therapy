@@ -1,3 +1,4 @@
+import { sendEmail } from "../emailHelper.js";
 import { db, app } from "./firebase-config.js";
 import {
   getAuth,
@@ -5,10 +6,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  sendPasswordResetEmail,
   updateProfile,
   verifyPasswordResetCode,
-  confirmPasswordReset
+  confirmPasswordReset,
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
 // Initialize Firebase
@@ -52,12 +52,20 @@ const logout = () => {
  * @param {object} actionCodeSettings - The action code settings for the email
  * @returns {Promise<boolean>} - true if sent successfully, false if failed
  */
-async function resetPassword(email, actionCodeSettings) {
+async function resetPassword(email) {
   if (!email) throw new Error("Email is required for password reset.");
 
   try {
-    await sendPasswordResetEmail(auth, email, actionCodeSettings);
-    return true;
+
+    const link = await sendPasswordResetEmail(auth, email, {
+      url: `${window.location.origin}/html/regs/reset-password`,
+      handleCodeInApp: true
+    });
+
+    return await sendEmail(email, "reset", {
+      name: 'there',
+      url: `${link}`,
+    });
   } catch (error) {
     console.error("Password reset error:", error);
     throw error;

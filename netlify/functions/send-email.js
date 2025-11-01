@@ -715,6 +715,32 @@ const templates = {
 </body>
 
 </html>`,
+      'reset': `
+<p>Hello {{name}},</p>
+
+<br/>
+
+<p>We received a request to reset the password for your Healing with Charlotte Casiraghi account.</p>
+
+<p>If you made this request, please click the link below. Your personal information and notes are treated with the utmost respect, and a strong password helps keep your healing journey private.</p>
+
+<p style="padding-block:10px; display: flex; place-content:center; justify-content:center; text-align: center; align-items:center; width:100%;" >
+<a href='{{url}}' style="padding:10px; padding-inline:15px; background: #8b5e5a; width:100%; border-radius: 10px; color:white; font-weight:bold; text-align:center; place-self:center;">Reset My Password</a>
+</p>
+
+<p>This link will expire in 24 hours.</p>
+
+<p>If you didn't request a password reset, you can safely ignore this email; your existing password will remain unchanged.</p>
+
+<p>For assistance, write to healingwithcharlottecasiraghi@gmail.com.</p>
+
+<br/>
+
+<p>With care,</p>
+<p>Companion Support</p>
+<p>📞 EU: +33 7 45 62 46 34</p>
+<p>📞 US: +1 (302) 277-8716</p>
+<p>✉️ healingwithcharlottecasiraghi@gmail.com</p>`,
     }
   },
   fr: {
@@ -1337,7 +1363,32 @@ const templates = {
 </body>
 
 </html>`,
+      'reset': `
+<p>Bonjour {{name}},</p>
 
+<br/>
+
+<p>Nous avons reçu une demande de réinitialisation du mot de passe pour votre compte Healing with Charlotte Casiraghi.</p>
+
+<p>Si vous êtes à l’origine de cette demande, veuillez cliquer sur le lien ci-dessous. Vos informations personnelles et vos notes sont traitées avec le plus grand soin, et un mot de passe sécurisé contribue à garder votre parcours de guérison privé.</p>
+
+<p style="padding-block:10px; display: flex; place-content:center; justify-content:center; text-align: center; align-items:center; width:100%;" >
+<a href='{{url}}' style="padding:10px; padding-inline:15px; background: #8b5e5a; width:100%; border-radius: 10px; color:white; font-weight:bold; text-align:center; place-self:center;">Réinitialiser mon mot de passe</a>
+</p>
+
+<p>Ce lien expirera dans 24 heures.</p>
+
+<p>Si vous n’êtes pas à l’origine de cette demande, vous pouvez ignorer cet email en toute sécurité ; votre mot de passe actuel restera inchangé.</p>
+
+<p>Pour toute assistance, veuillez écrire à healingwithcharlottecasiraghi@gmail.com.</p>
+
+<br/>
+
+<p>Avec bienveillance,</p>
+<p>Companion Support</p>
+<p>📞 UE : +33 7 45 62 46 34</p>
+<p>📞 US : +1 (302) 277-8716</p>
+<p>✉️ healingwithcharlottecasiraghi@gmail.com</p>`
     }
   },
   es: {
@@ -1992,6 +2043,32 @@ const templates = {
 </body>
 
 </html>`,
+      'reset': `
+<p>Hola {{name}},</p>
+
+<br/>
+
+<p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta de Healing with Charlotte Casiraghi.</p>
+
+<p>Si realizaste esta solicitud, por favor haz clic en el enlace de abajo. Tu información personal y tus notas se mantienen con el máximo respeto, y una contraseña segura ayuda a proteger tu camino de sanación.</p>
+
+<p style="padding-block:10px; display: flex; place-content:center; justify-content:center; text-align: center; align-items:center; width:100%;" >
+<a href='{{url}}' style="padding:10px; padding-inline:15px; background: #8b5e5a; width:100%; border-radius: 10px; color:white; font-weight:bold; text-align:center; place-self:center;">Restablecer mi contraseña</a>
+</p>
+
+<p>Este enlace expirará en 24 horas.</p>
+
+<p>Si no solicitaste un restablecimiento de contraseña, puedes ignorar este correo; tu contraseña existente seguirá siendo la misma.</p>
+
+<p>Si necesitas ayuda, escribe a healingwithcharlottecasiraghi@gmail.com.</p>
+
+<br/>
+
+<p>Con cariño,</p>
+<p>Companion Support</p>
+<p>📞 UE: +33 7 45 62 46 34</p>
+<p>📞 EE. UU.: +1 (302) 277-8716</p>
+<p>✉️ healingwithcharlottecasiraghi@gmail.com</p>`
 
     }
   },
@@ -2687,7 +2764,32 @@ const templates = {
     <p>Con affetto,<br>Companion support</p>
 </body>
 
-</html>`
+</html>`,
+      'reset':`<p>Ciao {{name}},</p>
+
+<br/>
+
+<p>Abbiamo ricevuto una richiesta per reimpostare la password del tuo account Healing with Charlotte Casiraghi.</p>
+
+<p>Se sei stato tu a fare questa richiesta, clicca sul link qui sotto. Le tue informazioni personali e le tue note sono trattate con la massima riservatezza, e una password sicura aiuta a mantenere privata la tua esperienza di guarigione.</p>
+
+<p style="padding-block:10px; display: flex; place-content:center; justify-content:center; text-align: center; align-items:center; width:100%;">
+<a href='{{url}}' style="padding:10px; padding-inline:15px; background: #8b5e5a; width:100%; border-radius: 10px; color:white; font-weight:bold; text-align:center; place-self:center;">Reimposta la Mia Password</a>
+</p>
+
+<p>Questo link scadrà tra 24 ore.</p>
+
+<p>Se non hai richiesto la reimpostazione della password, puoi ignorare questa email; la tua password attuale rimarrà invariata.</p>
+
+<p>Per assistenza, scrivi a healingwithcharlottecasiraghi@gmail.com.</p>
+
+<br/>
+
+<p>Con cura,</p>
+<p>Supporto del Compagno</p>
+<p>📞 EU: +33 7 45 62 46 34</p>
+<p>📞 US: +1 (302) 277-8716</p>
+<p>✉️ healingwithcharlottecasiraghi@gmail.com</p>`
     }
   },
   de: {
@@ -3213,7 +3315,31 @@ const templates = {
     <p>Herzlichst,<br>Companion Support</p>
 </body>
 
-</html>`
+</html>`,
+      'reset':`<p>Ciao {{name}},</p>
+
+<br/>
+<p>Abbiamo ricevuto una richiesta per reimpostare la password del tuo account Healing with Charlotte Casiraghi.</p>
+
+<p>Se sei stato tu a fare questa richiesta, clicca sul link qui sotto. Le tue informazioni personali e le tue note sono trattate con la massima riservatezza, e una password sicura aiuta a mantenere privata la tua esperienza di guarigione.</p>
+
+<p style="padding-block:10px; display: flex; place-content:center; justify-content:center; text-align: center; align-items:center; width:100%;">
+<a href='{{url}}' style="padding:10px; padding-inline:15px; background: #8b5e5a; width:100%; border-radius: 10px; color:white; font-weight:bold; text-align:center; place-self:center;">Reimposta la Mia Password</a>
+</p>
+
+<p>Questo link scadrà tra 24 ore.</p>
+
+<p>Se non hai richiesto la reimpostazione della password, puoi ignorare questa email; la tua password attuale rimarrà invariata.</p>
+
+<p>Per assistenza, scrivi a healingwithcharlottecasiraghi@gmail.com.</p>
+
+<br/>
+
+<p>Con cura,</p>
+<p>Supporto del Compagno</p>
+<p>📞 EU: +33 7 45 62 46 34</p>
+<p>📞 US: +1 (302) 277-8716</p>
+<p>✉️ healingwithcharlottecasiraghi@gmail.com</p>`,
     }
   },
 };

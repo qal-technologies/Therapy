@@ -74,12 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 emailInput.disabled = true;
 
-                const actionCodeSettings = {
-                    url: `${window.location.origin}/html/regs/Signup.html?type=login`,
-                    handleCodeInApp: true,
-                };
-
-                await resetPassword(email, actionCodeSettings);
+                
+                await resetPassword(email);
                 handleAlert(
                     `A reset link has been sent to <b>${email}</b> <br/> Please check your inbox or Spam folder.`,
                     "blur",

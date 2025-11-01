@@ -229,7 +229,7 @@ function addPadding() {
     }
 }
 
-async function handleTranslateFirstLoad() {
+export async function handleTranslateFirstLoad() {
     const os = getOS();
 
     const pathKey = `translated_texts:${window.location.pathname}`;

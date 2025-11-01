@@ -1,8 +1,8 @@
 import { verifyResetCode, confirmNewPassword } from './auth.js';
 import { sendEmail } from '../emailHelper.js';
-import handleAlert, { getOS, handleRedirect } from './general.js';
+import handleAlert, { getOS, handleRedirect, handleTranslateFirstLoad } from './general.js';
 
-window.addEventListener('load', () => {
+window.addEventListener('load', async() => {
     const urlParams = new URLSearchParams(window.location.search);
     const oobCode = urlParams.get('oobCode');
 
@@ -12,6 +12,7 @@ window.addEventListener('load', () => {
     const userEmailSpan = document.getElementById('user-email');
     const passwordError = document.querySelector('.password-error');
 
+    await handleTranslateFirstLoad();
 
     function handlePasswordAndViews() {
         const btns = document.querySelectorAll(".toggle-password");

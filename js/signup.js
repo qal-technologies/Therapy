@@ -1,5 +1,5 @@
 import { signup, login, handleAuthStateChange, logout, updateUserProfile } from './auth.js';
-import { createUserProfile, createUserActivity, updateUserActivity } from './database.js'; import { sendEmail } from '../emailHelper.js';
+import { createUserProfile, createUserActivity, updateUserActivity, updateUserData } from './database.js'; import { sendEmail } from '../emailHelper.js';
 import handleAlert, { getDisplayLanguage, getOS, handleRedirect, translateElementFragment } from './general.js';
 
 const TEMPLATE = {
@@ -628,8 +628,10 @@ window.addEventListener('load', async () => {
 
     disableAllInputs(true);
     try {
+      const userLangName = getDisplayLanguage();
       const userCredential = await login(email, password);;
       const user = userCredential.user;
+      updateUserData(user.uid, { language: userLangName });
 
       if (sessionStorage.getItem("userEmail")) {
         sessionStorage.removeItem("userEmail");
