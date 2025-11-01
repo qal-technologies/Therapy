@@ -34,7 +34,7 @@ async function sendEmail(to, templateName, variables, language) {
     }
 }
 
-export async function handler(event) {
+exports.handler = async (event) => {
     try {
         const { email, language } = JSON.parse(event.body);
 
