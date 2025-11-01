@@ -19,6 +19,7 @@ const templates = {
       "payment-processing": "Your payment is being processed",
       "admin-otp": "Your Admin Panel OTP Code",
       'waitlist-spot': "A spot is available – claim your Inner Circle Experience",
+      'reset':'Reset your Healing with Charlotte Casiraghi password'
     },
     templates: {
       'login-alert': `<!DOCTYPE html>
@@ -757,6 +758,7 @@ const templates = {
       "payment-processing": "Votre paiement est en cours de traitement",
       "admin-otp": "Votre code OTP pour le panneau d'administration",
       'waitlist-spot': "Une place est disponible – réclamez votre Expérience du Cercle Intérieur",
+      'reset':'Réinitialisez votre mot de passe Healing with Charlotte Casiraghi',
     },
     templates: {
       'login-alert': `
@@ -1405,6 +1407,7 @@ const templates = {
       "payment-processing": "Tu pago está siendo procesado",
       "admin-otp": "Tu código OTP para el panel de administración",
       'waitlist-spot': "Hay un lugar disponible – reclama tu Experiencia del Círculo Íntimo",
+      'reset':'Restablece tu contraseña de Healing with Charlotte Casiraghi'
     },
     templates: {
       'login-alert': `<!DOCTYPE html>
@@ -2086,6 +2089,7 @@ const templates = {
       "payment-processing": "Il tuo pagamento è in fase di elaborazione",
       "admin-otp": "Il tuo codice OTP per il pannello di amministrazione",
       'waitlist-spot': "È disponibile un posto – richiedi la tua Esperienza del Cerchio Interno",
+      'reset':'Reimposta la tua password di Healing with Charlotte Casiraghi'
     },
     templates: {
       'login-alert': `<!DOCTYPE html>
@@ -2806,6 +2810,7 @@ const templates = {
       "payment-processing": "Ihre Zahlung wird bearbeitet",
       "admin-otp": "Ihr OTP-Code für das Admin-Panel",
       'waitlist-spot': "Ein Platz ist verfügbar – sichern Sie sich Ihr Inner Circle Erlebnis",
+      'reset':'Setze dein Healing with Charlotte Casiraghi-Passwort zurück'
     },
     templates: {
       'login-alert': `<!DOCTYPE html>
