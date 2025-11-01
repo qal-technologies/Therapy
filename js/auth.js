@@ -65,8 +65,20 @@ async function resetPassword(email) {
       body: JSON.stringify({ email, language })
     });
 
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.error || "Failed to send reset email");
+    const responseText = await res.text();
+
+    if (!res.ok) {
+      console.error("Server error response:", responseText);
+      throw new Error("Failed to send reset email");
+    }
+
+    let result;
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      console.error("Invalid JSON response:", responseText);
+      throw new Error("Unexpected response format");
+    }
 
     return true;
   } catch (error) {
