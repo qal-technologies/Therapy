@@ -9,6 +9,7 @@ import {
   updateProfile,
   verifyPasswordResetCode,
   confirmPasswordReset,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
 // Initialize Firebase
