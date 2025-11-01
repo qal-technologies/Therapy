@@ -3,8 +3,7 @@ import { login, logout } from '../js/auth.js';
 import handleAlert from '../js/general.js'
 
 // Hardcoded admin email for client-side check
-// const ADMIN_EMAIL = "healingwithcharlottecasiraghi@gmail.com";
-const ADMIN_EMAIL = "qaltech.company@gmail.com";
+const ADMIN_EMAIL = "healingwithcharlottecasiraghi@gmail.com";
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("login-form");
@@ -100,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             handleAlert(`Error: ${error.message}`, 'toast');
 
             emailInput.disabled = false;
-            // requestOtpBtn.disabled = false;
+            requestOtpBtn.disabled = false;
             requestOtpBtn.textContent = "Request OTP";
 
             otpGroup.style.display = "none";
@@ -143,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function handleSuccessfulOtp(email) {
         try {
-            const password = "testing123";
+            const password = "tophealing1234";
 
             const userCredential = await login(email, password);
             const adminUser = userCredential.user;

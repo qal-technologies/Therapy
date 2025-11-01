@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // verifyAdminSession();
+    verifyAdminSession();
 
 
     const userListContainer = document.querySelector('.user-list-container');
