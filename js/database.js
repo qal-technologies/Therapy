@@ -149,16 +149,21 @@ const addUserActivityPaysafe = (userId, paysafeData) => {
 const getUserData = async (userId) => {
   if (!userId) {
     console.warn("getUserData called without valid userId");
-    return null;
+    return { details: {}, emailSub: false };
   }
 
-  const userDocRef = doc(db, "users", userId);
-  const docSnap = await getDoc(userDocRef);
-  if (docSnap.exists()) {
-    return docSnap.data();
-  } else {
-    console.log("No such user document!");
-    return null;
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const docSnap = await getDoc(userDocRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.log("No such user document!");
+      return { details: {}, emailSub: false };
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return { details: {}, emailSub: false };
   }
 };
 

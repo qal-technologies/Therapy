@@ -98,11 +98,12 @@ div#body {
   top: 0 !important;
   z-index: -99999999;
   -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   display: block;
   flex: 1 !important;
   -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
   height: 100vh;
   height: 100dvh;
   min-height: 100dvh;
@@ -134,6 +135,7 @@ a#scrollUp {
   background: var(--vert-gradient-color);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
+  overflow-scrolling: touch;
   padding: 10px;
   cursor: pointer;
   width: 50px;
@@ -459,7 +461,9 @@ span.bold {
   border-left: 4px dotted var(--link);
   border-top: 4px dotted var(--link);
   border-radius: 50%;
+  -webkit-animation: spin 600ms linear 100ms infinite alternate forwards;
   animation: spin 600ms linear 100ms infinite alternate forwards;
+  -webkit-animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 

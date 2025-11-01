@@ -230,153 +230,77 @@ function addPadding() {
 }
 
 export async function handleTranslateFirstLoad() {
-    const os = getOS();
-
-    const pathKey = `translated_texts:${window.location.pathname}`;
-    const cachedJson = window.location.pathname.includes(JSON.parse(sessionStorage.getItem(pathKey)));
-    let userLang;
-
-    if (os === 'iOS' && navigator.languages && navigator.languages.length > 0) {
-        userLang = navigator.languages[0].split("-")[0];
-    } else {
-        userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-    }
-
-    // iOS() ? alert(`USER LANGUAGE: ${userLang}`) : console.log(userLang);
-
-
-    //  Don't translate if the user's language is English
-    if (userLang === "en" || !navigator.onLine) {
+    const cleanup = () => {
+        const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
+        if (loader) loader.remove();
         document.body.style.visibility = "visible";
-        if (document.cookie || cookieStore) {
-            document.cookie = "";
-        }
-        return;
-    }
-
-    if (iOS()) {
-        try {
-            setGoogleTransCookie('en', userLang);
-        } catch (e) {
-            // alert(`error in cookie: ${e}`)
-        }
-    }
-
-
+    };
 
     try {
-        loadGoogleTranslateAndApply(userLang);
-    } catch (e) {
-        // alert(e);
-    }
+        const os = getOS();
+        let userLang;
 
+        if (os === 'iOS' && navigator.languages && navigator.languages.length > 0) {
+            userLang = navigator.languages[0].split("-")[0];
+        } else {
+            userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
+        }
 
+        if (userLang === "en" || !navigator.onLine) {
+            cleanup();
+            return;
+        }
 
-    // If we have cached translations, apply them directly to the DOM
-    if (cachedJson) {
-        document.body.style.visibility = "visible";
-        return true;
-    } else {
-        return new Promise((resolve) => {
-
-            function cleanup() {
-                clearTimeout(fallbackTimeout);
-                const loader = document.getElementById("wait-loading-section") || document.querySelector(".wait-loading-section");
-
-                if (loader) loader.remove();
-                document.body.style.visibility = "visible";
+        if (iOS()) {
+            try {
+                setGoogleTransCookie('en', userLang);
+            } catch (e) {
+                console.warn("Failed to set Google Translate cookie:", e);
             }
+        }
 
-            let done = false;
-            const TRANSLATION_MAX_WAIT_MS = 4000;
+        const pathKey = `translated_texts:${window.location.pathname}`;
+        const cachedJson = sessionStorage.getItem(pathKey);
+        if (cachedJson) {
+            cleanup();
+            return true;
+        }
 
-            const fallbackTimeout = setTimeout(() => {
-                if (!done) {
-                    console.warn("Translation timeout, proceeding without translation.");
-                    // iOS() ? alert("Translation timeout, proceeding without translation.") : "";
-                    cleanup();
-                    resolve(false);
+        const loadingHTML = `
+            <div class="wait-loading-section" id="wait-loading-section">
+                <div class="loading-spinner"></div>
+            </div>`;
+        document.body.insertAdjacentHTML("beforebegin", loadingHTML);
+
+        await loadGoogleTranslateAndApply(userLang);
+
+        const TRANSLATION_MAX_WAIT_MS = 4000;
+        const translationPromise = new Promise((resolve) => {
+            const observer = new MutationObserver(() => {
+                if (pageIsTranslated()) {
+                    observer.disconnect();
+                    resolve(true);
                 }
-            }, TRANSLATION_MAX_WAIT_MS);
-
-            const loadingHTML = `
-          <div class="wait-loading-section" id="wait-loading-section">
-            <div class="loading-spinner"></div>
-          </div>`;
-            document.body.insertAdjacentHTML("beforebegin", loadingHTML);
-
-            function waitForTranslation() {
-                return new Promise((res, rej) => {
-                    const htmlEl = document.documentElement;
-                    const timeout = setTimeout(() => {
-                        observer.disconnect();
-                        rej("translation detection timeout");
-                    }, 5000);
-
-                    const observer = new MutationObserver(() => {
-                        if (htmlEl.classList.contains("translated") ||
-                            htmlEl.classList.contains("translated-ltr") ||
-                            htmlEl.classList.contains("translated-rtl")) {
-                            clearTimeout(timeout);
-                            observer.disconnect();
-
-                            // iOS() ? alert("HTML class Tag added") : "";
-
-                            setTimeout(() => res(), 600);
-                        }
-                    });
-
-                    observer.observe(htmlEl, { attributes: true, attributeFilter: ["class"] });
-                });
-            }
-
-            const userLang = (navigator.language || navigator.userLanguage || "en").split("-")[0];
-
-            if (userLang === "en") {
-                clearTimeout(fallbackTimeout);
-                cleanup();
-                resolve(false);
-                return;
-            }
-
-            setTimeout(() => {
-                cleanup();
-            }, 2000);
-
-
-
-            const selectTryInterval = setInterval(() => {
-                const select = document.querySelector(".goog-te-combo");
-                if (select) {
-                    clearInterval(selectTryInterval);
-                    select.value = userLang;
-                    select.dispatchEvent(new Event("change"));
-
-                    waitForTranslation().then(async () => {
-                        done = true;
-                        clearTimeout(fallbackTimeout);
-                        if (pageIsTranslated()) {
-                            cleanup();
-                            resolve(true);
-                        } else {
-                            cleanup();
-                            resolve(false);
-                        }
-                    }).catch((err) => {
-                        console.warn("waitForTranslationFinish failed:", err);
-                        // iOS() ? alert("waitForTranslationFinish failed:", err) : "";
-                        cleanup();
-                        resolve(false);
-                    });
-                }
-            }, 150);
-
-            setTimeout(() => {
-                clearInterval(selectTryInterval);
-            }, 9000);
+            });
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
         });
-    }
 
+        const timeoutPromise = new Promise((resolve) => {
+            setTimeout(() => {
+                console.warn("Translation timeout, proceeding without translation.");
+                resolve(false);
+            }, TRANSLATION_MAX_WAIT_MS);
+        });
+
+        const translated = await Promise.race([translationPromise, timeoutPromise]);
+
+        cleanup();
+        return translated;
+    } catch (error) {
+        console.error("An error occurred during translation:", error);
+        cleanup();
+        return false;
+    }
 }
 
 function setGoogleTransCookie(source, target) {
@@ -525,15 +449,11 @@ function setupEventListeners() {
     const menu = document.querySelector("header#header div#menu");
 
     if (menu) {
-        const os = getOS();
-        if (os === 'iOS') {
-            menu.addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                toggleMenu();
-            }, { passive: false });
-        } else {
-            menu.addEventListener("click", toggleMenu);
-        }
+        menu.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            toggleMenu();
+        }, { passive: false });
+        menu.addEventListener("click", toggleMenu);
     }
     backButton && backButton.addEventListener("click", goBackButton);
     refreshButton && refreshButton.addEventListener("click", handleRefresh);
@@ -711,27 +631,35 @@ async function setupNewsletter(user) {
 }
 
 async function initializeApp() {
-    await handleAuthStateChange(async user => {
-        setupAuthUI(user);
-        await setupNewsletter(user);
-    });
-
-    await handleTranslateFirstLoad();
-    addPadding();
-    setupCommonUI();
-    setupEventListeners();
-
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/service-worker.js").catch(error => {
-            console.error("Service Worker registration failed:", error);
+    try {
+        await new Promise((resolve) => {
+            handleAuthStateChange(async (user) => {
+                setupAuthUI(user);
+                await setupNewsletter(user);
+                resolve();
+            });
         });
-    }
 
-    handleInputFocusFix();
+        await handleTranslateFirstLoad();
+    } catch (error) {
+        console.error("Error during app initialization:", error);
+    } finally {
+        addPadding();
+        setupCommonUI();
+        setupEventListeners();
+
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/service-worker.js").catch(error => {
+                console.error("Service Worker registration failed:", error);
+            });
+        }
+
+        handleInputFocusFix();
+    }
 }
 
 window.onload = initializeApp;
-window.addEventListener("beforeunload", saveTranslationsToSession);
+window.addEventListener("beforeunload", saveTranslationsToSession, { passive: true });
 window.addEventListener("popstate", () => {
     const userLang = sessionStorage.getItem("last_lang");
 
@@ -743,7 +671,7 @@ window.addEventListener("popstate", () => {
             console.log(error);
         }
     }
-});
+}, { passive: true });
 
 window.addEventListener("pageshow", (event) => {
     if (event.persisted) {
@@ -757,7 +685,7 @@ window.addEventListener("pageshow", (event) => {
             }
         }
     }
-});
+}, { passive: true });
 
 (function patchHistoryMethods() {
     const pushState = history.pushState;
@@ -776,7 +704,7 @@ window.addEventListener("pageshow", (event) => {
 
     window.addEventListener('locationchange', (event) => {
         reapplyTranslationIfNeeded();
-    });
+    }, { passive: true });
 })();
 
 const observer = new MutationObserver(() => {
@@ -790,7 +718,7 @@ const observer = new MutationObserver(() => {
 
 observer.observe(document.body, { childList: true, subtree: true });
 
-window.onresize = () => {
+window.addEventListener('resize', () => {
     const navWidth = header.clientWidth;
 
     if (navWidth >= 800) {
@@ -807,7 +735,7 @@ window.onresize = () => {
 
         show = false;
     }
-};
+}, { passive: true });
 
 
 export function handleRedirect(href = "", type = "default") {
