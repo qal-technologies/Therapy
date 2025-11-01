@@ -291,6 +291,26 @@ body {
   font-family: PoppinsMed;
 }
 
+.payment-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-footer #open-payment{
+  width: max-content;
+  max-width: 90%;
+  padding: 8px;
+  padding-inline: 14px;
+  border-radius: 18px;
+  background: none;
+  color: var(--link);
+  font-weight: bolder;
+  border: 2px solid var(--link);
+  cursor: pointer;
+  text-align: center;
+}
 /* Payslip Modal */
 .modal {
   display: none;

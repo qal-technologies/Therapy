@@ -108,8 +108,15 @@ window.addEventListener('load', () => {
                       <span class="detail-value">&euro;${parseFloat(payment.price).toFixed(2)}</span>
                   </div>
               </div>
+
+              <div class="payment-footer">
+              <button id="open-payment" title="Open Payment">Open Receipt</button>
+              </div>
             `;
 
+        paymentCard.querySelector('button#open-payment').addEventListener('click', () => {
+          showPayslip(payment)
+        })
         paymentCard.addEventListener('click', () => {
           showPayslip(payment);
         });
@@ -168,7 +175,7 @@ window.addEventListener('load', () => {
     document.getElementById('receiptCurrency').textContent = payment.currency;
     document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted || payment.price).toFixed(2)}`;
     document.getElementById('receiptStatus').textContent = statusName.toLocaleUpperCase();
-    document.getElementById('receiptDescription').textContent = `Payment for ${payment.paymentType.charAt(0).toUpperCase() + payment.paymentType.slice(1) || 'Session'}` ;
+    document.getElementById('receiptDescription').textContent = `Payment for ${payment.paymentType.charAt(0).toUpperCase() + payment.paymentType.slice(1) || 'Session'}`;
     document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
 
     if (payment.status === false && payment.statusMessage) {

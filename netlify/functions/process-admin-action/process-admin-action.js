@@ -143,7 +143,6 @@ exports.handler = async (event) => {
         await batch.commit();
 
         // Trigger email notification to the user
-
         const templateName = paymentStatus ? 'payment-approved' : 'payment-declined';
         await sendEmail(userEmail, templateName, {
             first_name: firstName,

@@ -557,7 +557,7 @@ window.addEventListener('load', async () => {
       const userCredential = await signup(email, password);
       const device = getOS() === "iOS" ? "iPhone" : getOS();
       const user = userCredential.user;
-      const langCode = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+      const langCode = ((navigator.languages && navigator.languages[0]) || navigator.language).split('-')[0] || 'en';
 
       await createUserProfile(user.uid, {
         firstName,
@@ -629,7 +629,7 @@ window.addEventListener('load', async () => {
 
     disableAllInputs(true);
     try {
-      const langCode = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+      const langCode = ((navigator.languages && navigator.languages[0]) || navigator.language).split('-')[0] || 'en';
       const userCredential = await login(email, password);;
       const user = userCredential.user;
       updateUserData(user.uid, { language: langCode });
