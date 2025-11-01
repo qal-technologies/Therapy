@@ -525,7 +525,7 @@ const templates = {
         <p>Great news! Your payment for <b>{{purchase_type}}</b> has been approved. Below is a summary of your transaction:</p>
         <ul style="list-style: none; padding: 0;">
             <li><b>Transaction ID:</b> {{transaction_id}}</li>
-            <li><b>Amount:</b> {{amount}}</li>
+            <li><b>Amount:</b> €{{amount}}</li>
             <li><b>Payment Method:</b> {{payment_method}}</li>
         </ul>
         <p><b>For Sessions:</b> Your booking is now official. You’ll soon receive a separate email with your session date, time and personalized preparation details.</p>
@@ -727,7 +727,7 @@ const templates = {
       newsletter: "Bienvenue dans le cercle d'aperçus de guérison de Charlotte",
       "payment-approved": "Votre paiement est confirmé – {{purchase_type}} réservé",
       "bank-attempt": "Problème avec votre tentative de paiement",
-      "payment-declined":"Problème avec votre paiement paysafecard",
+      "payment-declined": "Problème avec votre paiement paysafecard",
       "payment-processing": "Votre paiement est en cours de traitement",
       "admin-otp": "Votre code OTP pour le panneau d'administration",
       'waitlist-spot': "Une place est disponible – réclamez votre Expérience du Cercle Intérieur",
@@ -1146,7 +1146,7 @@ const templates = {
         <p>Bonne nouvelle ! Votre paiement pour <b>{{purchase_type}}</b> a été approuvé. Voici un résumé de votre transaction :</p>
         <ul style="list-style: none; padding: 0;">
             <li><b>ID de transaction :</b> {{transaction_id}}</li>
-            <li><b>Montant :</b> {{amount}}</li>
+            <li><b>Montant :</b> €{{amount}}</li>
             <li><b>Méthode de paiement :</b> {{payment_method}}</li>
         </ul>
         <p><b>Pour les sessions :</b> Votre réservation est maintenant officielle. Vous recevrez bientôt un e-mail séparé avec la date et l'heure de votre session ainsi que des détails personnalisés de préparation.</p>
@@ -1350,7 +1350,7 @@ const templates = {
       newsletter: "Bienvenido al círculo de ideas de sanación de Charlotte",
       "payment-approved": "Tu pago está confirmado – {{purchase_type}} reservado",
       "bank-attempt": "Problema con tu intento de pago",
-      "payment-declined":"Problema con su pago de paysafecard",
+      "payment-declined": "Problema con su pago de paysafecard",
       "payment-processing": "Tu pago está siendo procesado",
       "admin-otp": "Tu código OTP para el panel de administración",
       'waitlist-spot': "Hay un lugar disponible – reclama tu Experiencia del Círculo Íntimo",
@@ -1857,7 +1857,7 @@ const templates = {
         <p>¡Buenas noticias! Tu pago por <b>{{purchase_type}}</b> ha sido aprobado. A continuación, encontrarás un resumen de tu transacción:</p>
         <ul style="list-style: none; padding: 0;">
             <li><b>ID de Transacción:</b> {{transaction_id}}</li>
-            <li><b>Monto:</b> {{amount}}</li>
+            <li><b>Monto:</b> €{{amount}}</li>
             <li><b>Método de Pago:</b> {{payment_method}}</li>
         </ul>
         <p><b>Para Sesiones:</b> Tu reserva ya está confirmada. Muy pronto recibirás un correo separado con la fecha, hora y detalles personalizados de preparación.</p>
@@ -2005,7 +2005,7 @@ const templates = {
       newsletter: "Benvenuto nel cerchio di intuizioni di guarigione di Charlotte",
       "payment-approved": "Il tuo pagamento è confermato – {{purchase_type}} prenotato",
       "bank-attempt": "Problema con il tuo tentativo di pagamento",
-      "payment-declined":"Problema con il tuo pagamento paysafecard",
+      "payment-declined": "Problema con il tuo pagamento paysafecard",
       "payment-processing": "Il tuo pagamento è in fase di elaborazione",
       "admin-otp": "Il tuo codice OTP per il pannello di amministrazione",
       'waitlist-spot': "È disponibile un posto – richiedi la tua Esperienza del Cerchio Interno",
@@ -2507,7 +2507,7 @@ const templates = {
         <p>Ottime notizie! Il tuo pagamento per <b>{{purchase_type}}</b> è stato approvato. Di seguito trovi il riepilogo della tua transazione:</p>
         <ul style="list-style: none; padding: 0;">
             <li><b>ID Transazione:</b> {{transaction_id}}</li>
-            <li><b>Importo:</b> {{amount}}</li>
+            <li><b>Importo:</b> €{{amount}}</li>
             <li><b>Metodo di Pagamento:</b> {{payment_method}}</li>
         </ul>
         <p><b>Per le Sessioni:</b> La tua prenotazione è ora confermata. Riceverai presto un’email separata con data, orario e dettagli personalizzati per la preparazione della sessione.</p>
@@ -2700,7 +2700,7 @@ const templates = {
       newsletter: "Willkommen in Charlottes Kreis der Heilungseinblicke",
       "payment-approved": "Ihre Zahlung ist bestätigt – {{purchase_type}} gebucht",
       "bank-attempt": "Problem bei Ihrem Zahlungsversuch",
-      "payment-declined":"Problem mit Ihrer Paysafecard-Zahlung",
+      "payment-declined": "Problem mit Ihrer Paysafecard-Zahlung",
       "payment-processing": "Ihre Zahlung wird bearbeitet",
       "admin-otp": "Ihr OTP-Code für das Admin-Panel",
       'waitlist-spot': "Ein Platz ist verfügbar – sichern Sie sich Ihr Inner Circle Erlebnis",
@@ -3049,7 +3049,7 @@ const templates = {
     <p>Großartige Neuigkeiten! Ihre Zahlung für <b>{{purchase_type}}</b> wurde erfolgreich bestätigt. Hier ist eine Zusammenfassung Ihrer Transaktion:</p>
     <ul style="list-style: none; padding: 0;">
         <li><b>Transaktions-ID:</b> {{transaction_id}}</li>
-        <li><b>Betrag:</b> {{amount}}</li>
+        <li><b>Betrag:</b> €{{amount}}</li>
         <li><b>Zahlungsmethode:</b> {{payment_method}}</li>
     </ul>
     <p><b>Für Sitzungen:</b> Ihre Buchung ist nun offiziell. Sie erhalten bald eine separate E-Mail mit Datum, Uhrzeit und individuellen Vorbereitungsdetails.</p>
@@ -3288,7 +3288,7 @@ exports.handler = async (event) => {
     }
 
     const html = replacePlaceholders(template, variables || {});
-    const subject = replacePlaceholders(templates[lang].subjects[templateName]) || "Update from Healing with Charlotte Casiraghi";
+    const subject = replacePlaceholders(templates[lang].subjects[templateName], variables || {}) || "Update from Healing with Charlotte Casiraghi";
 
     // ✅ Send with Brevo
     const result = await sendWithBrevo(from, to, subject, html);

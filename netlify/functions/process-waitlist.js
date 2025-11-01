@@ -3,13 +3,13 @@ const fetch = require('node-fetch');
 const admin = require('firebase-admin');
 
 // Server-side email sending helper
-async function sendEmail(email, templateName, variables) {
+async function sendEmail(email, templateName, variables, language) {
     const SEND_EMAIL_FUNCTION_URL = `${process.env.SITE_URL}/.netlify/functions/send-email`;
     try {
         const response = await fetch(SEND_EMAIL_FUNCTION_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ to: email, templateName, variables }),
+            body: JSON.stringify({ to, templateName, variables, language }),
         });
         if (!response.ok) {
             const errorBody = await response.text();
@@ -53,11 +53,11 @@ exports.handler = async function (event, context) {
             const waitlistId = doc.data().id;
             const userData = db.collection('users').doc(waitlistId);
             const userDoc = await userData.get();
-            const {email, firstName } = userDoc.data();
+            const { email, firstName, language } = userDoc.data();
 
             try {
                 // 1. Send the waitlist confirmation email
-                await sendEmail(email, 'waitlist-spot', { firstName });
+                await sendEmail(email, 'waitlist-spot', { firstName }, language || 'en');
 
                 // 2. Update the main user_activities document
                 const userActivityRef = db.collection('user_activities').doc(waitlistId);

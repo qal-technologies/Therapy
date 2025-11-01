@@ -711,6 +711,11 @@ async function setupNewsletter(user) {
 }
 
 async function initializeApp() {
+    await handleAuthStateChange(async user => {
+        setupAuthUI(user);
+        await setupNewsletter(user);
+    });
+
     await handleTranslateFirstLoad();
     addPadding();
     setupCommonUI();
@@ -723,11 +728,6 @@ async function initializeApp() {
     }
 
     handleInputFocusFix();
-
-    await handleAuthStateChange(async user => {
-        setupAuthUI(user);
-        await setupNewsletter(user);
-    });
 }
 
 window.onload = initializeApp;
@@ -1112,7 +1112,7 @@ async function handleAlert(
 
                     document.body.style.overflow = "";
 
-                    // 👇 iOS fix: force a full reflow and touch layer rebuild
+                    //iOS fix: 
                     parent.style.transform = "translateZ(0)";
                     document.body.offsetHeight;
 

@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const renderedEvents = new Set();
+    
     async function loadChatForUser(user) {
         const messageContainer = document.querySelector('.message-container');
         chatView.classList.remove('no-chat');
@@ -373,8 +373,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 appendEventIfNew(ev, events);
             }
 
-            messageContainer.scrollTop = messageContainer.scrollHeight;
-
             // Add swipe handlers / reply-button listeners (in case some were added)
             document.querySelectorAll('.reply-button').forEach(btn => {
                 btn.onclick = (e) => setFocusedMessage(e.target.closest('.message-bubble'));
@@ -455,6 +453,9 @@ document.addEventListener('DOMContentLoaded', () => {
             // Save unsubscribes
             userListeners.set(user.id, unsubscribes);
         }
+
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+
     }
 
     function clearAllUserListenersExcept(exceptUserId) {
@@ -806,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /* resizeObserver.observe(chatFooter);*/
+    resizeObserver.observe(chatFooter);
 
     function setFocusedMessage(messageElement) {
         if (focusedMessage) {

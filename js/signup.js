@@ -564,6 +564,7 @@ window.addEventListener('load', async () => {
         lastName,
         email,
         country,
+        language: userLangName
       });
 
       await updateUserProfile(user, {

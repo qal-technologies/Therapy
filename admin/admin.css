@@ -71,6 +71,24 @@ body {
     visibility: visible;
 }
 
+.skiptranslate, .goog-te-banner-frame, .goog-te-menu-frame, .goog-logo-link, .goog-te-gadget span, #google_translate_element select {
+    display: none !important;
+}
+
+span, i {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    padding-inline: 6px !important;
+}
+
+[data-translating] {
+    visibility: hidden !important;
+}
+
+#goog-gt-tt {
+    display: none !important;
+}
+
 #admin-dashboard {
     display: flex;
     width: 100vw;
@@ -658,7 +676,6 @@ body {
     gap: 10px;
     margin-inline-start: 10px;
     opacity: 0;
-    transform: translateY(20px);
     animation-duration: 0.35s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;

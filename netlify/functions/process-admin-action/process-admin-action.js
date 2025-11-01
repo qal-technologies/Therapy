@@ -13,12 +13,12 @@ const db = admin.firestore();
 const API_URL = `${process.env.SITE_URL}/.netlify/functions/send-email`;
 
 // Helper function to send emails (reusing Brevo logic)
-async function sendEmail(to, templateName, variables) {
+async function sendEmail(to, templateName, variables, language) {
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ to, templateName, variables }),
+            body: JSON.stringify({ to, templateName, variables, language }),
         });
 
         if (!response.ok) {
@@ -92,7 +92,7 @@ exports.handler = async (event) => {
             return { statusCode: 404, body: JSON.stringify({ error: 'Payment data not found.' }) };
         }
 
-        const { email: userEmail, firstName } = userData.details;
+        const { email: userEmail, firstName, language } = userData.details;
 
         const paymentData = paymentDoc.data();
         const { paymentType, price, method, id, currency } = paymentData;
@@ -152,7 +152,7 @@ exports.handler = async (event) => {
             amount: price,
             payment_method: method,
             currency,
-        });
+        }, language || 'en');
 
         return {
             statusCode: 200,

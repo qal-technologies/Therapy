@@ -351,7 +351,7 @@ const templates = {
         <p>Great news! Your payment for <b>{{purchase_type}}</b> has been approved. Below is a summary of your transaction:</p>
         <ul style="list-style: none; padding: 0;">
             <li><b>Transaction ID:</b> {{transaction_id}}</li>
-            <li><b>Amount:</b> {{amount}}</li>
+            <li><b>Amount:</b> €{{amount}}</li>
             <li><b>Payment Method:</b> {{payment_method}}</li>
         </ul>
         <p><b>For Sessions:</b> Your booking is now official. You’ll soon receive a separate email with your session date, time and personalized preparation details.</p>

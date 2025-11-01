@@ -2028,10 +2028,6 @@ ul.instructions.redeem li {
     transition: all ease 400ms;
 }
 
-.paysafe-section .continue-btn.try-again {
-    background: red;
-}
-
 .paysafe-section .continue-btn.success {
     background: rgb(0, 184, 0);
 }

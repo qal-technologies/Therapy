@@ -162,13 +162,13 @@ window.addEventListener('load', () => {
 
 
     document.getElementById('receiptId').textContent = payment.id;
-    document.getElementById('receiptType').textContent = payment.title;
+    document.getElementById('receiptType').textContent = payment.paymentType.toUpperCase();
     document.getElementById('receiptAmount').textContent = `€${parseFloat(payment.price).toFixed(2)}`;
     document.getElementById('receiptMethod').textContent = payment.method;
     document.getElementById('receiptCurrency').textContent = payment.currency;
     document.getElementById('receiptConverted').textContent = `${symbol}${parseFloat(payment.converted || payment.price).toFixed(2)}`;
     document.getElementById('receiptStatus').textContent = statusName.toLocaleUpperCase();
-    document.getElementById('receiptDescription').textContent = payment.description;
+    document.getElementById('receiptDescription').textContent = `Payment for ${payment.paymentType.charAt(0).toUpperCase() + payment.paymentType.slice(1) || 'Session'}` ;
     document.getElementById('receiptDate').textContent = 'Date: ' + paymentDate;
 
     if (payment.status === false && payment.statusMessage) {
