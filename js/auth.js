@@ -56,22 +56,25 @@ const logout = () => {
 async function resetPassword(email) {
   if (!email) throw new Error("Email is required for password reset.");
 
+  const language = navigator.languages && navigator.languages.length ? navigator.languages[0].split('-')[0] : navigator.language.split('-')[0];
+
   try {
-
-    const link = await sendPasswordResetEmail(auth, email, {
-      url: `https://guerisonendirectavecharlottecasiraghi.netlify.app/html/regs/reset-password`,
-      handleCodeInApp: true
+    const res = await fetch("/.netlify/functions/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, language })
     });
 
-    return await sendEmail(email, "reset", {
-      name: 'there',
-      url: `${link}`,
-    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "Failed to send reset email");
+
+    return true;
   } catch (error) {
     console.error("Password reset error:", error);
     throw error;
   }
 }
+
 
 /**
  * Listens for changes in the user's authentication state.

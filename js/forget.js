@@ -57,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         if (!valid) {
             handleAlert("Invalid email address, please check the email you entered and try again.", "blur", true, "<i class='bi bi-exclamation-circle text-danger fs-2'></i> <br/> Invalid Email", true, [{ text: "OK", onClick: "closeAlert" }]);
             throw new Error("Please enter a valid email address.");
@@ -74,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 emailInput.disabled = true;
 
-                
+
                 await resetPassword(email);
                 handleAlert(
                     `A reset link has been sent to <b>${email}</b> <br/> Please check your inbox or Spam folder.`,
@@ -90,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 console.error("Password reset error:", error);
                 const errorMessage = error.message.split('(').pop().split(')')[0].replace('auth/', '');
-               
+
 
                 if (errorMessage.includes("network-request-failed")) {
                     handleAlert("Network error. Please check your internet connection and try again.", "blur", true, `${getOS() === "iOS" ? `<i class="bi bi-cloud-slash text-danger fs-2"></i>` : `<i class='bi bi-wifi-off text-danger fs-2'></i>`} <br/> Network Error`, true, [{ text: "Try Again", onClick: "closeAlert" }]);
@@ -103,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 emailInput.disabled = false;
                 resetButton.disabled = false;
                 resetButton.innerHTML = `<p class="reset-text">RESET PASSWORD</p>`;
-                    translateElementFragment(resetButton, "")
+                translateElementFragment(resetButton, "")
             }
         }
     });
