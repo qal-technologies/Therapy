@@ -152,7 +152,7 @@ exports.handler = async (event) => {
             amount: price,
             payment_method: method,
             currency: 'EUR',
-        }, language || 'en');
+        }, language || userData.language || 'en');
 
         return {
             statusCode: 200,
