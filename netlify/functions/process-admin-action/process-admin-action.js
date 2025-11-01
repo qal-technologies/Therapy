@@ -151,7 +151,7 @@ exports.handler = async (event) => {
             transaction_id: id,
             amount: price,
             payment_method: method,
-            currency,
+            currency: 'EUR',
         }, language || 'en');
 
         return {
