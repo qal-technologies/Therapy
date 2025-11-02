@@ -227,11 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
         `;
 
-        if (prepend) {
-            userListContainer.prepend(userElement);
-        } else {
-            userListContainer.appendChild(userElement);
-        }
+ userListContainer.prepend(userElement);
+        
 
         userElement.addEventListener('click', () => {
             markAsOpened(user.id);
