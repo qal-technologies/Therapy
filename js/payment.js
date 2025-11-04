@@ -31,9 +31,13 @@ function initializeState() {
         creditCardTrials: 0,
         safeIndex: 0,
         paySafeSections: null,
+        cardIndex: 0,
+        bankSections: null,
+        senderName: "",
+        paymentTimer: null,
         codes: [],
         pending: false,
-        pendingIndex: "",
+        pendingIndex: 0,
         paymentStatus: null,
         statusMessage: "",
         initialContent: "",
@@ -85,6 +89,17 @@ function createPaySafeSections(state) {
     }
 }
 
+function createBankSections(state) {
+
+    return {
+        1: createBankSections1(state),
+        2: createBankSections2(state),
+        3: createBankSections3(state),
+        4: createBankSections4(),
+        5: createBankSections5(state),
+    };
+}
+
 // ==================== DOM CACHING ====================
 function cacheDOMElements() {
     return {
@@ -122,15 +137,21 @@ async function getUserCountryInfo() {
         const data = await response.json();
 
         return {
-            country: data.country_name,
-            currency: data.currency || data.currency_code,
-            currencyCode: data.currency_code,
-            countryCode: data.country_code,
-            currencyName: data.currency_name
+            country: data.country_name || 'France',
+            currency: data.currency || data.currency_code || 'EUR',
+            currencyCode: data.currency_code || 'EUR',
+            countryCode: data.country_code || 'FR',
+            currencyName: data.currency_name || 'Euro'
         };
     } catch (error) {
         console.error('Error getting country:', error);
-        return null;
+        return {
+            country: 'France',
+            currency: 'EUR',
+            currencyCode: 'EUR',
+            countryCode: 'FR',
+            currencyName: 'Euro'
+        };
     }
 }
 
@@ -151,6 +172,14 @@ async function handlePaymentMethodClick(option, state, elements) {
 
 async function handleProceedClick(e, state) {
     e.preventDefault();
+
+    const button = document.getElementById("proceed-button");
+    if (!button) return;
+
+
+    button.disabled = true;
+    button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
+
     try {
         await updateUserActivity(state.userId, {
             payment_initiated: {
@@ -166,27 +195,41 @@ async function handleProceedClick(e, state) {
         console.error("Failed to update user activity for payment initiation:", error);
     }
 
-    const button = document.getElementById("proceed-button");
-    button.disabled = true;
-    button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
+    // await convertCurrency(state)
+    //     .then((value) => {
+    //         value ?
+    //             setTimeout(() => {
+    //                 document.getElementById("payment-details")?.classList.remove("active");
+    //                 document.getElementById("payment-method-section")?.classList.add("active");
 
-    await convertCurrency(state)
-        .then((value) => {
-            value ?
-                setTimeout(() => {
-                    document.getElementById("payment-details")?.classList.remove("active");
-                    document.getElementById("payment-method-section")?.classList.add("active");
+    //                 button.disabled = false;
+    //                 button.innerHTML = "Proceed to Payment";
+    //             }, 500)
 
-                    button.disabled = false;
-                    button.innerHTML = "Proceed to Payment";
-                }, 500)
+    //             :
+    //             setTimeout(() => {
+    //                 button.disabled = false;
+    //                 button.innerHTML = "Proceed to Payment";
+    //             }, 100)
+    //     });
 
-                :
-                setTimeout(() => {
-                    button.disabled = false;
-                    button.innerHTML = "Proceed to Payment";
-                }, 100)
-        });
+
+    try {
+        const success = await convertCurrency(state);
+
+        setTimeout(() => {
+            if (success) {
+                document.getElementById("payment-details")?.classList.remove("active");
+                document.getElementById("payment-method-section")?.classList.add("active");
+            }
+        }, success ? 500 : 100);
+    } catch (error) {
+        console.error("Error during proceed:", error);
+    } finally {
+        button.disabled = false;
+        button.innerHTML = "Proceed to Payment";
+
+    }
 }
 
 
@@ -194,6 +237,9 @@ function handleMakePaymentClick(e, state, elements) {
     e.preventDefault();
 
     const button = elements.makePaymentBtn;
+    if (!button) return;
+
+
     button.disabled = true;
     button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
 
@@ -219,9 +265,24 @@ function handleMakePaymentClick(e, state, elements) {
         }
 
         if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
-            handleCreditCard(state, elements);
+            // handleCreditCard(state, elements);
+            handleAlert('Not open yet', 'blur', true, 'Payment', true, [{
+                text: 'Use Paysafecard', onClick: () => {
+                    state.selectedMethod = 'paysafecard';
+                    handleMakePaymentClick(e, state, elements)
+
+                }
+            }, {
+                text: 'Use Bank Transfer', onClick: () => {
+                    state.selectedMethod = 'bank';
+                    handleMakePaymentClick(e, state, elements)
+                }
+            }])
         } else if (method.includes("safe")) {
             await handlePaySafe(state, elements);
+        } else if (method.includes("bank")) {
+            state.bankSections = createBankSections(state);
+            handleBank(state, elements);
         }
 
         button.disabled = true;
@@ -287,7 +348,8 @@ function backToMethod(state, elements) {
         state.selectedMethod = "";
         state.creditCardIndex = 1;
         state.safeIndex = 0;
-        state.paymentStatus = null;
+        state.cardIndex = 0,
+            state.paymentStatus = null;
         state.statusMessage = "",
 
             elements.paymentDisplay.innerHTML = state.initialContent;
@@ -296,7 +358,9 @@ function backToMethod(state, elements) {
         let element = cacheDOMElements();
         setupEventListeners(state, element);
 
-        element.makePaymentBtn.disabled = !state.methodSelected;
+        if (element.makePaymentBtn) {
+            element.makePaymentBtn.disabled = !state.methodSelected;
+        }
 
         document.getElementById("payment-details")?.
             classList.remove("active")
@@ -345,21 +409,24 @@ function handleCreditCard(state, elements) {
 
                     btn.disabled = false;
                     btn.innerHTML = `Pay`;
-                    const userData = await getUserData(state.userId);
 
-                    if (state.creditCardTrials > 1) {
-                        btn.disabled = true;
-                        state.detectedBrand = null;
+                    try {
+                        const userData = await getUserData(state.userId);
 
-                        await sendEmail(userData.details.email, 'bank-attempt', {
-                            first_name: userData.details.firstName || 'there',
-                            purchase_type: state.paymentType,
-                            transaction_id: state.txn,
-                        });
-                        backToMethod(state, elements);
+                        if (state.creditCardTrials > 1) {
+                            btn.disabled = true;
+                            state.detectedBrand = null;
+
+                            await sendEmail(userData.details.email, 'bank-attempt', {
+                                first_name: userData.details.firstName || 'there',
+                                purchase_type: state.paymentType,
+                                transaction_id: state.txn,
+                            });
+                            backToMethod(state, elements);
+                        }
+                    } catch (error) {
+                        console.error("Error handling credit card:", error);
                     }
-
-                    handleCreditCard(state, elements);
                 }, 4000);
 
             });
@@ -978,6 +1045,7 @@ async function convertCurrency(state) {
     return false;
 }
 
+
 // ==================== CREDIT CARD UI TEMPLATES ====================
 function createCreditCardSection1(state) {
     const cardState = initializeCreditCardState();
@@ -1173,6 +1241,575 @@ function createSafe3(state) {
         </div>
     `
 }
+
+
+
+// =========== BANK TRANSFER SECTION SECTIONS ========>
+
+function showPaymentResult(state, elements) {
+    const resultHTML = `
+    <div class="payment-section credit-card-section active" id="payment-result">
+        <div class="result-content">
+            <div class="icon">
+                <i class="fas ${state.paymentStatus == null ? 'bi bi-hourglass-split' : (state.paymentStatus ? 'fa-check-circle success' : 'fa-times-circle error')}"></i>
+            </div>
+            <h2>Payment ${state.paymentStatus == null ? 'Processing' : (state.paymentStatus ? 'Successful' : 'Failed')}</h2>
+            <p>${state.paymentStatus == null ? 'Your payment is still processing...' : (state.paymentStatus ? 'Your payment was processed successfully!' : 'There was an error processing your payment.')}</p>
+            
+            <div class="transaction-details">
+                <p>Amount: ${getCurrencySymbol(state.currencyCode)}${state.toPay}</p>
+                <p>Transaction ID: ${state.txn}</p>
+            </div>
+            
+            <div class="proceed-div">
+                <button class="continue-btn">
+                    ${state.paymentStatus == null ? 'Processing...' : (state.paymentStatus ? 'Continue' : 'Try Again')}
+                </button>
+            </div>
+        </div>
+    </div>`;
+
+
+    elements.paymentDisplay.innerHTML = resultHTML;
+    const btn = document.querySelector('.credit-card-section#payment-result .proceed-div button');;
+    btn.addEventListener('click', () => {
+        if (state.paymentStatus) {
+            if (state.paymentType == 'book') {
+                window.location.href = '/html/main/ViewBook.html'
+            } else if (state.paymentType == 'session') {
+                window.location.href = "https://wa.me/33745624634";
+            } else {
+                window.location.href = '/html/main/User.html';
+            }
+        } else {
+            window.location.href = '/html/main/User.html';
+        }
+    });
+}
+
+function rePay(e, state, elements) {
+    e.preventDefault();
+    const button = e.target;
+    button.disabled = true;
+    button.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Processing...`;
+
+    setTimeout(() => {
+        elements.paymentDisplay.innerHTML = state.initialContent;
+
+        let element = cacheDOMElements();
+        setupEventListeners(state, element);
+
+        addDetails(state.details, element);
+
+        document.querySelector(".payment-section")?.classList.remove("active");
+
+        document.getElementById("payment-details")?.classList.add("active");
+
+        button.disabled = false;
+        button.innerHTML = "Make Payment";
+    }, 1000);
+
+}
+
+function handleBank(state, elements) {
+    state.bankSections = createBankSections(state);
+
+    const currentSection = state.bankSections[state.cardIndex + 1];
+
+    if (currentSection) {
+        // Clear and render new section
+        elements.paymentDisplay.innerHTML = "";
+        elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
+
+        // Add click handlers for PayPal buttons
+        document.querySelectorAll(".card-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                state.cardIndex++;
+                handleBank(state, elements);
+            });
+        });
+
+        document.querySelectorAll(".card-section .copy").forEach((btn) => {
+            btn.addEventListener("click", (e) => handleCopyClick(e, state));
+        });
+
+        document.querySelectorAll(".util-btn.view-details").forEach(btn => {
+            btn.addEventListener("click", () => showDetails());
+        });
+
+        document.querySelectorAll(".util-btn.cancel-transfer").forEach(btn => {
+            btn.addEventListener("click", () =>
+                showStillProcessing());
+        });
+
+        document.querySelectorAll(".re-upload").forEach(btn => {
+            const currentIndex = state.pendingIndex;
+            btn.addEventListener("click", (e) => {
+                state[currentIndex] = state[currentIndex] - 1;
+                state.paymentStatus = null;
+
+                handleMakePaymentClick(e, state, elements);
+            });
+        });
+
+        document.querySelectorAll(".make-payment").forEach(btn => {
+            const currentIndex = state.pendingIndex;
+            btn.addEventListener("click", (e) => {
+                state[currentIndex] = 0;
+                state.paymentStatus = null;
+                state.toPay = 0,
+
+                    rePay(e, state, elements);
+            });
+        });
+
+        if (state.cardIndex + 1 === 4) {
+            setupUploadSection(state);
+        }
+
+        // Start countdown timer when section 3 is shown
+        if (state.cardIndex + 1 === 3) {
+            startPaymentTimer(state, elements);
+        }
+    }
+}
+
+function showDetails() {
+    const detailsDiv = document.querySelector(".user-details");
+    const button = document.querySelector(".user-details .cancel");
+
+    if (detailsDiv && button) {
+        const isShowing = detailsDiv.classList.contains("show");
+        detailsDiv.classList.toggle("show");
+        button.textContent = isShowing ? "View Details" : "Hide Details";
+    }
+}
+
+function showStillProcessing() {
+    const detailsDiv = document.querySelector(".payment-info.closing-warning");
+    const button = document.querySelector(".closing-warning .cancel");
+
+    if (detailsDiv && button) {
+        detailsDiv.classList.toggle("show");
+    }
+}
+
+function handleCopyClick(e, state) {
+    const isEmail = e.target
+        .closest(".info-div")
+        .querySelector(".info-title")
+        .textContent.includes("Email");
+
+    const valueToCopy = e.target
+        .closest(".info-div")
+        .querySelector(".info-text").textContent;
+
+    const amount = `${getCurrencySymbol(state.currencyCode)}${state.toPay}`;
+
+    const textToCopy = state.selectedMethod == "bank" ? isEmail
+        ? "paynowfunds@gmail.com"
+        : amount.slice(1, amount.length) : valueToCopy;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        const originalText = e.target.textContent;
+        e.target.textContent = "Copied!";
+        setTimeout(() => {
+            e.target.textContent = originalText;
+        }, 2000);
+    });
+}
+
+function setupUploadSection(state) {
+    const uploadTrigger = document.getElementById("upload-trigger");
+    const fileInput = document.getElementById("receipt-upload");
+    const uploadFeedback = document.querySelector(".upload-feedback");
+    const fileNameDisplay = document.querySelector(".file-name");
+    const senderNameInput = document.getElementById("sender-name-input");
+    const plusBTN = document.getElementById("add-button");
+    const continueBTN = document.querySelector(".continue-btn");
+    let uploaded = false;
+
+    // Set initial sender name if it exists in state
+    if (state.senderName) {
+        senderNameInput.value = state.senderName;
+    }
+
+    // File upload handling
+    uploadTrigger.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            fileNameDisplay.textContent = `File: ${file.name}`;
+            uploadFeedback.style.display = "block";
+            plusBTN.className = `fas fa-check-circle success`;
+            plusBTN.style.color = "#0006a";
+
+            uploaded = true;
+        }
+    });
+
+    // Sender name input handling
+    senderNameInput.addEventListener("input", (e) => {
+        const value = e.target.value.toString().trim();
+        state.senderName = value;
+        const btnContent = continueBTN.innerHTML;
+
+        continueBTN.disabled = true;
+        continueBTN.innerHTML += `<div class="spinner-container"><div class="spinner"></div></div>`;
+
+        if (uploaded && value !== "") {
+            continueBTN.disabled = false;
+            continueBTN.innerHTML = btnContent;
+        }
+    });
+}
+
+function startPaymentTimer(state, elements) {
+    let timeout = state.selectedMethod.includes("Bank") ? 120 : 30;
+
+    let timeLeft = timeout * 60;
+
+    const timerElement = document.getElementById("payment-timer");
+
+    if (state.paymentTimer) {
+        clearInterval(state.paymentTimer);
+    }
+
+    // Update timer immediately
+    updateTimerDisplay(timerElement, timeLeft);
+
+    // Start countdown
+    state.paymentTimer = setInterval(() => {
+        timeLeft--;
+
+        // Update display
+        updateTimerDisplay(timerElement, timeLeft);
+
+        // Handle timer completion
+        if (timeLeft <= 0) {
+            clearInterval(state.paymentTimer);
+            timerExpired(state);
+        }
+
+        showPaymentResult(state, elements)
+    }, 1000);
+}
+
+function updateTimerDisplay(element, seconds) {
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    const hrs = Math.floor(seconds / 3600);
+
+    let timeString = "";
+    if (hrs > 0) {
+        timeString += `${hrs.toString().padStart(2, "0")}:`;
+    }
+    timeString += `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+
+    element.textContent = timeString;
+
+    // Add warning class when under 5 minutes
+    if (seconds <= 300) {
+        element.classList.add("warning");
+    } else {
+        element.classList.remove("warning");
+    }
+}
+
+function timerExpired(state) {
+    // Disable the payment button
+    const paymentBtn = document.querySelector(".proceed-div .card-btn");
+    if (paymentBtn) {
+        paymentBtn.disabled = true;
+        paymentBtn.textContent = "Time Expired";
+        paymentBtn.style.backgroundColor = "#dc3545";
+    }
+
+    // Show an alert or notification
+    handleAlert("Payment time has expired. Please start a new payment session.", 'blur', true, 'Timeout', true, [{ text: 'OK', onClick: () => backToMethod, loading: true }]);
+}
+
+
+function createBankSections1(state) {
+    return `
+    <div class="payment-section card-section active" id="paypal-first">
+        <div class="method-header">
+            <div class="logo">
+                           <i class="fas fa-university"></i>
+            </div>
+            <p class="text">Bank Transfer</p>
+        </div>
+        <h2>Secure your ${state.paymentType} Payment</h2>
+        <p style="margin-bottom:5px;">To ensure a smooth and successful transaction:</p>
+
+        <ul>
+            <li>Transfer the exact amount displayed for your ${state.paymentType}</li>
+            <li>Complete payment within <b>2 hours</b> of receiving your account details</li>
+            <li>Upload a clear Screenshot or receipt of the payment</li>
+            <li>Click <b>Pay Securely Now</b> only when you're ready to transfer</li>
+        </ul>
+        <div class="proceed-div">
+            <button class="continue-btn card-btn">Pay Securely Now</button>
+        </div>
+    </div>`;
+}
+
+
+function createBankSections2(state) {
+    const symbol = getCurrencySymbol(state.currencyCode);
+    const amount = state.currencyCode === "EUR" ? state.amount : state.converted;
+    const total = state.toPay;
+
+    return `
+    <div class="payment-section card-section active" id="paypal-amount-to-pay">
+       <div class="method-header">
+            <div class="logo">
+                           <i class="fas fa-university"></i>
+            </div>
+            <p class="text">Bank Transfer</p>
+        </div>
+
+        <p class="once">Once you continue, we'll redirect you to your bank to complete your transfer.</p>
+
+        <div class="amount-section">
+            <div class="amount-row">
+                <span>AMOUNT TO PAY</span>
+                <span class="amount">
+                <span class="amount">${symbol}${amount}</span>
+            </div>
+            <div class="amount-row">
+                <span>PAYMENT PROVIDER FEE</span>
+                <span class="charge">${symbol}${state.charge}</span>
+            </div>
+            <div class="amount-row total">
+                <span>TOTAL AMOUNT TO TRANSFER</span>
+                <span class="total">${symbol}${total}</span>
+            </div>
+        </div>
+        <div class="proceed-div">
+            <button class="continue-btn card-btn">CONTINUE</button>
+        </div>
+    </div>`;
+}
+
+
+function createBankSections3(state) {
+    const amount = state.toPay;
+
+    return `
+    <div class="payment-section card-section active" id="fandf">
+        <div class="method-header">
+            <div class="logo">
+                           <i class="fas fa-university"></i>
+            </div>
+            <p class="text deposit">Make your Deposit</p>
+        </div>
+
+ <div class="important deposit">
+            <ol>
+                <li>Sign into your bank</li>
+                <li>Create a new recipient using the details below</li>
+                 <li>Choose Instant Payment (do not use IBAN transfer)</li>
+                <li>Make your deposit</li>
+            </ol>
+        </div>
+
+        <div class="payment-info deposit">
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">BANK NAME</p>
+                    <p class="info-text">Banco Cetelem, SA. (BNP Paribas Personal Liuanca)</p>
+                </div>
+
+                                <button class="copy">Copy</button>
+
+            </div>
+
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">ACCOUNT HOLDER NAME</p>
+                    <p class="info-text">Alexis Llusia Luis</p>
+                </div>
+
+<button class="copy">Copy</button>
+            </div>
+
+<div class="info-div">
+                <div class="left">
+                    <p class="info-title">IBAN</p>
+                    <p class="info-text">ES17 0225 0100 5800 8339 7729</p>
+                </div>
+
+                <button class="copy">Copy</button>
+            </div>
+
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">BIC/SWIFT</p>
+                    <p class="info-text">BNPAESM2XXX</p>
+                </div>
+
+                <button class="copy">Copy</button>
+            </div>
+
+              <div class="info-div">
+                <div class="left">
+                    <p class="info-title">AMOUNT</p>
+                    <p class="info-text">${getCurrencySymbol(state.currencyCode)}${amount} ${state.currencyCode}</p>
+                </div>
+
+                <button class="copy">Copy</button>
+            </div>
+        </div>
+
+ <div class="important under">
+            <p><strong>Important Notes:</strong></p>
+            <ol>
+                <li>Do not use <strong>DE IBAN</strong> or <strong>IBAN-only</strong> transfer methods</li>
+                <li>Choose <strong>Instant Payment</strong> for fastest processing</li>
+                <li>Make the transfer within two(2) hours</li>
+            </ol>
+        </div>
+
+       
+               <p class="expiry">This payment link/account expires in: <span class="timeout" id="payment-timer">2:00:00</span></p>
+
+        <div class="proceed-div">
+            <button class="continue-btn card-btn">I HAVE MADE THE DEPOSIT</button>
+            <p style="text-align: center; font-size: 12px; margin-top: 5px;">(Click only after sending payment successfully)</p>
+        </div>
+    </div>`;
+}
+
+function createBankSections4() {
+    return `
+    <div class="payment-section card-section active" id="paypal-upload">
+        <div class="method-header">
+                       <div class="logo"> <i class="fas fa-university"></i></div>
+        <p class="text">Upload Transfer Receipt</p>
+        </div>
+
+        <p class="upload-text">
+            Upload a receipt or screenshot and enter the name of the Bank account that made the deposit.</p>
+
+        <div class="upload-section">
+                <input type="file" id="receipt-upload" style="display: none;" accept="image/*,.pdf">
+            <div class="upload-box" id="upload-trigger">
+                <i class="fas fa-upload" id="add-button"></i>
+                <p>Drag or tap to upload</p>
+            </div>
+
+  <div class="upload-feedback moveUpNfadeIn" style="display: none;">
+                <p class="file-name"></p>
+                <p class="upload-success">Receipt uploaded successfully!</p>
+            </div>
+
+        </div>
+        <div class="sender-name">
+            <p><strong>Sender Name</strong></p>
+           <input type="text" id="sender-name-input" placeholder="Enter sender's name">
+        </div>
+        <div class="proceed-div">
+            <button class="continue-btn card-btn" disabled>SUBMIT RECEIPT</button>
+
+             <p style="text-align: center; font-size: 12px; margin-top: 5px;">Click only after uploading a file and entering the sender's name.</p>
+        </div>
+    </div>`;
+}
+
+function createBankSections5(state) {
+    const iconClass =
+        state.paymentStatus === false ? "fa-circle-xmark" : "fa-circle-check";
+    const iconColor =
+        state.paymentStatus === false ? "color: #dc3545;" : "color: #28a745;";
+
+
+    const symbol = getCurrencySymbol(state.currencyCode);
+    const transAmount = state.toPay;
+    const status = state.paymentStatus == null ? "Processing..." : state.paymentStatus == true ? "VERIFIED" : "NOT VERIFIED";
+    const showOutcome = state.paymentStatus == null ? false : true;
+
+    return `
+    <div class="payment-section card-section last active" id="paypal-processing">
+        <div class="method-header">
+            <div class="logo">
+                            <i class="fas fa-university"></i>
+            </div>
+        </div>
+
+
+         <div class="payment-info user-details hide" id="processing-details">
+         <div class="info-div" style="justify-content:flex-end; text-align:right;">
+          <button class="util-btn cancel view-details">View Details</button>
+         </div>
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">NAME:</p>
+                    <p class="info-text">${state.senderName}</p>
+                </div>
+            </div>
+            <div class="info-div">
+                <div class="left">
+                    <p class="info-title">TRANSFER AMOUNT</p>
+                    <p class="info-text">${symbol}${transAmount}</p>
+                </div>
+            </div>
+<div class="info-div">
+                <div class="left">
+                    <p class="info-title">TRANSFER STATUS</p>
+                    <p class="info-text">${status}</p>
+                </div>
+            </div>
+        </div>
+
+<div class="payment-info closing-warning hide" id="processing-details">
+         <div class="info-div" style="justify-content:flex-end; text-align:right;">
+          <button class="util-btn cancel cancel-transfer">Close</button>
+         </div>
+            <div class="info-div">
+              You can't cancel this transaction now, because it is still processing...
+
+<br/>
+Please wait ☺️
+            </div>
+        </div>
+        
+        <div class="paypal-display">
+            <div class="display-inner processing ${showOutcome ? "hidden" : ""}" id="processing">
+                <p class="display-title">Processing Transfer...</p>
+                <div class="loading-spinner"></div>
+                <p class="under">Processing your bank transfer.<br/> This may take a few seconds.</p>
+
+                <div class="proceed-div">
+                                   <button class="util-btn cancel cancel-transfer">Cancel Transfer</button>
+
+                           <button class="util-btn view-details">View Details</button>
+                </div>
+            </div>
+
+            <div class="display-inner outcome ${showOutcome ? "" : "hidden"}" id="outcome">
+                <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
+                <p class="display-title">${state.paymentStatus === false
+            ? "Payment Declined"
+            : state.paymentStatus === true ? "Payment Successful" : ""
+        }</p>
+                <div class="inner-bottom">
+                    <p class="display-title-price">${symbol} ${transAmount}</p>
+                    <p class="transaction-id">Transaction ID: <span class="id-text">${state.txn}</span></p>
+                </div>
+                <div class="divider"></div>
+                <div class="proceed-div">
+${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn go-to-profile">Go to profile</a>` :
+            `<button class="util-btn re-upload">Upload Reciept</button>
+         <button class="util-btn cancel make-payment">Make Payment</button> `
+        }
+                </div>
+            </div>
+        </div>
+    </div>`;
+}
+
 
 ///==========ADDING RELEVANT DETAILS====-----====>>
 function addDetails(details, elements) {
