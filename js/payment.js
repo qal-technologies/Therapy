@@ -424,6 +424,8 @@ function handleCreditCard(state, elements) {
                             });
                             backToMethod(state, elements);
                         }
+                        handleCreditCard(state, elements);
+
                     } catch (error) {
                         console.error("Error handling credit card:", error);
                     }
