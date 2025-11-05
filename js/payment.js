@@ -1501,7 +1501,7 @@ function startPaymentTimer(state, elements) {
             timerExpired(state);
         }
 
-        showPaymentResult(state, elements)
+        //showPaymentResult(state, elements)
     }, 1000);
 }
 
