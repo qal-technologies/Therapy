@@ -1331,9 +1331,15 @@ function handleBank(state, elements) {
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
 
-        // Add click handlers for PayPal buttons
+        // Add click handlers for bank section buttons
         document.querySelectorAll(".card-btn").forEach((btn) => {
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", async () => {
+                // If on the receipt upload screen, save data before proceeding
+                if (state.cardIndex + 1 === 4) {
+                    btn.disabled = true;
+                    btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Saving...`;
+                    await savePaymentData(state);
+                }
                 state.cardIndex++;
                 handleBank(state, elements);
             });
@@ -1363,13 +1369,14 @@ function handleBank(state, elements) {
         });
 
         document.querySelectorAll(".make-payment").forEach(btn => {
-            const currentIndex = state.pendingIndex;
             btn.addEventListener("click", (e) => {
-                state[currentIndex] = 0;
+                // Reset the payment state and return to the bank details screen (index 2)
+                state.cardIndex = 2;
                 state.paymentStatus = null;
-                state.toPay = 0,
+                sessionStorage.removeItem(`paymentTimer_${state.txn}`); // Clear the expired timer
 
-                    rePay(e, state, elements);
+                // Re-initialize the bank flow from the details screen
+                handleBank(state, elements);
             });
         });
 
@@ -1476,34 +1483,39 @@ function setupUploadSection(state) {
 }
 
 function startPaymentTimer(state, elements) {
-    let timeout = state.selectedMethod.includes("Bank") ? 120 : 30;
-
-    let timeLeft = timeout * 60;
+    const PAYMENT_TIMER_KEY = `paymentTimer_${state.txn}`;
+    const timeout = state.selectedMethod.includes("Bank") ? 120 : 30; // in minutes
 
     const timerElement = document.getElementById("payment-timer");
+    if (!timerElement) return;
 
     if (state.paymentTimer) {
         clearInterval(state.paymentTimer);
     }
 
-    // Update timer immediately
-    updateTimerDisplay(timerElement, timeLeft);
+    let expiryTimestamp = sessionStorage.getItem(PAYMENT_TIMER_KEY);
 
-    // Start countdown
-    state.paymentTimer = setInterval(() => {
-        timeLeft--;
+    if (!expiryTimestamp) {
+        expiryTimestamp = Date.now() + timeout * 60 * 1000;
+        sessionStorage.setItem(PAYMENT_TIMER_KEY, expiryTimestamp);
+    }
 
-        // Update display
-        updateTimerDisplay(timerElement, timeLeft);
+    const updateTimer = () => {
+        const now = Date.now();
+        const timeLeft = Math.round((expiryTimestamp - now) / 1000);
 
-        // Handle timer completion
         if (timeLeft <= 0) {
             clearInterval(state.paymentTimer);
+            updateTimerDisplay(timerElement, 0);
             timerExpired(state);
+            sessionStorage.removeItem(PAYMENT_TIMER_KEY);
+        } else {
+            updateTimerDisplay(timerElement, timeLeft);
         }
+    };
 
-        //showPaymentResult(state, elements)
-    }, 1000);
+    updateTimer();
+    state.paymentTimer = setInterval(updateTimer, 1000);
 }
 
 function updateTimerDisplay(element, seconds) {
@@ -1882,10 +1894,10 @@ async function initializePaymentFlow(e, state, elements) {
             state.statusMessage = paymentToProcess.statusMessage || "";
             state.paymentType = paymentToProcess.paymentType;
 
-            const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
+            const indexName = paymentToProcess.method.toLowerCase().includes("bank") ? "card" : "safe";
             state.pendingIndex = `${indexName}Index`;
 
-            state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : paymentToProcess.index;
+            state[`${indexName}Index`] = paymentToProcess.method.toLowerCase().includes("bank") ? 4 : paymentToProcess.index;
 
             // Hide the initial details view as we will poll for results
             if (elements.paymentDetailsDiv) {
