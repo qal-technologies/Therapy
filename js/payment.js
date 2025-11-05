@@ -35,6 +35,7 @@ function initializeState() {
         bankSections: null,
         senderName: "",
         paymentTimer: null,
+receiptUrl:'',
         codes: [],
         pending: false,
         pendingIndex: 0,
