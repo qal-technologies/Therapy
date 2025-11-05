@@ -927,7 +927,7 @@ p.fandf-text {
 }
 
 .paypal-display .display-inner i {
-    font-size: 1.5rem;
+    font-size: 4rem;
 }
 
 .display-inner .display-title {
@@ -2060,6 +2060,7 @@ ul.instructions.redeem li {
 
 .paysafe-section .continue-btn, button.make-payment {
     background: var(--link) !important;
+    color: white !important;
     opacity: 0.8;
     transition: all ease 400ms;
 }

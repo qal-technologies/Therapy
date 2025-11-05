@@ -1,4 +1,60 @@
 (function () {
+    if (!window.fetch) {
+        window.fetch = function (url, options) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                options = options || {};
+
+                xhr.open(options.method || 'GET', url, true);
+
+                // Set headers
+                if (options.headers) {
+                    Object.keys(options.headers).forEach(function (key) {
+                        xhr.setRequestHeader(key, options.headers[key]);
+                    });
+                }
+
+                xhr.onload = function () {
+                    var response = {
+                        ok: xhr.status >= 200 && xhr.status < 300,
+                        status: xhr.status,
+                        statusText: xhr.statusText,
+                        headers: {
+                            get: function (name) {
+                                return xhr.getResponseHeader(name);
+                            }
+                        },
+                        text: function () {
+                            return Promise.resolve(xhr.responseText);
+                        },
+                        json: function () {
+                            return Promise.resolve(JSON.parse(xhr.responseText));
+                        },
+                        blob: function () {
+                            return Promise.resolve(new Blob([xhr.response]));
+                        },
+                        arrayBuffer: function () {
+                            return Promise.resolve(xhr.response);
+                        }
+                    };
+                    resolve(response);
+                };
+
+                xhr.onerror = function () {
+                    reject(new TypeError('Network request failed'));
+                };
+
+                xhr.ontimeout = function () {
+                    reject(new TypeError('Network request timed out'));
+                };
+
+                xhr.send(options.body || null);
+            });
+        };
+    }
+})();
+
+(function () {
     'use strict';
 
     // Feature Detection and Polyfills
