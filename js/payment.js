@@ -1,5 +1,5 @@
 import handleAlert, { getOS, handleRedirect, translateElementFragment } from './general.js';
-import { handleAuthStateChange, getCurrentUser, db } from './auth.js';
+import { handleAuthStateChange, db } from './auth.js';
 import { doc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 import {
     getPaymentById,
@@ -165,10 +165,10 @@ async function handlePaymentMethodClick(option, state, elements) {
     const method = option.className.includes("card") ?
         "Credit Card" :
         option.className.includes("paysafe") ?
-        "Paysafe Card" :
-        option.className.includes("bank") ?
-        "Bank Transfer" :
-        option.textContent.trim();
+            "Paysafe Card" :
+            option.className.includes("bank") ?
+                "Bank Transfer" :
+                option.textContent.trim();
 
     state.methodSelected = true;
     state.selectedMethod = method.toString().replace(/\s/g, "");
@@ -277,14 +277,14 @@ function handleMakePaymentClick(e, state, elements) {
                 text: 'Paysafecard', onClick: () => {
                     state.selectedMethod = 'paysafecard';
                     handleMakePaymentClick(e, state, elements);
-return 'closeAlert';
+                    return 'closeAlert';
 
                 }
             }, {
                 text: 'Bank Transfer', onClick: () => {
                     state.selectedMethod = 'bank';
                     handleMakePaymentClick(e, state, elements);
-return 'closeAlert';
+                    return 'closeAlert';
 
                 }
             }])
@@ -1371,10 +1371,8 @@ function handleBank(state, elements) {
 
         document.querySelectorAll(".util-btn.re-upload").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                // Reset the payment state and return to the upload receipt screen (index 3)
                 state.cardIndex = 3;
                 state.paymentStatus = null;
-                // Re-initialize the bank flow from the upload screen
                 handleBank(state, elements);
             });
         });
@@ -1383,8 +1381,8 @@ function handleBank(state, elements) {
             btn.addEventListener("click", (e) => {
                 state.cardIndex = 2;
                 state.paymentStatus = null;
-                sessionStorage.removeItem(`paymentTimer_${state.txn}`); 
-                
+                sessionStorage.removeItem(`paymentTimer_${state.txn}`);
+
                 handleBank(state, elements);
             });
         });
