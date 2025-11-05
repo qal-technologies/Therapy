@@ -1865,7 +1865,7 @@ Please wait ☺️
                 <div class="divider"></div>
 
                 <div class="proceed-div">
-${state.paymentStatus == true ? `<a href="${state.paymentType.toLowerCase() == 'session' ? "https://wa.me/33745624634" : '/html/main/ViewBook.html'}" class="util-btn go-to-profile ${state.paymentType.toLowerCase() == 'session' ? 'facebook' : ''}" target="_blank">${state.paymentType.toLowerCase() == 'session' ? 'Message on WhatsApp' : '<i class="bi bi-whatsapp"></i> Message Me on WhatsApp'}</a>` :
+${state.paymentStatus == true ? `<a href="${state.paymentType.toLowerCase() == 'session' ? "https://wa.me/33745624634" : '/html/main/ViewBook.html'}" class="util-btn go-to-profile ${state.paymentType.toLowerCase() == 'session' ? 'facebook' : ''}" target="_blank">${state.paymentType.toLowerCase() == 'session' ? '<i class="bi bi-whatsapp"></i> Message Me on WhatsApp' : 'View Book'}</a>` :
             `<button class="util-btn re-upload">Upload Reciept</button>
          <button class="util-btn cancel make-payment">Make Payment</button> `
         }
