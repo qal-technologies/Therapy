@@ -35,6 +35,7 @@ function initializeState() {
         cardIndex: 0,
         bankSections: null,
         senderName: "",
+        receiptURL:"",
         paymentTimer: null,
         codes: [],
         pending: false,
@@ -828,6 +829,8 @@ async function savePaymentData(state) {
         date: new Date(),
         index: index,
         userId: userId,
+        senderName: state.senderName,
+        receiptURL: state.receiptURL,
     };
     // description: state.details.description,
 
