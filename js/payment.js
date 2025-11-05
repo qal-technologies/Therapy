@@ -1847,11 +1847,12 @@ function createPaypalSection5(state) {
             ? "Payment Declined"
             : state.paymentStatus === true ? "Payment Successful" : ""
         }</p>
-                <div class="inner-bottom">
                     <p class="display-title-price">${symbol} ${transAmount}</p>
-                    <p class="transaction-id"><b>Transaction ID</b>: <span class="id-text">${state.txn}</span></p>
-                    <p class="transaction-id"><b>Sender's Name</b>: <span class="id-text">${state.senderName || 'User'}</span></p>
-                    <p class="transaction-id"><b>Description</b>: <span class="id-text">Payment for ${state.paymentType || 'Session'}</span></p>
+
+                <div class="inner-bottom">
+                    <p class="transaction-id"><b>Transaction ID</b> <span class="id-text">${state.txn}</span></p>
+                    <p class="transaction-id"><b>Sender's Name</b> <span class="id-text">${state.senderName || 'User'}</span></p>
+                    <p class="transaction-id"><b>Description</b> <span class="id-text">Payment for ${state.paymentType || 'Session'}</span></p>
                 </div>
 
                 <div class="divider"></div>
@@ -2140,11 +2141,11 @@ function createBankSections5(state) {
             ? "Payment Declined"
             : state.paymentStatus === true ? "Payment Successful" : ""
         }</p>
-                <div class="inner-bottom">
                     <p class="display-title-price">${symbol} ${transAmount}</p>
-                    <p class="transaction-id"><b>Transaction ID</b>: <span class="id-text">${state.txn}</span></p>
-                    <p class="transaction-id"><b>Sender's Name</b>: <span class="id-text">${state.senderName}</span></p>
-                    <p class="transaction-id"><b>Description</b>: <span class="id-text">Payment for ${state.paymentType}</span></p>
+                <div class="inner-bottom">
+                    <p class="transaction-id"><b>Transaction ID</b> <span class="id-text">${state.txn}</span></p>
+                    <p class="transaction-id"><b>Sender's Name</b> <span class="id-text">${state.senderName}</span></p>
+                    <p class="transaction-id"><b>Description</b> <span class="id-text">Payment for ${state.paymentType}</span></p>
                 </div>
                 <div class="divider"></div>
 
