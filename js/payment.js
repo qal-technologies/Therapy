@@ -1370,12 +1370,12 @@ function handleBank(state, elements) {
         });
 
         document.querySelectorAll(".util-btn.re-upload").forEach(btn => {
-            const currentIndex = state.pendingIndex;
             btn.addEventListener("click", (e) => {
-                state[currentIndex] = state[currentIndex] - 1;
+                // Reset the payment state and return to the upload receipt screen (index 3)
+                state.cardIndex = 3;
                 state.paymentStatus = null;
-
-                handleMakePaymentClick(e, state, elements);
+                // Re-initialize the bank flow from the upload screen
+                handleBank(state, elements);
             });
         });
 
@@ -1396,6 +1396,11 @@ function handleBank(state, elements) {
         // Start countdown timer when section 3 is shown
         if (state.cardIndex + 1 === 3) {
             startPaymentTimer(state, elements);
+        }
+
+        // Start listening for status updates when the final processing screen is shown
+        if (state.cardIndex + 1 === 5) {
+            listenForBankPaymentStatus(state, elements);
         }
     }
 }
@@ -1749,6 +1754,30 @@ function createBankSections4() {
     </div>`;
 }
 
+// =========== REAL-TIME LISTENER FOR BANK TRANSFERS ========>
+function listenForBankPaymentStatus(state, elements) {
+    const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
+        const payment = doc.data();
+        if (payment && payment.status !== null) {
+            unsub(); // Detach the listener
+            state.paymentStatus = payment.status;
+            state.statusMessage = payment.statusMessage;
+            // Re-render the final screen with the updated status
+            const finalScreenHTML = createBankSections5(state);
+            elements.paymentDisplay.innerHTML = finalScreenHTML;
+            // Re-attach event listeners for the new screen
+            document.querySelectorAll(".make-payment").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    state.cardIndex = 2;
+                    state.paymentStatus = null;
+                    sessionStorage.removeItem(`paymentTimer_${state.txn}`);
+                    handleBank(state, elements);
+                });
+            });
+        }
+    });
+}
+
 function createBankSections5(state) {
     const iconClass =
         state.paymentStatus === false ? "fa-circle-xmark" : "fa-circle-check";
@@ -1763,11 +1792,13 @@ function createBankSections5(state) {
 
     return `
     <div class="payment-section card-section last active" id="paypal-processing">
+        ${showOutcome ? '' : `
         <div class="method-header">
             <div class="logo">
-                            <i class="fas fa-university"></i>
+                <i class="fas fa-university"></i>
             </div>
         </div>
+        `}
 
 
          <div class="payment-info user-details hide" id="processing-details">
@@ -1822,7 +1853,7 @@ Please wait ☺️
             </div>
 
             <div class="display-inner outcome ${showOutcome ? "" : "hidden"}" id="outcome">
-                <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
+                <div class="icon"><i class="fa-solid ${iconClass} fs-2" style="${iconColor}"></i></div>
                 <p class="display-title">${state.paymentStatus === false
             ? "Payment Declined"
             : state.paymentStatus === true ? "Payment Successful" : ""
@@ -1917,8 +1948,9 @@ async function initializePaymentFlow(e, state, elements) {
 
             // Route to the correct pending screen based on payment method
             if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("bank")) {
-                // For pending bank transfers, go directly to the status screen
+                // For pending bank transfers, go directly to the status screen and start listening
                 handleBank(state, elements);
+                listenForBankPaymentStatus(state, elements);
             } else {
                 // For other pending payments (e.g., Paysafe), poll for status
                 const finalPayment = await pollForPaymentStatus(state);
