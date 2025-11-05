@@ -142,6 +142,27 @@ const addUserActivityPaysafe = (userId, paysafeData) => {
 };
 
 /**
+ * Adds a Bank Transfer event document to the user's activity sub-collection.
+ * @param {string} userId - The user's ID.
+ * @param {object} bankTransferData - The Bank Transfer data to store.
+ * @returns {Promise<DocumentReference>}
+ */
+const addUserActivityBankTransfer = (userId, bankTransferData) => {
+  const bankTransferCollectionRef = collection(db, "user_activities", userId, "bank_transfer_events");
+  const userActivityDocRef = doc(db, "user_activities", userId);
+
+  const last_message = `User submitted a bank transfer receipt for ${bankTransferData.paymentType} - €${bankTransferData.amount}.`;
+  setDoc(userActivityDocRef, {
+    last_update: new Date(),
+    unread_count: increment(1),
+    opened: false,
+    last_message: last_message
+  }, { merge: true });
+
+  return addDoc(bankTransferCollectionRef, bankTransferData);
+};
+
+/**
  * Retrieves a user's full data from Firestore.
  * @param {string} userId - The user's ID.
  * @returns {Promise<object | null>} The user's data or null if not found.
@@ -379,5 +400,6 @@ export {
   getCartById,
   updateUserData,
   addUserActivityPaysafe,
+  addUserActivityBankTransfer,
   addToPendingWaitlist,
 };

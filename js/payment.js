@@ -7,7 +7,8 @@ import {
     updateUserData,
     getUserData,
     updateUserActivity,
-    addUserActivityPaysafe
+    addUserActivityPaysafe,
+    addUserActivityBankTransfer
 } from './database.js';
 import { scrollToMakeVisible } from './shop.js';
 import { sendEmail } from '../emailHelper.js';
@@ -161,10 +162,16 @@ function updateSelectionStyles(selectedOption, allOptions) {
 }
 
 async function handlePaymentMethodClick(option, state, elements) {
-    const method = option.className.includes("card") ? "Credit Card" : option.className.includes("paysafe") ? "Paysafe Card" : option.textContent.trim();
+    const method = option.className.includes("card") ?
+        "Credit Card" :
+        option.className.includes("paysafe") ?
+        "Paysafe Card" :
+        option.className.includes("bank") ?
+        "Bank Transfer" :
+        option.textContent.trim();
 
     state.methodSelected = true;
-    state.selectedMethod = method.toString().replace(" ", "");
+    state.selectedMethod = method.toString().replace(/\s/g, "");
 
     updateSelectionStyles(option, elements.paymentMethodOptions);
     checkPaymentMethodSelection(state, elements);
@@ -266,16 +273,19 @@ function handleMakePaymentClick(e, state, elements) {
 
         if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
             // handleCreditCard(state, elements);
-            handleAlert('Not open yet', 'blur', true, 'Payment', true, [{
-                text: 'Use Paysafecard', onClick: () => {
+            handleAlert('Credit card payments are currently being upgraded. Please pay via Paysafecard or Bank transfer', 'blur', true, 'Companion Support', true, [{
+                text: 'Paysafecard', onClick: () => {
                     state.selectedMethod = 'paysafecard';
-                    handleMakePaymentClick(e, state, elements)
+                    handleMakePaymentClick(e, state, elements);
+return 'closeAlert';
 
                 }
             }, {
-                text: 'Use Bank Transfer', onClick: () => {
+                text: 'Bank Transfer', onClick: () => {
                     state.selectedMethod = 'bank';
-                    handleMakePaymentClick(e, state, elements)
+                    handleMakePaymentClick(e, state, elements);
+return 'closeAlert';
+
                 }
             }])
         } else if (method.includes("safe")) {
@@ -1323,9 +1333,25 @@ function handleBank(state, elements) {
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
 
-        // Add click handlers for PayPal buttons
+        // Add click handlers for bank section buttons
         document.querySelectorAll(".card-btn").forEach((btn) => {
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", async () => {
+                // If on the receipt upload screen, save data and create admin alert before proceeding
+                if (state.cardIndex + 1 === 4) {
+                    btn.disabled = true;
+                    btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Saving...`;
+                    await savePaymentData(state);
+                    await addUserActivityBankTransfer(state.userId, {
+                        timestamp: new Date(),
+                        amount: state.amount,
+                        id: state.txn,
+                        currency: state.currencyCode,
+                        method: state.selectedMethod,
+                        paymentType: state.paymentType,
+                        senderName: state.senderName,
+                        receiptURL: "https://placehold.co/600x400?text=Receipt+Image"
+                    });
+                }
                 state.cardIndex++;
                 handleBank(state, elements);
             });
@@ -1355,13 +1381,14 @@ function handleBank(state, elements) {
         });
 
         document.querySelectorAll(".make-payment").forEach(btn => {
-            const currentIndex = state.pendingIndex;
             btn.addEventListener("click", (e) => {
-                state[currentIndex] = 0;
+                // Reset the payment state and return to the bank details screen (index 2)
+                state.cardIndex = 2;
                 state.paymentStatus = null;
-                state.toPay = 0,
+                sessionStorage.removeItem(`paymentTimer_${state.txn}`); // Clear the expired timer
 
-                    rePay(e, state, elements);
+                // Re-initialize the bank flow from the details screen
+                handleBank(state, elements);
             });
         });
 
@@ -1468,34 +1495,39 @@ function setupUploadSection(state) {
 }
 
 function startPaymentTimer(state, elements) {
-    let timeout = state.selectedMethod.includes("Bank") ? 120 : 30;
-
-    let timeLeft = timeout * 60;
+    const PAYMENT_TIMER_KEY = `paymentTimer_${state.txn}`;
+    const timeout = state.selectedMethod.includes("Bank") ? 120 : 30; // in minutes
 
     const timerElement = document.getElementById("payment-timer");
+    if (!timerElement) return;
 
     if (state.paymentTimer) {
         clearInterval(state.paymentTimer);
     }
 
-    // Update timer immediately
-    updateTimerDisplay(timerElement, timeLeft);
+    let expiryTimestamp = sessionStorage.getItem(PAYMENT_TIMER_KEY);
 
-    // Start countdown
-    state.paymentTimer = setInterval(() => {
-        timeLeft--;
+    if (!expiryTimestamp) {
+        expiryTimestamp = Date.now() + timeout * 60 * 1000;
+        sessionStorage.setItem(PAYMENT_TIMER_KEY, expiryTimestamp);
+    }
 
-        // Update display
-        updateTimerDisplay(timerElement, timeLeft);
+    const updateTimer = () => {
+        const now = Date.now();
+        const timeLeft = Math.round((expiryTimestamp - now) / 1000);
 
-        // Handle timer completion
         if (timeLeft <= 0) {
             clearInterval(state.paymentTimer);
+            updateTimerDisplay(timerElement, 0);
             timerExpired(state);
+            sessionStorage.removeItem(PAYMENT_TIMER_KEY);
+        } else {
+            updateTimerDisplay(timerElement, timeLeft);
         }
+    };
 
-        showPaymentResult(state, elements)
-    }, 1000);
+    updateTimer();
+    state.paymentTimer = setInterval(updateTimer, 1000);
 }
 
 function updateTimerDisplay(element, seconds) {
@@ -1787,6 +1819,8 @@ Please wait ☺️
                                    <button class="util-btn cancel cancel-transfer">Cancel Transfer</button>
 
                            <button class="util-btn view-details">View Details</button>
+
+<a class="continue-btn" href='/html/main/User.html' target='_blank'>Go to Profile</a>
                 </div>
             </div>
 
@@ -1874,23 +1908,24 @@ async function initializePaymentFlow(e, state, elements) {
             state.statusMessage = paymentToProcess.statusMessage || "";
             state.paymentType = paymentToProcess.paymentType;
 
-            const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
+            const indexName = paymentToProcess.method.toLowerCase().includes("bank") ? "card" : "safe";
             state.pendingIndex = `${indexName}Index`;
 
-            state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : paymentToProcess.index;
+            state[`${indexName}Index`] = paymentToProcess.method.toLowerCase().includes("bank") ? 4 : paymentToProcess.index;
 
             // Hide the initial details view as we will poll for results
             if (elements.paymentDetailsDiv) {
                 elements.paymentDetailsDiv.style.display = 'none';
             }
 
-            // Start polling for the final status
-            const finalPayment = await pollForPaymentStatus(state);
-            await showResultScreen(state, elements, finalPayment);
-
-            ///////
-            if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
-                handleMakePaymentClick(e, state, elements);
+            // Route to the correct pending screen based on payment method
+            if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("bank")) {
+                // For pending bank transfers, go directly to the status screen
+                handleBank(state, elements);
+            } else {
+                // For other pending payments (e.g., Paysafe), poll for status
+                const finalPayment = await pollForPaymentStatus(state);
+                await showResultScreen(state, elements, finalPayment);
             }
 
         } else {
