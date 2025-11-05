@@ -1398,6 +1398,11 @@ function handleBank(state, elements) {
         if (state.cardIndex + 1 === 3) {
             startPaymentTimer(state, elements);
         }
+
+        // Start listening for status updates when the final processing screen is shown
+        if (state.cardIndex + 1 === 5) {
+            listenForBankPaymentStatus(state, elements);
+        }
     }
 }
 
@@ -1750,6 +1755,30 @@ function createBankSections4() {
     </div>`;
 }
 
+// =========== REAL-TIME LISTENER FOR BANK TRANSFERS ========>
+function listenForBankPaymentStatus(state, elements) {
+    const unsub = onSnapshot(doc(db, "users", state.userId, 'payments', state.txn), (doc) => {
+        const payment = doc.data();
+        if (payment && payment.status !== null) {
+            unsub(); // Detach the listener
+            state.paymentStatus = payment.status;
+            state.statusMessage = payment.statusMessage;
+            // Re-render the final screen with the updated status
+            const finalScreenHTML = createBankSections5(state);
+            elements.paymentDisplay.innerHTML = finalScreenHTML;
+            // Re-attach event listeners for the new screen
+            document.querySelectorAll(".make-payment").forEach(btn => {
+                btn.addEventListener("click", (e) => {
+                    state.cardIndex = 2;
+                    state.paymentStatus = null;
+                    sessionStorage.removeItem(`paymentTimer_${state.txn}`);
+                    handleBank(state, elements);
+                });
+            });
+        }
+    });
+}
+
 function createBankSections5(state) {
     const iconClass =
         state.paymentStatus === false ? "fa-circle-xmark" : "fa-circle-check";
@@ -1918,8 +1947,9 @@ async function initializePaymentFlow(e, state, elements) {
 
             // Route to the correct pending screen based on payment method
             if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("bank")) {
-                // For pending bank transfers, go directly to the status screen
+                // For pending bank transfers, go directly to the status screen and start listening
                 handleBank(state, elements);
+                listenForBankPaymentStatus(state, elements);
             } else {
                 // For other pending payments (e.g., Paysafe), poll for status
                 const finalPayment = await pollForPaymentStatus(state);

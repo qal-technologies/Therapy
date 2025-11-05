@@ -74,11 +74,13 @@ exports.handler = async (event) => {
         // Update Firestore::::
         const userActivityRef = db.collection('user_activities').doc(userId);
         const userActivityPaysafeRef = userActivityRef.collection('paysafe_events').doc(paymentId);
+        const userActivityBankTransferRef = userActivityRef.collection('bank_transfer_events').doc(paymentId);
         const userPaymentRef = db.collection('users').doc(userId).collection('payments').doc(paymentId);
         const userRef = db.collection('users').doc(userId);
 
-        const [paysafeDoc, paymentDoc, userActivities, userDoc] = await Promise.all([
+        const [paysafeDoc, bankTransferDoc, paymentDoc, userActivities, userDoc] = await Promise.all([
             userActivityPaysafeRef.get(),
+            userActivityBankTransferRef.get(),
             userPaymentRef.get(),
             userActivityRef.get(),
             userRef.get(),
@@ -102,6 +104,11 @@ exports.handler = async (event) => {
 
         if (paysafeDoc.exists) {
             batch.update(userActivityPaysafeRef, {
+                status: paymentStatus,
+                statusMessage
+            });
+        } else if (bankTransferDoc.exists) {
+            batch.update(userActivityBankTransferRef, {
                 status: paymentStatus,
                 statusMessage
             });
