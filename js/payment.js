@@ -1475,34 +1475,39 @@ function setupUploadSection(state) {
 }
 
 function startPaymentTimer(state, elements) {
-    let timeout = state.selectedMethod.includes("Bank") ? 120 : 30;
-
-    let timeLeft = timeout * 60;
+    const PAYMENT_TIMER_KEY = `paymentTimer_${state.txn}`;
+    const timeout = state.selectedMethod.includes("Bank") ? 120 : 30; // in minutes
 
     const timerElement = document.getElementById("payment-timer");
+    if (!timerElement) return;
 
     if (state.paymentTimer) {
         clearInterval(state.paymentTimer);
     }
 
-    // Update timer immediately
-    updateTimerDisplay(timerElement, timeLeft);
+    let expiryTimestamp = sessionStorage.getItem(PAYMENT_TIMER_KEY);
 
-    // Start countdown
-    state.paymentTimer = setInterval(() => {
-        timeLeft--;
+    if (!expiryTimestamp) {
+        expiryTimestamp = Date.now() + timeout * 60 * 1000;
+        sessionStorage.setItem(PAYMENT_TIMER_KEY, expiryTimestamp);
+    }
 
-        // Update display
-        updateTimerDisplay(timerElement, timeLeft);
+    const updateTimer = () => {
+        const now = Date.now();
+        const timeLeft = Math.round((expiryTimestamp - now) / 1000);
 
-        // Handle timer completion
         if (timeLeft <= 0) {
             clearInterval(state.paymentTimer);
+            updateTimerDisplay(timerElement, 0);
             timerExpired(state);
+            sessionStorage.removeItem(PAYMENT_TIMER_KEY);
+        } else {
+            updateTimerDisplay(timerElement, timeLeft);
         }
+    };
 
-        showPaymentResult(state, elements)
-    }, 1000);
+    updateTimer();
+    state.paymentTimer = setInterval(updateTimer, 1000);
 }
 
 function updateTimerDisplay(element, seconds) {
