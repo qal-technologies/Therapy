@@ -1369,12 +1369,12 @@ function handleBank(state, elements) {
         });
 
         document.querySelectorAll(".re-upload").forEach(btn => {
-            const currentIndex = state.pendingIndex;
             btn.addEventListener("click", (e) => {
-                state[currentIndex] = state[currentIndex] - 1;
+                // Reset the payment state and return to the upload receipt screen (index 3)
+                state.cardIndex = 3;
                 state.paymentStatus = null;
-
-                handleMakePaymentClick(e, state, elements);
+                // Re-initialize the bank flow from the upload screen
+                handleBank(state, elements);
             });
         });
 
@@ -1793,11 +1793,13 @@ function createBankSections5(state) {
 
     return `
     <div class="payment-section card-section last active" id="paypal-processing">
+        ${showOutcome ? '' : `
         <div class="method-header">
             <div class="logo">
-                            <i class="fas fa-university"></i>
+                <i class="fas fa-university"></i>
             </div>
         </div>
+        `}
 
 
          <div class="payment-info user-details hide" id="processing-details">
@@ -1850,7 +1852,7 @@ Please wait ☺️
             </div>
 
             <div class="display-inner outcome ${showOutcome ? "" : "hidden"}" id="outcome">
-                <div class="icon"><i class="fa-solid ${iconClass}" style="${iconColor}"></i></div>
+                <div class="icon"><i class="fa-solid ${iconClass} fs-2" style="${iconColor}"></i></div>
                 <p class="display-title">${state.paymentStatus === false
             ? "Payment Declined"
             : state.paymentStatus === true ? "Payment Successful" : ""
