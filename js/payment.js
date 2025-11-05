@@ -1336,7 +1336,6 @@ function handleBank(state, elements) {
         // Add click handlers for bank section buttons
         document.querySelectorAll(".card-btn").forEach((btn) => {
             btn.addEventListener("click", async () => {
-                // If on the receipt upload screen, save data and create admin alert before proceeding
                 if (state.cardIndex + 1 === 4) {
                     btn.disabled = true;
                     btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Saving...`;
@@ -1370,7 +1369,7 @@ function handleBank(state, elements) {
                 showStillProcessing());
         });
 
-        document.querySelectorAll(".re-upload").forEach(btn => {
+        document.querySelectorAll(".util-btn.re-upload").forEach(btn => {
             const currentIndex = state.pendingIndex;
             btn.addEventListener("click", (e) => {
                 state[currentIndex] = state[currentIndex] - 1;
@@ -1382,12 +1381,10 @@ function handleBank(state, elements) {
 
         document.querySelectorAll(".make-payment").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                // Reset the payment state and return to the bank details screen (index 2)
                 state.cardIndex = 2;
                 state.paymentStatus = null;
-                sessionStorage.removeItem(`paymentTimer_${state.txn}`); // Clear the expired timer
-
-                // Re-initialize the bank flow from the details screen
+                sessionStorage.removeItem(`paymentTimer_${state.txn}`); 
+                
                 handleBank(state, elements);
             });
         });
@@ -1832,7 +1829,7 @@ Please wait ☺️
         }</p>
                 <div class="inner-bottom">
                     <p class="display-title-price">${symbol} ${transAmount}</p>
-                    <p class="transaction-id">Transaction ID: <span class="id-text">${state.txn}</span></p>
+                    <p class="transaction-id"><b>Transaction ID</b>: <span class="id-text">${state.txn}</span></p>
                 </div>
                 <div class="divider"></div>
                 <div class="proceed-div">
