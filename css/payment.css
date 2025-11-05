@@ -2032,7 +2032,7 @@ ul.instructions.redeem li {
     background: rgb(0, 184, 0);
 }
 
-.continue-btn.facebook {
+.paysafe-section .continue-btn.facebook {
     width: max-content;
     max-width: 90%;
     gap: 5px;
