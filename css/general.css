@@ -806,6 +806,10 @@ section#newsletter {
   font-size: 3rem;
 }
 
+.fs-2 {
+  font-size: 3rem;
+}
+
 .alert-message .alert-button.secondary {
   background: transparent;
   border: 2px solid var(--link);
