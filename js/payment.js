@@ -1842,12 +1842,12 @@ Please wait ☺️
             <div class="display-inner processing ${showOutcome ? "hidden" : ""}" id="processing">
                 <p class="display-title">Processing Transfer...</p>
                 <div class="loading-spinner"></div>
-                <p class="under">Processing your bank transfer.<br/> This may take a few seconds.</p>
+                <p class="under">Processing your bank transfer.<br/> You will be notified about the status of the payment. </p>
 
                 <div class="proceed-div">
-                                   <button class="util-btn cancel cancel-transfer">Cancel Transfer</button>
+                                   <!--button class="util-btn cancel cancel-transfer">Cancel Transfer</button-->
 
-                           <button class="util-btn view-details">View Details</button>
+                           <!--button class="util-btn view-details">View Details</button-->
 
 <a class="continue-btn" href='/html/main/User.html' target='_blank'>Go to Profile</a>
                 </div>
