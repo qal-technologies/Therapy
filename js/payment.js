@@ -1330,9 +1330,15 @@ function handleBank(state, elements) {
         elements.paymentDisplay.innerHTML = "";
         elements.paymentDisplay.insertAdjacentHTML("beforeend", currentSection);
 
-        // Add click handlers for PayPal buttons
+        // Add click handlers for bank section buttons
         document.querySelectorAll(".card-btn").forEach((btn) => {
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click", async () => {
+                // If on the receipt upload screen, save data before proceeding
+                if (state.cardIndex + 1 === 4) {
+                    btn.disabled = true;
+                    btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Saving...`;
+                    await savePaymentData(state);
+                }
                 state.cardIndex++;
                 handleBank(state, elements);
             });
@@ -1362,13 +1368,14 @@ function handleBank(state, elements) {
         });
 
         document.querySelectorAll(".make-payment").forEach(btn => {
-            const currentIndex = state.pendingIndex;
             btn.addEventListener("click", (e) => {
-                state[currentIndex] = 0;
+                // Reset the payment state and return to the bank details screen (index 2)
+                state.cardIndex = 2;
                 state.paymentStatus = null;
-                state.toPay = 0,
+                sessionStorage.removeItem(`paymentTimer_${state.txn}`); // Clear the expired timer
 
-                    rePay(e, state, elements);
+                // Re-initialize the bank flow from the details screen
+                handleBank(state, elements);
             });
         });
 
@@ -1886,10 +1893,10 @@ async function initializePaymentFlow(e, state, elements) {
             state.statusMessage = paymentToProcess.statusMessage || "";
             state.paymentType = paymentToProcess.paymentType;
 
-            const indexName = paymentToProcess.method == "bank" ? "creditCard" : "safe";
+            const indexName = paymentToProcess.method.toLowerCase().includes("bank") ? "card" : "safe";
             state.pendingIndex = `${indexName}Index`;
 
-            state[`${indexName}Index`] = state.pendingIndex == "creditCardIndex" ? 1 : paymentToProcess.index;
+            state[`${indexName}Index`] = paymentToProcess.method.toLowerCase().includes("bank") ? 4 : paymentToProcess.index;
 
             // Hide the initial details view as we will poll for results
             if (elements.paymentDetailsDiv) {
