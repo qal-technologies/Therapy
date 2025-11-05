@@ -1807,6 +1807,8 @@ Please wait ☺️
                                    <button class="util-btn cancel cancel-transfer">Cancel Transfer</button>
 
                            <button class="util-btn view-details">View Details</button>
+
+<a class="continue-btn" href='/html/main/User.html' target='_blank'>Go to Profile</a>
                 </div>
             </div>
 
