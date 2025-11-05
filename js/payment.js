@@ -7,7 +7,8 @@ import {
     updateUserData,
     getUserData,
     updateUserActivity,
-    addUserActivityPaysafe
+    addUserActivityPaysafe,
+    addUserActivityBankTransfer
 } from './database.js';
 import { scrollToMakeVisible } from './shop.js';
 import { sendEmail } from '../emailHelper.js';
@@ -1333,11 +1334,21 @@ function handleBank(state, elements) {
         // Add click handlers for bank section buttons
         document.querySelectorAll(".card-btn").forEach((btn) => {
             btn.addEventListener("click", async () => {
-                // If on the receipt upload screen, save data before proceeding
+                // If on the receipt upload screen, save data and create admin alert before proceeding
                 if (state.cardIndex + 1 === 4) {
                     btn.disabled = true;
                     btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Saving...`;
                     await savePaymentData(state);
+                    await addUserActivityBankTransfer(state.userId, {
+                        timestamp: new Date(),
+                        amount: state.amount,
+                        id: state.txn,
+                        currency: state.currencyCode,
+                        method: state.selectedMethod,
+                        paymentType: state.paymentType,
+                        senderName: state.senderName,
+                        receiptURL: "https://placehold.co/600x400?text=Receipt+Image"
+                    });
                 }
                 state.cardIndex++;
                 handleBank(state, elements);
