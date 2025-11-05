@@ -266,7 +266,7 @@ function handleMakePaymentClick(e, state, elements) {
 
         if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
             // handleCreditCard(state, elements);
-            handleAlert('Credit card payments are currently being upgraded. Please pay via Paysafecard or Bank transfer', 'blur', true, 'Payment', true, [{
+            handleAlert('Credit card payments are currently being upgraded. Please pay via Paysafecard or Bank transfer', 'blur', true, 'Companion Support', true, [{
                 text: 'Paysafecard', onClick: () => {
                     state.selectedMethod = 'paysafecard';
                     handleMakePaymentClick(e, state, elements);
