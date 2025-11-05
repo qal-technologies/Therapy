@@ -177,13 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function addUserToList(user, prepend = false) {
-        const allList = document.querySelectorAll('div.user-list-item')
-            ?.forEach(list => {
-                if (list.dataset.id == user.id) {
-                    list.remove();
-                };
-            });
-
         const colors = ['#dcf8c6', '#b7f8c8', '#b7e8f8', '#f8b7b7', '#f8d8b7', '#f8f8b7'];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
@@ -227,8 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
         `;
 
- userListContainer.prepend(userElement);
-        
+        userListContainer.prepend(userElement);
+
 
         userElement.addEventListener('click', () => {
             markAsOpened(user.id);
@@ -248,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
+
     async function loadChatForUser(user) {
         const messageContainer = document.querySelector('.message-container');
         chatView.classList.remove('no-chat');
@@ -291,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageBubble.classList.remove('received');
                 messageBubble.classList.add('sent');
             }
-            if (event.type === 'paysafe-code' || event.type === 'bank-transfer') {
+            if (event.type === 'paysafe-code' || event.type === 'bank-transfer' || event.type === 'paypal') {
                 messageBubble.dataset.replyable = true;
             }
             messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: event.type });
@@ -300,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add to DOM
             messageContainer.appendChild(messageBubble);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
 
             // Attach reply click handler if present
             const replyBtn = messageBubble.querySelector('.reply-button');
@@ -353,6 +347,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const bankTransferSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'bank_transfer_events'));
                 bankTransferSnapshot.forEach(docSnap => events.push({ type: 'bank-transfer', ...docSnap.data() }));
+
+
+                const paypalSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'paypal_events'));
+                paypalSnapshot.forEach(docSnap => events.push({ type: 'paypal', ...docSnap.data() }));
             } catch (_) { }
             try {
                 const repliesSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'admin_replies'));
@@ -379,7 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         await initialLoad();
-
 
         if (!userListeners.has(user.id)) {
             const unsubscribes = [];
@@ -449,6 +446,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             unsubscribes.push(unsubBankTransfer);
 
+            const paypalRef = collection(db, 'user_activities', user.id, 'paypal_events');
+            const unsubPaypal = onSnapshot(paypalRef, (snap) => {
+                snap.docChanges().forEach(change => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const ev = { type: 'paypal', ...change.doc.data() };
+                        appendEventIfNew(ev, [ev]);
+                    }
+                });
+            });
+            unsubscribes.push(unsubPaypal);
+
             // Listen to admin_replies subcollection for admin replies
             const repliesRef = collection(db, 'user_activities', user.id, 'admin_replies');
             const unsubReplies = onSnapshot(repliesRef, (snap) => {
@@ -465,7 +473,10 @@ document.addEventListener('DOMContentLoaded', () => {
             userListeners.set(user.id, unsubscribes);
         }
 
-        messageContainer.scrollTop = messageContainer.scrollHeight;
+        messageContainer.scrollTo({
+            top: messageContainer.scrollHeight,
+            behavior: 'smooth'
+        });
 
     }
 
@@ -669,6 +680,24 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
 
             case 'bank-transfer':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <img src="${event.receiptURL}" alt="Receipt Image" class="receipt-image">
+                    <p>User made payment for <strong>${event.paymentType} (€${event.amount})</strong>.</p>
+                    <p>Transaction ID: <strong>${event.id}</strong></p>
+                    <p>Method: <strong>${event.method}</strong></p>
+                    <p>Sender Name: <strong>${event.senderName}</strong></p>
+                </div>
+                <div class="reply-button">
+                    <i class="bi bi-reply-fill"></i>
+                </div>
+            `;
+
+            case 'paypal':
                 return `
                 <div class="message-content">
                     <div class="tag-div">
@@ -901,8 +930,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`Failed to process payment - ${response.json().error}`);
             }
 
-            // Optionally, add the admin's reply to the chat view as a "sent" message
-            /*addSentMessage(replyText, paymentId);*/
             const replyPreview = document.getElementById('reply-preview');
             if (replyPreview) {
                 replyPreview.style.display = 'none';
@@ -912,25 +939,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(`Failed to process payment - ${error}`);
         }
     }
-
-    function addSentMessage(text, id) {
-        const messageContainer = document.querySelector('.message-container');
-        const messageBubble = document.createElement('div');
-        messageBubble.classList.add('message-bubble', 'sent');
-
-        messageBubble.innerHTML = `
-            <div class="message-content">
-                <div class="tag-div">
-                    <span class="tag-name" data-tag="REPLY">TXN ID: ${id}</span>
-                             <span class="message-meta">${formatTimestamp(new Date())}</span>
-                </div>
-                <p>${text}</p>
-            </div>
-        `;
-        messageContainer.appendChild(messageBubble);
-        messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-
 
     // Logic to go back to the user list on mobile
     const chatHeader = document.querySelector('.chat-header');

@@ -23,9 +23,20 @@
 * {
     padding: 0;
     margin: 0;
+    -moz-text-decoration-color: none;
+    text-decoration-color: none;
+    -moz-text-decoration-line: none;
+    text-decoration-line: none;
+    -moz-text-decoration-style: none;
+    text-decoration-style: none;
     text-decoration: none !important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
-    font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
+    font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, Arial, Helvetica, sans-serif;
+    font-display: swap;
+    -webkit-transition: all 400ms ease;
+    -moz-transition: all 400ms ease;
     transition: all 400ms ease;
     list-style: none;
     -webkit-tap-highlight-color: transparent;
@@ -37,6 +48,7 @@
     scrollbar-width: thin;
     -webkit-scrollbar-color: transparent transparent;
     scrollbar-color: transparent transparent;
+    -webkit-user-select: none !important;
     user-select: none !important;
 }
 
@@ -64,7 +76,6 @@ body {
     width: 100%;
     height: 100%;
     flex: 1;
-    font-family: PoppinsLight, PoppinsSemi, PoppinsMed, Arial, sans-serif;
     background: #000000;
     margin: 0;
     overflow: hidden;
@@ -91,8 +102,11 @@ span, i {
 
 #admin-dashboard {
     display: flex;
+    width: 100%;
     width: 100vw;
+    height: 100%;
     height: 100vh;
+    background: black;
     background: linear-gradient(#05000e, rgb(0, 0, 0));
     position: fixed;
     top: 0;
@@ -103,12 +117,16 @@ span, i {
 /* Sidebar (Left Panel) */
 .sidebar {
     display: flex;
+    -ms-flex-direction: column;
     flex-direction: column;
     width: 30%;
+    height: 100%;
     height: 100vh;
     min-width: 300px;
     max-width: 500px;
+    -moz-border-right-colors: #3d3d3d8e;
     border-right: 1px solid #3d3d3d8e;
+    background: black;
     background: linear-gradient(0deg, rgb(12, 12, 12), black 60%);
     flex: 1;
 }
@@ -122,7 +140,9 @@ span, i {
 }
 
 .sidebar-header {
+    -ms-flex-direction: row;
     flex-direction: row;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     gap: 10px;
     align-items: center;
@@ -137,6 +157,7 @@ span, i {
     color: white;
     padding: 0;
     display: flex;
+    -ms-flex-direction: column;
     flex-direction: column;
     align-items: center;
     gap: 5px;
@@ -153,10 +174,12 @@ span, i {
     padding-inline: 10px;
     padding-inline-end: 20px;
     display: flex;
+    -ms-flex-direction: row;
     flex-direction: row;
     align-items: center;
     gap: 10px;
     background: rgb(2, 2, 2, 0.9);
+    -webkit-backdrop-filter: blur(25px);
     backdrop-filter: blur(25px);
     border-bottom: 1px solid #3d3d3d8e;
 }
@@ -183,6 +206,7 @@ span, i {
     padding: 10px;
     border-radius: 50px;
     background: rgb(2, 2, 2, 0.9);
+    -webkit-backdrop-filter: blur(25px);
     backdrop-filter: blur(25px);
     transition: opacity 0.3s ease, transform 0.3s ease, display 0.2s ease;
     opacity: 0;
@@ -238,6 +262,7 @@ span, i {
     max-width: 60%;
     width: max-content;
     background: rgba(0, 0, 0, 0.9);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     padding: 8px;
     padding-inline: 20px;
@@ -271,10 +296,12 @@ span, i {
     color: white;
     flex-wrap: wrap;
     font-family: PoppinsSemi;
-    padding-block: 15px;
+    margin-inline-start: 12px;
+    padding-block: 10px;
     max-width: 250px;
     height: max-content;
     align-self: flex-start;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -284,9 +311,10 @@ span, i {
     display: flex;
     flex-direction: column;
     margin-inline-start: 8px;
-    padding-inline-start: 10px;
+    padding-inline-start: 8px;
     height: max-content;
     border-left: 1px solid rgba(130, 130, 130, 0.5);
+    -webkit-user-select: none !important;
     user-select: none !important;
     pointer-events: none;
 }
@@ -400,6 +428,7 @@ span, i {
     padding: 8px;
     padding-inline-start: 25%;
     background-color: #ffffff36;
+    -webkit-backdrop-filter: blur(19px);
     backdrop-filter: blur(19px);
     font-size: 14px;
     color: white;
@@ -429,6 +458,7 @@ span, i {
     display: none;
     padding: 10px;
     background-color: transparent;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.13);
 }
@@ -448,6 +478,7 @@ span, i {
     font-size: 12px;
     color: white;
     background-color: rgb(22, 22, 22, 0.1);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     cursor: pointer;
 }
@@ -505,6 +536,7 @@ span, i {
     gap: 8px;
     background: transparent;
     place-self: center;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border-radius: 18px;
     text-decoration: none !important;
@@ -662,6 +694,7 @@ span, i {
     display: flex;
     flex-direction: column;
     flex: 1;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -686,6 +719,7 @@ span, i {
     background: rgba(220, 255, 238, 0.4);
     border-top-left-radius: 22px;
     border-bottom-left-radius: 22px;
+    -webkit-backdrop-filter: brightness(110%);
     backdrop-filter: brightness(110%);
     margin-left: 20px;
 }
@@ -792,6 +826,7 @@ span, i {
 .tag-div .tag-name {
     width: max-content;
     background: rgba(232, 195, 195, 0.2);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     padding-inline: 8px;
     border-radius: 15px;
@@ -868,6 +903,7 @@ span, i {
     margin: 0;
     padding: 0;
     margin-top: 5px;
+    -webkit-user-select: text;
     user-select: text;
     letter-spacing: 0.6px;
     box-sizing: border-box;
@@ -903,6 +939,7 @@ span, i {
 
 .chat-footer .under {
     background: rgba(14, 14, 14, 0.9);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     width: 100%;
     display: flex;
@@ -927,6 +964,7 @@ span, i {
     padding: 10px 15px;
     font-size: 16px;
     background: rgba(50, 50, 50, 0.6);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     caret-color: #25d362;
     color: white;
@@ -988,6 +1026,7 @@ span, i {
     justify-content: center;
     background: transparent;
     background: rgba(0, 0, 0, 0.3);
+    -webkit-backdrop-filter: blur(10px) brightness(80%);
     backdrop-filter: blur(10px) brightness(80%);
     position: relative;
     top: 0;
@@ -1194,6 +1233,7 @@ height:100%*/
     width: 40px;
     height: 40px;
     background-color: #25d362d6;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid black;
     color: rgb(0, 0, 0);
@@ -1236,6 +1276,7 @@ height:100%*/
     animation: fadeIn 0.2s ease-in-out;
     overflow: hidden;
     box-shadow: 0px 0px 16px rgba(0, 52, 11, 0.5);
+    -webkit-user-select: none;
     user-select: none;
     margin-inline-start: 5px;
     position: relative;
@@ -1502,6 +1543,7 @@ height:100%*/
     left: 50%;
     transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.98);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid #8181818e;
     color: white;

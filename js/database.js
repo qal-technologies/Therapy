@@ -162,6 +162,29 @@ const addUserActivityBankTransfer = (userId, bankTransferData) => {
   return addDoc(bankTransferCollectionRef, bankTransferData);
 };
 
+
+/**
+ * Adds a Paypal event document to the user's activity sub-collection.
+ * @param {string} userId - The user's ID.
+ * @param {object} paypalData - The Paypal data to store.
+ * @returns {Promise<DocumentReference>}
+ */
+const addUserActivityPaypal = (userId, paypalData) => {
+  const paypalCollectionRef = collection(db, "user_activities", userId, "paypal_events");
+  const userActivityDocRef = doc(db, "user_activities", userId);
+
+  const last_message = `User submitted a Paypal receipt for ${paypalData.paymentType} - €${paypalData.amount}.`;
+  setDoc(userActivityDocRef, {
+    last_update: new Date(),
+    unread_count: increment(1),
+    opened: false,
+    last_message: last_message
+  }, { merge: true });
+
+  return addDoc(paypalCollectionRef, paypalData);
+};
+
+
 /**
  * Retrieves a user's full data from Firestore.
  * @param {string} userId - The user's ID.
@@ -402,4 +425,5 @@ export {
   addUserActivityPaysafe,
   addUserActivityBankTransfer,
   addToPendingWaitlist,
+  addUserActivityPaypal
 };

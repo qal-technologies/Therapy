@@ -40,13 +40,22 @@
 * {
   padding: 0;
   margin: 0;
+  -moz-text-decoration-color: none;
+  text-decoration-color: none;
+  -moz-text-decoration-line: none;
+  text-decoration-line: none;
+  -moz-text-decoration-style: none;
+  text-decoration-style: none;
   text-decoration: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, sans-serif;
+  font-family: PoppinsLight, PoppinsMed, PoppinsSemi, PoppinsBold, Arial, Helvetica, sans-serif;
   font-display: swap;
   word-wrap: break-word;
   overflow-wrap: break-word;
   word-break: break-word;
+  -webkit-transition: all 400ms ease;
   transition: all 400ms ease;
   list-style: none;
   -webkit-tap-highlight-color: transparent;
@@ -58,37 +67,37 @@
   scrollbar-width: thin;
   -webkit-scrollbar-color: var(--accent) var(--primaryTrans);
   scrollbar-color: var(--accent) var(--primaryTrans);
-
 }
 
 * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        html {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-        
-        body {
-            margin: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        img {
-            max-width: 100%;
-            height: auto;
-            border: 0;
-        }
-        
-        button, input, select, textarea {
-            font-family: inherit;
-            font-size: 100%;
-            margin: 0;
-        }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+}
 
 *:focus, *:active {
   outline: none !important;
@@ -140,14 +149,14 @@ div#body {
 }
 
 @supports not (display: grid) {
-            .grid {
-                display: -webkit-box;
-                display: -webkit-flex;
-                display: -ms-flexbox;
-                display: flex;
-                flex-wrap: wrap;
-            }
-        }
+  .grid {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 
 
 body, html {
