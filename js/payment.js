@@ -1369,7 +1369,7 @@ function handleBank(state, elements) {
                 showStillProcessing());
         });
 
-        document.querySelectorAll(".util-btn.re-upload").forEach(btn => {
+        document.querySelectorAll(".re-upload").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 state.cardIndex = 3;
                 state.paymentStatus = null;
@@ -1859,10 +1859,13 @@ Please wait ☺️
                 <div class="inner-bottom">
                     <p class="display-title-price">${symbol} ${transAmount}</p>
                     <p class="transaction-id"><b>Transaction ID</b>: <span class="id-text">${state.txn}</span></p>
+                    <p class="transaction-id"><b>Sender's Name</b>: <span class="id-text">${state.senderName}</span></p>
+                    <p class="transaction-id"><b>Paid for</b>: <span class="id-text">${state.paymentType}</span></p>
                 </div>
                 <div class="divider"></div>
+
                 <div class="proceed-div">
-${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn go-to-profile">Go to profile</a>` :
+${state.paymentStatus == true ? `<a href="${state.paymentType.toLowerCase() == 'session' ? "https://wa.me/33745624634" : '/html/main/ViewBook.html'}" class="util-btn go-to-profile ${state.paymentType.toLowerCase() == 'session' ? 'facebook' : ''}" target="_blank">${state.paymentType.toLowerCase() == 'session' ? 'Message on WhatsApp' : '<i class="bi bi-whatsapp"></i> Message Me on WhatsApp'}</a>` :
             `<button class="util-btn re-upload">Upload Reciept</button>
          <button class="util-btn cancel make-payment">Make Payment</button> `
         }
