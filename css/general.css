@@ -139,6 +139,17 @@ div#body {
   height: 100dvh;
 }
 
+@supports not (display: grid) {
+            .grid {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -ms-flexbox;
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+
+
 body, html {
   overflow-y: hidden !important;
   overflow-x: hidden !important;
