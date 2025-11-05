@@ -266,15 +266,15 @@ function handleMakePaymentClick(e, state, elements) {
 
         if ((method.includes("credit") || method.includes("debit")) && !method.includes("safe")) {
             // handleCreditCard(state, elements);
-            handleAlert('Not open yet', 'blur', true, 'Payment', true, [{
-                text: 'Use Paysafecard', onClick: () => {
+            handleAlert('Credit card payments are currently being upgraded. Please pay via Paysafecard or Bank transfer', 'blur', true, 'Payment', true, [{
+                text: 'Paysafecard', onClick: () => {
                     state.selectedMethod = 'paysafecard';
                     handleMakePaymentClick(e, state, elements);
 return 'closeAlert';
 
                 }
             }, {
-                text: 'Use Bank Transfer', onClick: () => {
+                text: 'Bank Transfer', onClick: () => {
                     state.selectedMethod = 'bank';
                     handleMakePaymentClick(e, state, elements);
 return 'closeAlert';
