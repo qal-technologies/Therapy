@@ -901,9 +901,18 @@ p.fandf-text {
 }
 
 #paypal-processing .paypal-display {
-    width: 100%;
+    width: 90%;
+    min-width: max-content;
+    padding: 20px;
+    height: max-content;
+    min-height: 40%;
+    min-height: 40vh;
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 0px 0px 12px rgba(174, 174, 174, 0.427);
+    align-self: center;
+    justify-self: center;
 }
 
 .paypal-display .display-inner {
@@ -920,6 +929,27 @@ p.fandf-text {
     font-family: PoppinsSemi;
     margin-block: 10px;
     color: black;
+}
+
+.display-inner .inner-bottom {
+    width: 95%;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    background: #f0f0f0;
+}
+
+.display-inner .inner-bottom p {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .display-inner .under {
@@ -2022,7 +2052,7 @@ ul.instructions.redeem li {
     overflow-y: auto;
 }
 
-.paysafe-section .continue-btn {
+.paysafe-section .continue-btn, .make-payment {
     background: var(--link);
     opacity: 0.8;
     transition: all ease 400ms;
@@ -2039,7 +2069,7 @@ ul.instructions.redeem li {
     background: rgb(0, 184, 40);
 }
 
-.paysafe-section .continue-btn:hover {
+.paysafe-section .continue-btn:hover, .make-payment:hover {
     opacity: 1;
 }
 

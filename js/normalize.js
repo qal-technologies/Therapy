@@ -263,3 +263,42 @@
     }
 
 })();
+
+(function () {
+    var prefixes = ['webkit', 'moz', 'ms', 'o'];
+    var style = document.createElement('style');
+
+    // Add prefixed CSS properties
+    var prefixedCSS = `
+        .transform { 
+            -webkit-transform: translate(0,0);
+            -moz-transform: translate(0,0);
+            -ms-transform: translate(0,0);
+            -o-transform: translate(0,0);
+            transform: translate(0,0);
+        }
+        .transition {
+            -webkit-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+        }
+        .flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+        .user-select-none {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    `;
+
+    style.textContent = prefixedCSS;
+    document.head.appendChild(style);
+})();
