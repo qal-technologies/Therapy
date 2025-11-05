@@ -1565,7 +1565,7 @@ function handlePaypal(state, elements) {
         // Add click handlers for PayPal buttons
         document.querySelectorAll(".paypal-btn").forEach((btn) => {
             btn.addEventListener("click", async () => {
-                if (state.cardIndex + 1 === 4) {
+                if (state.paypalIndex + 1 === 4) {
                     btn.disabled = true;
                     btn.innerHTML = `<div class="spinner-container"><div class="spinner"></div></div>  Saving...`;
                     await savePaymentData(state);
@@ -1591,7 +1591,8 @@ function handlePaypal(state, elements) {
 
         document.querySelectorAll(".make-payment").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                state.cardIndex = 2;
+                e.preventDefault();
+                state.paypalIndex = 2;
                 state.paymentStatus = null;
                 sessionStorage.removeItem(`paymentTimer_${state.txn}`);
 
@@ -1607,7 +1608,7 @@ function handlePaypal(state, elements) {
             startPaymentTimer(state, elements);
         }
 
-        if (state.cardIndex + 1 === 5) {
+        if (state.paypalIndex + 1 === 5) {
             listenForPayPalPaymentStatus(state, elements);
         }
     }
