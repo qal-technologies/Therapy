@@ -161,10 +161,16 @@ function updateSelectionStyles(selectedOption, allOptions) {
 }
 
 async function handlePaymentMethodClick(option, state, elements) {
-    const method = option.className.includes("card") ? "Credit Card" : option.className.includes("paysafe") ? "Paysafe Card" : option.textContent.trim();
+    const method = option.className.includes("card") ?
+        "Credit Card" :
+        option.className.includes("paysafe") ?
+        "Paysafe Card" :
+        option.className.includes("bank") ?
+        "Bank Transfer" :
+        option.textContent.trim();
 
     state.methodSelected = true;
-    state.selectedMethod = method.toString().replace(" ", "");
+    state.selectedMethod = method.toString().replace(/\s/g, "");
 
     updateSelectionStyles(option, elements.paymentMethodOptions);
     checkPaymentMethodSelection(state, elements);
