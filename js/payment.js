@@ -269,13 +269,16 @@ function handleMakePaymentClick(e, state, elements) {
             handleAlert('Not open yet', 'blur', true, 'Payment', true, [{
                 text: 'Use Paysafecard', onClick: () => {
                     state.selectedMethod = 'paysafecard';
-                    handleMakePaymentClick(e, state, elements)
+                    handleMakePaymentClick(e, state, elements);
+return 'closeAlert';
 
                 }
             }, {
                 text: 'Use Bank Transfer', onClick: () => {
                     state.selectedMethod = 'bank';
-                    handleMakePaymentClick(e, state, elements)
+                    handleMakePaymentClick(e, state, elements);
+return 'closeAlert';
+
                 }
             }])
         } else if (method.includes("safe")) {
