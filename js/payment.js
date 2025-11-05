@@ -35,6 +35,7 @@ function initializeState() {
         bankSections: null,
         senderName: "",
         paymentTimer: null,
+receiptUrl:'',
         codes: [],
         pending: false,
         pendingIndex: 0,
@@ -1821,7 +1822,7 @@ Please wait ☺️
                 </div>
                 <div class="divider"></div>
                 <div class="proceed-div">
-${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn go-to-profile">Go to profile</a>` :
+${state.paymentStatus == true ? `<a href="${state.paymentType.toLowerCase() == 'book' ? '/html/main/ViewBook.html': 'https://wa.me/33745624634'}" class="util-btn go-to-profile ${state.paymentType.toLowerCase() == 'session' ? 'continue-btn facebook' : ''}">${state.paymentType.toLowerCase() == 'session'? 'Message on WhatsApp': 'Continue your Journey'}</a>` :
             `<button class="util-btn re-upload">Upload Reciept</button>
          <button class="util-btn cancel make-payment">Make Payment</button> `
         }
