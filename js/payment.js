@@ -35,7 +35,6 @@ function initializeState() {
         bankSections: null,
         senderName: "",
         paymentTimer: null,
-receiptUrl:'',
         codes: [],
         pending: false,
         pendingIndex: 0,
@@ -1822,7 +1821,7 @@ Please wait ☺️
                 </div>
                 <div class="divider"></div>
                 <div class="proceed-div">
-${state.paymentStatus == true ? `<a href="${state.paymentType.toLowerCase() == 'book' ? '/html/main/ViewBook.html': 'https://wa.me/33745624634'}" class="util-btn go-to-profile ${state.paymentType.toLowerCase() == 'session' ? 'continue-btn facebook' : ''}">${state.paymentType.toLowerCase() == 'session'? 'Message on WhatsApp': 'Continue your Journey'}</a>` :
+${state.paymentStatus == true ? `<a href="/html/main/User.html" class="util-btn go-to-profile">Go to profile</a>` :
             `<button class="util-btn re-upload">Upload Reciept</button>
          <button class="util-btn cancel make-payment">Make Payment</button> `
         }
@@ -1904,13 +1903,14 @@ async function initializePaymentFlow(e, state, elements) {
                 elements.paymentDetailsDiv.style.display = 'none';
             }
 
-            // Start polling for the final status
-            const finalPayment = await pollForPaymentStatus(state);
-            await showResultScreen(state, elements, finalPayment);
-
-            ///////
-            if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("credit")) {
-                handleMakePaymentClick(e, state, elements);
+            // Route to the correct pending screen based on payment method
+            if (paymentToProcess.method && paymentToProcess.method.toLowerCase().includes("bank")) {
+                // For pending bank transfers, go directly to the status screen
+                handleBank(state, elements);
+            } else {
+                // For other pending payments (e.g., Paysafe), poll for status
+                const finalPayment = await pollForPaymentStatus(state);
+                await showResultScreen(state, elements, finalPayment);
             }
 
         } else {
