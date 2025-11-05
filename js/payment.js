@@ -1863,7 +1863,7 @@ Please wait ☺️
                     <p class="display-title-price">${symbol} ${transAmount}</p>
                     <p class="transaction-id"><b>Transaction ID</b>: <span class="id-text">${state.txn}</span></p>
                     <p class="transaction-id"><b>Sender's Name</b>: <span class="id-text">${state.senderName}</span></p>
-                    <p class="transaction-id"><b>Paid for</b>: <span class="id-text">${state.paymentType}</span></p>
+                    <p class="transaction-id"><b>Description</b>: <span class="id-text">Payment for ${state.paymentType}</span></p>
                 </div>
                 <div class="divider"></div>
 
