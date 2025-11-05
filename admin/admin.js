@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 messageBubble.classList.remove('received');
                 messageBubble.classList.add('sent');
             }
-            if (event.type === 'paysafe-code') {
+            if (event.type === 'paysafe-code' || event.type === 'bank-transfer') {
                 messageBubble.dataset.replyable = true;
             }
             messageBubble.dataset.eventData = JSON.stringify({ id: event.id, type: event.type });
@@ -350,6 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const paysafeSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'paysafe_events'));
                 paysafeSnapshot.forEach(docSnap => events.push({ type: 'paysafe-code', ...docSnap.data() }));
+
+                const bankTransferSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'bank_transfer_events'));
+                bankTransferSnapshot.forEach(docSnap => events.push({ type: 'bank-transfer', ...docSnap.data() }));
             } catch (_) { }
             try {
                 const repliesSnapshot = await getDocs(collection(db, 'user_activities', user.id, 'admin_replies'));
@@ -434,6 +437,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
             unsubscribes.push(unsubPaysafe);
+
+            const bankTransferRef = collection(db, 'user_activities', user.id, 'bank_transfer_events');
+            const unsubBankTransfer = onSnapshot(bankTransferRef, (snap) => {
+                snap.docChanges().forEach(change => {
+                    if (change.type === 'added' || change.type === 'modified') {
+                        const ev = { type: 'bank-transfer', ...change.doc.data() };
+                        appendEventIfNew(ev, [ev]);
+                    }
+                });
+            });
+            unsubscribes.push(unsubBankTransfer);
 
             // Listen to admin_replies subcollection for admin replies
             const repliesRef = collection(db, 'user_activities', user.id, 'admin_replies');
@@ -649,6 +663,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p><strong>CODES:</strong><br/>${event.codes.map(code => `<span>${code}</span><br/>`).join('')}</p>
                 </div>
 
+                <div class="reply-button">
+                    <i class="bi bi-reply-fill"></i>
+                </div>
+            `;
+
+            case 'bank-transfer':
+                return `
+                <div class="message-content">
+                    <div class="tag-div">
+                        <span class="tag-name" data-tag="PAYMENT">PAYMENT</span>
+                        <span class="message-meta">${time}</span>
+                    </div>
+                    <img src="${event.receiptURL}" alt="Receipt Image" class="receipt-image">
+                    <p>User made payment for <strong>${event.paymentType} (€${event.amount})</strong>.</p>
+                    <p>Transaction ID: <strong>${event.id}</strong></p>
+                    <p>Method: <strong>${event.method}</strong></p>
+                    <p>Sender Name: <strong>${event.senderName}</strong></p>
+                </div>
                 <div class="reply-button">
                     <i class="bi bi-reply-fill"></i>
                 </div>
